@@ -72,7 +72,7 @@ describe('CartView', () => {
           await wrapper.findByText('Additional services'),
         ).toBeInTheDocument();
         expect(await wrapper.findByText('Trim video')).toBeInTheDocument();
-        expect((await wrapper.findByTestId('price-value')).innerHTML).toEqual(
+        expect((await wrapper.findByTestId('price-badge')).innerHTML).toEqual(
           '$600',
         );
       },

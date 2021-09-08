@@ -2,17 +2,15 @@ import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { convertVideoFromApi } from 'src/services/convertVideoFromApi';
 import { VideoCardV2 } from '@boclips-ui/video-card-v2';
-import { PriceBadge } from 'src/components/videoCard/PriceBadge';
+import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import { Link } from 'react-router-dom';
-import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import { trackNavigateToVideoDetails } from 'src/components/common/analytics/Analytics';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
-import s from './VideoCardWrapper.module.less';
 import { VideoCardButtons } from './buttons/VideoCardButtons';
+import s from './VideoCardWrapper.module.less';
 
 interface Props {
   video: Video;
@@ -40,15 +38,7 @@ export const VideoCardWrapper = ({ video }: Props) => {
         video={convertVideoFromApi(video)}
         videoPlayer={<VideoPlayer video={video} showDurationBadge />}
         border="bottom"
-        topBadge={
-          <PriceBadge
-            price={createPriceDisplayValue(
-              video.price?.amount,
-              video.price?.currency,
-              getBrowserLocale(),
-            )}
-          />
-        }
+        topBadge={<PriceBadge price={video.price} className="text-xl" />}
         title={<VideoCardTitle />}
         actions={[
           <VideoCardButtons

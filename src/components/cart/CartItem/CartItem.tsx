@@ -7,9 +7,8 @@ import RemoveFromCartIcon from 'src/resources/icons/bin.svg';
 import { useCartMutation } from 'src/hooks/api/cartQuery';
 import c from 'classnames';
 import { Link } from 'react-router-dom';
-import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
 import { TextButton } from 'src/components/common/textButton/TextButton';
-import { getBrowserLocale } from 'src/services/getBrowserLocale';
+import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import s from './style.module.less';
 
 interface Props {
@@ -60,16 +59,10 @@ const CartItem = ({ videoItem, cartItem }: Props) => {
           >
             {videoItem.title}
           </Link>
-          <div
-            className="text-gray-900 text-lg font-bold"
-            data-qa="price-value"
-          >
-            {createPriceDisplayValue(
-              videoItem?.price?.amount,
-              videoItem?.price?.currency,
-              getBrowserLocale(),
-            )}
-          </div>
+          <PriceBadge
+            className="text-gray-900 text-lg"
+            price={videoItem.price}
+          />
         </div>
         <div className="text-sm text-gray-800 font-normal">{`ID: ${videoItem.id}`}</div>
         <TextButton
