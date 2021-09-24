@@ -23,7 +23,7 @@ import { ErrorBoundary } from 'src/components/common/errors/ErrorBoundary';
 import RefreshPageError from 'src/components/common/errors/refreshPageError/RefreshPageError';
 import { Layout } from 'src/components/layout/Layout';
 
-export const PAGE_SIZE = 10;
+export const PAGE_SIZE = 30;
 
 const SearchResultsView = () => {
   const queryClient = useQueryClient();

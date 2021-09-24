@@ -136,7 +136,7 @@ describe('SearchResults', () => {
     const fakeClient = new FakeBoclipsClient();
 
     const videos = [];
-    for (let i = 0; i < 11; i++) {
+    for (let i = 0; i < 31; i++) {
       videos.push(
         VideoFactory.sample({
           id: `${i}`,
@@ -154,18 +154,18 @@ describe('SearchResults', () => {
     );
 
     expect(await wrapper.findByText('video 0')).toBeVisible();
-    expect(wrapper.queryByText('video 10')).not.toBeInTheDocument();
+    expect(wrapper.queryByText('video 30')).not.toBeInTheDocument();
 
     fireEvent.click(wrapper.getByText('2'));
 
-    expect(await wrapper.findByText('video 10')).toBeVisible();
+    expect(await wrapper.findByText('video 30')).toBeVisible();
     expect(wrapper.queryByText('video 0')).not.toBeInTheDocument();
   });
 
   it('persists queries between pages', async () => {
     const fakeClient = new FakeBoclipsClient();
 
-    for (let i = 0; i < 11; i++) {
+    for (let i = 0; i < 31; i++) {
       fakeClient.videos.insertVideo(
         VideoFactory.sample({
           id: `video ${i}`,
@@ -195,7 +195,7 @@ describe('SearchResults', () => {
     );
 
     expect(await wrapper.findByText('video 0')).toBeVisible();
-    expect(wrapper.queryByText('video 10')).not.toBeInTheDocument();
+    expect(wrapper.queryByText('video 30')).not.toBeInTheDocument();
 
     fireEvent.click(wrapper.getByText('2'));
 
@@ -204,7 +204,7 @@ describe('SearchResults', () => {
       true,
     );
 
-    expect(await wrapper.findByText('video 10')).toBeVisible();
+    expect(await wrapper.findByText('video 30')).toBeVisible();
     expect(wrapper.queryByText('video 0')).not.toBeInTheDocument();
   });
 
