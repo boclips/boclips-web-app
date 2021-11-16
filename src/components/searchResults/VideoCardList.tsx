@@ -1,5 +1,5 @@
 import { Video } from 'boclips-api-client/dist/types';
-import { List } from 'antd';
+import List from 'antd/lib/list';
 import { PAGE_SIZE } from 'src/views/search/SearchResultsView';
 import React from 'react';
 import { VideoCardWrapper } from 'src/components/videoCard/VideoCardWrapper';

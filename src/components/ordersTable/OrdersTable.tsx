@@ -1,5 +1,5 @@
 import React from 'react';
-import { List } from 'antd';
+import List from 'antd/lib/list';
 import { OrdersCard } from 'src/components/ordersTable/OrdersCard';
 import { Order } from 'boclips-api-client/dist/sub-clients/orders/model/Order';
 import { PaginationButtons } from 'src/components/common/PaginationButtons';
