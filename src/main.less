@@ -11,12 +11,20 @@
   }
 
   h1 {
-    @apply font-medium text-h1;
+  @apply font-medium text-h1;
   }
 
   h2 {
-    @apply text-h2;
+  @apply text-h2;
     color: inherit !important;
+  }
+
+  h3 {
+  @apply text-h3;
+  }
+
+  h4 {
+  @apply text-h4;
   }
 
   .container {
@@ -40,12 +48,12 @@
     &:checked:active,
     &:checked:hover,
     &:checked:focus {
-      @apply shadow-none ring-0 bg-blue-800 outline-none;
+    @apply shadow-none ring-0 bg-blue-800 outline-none;
     }
 
     &:focus-visible,
     &:focus {
-      @apply shadow-none ring-0 outline-none;
+    @apply shadow-none ring-0 outline-none;
     }
   }
 }

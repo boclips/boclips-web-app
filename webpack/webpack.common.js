@@ -16,16 +16,11 @@ module.exports = {
     alias: {
       src: srcPath,
       resources: resourcePath,
+      'react-dom': '@hot-loader/react-dom',
     },
   },
   module: {
     rules: [
-      // {
-      //   test: /\.m?js/,
-      //   resolve: {
-      //     fullySpecified: false,
-      //   },
-      // },
       {
         test: /\.(ts|tsx)$/,
         exclude: ['/node_modules/', '/storybook'],

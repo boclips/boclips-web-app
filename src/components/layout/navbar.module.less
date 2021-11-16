@@ -1,3 +1,5 @@
+@import '~@boclips-ui/styles/src/breakpoints';
+
 .navbar {
   @apply items-center h-full bg-white;
   position: sticky;
@@ -14,5 +16,11 @@
     z-index: -1;
     background-color: white;
     box-shadow: 0 2px 8px 0 rgba(0, 21, 80, 0.15);
+  }
+}
+
+@media screen and (min-width: @screen-sm) {
+  .navbar {
+    padding-left: 1rem;
   }
 }

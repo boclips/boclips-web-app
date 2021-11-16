@@ -11,23 +11,23 @@ interface Props {
   showSearchBar?: boolean;
 }
 
-const Navbar = (
+const NavbarResponsive = (
   { showSearchBar }: Props = { showSearchBar: false },
 ): ReactElement => {
   return (
     <nav
-      className={c(s.navbar, 'col-start-1 col-end-26 grid grid-cols-24 gap-6')}
+      className={c(s.navbar, 'col-span-full grid grid-cols-24')}
       aria-label="Boclips navigation bar"
     >
-      <div className="col-start-1 col-end-5">
+      <div className="col-start-1 col-end-12">
         <Logo />
       </div>
       {showSearchBar && (
-        <div className="col-start-6 col-end-20 flex justify-start">
+        <div className="flex justify-start">
           <Search size="small" showIconOnly />
         </div>
       )}
-      <div className="col-start-20 col-end-25 flex h-full justify-end">
+      <div className="col-start-12 col-end-25 flex h-full justify-end">
         <AccountButton />
         <FeatureGate linkName="cart">
           <CartButton />
@@ -37,4 +37,4 @@ const Navbar = (
   );
 };
 
-export default Navbar;
+export default NavbarResponsive;

@@ -49,8 +49,13 @@ const ErrorView = lazy(() => import('src/views/error/ErrorView'));
 const NotFound = lazy(() => import('src/views/notFound/NotFound'));
 
 const FallbackView = lazy(() => import('src/views/fallback/FallbackView'));
+
 const AccessDeniedView = lazy(
   () => import('src/views/accessDenied/AccessDenied'),
+);
+
+const HomepageWithCategories = lazy(
+  () => import('src/views/homepageWithCategories/ResponsiveHomeView'),
 );
 
 interface Props {
@@ -152,6 +157,15 @@ const App = ({
                         <>
                           <Helmet title="Order confirmed!" />
                           <OrderConfirmationView state={location?.state} />
+                        </>
+                      )}
+                    />
+                    <Route
+                      path="/homepage-with-categories"
+                      render={() => (
+                        <>
+                          <Helmet title="Boclips" />
+                          <HomepageWithCategories />
                         </>
                       )}
                     />

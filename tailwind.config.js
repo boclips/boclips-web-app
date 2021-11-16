@@ -2,7 +2,8 @@ const debugScreens = require('tailwindcss-debug-screens');
 const forms = require('@tailwindcss/forms');
 
 module.exports = {
-  purge: ['./src/**/*.html', './src/**/*.tsx'],
+  purge: ['./src/**/*.{js,ts,jsx,tsx}'],
+  mode: 'jit',
   theme: {
     container: {
       center: true,
@@ -14,9 +15,10 @@ module.exports = {
       tightestest: '-.15em',
     },
     screens: {
-      sm: '1280px',
-      md: '1440px',
-      lg: '1680px',
+      sm: '320px',
+      md: '768px',
+      lg: '1280px',
+      xl: '1680px',
     },
     extend: {
       gridTemplateRows: {
@@ -32,6 +34,7 @@ module.exports = {
         new: 'repeat(24, minmax(0, 38px))',
         container:
           'minmax(2rem, 1fr) repeat(24, minmax(0, 38px)) minmax(2rem, 1fr)',
+        responsive: '1rem repeat(24, 1fr) 1rem',
         content: 'repeat(24, minmax(0, 38px))',
         24: 'repeat(24, 1fr)',
       },
@@ -120,10 +123,12 @@ module.exports = {
       },
       fontSize: {
         xxs: '0.65rem',
+        xs: '0.875rem',
         md: '1rem',
         h1: '2.5rem',
-        h2: '1.875rem',
-        h3: '1.25rem',
+        h2: '2rem',
+        h3: '1.5rem',
+        h4: '1.25rem',
       },
       spacing: {
         14: '3.5rem',

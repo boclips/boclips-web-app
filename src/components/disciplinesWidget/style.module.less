@@ -1,0 +1,28 @@
+@import "~@boclips-ui/styles/src/publishersColours";
+
+.discipline {
+@apply flex items-center rounded;
+  width: 100%;
+  border: 1px solid @blue-400;
+  height: 80px;
+  padding: 0 1rem;
+  margin-bottom: 0.5rem;
+
+  &&:last-of-type {
+    margin-bottom: 0;
+  }
+
+  span {
+    padding-left: 0.5rem;
+  }
+
+  .arrow{
+    padding:0;
+    svg{
+      height: 17px;
+      width: 10px;
+      stroke: @gray-800;
+    }
+  }
+}
+
