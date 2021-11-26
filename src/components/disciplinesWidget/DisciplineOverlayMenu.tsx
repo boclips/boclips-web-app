@@ -2,9 +2,15 @@ import ArrowRight from 'src/resources/icons/arrow-no-size.svg';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import getDisciplineIllustration from 'src/services/getDisciplineIllustration';
+import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
 import s from './style.module.less';
 
-const DisciplineOverlayMenu = ({ onClick, selectedDiscipline }) => {
+interface Props {
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  selectedDiscipline: Discipline;
+}
+
+const DisciplineOverlayMenu = ({ onClick, selectedDiscipline }: Props) => {
   return (
     <div className={s.overlay}>
       <div className={s.overlayHeader}>

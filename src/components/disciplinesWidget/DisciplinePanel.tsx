@@ -1,9 +1,15 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import c from 'classnames';
+import { Subject } from 'boclips-api-client/dist/types';
 import s from './style.module.less';
 
-const DisciplinePanel = ({ subjects, positionTop }) => {
+interface Props {
+  positionTop: boolean;
+  subjects: Array<Subject>;
+}
+
+const DisciplinePanel = ({ subjects, positionTop }: Props) => {
   return (
     <div
       className={c(s.disciplinePanel, {
