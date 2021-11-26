@@ -4,7 +4,7 @@ import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientP
 import { Projection } from 'boclips-api-client/dist/sub-clients/common/model/Projection';
 
 export const doGetChannels = (client: BoclipsClient) => {
-  return client.channels.getAll(Projection.LIST);
+  return client.channels.getAll({ projection: Projection.LIST });
 };
 
 export const useGetChannelsQuery = () => {

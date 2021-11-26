@@ -31,7 +31,12 @@ export const SelectedFilters = ({ removeFilter, clearFilters }: Props) => {
   ): SelectedFilter => {
     return {
       id: selectedFilterId,
-      name: getFilterLabel(filterKey, selectedFilterId, channels, subjects),
+      name: getFilterLabel(
+        filterKey,
+        selectedFilterId,
+        channels.page,
+        subjects,
+      ),
       key: filterKey,
     };
   };

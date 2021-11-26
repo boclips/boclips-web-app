@@ -10,7 +10,7 @@ import c from 'classnames';
 import s from './style.module.less';
 
 interface Props {
-  size: 'big' | 'small';
+  size: 'big' | 'small' | 'responsive';
   showIconOnly: boolean;
   onSearch?: (query: string) => void;
 }
@@ -41,6 +41,7 @@ export const Search = ({ size, showIconOnly, onSearch }: Props) => {
       className={c(s.searchWrapper, {
         [s.big]: size === 'big',
         [s.small]: size !== 'big',
+        [s.responsive]: size === 'responsive',
       })}
     >
       <SearchBar

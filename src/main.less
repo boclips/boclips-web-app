@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import 'vars.less';
+@import '~@boclips-ui/styles/src/publishersColours';
 
 @layer base {
   img,
@@ -27,9 +28,25 @@
   @apply text-h4;
   }
 
+  a {
+    color: @blue-800!important;
+
+    &:hover {
+      text-decoration: underline;
+      color: @blue-800;
+    }
+
+    &:active {
+      color: @blue-900;
+    }
+
+    &:focus {
+      background: #FFC966;
+    }
+  }
+
   .container {
     min-width: 1280px;
-    padding: 0 2rem;
   }
 
   input[type='checkbox'] {

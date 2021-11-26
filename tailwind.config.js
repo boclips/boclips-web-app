@@ -17,12 +17,14 @@ module.exports = {
     screens: {
       sm: '320px',
       md: '768px',
-      lg: '1280px',
+      lg: '1148px',
       xl: '1680px',
     },
     extend: {
       gridTemplateRows: {
         home: '75px minmax(0, 458px) 63px',
+        'home-responsive': 'auto minmax(100%, auto) 63px',
+        'navbar-responsive': 'auto auto',
         'search-view': '75px minmax(0, auto) 63px',
         'orders-view': '75px 50px minmax(0, auto) 63px',
         'order-view': '75px 21px minmax(0, auto) minmax(0, auto) 63px',
@@ -34,7 +36,8 @@ module.exports = {
         new: 'repeat(24, minmax(0, 38px))',
         container:
           'minmax(2rem, 1fr) repeat(24, minmax(0, 38px)) minmax(2rem, 1fr)',
-        responsive: '1rem repeat(24, 1fr) 1rem',
+        responsive:
+          'minmax(1rem, 1fr) repeat(24, minmax(0, 38px)) minmax(1rem, 1fr)',
         content: 'repeat(24, minmax(0, 38px))',
         24: 'repeat(24, 1fr)',
       },
@@ -146,6 +149,7 @@ module.exports = {
       },
       width: {
         44: '11rem',
+        max: '105rem',
       },
     },
   },

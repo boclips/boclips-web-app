@@ -1,44 +1,103 @@
-import React from 'react';
-import ImagePlaceholder from 'resources/placeholder/image.svg';
-import ArrowRight from 'resources/icons/arrow-no-size.svg';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import DisciplineOverlayMenu from 'src/components/disciplinesWidget/DisciplineOverlayMeny';
+import DisciplinePanel from 'src/components/disciplinesWidget/DisciplinePanel';
+import DisciplineTile from 'src/components/disciplinesWidget/DisciplineTile';
+import { useGetDisciplinesQuery } from 'src/hooks/api/disciplinesQuery';
+import c from 'classnames';
 import s from './style.module.less';
 
-const disciplines = [
-  { name: 'Business', image: '' },
-  { name: 'Health and Medicine', image: '' },
-  { name: 'Humanities', image: '' },
-  { name: 'Life Sciences', image: '' },
-  { name: 'Mathematics', image: '' },
-  { name: 'Physical Sciences', image: '' },
-  { name: 'Social Sciences', image: '' },
-  { name: 'Technology', image: '' },
-];
+const DisciplineWidget = (): ReactElement => {
+  const { data: disciplines, isLoading } = useGetDisciplinesQuery();
 
-const DisciplineWidget = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedDiscipline, setSelectedDiscipline] = useState(null);
+  const [subjectsPositionTop, setSubjectsPositionTop] = useState(null);
+  const breakpoints = useMediaBreakPoint();
+  const mobileView =
+    breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
+
+  useEffect(() => {
+    if (modalOpen && mobileView) {
+      document.querySelector('body').style.overflow = 'hidden';
+    } else {
+      document.querySelector('body').style.overflow = null;
+    }
+  }, [modalOpen, mobileView]);
+
+  const onClick = (discipline, gridPosition = null) => {
+    if (mobileView) {
+      setModalOpen(!modalOpen);
+      setSelectedDiscipline(discipline);
+    }
+
+    if (!modalOpen) {
+      setModalOpen(!modalOpen);
+      setSelectedDiscipline(discipline);
+      setSubjectsPositionTop(gridPosition);
+    } else {
+      setSelectedDiscipline(discipline);
+      setSubjectsPositionTop(gridPosition);
+
+      if (discipline.id === selectedDiscipline.id) {
+        setModalOpen(!modalOpen);
+        setSelectedDiscipline(null);
+      }
+    }
+  };
+
   return (
-    <main className="col-span-full row-start-2 row-end-2 px-4">
-      <h4 className="text-center">Let’s find the videos you need</h4>
-      <div className="mt-4">
-        {disciplines.map((it) => {
-          return (
-            <button
-              key={it.name}
-              type="button"
-              onClick={() => null}
-              className={s.discipline}
-            >
-              <ImagePlaceholder />
-              <span className="flex items-center font-medium w-full">
-                {it.name}
-              </span>
-              <span className={s.arrow}>
-                <ArrowRight />
-              </span>
-            </button>
-          );
-        })}
+    <main className="col-start-2 col-end-26 row-start-2 row-end-2 lg:col-start-4 lg:col-end-24 md:pt-4">
+      <h4 className="text-center md:text-4xl">
+        Let’s find the videos you need
+      </h4>
+      <div className={s.disciplineWrapper}>
+        {isLoading ? (
+          <SkeletonTiles />
+        ) : (
+          disciplines?.map((it, i) => {
+            const gridPositionTop = disciplines.length / 2 > i && !mobileView;
+
+            return (
+              <DisciplineTile
+                key={it.id}
+                discipline={it}
+                selectedDiscipline={selectedDiscipline}
+                onClick={onClick}
+                gridPositionTop={gridPositionTop}
+              />
+            );
+          })
+        )}
+
+        {modalOpen && !mobileView && (
+          <DisciplinePanel
+            subjects={selectedDiscipline?.subjects}
+            positionTop={subjectsPositionTop}
+          />
+        )}
       </div>
+
+      {modalOpen && mobileView && (
+        <DisciplineOverlayMenu
+          selectedDiscipline={selectedDiscipline}
+          onClick={onClick}
+        />
+      )}
     </main>
+  );
+};
+
+const SkeletonTiles = () => {
+  const numberOfTiles = 8;
+  const skeletonsToRender = Array.from(Array(numberOfTiles).keys());
+
+  return (
+    <>
+      {skeletonsToRender.map((i) => (
+        <div key={i} className={c(s.discipline, s.skeleton)} />
+      ))}
+    </>
   );
 };
 

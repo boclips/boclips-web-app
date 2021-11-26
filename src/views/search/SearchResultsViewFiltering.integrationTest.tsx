@@ -178,12 +178,10 @@ describe('SearchResultsFiltering', () => {
 
   describe('channel filters', () => {
     it('can filter channel filter options', async () => {
-      fakeClient.channels.insertFixture(
+      fakeClient.channels.insertFixture([
         ChannelFactory.sample({ id: 'getty-id', name: 'Getty' }),
-      );
-      fakeClient.channels.insertFixture(
         ChannelFactory.sample({ id: 'ted-id', name: 'Ted' }),
-      );
+      ]);
 
       fakeClient.videos.setFacets(
         FacetsFactory.sample({

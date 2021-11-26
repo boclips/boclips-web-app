@@ -1,9 +1,13 @@
 import React from 'react';
 
-const Footer = () => {
+interface Props {
+  columnPosition?: string;
+}
+
+const Footer = ({ columnPosition }: Props) => {
   return (
     <footer
-      className="col-start-1 col-end-25 row-end-last"
+      className={`col-start-1 col-end-25 row-end-last ${columnPosition}`}
       aria-label="Boclips footer"
     >
       <div className="border-t text-xxs text-footer pt-4 font-thin ">

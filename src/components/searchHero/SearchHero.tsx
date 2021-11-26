@@ -36,7 +36,7 @@ const SearchHero = () => {
         </h1>
         <Search size="big" showIconOnly={false} onSearch={onSearch} />
       </div>
-      <div className="col-start-16 col-end-25 row-start-2 row-end-2 self-center justify-self-start">
+      <div className="col-start-16 col-end-25 row-start-2 row-end-2 self-center justify-self-start z-0">
         <HomeImageSVG />
       </div>
     </>
