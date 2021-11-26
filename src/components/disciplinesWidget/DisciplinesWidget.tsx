@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
-import DisciplineOverlayMenu from 'src/components/disciplinesWidget/DisciplineOverlayMeny';
+import DisciplineOverlayMenu from 'src/components/disciplinesWidget/DisciplineOverlayMenu';
 import DisciplinePanel from 'src/components/disciplinesWidget/DisciplinePanel';
 import DisciplineTile from 'src/components/disciplinesWidget/DisciplineTile';
 import { useGetDisciplinesQuery } from 'src/hooks/api/disciplinesQuery';
