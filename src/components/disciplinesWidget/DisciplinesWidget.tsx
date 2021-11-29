@@ -58,7 +58,8 @@ const DisciplineWidget = (): ReactElement => {
           disciplines?.map((discipline, i) => {
             if (discipline.name === 'World Languages') return null;
 
-            const gridPositionTop = disciplines.length / 2 > i && !mobileView;
+            const gridPositionTop =
+              Math.floor(disciplines.length / 2) > i && !mobileView;
 
             return (
               <DisciplineTile
