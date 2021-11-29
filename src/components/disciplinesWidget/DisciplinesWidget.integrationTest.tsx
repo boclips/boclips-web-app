@@ -255,6 +255,37 @@ export const disciplines = [
       },
     ],
   },
+  {
+    id: '',
+    name: 'World Languages',
+    code: 'discipline-code',
+    subjects: [
+      {
+        id: '5cb499c9fd5beb428189454f',
+        name: 'Biochemistry 1',
+      },
+      {
+        id: 'id-2',
+        name: 'Ecology and Environmental Studies 1',
+      },
+      {
+        id: 'id-3',
+        name: 'General Biology 1',
+      },
+      {
+        id: '4',
+        name: 'Human Biology 1',
+      },
+      {
+        id: '5',
+        name: 'Microbiology 1',
+      },
+      {
+        id: '6',
+        name: 'Zoology and Animal Sciences 1',
+      },
+    ],
+  },
 ];
 
 describe('Mobile & Desktop - DisciplineWidget', () => {
@@ -285,6 +316,7 @@ describe('Mobile & Desktop - DisciplineWidget', () => {
     expect(await screen.findByText(disciplines[5].name)).toBeInTheDocument();
     expect(await screen.findByText(disciplines[6].name)).toBeInTheDocument();
     expect(await screen.findByText(disciplines[7].name)).toBeInTheDocument();
+    expect(screen.queryByText(disciplines[8].name)).not.toBeInTheDocument();
   });
 });
 

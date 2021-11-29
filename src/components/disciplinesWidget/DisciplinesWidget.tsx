@@ -55,13 +55,15 @@ const DisciplineWidget = (): ReactElement => {
         {isLoading ? (
           <SkeletonTiles />
         ) : (
-          disciplines?.map((it, i) => {
+          disciplines?.map((discipline, i) => {
+            if (discipline.name === 'World Languages') return null;
+
             const gridPositionTop = disciplines.length / 2 > i && !mobileView;
 
             return (
               <DisciplineTile
-                key={it.id}
-                discipline={it}
+                key={discipline.id}
+                discipline={discipline}
                 selectedDiscipline={selectedDiscipline}
                 onClick={onClick}
                 gridPositionTop={gridPositionTop}
