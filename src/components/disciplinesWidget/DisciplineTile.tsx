@@ -4,7 +4,7 @@ import React from 'react';
 import c from 'classnames';
 import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
 import s from './style.module.less';
-import SubjectsPanel from './DisciplinePanel';
+import SubjectsPanel from './SubjectsPanel';
 
 interface Props {
   discipline: Discipline;
