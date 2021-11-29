@@ -4,7 +4,7 @@ import React from 'react';
 import c from 'classnames';
 import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
 import s from './style.module.less';
-import DisciplinePanel from './DisciplinePanel';
+import SubjectsPanel from './DisciplinePanel';
 
 interface Props {
   discipline: Discipline;
@@ -41,7 +41,7 @@ const DisciplineTile = ({
         <span className={s.illustration}>
           {getDisciplineIllustration(discipline.name)}
         </span>
-        <span className="flex items-center font-medium w-full">
+        <span className="flex items-center font-medium text-md w-full justify-center pt-4">
           {discipline.name}
         </span>
         <span className={s.arrow}>
@@ -49,7 +49,7 @@ const DisciplineTile = ({
         </span>
       </button>
       {isSelected && !isMobileView && (
-        <DisciplinePanel
+        <SubjectsPanel
           subjects={selectedDiscipline?.subjects}
           positionTop={gridPositionTop}
         />

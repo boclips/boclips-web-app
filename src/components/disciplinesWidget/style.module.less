@@ -1,11 +1,11 @@
-@import "~@boclips-ui/styles/src/publishersColours";
-@import "~@boclips-ui/styles/src/breakpoints";
+@import '~@boclips-ui/styles/src/publishersColours';
+@import '~@boclips-ui/styles/src/breakpoints';
 
 .disciplineWrapper {
   display: grid;
 
   .discipline {
-  @apply flex items-center rounded;
+    @apply flex items-center rounded;
     background: @white;
     border: 1px solid @blue-400;
     height: 80px;
@@ -33,7 +33,12 @@
   .discipline {
     &.skeleton {
       animation: skeleton ease-in 1s infinite;
-      background: linear-gradient(90deg, @gray-100 25%, @gray-300 37%, @gray-100 63%);
+      background: linear-gradient(
+        90deg,
+        @gray-100 25%,
+        @gray-300 37%,
+        @gray-100 63%
+      );
 
       background-size: 200% 200%;
       border-color: @gray-200;
@@ -52,7 +57,7 @@
   padding: 1rem;
 
   .overlayHeader {
-  @apply flex flex-row items-center;
+    @apply flex flex-row items-center;
     height: 32px;
     font-size: 1.125rem;
     text-align: center;
@@ -81,7 +86,7 @@
   }
 
   .selectedDiscipline {
-  @apply flex items-center rounded;
+    @apply flex items-center rounded;
     width: 100%;
     border: 1px solid @blue-400;
     height: 56px;
@@ -130,7 +135,7 @@
   .disciplineWrapper {
     margin-top: 1rem;
     flex-direction: column;
-    grid-gap: .5rem;
+    grid-gap: 0.5rem;
 
     .discipline {
       width: 100%;
@@ -161,7 +166,7 @@
   .overlay {
     width: 70vw;
     left: 30vw;
-    box-shadow: rgba(@gray-900, .5) 0 0 0 100vw;
+    box-shadow: rgba(@gray-900, 0.5) 0 0 0 100vw;
   }
 }
 
@@ -171,11 +176,11 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: auto auto auto;
     grid-column-gap: 1.5rem;
-    grid-row-gap: .75rem;
+    grid-row-gap: 0.75rem;
     position: relative;
 
     &:after {
-    @apply rounded;
+      @apply rounded;
       content: '';
       width: 120%;
       height: 100%;
@@ -184,7 +189,6 @@
       background: @blue-100;
       position: absolute;
       z-index: -1;
-
     }
 
     .discipline {
@@ -241,28 +245,21 @@
           }
         }
       }
-
-      span {
-        justify-content: center;
-        font-size: 1.125rem;
-        padding: 1rem 0 0;
-      }
     }
 
     .disciplinePanel {
-    @apply col-span-full row-start-2 row-end-2 rounded;
+      @apply col-span-full row-start-2 row-end-2 rounded;
       min-height: 176px;
       border: 1px solid @blue-400;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       padding: 1.5rem;
-      margin: .75rem 0;
+      margin: 0.75rem 0;
       background: @white;
 
-
       &.placeBottom {
-      @apply row-start-3 row-end-3;
+        @apply row-start-3 row-end-3;
       }
 
       .linkWrapper {
@@ -278,7 +275,6 @@
     }
   }
 }
-
 
 @keyframes skeleton {
   0% {

@@ -9,7 +9,7 @@ interface Props {
   subjects: Array<Subject>;
 }
 
-const DisciplinePanel = ({ subjects, positionTop }: Props) => {
+const SubjectsPanel = ({ subjects, positionTop }: Props) => {
   return (
     <div
       className={c(s.disciplinePanel, {
@@ -37,4 +37,4 @@ const DisciplinePanel = ({ subjects, positionTop }: Props) => {
   );
 };
 
-export default DisciplinePanel;
+export default SubjectsPanel;
