@@ -5,6 +5,7 @@ import DisciplineWidget from 'src/components/disciplinesWidget/DisciplinesWidget
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import userEvent from '@testing-library/user-event';
 
 export const disciplines = [
   {
@@ -388,8 +389,7 @@ describe('Mobile - DisciplineWidget ', () => {
     const fakeClient = new FakeBoclipsClient();
     const client = new QueryClient();
 
-    // eslint-disable-next-line array-callback-return
-    disciplines.map((discipline) => {
+    disciplines.forEach((discipline) => {
       fakeClient.disciplines.insertDiscipline(discipline);
     });
 
@@ -403,11 +403,10 @@ describe('Mobile - DisciplineWidget ', () => {
       </BoclipsClientProvider>,
     );
 
-    fireEvent.keyDown(await screen.findByText('Business'), {
-      key: 'Enter',
-      code: 'Enter',
-      charCode: 13,
-    });
+    userEvent.type(
+      await screen.findByRole('button', { name: /Business/ }),
+      '{Enter}',
+    );
 
     expect(await screen.findByText('Select subject'));
   });

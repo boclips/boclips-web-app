@@ -1,4 +1,3 @@
-import { handleEnterKeyDown } from 'src/services/handleEnterKeyDown';
 import getDisciplineIllustration from 'src/services/getDisciplineIllustration';
 import ArrowRight from 'src/resources/icons/arrow-no-size.svg';
 import React from 'react';
@@ -24,9 +23,6 @@ const DisciplineTile = ({
       key={discipline.id}
       type="button"
       onClick={() => onClick(discipline, gridPositionTop)}
-      onKeyDown={(e) =>
-        handleEnterKeyDown(e, () => onClick(discipline, gridPositionTop))
-      }
       className={c(s.discipline, {
         [s.gridPositionTop]: gridPositionTop,
         [s.gridPositionBottom]: !gridPositionTop,
