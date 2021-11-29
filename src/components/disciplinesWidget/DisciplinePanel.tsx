@@ -18,16 +18,17 @@ const DisciplinePanel = ({ subjects, positionTop }: Props) => {
     >
       {subjects?.map((subject) => {
         return (
-          <div key={subject.name} className={s.linkWrapper}>
-            <Link
-              to={{
-                pathname: '/videos',
-                search: `?subject=${subject.id}`,
-              }}
-            >
-              <span>{subject.name}</span>
-            </Link>
-          </div>
+          <Link
+            key={subject.name}
+            className={s.linkWrapper}
+            aria-label={`Search for videos with subject ${subject.name}`}
+            to={{
+              pathname: '/videos',
+              search: `?subject=${subject.id}`,
+            }}
+          >
+            <span>{subject.name}</span>
+          </Link>
         );
       })}
     </div>

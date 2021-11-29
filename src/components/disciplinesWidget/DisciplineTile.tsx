@@ -18,15 +18,19 @@ const DisciplineTile = ({
   selectedDiscipline,
   onClick,
 }: Props) => {
+  const isSelected = selectedDiscipline?.id === discipline.id;
+
   return (
     <button
+      aria-label={`Discipline ${discipline.name}`}
       key={discipline.id}
       type="button"
       onClick={() => onClick(discipline, gridPositionTop)}
+      aria-expanded={isSelected}
       className={c(s.discipline, {
         [s.gridPositionTop]: gridPositionTop,
         [s.gridPositionBottom]: !gridPositionTop,
-        [s.selectedItem]: selectedDiscipline?.id === discipline.id,
+        [s.selectedItem]: isSelected,
       })}
     >
       <span className={s.illustration}>
