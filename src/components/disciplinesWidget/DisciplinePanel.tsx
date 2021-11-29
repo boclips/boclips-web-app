@@ -22,6 +22,7 @@ const SubjectsPanel = ({ subjects, positionTop }: Props) => {
           <div key={subject.name} className={s.linkWrapper}>
             <Link
               tabIndex={0}
+              className="hover:underline"
               aria-label={`Search for videos with subject ${subject.name}`}
               to={{
                 pathname: '/videos',
