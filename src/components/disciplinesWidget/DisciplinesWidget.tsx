@@ -54,23 +54,23 @@ const DisciplineWidget = (): ReactElement => {
         {isLoading ? (
           <SkeletonTiles />
         ) : (
-          disciplines?.map((discipline, i) => {
-            if (discipline.name === 'World Languages') return null;
+          disciplines
+            ?.filter((discipline) => discipline.name !== 'World Languages')
+            ?.map((discipline, i) => {
+              const gridPositionTop =
+                Math.floor(disciplines.length / 2) > i && !mobileView;
 
-            const gridPositionTop =
-              Math.floor(disciplines.length / 2) > i && !mobileView;
-
-            return (
-              <DisciplineTile
-                key={discipline.id}
-                discipline={discipline}
-                selectedDiscipline={selectedDiscipline}
-                onClick={onClick}
-                gridPositionTop={gridPositionTop}
-                isMobileView={mobileView}
-              />
-            );
-          })
+              return (
+                <DisciplineTile
+                  key={discipline.id}
+                  discipline={discipline}
+                  selectedDiscipline={selectedDiscipline}
+                  onClick={onClick}
+                  gridPositionTop={gridPositionTop}
+                  isMobileView={mobileView}
+                />
+              );
+            })
         )}
       </div>
 
