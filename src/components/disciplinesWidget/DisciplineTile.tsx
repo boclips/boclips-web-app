@@ -22,6 +22,16 @@ const DisciplineTile = ({
   isMobileView,
 }: Props) => {
   const isSelected = selectedDiscipline?.id === discipline.id;
+  const subjectsPanelRef = React.useRef<null | HTMLDivElement>();
+
+  React.useLayoutEffect(() => {
+    if (isSelected && subjectsPanelRef.current) {
+      subjectsPanelRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+      });
+    }
+  }, [isSelected]);
 
   return (
     <>
@@ -50,6 +60,7 @@ const DisciplineTile = ({
       </button>
       {isSelected && !isMobileView && (
         <SubjectsPanel
+          ref={subjectsPanelRef}
           subjects={selectedDiscipline?.subjects}
           positionTop={gridPositionTop}
         />
