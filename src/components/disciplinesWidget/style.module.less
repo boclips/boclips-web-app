@@ -247,13 +247,9 @@
       }
     }
 
-    .disciplinePanel {
-      @apply col-span-full row-start-2 row-end-2 rounded;
-      min-height: 176px;
+    .subjectsPanel {
+      @apply col-span-full row-start-2 row-end-2 rounded grid grid-cols-4 gap-8;
       border: 1px solid @blue-400;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
       padding: 1.5rem;
       margin: 0.75rem 0;
       background: @white;
@@ -264,9 +260,6 @@
 
       .linkWrapper {
         overflow: hidden;
-        width: 25%;
-        max-height: 56px;
-        padding-right: 4rem;
       }
     }
 

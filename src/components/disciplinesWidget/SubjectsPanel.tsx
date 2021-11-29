@@ -14,7 +14,7 @@ const SubjectsPanel = React.forwardRef(
     return (
       <div
         ref={ref}
-        className={c(s.disciplinePanel, {
+        className={c(s.subjectsPanel, {
           [s.placeBottom]: !positionTop,
         })}
         id="discipline-panel"
