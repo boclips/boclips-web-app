@@ -1,18 +1,19 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import DisciplineOverlayMenu from 'src/components/disciplinesWidget/DisciplineOverlayMenu';
-import DisciplinePanel from 'src/components/disciplinesWidget/DisciplinePanel';
 import DisciplineTile from 'src/components/disciplinesWidget/DisciplineTile';
 import { useGetDisciplinesQuery } from 'src/hooks/api/disciplinesQuery';
 import c from 'classnames';
+import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
 import s from './style.module.less';
 
 const DisciplineWidget = (): ReactElement => {
   const { data: disciplines, isLoading } = useGetDisciplinesQuery();
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedDiscipline, setSelectedDiscipline] = useState(null);
-  const [subjectsPositionTop, setSubjectsPositionTop] = useState(null);
+  const [selectedDiscipline, setSelectedDiscipline] = useState<Discipline>(
+    null,
+  );
   const breakpoints = useMediaBreakPoint();
   const mobileView =
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
@@ -25,7 +26,7 @@ const DisciplineWidget = (): ReactElement => {
     }
   }, [modalOpen, mobileView]);
 
-  const onClick = (discipline, gridPosition = null) => {
+  const onClick = (discipline: Discipline) => {
     if (mobileView) {
       setModalOpen(!modalOpen);
       setSelectedDiscipline(discipline);
@@ -34,10 +35,8 @@ const DisciplineWidget = (): ReactElement => {
     if (!modalOpen) {
       setModalOpen(!modalOpen);
       setSelectedDiscipline(discipline);
-      setSubjectsPositionTop(gridPosition);
     } else {
       setSelectedDiscipline(discipline);
-      setSubjectsPositionTop(gridPosition);
 
       if (discipline.id === selectedDiscipline.id) {
         setModalOpen(!modalOpen);
@@ -68,16 +67,10 @@ const DisciplineWidget = (): ReactElement => {
                 selectedDiscipline={selectedDiscipline}
                 onClick={onClick}
                 gridPositionTop={gridPositionTop}
+                isMobileView={mobileView}
               />
             );
           })
-        )}
-
-        {modalOpen && !mobileView && (
-          <DisciplinePanel
-            subjects={selectedDiscipline?.subjects}
-            positionTop={subjectsPositionTop}
-          />
         )}
       </div>
 

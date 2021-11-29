@@ -6,7 +6,7 @@ import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/mode
 import s from './style.module.less';
 
 interface Props {
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onClick: (discipline: Discipline) => void;
   selectedDiscipline: Discipline;
 }
 
@@ -19,7 +19,7 @@ const DisciplineOverlayMenu = ({ onClick, selectedDiscipline }: Props) => {
           aria-label="Go back to homepage"
           data-qa="overlay-header-back-button"
           className={s.backArrow}
-          onClick={onClick}
+          onClick={() => onClick(selectedDiscipline)}
         >
           <ArrowRight />
         </button>
