@@ -31,7 +31,7 @@ const SubjectsPanel = React.forwardRef(
                   search: `?subject=${subject.id}`,
                 }}
               >
-                <span>{subject.name}</span>
+                <span className="text-md">{subject.name}</span>
               </Link>
             </div>
           );
