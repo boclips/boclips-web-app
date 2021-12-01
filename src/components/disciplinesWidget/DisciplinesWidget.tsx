@@ -55,6 +55,7 @@ const DisciplineWidget = (): ReactElement => {
           <SkeletonTiles />
         ) : (
           disciplines
+            ?.sort((a, b) => a.name.localeCompare(b.name))
             ?.filter((discipline) => discipline.name !== 'World Languages')
             ?.map((discipline, i) => {
               const gridPositionTop =

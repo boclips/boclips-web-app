@@ -195,8 +195,8 @@ export const disciplines = [
     ],
   },
   {
-    id: '7',
-    name: 'Social Sciences',
+    id: '8',
+    name: 'Technology',
     code: 'discipline-code',
     subjects: [
       {
@@ -226,8 +226,8 @@ export const disciplines = [
     ],
   },
   {
-    id: '8',
-    name: 'Technology',
+    id: '7',
+    name: 'Social Sciences',
     code: 'discipline-code',
     subjects: [
       {
@@ -299,7 +299,7 @@ describe('Mobile & Desktop - DisciplineWidget', () => {
       fakeClient.disciplines.insertDiscipline(discipline);
     });
 
-    render(
+    const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
         <QueryClientProvider client={client}>
           <MemoryRouter initialEntries={['/homepage-with-categories']}>
@@ -307,6 +307,23 @@ describe('Mobile & Desktop - DisciplineWidget', () => {
           </MemoryRouter>
         </QueryClientProvider>
       </BoclipsClientProvider>,
+    );
+
+    const buttons = await wrapper.findAllByRole('button');
+    expect(buttons.length).toBe(8);
+
+    const orderedButtonLabels = [
+      'Business',
+      'Health and Medicine',
+      'Humanities',
+      'Life Sciences',
+      'Mathematics',
+      'Physical Sciences',
+      'Social Sciences',
+      'Technology',
+    ];
+    orderedButtonLabels.forEach((label, index) =>
+      expect(buttons[index].textContent).toBe(label),
     );
 
     expect(await screen.findByText(disciplines[0].name)).toBeInTheDocument();
