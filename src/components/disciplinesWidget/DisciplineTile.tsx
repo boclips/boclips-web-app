@@ -25,13 +25,13 @@ const DisciplineTile = ({
   const subjectsPanelRef = React.useRef<null | HTMLDivElement>();
 
   React.useLayoutEffect(() => {
-    if (isSelected && subjectsPanelRef.current) {
+    if (isSelected && subjectsPanelRef.current && isMobileView) {
       subjectsPanelRef.current.scrollIntoView({
         behavior: 'smooth',
         block: 'end',
       });
     }
-  }, [isSelected]);
+  }, [isMobileView, isSelected]);
 
   return (
     <>

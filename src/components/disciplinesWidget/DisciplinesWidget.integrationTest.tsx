@@ -22,6 +22,10 @@ export const disciplines = [
         name: 'Ecology and Environmental Studies',
       },
       {
+        id: '6',
+        name: 'Zoology and Animal Sciences',
+      },
+      {
         id: 'id-3',
         name: 'General Biology',
       },
@@ -32,10 +36,6 @@ export const disciplines = [
       {
         id: '5',
         name: 'Microbiology',
-      },
-      {
-        id: '6',
-        name: 'Zoology and Animal Sciences',
       },
     ],
   },
@@ -430,6 +430,13 @@ describe('Mobile - DisciplineWidget ', () => {
 });
 
 describe('Desktop - DisciplineWidget', () => {
+  beforeEach(() => {
+    Object.defineProperty(window, 'innerWidth', {
+      writable: true,
+      configurable: true,
+      value: 1700,
+    });
+  });
   it('displays subject panel', async () => {
     const fakeClient = new FakeBoclipsClient();
     const client = new QueryClient();
@@ -451,8 +458,11 @@ describe('Desktop - DisciplineWidget', () => {
 
     fireEvent.click(await screen.findByText('Business'));
 
-    disciplines[0]?.subjects?.map((it) =>
-      expect(screen.getByText(it.name)).toBeInTheDocument(),
-    );
+    const renderedSubjects = await screen.findAllByRole('link');
+    disciplines[0]?.subjects
+      ?.sort((a, b) => a.name.localeCompare(b.name))
+      .map((it, index) =>
+        expect(renderedSubjects[index].textContent).toBe(it.name),
+      );
   });
 });
