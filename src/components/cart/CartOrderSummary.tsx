@@ -62,7 +62,7 @@ export const CartOrderSummary = ({ videos }: Props) => {
 
   return (
     <>
-      <div className="col-start-19 col-end-25">
+      <div className="col-start-19 col-end-26">
         <div className="border-blue-500 border-2 flex flex-col rounded p-5">
           <div className="border-b border-blue-500 mb-4 font-normal text-base">
             <CartSummaryItem

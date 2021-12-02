@@ -33,13 +33,8 @@ module.exports = {
         'refresh-page-view': '75px minmax(0, auto) 63px',
       },
       gridTemplateColumns: {
-        new: 'repeat(24, minmax(0, 38px))',
         container:
           'minmax(2rem, 1fr) repeat(24, minmax(0, 38px)) minmax(2rem, 1fr)',
-        responsive:
-          'minmax(1rem, 1fr) repeat(24, minmax(0, 38px)) minmax(1rem, 1fr)',
-        content: 'repeat(24, minmax(0, 38px))',
-        24: 'repeat(24, 1fr)',
       },
       gridRowStart: {
         last: '-1',

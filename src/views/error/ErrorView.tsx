@@ -13,7 +13,7 @@ const ErrorView = ({ error }: Props) => {
 
   return (
     <Layout rowsSetup="grid-rows-home">
-      <Navbar showSearchBar />
+      <Navbar />
       <RefreshPageError />
       <Footer />
     </Layout>

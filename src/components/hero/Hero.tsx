@@ -21,15 +21,15 @@ export const Hero = ({
   return (
     <>
       <div
-        className={`${s.heroWrapper} col-start-1 col-end-25 row-start-${row} row-end-${row} bg-primary-light rounded-lg`}
+        className={`${s.heroWrapper} col-start-2 col-end-26 row-start-${row} row-end-${row} bg-primary-light rounded-lg`}
       />
       <div
-        className={`${s.svgWrapper} col-start-3 col-end-12 row-start-${row} row-end-${row} flex justify-center items-center`}
+        className={`${s.svgWrapper} col-start-4 col-end-12 row-start-${row} row-end-${row} flex justify-center items-center`}
       >
         {icon}
       </div>
       <div
-        className={`${s.heroCopyWrapper} col-start-12 col-end-23 lg:col-start-12 lg:col-end-21 row-start-${row} row-end-${row} text-blue-800 flex flex-col justify-center`}
+        className={`${s.heroCopyWrapper} col-start-13 col-end-24 lg:col-start-13 lg:col-end-22 row-start-${row} row-end-${row} text-blue-800 flex flex-col justify-center`}
       >
         <h2 className="blue-800 font-medium text-4xl">{title}</h2>
         {description && (

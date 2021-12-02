@@ -42,7 +42,7 @@ export const FilterPanel = ({
   if (!resultsFound && !areFiltersApplied) return null;
 
   return (
-    <div className="col-start-1 col-end-6">
+    <div className="col-start-2 col-end-7">
       <div
         className={c('text-primary text-lg font-medium', {
           'pb-4': areFiltersApplied,

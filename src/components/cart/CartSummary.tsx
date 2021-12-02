@@ -7,7 +7,7 @@ interface Props {
 
 export const CartSummary = ({ cart }: Props) => {
   return (
-    <div className="col-start-1 col-end-25 grid-row-start-2 grid-row-end-2 flex flex-row">
+    <div className="col-start-2 col-end-26 grid-row-start-2 grid-row-end-2 flex flex-row">
       <div className="font-bold text-2xl">Shopping cart</div>
       {!!cart.items.length && (
         <span className="text-2xl pl-3">

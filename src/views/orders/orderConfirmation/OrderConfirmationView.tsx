@@ -28,7 +28,7 @@ const OrderConfirmationView = ({ state }: OrderConfirmedInterface) => {
 
   return (
     <Layout rowsSetup="grid-rows-home">
-      <Navbar showSearchBar />
+      <Navbar />
       <Hero
         title="Your order is confirmed"
         icon={<OrderConfirmedSVG />}

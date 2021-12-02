@@ -4,7 +4,7 @@ import Arrow from '../../resources/icons/grey-arrow.svg';
 
 export const OrderHeader = ({ id }: { id?: string }) => {
   return (
-    <div className="grid-row-start-2 grid-row-end-2 col-start-1 col-end-25">
+    <div className="grid-row-start-2 grid-row-end-2 col-start-2 col-end-26">
       <div className="flex flex-row items-center">
         <Link
           to="/orders"

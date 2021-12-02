@@ -7,7 +7,7 @@ import { PageNotFoundError } from 'src/components/common/errors/pageNotFound/Pag
 const NotFound = () => {
   return (
     <Layout rowsSetup="grid-rows-home">
-      <Navbar showSearchBar />
+      <Navbar />
       <PageNotFoundError />
       <Footer />
     </Layout>

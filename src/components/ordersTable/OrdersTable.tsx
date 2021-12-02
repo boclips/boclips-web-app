@@ -17,7 +17,7 @@ export const OrdersTable = ({ orders, paginationPage }: Props) => {
   };
 
   return (
-    <div className="col-start-1 col-end-25 row-start-3 row-end-4 flex items-center">
+    <div className="col-start-2 col-end-26 row-start-3 row-end-4 flex items-center">
       <List
         className="w-full"
         itemLayout="vertical"

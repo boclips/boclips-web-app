@@ -30,8 +30,8 @@ const OrdersView = () => {
 
   return (
     <Layout rowsSetup="grid-rows-orders-view">
-      <Navbar showSearchBar />
-      <div className="col-start-1 col-end-25 row-start-2 row-end-2 flex items-center">
+      <Navbar />
+      <div className="col-start-2 col-end-26 row-start-2 row-end-2 flex items-center">
         <div className="font-bold text-2xl text-grey-800">Your Orders</div>
       </div>
       {hasOrders ? (
