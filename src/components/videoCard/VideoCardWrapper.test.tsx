@@ -47,8 +47,8 @@ describe('Video card', () => {
 
     expect(await wrapper.findByText('hello i am a title')).toBeVisible();
     expect(wrapper.getByText('wow what a video hansen')).toBeVisible();
-    expect(wrapper.getByText('Released on Mar 20, 2019')).toBeVisible();
-    expect(wrapper.getByText('by BFI')).toBeVisible();
+    expect(wrapper.getByText('20 Mar 2019')).toBeVisible();
+    expect(wrapper.getByText('BFI')).toBeVisible();
     expect(wrapper.getByText('geography')).toBeVisible();
     expect(wrapper.queryByText('Ages 7-9')).not.toBeInTheDocument();
     expect(wrapper.getByText('$100')).toBeVisible();

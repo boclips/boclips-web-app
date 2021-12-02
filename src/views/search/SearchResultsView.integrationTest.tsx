@@ -55,8 +55,8 @@ describe('SearchResults', () => {
 
     expect(await wrapper.findByText('hello i am a title')).toBeVisible();
     expect(await wrapper.findByText('wow what a video hansen')).toBeVisible();
-    expect(await wrapper.findByText('Released on Mar 20, 2019')).toBeVisible();
-    expect(await wrapper.findByText('by BFI')).toBeVisible();
+    expect(await wrapper.findByText('20 Mar 2019')).toBeVisible();
+    expect(await wrapper.findByText('BFI')).toBeVisible();
     expect(await wrapper.findByText('geography')).toBeVisible();
     expect(wrapper.queryByText('Ages 7-9')).not.toBeInTheDocument();
     expect(wrapper.queryByText('Selected filters')).not.toBeInTheDocument();

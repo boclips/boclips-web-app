@@ -1,7 +1,7 @@
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { convertVideoFromApi } from 'src/services/convertVideoFromApi';
-import { VideoCardV2 } from '@boclips-ui/video-card-v2';
+import { VideoCard } from '@boclips-ui/video-card';
 import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import { Link } from 'react-router-dom';
@@ -33,7 +33,7 @@ export const VideoCardWrapper = ({ video }: Props) => {
 
   return (
     <div className={s.videoCard}>
-      <VideoCardV2
+      <VideoCard
         key={video.id}
         video={convertVideoFromApi(video)}
         videoPlayer={<VideoPlayer video={video} showDurationBadge />}
