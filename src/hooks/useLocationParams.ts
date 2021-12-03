@@ -21,7 +21,7 @@ export const useSearchQueryLocationParams = (): [
 ] => {
   const locationParams = useLocationParams();
   const searchQueryLocationParams = {
-    query: locationParams.get('q'),
+    query: locationParams.get('q') || '',
     page: Number(locationParams.get('page')) || 1,
     filters: {
       video_type: locationParams.getAll('video_type'),

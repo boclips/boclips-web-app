@@ -582,7 +582,7 @@ describe('SearchResultsFiltering', () => {
         }),
       );
 
-      const wrapper = renderSearchResultsView(['/videos?q=video&prices=10000']);
+      const wrapper = renderSearchResultsView(['/videos?&prices=10000']);
 
       await waitFor(async () => {
         expect(await wrapper.findByText('cheap video')).toBeInTheDocument();

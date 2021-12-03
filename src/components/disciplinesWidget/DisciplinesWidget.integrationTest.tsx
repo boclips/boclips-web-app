@@ -21,7 +21,7 @@ describe('Mobile & Desktop - DisciplineWidget', () => {
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
         <QueryClientProvider client={client}>
-          <MemoryRouter initialEntries={['/homepage-with-categories']}>
+          <MemoryRouter>
             <DisciplineWidget />
           </MemoryRouter>
         </QueryClientProvider>
@@ -78,7 +78,7 @@ describe('Mobile - DisciplineWidget ', () => {
     render(
       <BoclipsClientProvider client={fakeClient}>
         <QueryClientProvider client={client}>
-          <MemoryRouter initialEntries={['/homepage-with-categories']}>
+          <MemoryRouter>
             <DisciplineWidget />
           </MemoryRouter>
         </QueryClientProvider>
@@ -107,7 +107,7 @@ describe('Mobile - DisciplineWidget ', () => {
     render(
       <BoclipsClientProvider client={fakeClient}>
         <QueryClientProvider client={client}>
-          <MemoryRouter initialEntries={['/homepage-with-categories']}>
+          <MemoryRouter>
             <DisciplineWidget />
           </MemoryRouter>
         </QueryClientProvider>
@@ -132,7 +132,7 @@ describe('Mobile - DisciplineWidget ', () => {
     render(
       <BoclipsClientProvider client={fakeClient}>
         <QueryClientProvider client={client}>
-          <MemoryRouter initialEntries={['/homepage-with-categories']}>
+          <MemoryRouter>
             <DisciplineWidget />
           </MemoryRouter>
         </QueryClientProvider>
@@ -168,7 +168,7 @@ describe('Desktop - DisciplineWidget', () => {
     render(
       <BoclipsClientProvider client={fakeClient}>
         <QueryClientProvider client={client}>
-          <MemoryRouter initialEntries={['/homepage-with-categories']}>
+          <MemoryRouter>
             <DisciplineWidget />
           </MemoryRouter>
         </QueryClientProvider>
