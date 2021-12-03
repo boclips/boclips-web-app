@@ -7,7 +7,7 @@ import SearchHero from '../../components/searchHero/SearchHero';
 const HomeView = () => {
   return (
     <Layout rowsSetup="grid-rows-home">
-      <Navbar showSearchBar={false} />
+      <Navbar />
       <SearchHero />
       <Footer />
     </Layout>

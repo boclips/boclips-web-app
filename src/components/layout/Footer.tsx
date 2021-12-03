@@ -7,7 +7,7 @@ interface Props {
 const Footer = ({ columnPosition }: Props) => {
   return (
     <footer
-      className={`col-start-1 col-end-25 row-end-last ${columnPosition}`}
+      className={`col-start-2 col-end-26 row-end-last ${columnPosition}`}
       aria-label="Boclips footer"
     >
       <div className="border-t text-xxs text-footer pt-4 font-thin ">

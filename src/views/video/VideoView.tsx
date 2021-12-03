@@ -25,7 +25,7 @@ const VideoView = () => {
   return (
     <Layout dataQa="video-page" rowsSetup="grid-rows-video-view">
       {video?.title && <Helmet title={video.title} />}
-      <Navbar showSearchBar />
+      <Navbar />
       <ErrorBoundary
         fallback={
           isVideoNotFound ? <PageNotFoundError /> : <RefreshPageError />

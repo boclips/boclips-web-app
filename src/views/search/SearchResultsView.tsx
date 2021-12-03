@@ -135,7 +135,7 @@ const SearchResultsView = () => {
 
   return (
     <Layout rowsSetup="grid-rows-search-view">
-      <Navbar showSearchBar />
+      <Navbar />
       <ErrorBoundary fallback={<RefreshPageError row="2" />}>
         <FilterPanel
           facets={data?.facets}

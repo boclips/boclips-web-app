@@ -30,7 +30,7 @@ const OrderTable = () => {
   return (
     <Layout rowsSetup="grid-rows-order-view ">
       <OrderHelmet orderId={orderId} />
-      <Navbar showSearchBar />
+      <Navbar />
       <OrderHeader id={order?.id} />
       <ErrorBoundary fallback={<RefreshPageError row="3" />}>
         <OrderPage order={order} />

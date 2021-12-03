@@ -13,7 +13,7 @@ interface Props {
 
 export const OrderSummary = ({ order }: Props) => {
   return (
-    <div className="grid-row-start-3 grid-row-end-3 col-start-1 col-end-25">
+    <div className="grid-row-start-3 grid-row-end-3 col-start-2 col-end-26">
       <div className="flex justify-between mb-3">
         <div className="text-2xl font-bold text-gray-800 mb-4 ">{`Order ${order?.id}`}</div>
         <div className="text-base text-right w-64">

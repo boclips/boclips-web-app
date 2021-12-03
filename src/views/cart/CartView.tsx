@@ -24,7 +24,7 @@ const CartView = () => {
 
   return (
     <Layout rowsSetup="grid-rows-cart-view">
-      <Navbar showSearchBar />
+      <Navbar />
       <CartSummary cart={cart} />
       {itemsInCart && videoIds ? (
         <Cart cart={cart} cartItemVideos={cartItemVideos} />

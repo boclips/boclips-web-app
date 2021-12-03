@@ -1,46 +1,5 @@
 @import 'node_modules/@boclips-ui/styles/src/publishersColours';
 
-.emptyCartView {
-  @apply grid grid-cols-24 row-span-3 col-start-1 col-end-25 bg-primary-light h-auto rounded-lg;
-  a {
-    color: @blue-700 !important;
-    text-decoration: underline !important;
-
-    &:hover {
-      text-decoration: none !important;
-    }
-  }
-  height: 432px;
-  opacity: 0;
-  animation-duration: 0.7s;
-  &.fadeIn {
-    animation-name: fadeIn;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease-in-out;
-  }
-}
-
-.orderConfirmedView {
-  @apply grid grid-cols-24 row-start-2 row-end-4 col-start-1 col-end-25 bg-primary-light h-auto rounded-lg;
-  a {
-    color: #002588 !important;
-    text-decoration: none !important;
-
-    &:hover {
-      text-decoration: none !important;
-    }
-  }
-  height: 490px;
-}
-
-.fadeOutWrapper {
-  animation-duration: 0.5s;
-  &.fadeOut {
-    animation-name: fadeOut;
-    animation-fill-mode: forwards;
-  }
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;
