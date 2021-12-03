@@ -16,6 +16,7 @@ import { Subject } from 'boclips-api-client/dist/sub-clients/subjects/model/Subj
 import { UserFeatureKey } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 
 export interface Bo {
+  interact(callback: (apiClient: FakeBoclipsClient) => void): void;
   create: {
     fixtureSet: {
       eelsBiologyGeography: () => void;
@@ -101,7 +102,9 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
 
   return {
     inspect: () => apiClient,
-
+    interact: (callback: (apiClient: FakeBoclipsClient) => void) => {
+      callback(apiClient);
+    },
     set: {
       facets: boSetFacets,
       features: boSetFeatures,

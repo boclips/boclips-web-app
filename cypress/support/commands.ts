@@ -25,11 +25,8 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 import '@percy/cypress';
 
-Cypress.Commands.add('bo', (verb, noun, value) => {
+Cypress.Commands.add('bo', (callback) => {
   cy.window().then(({ bo }) => {
-    if (typeof bo[verb][noun][value] === 'function') {
-      return bo[verb][noun][value]();
-    }
-    return bo[verb][noun](value);
+    callback(bo);
   });
 });

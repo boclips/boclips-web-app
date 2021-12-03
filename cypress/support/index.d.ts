@@ -14,10 +14,6 @@ declare namespace Cypress {
   type Bo = import('../../src/testSupport/bo').Bo;
 
   interface Chainable {
-    bo<T extends keyof Bo, U extends keyof Bo[T], V extends keyof Bo[T][U]>(
-      verb: T,
-      noun: U,
-      value?: V | any,
-    );
+    bo: (callback: (bo: Bo) => void) => void;
   }
 }

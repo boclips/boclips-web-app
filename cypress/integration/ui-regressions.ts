@@ -1,3 +1,5 @@
+import { disciplines } from '../../src/components/disciplinesWidget/disciplinesFixture';
+
 context('UI Regression', () => {
   const endpoint = 'http://localhost:9000';
 
@@ -6,7 +8,26 @@ context('UI Regression', () => {
   it('has a homepage', () => {
     cy.visit(`${endpoint}/`);
 
+    cy.bo((bo) =>
+      bo.interact((apiClient) => {
+        disciplines.forEach((discipline) => {
+          apiClient.disciplines.insertDiscipline(discipline);
+          discipline.subjects.forEach((subject) =>
+            apiClient.subjects.insertSubject(subject),
+          );
+        });
+      }),
+    );
+
+    cy.get('img').click();
+
     cy.percySnapshot('Home Page', {
+      widths: snapshotViewWidths,
+    });
+
+    cy.get('button').contains('Business').click();
+
+    cy.percySnapshot('Home Page with subjects', {
       widths: snapshotViewWidths,
     });
   });
@@ -23,7 +44,7 @@ context('UI Regression', () => {
   it('applies filters', () => {
     cy.visit(`${endpoint}/`);
 
-    cy.bo('create', 'fixtureSet', 'eelsBiologyGeography');
+    cy.bo((bo) => bo.create.fixtureSet.eelsBiologyGeography());
 
     cy.get('[data-qa="search-input"]').type('eel');
     cy.get('button[aria-label="search"]').click();
@@ -49,7 +70,7 @@ context('UI Regression', () => {
   it('renders the cart and order flow', () => {
     cy.visit(`${endpoint}/`);
 
-    cy.bo('create', 'cartWithVideos');
+    cy.bo((bo) => bo.create.cartWithVideos());
 
     cy.get('[data-qa="cart-button"]').click();
 

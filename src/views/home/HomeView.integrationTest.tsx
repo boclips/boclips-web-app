@@ -6,7 +6,7 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { Helmet } from 'react-helmet';
 // eslint-disable-next-line import/extensions
-import { disciplines } from 'src/components/disciplinesWidget/DisciplinesWidget.integrationTest';
+import { disciplines } from 'src/components/disciplinesWidget/disciplinesFixture';
 import { createBrowserHistory } from 'history';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
