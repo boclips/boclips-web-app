@@ -33,7 +33,7 @@ describe('App', () => {
     );
 
     expect(
-      await wrapper.findByText('What videos do you need today?'),
+      await wrapper.findByText('Let’s find the videos you need'),
     ).toBeVisible();
     expect(wrapper.queryByText('Page not found!')).not.toBeInTheDocument();
   });

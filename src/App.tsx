@@ -54,10 +54,6 @@ const AccessDeniedView = lazy(
   () => import('src/views/accessDenied/AccessDenied'),
 );
 
-const HomepageWithCategories = lazy(
-  () => import('src/views/homepageWithCategories/ResponsiveHomeView'),
-);
-
 interface Props {
   apiClient: BoclipsClient;
   boclipsSecurity: BoclipsSecurity;
@@ -157,15 +153,6 @@ const App = ({
                         <>
                           <Helmet title="Order confirmed!" />
                           <OrderConfirmationView state={location?.state} />
-                        </>
-                      )}
-                    />
-                    <Route
-                      path="/homepage-with-categories"
-                      render={() => (
-                        <>
-                          <Helmet title="Boclips" />
-                          <HomepageWithCategories />
                         </>
                       )}
                     />

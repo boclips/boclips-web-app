@@ -19,7 +19,7 @@ describe('OrderConfirmationView', () => {
 
     expect(await wrapper.findByText('Loading')).toBeVisible();
     expect(
-      await wrapper.findByText('What videos do you need today?'),
+      await wrapper.findByText('Let’s find the videos you need'),
     ).toBeVisible();
   });
 

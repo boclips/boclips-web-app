@@ -1,16 +1,19 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Router } from 'react-router-dom';
 import App from 'src/App';
-import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { Helmet } from 'react-helmet';
+// eslint-disable-next-line import/extensions
+import { disciplines } from 'src/components/disciplinesWidget/DisciplinesWidget.integrationTest';
+import { createBrowserHistory } from 'history';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 describe('HomeView', () => {
   it('loads the home view text', async () => {
     const wrapper = render(
-      <MemoryRouter initialEntries={['/']}>
+      <MemoryRouter>
         <App
           apiClient={new FakeBoclipsClient()}
           boclipsSecurity={stubBoclipsSecurity}
@@ -19,13 +22,13 @@ describe('HomeView', () => {
     );
 
     expect(
-      await wrapper.findByText('What videos do you need today?'),
+      await wrapper.findByText('Let’s find the videos you need'),
     ).toBeInTheDocument();
   });
 
   it('displays Boclips as window title', async () => {
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/']}>
+    render(
+      <MemoryRouter>
         <App
           apiClient={new FakeBoclipsClient()}
           boclipsSecurity={stubBoclipsSecurity}
@@ -33,58 +36,51 @@ describe('HomeView', () => {
       </MemoryRouter>,
     );
 
-    await wrapper.findByTestId('search-input');
     const helmet = Helmet.peek();
 
     expect(helmet.title).toEqual('Boclips');
   });
 
-  describe('Navigating to search', () => {
-    let fakeClient: FakeBoclipsClient = null;
+  it('redirects to search (video) page with selected subject', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const client = new QueryClient();
 
-    beforeEach(async () => {
-      fakeClient = new FakeBoclipsClient();
-      const fakeVideosClient = fakeClient.videos;
-      fakeVideosClient.insertVideo(
-        VideoFactory.sample({
-          title: 'elephants',
-          description: 'I am an elephant',
-        }),
-      );
+    // eslint-disable-next-line array-callback-return
+    disciplines.map((discipline) => {
+      fakeClient.disciplines.insertDiscipline(discipline);
     });
 
-    it('goes to the search results page on enter', async () => {
-      const wrapper = render(
-        <MemoryRouter initialEntries={['/']}>
+    const expectedPathname = '/videos';
+    const expectedSearch = `?subject=${disciplines[0].subjects[0].id}`;
+
+    const history = createBrowserHistory();
+
+    render(
+      <QueryClientProvider client={client}>
+        <Router history={history}>
           <App apiClient={fakeClient} boclipsSecurity={stubBoclipsSecurity} />
-        </MemoryRouter>,
-      );
+        </Router>
+      </QueryClientProvider>,
+    );
 
-      const searchBar = wrapper.getByRole('combobox', {
-        name: /search/i,
-      }) as HTMLInputElement;
+    fireEvent.click(await screen.findByText('Business'));
 
-      fireEvent.change(searchBar, { target: { value: 'elephant' } });
-      fireEvent.keyDown(searchBar, { key: 'Enter', code: 'Enter' });
+    fireEvent.click(await screen.findByText(disciplines[0].subjects[0].name));
 
-      expect(await wrapper.findByText('I am an elephant'));
-    });
+    expect(history.location.pathname).toEqual(expectedPathname);
+    expect(history.location.search).toEqual(expectedSearch); // search = query parameters
+  });
 
-    it('goes to the search results page when clicking button', async () => {
-      const wrapper = render(
-        <MemoryRouter initialEntries={['/']}>
-          <App apiClient={fakeClient} boclipsSecurity={stubBoclipsSecurity} />
-        </MemoryRouter>,
-      );
+  it('Search is visible on homepage', async () => {
+    const wrapper = render(
+      <MemoryRouter>
+        <App
+          apiClient={new FakeBoclipsClient()}
+          boclipsSecurity={stubBoclipsSecurity}
+        />
+      </MemoryRouter>,
+    );
 
-      const searchBar = wrapper.getByRole('combobox', {
-        name: /search/i,
-      }) as HTMLInputElement;
-
-      fireEvent.change(searchBar, { target: { value: 'elephant' } });
-      fireEvent.click(wrapper.getByRole('button', { name: /search/i }));
-
-      expect(await wrapper.findByText('I am an elephant'));
-    });
+    expect(await wrapper.findByTestId('search-input')).toBeInTheDocument();
   });
 });

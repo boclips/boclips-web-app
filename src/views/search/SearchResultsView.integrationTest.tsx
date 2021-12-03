@@ -19,6 +19,14 @@ import { Helmet } from 'react-helmet';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 
 describe('SearchResults', () => {
+  beforeEach(() => {
+    Object.defineProperty(window, 'innerWidth', {
+      writable: true,
+      configurable: true,
+      value: 1700,
+    });
+  });
+
   it('renders a list of videos that match the search query', async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.users.insertCurrentUser(UserFactory.sample());

@@ -12,6 +12,14 @@ import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
 
 describe('account button', () => {
+  beforeEach(() => {
+    Object.defineProperty(window, 'innerWidth', {
+      writable: true,
+      configurable: true,
+      value: 1700,
+    });
+  });
+
   it('opens the tooltip when clicked and close the tooltip when clicked on the body', async () => {
     const fakeClient = new FakeBoclipsClient();
     const user = {
