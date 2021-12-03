@@ -26,7 +26,7 @@ context('UI Regression', () => {
     cy.bo('create', 'fixtureSet', 'eelsBiologyGeography');
 
     cy.get('[data-qa="search-input"]').type('eel');
-    cy.get('button').contains('Search').click();
+    cy.get('button[aria-label="search"]').click();
 
     cy.get('[data-qa="video-card-wrapper"]').should((videoCard) => {
       expect(videoCard.length).to.equal(2);
@@ -57,7 +57,7 @@ context('UI Regression', () => {
       widths: snapshotViewWidths,
     });
 
-    cy.get('button').contains('Place order').click();
+    cy.contains('Place order').click();
 
     cy.percySnapshot('Order confirmation modal', {
       widths: snapshotViewWidths,
