@@ -51,7 +51,7 @@ const DisciplineTile = ({
         <span className={s.illustration}>
           {getDisciplineIllustration(discipline.name)}
         </span>
-        <span className="flex items-center font-medium text-md w-full justify-center pt-4">
+        <span className="flex items-center font-medium text-md w-full justify-center lg:pt-4">
           {discipline.name}
         </span>
         <span className={s.arrow}>
