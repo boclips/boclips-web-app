@@ -9,14 +9,12 @@ interface Props {
   options: FilterOption[];
   filterName: string;
   handleChange: (filter: string, values: string[]) => void;
-  searchPlaceholder: string;
 }
 export const SearchableFilter = ({
   title,
   options = [],
   filterName,
   handleChange,
-  searchPlaceholder,
 }: Props) => {
   const [searchText, setSearchText] = useState<string>();
 
@@ -31,12 +29,7 @@ export const SearchableFilter = ({
       title={title}
       options={filteredOptions}
       handleChange={handleChange}
-      filtersSearch={
-        <FilterSearch
-          placeholderText={searchPlaceholder}
-          onSearch={setSearchText}
-        />
-      }
+      filtersSearch={<FilterSearch onSearch={setSearchText} />}
       handleFilterToggle={() => setSearchText('')}
     />
   );

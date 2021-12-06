@@ -16,7 +16,6 @@ export const ChannelFilter = ({ options, handleChange }: Props) => {
       title="Channel"
       filterName="channel"
       handleChange={handleChange}
-      searchPlaceholder="Search for channel"
     />
   ) : (
     <></>

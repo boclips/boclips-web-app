@@ -214,7 +214,7 @@ describe('SearchResultsFiltering', () => {
       expect(await wrapper.findByText('Ted')).toBeInTheDocument();
 
       act(() => {
-        fireEvent.change(wrapper.getByPlaceholderText('Search for channel'), {
+        fireEvent.change(wrapper.getByPlaceholderText('Search...'), {
           target: { value: 'get' },
         });
       });

@@ -1,5 +1,5 @@
 import { renderWithLocation } from 'src/testSupport/renderWithLocation';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, RenderResult } from '@testing-library/react';
 import React from 'react';
 import { SearchableFilter } from 'src/components/filterPanel/filter/SearchableFilter';
 import { FilterOption } from 'src/types/FilterOption';
@@ -49,7 +49,6 @@ describe('searchableFilter', () => {
   it('renders the search input with default placeholder when enabled', () => {
     const panel = renderWithLocation(
       <SearchableFilter
-        searchPlaceholder="Search"
         options={channels}
         title="Video Types"
         filterName="test"
@@ -57,29 +56,12 @@ describe('searchableFilter', () => {
       />,
     );
 
-    expect(panel.getByPlaceholderText('Search')).toBeInTheDocument();
-  });
-
-  it('renders the search input with custom placeholder when passed in', () => {
-    const panel = renderWithLocation(
-      <SearchableFilter
-        searchPlaceholder="Search for channel"
-        options={channels}
-        title="Video Types"
-        filterName="test"
-        handleChange={() => {}}
-      />,
-    );
-
-    expect(
-      panel.getByPlaceholderText('Search for channel'),
-    ).toBeInTheDocument();
+    expect(getSearchInput(panel)).toBeInTheDocument();
   });
 
   it('filters and bolds options based on the search input', () => {
     const panel = renderWithLocation(
       <SearchableFilter
-        searchPlaceholder="Search for channel"
         options={channels}
         title="Video Types"
         filterName="test"
@@ -87,10 +69,9 @@ describe('searchableFilter', () => {
       />,
     );
 
-    const searchInput = panel.getByPlaceholderText('Search for channel');
     expect(panel.getByText('Show all (6)')).toBeInTheDocument();
 
-    fireEvent.change(searchInput, { target: { value: 'TED' } });
+    fireEvent.change(getSearchInput(panel), { target: { value: 'TED' } });
 
     expect(panel.queryByText('Show all (6)')).toBeNull();
     expect(panel.getByText('TED')).toHaveClass('font-medium');
@@ -101,7 +82,6 @@ describe('searchableFilter', () => {
   it('resets the filter search when toggling the filter', () => {
     const panel = renderWithLocation(
       <SearchableFilter
-        searchPlaceholder="Search for channel"
         options={channels}
         title="Channels"
         filterName="test"
@@ -109,14 +89,18 @@ describe('searchableFilter', () => {
       />,
     );
 
-    const searchInput = panel.getByPlaceholderText('Search for channel');
-    fireEvent.change(searchInput, { target: { value: 'Not valid channel' } });
+    fireEvent.change(getSearchInput(panel), {
+      target: { value: 'Not valid channel' },
+    });
 
     // Close and open the panel
     fireEvent.click(panel.getByText('Channels'));
     fireEvent.click(panel.getByText('Channels'));
 
-    expect(panel.getByPlaceholderText('Search for channel')).toBeVisible();
+    expect(getSearchInput(panel)).toBeVisible();
     expect(panel.getByText('TED-ED')).toBeInTheDocument();
   });
+
+  const getSearchInput = (view: RenderResult) =>
+    view.getByPlaceholderText('Search...');
 });

@@ -8,7 +8,7 @@ interface Props {
   onSearch: (text) => void;
 }
 export const FilterSearch = ({
-  placeholderText = 'Search',
+  placeholderText = 'Search...',
   onSearch,
 }: Props) => {
   const [searchText, setSearchText] = useState<string>('');
