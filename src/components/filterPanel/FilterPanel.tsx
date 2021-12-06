@@ -34,10 +34,7 @@ export const FilterPanel = ({
   areFiltersApplied,
   dateFilters,
 }: Props) => {
-  const filterOptions = useFilterOptions(facets);
-  const isDurationFilterApplied = filterOptions.durations.find(
-    (it) => it.hits > 0,
-  );
+  const options = useFilterOptions(facets);
 
   if (!resultsFound && !areFiltersApplied) return null;
 
@@ -58,37 +55,24 @@ export const FilterPanel = ({
       )}
       {resultsFound && (
         <>
-          {filterOptions.videoTypes.length > 0 && (
-            <VideoTypeFilter
-              options={filterOptions.videoTypes}
-              handleChange={handleChange}
-            />
-          )}
-          {isDurationFilterApplied && (
-            <DurationFilter
-              options={filterOptions.durations}
-              handleChange={handleChange}
-            />
-          )}
+          <SubjectFilter
+            options={options.subjects}
+            handleChange={handleChange}
+          />
+          <ChannelFilter
+            options={options.channels}
+            handleChange={handleChange}
+          />
+          <DurationFilter
+            options={options.durations}
+            handleChange={handleChange}
+          />
           <DateFilter releaseDates={dateFilters} handleChange={handleChange} />
-          {filterOptions.channels.length > 0 && (
-            <ChannelFilter
-              options={filterOptions.channels}
-              handleChange={handleChange}
-            />
-          )}
-          {filterOptions.prices.length > 0 && (
-            <PriceFilter
-              options={filterOptions.prices}
-              handleChange={handleChange}
-            />
-          )}
-          {filterOptions.subjects.length > 0 && (
-            <SubjectFilter
-              options={filterOptions.subjects}
-              handleChange={handleChange}
-            />
-          )}
+          <VideoTypeFilter
+            options={options.videoTypes}
+            handleChange={handleChange}
+          />
+          <PriceFilter options={options.prices} handleChange={handleChange} />
         </>
       )}
     </div>

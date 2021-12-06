@@ -8,7 +8,9 @@ interface Props {
 }
 
 export const ChannelFilter = ({ options, handleChange }: Props) => {
-  return (
+  const hasOptions = options.length > 0;
+
+  return hasOptions ? (
     <SearchableFilter
       options={options}
       title="Channel"
@@ -16,5 +18,7 @@ export const ChannelFilter = ({ options, handleChange }: Props) => {
       handleChange={handleChange}
       searchPlaceholder="Search for channel"
     />
+  ) : (
+    <></>
   );
 };

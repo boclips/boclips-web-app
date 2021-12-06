@@ -9,12 +9,16 @@ interface Props {
 }
 
 export const VideoTypeFilter = ({ options = [], handleChange }: Props) => {
-  return (
+  const hasOptions = options.length > 0;
+
+  return hasOptions ? (
     <CheckboxFilter
       options={convertFilterOptions(options, 'SORT_BY_NAME')}
       title="Video type"
       handleChange={handleChange}
       filterName="video_type"
     />
+  ) : (
+    <></>
   );
 };

@@ -9,12 +9,15 @@ interface Props {
 }
 
 export const SubjectFilter = ({ options, handleChange }: Props) => {
-  return (
+  const hasOptions = options.length > 0;
+  return hasOptions ? (
     <CheckboxFilter
       options={convertFilterOptions(options, 'SORT_BY_HITS_AND_NAME')}
       title="Subject"
       filterName="subject"
       handleChange={handleChange}
     />
+  ) : (
+    <></>
   );
 };

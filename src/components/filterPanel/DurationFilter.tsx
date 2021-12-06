@@ -9,12 +9,16 @@ interface Props {
 }
 
 export const DurationFilter = ({ options, handleChange }: Props) => {
-  return (
+  const isDurationFilterApplied = options.find((it) => it.hits > 0);
+
+  return isDurationFilterApplied ? (
     <CheckboxFilter
       options={convertFilterOptions(options, 'SORT_BY_DURATION')}
       title="Duration"
       filterName="duration"
       handleChange={handleChange}
     />
+  ) : (
+    <></>
   );
 };

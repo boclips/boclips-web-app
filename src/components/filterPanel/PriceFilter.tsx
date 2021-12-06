@@ -10,7 +10,9 @@ interface Props {
 }
 
 export const PriceFilter = ({ options, handleChange }: Props) => {
-  return (
+  const hasOptions = options.length > 0;
+
+  return hasOptions ? (
     <FeatureGate feature="BO_WEB_APP_PRICES">
       <CheckboxFilter
         options={convertFilterOptions(options, 'SORT_BY_HITS_AND_NAME')}
@@ -19,5 +21,7 @@ export const PriceFilter = ({ options, handleChange }: Props) => {
         handleChange={handleChange}
       />
     </FeatureGate>
+  ) : (
+    <></>
   );
 };
