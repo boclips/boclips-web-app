@@ -11,7 +11,7 @@ context('UI Regression', () => {
     cy.bo((bo) =>
       bo.interact((apiClient) => {
         disciplines.forEach((discipline) => {
-          apiClient.disciplines.insertDiscipline(discipline);
+          apiClient.disciplines.insertMyDiscipline(discipline);
           discipline.subjects.forEach((subject) =>
             apiClient.subjects.insertSubject(subject),
           );

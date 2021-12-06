@@ -2,15 +2,15 @@ import getDisciplineIllustration from 'src/services/getDisciplineIllustration';
 import ArrowRight from 'src/resources/icons/arrow-no-size.svg';
 import React from 'react';
 import c from 'classnames';
-import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
+import { DisciplineWithSubjectOffering } from 'src/hooks/api/disciplinesQuery';
 import s from './style.module.less';
 import SubjectsPanel from './SubjectsPanel';
 
 interface Props {
-  discipline: Discipline;
+  discipline: DisciplineWithSubjectOffering;
   gridPositionTop: boolean;
-  selectedDiscipline: Discipline;
-  onClick: (discipline: Discipline) => void;
+  selectedDiscipline: DisciplineWithSubjectOffering;
+  onClick: (discipline: DisciplineWithSubjectOffering) => void;
   isMobileView: boolean;
 }
 
@@ -39,7 +39,7 @@ const DisciplineTile = ({
         aria-label={`Discipline ${discipline.name}`}
         key={discipline.id}
         type="button"
-        aria-controls="discipline-panel"
+        aria-controls="subjects-panel"
         onClick={() => onClick(discipline)}
         aria-expanded={isSelected}
         className={c(s.discipline, {
@@ -62,6 +62,7 @@ const DisciplineTile = ({
         <SubjectsPanel
           ref={subjectsPanelRef}
           subjects={selectedDiscipline?.subjects}
+          subjectsWeAlsoOffer={selectedDiscipline.subjectsWeAlsoOffer}
           positionTop={gridPositionTop}
         />
       )}

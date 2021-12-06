@@ -15,7 +15,7 @@ describe('Mobile & Desktop - DisciplineWidget', () => {
 
     // eslint-disable-next-line array-callback-return
     disciplines.map((discipline) => {
-      fakeClient.disciplines.insertDiscipline(discipline);
+      fakeClient.disciplines.insertMyDiscipline(discipline);
     });
 
     const wrapper = render(
@@ -72,7 +72,7 @@ describe('Mobile - DisciplineWidget ', () => {
 
     // eslint-disable-next-line array-callback-return
     disciplines.map((discipline) => {
-      fakeClient.disciplines.insertDiscipline(discipline);
+      fakeClient.disciplines.insertMyDiscipline(discipline);
     });
 
     render(
@@ -101,7 +101,7 @@ describe('Mobile - DisciplineWidget ', () => {
 
     // eslint-disable-next-line array-callback-return
     disciplines.map((discipline) => {
-      fakeClient.disciplines.insertDiscipline(discipline);
+      fakeClient.disciplines.insertMyDiscipline(discipline);
     });
 
     render(
@@ -126,7 +126,7 @@ describe('Mobile - DisciplineWidget ', () => {
     const client = new QueryClient();
 
     disciplines.forEach((discipline) => {
-      fakeClient.disciplines.insertDiscipline(discipline);
+      fakeClient.disciplines.insertMyDiscipline(discipline);
     });
 
     render(
@@ -156,13 +156,14 @@ describe('Desktop - DisciplineWidget', () => {
       value: 1700,
     });
   });
+
   it('displays subject panel', async () => {
     const fakeClient = new FakeBoclipsClient();
     const client = new QueryClient();
 
     // eslint-disable-next-line array-callback-return
     disciplines.map((discipline) => {
-      fakeClient.disciplines.insertDiscipline(discipline);
+      fakeClient.disciplines.insertMyDiscipline(discipline);
     });
 
     render(
@@ -183,5 +184,51 @@ describe('Desktop - DisciplineWidget', () => {
       .map((it, index) =>
         expect(renderedSubjects[index].textContent).toBe(it.name),
       );
+  });
+
+  it('displays a list of subjects that we also offer', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const client = new QueryClient();
+
+    fakeClient.disciplines.insertDiscipline({
+      id: '123',
+      name: 'discipline name',
+      code: 'discipline code',
+      subjects: [
+        { id: 'subject123', name: 'Available subject' },
+        { id: 'subject456', name: 'Unavailable subject' },
+      ],
+    });
+
+    fakeClient.disciplines.insertMyDiscipline({
+      id: '123',
+      name: 'discipline name',
+      code: 'discipline code',
+      subjects: [{ id: 'subject123', name: 'Available subject' }],
+    });
+
+    render(
+      <BoclipsClientProvider client={fakeClient}>
+        <QueryClientProvider client={client}>
+          <MemoryRouter>
+            <DisciplineWidget />
+          </MemoryRouter>
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
+    );
+
+    fireEvent.click(await screen.findByText('discipline name'));
+    const renderedAvailableSubjects = await screen.findAllByRole('link');
+
+    const availableSubject = screen.getByRole('link', {
+      name: /Available subject/,
+    });
+    const subjectsWeAlsoOffer = screen.getByText('Unavailable subject');
+
+    expect(availableSubject).toBeVisible();
+    expect(subjectsWeAlsoOffer).toBeVisible();
+
+    expect(renderedAvailableSubjects).not.toContain(subjectsWeAlsoOffer);
+    expect(renderedAvailableSubjects).toContain(availableSubject);
   });
 });

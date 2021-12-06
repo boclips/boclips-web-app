@@ -2,18 +2,20 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import DisciplineOverlayMenu from 'src/components/disciplinesWidget/DisciplineOverlayMenu';
 import DisciplineTile from 'src/components/disciplinesWidget/DisciplineTile';
-import { useGetDisciplinesQuery } from 'src/hooks/api/disciplinesQuery';
 import c from 'classnames';
-import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
+import {
+  DisciplineWithSubjectOffering,
+  useGetDisciplinesQuery,
+} from 'src/hooks/api/disciplinesQuery';
 import s from './style.module.less';
 
 const DisciplineWidget = (): ReactElement => {
   const { data: disciplines, isLoading } = useGetDisciplinesQuery();
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedDiscipline, setSelectedDiscipline] = useState<Discipline>(
-    null,
-  );
+  const [selectedDiscipline, setSelectedDiscipline] = useState<
+    DisciplineWithSubjectOffering
+  >(null);
   const breakpoints = useMediaBreakPoint();
   const mobileView =
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
@@ -26,7 +28,7 @@ const DisciplineWidget = (): ReactElement => {
     }
   }, [modalOpen, mobileView]);
 
-  const onClick = (discipline: Discipline) => {
+  const onClick = (discipline: DisciplineWithSubjectOffering) => {
     if (mobileView) {
       setModalOpen(!modalOpen);
       setSelectedDiscipline(discipline);

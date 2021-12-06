@@ -2,12 +2,13 @@ import ArrowRight from 'src/resources/icons/arrow-no-size.svg';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import getDisciplineIllustration from 'src/services/getDisciplineIllustration';
-import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
+import { DisciplineWithSubjectOffering } from 'src/hooks/api/disciplinesQuery';
 import s from './style.module.less';
+import { ExtraSubjects } from './ExtraSubjects';
 
 interface Props {
-  onClick: (discipline: Discipline) => void;
-  selectedDiscipline: Discipline;
+  onClick: (discipline: DisciplineWithSubjectOffering) => void;
+  selectedDiscipline: DisciplineWithSubjectOffering;
 }
 
 const DisciplineOverlayMenu = ({ onClick, selectedDiscipline }: Props) => {
@@ -41,7 +42,7 @@ const DisciplineOverlayMenu = ({ onClick, selectedDiscipline }: Props) => {
                 search: `?subject=${subject.id}`,
               }}
             >
-              <span>{subject.name}</span>
+              <span className="text-md">{subject.name}</span>
               <span>
                 <ArrowRight />
               </span>
@@ -49,6 +50,12 @@ const DisciplineOverlayMenu = ({ onClick, selectedDiscipline }: Props) => {
           );
         })}
       </div>
+      {selectedDiscipline.subjectsWeAlsoOffer &&
+        selectedDiscipline.subjectsWeAlsoOffer.length > 0 && (
+          <ExtraSubjects
+            subjectsWeAlsoOffer={selectedDiscipline.subjectsWeAlsoOffer}
+          />
+        )}
     </div>
   );
 };

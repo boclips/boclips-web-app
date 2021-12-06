@@ -47,7 +47,7 @@ describe('HomeView', () => {
 
     // eslint-disable-next-line array-callback-return
     disciplines.map((discipline) => {
-      fakeClient.disciplines.insertDiscipline(discipline);
+      fakeClient.disciplines.insertMyDiscipline(discipline);
     });
 
     const expectedPathname = '/videos';

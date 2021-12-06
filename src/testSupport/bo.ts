@@ -14,6 +14,7 @@ import {
 import { VideoFacets } from 'boclips-api-client/dist/sub-clients/videos/model/VideoFacets';
 import { Subject } from 'boclips-api-client/dist/sub-clients/subjects/model/Subject';
 import { UserFeatureKey } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
+import { disciplines } from 'src/components/disciplinesWidget/disciplinesFixture';
 
 export interface Bo {
   interact(callback: (apiClient: FakeBoclipsClient) => void): void;
@@ -24,6 +25,7 @@ export interface Bo {
     video: (video: Partial<Video>) => void;
     subject: (subject: Subject) => void;
     cartWithVideos: () => void;
+    disciplines: () => void;
   };
   inspect: () => FakeBoclipsClient;
   set: {
@@ -100,6 +102,31 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
     );
   };
 
+  const insertDisciplines = () => {
+    const extraSubjects = [
+      { name: 'Extra Subject', id: 'extra-subject1' },
+      { name: 'General Mathematics', id: 'extra-subject2' },
+      { name: 'General Mathematics', id: 'extra-subject3' },
+      { name: 'General Mathematics', id: 'extra-subject4' },
+      { name: 'Zoology and Animal Sciences', id: 'extra-subject5' },
+    ];
+
+    disciplines.forEach((discipline) => {
+      apiClient.disciplines.insertMyDiscipline(discipline);
+      apiClient.disciplines.insertDiscipline({
+        ...discipline,
+        subjects: [...discipline.subjects, ...extraSubjects],
+      });
+      discipline.subjects.forEach((subject) =>
+        apiClient.subjects.insertSubject(subject),
+      );
+    });
+
+    extraSubjects.forEach((s) => {
+      apiClient.subjects.insertSubject(s);
+    });
+  };
+
   return {
     inspect: () => apiClient,
     interact: (callback: (apiClient: FakeBoclipsClient) => void) => {
@@ -113,6 +140,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
     create: {
       video: boCreateVideo,
       subject: boCreateSubject,
+      disciplines: insertDisciplines,
 
       cartWithVideos: () => {
         apiClient.videos.insertVideo(
