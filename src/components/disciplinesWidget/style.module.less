@@ -5,7 +5,7 @@
   display: grid;
 
   .discipline {
-    @apply flex items-center rounded;
+  @apply flex items-center rounded;
     background: @white;
     border: 1px solid @blue-400;
     height: 80px;
@@ -33,12 +33,10 @@
   .discipline {
     &.skeleton {
       animation: skeleton ease-in 1s infinite;
-      background: linear-gradient(
-        90deg,
-        @gray-100 25%,
-        @gray-300 37%,
-        @gray-100 63%
-      );
+      background: linear-gradient(90deg,
+      @gray-100 25%,
+      @gray-300 37%,
+      @gray-100 63%);
 
       background-size: 200% 200%;
       border-color: @gray-200;
@@ -57,7 +55,7 @@
   padding: 1rem;
 
   .overlayHeader {
-    @apply flex flex-row items-center;
+  @apply flex flex-row items-center;
     height: 32px;
     font-size: 1.125rem;
     text-align: center;
@@ -86,7 +84,7 @@
   }
 
   .selectedDiscipline {
-    @apply flex items-center rounded;
+  @apply flex items-center rounded;
     width: 100%;
     border: 1px solid @blue-400;
     height: 56px;
@@ -176,11 +174,11 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: auto auto auto;
     grid-column-gap: 1.5rem;
-    grid-row-gap: 0.75rem;
+    grid-row-gap: 1.5rem;
     position: relative;
 
     &:after {
-      @apply rounded;
+    @apply rounded;
       content: '';
       width: 120%;
       height: 100%;
@@ -248,14 +246,14 @@
     }
 
     .subjectsPanel {
-      @apply col-span-full row-start-2 row-end-2 rounded;
+    @apply col-span-full row-start-2 row-end-2 rounded;
       border: 1px solid @blue-400;
       padding: 1.5rem;
-      margin: 0.75rem 0;
+
       background: @white;
 
       &.placeBottom {
-        @apply row-start-3 row-end-3;
+      @apply row-start-3 row-end-3;
       }
 
       .linkWrapper {

@@ -51,8 +51,8 @@ export const AccountButton = () => {
 
   return (
     <>
-      <div
-        role="presentation"
+      <button
+        type="button"
         onMouseEnter={onMouseEnterAction}
         onMouseLeave={onMouseLeaveAction}
         className={c(s.account, { [s.active]: displayModal || onMouseEnter })}
@@ -61,7 +61,7 @@ export const AccountButton = () => {
       >
         <MyAccountSVG />
         <span className="mt-1 text-xs font-medium">Account</span>
-      </div>
+      </button>
       {isLoading && displayModal && (
         <div ref={ref} className={s.tooltip}>
           <Loading />
