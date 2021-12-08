@@ -1,7 +1,6 @@
 export type FilterKey =
   | 'video_type'
   | 'subject'
-  | 'best_for'
   | 'channel'
   | 'duration'
   | 'prices'

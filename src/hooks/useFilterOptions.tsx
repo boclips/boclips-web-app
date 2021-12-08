@@ -8,7 +8,6 @@ export interface Filters {
   durations: FilterOption[];
   channels: FilterOption[];
   videoTypes: FilterOption[];
-  bestFor: FilterOption[];
   prices: FilterOption[];
 }
 

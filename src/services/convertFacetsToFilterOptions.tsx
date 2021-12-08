@@ -20,7 +20,6 @@ export const convertFacetsToFilterOptions = (
   const safeFacets = {
     channels: facets?.channels || [],
     subjects: facets?.subjects || [],
-    bestFor: facets?.bestForTags || [],
     videoTypes: facets?.videoTypes || [],
     durations: facets?.durations || [],
     prices: facets?.prices || [],
@@ -36,11 +35,6 @@ export const convertFacetsToFilterOptions = (
       safeFacets.subjects,
       appliedFilters?.subject || [],
       'subject',
-    ),
-    bestFor: createFilterOptions(
-      safeFacets.bestFor,
-      appliedFilters?.best_for || [],
-      'best_for',
     ),
     videoTypes: createFilterOptions(
       safeFacets.videoTypes,
@@ -98,8 +92,6 @@ export const getFilterLabel = (
       return getChannelLabel(id, channels);
     case 'subject':
       return getSubjectsLabel(id, subjects);
-    case 'best_for':
-      return id;
     case 'release_date_from':
       return `From: ${dayjs(id).format('MM-DD-YYYY')}`;
     case 'release_date_to':

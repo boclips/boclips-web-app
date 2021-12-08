@@ -254,35 +254,6 @@ describe('SearchResultsFiltering', () => {
     });
   });
 
-  describe('Best For filters', () => {
-    it('displays the filter and facet counts', async () => {
-      fakeClient.videos.setFacets(
-        FacetsFactory.sample({
-          bestForTags: [
-            { id: 'hook', name: 'Hook', hits: 12 },
-            { id: 'explainer', name: 'Explainer', hits: 22 },
-          ],
-        }),
-      );
-
-      fakeClient.videos.insertVideo(
-        VideoFactory.sample({
-          id: '1',
-          title: 'my video',
-          bestFor: [{ label: 'Hook' }],
-        }),
-      );
-
-      const wrapper = renderSearchResultsView(['/videos?q=video']);
-
-      expect(await wrapper.findByText('Best for')).toBeVisible();
-      expect(await wrapper.findByText('Hook')).toBeVisible();
-      expect(wrapper.getByText('12')).toBeVisible();
-      expect(wrapper.getByText('Explainer')).toBeVisible();
-      expect(wrapper.getByText('22')).toBeVisible();
-    });
-  });
-
   describe('Duration filters', () => {
     it('displays the duration filters and facet counts', async () => {
       fakeClient.videos.setFacets(

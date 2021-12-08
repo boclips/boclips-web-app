@@ -109,7 +109,6 @@ const SearchResultsView = () => {
     const emptyFilters = {
       duration: [],
       video_type: [],
-      best_for: [],
       channel: [],
       subject: [],
       prices: [],
