@@ -1,18 +1,20 @@
 import s from 'src/components/layout/navbar.module.less';
 import React from 'react';
 import c from 'classnames';
+import Logo from 'src/components/logo/Logo';
 
-interface Props {
-  logo?: React.ReactNode;
-}
-
-export const EmptyNavbar = ({ logo }: Props) => {
+export const EmptyNavbar = () => {
   return (
     <nav
-      className={c(s.navbar, 'col-start-1 col-end-25 grid grid-cols-24 gap-6')}
+      className={c(
+        s.navbarResponsive,
+        'grid col-span-full grid-rows-navbar-responsive items-center gap-x-2 lg:gap-x-6 grid-cols-container',
+      )}
       aria-label="Boclips navigation bar"
     >
-      {logo}
+      <div className={s.logo}>
+        <Logo />
+      </div>
     </nav>
   );
 };
