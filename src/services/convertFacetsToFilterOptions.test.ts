@@ -10,6 +10,7 @@ describe('convertFacets', () => {
     const facets = FacetsFactory.sample({
       subjects: [FacetFactory.sample({ id: '1' })],
       durations: [FacetFactory.sample({ id: '2' })],
+      bestForTags: [FacetFactory.sample({ id: 'hooks', hits: 2 })],
       videoTypes: [FacetFactory.sample({ id: '3' })],
       channels: [FacetFactory.sample({ id: '4' })],
       prices: [FacetFactory.sample({ id: '5' })],
@@ -19,6 +20,7 @@ describe('convertFacets', () => {
       video_type: [],
       channel: [],
       subject: [],
+      best_for: [],
       duration: [],
       prices: [],
       release_date_from: [],
@@ -32,6 +34,9 @@ describe('convertFacets', () => {
     expect(filterOptions.videoTypes[0].key).toEqual('video_type');
     expect(filterOptions.durations[0].id).toEqual('2');
     expect(filterOptions.durations[0].key).toEqual('duration');
+    expect(filterOptions.bestFor[0].id).toEqual('hooks');
+    expect(filterOptions.bestFor[0].key).toEqual('best_for');
+    expect(filterOptions.bestFor[0].hits).toEqual(2);
     expect(filterOptions.subjects[0].id).toEqual('1');
     expect(filterOptions.subjects[0].key).toEqual('subject');
     expect(filterOptions.prices[0].id).toEqual('5');
@@ -43,6 +48,7 @@ describe('convertFacets', () => {
 
     expect(filterOptions.subjects).toHaveLength(0);
     expect(filterOptions.videoTypes).toHaveLength(0);
+    expect(filterOptions.bestFor).toHaveLength(0);
     expect(filterOptions.channels).toHaveLength(0);
     expect(filterOptions.durations).toHaveLength(0);
     expect(filterOptions.prices).toHaveLength(0);

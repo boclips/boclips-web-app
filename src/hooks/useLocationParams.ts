@@ -25,6 +25,7 @@ export const useSearchQueryLocationParams = (): [
     page: Number(locationParams.get('page')) || 1,
     filters: {
       video_type: locationParams.getAll('video_type'),
+      best_for: locationParams.getAll('best_for'),
       subject: locationParams.getAll('subject'),
       channel: locationParams.getAll('channel'),
       duration: locationParams.getAll('duration'),

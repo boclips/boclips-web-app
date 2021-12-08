@@ -8,6 +8,7 @@ import { useFilterOptions } from 'src/hooks/useFilterOptions';
 import { PriceFilter } from 'src/components/filterPanel/PriceFilter';
 import c from 'classnames';
 import { DateFilter } from 'src/components/filterPanel/DateFilter';
+import { BestForFilter } from 'src/components/filterPanel/BestForFilter';
 import { SelectedFilters } from './SelectedFilters';
 
 export interface DateFilters {
@@ -57,6 +58,10 @@ export const FilterPanel = ({
         <>
           <SubjectFilter
             options={options.subjects}
+            handleChange={handleChange}
+          />
+          <BestForFilter
+            options={options.bestFor}
             handleChange={handleChange}
           />
           <ChannelFilter

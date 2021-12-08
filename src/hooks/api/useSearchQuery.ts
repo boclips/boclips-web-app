@@ -23,6 +23,7 @@ const doSearch = (
     size: pageSize,
     prices: filters?.prices,
     type: filters?.video_type,
+    best_for: filters?.best_for,
     subject: filters?.subject,
     channel: filters?.channel,
     duration: filters?.duration,
