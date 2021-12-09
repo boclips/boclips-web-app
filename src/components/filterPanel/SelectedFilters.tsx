@@ -71,6 +71,7 @@ export const SelectedFilters = ({ removeFilter, clearFilters }: Props) => {
     searchQueryLocationParams.filters.duration.length,
     searchQueryLocationParams.filters.subject.length,
     searchQueryLocationParams.filters.prices.length,
+    searchQueryLocationParams.filters.best_for.length,
     releaseDateFrom,
     releaseDateTo,
     channels,

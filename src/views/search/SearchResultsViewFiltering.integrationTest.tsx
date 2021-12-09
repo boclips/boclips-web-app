@@ -254,6 +254,38 @@ describe('SearchResultsFiltering', () => {
     });
   });
 
+  describe('Best For filters', () => {
+    it('displays the filter and facet counts, order by facet counts', async () => {
+      fakeClient.videos.setFacets(
+        FacetsFactory.sample({
+          bestForTags: [
+            { id: 'hook', name: 'Hook', hits: 12 },
+            { id: 'explainer', name: 'Explainer', hits: 22 },
+          ],
+        }),
+      );
+
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '1',
+          title: 'my video',
+          bestFor: [{ label: 'Hook' }],
+        }),
+      );
+
+      const wrapper = renderSearchResultsView(['/videos?q=video']);
+
+      expect(await wrapper.findByText('Best for')).toBeVisible();
+      const options = wrapper
+        .getAllByRole('checkbox')
+        .map((it) => it.closest('label'));
+      expect(within(options[0]).getByText('Explainer')).toBeVisible();
+      expect(within(options[0]).getByText('22')).toBeVisible();
+      expect(within(options[1]).getByText('Hook')).toBeVisible();
+      expect(within(options[1]).getByText('12')).toBeVisible();
+    });
+  });
+
   describe('Duration filters', () => {
     it('displays the duration filters and facet counts', async () => {
       fakeClient.videos.setFacets(
