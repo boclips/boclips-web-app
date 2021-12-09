@@ -6,7 +6,7 @@ import { Layout } from 'src/components/layout/Layout';
 
 const HomeView = () => {
   return (
-    <Layout rowsSetup="grid-rows-home-responsive">
+    <Layout rowsSetup="grid-rows-home-responsive" responsiveLayout>
       <Navbar />
       <DisciplinesWidget />
       <Footer columnPosition="col-start-2 col-end-26" />
