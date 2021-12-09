@@ -4,6 +4,7 @@
   "description": "The publishers frontend app, v2",
   "main": "index.tsx",
   "scripts": {
+    "audit": "audit-ci --critical",
     "test": "jest --maxWorkers=50%",
     "test-visual": "percy exec ./node_modules/.bin/cypress run",
     "test-visual:open": "percy exec ./node_modules/.bin/cypress open",
@@ -30,6 +31,7 @@
     "@tailwindcss/jit": "^0.1.18",
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^12.7.3",
+    "audit-ci": "^5.1.2",
     "autoprefixer": "^10.4.0",
     "css-loader": "^5.0.0",
     "css-minimizer-webpack-plugin": "^1.1.5",
