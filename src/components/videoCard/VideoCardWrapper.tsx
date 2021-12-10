@@ -1,5 +1,6 @@
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
+import { convertVideoFromApi } from 'src/services/convertVideoFromApi';
 import { VideoCard } from '@boclips-ui/video-card';
 import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
@@ -34,7 +35,7 @@ export const VideoCardWrapper = ({ video }: Props) => {
     <div className={s.videoCard}>
       <VideoCard
         key={video.id}
-        video={video}
+        video={convertVideoFromApi(video)}
         videoPlayer={<VideoPlayer video={video} showDurationBadge />}
         border="bottom"
         topBadge={<PriceBadge price={video.price} className="text-xl" />}
