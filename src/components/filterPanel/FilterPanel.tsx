@@ -64,6 +64,10 @@ export const FilterPanel = ({
             options={options.bestFor}
             handleChange={handleChange}
           />
+          <VideoTypeFilter
+            options={options.videoTypes}
+            handleChange={handleChange}
+          />
           <ChannelFilter
             options={options.channels}
             handleChange={handleChange}
@@ -73,10 +77,6 @@ export const FilterPanel = ({
             handleChange={handleChange}
           />
           <DateFilter releaseDates={dateFilters} handleChange={handleChange} />
-          <VideoTypeFilter
-            options={options.videoTypes}
-            handleChange={handleChange}
-          />
           <PriceFilter options={options.prices} handleChange={handleChange} />
         </>
       )}
