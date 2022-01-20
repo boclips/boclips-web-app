@@ -88,6 +88,55 @@ describe('Mobile - Navbar', () => {
 
     expect(screen.queryByText('Ricky Julian')).not.toBeInTheDocument();
   });
+
+  describe('when playlist feature is enabled', () => {
+    const client = new FakeBoclipsClient();
+
+    beforeEach(() => {
+      client.users.insertCurrentUser(
+        UserFactory.sample({ features: { BO_WEB_APP_ENABLE_PLAYLISTS: true } }),
+      );
+    });
+
+    it('does render your library', async () => {
+      render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={client}>
+            <NavbarResponsive />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      fireEvent.click(await screen.findByTestId('side-menu'));
+      expect(screen.getByText('Your library')).toBeVisible();
+    });
+  });
+
+  describe('when playlist feature is disabled', () => {
+    const client = new FakeBoclipsClient();
+
+    beforeEach(() => {
+      client.users.insertCurrentUser(
+        UserFactory.sample({
+          features: { BO_WEB_APP_ENABLE_PLAYLISTS: false },
+        }),
+      );
+    });
+
+    it('does not render your library', async () => {
+      render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={client}>
+            <NavbarResponsive />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      fireEvent.click(await screen.findByTestId('side-menu'));
+
+      expect(screen.queryByText('Your library')).not.toBeInTheDocument();
+    });
+  });
 });
 
 // TODO: The order of this tests matter because the object state is being leaked.

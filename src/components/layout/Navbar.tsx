@@ -87,6 +87,9 @@ const NavbarResponsive = (): ReactElement => {
             <span>{user.email}</span>
           </div>
           <div className={s.buttons}>
+            <FeatureGate feature="BO_WEB_APP_ENABLE_PLAYLISTS">
+              <Link to="/library">Your library</Link>
+            </FeatureGate>
             <Link to="/orders">Your orders</Link>
             <FeatureGate linkName="cart">
               <Link to="/cart">Cart</Link>
