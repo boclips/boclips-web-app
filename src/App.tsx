@@ -84,7 +84,7 @@ const App = ({
         AnalyticsFactory.getAppcues().sendEvent(AppcuesEvent.LOGGED_IN);
       });
     // eslint-disable-next-line
-  }, []);
+    }, []);
 
   useEffect(() => {
     trackPageRendered(currentLocation, apiClient);
@@ -153,6 +153,14 @@ const App = ({
                         <>
                           <Helmet title="Order confirmed!" />
                           <OrderConfirmationView state={location?.state} />
+                        </>
+                      )}
+                    />
+                    <Route
+                      path="/library"
+                      render={() => (
+                        <>
+                          <Helmet title="Your library" />
                         </>
                       )}
                     />

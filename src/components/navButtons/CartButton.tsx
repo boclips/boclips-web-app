@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useCartQuery } from 'src/hooks/api/cartQuery';
 import { useHistory, useLocation } from 'react-router-dom';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
@@ -8,18 +8,11 @@ import s from './style.module.less';
 import CartIcon from '../../resources/icons/cart-icon.svg';
 
 const CartButton = () => {
-  const [onMouseEnter, setOnMouseEnter] = useState(false);
   const { data: cart } = useCartQuery();
   const history = useHistory();
 
   const location = useLocation();
   const isOnCartPage = location.pathname.includes('cart');
-  const onMouseEnterAction = () => {
-    setOnMouseEnter(true);
-  };
-  const onMouseLeaveAction = () => {
-    setOnMouseEnter(false);
-  };
 
   const cartOpenedEvent = () => {
     AnalyticsFactory.getAppcues().sendEvent(AppcuesEvent.CART_OPENED);
@@ -29,11 +22,7 @@ const CartButton = () => {
   };
 
   return (
-    <div
-      onMouseEnter={onMouseEnterAction}
-      onMouseLeave={onMouseLeaveAction}
-      className={c(s.cartButton, { [s.active]: isOnCartPage || onMouseEnter })}
-    >
+    <div className={c(s.navButton, { [s.active]: isOnCartPage })}>
       <button type="button" onClick={cartOpenedEvent} data-qa="cart-button">
         <CartIcon />
         <span className="text-xs mt-1 font-medium">

@@ -3,7 +3,7 @@ import React from 'react';
 import { render } from 'src/testSupport/render';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import NavbarResponsive from 'src/components/layout/Navbar';
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
@@ -87,5 +87,66 @@ describe('Mobile - Navbar', () => {
     fireEvent.click(screen.getByTestId('side-menu'));
 
     expect(screen.queryByText('Ricky Julian')).not.toBeInTheDocument();
+  });
+});
+
+// TODO: The order of this tests matter because the object state is being leaked.
+// Need to change the way we set window sizes
+describe('Desktop - Navbar', () => {
+  const client = new FakeBoclipsClient();
+
+  beforeEach(() => {
+    Object.defineProperty(window, 'innerWidth', {
+      writable: true,
+      configurable: true,
+      value: 1700,
+    });
+  });
+
+  describe('when playlist feature is enabled', () => {
+    beforeEach(() => {
+      client.users.insertCurrentUser(
+        UserFactory.sample({ features: { BO_WEB_APP_ENABLE_PLAYLISTS: true } }),
+      );
+    });
+
+    it('does render your library and icon', async () => {
+      render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={client}>
+            <NavbarResponsive />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      await waitFor(() => {
+        expect(screen.getByTestId('library-button')).toBeVisible();
+        expect(screen.getByText('Your Library')).toBeVisible();
+      });
+    });
+  });
+
+  describe('when playlist feature is disabled', () => {
+    beforeEach(() => {
+      client.users.insertCurrentUser(
+        UserFactory.sample({
+          features: { BO_WEB_APP_ENABLE_PLAYLISTS: false },
+        }),
+      );
+    });
+
+    it('does not render your library and icon', async () => {
+      render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={client}>
+            <NavbarResponsive />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      await waitFor(() => {
+        expect(screen.queryByTestId('library-button')).not.toBeInTheDocument();
+      });
+    });
   });
 });

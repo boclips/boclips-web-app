@@ -3,14 +3,15 @@ import c from 'classnames';
 import Logo from 'src/components/logo/Logo';
 import MenuIconSVG from 'src/resources/icons/menu-icon.svg';
 import CrossIconSVG from 'src/resources/icons/cross-icon.svg';
-import { AccountButton } from 'src/components/accountButton/AccountButton';
+import { AccountButton } from 'src/components/navButtons/AccountButton';
 import { FeatureGate } from 'src/components/common/FeatureGate';
-import CartButton from 'src/components/cartButton/CartButton';
+import CartButton from 'src/components/navButtons/CartButton';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { Link } from 'react-router-dom';
 import { Constants } from 'src/AppConstants';
 import { useBoclipsSecurity } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import LibraryButton from 'src/components/navButtons/LibraryButton';
 import s from './navbar.module.less';
 import { Search } from '../searchBar/SearchBar';
 
@@ -62,6 +63,9 @@ const NavbarResponsive = (): ReactElement => {
           </div>
         ) : (
           <div className={s.buttonsDesktop}>
+            <FeatureGate feature="BO_WEB_APP_ENABLE_PLAYLISTS">
+              <LibraryButton />
+            </FeatureGate>
             <AccountButton />
             <FeatureGate linkName="cart">
               <CartButton />

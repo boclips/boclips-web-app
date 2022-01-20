@@ -55,7 +55,7 @@ export const AccountButton = () => {
         type="button"
         onMouseEnter={onMouseEnterAction}
         onMouseLeave={onMouseLeaveAction}
-        className={c(s.account, { [s.active]: displayModal || onMouseEnter })}
+        className={c(s.navButton, { [s.active]: displayModal || onMouseEnter })}
         onClick={onClick}
         data-qa="account-menu"
       >
