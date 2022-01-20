@@ -4,3 +4,4 @@ dist/
 fly-dist/
 cypress/videos
 cypress/screenshots
+.DS_Store
