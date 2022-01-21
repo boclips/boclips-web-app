@@ -54,6 +54,8 @@ const AccessDeniedView = lazy(
   () => import('src/views/accessDenied/AccessDenied'),
 );
 
+const LibraryView = lazy(() => import('src/views/library/LibraryView'));
+
 interface Props {
   apiClient: BoclipsClient;
   boclipsSecurity: BoclipsSecurity;
@@ -161,6 +163,7 @@ const App = ({
                       render={() => (
                         <>
                           <Helmet title="Your library" />
+                          <LibraryView />
                         </>
                       )}
                     />
