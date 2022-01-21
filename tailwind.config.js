@@ -25,12 +25,11 @@ module.exports = {
         home: 'auto minmax(0, 458px) 63px',
         'home-responsive': 'auto minmax(100%, auto) 63px',
         'navbar-responsive': 'auto auto',
-        'search-view': 'auto minmax(0, auto) 63px',
-        'orders-view': 'auto 50px minmax(0, auto) 63px',
+
+        'default-view': 'auto minmax(0, auto) 63px',
+        'default-view-with-title': 'auto 50px minmax(0, auto) 63px',
+
         'order-view': 'auto 21px minmax(0, auto) minmax(0, auto) 63px',
-        'cart-view': 'auto 50px minmax(0, auto) 63px',
-        'video-view': 'auto minmax(0, auto) 63px',
-        'refresh-page-view': 'auto minmax(0, auto) 63px',
       },
       gridTemplateColumns: {
         container:

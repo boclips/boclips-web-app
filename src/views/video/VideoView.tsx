@@ -23,7 +23,7 @@ const VideoView = () => {
   const isVideoNotFound = (error as BoclipsApiError)?.status === 404;
 
   return (
-    <Layout dataQa="video-page" rowsSetup="grid-rows-video-view">
+    <Layout dataQa="video-page" rowsSetup="grid-rows-default-view">
       {video?.title && <Helmet title={video.title} />}
       <Navbar />
       <ErrorBoundary

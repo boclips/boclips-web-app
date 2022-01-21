@@ -23,7 +23,7 @@ const CartView = () => {
   if (isCartLoading || isCartItemVideosLoading || !videoIds) return <Loading />;
 
   return (
-    <Layout rowsSetup="grid-rows-cart-view">
+    <Layout rowsSetup="grid-rows-default-view-with-title">
       <Navbar />
       <CartSummary cart={cart} />
       {itemsInCart && videoIds ? (

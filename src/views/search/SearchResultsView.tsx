@@ -135,7 +135,7 @@ const SearchResultsView = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <Layout rowsSetup="grid-rows-search-view">
+    <Layout rowsSetup="grid-rows-default-view">
       <Navbar />
       <ErrorBoundary fallback={<RefreshPageError row="2" />}>
         <FilterPanel

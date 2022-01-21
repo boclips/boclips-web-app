@@ -29,7 +29,7 @@ const OrdersView = () => {
   if (isLoading && !hasOrders) return <Loading />;
 
   return (
-    <Layout rowsSetup="grid-rows-orders-view">
+    <Layout rowsSetup="grid-rows-default-view-with-title">
       <Navbar />
       <div className="col-start-2 col-end-26 row-start-2 row-end-2 flex items-center">
         <div className="font-bold text-2xl text-grey-800">Your Orders</div>
