@@ -26,11 +26,8 @@ describe('Desktop & Mobile - Navbar', () => {
 
 describe('Mobile - Navbar', () => {
   beforeEach(() => {
-    Object.defineProperty(window, 'innerWeight', {
-      writable: true,
-      configurable: true,
-      value: 375,
-    });
+    // @ts-ignore
+    window.innerWidth = 768;
   });
 
   it('opens menu on hamburger click', async () => {
@@ -139,17 +136,12 @@ describe('Mobile - Navbar', () => {
   });
 });
 
-// TODO: The order of this tests matter because the object state is being leaked.
-// Need to change the way we set window sizes
 describe('Desktop - Navbar', () => {
   const client = new FakeBoclipsClient();
 
   beforeEach(() => {
-    Object.defineProperty(window, 'innerWidth', {
-      writable: true,
-      configurable: true,
-      value: 1700,
-    });
+    // @ts-ignore
+    window.innerWidth = 1148;
   });
 
   describe('when playlist feature is enabled', () => {

@@ -59,11 +59,8 @@ describe('Mobile & Desktop - DisciplineWidget', () => {
 
 describe('Mobile - DisciplineWidget ', () => {
   beforeEach(() => {
-    Object.defineProperty(window, 'innerWeight', {
-      writable: true,
-      configurable: true,
-      value: 375,
-    });
+    // @ts-ignore
+    window.innerWidth = 375;
   });
 
   it('displays full page overlay when discipline tapped', async () => {
@@ -150,11 +147,8 @@ describe('Mobile - DisciplineWidget ', () => {
 
 describe('Desktop - DisciplineWidget', () => {
   beforeEach(() => {
-    Object.defineProperty(window, 'innerWidth', {
-      writable: true,
-      configurable: true,
-      value: 1700,
-    });
+    // @ts-ignore
+    window.innerWidth = 1700;
   });
 
   it('displays subject panel', async () => {
