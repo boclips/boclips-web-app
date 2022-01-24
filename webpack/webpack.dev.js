@@ -5,7 +5,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const common = require('./webpack.common.js');
 
 const srcPath = path.resolve(__dirname, '../src');
-const distPath = path.resolve(__dirname, '../dist');
 
 module.exports = merge(common, {
   mode: 'development',
@@ -16,7 +15,7 @@ module.exports = merge(common, {
     // chunkFilename: '[name].chunk.js',
   },
   devServer: {
-    contentBase: distPath,
+    static: srcPath,
     historyApiFallback: true,
     port: 9000,
     hot: true,

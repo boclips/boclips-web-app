@@ -86,7 +86,7 @@ const App = ({
         AnalyticsFactory.getAppcues().sendEvent(AppcuesEvent.LOGGED_IN);
       });
     // eslint-disable-next-line
-    }, []);
+  }, []);
 
   useEffect(() => {
     trackPageRendered(currentLocation, apiClient);
