@@ -7,7 +7,7 @@ import Library from 'src/components/library/Library';
 
 const LibraryView = () => {
   return (
-    <Layout rowsSetup="grid-rows-home-responsive" responsiveLayout>
+    <Layout rowsSetup="grid-rows-default-view-with-title" responsiveLayout>
       <Navbar />
       <FeatureGate feature="BO_WEB_APP_ENABLE_PLAYLISTS">
         <Library />
