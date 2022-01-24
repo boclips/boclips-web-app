@@ -440,9 +440,11 @@ describe('SearchResultsFiltering', () => {
         </MemoryRouter>,
       );
 
-      expect(await wrapper.findByText('vid title')).toBeVisible();
-      expect(await wrapper.queryByText('Price')).not.toBeInTheDocument();
-      expect(await wrapper.queryByText('$1,000')).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(wrapper.getByText('vid title')).toBeVisible();
+        expect(wrapper.queryByText('Price')).not.toBeInTheDocument();
+        expect(wrapper.queryByText('$1,000')).not.toBeInTheDocument();
+      });
     });
 
     it(`shows price filters for users with the prices feature enabled`, async () => {

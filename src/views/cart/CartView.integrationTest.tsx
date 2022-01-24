@@ -176,10 +176,14 @@ describe('CartView', () => {
 
     const wrapper = renderCartView(fakeClient);
 
-    expect(await wrapper.findByText(' total', { exact: false })).toBeVisible();
-    expect((await wrapper.findByTestId('total-price')).innerHTML).toEqual(
-      '$900',
-    );
+    await waitFor(async () => {
+      expect(
+        await wrapper.findByText(' total', { exact: false }),
+      ).toBeVisible();
+      expect((await wrapper.findByTestId('total-price')).innerHTML).toEqual(
+        '$900',
+      );
+    });
 
     expect(await wrapper.findByText('Captions')).toBeVisible();
     expect(await wrapper.findByText('Transcripts')).toBeVisible();
@@ -254,7 +258,7 @@ describe('CartView', () => {
 
       const wrapper = renderCartView(fakeClient);
 
-      expect(await wrapper.findByText('Shopping cart'));
+      expect(await wrapper.findByText('Shopping cart')).toBeInTheDocument();
       expect(await wrapper.queryByText('Captions')).not.toBeInTheDocument();
       expect(await wrapper.queryByText('Editing')).not.toBeInTheDocument();
       expect(await wrapper.queryByText('Trimming')).not.toBeInTheDocument();
@@ -288,10 +292,12 @@ describe('CartView', () => {
 
       fireEvent.blur(await wrapper.findByLabelText('trim-to'));
 
-      expect(await wrapper.findByText('Transcripts')).toBeVisible();
-      expect(await wrapper.findByText('Captions')).toBeVisible();
-      expect(await wrapper.findByText('Editing')).toBeVisible();
-      expect(await wrapper.findByText('Trimming')).toBeVisible();
+      await waitFor(async () => {
+        expect(await wrapper.findByText('Transcripts')).toBeVisible();
+        expect(await wrapper.findByText('Captions')).toBeVisible();
+        expect(await wrapper.findByText('Editing')).toBeVisible();
+        expect(await wrapper.findByText('Trimming')).toBeVisible();
+      });
     });
 
     it('displays error when trying to place order with invalid trim values and then removes the error when trim becomes valid again', async () => {

@@ -4,7 +4,11 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "target": "es5",
-    "lib": ["es2015", "es6", "dom"],
+    "lib": [
+      "es2015",
+      "es6",
+      "dom"
+    ],
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "module": "esnext",
@@ -14,10 +18,20 @@
     "baseUrl": "./src",
     "skipLibCheck": true,
     "paths": {
-      "src/*": ["*"],
-      "resources/*": ["../resources/*"],
-      "test-support/*": ["../test-support/*"]
+      "src/*": [
+        "*"
+      ],
+      "resources/*": [
+        "../resources/*"
+      ],
+      "test-support/*": [
+        "../test-support/*"
+      ]
     }
   },
-  "exclude": ["cypress", "node_modules", "dist"]
+  "exclude": [
+    "cypress",
+    "node_modules",
+    "dist"
+  ]
 }

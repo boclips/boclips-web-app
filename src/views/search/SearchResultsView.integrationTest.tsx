@@ -61,13 +61,15 @@ describe('SearchResults', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByText('hello i am a title')).toBeVisible();
-    expect(await wrapper.findByText('wow what a video hansen')).toBeVisible();
-    expect(await wrapper.findByText('20 Mar 2019')).toBeVisible();
-    expect(await wrapper.findByText('BFI')).toBeVisible();
-    expect(await wrapper.findByText('geography')).toBeVisible();
-    expect(wrapper.queryByText('Ages 7-9')).not.toBeInTheDocument();
-    expect(wrapper.queryByText('Selected filters')).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(wrapper.getByText('hello i am a title')).toBeVisible();
+      expect(wrapper.getByText('wow what a video hansen')).toBeVisible();
+      expect(wrapper.getByText('20 Mar 2019')).toBeVisible();
+      expect(wrapper.getByText('BFI')).toBeVisible();
+      expect(wrapper.getByText('geography')).toBeVisible();
+      expect(wrapper.queryByText('Ages 7-9')).not.toBeInTheDocument();
+      expect(wrapper.queryByText('Selected filters')).not.toBeInTheDocument();
+    });
   });
 
   it('renders a hits count that is updated after new search', async () => {
@@ -161,13 +163,17 @@ describe('SearchResults', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByText('video 0')).toBeVisible();
-    expect(wrapper.queryByText('video 30')).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(wrapper.getByText('video 0')).toBeVisible();
+      expect(wrapper.queryByText('video 30')).not.toBeInTheDocument();
+    });
 
     fireEvent.click(wrapper.getByText('2'));
 
-    expect(await wrapper.findByText('video 30')).toBeVisible();
-    expect(wrapper.queryByText('video 0')).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(wrapper.getByText('video 30')).toBeVisible();
+      expect(wrapper.queryByText('video 0')).not.toBeInTheDocument();
+    });
   });
 
   it('persists queries between pages', async () => {
@@ -212,8 +218,10 @@ describe('SearchResults', () => {
       true,
     );
 
-    expect(await wrapper.findByText('video 30')).toBeVisible();
-    expect(wrapper.queryByText('video 0')).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(wrapper.getByText('video 30')).toBeVisible();
+      expect(wrapper.queryByText('video 0')).not.toBeInTheDocument();
+    });
   });
 
   it('directs to video page when card is clicked', async () => {
@@ -233,15 +241,9 @@ describe('SearchResults', () => {
       </MemoryRouter>,
     );
 
-    let newsVideo = null;
+    const newsVideo = await wrapper.findByText(/news video/);
 
-    await waitFor(async () => {
-      newsVideo = await wrapper.findByText(/news video/);
-    });
-
-    fireEvent.click(newsVideo);
-
-    expect(await wrapper.findByTestId('video-page')).toBeVisible();
+    expect(newsVideo.closest('a')).toHaveAttribute('href', '/videos/video-id');
   });
 
   describe('cart in video-card', () => {

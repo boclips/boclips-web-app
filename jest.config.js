@@ -14,7 +14,7 @@ module.exports = {
     '~(.*)$': '<rootDir>/src/$1',
     '\\.(css|less)$': '<rootDir>/__mocks__/styleMock.js',
   },
-  testEnvironment: 'jest-environment-jsdom-fifteen',
+  testEnvironment: 'jsdom',
   testMatch: ['**/*.(integrationTest|test).(ts|tsx)'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/dist/'],
   transform: {
