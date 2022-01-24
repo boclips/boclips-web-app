@@ -1,14 +1,17 @@
 import '@testing-library/jest-dom/extend-expect';
-import * as ReactTestingLibrary from '@testing-library/react';
+import { configure } from '@testing-library/react';
+import resizeTo from "src/testSupport/resizeTo";
 
 const jestTimeout = 10000;
 
-ReactTestingLibrary.configure({
+configure({
     testIdAttribute: 'data-qa',
     asyncUtilTimeout: jestTimeout - 2000,
 });
 
 jest.setTimeout(jestTimeout);
+
+window.resizeTo = resizeTo;
 
 window.scrollTo = jest.fn();
 // @ts-ignore

@@ -26,8 +26,7 @@ describe('Desktop & Mobile - Navbar', () => {
 
 describe('Mobile - Navbar', () => {
   beforeEach(() => {
-    // @ts-ignore
-    window.innerWidth = 768;
+    window.resizeTo(768, 1024);
   });
 
   it('opens menu on hamburger click', async () => {
@@ -140,8 +139,7 @@ describe('Desktop - Navbar', () => {
   const client = new FakeBoclipsClient();
 
   beforeEach(() => {
-    // @ts-ignore
-    window.innerWidth = 1148;
+    window.resizeTo(1680, 1024);
   });
 
   describe('when playlist feature is enabled', () => {

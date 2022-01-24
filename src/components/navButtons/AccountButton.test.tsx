@@ -13,11 +13,7 @@ import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProv
 
 describe('account button', () => {
   beforeEach(() => {
-    Object.defineProperty(window, 'innerWidth', {
-      writable: true,
-      configurable: true,
-      value: 1700,
-    });
+    window.resizeTo(1680, 1024);
   });
 
   it('opens the tooltip when clicked and close the tooltip when clicked on the body', async () => {

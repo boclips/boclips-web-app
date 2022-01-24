@@ -59,8 +59,7 @@ describe('Mobile & Desktop - DisciplineWidget', () => {
 
 describe('Mobile - DisciplineWidget ', () => {
   beforeEach(() => {
-    // @ts-ignore
-    window.innerWidth = 375;
+    window.resizeTo(768, 1024);
   });
 
   it('displays full page overlay when discipline tapped', async () => {
@@ -147,8 +146,7 @@ describe('Mobile - DisciplineWidget ', () => {
 
 describe('Desktop - DisciplineWidget', () => {
   beforeEach(() => {
-    // @ts-ignore
-    window.innerWidth = 1700;
+    window.resizeTo(1680, 1024);
   });
 
   it('displays subject panel', async () => {
