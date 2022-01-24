@@ -2,8 +2,7 @@ const debugScreens = require('tailwindcss-debug-screens');
 const forms = require('@tailwindcss/forms');
 
 module.exports = {
-  purge: ['./src/**/*.{js,ts,jsx,tsx}'],
-  mode: 'jit',
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     container: {
       center: true,
@@ -144,22 +143,6 @@ module.exports = {
         max: '105rem',
       },
     },
-  },
-  variants: {
-    appearance: ['responsive', 'checked'],
-    boxShadow: ['responsive', 'hover', 'focus', 'focus-within'],
-    border: ['responsive', 'hover', 'focus', 'focus-within', 'active'],
-    borderColor: ['responsive', 'hover', 'focus', 'focus-within', 'active'],
-    margin: ['last'],
-    padding: ['first', 'last'],
-    backgroundColor: [
-      'responsive',
-      'hover',
-      'focus',
-      'focus-within',
-      'active',
-      'checked',
-    ],
   },
   plugins: [forms, debugScreens],
 };
