@@ -8,10 +8,16 @@ interface Props {
 const PlaylistTile = ({ name }: Props) => {
   return (
     <div className={s.playlistTile}>
-      <div className={s.thumbnail}>
-        <div className={`${s.defaultImage} row-span-2 grid-cols-1`} />
-        <div className={`${s.defaultImage} grid-rows-1 grid-cols-2`} />
-        <div className={`${s.defaultImage} grid-rows-2 grid-cols-2`} />
+      <div className={s.thumbnailsContainer}>
+        <div
+          className={`${s.thumbnail} ${s.defaultThumbnail} row-span-2 grid-cols-1`}
+        />
+        <div
+          className={`${s.thumbnail} ${s.defaultThumbnail} grid-rows-1 grid-cols-2`}
+        />
+        <div
+          className={`${s.thumbnail} ${s.defaultThumbnail} grid-rows-2 grid-cols-2`}
+        />
       </div>
       <div className={s.header}>{name}</div>
     </div>
