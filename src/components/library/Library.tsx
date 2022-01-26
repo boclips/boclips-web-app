@@ -15,7 +15,6 @@ const Library = (): ReactElement => {
         {playlists.map((name) => (
           <PlaylistTile name={name} />
         ))}
-        ;
       </div>
     </>
   );
