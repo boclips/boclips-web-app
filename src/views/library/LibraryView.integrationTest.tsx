@@ -5,6 +5,29 @@ import App from 'src/App';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+
+export const playlists = [
+  CollectionFactory.sample({
+    title: 'box',
+  }),
+  CollectionFactory.sample({
+    title: 'print',
+  }),
+  CollectionFactory.sample({
+    title: 'scorn',
+  }),
+  CollectionFactory.sample({
+    title: 'sing',
+  }),
+  CollectionFactory.sample({
+    title: 'group',
+  }),
+  CollectionFactory.sample({
+    title: 'kneel',
+  }),
+];
 
 describe('LibraryView', () => {
   describe('when playlists feature is enabled', () => {
@@ -43,6 +66,27 @@ describe('LibraryView', () => {
       );
 
       expect(await screen.findByText('Your Library')).not.toBeInTheDocument();
+    });
+
+    it('Displays tiles for retrieved playlists', async () => {
+      const fakeClient = new FakeBoclipsClient();
+      const queryClient = new QueryClient();
+
+      playlists.forEach((playlist) => {
+        fakeClient.collections.addToFake(playlist);
+      });
+
+      const wrapper = render(
+        <QueryClientProvider client={queryClient}>
+          <MemoryRouter initialEntries={['/library']}>
+            <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+          </MemoryRouter>
+        </QueryClientProvider>,
+      );
+
+      playlists.forEach(async (it) => {
+        expect(await wrapper.findByText(it.title)).toBeInTheDocument();
+      });
     });
   });
 });

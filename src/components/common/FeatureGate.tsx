@@ -5,7 +5,7 @@ import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientP
 import { AdminLinks } from 'boclips-api-client/dist/types';
 
 interface FeatureGateProps {
-  children: React.ReactElement;
+  children: React.ReactElement | React.ReactElement[];
 }
 
 type OptionalProps =

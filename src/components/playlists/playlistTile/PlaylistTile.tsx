@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './style.module.less';
+import s from '../style.module.less';
 
 interface Props {
   name: string;
