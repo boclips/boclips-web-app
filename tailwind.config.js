@@ -116,7 +116,7 @@ module.exports = {
         55: '0.55',
       },
       fontSize: {
-        xxs: '0.65rem',
+        xxs: '0.75rem',
         xs: '0.875rem',
         md: '1rem',
         h1: '2.5rem',

@@ -24,7 +24,7 @@ const LibraryButton = () => {
     >
       <button type="button" onClick={onClick} data-qa="library-button">
         <YourLibraryIcon />
-        <span className="text-xs mt-1 font-medium">Your Library</span>
+        <span>Your Library</span>
       </button>
     </div>
   );

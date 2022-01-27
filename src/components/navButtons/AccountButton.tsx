@@ -50,23 +50,22 @@ export const AccountButton = () => {
   const boclipsSecurity = useBoclipsSecurity();
 
   return (
-    <>
-      <button
-        type="button"
-        onMouseEnter={onMouseEnterAction}
-        onMouseLeave={onMouseLeaveAction}
-        className={c(s.navButton, { [s.active]: displayModal || onMouseEnter })}
-        onClick={onClick}
-        data-qa="account-menu"
-      >
+    <div
+      onMouseEnter={onMouseEnterAction}
+      onMouseLeave={onMouseLeaveAction}
+      className={c(s.navButton, { [s.active]: displayModal || onMouseEnter })}
+    >
+      <button type="button" onClick={onClick} data-qa="account-menu">
         <MyAccountSVG />
-        <span className="mt-1 text-xs font-medium">Account</span>
+        <span>Account</span>
       </button>
+
       {isLoading && displayModal && (
         <div ref={ref} className={s.tooltip}>
           <Loading />
         </div>
       )}
+
       {displayModal && (
         <div ref={ref} className={s.tooltip}>
           <div className="font-medium">
@@ -95,6 +94,6 @@ export const AccountButton = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
