@@ -56,7 +56,7 @@ const AccessDeniedView = lazy(
 
 const LibraryView = lazy(() => import('src/views/library/LibraryView'));
 
-const LibraryItem = lazy(() => import('src/views/libraryItem/LibraryItem'));
+const PlaylistView = lazy(() => import('src/views/playlist/PlaylistView'));
 
 interface Props {
   apiClient: BoclipsClient;
@@ -175,8 +175,8 @@ const App = ({
                       path="/library/:id"
                       render={({ location }) => (
                         <>
-                          <Helmet title={location.state.name || 'Playlist'} />
-                          <LibraryItem />
+                          <Helmet title={location.state?.name || 'Playlist'} />
+                          <PlaylistView />
                         </>
                       )}
                     />

@@ -1,0 +1,34 @@
+@import '~@boclips-ui/styles/src/colors';
+
+.input {
+  border: 2px solid @gray-500;
+  border-radius: 4px;
+  min-height: 44px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  :global .ant-input {
+    @apply text-body-16;
+    min-height: inherit;
+    transition: none !important;
+  }
+
+  & input,
+  textarea {
+    border: none !important;
+    --tw-ring-shadow: none !important;
+    box-shadow: none;
+  }
+
+  ::placeholder {
+    color: var(--gray-500);
+    font-size: 16px;
+  }
+
+  &:active,
+  &:hover,
+  &:focus {
+    border: 2px solid @gray-600;
+  }
+}
