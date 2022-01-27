@@ -1,13 +1,21 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import s from '../style.module.less';
 
 interface Props {
   name: string;
+  id: string;
 }
 
-const PlaylistTile = ({ name }: Props) => {
+const PlaylistTile = ({ name, id }: Props) => {
   return (
-    <div className={s.playlistTile}>
+    <Link
+      to={{
+        pathname: `/library/${id}`,
+        state: { name },
+      }}
+      className={s.playlistTile}
+    >
       <div className={s.thumbnailsContainer}>
         <div
           className={`${s.thumbnail} ${s.defaultThumbnail} row-span-2 grid-cols-1`}
@@ -20,7 +28,7 @@ const PlaylistTile = ({ name }: Props) => {
         />
       </div>
       <div className={s.header}>{name}</div>
-    </div>
+    </Link>
   );
 };
 
