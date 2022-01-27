@@ -1,7 +1,5 @@
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
-import {CollectionEntityFactory} from "boclips-api-client/dist/test-support";
-import {CollectionsConverter} from "boclips-api-client/dist/sub-clients/collections/CollectionsConverter";
 
 export class CollectionFactory {
   static sample(collection: Partial<Collection>): Collection {
