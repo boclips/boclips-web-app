@@ -170,3 +170,35 @@ describe('LibraryView', () => {
     });
   });
 });
+
+it('can display an error message on failed playlist creation', async () => {
+  const client = new FakeBoclipsClient();
+  client.users.insertCurrentUser(
+    UserFactory.sample({ features: { BO_WEB_APP_ENABLE_PLAYLISTS: true } }),
+  );
+
+  const wrapper = render(
+    <MemoryRouter initialEntries={['/library']}>
+      <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+    </MemoryRouter>,
+  );
+  expect(
+    await wrapper.findByRole('button', { name: 'Create new playlist' }),
+  ).toBeVisible();
+
+  fireEvent.click(wrapper.getByRole('button', { name: 'Create new playlist' }));
+
+  const titleInput = wrapper.getByLabelText('*Playlist name');
+  userEvent.type(titleInput, 'My new playlist');
+
+  client.collections.setCreateCollectionErrorMessage('500 server error');
+
+  fireEvent.click(wrapper.getByRole('button', { name: 'Create playlist' }));
+
+  expect(
+    await wrapper.findByText('Error: Failed to create new playlist'),
+  ).toBeVisible();
+  expect(
+    await wrapper.findByText('Please refresh the page and try again'),
+  ).toBeVisible();
+});

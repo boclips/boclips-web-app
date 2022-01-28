@@ -5,6 +5,7 @@ import { BoInput } from 'src/components/common/input/BoInput/BoInput';
 import PlusSign from 'resources/icons/plus-sign.svg';
 import { usePlaylistMutation } from 'src/hooks/api/playlistsQuery';
 import { useHistory } from 'react-router-dom';
+import { displayErrorNotification } from 'src/components/common/errors/displayErrorNotification';
 import { BoTextArea } from '../common/input/BoInput/BoTextArea';
 import { Bodal } from '../common/bodal/Bodal';
 
@@ -17,7 +18,7 @@ export const LibraryHeader = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [playlistForm, setPlaylistForm] = useState<PlaylistForm>({});
   const [titleError, setTitleError] = useState<boolean>(false);
-  const { mutate, isSuccess, data } = usePlaylistMutation();
+  const { mutate, isSuccess, data, isError } = usePlaylistMutation();
   const history = useHistory();
 
   const handleConfirm = () => {
@@ -41,10 +42,17 @@ export const LibraryHeader = () => {
     setPlaylistForm({ ...playlistForm, description });
 
   React.useEffect(() => {
+    if (isError) {
+      displayErrorNotification(
+        'create-playlist',
+        'Error: Failed to create new playlist',
+        'Please refresh the page and try again',
+      );
+    }
     if (isSuccess) {
       history.push(`/library/${data}`);
     }
-  }, [data, history, isSuccess]);
+  }, [data, history, isSuccess, isError]);
 
   return (
     <>
