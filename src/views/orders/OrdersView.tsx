@@ -9,6 +9,7 @@ import RefreshPageError from 'src/components/common/errors/refreshPageError/Refr
 import EmptyOrdersSVG from 'src/resources/icons/empty-order-history.svg';
 import { Layout } from 'src/components/layout/Layout';
 import { Hero as OrdersEmptyState } from 'src/components/hero/Hero';
+import PageHeader from 'src/components/pageTitle/PageHeader';
 
 export const PAGE_SIZE = 10;
 
@@ -31,9 +32,7 @@ const OrdersView = () => {
   return (
     <Layout rowsSetup="grid-rows-default-view-with-title">
       <Navbar />
-      <div className="col-start-2 col-end-26 row-start-2 row-end-2 flex items-center">
-        <div className="font-bold text-2xl text-grey-800">Your Orders</div>
-      </div>
+      <PageHeader title="Your Orders" />
       {hasOrders ? (
         <ErrorBoundary fallback={<RefreshPageError row="3" />}>
           <OrdersTable paginationPage={changePaginationPage} orders={orders} />
