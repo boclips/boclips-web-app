@@ -18,7 +18,12 @@ export const LibraryHeader = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [playlistForm, setPlaylistForm] = useState<PlaylistForm>({});
   const [titleError, setTitleError] = useState<boolean>(false);
-  const { mutate, isSuccess, data, isError } = usePlaylistMutation();
+  const {
+    mutate: createPlaylist,
+    isSuccess,
+    data,
+    isError,
+  } = usePlaylistMutation();
   const history = useHistory();
 
   const handleConfirm = () => {
@@ -28,9 +33,10 @@ export const LibraryHeader = () => {
       return;
     }
 
-    mutate({
+    createPlaylist({
       title,
       description: playlistForm.description,
+      origin: 'BO_WEB_APP',
       videos: [],
     });
   };
@@ -59,14 +65,12 @@ export const LibraryHeader = () => {
       <PageHeader
         title="Your Library"
         button={
-          <div>
-            <Button
-              icon={<PlusSign />}
-              text="Create new playlist"
-              onClick={() => setModalOpen(true)}
-              width="206px"
-            />
-          </div>
+          <Button
+            icon={<PlusSign />}
+            text="Create new playlist"
+            onClick={() => setModalOpen(true)}
+            width="206px"
+          />
         }
       />
 
