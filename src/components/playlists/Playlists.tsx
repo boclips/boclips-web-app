@@ -8,7 +8,7 @@ const Playlists = () => {
   const { data: playlists, isLoading } = usePlaylistsQuery();
 
   return (
-    <div className={s.playlistsWrapper}>
+    <main className={s.playlistsWrapper}>
       {isLoading ? (
         <SkeletonTiles />
       ) : (
@@ -20,7 +20,7 @@ const Playlists = () => {
           />
         ))
       )}
-    </div>
+    </main>
   );
 };
 

@@ -14,6 +14,7 @@ const PlaylistTile = ({ name, id }: Props) => {
         pathname: `/library/${id}`,
         state: { name },
       }}
+      aria-label={`${name} playlist`}
       className={s.playlistTile}
     >
       <div className={s.thumbnailsContainer}>
