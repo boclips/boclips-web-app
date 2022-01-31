@@ -11,21 +11,20 @@ interface Props {
 
 const Thumbnail = ({ className, video }) => {
   const thumbnailUrl = video?.playback?.links?.thumbnail?.getOriginalLink();
-  return (
-    <>
-      {thumbnailUrl && (
-        <div
-          className={className}
-          key={video.id}
-          role="img"
-          aria-label={`Thumbnail of ${video?.title}`}
-          style={{
-            background: `url(${thumbnailUrl}) center center`,
-            backgroundSize: 'cover',
-          }}
-        />
-      )}
-    </>
+
+  return thumbnailUrl ? (
+    <div
+      className={className}
+      key={video.id}
+      role="img"
+      aria-label={`Thumbnail of ${video?.title}`}
+      style={{
+        background: `url(${thumbnailUrl}) center center`,
+        backgroundSize: 'cover',
+      }}
+    />
+  ) : (
+    <div className={className} />
   );
 };
 
