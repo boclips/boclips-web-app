@@ -10,11 +10,10 @@ import { CopyLinkButton } from 'src/components/common/copyLinkButton/CopyLinkBut
 
 interface Props {
   video: Video;
-  width?: string;
   appcueEvent?: AppcuesEvent;
 }
 
-export const CopyVideoLinkButton = ({ video, width, appcueEvent }: Props) => {
+export const CopyVideoLinkButton = ({ video, appcueEvent }: Props) => {
   const apiClient = useBoclipsClient();
   const { data: user, isFetched } = useGetUserQuery();
 
@@ -33,12 +32,12 @@ export const CopyVideoLinkButton = ({ video, width, appcueEvent }: Props) => {
 
   return (
     <CopyLinkButton
+      ariaLabel="Copy video link"
       title="Copy link"
       onCopy={handleCopied}
       link={link}
       disabled={!isFetched}
       dataQa={`copy-button-${video.id}`}
-      width={width}
     />
   );
 };

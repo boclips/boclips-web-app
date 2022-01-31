@@ -18,8 +18,8 @@ export const CopyLegacyVideoLinkButton = ({ video }: Props) => {
 
   return (
     <CopyLinkButton
+      ariaLabel="Copy legacy video link"
       title="Copy old link"
-      width="160px"
       link={link}
       dataQa={`copy-legacy-button-${video.id}`}
     />

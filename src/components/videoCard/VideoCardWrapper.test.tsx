@@ -7,6 +7,7 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { VideoInteractedWith } from 'boclips-api-client/dist/sub-clients/events/model/EventRequest';
 import { act, fireEvent } from '@testing-library/react';
+import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
 
@@ -52,6 +53,106 @@ describe('Video card', () => {
     expect(wrapper.getByText('geography')).toBeVisible();
     expect(wrapper.queryByText('Ages 7-9')).not.toBeInTheDocument();
     expect(wrapper.getByText('$100')).toBeVisible();
+  });
+
+  describe('video card elements', () => {
+    describe('video card buttons', () => {
+      const video = VideoFactory.sample({
+        title: 'video killed the radio star',
+      });
+
+      it('displays playlist button', async () => {
+        const fakeClient = new FakeBoclipsClient();
+
+        fakeClient.users.insertCurrentUser(
+          UserFactory.sample({
+            features: { BO_WEB_APP_ENABLE_PLAYLISTS: true },
+          }),
+        );
+
+        const wrapper = render(
+          <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+            <BoclipsClientProvider client={fakeClient}>
+              <VideoCardWrapper video={video} />
+            </BoclipsClientProvider>
+          </BoclipsSecurityProvider>,
+        );
+
+        expect(
+          await wrapper.findByLabelText('Add to playlist'),
+        ).toBeInTheDocument();
+      });
+
+      it('shows copy video link in the video card', async () => {
+        const fakeClient = new FakeBoclipsClient();
+        fakeClient.videos.insertVideo(
+          VideoFactory.sample({ id: '1', title: '1' }),
+        );
+
+        const wrapper = render(
+          <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+            <BoclipsClientProvider client={fakeClient}>
+              <VideoCardWrapper video={video} />
+            </BoclipsClientProvider>
+          </BoclipsSecurityProvider>,
+        );
+
+        expect(await wrapper.findByLabelText('Copy video link')).toBeVisible();
+      });
+
+      it('does not show copy legacy video link for non boclips users', async () => {
+        const fakeClient = new FakeBoclipsClient();
+        fakeClient.videos.insertVideo(
+          VideoFactory.sample({ id: '1', title: '1' }),
+        );
+
+        fakeClient.users.insertCurrentUser(
+          UserFactory.sample({
+            organisation: { id: 'org-1', name: 'Anything but boclips' },
+          }),
+        );
+
+        const wrapper = render(
+          <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+            <BoclipsClientProvider client={fakeClient}>
+              <VideoCardWrapper video={video} />
+            </BoclipsClientProvider>
+          </BoclipsSecurityProvider>,
+        );
+
+        expect(await wrapper.findByLabelText('Copy video link')).toBeVisible();
+        expect(
+          wrapper.queryByLabelText('Copy legacy video link'),
+        ).not.toBeInTheDocument();
+      });
+
+      it('does show copy legacy link button for boclips users', async () => {
+        const fakeClient = new FakeBoclipsClient();
+        fakeClient.videos.insertVideo(
+          VideoFactory.sample({ id: '1', title: '1' }),
+        );
+
+        fakeClient.users.insertCurrentUser(
+          UserFactory.sample({
+            features: { BO_WEB_APP_COPY_OLD_LINK_BUTTON: true },
+            organisation: { id: 'org-bo', name: 'Boclips' },
+          }),
+        );
+
+        const wrapper = render(
+          <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+            <BoclipsClientProvider client={fakeClient}>
+              <VideoCardWrapper video={video} />
+            </BoclipsClientProvider>
+          </BoclipsSecurityProvider>,
+        );
+
+        expect(await wrapper.findByLabelText('Copy video link')).toBeVisible();
+        expect(
+          await wrapper.findByLabelText('Copy legacy video link'),
+        ).toBeVisible();
+      });
+    });
   });
 
   describe('video interacted with events', () => {

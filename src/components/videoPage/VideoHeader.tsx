@@ -37,16 +37,16 @@ export const VideoHeader = ({ video }: Props) => {
           This is an agreed price for your organization
         </div>
       </FeatureGate>
-      <div className="flex flex-row " style={{ width: '100%' }}>
+      <div className="flex flex-row justify-between" style={{ width: '100%' }}>
         <CopyVideoLinkButton
           video={video}
-          width="50%"
           appcueEvent={AppcuesEvent.COPY_LINK_FROM_VIDEO_PAGE}
         />
+
         <FeatureGate linkName="cart">
           <AddToCartButton
             video={video}
-            width="50%"
+            width="200px"
             appcueEvent={AppcuesEvent.ADD_TO_CART_FROM_VIDEO_PAGE}
           />
         </FeatureGate>

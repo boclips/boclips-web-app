@@ -344,68 +344,6 @@ describe('SearchResults', () => {
     });
   });
 
-  describe('video card buttons', () => {
-    it('shows copy video link in the video card', async () => {
-      const fakeClient = new FakeBoclipsClient();
-      fakeClient.videos.insertVideo(
-        VideoFactory.sample({ id: '1', title: '1' }),
-      );
-
-      const wrapper = render(
-        <MemoryRouter initialEntries={['/videos']}>
-          <App apiClient={fakeClient} boclipsSecurity={stubBoclipsSecurity} />
-        </MemoryRouter>,
-      );
-
-      expect(await wrapper.findByText('Copy link')).toBeVisible();
-    });
-
-    it('does not show copy legacy video link for non boclips users', async () => {
-      const fakeClient = new FakeBoclipsClient();
-      fakeClient.videos.insertVideo(
-        VideoFactory.sample({ id: '1', title: '1' }),
-      );
-
-      fakeClient.users.insertCurrentUser(
-        UserFactory.sample({
-          organisation: { id: 'org-1', name: 'Anything but boclips' },
-        }),
-      );
-
-      const wrapper = render(
-        <MemoryRouter initialEntries={['/videos']}>
-          <App apiClient={fakeClient} boclipsSecurity={stubBoclipsSecurity} />
-        </MemoryRouter>,
-      );
-
-      expect(await wrapper.findByText('Copy link')).toBeVisible();
-      expect(wrapper.queryByText('Copy Legacy Link')).not.toBeInTheDocument();
-    });
-
-    it('does show copy legacy link button for boclips users', async () => {
-      const fakeClient = new FakeBoclipsClient();
-      fakeClient.videos.insertVideo(
-        VideoFactory.sample({ id: '1', title: '1' }),
-      );
-
-      fakeClient.users.insertCurrentUser(
-        UserFactory.sample({
-          features: { BO_WEB_APP_COPY_OLD_LINK_BUTTON: true },
-          organisation: { id: 'org-bo', name: 'Boclips' },
-        }),
-      );
-
-      const wrapper = render(
-        <MemoryRouter initialEntries={['/videos']}>
-          <App apiClient={fakeClient} boclipsSecurity={stubBoclipsSecurity} />
-        </MemoryRouter>,
-      );
-
-      expect(await wrapper.findByText('Copy link')).toBeVisible();
-      expect(wrapper.getByText('Copy old link')).toBeVisible();
-    });
-  });
-
   describe('window titles', () => {
     it('displays search query in window title', async () => {
       render(

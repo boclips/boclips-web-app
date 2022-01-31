@@ -25,7 +25,7 @@ describe('CopyLinkButton', () => {
         </BoclipsClientProvider>
       </QueryClientProvider>,
     );
-    const button = await wrapper.findByText(/Copy link/);
+    const button = await wrapper.findByLabelText('Copy video link');
     fireEvent.click(button);
 
     await waitFor(() => {
@@ -53,13 +53,13 @@ describe('CopyLinkButton', () => {
       </QueryClientProvider>,
     );
 
-    const button = await wrapper.findByText(/Copy link/);
+    const button = await wrapper.findByLabelText('Copy video link');
 
     act(() => {
       fireEvent.click(button);
     });
 
-    expect(await wrapper.findByText('Copied')).toBeVisible();
+    expect(await wrapper.findByLabelText('Copied')).toBeVisible();
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
       buildVideoDetailsLink(video, user),
     );

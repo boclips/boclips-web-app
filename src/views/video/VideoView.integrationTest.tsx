@@ -81,7 +81,7 @@ describe('Video View', () => {
     expect(
       await wrapper.findByText('Released on Dec 17, 2015 by'),
     ).toBeVisible();
-    expect(wrapper.getByRole('button', { name: 'Copy link' })).toBeVisible();
+    expect(await wrapper.findByLabelText('Copy video link')).toBeVisible();
     expect(await wrapper.findByText('Additional services')).toBeVisible();
   });
 
@@ -136,7 +136,7 @@ describe('Video View', () => {
 
     const wrapper = renderVideoView(['/videos/video-id']);
 
-    const button = await wrapper.findByRole('button', { name: 'Copy link' });
+    const button = await wrapper.findByLabelText('Copy video link');
 
     expect(button).toBeInTheDocument();
   });

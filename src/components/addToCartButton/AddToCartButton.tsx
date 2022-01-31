@@ -87,7 +87,7 @@ export const AddToCartButton = ({
   return (
     <div
       style={{ width }}
-      className={c(`h-12 flex justify-end ${s.svgOutlineNone}`, {
+      className={c(`flex justify-end ${s.svgOutlineNone}`, {
         [s.svgOutline]: cartItem,
       })}
     >
@@ -97,6 +97,7 @@ export const AddToCartButton = ({
           text="Add to cart"
           icon={<CartIcon />}
           width="100%"
+          height="40px"
         />
       ) : (
         <Button
@@ -105,6 +106,7 @@ export const AddToCartButton = ({
           text="Remove"
           icon={<CartIcon />}
           width="100%"
+          height="40px"
         />
       )}
     </div>

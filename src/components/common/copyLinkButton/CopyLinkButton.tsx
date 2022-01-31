@@ -2,24 +2,25 @@ import React from 'react';
 import CopyLinkIcon from 'src/resources/icons/copy-link-icon.svg';
 import CopiedLinkIcon from 'src/resources/icons/copied-link-icon.svg';
 import Button from '@boclips-ui/button';
+import { Tooltip } from '@boclips-ui/tooltip';
 import s from './style.module.less';
 
 interface Props {
   title: string;
   onCopy?: () => void;
   link: string;
-  width?: string;
   disabled?: boolean;
   dataQa?: string;
+  ariaLabel?: string;
 }
 
 export const CopyLinkButton = ({
   title,
   onCopy,
   link,
-  width,
   disabled,
   dataQa,
+  ariaLabel,
 }: Props) => {
   const [copiedToClipboard, setCopiedToClipboard] = React.useState(false);
 
@@ -38,19 +39,23 @@ export const CopyLinkButton = ({
   };
 
   return (
-    <div
-      style={{ width }}
-      className={`h-12 flex justify-end ${s.copyLinkButton} mr-2`}
-    >
-      <Button
-        data-qa={dataQa}
-        onClick={handleClick}
-        text={copiedToClipboard ? 'Copied' : title}
-        type="outline"
-        icon={copiedToClipboard ? <CopiedLinkIcon /> : <CopyLinkIcon />}
-        disabled={disabled}
-        width="100%"
-      />
+    <div className={s.copyLinkButton}>
+      <Tooltip text={copiedToClipboard ? 'Copier' : ariaLabel}>
+        <span>
+          <Button
+            aria-label={copiedToClipboard ? 'Copied' : ariaLabel}
+            data-qa={dataQa}
+            onClick={handleClick}
+            text={copiedToClipboard ? 'Copied' : title}
+            type="outline"
+            icon={copiedToClipboard ? <CopiedLinkIcon /> : <CopyLinkIcon />}
+            disabled={disabled}
+            width="40px"
+            height="40px"
+            iconOnly
+          />
+        </span>
+      </Tooltip>
     </div>
   );
 };

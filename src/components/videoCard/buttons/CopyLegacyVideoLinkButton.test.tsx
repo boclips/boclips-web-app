@@ -33,11 +33,11 @@ describe('CopyLegacyVideoLinkButton', () => {
       </QueryClientProvider>,
     );
 
-    const button = await wrapper.findByText(/Copy old link/);
+    const button = await wrapper.findByLabelText('Copy legacy video link');
 
     fireEvent.click(button);
 
-    expect(await wrapper.findByText('Copied')).toBeVisible();
+    expect(await wrapper.findByLabelText('Copied')).toBeVisible();
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
       'https://myoldvideo.com/videos/this-is-a-test',
     );
