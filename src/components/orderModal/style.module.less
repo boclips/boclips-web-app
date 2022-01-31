@@ -1,91 +1,25 @@
 @import '~@boclips-ui/styles/src/colors';
 
-.modalWrapper {
-  display: none;
-  position: fixed;
-  z-index: 51; // header is set to 50
-  width: 100%;
-  height: 100%;
-  left: 0;
-  &.showModal {
-    display: block;
+.modalTotalPrice {
+  @apply flex justify-between font-bold text-lg pt-5 mt-5 text-gray-900;
+}
+
+.modalItemsList {
+  margin-top: 1rem;
+  overflow: auto;
+  max-height: 50vh;
+
+  &::-webkit-scrollbar {
+    width: 7px;
   }
 
-  &:after {
-    content: '';
-    width: 100vw;
-    height: 100vh;
-    background: rgba(black, 0.5);
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: -1;
+  &::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: none;
   }
 
-  .modal {
-    position: relative;
-    top: 60px;
-    background: white;
-    border-radius: 4px;
-    width: 819px;
-    height: auto;
-    margin: auto;
-    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.13);
-  }
-
-  .modalContent {
-    padding: 2rem 2rem 0 2rem;
-  }
-
-  .modalHeader {
-    @apply flex flex-row justify-between text-blue-900 w-full mb-3 font-normal text-3xl;
-    background: white;
-
-    svg {
-      width: 20px !important;
-      height: 20px !important;
-    }
-  }
-
-  .modalItemsList {
-    margin-top: 1rem;
-    overflow: auto;
-    max-height: 50vh;
-    &::-webkit-scrollbar {
-      width: 7px;
-    }
-
-    &::-webkit-scrollbar-track {
-      border-radius: 100vh;
-      background: none;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: @blue-500;
-      border-radius: 100vh;
-    }
-  }
-
-  .modalFooter {
-    @apply border-t-2 border-blue-300;
-    width: 100%;
-    padding: 0 2rem 2rem 2rem;
-
-    .modalTotalPrice {
-      @apply flex justify-between font-bold text-lg pt-5 mt-5 text-gray-900;
-    }
-  }
-
-  .buttons {
-    height: 44px;
-    display: flex;
-    width: 100%;
-    justify-content: flex-end;
-    margin-top: 1.5rem;
-    button {
-      &:not(span button) {
-        margin-right: 0.5rem;
-      }
-    }
+  &::-webkit-scrollbar-thumb {
+    background: @blue-500;
+    border-radius: 100vh;
   }
 }

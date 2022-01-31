@@ -9,21 +9,26 @@ export interface Props {
   onConfirm?: () => void;
   onCancel?: () => void;
   confirmButtonText?: string;
+  confirmDisabled?: boolean;
   cancelButtonText?: string;
+  dataQa?: string;
 }
 
 export const Bodal: React.FC<Props> = ({
   title,
   onConfirm,
   confirmButtonText = 'Confirm',
+  confirmDisabled = false,
   onCancel,
   cancelButtonText = 'Cancel',
+  dataQa = 'modal',
   children,
 }: PropsWithChildren<Props>) => {
   return (
     <div
       role="dialog"
       aria-labelledby="bodal-title"
+      data-qa={dataQa}
       className={c(s.modalWrapper, { [s.showModal]: true })} // TODO
     >
       <div className={s.modal}>
@@ -46,7 +51,11 @@ export const Bodal: React.FC<Props> = ({
           {children}
           <div className={s.buttons}>
             <Button onClick={onCancel} text={cancelButtonText} type="outline" />
-            <Button onClick={onConfirm} text={confirmButtonText} />
+            <Button
+              onClick={onConfirm}
+              text={confirmButtonText}
+              disabled={confirmDisabled}
+            />
           </div>
         </div>
       </div>

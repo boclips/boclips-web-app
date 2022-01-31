@@ -4,9 +4,9 @@ import { getTotalPriceDisplayValue } from 'src/services/getTotalPriceDisplayValu
 import { Video } from 'boclips-api-client/dist/types';
 import { useCartQuery } from 'src/hooks/api/cartQuery';
 import { useCartValidation } from 'src/components/common/providers/CartValidationProvider';
-import { OrderModal } from '../orderModal/OrderModal';
-import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 import { trackOrderConfirmationModalOpened } from '../common/analytics/Analytics';
+import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
+import { OrderModal } from 'src/components/orderModal/OrderModal';
 
 interface Props {
   videos: Video[];
@@ -18,13 +18,19 @@ interface CartSummaryItem {
 }
 
 export const CartOrderSummary = ({ videos }: Props) => {
-  const boclipsClient = useBoclipsClient();
   const { isCartValid } = useCartValidation();
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const { data: cart } = useCartQuery();
   const [displayErrorMessage, setDisplayErrorMessage] = useState<boolean>(
     false,
   );
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const boclipsClient = useBoclipsClient();
+
+  React.useEffect(() => {
+    if (modalOpen) {
+      trackOrderConfirmationModalOpened(boclipsClient);
+    }
+  }, [modalOpen, boclipsClient]);
 
   const CartSummaryItem = ({ label, value }: CartSummaryItem) => {
     return (
@@ -41,13 +47,7 @@ export const CartOrderSummary = ({ videos }: Props) => {
     }
   }, [isCartValid]);
 
-  React.useEffect(() => {
-    if (modalOpen) {
-      trackOrderConfirmationModalOpened(boclipsClient);
-    }
-  }, [modalOpen, boclipsClient]);
-
-  const transriptsRequested = cart.items?.find(
+  const transcriptsRequested = cart.items?.find(
     (item) => item?.additionalServices?.transcriptRequested,
   );
   const captionsRequested = cart.items?.find(
@@ -80,7 +80,7 @@ export const CartOrderSummary = ({ videos }: Props) => {
             {editingRequested && (
               <CartSummaryItem label="Editing" value="Free" />
             )}
-            {transriptsRequested && (
+            {transcriptsRequested && (
               <CartSummaryItem label="Transcripts" value="Free" />
             )}
             {trimRequested && <CartSummaryItem label="Trimming" value="Free" />}
@@ -108,11 +108,9 @@ export const CartOrderSummary = ({ videos }: Props) => {
           )}
         </div>
       </div>
-      <OrderModal
-        setOpen={setModalOpen}
-        modalOpen={modalOpen}
-        videos={videos}
-      />
+      {modalOpen && (
+        <OrderModal setModalOpen={setModalOpen} videos={videos} cart={cart} />
+      )}
     </>
   );
 };
