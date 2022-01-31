@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import { BoclipsClient } from 'boclips-api-client';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -15,6 +15,7 @@ import { Helmet } from 'react-helmet';
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
 import { WithValidRoles } from 'src/components/common/errors/WithValidRoles';
 import { ROLES } from 'src/types/Roles';
+import { lazyWithRetry } from 'src/services/lazyWithRetry';
 import { BoclipsClientProvider } from './components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSecurityProvider';
 import Appcues from './services/analytics/Appcues';
@@ -27,36 +28,42 @@ declare global {
   }
 }
 
-const SearchResultsView = lazy(
+const SearchResultsView = lazyWithRetry(
   () => import('./views/search/SearchResultsView'),
 );
-const HomeView = lazy(() => import('./views/home/HomeView'));
+const HomeView = lazyWithRetry(() => import('./views/home/HomeView'));
 
-const CartView = lazy(() => import('src/views/cart/CartView'));
+const CartView = lazyWithRetry(() => import('src/views/cart/CartView'));
 
-const OrdersView = lazy(() => import('src/views/orders/OrdersView'));
+const OrdersView = lazyWithRetry(() => import('src/views/orders/OrdersView'));
 
-const OrderView = lazy(() => import('src/views/order/OrderView'));
+const OrderView = lazyWithRetry(() => import('src/views/order/OrderView'));
 
-const VideoView = lazy(() => import('src/views/video/VideoView'));
+const VideoView = lazyWithRetry(() => import('src/views/video/VideoView'));
 
-const OrderConfirmationView = lazy(
+const OrderConfirmationView = lazyWithRetry(
   () => import('src/views/orders/orderConfirmation/OrderConfirmationView'),
 );
 
-const ErrorView = lazy(() => import('src/views/error/ErrorView'));
+const ErrorView = lazyWithRetry(() => import('src/views/error/ErrorView'));
 
-const NotFound = lazy(() => import('src/views/notFound/NotFound'));
+const NotFound = lazyWithRetry(() => import('src/views/notFound/NotFound'));
 
-const FallbackView = lazy(() => import('src/views/fallback/FallbackView'));
+const FallbackView = lazyWithRetry(
+  () => import('src/views/fallback/FallbackView'),
+);
 
-const AccessDeniedView = lazy(
+const AccessDeniedView = lazyWithRetry(
   () => import('src/views/accessDenied/AccessDenied'),
 );
 
-const LibraryView = lazy(() => import('src/views/library/LibraryView'));
+const LibraryView = lazyWithRetry(
+  () => import('src/views/library/LibraryView'),
+);
 
-const PlaylistView = lazy(() => import('src/views/playlist/PlaylistView'));
+const PlaylistView = lazyWithRetry(
+  () => import('src/views/playlist/PlaylistView'),
+);
 
 interface Props {
   apiClient: BoclipsClient;
