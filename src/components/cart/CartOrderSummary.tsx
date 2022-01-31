@@ -4,9 +4,9 @@ import { getTotalPriceDisplayValue } from 'src/services/getTotalPriceDisplayValu
 import { Video } from 'boclips-api-client/dist/types';
 import { useCartQuery } from 'src/hooks/api/cartQuery';
 import { useCartValidation } from 'src/components/common/providers/CartValidationProvider';
+import { OrderModal } from 'src/components/orderModal/OrderModal';
 import { trackOrderConfirmationModalOpened } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
-import { OrderModal } from 'src/components/orderModal/OrderModal';
 
 interface Props {
   videos: Video[];

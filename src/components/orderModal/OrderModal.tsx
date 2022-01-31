@@ -7,10 +7,10 @@ import { useHistory } from 'react-router-dom';
 import { getTotalPriceDisplayValue } from 'src/services/getTotalPriceDisplayValue';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { Cart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
 import s from './style.module.less';
 import { trackOrderConfirmed } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
-import { Cart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
 import { Bodal } from '../common/bodal/Bodal';
 
 export interface Props {
@@ -55,7 +55,7 @@ export const OrderModal = ({ setModalOpen, videos, cart }: Props) => {
       title="Order summary"
       confirmButtonText="Confirm order"
       onConfirm={handleConfirm}
-      confirmDisabled={isUserLoading || !user || isLoading}
+      isLoading={isUserLoading || !user || isLoading}
       onCancel={() => setModalOpen(false)}
       dataQa="order-modal"
       cancelButtonText="Go back to cart"

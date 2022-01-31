@@ -2,6 +2,7 @@ import {
   fireEvent,
   render,
   screen,
+  waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import React from 'react';
@@ -201,4 +202,30 @@ it('can display an error message on failed playlist creation', async () => {
   expect(
     await wrapper.findByText('Please refresh the page and try again'),
   ).toBeVisible();
+});
+
+it('display spinner in confirm button after creating playlist', async () => {
+  const client = new FakeBoclipsClient();
+  client.users.insertCurrentUser(
+    UserFactory.sample({ features: { BO_WEB_APP_ENABLE_PLAYLISTS: true } }),
+  );
+
+  const wrapper = render(
+    <MemoryRouter initialEntries={['/library']}>
+      <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+    </MemoryRouter>,
+  );
+  expect(
+    await wrapper.findByRole('button', { name: 'Create new playlist' }),
+  ).toBeVisible();
+
+  fireEvent.click(wrapper.getByRole('button', { name: 'Create new playlist' }));
+
+  const titleInput = wrapper.getByLabelText('*Playlist name');
+  userEvent.type(titleInput, 'My new playlist');
+  fireEvent.click(wrapper.getByRole('button', { name: 'Create playlist' }));
+
+  await waitFor(() => {
+    expect(wrapper.getByTestId('spinner')).toBeInTheDocument();
+  });
 });

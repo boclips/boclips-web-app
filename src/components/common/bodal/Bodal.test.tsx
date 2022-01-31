@@ -70,6 +70,24 @@ describe('The mighty Bodal', () => {
     expect(handleCancel).toBeCalledTimes(1);
   });
 
+  it(`renders a spinner in confirm button when loading and prevents clicking`, () => {
+    const onConfirmSpy = jest.fn();
+    const wrapper = render(
+      <Bodal
+        isLoading
+        onConfirm={onConfirmSpy}
+        title="The Bodal"
+        confirmButtonText="confirm with spinner"
+      />,
+    );
+    const confirmButton = wrapper.getByText('confirm with spinner');
+
+    fireEvent.click(confirmButton);
+    expect(onConfirmSpy).not.toBeCalled();
+
+    expect(wrapper.getByTestId('spinner')).toBeInTheDocument();
+  });
+
   // Nice to have for later
   xit('calls onCancel when clicking outside of the modal', () => {
     const handleCancel = jest.fn();

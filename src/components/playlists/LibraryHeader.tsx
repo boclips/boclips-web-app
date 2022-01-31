@@ -23,6 +23,7 @@ export const LibraryHeader = () => {
     isSuccess,
     data,
     isError,
+    isLoading,
   } = usePlaylistMutation();
   const history = useHistory();
 
@@ -80,6 +81,7 @@ export const LibraryHeader = () => {
           confirmButtonText="Create playlist"
           onConfirm={handleConfirm}
           onCancel={() => setModalOpen(false)}
+          isLoading={isLoading}
         >
           <BoInput
             label="Playlist name"

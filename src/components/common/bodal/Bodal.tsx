@@ -1,7 +1,8 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, ReactElement } from 'react';
 import c from 'classnames';
 import Button from '@boclips-ui/button';
 import CloseIconSVG from 'src/resources/icons/cross-icon.svg';
+import { LoadingOutlined } from '@ant-design/icons';
 import s from './style.module.less';
 
 export interface Props {
@@ -9,7 +10,7 @@ export interface Props {
   onConfirm?: () => void;
   onCancel?: () => void;
   confirmButtonText?: string;
-  confirmDisabled?: boolean;
+  isLoading?: boolean;
   cancelButtonText?: string;
   dataQa?: string;
 }
@@ -18,12 +19,18 @@ export const Bodal: React.FC<Props> = ({
   title,
   onConfirm,
   confirmButtonText = 'Confirm',
-  confirmDisabled = false,
+  isLoading = false,
   onCancel,
   cancelButtonText = 'Cancel',
   dataQa = 'modal',
   children,
 }: PropsWithChildren<Props>) => {
+  const getSpinner = (): ReactElement =>
+    isLoading && (
+      <span data-qa="spinner" className="pb-2">
+        <LoadingOutlined />
+      </span>
+    );
   return (
     <div
       role="dialog"
@@ -54,7 +61,8 @@ export const Bodal: React.FC<Props> = ({
             <Button
               onClick={onConfirm}
               text={confirmButtonText}
-              disabled={confirmDisabled}
+              disabled={isLoading}
+              icon={getSpinner()}
             />
           </div>
         </div>
