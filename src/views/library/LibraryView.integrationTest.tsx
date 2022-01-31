@@ -14,7 +14,10 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { BoclipsClient } from 'boclips-api-client';
 import userEvent from '@testing-library/user-event';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient } from 'react-query';
+import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
+import { Link } from 'boclips-api-client/dist/types';
+import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 
 const setPlaylistsFeature = (client: FakeBoclipsClient, enabled: boolean) =>
   client.users.insertCurrentUser(
@@ -23,11 +26,13 @@ const setPlaylistsFeature = (client: FakeBoclipsClient, enabled: boolean) =>
 
 const renderLibraryView = (client: BoclipsClient) =>
   render(
-    <QueryClientProvider client={new QueryClient()}>
-      <MemoryRouter initialEntries={['/library']}>
-        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
-      </MemoryRouter>
-    </QueryClientProvider>,
+    <MemoryRouter initialEntries={['/library']}>
+      <App
+        apiClient={client}
+        boclipsSecurity={stubBoclipsSecurity}
+        reactQueryClient={new QueryClient()}
+      />
+    </MemoryRouter>,
   );
 
 describe('LibraryView', () => {
@@ -48,14 +53,13 @@ describe('LibraryView', () => {
       expect(await wrapper.findByText('Your Library')).toBeVisible();
     });
 
-    // TODO() - this was a false positive, need to update the FakeApiClient for this to work properly
-    xit('renders playlists created by the user', async () => {
+    it('renders playlists created by the user', async () => {
       const client = new FakeBoclipsClient();
       setPlaylistsFeature(client, true);
 
       const playlists = [
-        CollectionFactory.sample({ title: 'Playlist 1' }),
-        CollectionFactory.sample({ title: 'Playlist 2' }),
+        CollectionFactory.sample({ id: '1', title: 'Playlist 1' }),
+        CollectionFactory.sample({ id: '2', title: 'Playlist 2' }),
       ];
 
       playlists.forEach((it) => client.collections.addToFake(it));
@@ -64,6 +68,39 @@ describe('LibraryView', () => {
 
       expect(await wrapper.findByText('Playlist 1')).toBeVisible();
       expect(await wrapper.findByText('Playlist 2')).toBeVisible();
+    });
+
+    it('displays thumbnails for playlist', async () => {
+      const client = new FakeBoclipsClient();
+      setPlaylistsFeature(client, true);
+
+      const video = VideoFactory.sample({
+        title: 'My amazing video',
+        playback: PlaybackFactory.sample({
+          links: {
+            thumbnail: new Link({ href: 'http://thumbnail.jpg' }),
+            createPlayerInteractedWithEvent: new Link({ href: 'todo' }),
+          },
+        }),
+      });
+
+      const playlist = CollectionFactory.sample({
+        id: '1',
+        title: 'My collection about cats',
+        videos: [video],
+      });
+
+      client.collections.addToFake(playlist);
+      client.videos.insertVideo(video);
+
+      const wrapper = renderLibraryView(client);
+
+      expect(
+        await wrapper.findByText('My collection about cats'),
+      ).toBeVisible();
+      expect(
+        await wrapper.findByLabelText('Thumbnail of My amazing video'),
+      ).toBeVisible();
     });
 
     describe('Creating playlists', () => {
@@ -101,12 +138,12 @@ describe('LibraryView', () => {
         ).toBeVisible();
       });
 
-      it('can cancel modal', () => {
+      it('can cancel modal', async () => {
         const client = new FakeBoclipsClient();
         setPlaylistsFeature(client, true);
         const wrapper = renderLibraryView(client);
 
-        openPlaylistCreationModal(wrapper);
+        await openPlaylistCreationModal(wrapper);
 
         fireEvent.click(wrapper.getByRole('button', { name: 'Cancel' }));
 
@@ -114,12 +151,12 @@ describe('LibraryView', () => {
         expect(modal).not.toBeInTheDocument();
       });
 
-      it('cannot create a playlist without a title', () => {
+      it('cannot create a playlist without a title', async () => {
         const client = new FakeBoclipsClient();
         setPlaylistsFeature(client, true);
         const wrapper = renderLibraryView(client);
 
-        openPlaylistCreationModal(wrapper);
+        await openPlaylistCreationModal(wrapper);
 
         fireEvent.click(
           wrapper.getByRole('button', { name: 'Create playlist' }),
@@ -134,7 +171,7 @@ describe('LibraryView', () => {
         setPlaylistsFeature(client, true);
         const wrapper = renderLibraryView(client);
 
-        openPlaylistCreationModal(wrapper);
+        await openPlaylistCreationModal(wrapper);
         fillPlaylistName(wrapper, 'My new playlist');
         fillPlaylistDescription(wrapper, 'Blabla new playlist');
         confirmPlaylistCreationModal(wrapper);
@@ -153,7 +190,7 @@ describe('LibraryView', () => {
         const wrapper = renderLibraryView(client);
         client.collections.setCreateCollectionErrorMessage('500 server error');
 
-        openPlaylistCreationModal(wrapper);
+        await openPlaylistCreationModal(wrapper);
         fillPlaylistName(wrapper, 'My new playlist');
         confirmPlaylistCreationModal(wrapper);
 
@@ -170,7 +207,7 @@ describe('LibraryView', () => {
         setPlaylistsFeature(client, true);
         const wrapper = renderLibraryView(client);
 
-        openPlaylistCreationModal(wrapper);
+        await openPlaylistCreationModal(wrapper);
         fillPlaylistName(wrapper, 'My new playlist');
         confirmPlaylistCreationModal(wrapper);
 
@@ -183,9 +220,9 @@ describe('LibraryView', () => {
         });
       });
 
-      const openPlaylistCreationModal = (wrapper: RenderResult) =>
+      const openPlaylistCreationModal = async (wrapper: RenderResult) =>
         fireEvent.click(
-          wrapper.getByRole('button', { name: 'Create new playlist' }),
+          await wrapper.findByRole('button', { name: 'Create new playlist' }),
         );
 
       const fillPlaylistField = (

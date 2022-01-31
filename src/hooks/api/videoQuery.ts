@@ -30,7 +30,7 @@ export const useGetOrderedVideos = (videoIds: string[]) => {
   );
 };
 
-export const useFindOrGetVideo = (videoId: string) => {
+export const useFindOrGetVideo = (videoId?: string) => {
   const queryClient = useQueryClient();
   const apiClient = useBoclipsClient();
   const cachedVideos = queryClient.getQueryData<Pageable<Video>>(
@@ -39,5 +39,6 @@ export const useFindOrGetVideo = (videoId: string) => {
 
   return useQuery(['videos', videoId], () => doGetVideo(videoId, apiClient), {
     initialData: () => cachedVideos?.page.find((v) => v.id === videoId),
+    enabled: !!videoId,
   });
 };
