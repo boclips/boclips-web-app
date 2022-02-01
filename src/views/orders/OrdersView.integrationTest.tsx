@@ -9,7 +9,6 @@ import {
 } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { OrderStatus } from 'boclips-api-client/dist/sub-clients/orders/model/Order';
-import { OrderCaptionStatus } from 'boclips-api-client/dist/sub-clients/orders/model/OrderItem';
 import { Link } from 'boclips-api-client/dist/types';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
@@ -138,6 +137,7 @@ describe('OrderView', () => {
     const items = [
       OrderItemFactory.sample({
         id: 'item-1',
+        video: OrderItemFactory.sampleVideo({ id: '123' }),
       }),
       OrderItemFactory.sample({
         id: 'item-2',
@@ -150,6 +150,7 @@ describe('OrderView', () => {
     });
 
     fakeClient.orders.insertOrderFixture(order);
+    fakeClient.videos.insertVideo(VideoFactory.sample({ id: '123' }));
 
     const wrapper = render(
       <MemoryRouter initialEntries={['/orders']}>
@@ -167,7 +168,7 @@ describe('OrderView', () => {
     );
   });
 
-  it('shows first available thumbnail', async () => {
+  it('shows thumbnail from first video in order', async () => {
     const fakeClient = new FakeBoclipsClient();
 
     const videos = [
@@ -175,10 +176,9 @@ describe('OrderView', () => {
         id: '123',
         playback: PlaybackFactory.sample({
           links: {
-            thumbnail: new Link({ href: null, templated: true }),
+            thumbnail: new Link({ href: 'https://validThumbnail.com' }),
             createPlayerInteractedWithEvent: new Link({
-              href: 'player interacted with',
-              templated: true,
+              href: '',
             }),
           },
         }),
@@ -187,13 +187,9 @@ describe('OrderView', () => {
         id: '234',
         playback: PlaybackFactory.sample({
           links: {
-            thumbnail: new Link({
-              href: 'https://validThumbnail.com',
-              templated: true,
-            }),
+            thumbnail: new Link({ href: 'https://secondThumbnail.com' }),
             createPlayerInteractedWithEvent: new Link({
-              href: 'player interacted with',
-              templated: true,
+              href: '',
             }),
           },
         }),
@@ -203,35 +199,11 @@ describe('OrderView', () => {
     const items = [
       OrderItemFactory.sample({
         id: 'item-1',
-        video: {
-          id: '123',
-          types: ['123'],
-          title: 'videoooo',
-          videoReference: 'i am a reference',
-          maxResolutionAvailable: true,
-          captionStatus: OrderCaptionStatus.PROCESSING,
-          _links: {
-            fullProjection: new Link({ href: 'i am a link', templated: true }),
-            videoUpload: new Link({ href: 'i am a link', templated: true }),
-            captionAdmin: new Link({ href: 'i am a link', templated: true }),
-          },
-        },
+        video: OrderItemFactory.sampleVideo({ id: '123' }),
       }),
       OrderItemFactory.sample({
         id: 'item-2',
-        video: {
-          id: '234',
-          types: ['123'],
-          title: 'videoooo',
-          videoReference: 'i am a reference',
-          maxResolutionAvailable: true,
-          captionStatus: OrderCaptionStatus.PROCESSING,
-          _links: {
-            fullProjection: new Link({ href: 'i am a link', templated: true }),
-            videoUpload: new Link({ href: 'i am a link', templated: true }),
-            captionAdmin: new Link({ href: 'i am a link', templated: true }),
-          },
-        },
+        video: OrderItemFactory.sampleVideo({ id: '234' }),
       }),
     ];
 

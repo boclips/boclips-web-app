@@ -23,14 +23,6 @@ export const useGetVideos = (videoIds: string[]) => {
   });
 };
 
-export const useGetOrderedVideos = (videoIds: string[]) => {
-  const apiClient = useBoclipsClient();
-
-  return useQuery(['orderVideos', videoIds], () =>
-    doGetVideos(videoIds, apiClient),
-  );
-};
-
 export const useFindOrGetVideo = (videoId?: string) => {
   const queryClient = useQueryClient();
   const apiClient = useBoclipsClient();
