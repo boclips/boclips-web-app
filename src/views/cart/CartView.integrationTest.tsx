@@ -41,6 +41,9 @@ describe('CartView', () => {
     },
     types: [{ name: 'INSTRUCTIONAL', id: 3 }],
   });
+  beforeEach(() => {
+    window.resizeTo(1680, 1024);
+  });
 
   it('when no items in cart, displays empty cart view with basic header', async () => {
     const wrapper = renderCartView(new FakeBoclipsClient());

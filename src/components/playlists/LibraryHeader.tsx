@@ -74,7 +74,6 @@ export const LibraryHeader = () => {
           />
         }
       />
-
       {modalOpen && (
         <Bodal
           title="Create new playlist"

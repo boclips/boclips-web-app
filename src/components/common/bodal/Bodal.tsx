@@ -3,6 +3,8 @@ import c from 'classnames';
 import Button from '@boclips-ui/button';
 import CloseIconSVG from 'src/resources/icons/cross-icon.svg';
 import { LoadingOutlined } from '@ant-design/icons';
+import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import { Overlay } from 'src/components/common/overlay/Overlay';
 import s from './style.module.less';
 
 export interface Props {
@@ -31,7 +33,40 @@ export const Bodal: React.FC<Props> = ({
         <LoadingOutlined />
       </span>
     );
-  return (
+  const header = (
+    <>
+      <span className="text-gray-900 text-xl font-medium" id="bodal-title">
+        {title}
+      </span>
+      <button
+        type="button"
+        aria-label={`Close ${title} modal`}
+        onClick={onCancel}
+      >
+        <CloseIconSVG className="stroke-current stroke-2" />
+      </button>
+    </>
+  );
+  const breakpoints = useMediaBreakPoint();
+  const mobileView =
+    breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
+
+  const footer = (
+    <>
+      <Button onClick={onCancel} text={cancelButtonText} type="outline" />
+      <Button
+        onClick={onConfirm}
+        text={confirmButtonText}
+        disabled={isLoading}
+        icon={getSpinner()}
+      />
+    </>
+  );
+  return mobileView ? (
+    <Overlay header={header} footer={footer}>
+      {children}
+    </Overlay>
+  ) : (
     <div
       role="dialog"
       aria-labelledby="bodal-title"
@@ -40,31 +75,9 @@ export const Bodal: React.FC<Props> = ({
     >
       <div className={s.modal}>
         <div className={s.modalContent}>
-          <div className={s.modalHeader}>
-            <span
-              className="text-gray-900 text-xl font-medium"
-              id="bodal-title"
-            >
-              {title}
-            </span>
-            <button
-              type="button"
-              aria-label={`Close ${title} modal`}
-              onClick={onCancel}
-            >
-              <CloseIconSVG className="stroke-current stroke-2" />
-            </button>
-          </div>
+          <div className={s.modalHeader}>{header}</div>
           {children}
-          <div className={s.buttons}>
-            <Button onClick={onCancel} text={cancelButtonText} type="outline" />
-            <Button
-              onClick={onConfirm}
-              text={confirmButtonText}
-              disabled={isLoading}
-              icon={getSpinner()}
-            />
-          </div>
+          <div className={s.buttons}>{footer}</div>
         </div>
       </div>
     </div>

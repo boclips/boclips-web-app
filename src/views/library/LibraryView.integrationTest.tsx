@@ -46,11 +46,15 @@ describe('LibraryView', () => {
   });
 
   describe('Feature enabled', () => {
+    beforeEach(() => {
+      window.resizeTo(1680, 1024);
+    });
+
     it('loads the title for library page', async () => {
       const client = new FakeBoclipsClient();
       setPlaylistsFeature(client, true);
       const wrapper = renderLibraryView(client);
-      expect(await wrapper.findByText('Your Library')).toBeVisible();
+      expect(await wrapper.findByTitle('Your Library')).toBeVisible();
     });
 
     it('renders playlists created by the user', async () => {
