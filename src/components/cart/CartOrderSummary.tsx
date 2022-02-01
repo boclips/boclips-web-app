@@ -1,15 +1,15 @@
 import React, { ReactElement, useState } from 'react';
 import Button from '@boclips-ui/button';
 import { getTotalPriceDisplayValue } from 'src/services/getTotalPriceDisplayValue';
-import { Video } from 'boclips-api-client/dist/types';
-import { useCartQuery } from 'src/hooks/api/cartQuery';
 import { useCartValidation } from 'src/components/common/providers/CartValidationProvider';
 import { OrderModal } from 'src/components/orderModal/OrderModal';
+import { Cart as ApiCart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
+import { useGetVideos } from 'src/hooks/api/videoQuery';
 import { trackOrderConfirmationModalOpened } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 
 interface Props {
-  videos: Video[];
+  cart: ApiCart;
 }
 
 interface CartSummaryItem {
@@ -17,14 +17,14 @@ interface CartSummaryItem {
   value: string | ReactElement;
 }
 
-export const CartOrderSummary = ({ videos }: Props) => {
+export const CartOrderSummary = ({ cart }: Props) => {
   const { isCartValid } = useCartValidation();
-  const { data: cart } = useCartQuery();
   const [displayErrorMessage, setDisplayErrorMessage] = useState<boolean>(
     false,
   );
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const boclipsClient = useBoclipsClient();
+  const { data: videos } = useGetVideos(cart.items.map((it) => it.videoId));
 
   React.useEffect(() => {
     if (modalOpen) {

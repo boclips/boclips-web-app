@@ -10,6 +10,8 @@ import { CartItemFactory } from 'boclips-api-client/dist/test-support/CartsFacto
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { CartValidationProvider } from 'src/components/common/providers/CartValidationProvider';
+import { Video } from 'boclips-api-client/dist/types';
+import { CartItem as CartItemType } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
 
 describe('CartItem', () => {
   let client: any;
@@ -35,19 +37,37 @@ describe('CartItem', () => {
     );
   }
 
-  it('displays cart item with title and additional services', async () => {
-    const cartItem = CartItemFactory.sample({
-      id: 'cart-item-id-1',
-      videoId: '123',
+  const setupCartItemWithVideo = (
+    fakeApiClient: FakeBoclipsClient,
+    cartItem: Partial<CartItemType>,
+    video: Partial<Video>,
+  ) => {
+    const fullVideo = VideoFactory.sample(video);
+    const fullCartItem = CartItemFactory.sample({
+      ...cartItem,
+      videoId: fullVideo.id,
     });
 
-    const video = VideoFactory.sample({
-      id: '123',
-      title: 'this is cart item test',
-    });
+    fakeApiClient.videos.insertVideo(fullVideo);
+    return fullCartItem;
+  };
+
+  it('displays cart item with title and additional services', async () => {
+    const fakeApiClient = new FakeBoclipsClient();
+    const cartItem = setupCartItemWithVideo(
+      fakeApiClient,
+      CartItemFactory.sample({
+        id: 'cart-item-id-1',
+      }),
+      VideoFactory.sample({
+        id: '123',
+        title: 'this is cart item test',
+      }),
+    );
 
     const wrapper = renderCartItem(
-      <CartItem videoItem={video} cartItem={cartItem} />,
+      <CartItem cartItem={cartItem} />,
+      fakeApiClient,
     );
 
     expect(
@@ -66,18 +86,17 @@ describe('CartItem', () => {
   });
 
   it('opens trim video options on when checkbox is checked', async () => {
-    const cartItem = CartItemFactory.sample({
-      id: 'cart-item-id-1',
-      videoId: '123',
-    });
+    const fakeApiClient = new FakeBoclipsClient();
 
-    const video = VideoFactory.sample({
-      id: '123',
-      title: 'this is cart item test',
-    });
+    const cartItem = setupCartItemWithVideo(
+      fakeApiClient,
+      CartItemFactory.sample({}),
+      VideoFactory.sample({}),
+    );
 
     const wrapper = renderCartItem(
-      <CartItem videoItem={video} cartItem={cartItem} />,
+      <CartItem cartItem={cartItem} />,
+      fakeApiClient,
     );
 
     fireEvent.click(await wrapper.findByText('Trim video'));
@@ -93,6 +112,7 @@ describe('CartItem', () => {
     });
 
     const fakeClient = new FakeBoclipsClient();
+    fakeClient.videos.insertVideo(video);
 
     let cart = await fakeClient.carts.getCart();
 
@@ -102,7 +122,7 @@ describe('CartItem', () => {
     );
 
     const wrapper = renderCartItem(
-      <CartItem videoItem={video} cartItem={cartItemFromCart} />,
+      <CartItem cartItem={cartItemFromCart} />,
       fakeClient,
     );
 
@@ -127,29 +147,29 @@ describe('CartItem', () => {
   });
 
   it('displays the trim values if cart item has trim info specified', async () => {
-    const video = VideoFactory.sample({
-      id: '123',
-      title: 'this is cart item test',
-    });
+    const fakeApiClient = new FakeBoclipsClient();
 
-    const cartItem = CartItemFactory.sample({
-      id: 'cart-item-id-1',
-      videoId: '123',
-      additionalServices: {
-        trim: {
-          from: '01:21',
-          to: '02:21',
+    const cartItem = setupCartItemWithVideo(
+      fakeApiClient,
+      CartItemFactory.sample({
+        additionalServices: {
+          trim: {
+            from: '01:21',
+            to: '02:21',
+          },
         },
-      },
-    });
+      }),
+      VideoFactory.sample({}),
+    );
 
     const wrapper = renderCartItem(
-      <CartItem videoItem={video} cartItem={cartItem} />,
+      <CartItem cartItem={cartItem} />,
+      fakeApiClient,
     );
 
-    expect(wrapper.getByLabelText('From:').closest('input').value).toEqual(
-      '01:21',
-    );
+    expect(
+      (await wrapper.findByLabelText('From:')).closest('input').value,
+    ).toEqual('01:21');
 
     expect(wrapper.getByLabelText('To:').closest('input').value).toEqual(
       '02:21',
@@ -157,28 +177,26 @@ describe('CartItem', () => {
   });
 
   it('sets trim to null when trim checkbox is unset', async () => {
-    const video = VideoFactory.sample({
-      id: 'trim-null-id-1',
-      title: 'this is cart item test',
-    });
+    const fakeApiClient = new FakeBoclipsClient();
 
-    const cartItem = CartItemFactory.sample({
-      id: 'cart-item-id-1',
-      videoId: 'trim-null-id-1',
-      additionalServices: {
-        trim: {
-          from: '2:00',
-          to: '3:00',
+    const cartItem = setupCartItemWithVideo(
+      fakeApiClient,
+      CartItemFactory.sample({
+        additionalServices: {
+          trim: {
+            from: '2:00',
+            to: '3:00',
+          },
         },
-      },
-    });
+      }),
+      VideoFactory.sample({}),
+    );
 
-    const fakeClient = new FakeBoclipsClient();
-    fakeClient.carts.insertCartItem(cartItem);
+    fakeApiClient.carts.insertCartItem(cartItem);
 
     const wrapper = renderCartItem(
-      <CartItem videoItem={video} cartItem={cartItem} />,
-      fakeClient,
+      <CartItem cartItem={cartItem} />,
+      fakeApiClient,
     );
 
     fireEvent.click(await wrapper.findByText('Trim video'));
@@ -186,7 +204,7 @@ describe('CartItem', () => {
     expect(wrapper.queryByText(/From:/)).not.toBeInTheDocument();
     expect(wrapper.queryByText(/To:/)).not.toBeInTheDocument();
 
-    const cart = await fakeClient.carts.getCart();
+    const cart = await fakeApiClient.carts.getCart();
 
     await waitFor(() => {
       expect(cart.items[0].additionalServices.trim).toEqual(null);
@@ -194,29 +212,24 @@ describe('CartItem', () => {
   });
 
   it('sets transcript request to true when checkbox is checked and to false when is unchecked', async () => {
-    const video = VideoFactory.sample({
-      id: 'transcript-test',
-      title: 'this is cart item test',
-    });
-
-    const cartItem = CartItemFactory.sample({
-      id: 'cart-item-id-1',
-      videoId: 'transcript-test',
-      additionalServices: {
-        trim: {
-          from: '2:00',
-          to: '3:00',
-        },
-        transcriptRequested: false,
-      },
-    });
-
     const fakeClient = new FakeBoclipsClient();
+
+    const cartItem = setupCartItemWithVideo(
+      fakeClient,
+      CartItemFactory.sample({
+        additionalServices: {
+          transcriptRequested: false,
+        },
+      }),
+      VideoFactory.sample({}),
+    );
+
     fakeClient.carts.insertCartItem(cartItem);
     const wrapper = renderCartItem(
-      <CartItem videoItem={video} cartItem={cartItem} />,
+      <CartItem cartItem={cartItem} />,
       fakeClient,
     );
+
     fireEvent.click(await wrapper.findByText('Request transcripts'));
 
     let cart = await fakeClient.carts.getCart();
@@ -239,33 +252,26 @@ describe('CartItem', () => {
   });
 
   it('sets captions request to true when checkbox is checked and to false when is unchecked', async () => {
-    const video = VideoFactory.sample({
-      id: 'captions-test', // this id must be unique for the test
-      title: 'this is cart item test',
-    });
-
-    const cartItem = CartItemFactory.sample({
-      id: 'cart-item-id-1',
-      videoId: 'captions-test', // this needs to be the same as in video.id
-      additionalServices: {
-        trim: {
-          from: '2:00',
-          to: '3:00',
-        },
-        transcriptRequested: false,
-        captionsRequested: false,
-      },
-    });
-
     const fakeClient = new FakeBoclipsClient();
+
+    const cartItem = setupCartItemWithVideo(
+      fakeClient,
+      CartItemFactory.sample({
+        additionalServices: {
+          captionsRequested: false,
+        },
+      }),
+      VideoFactory.sample({}),
+    );
+
     fakeClient.carts.insertCartItem(cartItem);
 
     const wrapper = renderCartItem(
-      <CartItem videoItem={video} cartItem={cartItem} />,
+      <CartItem cartItem={cartItem} />,
       fakeClient,
     );
 
-    await fireEvent.click(await wrapper.findByText('Request English captions'));
+    fireEvent.click(await wrapper.findByText('Request English captions'));
 
     let cart = await fakeClient.carts.getCart();
 
@@ -283,28 +289,16 @@ describe('CartItem', () => {
   });
 
   it('Opens a input box when you tick edit request', async () => {
-    const video = VideoFactory.sample({
-      id: 'edit-request-id-1',
-      title: 'this is cart item test',
-    });
-
-    const cartItem = CartItemFactory.sample({
-      id: 'edit-request-id-1',
-      videoId: 'captions-test',
-      additionalServices: {
-        trim: {
-          from: '2:00',
-          to: '3:00',
-        },
-        transcriptRequested: false,
-        captionsRequested: false,
-      },
-    });
-
     const fakeClient = new FakeBoclipsClient();
 
+    const cartItem = setupCartItemWithVideo(
+      fakeClient,
+      CartItemFactory.sample({}),
+      VideoFactory.sample({}),
+    );
+
     const wrapper = renderCartItem(
-      <CartItem videoItem={video} cartItem={cartItem} />,
+      <CartItem cartItem={cartItem} />,
       fakeClient,
     );
 
@@ -318,21 +312,18 @@ describe('CartItem', () => {
       await wrapper.findByText('Specify how you’d like to edit the video'),
     ).toBeInTheDocument();
   });
+
   it('Saves edit request to cart', async () => {
-    const video = VideoFactory.sample({
-      id: 'edit-request-id-2',
-      title: 'this is cart item test',
-    });
-
-    const cartItem = CartItemFactory.sample({
-      id: 'edit-request-id-2',
-      videoId: 'edit-request-id-2',
-    });
-
     const fakeClient = new FakeBoclipsClient();
 
+    const cartItem = setupCartItemWithVideo(
+      fakeClient,
+      CartItemFactory.sample({}),
+      VideoFactory.sample({}),
+    );
+
     const wrapper = renderCartItem(
-      <CartItem videoItem={video} cartItem={cartItem} />,
+      <CartItem cartItem={cartItem} />,
       fakeClient,
     );
 
@@ -363,23 +354,20 @@ describe('CartItem', () => {
   });
 
   it('Can set an edit request to null', async () => {
-    const video = VideoFactory.sample({
-      id: 'edit-request-id-3',
-      title: 'this is cart item test',
-    });
-
-    const cartItem = CartItemFactory.sample({
-      id: 'edit-request-id-3',
-      videoId: 'edit-request-id-3',
-      additionalServices: {
-        editRequest: 'this was a mistake',
-      },
-    });
-
     const fakeClient = new FakeBoclipsClient();
 
+    const cartItem = setupCartItemWithVideo(
+      fakeClient,
+      CartItemFactory.sample({
+        additionalServices: {
+          editRequest: 'this was a mistake',
+        },
+      }),
+      VideoFactory.sample({}),
+    );
+
     const wrapper = renderCartItem(
-      <CartItem videoItem={video} cartItem={cartItem} />,
+      <CartItem cartItem={cartItem} />,
       fakeClient,
     );
 
