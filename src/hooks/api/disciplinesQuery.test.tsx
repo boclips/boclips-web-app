@@ -1,9 +1,8 @@
-import React from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient } from 'react-query';
 import { renderHook } from '@testing-library/react-hooks';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
+import { wrapperWithClients } from 'src/testSupport/wrapper';
 import {
   DisciplineWithSubjectOffering,
   useGetDisciplinesQuery,
@@ -171,14 +170,8 @@ const renderWithDisciplines = async ({
     boclipsClient.disciplines.insertDiscipline(discipline),
   );
 
-  const wrapper = ({ children }) => (
-    <BoclipsClientProvider client={boclipsClient}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </BoclipsClientProvider>
-  );
-
   const { result, waitFor } = renderHook(() => useGetDisciplinesQuery(), {
-    wrapper,
+    wrapper: wrapperWithClients(boclipsClient, queryClient),
   });
 
   await waitFor(() => result.current.isSuccess);

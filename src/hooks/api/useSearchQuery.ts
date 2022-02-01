@@ -6,6 +6,8 @@ import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientP
 import { FilterKey } from 'src/types/search/FilterKey';
 import dayjs from 'dayjs';
 
+export const SEARCH_BASE_KEY = 'videos';
+
 export interface SearchQuery {
   query: string;
   page: number;
@@ -40,7 +42,7 @@ const doSearch = (
   });
 
 const generateSearchKey = ({ query, page, pageSize, filters }: SearchQuery) => [
-  'videosSearch',
+  SEARCH_BASE_KEY,
   { query, page, pageSize, filters },
 ];
 

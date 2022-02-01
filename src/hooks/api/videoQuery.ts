@@ -1,8 +1,9 @@
 import { useQuery, useQueryClient } from 'react-query';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { BoclipsClient } from 'boclips-api-client';
+import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
+import { SEARCH_BASE_KEY } from 'src/hooks/api/useSearchQuery';
 
 export const doGetVideos = (videoIds: string[], apiClient: BoclipsClient) => {
   return apiClient.videos
@@ -33,12 +34,26 @@ export const useGetOrderedVideos = (videoIds: string[]) => {
 export const useFindOrGetVideo = (videoId?: string) => {
   const queryClient = useQueryClient();
   const apiClient = useBoclipsClient();
-  const cachedVideos = queryClient.getQueryData<Pageable<Video>>(
-    'videosSearch',
+  const cachedVideos = queryClient.getQueriesData<Pageable<Video>>(
+    SEARCH_BASE_KEY,
   );
 
-  return useQuery(['videos', videoId], () => doGetVideo(videoId, apiClient), {
-    initialData: () => cachedVideos?.page.find((v) => v.id === videoId),
+  return useQuery(['video', videoId], () => doGetVideo(videoId, apiClient), {
+    initialData: () => findVideoInSearchCache(cachedVideos, videoId),
     enabled: !!videoId,
   });
+};
+
+const findVideoInSearchCache = (
+  cache: [any, Pageable<Video>][],
+  videoId: string,
+) => {
+  let cachedVideoFromSearch;
+
+  cache.find(([key, videos]) => {
+    cachedVideoFromSearch = videos?.page?.find((v) => v.id === videoId);
+    return cachedVideoFromSearch ? [key, videos] : undefined;
+  });
+
+  return cachedVideoFromSearch;
 };
