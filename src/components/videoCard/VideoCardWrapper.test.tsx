@@ -6,8 +6,9 @@ import { render } from 'src/testSupport/render';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { VideoInteractedWith } from 'boclips-api-client/dist/sub-clients/events/model/EventRequest';
-import { act, fireEvent } from '@testing-library/react';
+import { act, fireEvent, waitFor } from '@testing-library/react';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
 
@@ -55,103 +56,225 @@ describe('Video card', () => {
     expect(wrapper.getByText('$100')).toBeVisible();
   });
 
-  describe('video card elements', () => {
-    describe('video card buttons', () => {
-      const video = VideoFactory.sample({
-        title: 'video killed the radio star',
+  describe('copy link buttons', () => {
+    const video = VideoFactory.sample({
+      title: 'video killed the radio star',
+    });
+
+    it('shows copy video link in the video card', async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({ id: '1', title: '1' }),
+      );
+
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={fakeClient}>
+            <VideoCardWrapper video={video} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      expect(await wrapper.findByLabelText('Copy video link')).toBeVisible();
+    });
+
+    it('does not show copy legacy video link for non boclips users', async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({ id: '1', title: '1' }),
+      );
+
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          organisation: { id: 'org-1', name: 'Anything but boclips' },
+        }),
+      );
+
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={fakeClient}>
+            <VideoCardWrapper video={video} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      expect(await wrapper.findByLabelText('Copy video link')).toBeVisible();
+      expect(
+        wrapper.queryByLabelText('Copy legacy video link'),
+      ).not.toBeInTheDocument();
+    });
+
+    it('does show copy legacy link button for boclips users', async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({ id: '1', title: '1' }),
+      );
+
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          features: { BO_WEB_APP_COPY_OLD_LINK_BUTTON: true },
+          organisation: { id: 'org-bo', name: 'Boclips' },
+        }),
+      );
+
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={fakeClient}>
+            <VideoCardWrapper video={video} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      expect(await wrapper.findByLabelText('Copy video link')).toBeVisible();
+      expect(
+        await wrapper.findByLabelText('Copy legacy video link'),
+      ).toBeVisible();
+    });
+  });
+
+  describe('add to playlist button', () => {
+    const video = VideoFactory.sample({
+      title: 'video killed the radio star',
+    });
+
+    it('clicking on playlist button opens popover with playlists', async () => {
+      const fakeClient = new FakeBoclipsClient();
+
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          features: { BO_WEB_APP_ENABLE_PLAYLISTS: true },
+        }),
+      );
+
+      fakeClient.collections.addToFake(
+        CollectionFactory.sample({
+          id: 'playlist-id',
+          title: 'first playlist',
+          origin: 'BO_WEB_APP',
+        }),
+      );
+
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={fakeClient}>
+            <VideoCardWrapper video={video} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      const playlistButton = await wrapper.findByLabelText('Add to playlist');
+      expect(playlistButton).toBeInTheDocument();
+      fireEvent.click(playlistButton);
+
+      expect(await wrapper.findByText('Add to playlist')).toBeInTheDocument();
+      expect(
+        await wrapper.findByLabelText('first playlist'),
+      ).toBeInTheDocument();
+
+      const checkbox = await wrapper.findByRole('checkbox');
+      expect(checkbox).toBeInTheDocument();
+      expect(checkbox.getAttribute('id')).toEqual('playlist-id');
+    });
+
+    it('can add video to a playlist', async () => {
+      const fakeClient = new FakeBoclipsClient();
+
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          features: { BO_WEB_APP_ENABLE_PLAYLISTS: true },
+        }),
+      );
+
+      fakeClient.collections.addToFake(
+        CollectionFactory.sample({
+          id: 'playlist-id',
+          title: 'first playlist',
+          origin: 'BO_WEB_APP',
+        }),
+      );
+
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={fakeClient}>
+            <VideoCardWrapper video={video} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      fireEvent.click(await wrapper.findByLabelText('Add to playlist'));
+
+      const checkbox = await wrapper.findByRole('checkbox');
+      fireEvent.click(checkbox);
+
+      await waitFor(async () => {
+        expect(await wrapper.findByRole('checkbox')).toHaveProperty(
+          'checked',
+          true,
+        );
       });
+    });
 
-      it('displays playlist button', async () => {
-        const fakeClient = new FakeBoclipsClient();
+    it('can remove video from a playlist', async () => {
+      const fakeClient = new FakeBoclipsClient();
 
-        fakeClient.users.insertCurrentUser(
-          UserFactory.sample({
-            features: { BO_WEB_APP_ENABLE_PLAYLISTS: true },
-          }),
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          features: { BO_WEB_APP_ENABLE_PLAYLISTS: true },
+        }),
+      );
+
+      fakeClient.collections.addToFake(
+        CollectionFactory.sample({
+          id: 'playlist-id',
+          title: 'first playlist',
+          origin: 'BO_WEB_APP',
+          videos: [VideoFactory.sample({ id: video.id })],
+        }),
+      );
+
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={fakeClient}>
+            <VideoCardWrapper video={video} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      fireEvent.click(await wrapper.findByLabelText('Add to playlist'));
+
+      const checkbox = await wrapper.findByRole('checkbox');
+      fireEvent.click(checkbox);
+
+      await waitFor(async () => {
+        expect(await wrapper.findByRole('checkbox')).toHaveProperty(
+          'checked',
+          false,
         );
-
-        const wrapper = render(
-          <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-            <BoclipsClientProvider client={fakeClient}>
-              <VideoCardWrapper video={video} />
-            </BoclipsClientProvider>
-          </BoclipsSecurityProvider>,
-        );
-
-        expect(
-          await wrapper.findByLabelText('Add to playlist'),
-        ).toBeInTheDocument();
       });
+    });
 
-      it('shows copy video link in the video card', async () => {
-        const fakeClient = new FakeBoclipsClient();
-        fakeClient.videos.insertVideo(
-          VideoFactory.sample({ id: '1', title: '1' }),
-        );
+    it('clicking on playlist button opens popover that can be closed with X button', async () => {
+      const fakeClient = new FakeBoclipsClient();
 
-        const wrapper = render(
-          <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-            <BoclipsClientProvider client={fakeClient}>
-              <VideoCardWrapper video={video} />
-            </BoclipsClientProvider>
-          </BoclipsSecurityProvider>,
-        );
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          features: { BO_WEB_APP_ENABLE_PLAYLISTS: true },
+        }),
+      );
 
-        expect(await wrapper.findByLabelText('Copy video link')).toBeVisible();
-      });
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={fakeClient}>
+            <VideoCardWrapper video={video} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
 
-      it('does not show copy legacy video link for non boclips users', async () => {
-        const fakeClient = new FakeBoclipsClient();
-        fakeClient.videos.insertVideo(
-          VideoFactory.sample({ id: '1', title: '1' }),
-        );
+      const playlistButton = await wrapper.findByLabelText('Add to playlist');
+      fireEvent.click(playlistButton);
 
-        fakeClient.users.insertCurrentUser(
-          UserFactory.sample({
-            organisation: { id: 'org-1', name: 'Anything but boclips' },
-          }),
-        );
-
-        const wrapper = render(
-          <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-            <BoclipsClientProvider client={fakeClient}>
-              <VideoCardWrapper video={video} />
-            </BoclipsClientProvider>
-          </BoclipsSecurityProvider>,
-        );
-
-        expect(await wrapper.findByLabelText('Copy video link')).toBeVisible();
-        expect(
-          wrapper.queryByLabelText('Copy legacy video link'),
-        ).not.toBeInTheDocument();
-      });
-
-      it('does show copy legacy link button for boclips users', async () => {
-        const fakeClient = new FakeBoclipsClient();
-        fakeClient.videos.insertVideo(
-          VideoFactory.sample({ id: '1', title: '1' }),
-        );
-
-        fakeClient.users.insertCurrentUser(
-          UserFactory.sample({
-            features: { BO_WEB_APP_COPY_OLD_LINK_BUTTON: true },
-            organisation: { id: 'org-bo', name: 'Boclips' },
-          }),
-        );
-
-        const wrapper = render(
-          <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-            <BoclipsClientProvider client={fakeClient}>
-              <VideoCardWrapper video={video} />
-            </BoclipsClientProvider>
-          </BoclipsSecurityProvider>,
-        );
-
-        expect(await wrapper.findByLabelText('Copy video link')).toBeVisible();
-        expect(
-          await wrapper.findByLabelText('Copy legacy video link'),
-        ).toBeVisible();
-      });
+      fireEvent.click(await wrapper.findByLabelText('close add to playlist'));
+      expect(wrapper.queryByText('Add to playlist')).not.toBeInTheDocument();
     });
   });
 

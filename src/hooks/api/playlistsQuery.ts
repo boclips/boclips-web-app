@@ -4,6 +4,7 @@ import { BoclipsClient } from 'boclips-api-client';
 import { CreateCollectionRequest } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
+import axios from 'axios';
 
 export const usePlaylistsQuery = () => {
   const client = useBoclipsClient();
@@ -20,6 +21,22 @@ export const usePlaylistQuery = (id: string) => {
   return useQuery(['playlist', id], () => client.collections.get(id), {
     initialData: () => cachedPlaylists?.page?.find((c) => c.id === id),
   });
+};
+
+export const doAddToPlaylist = (playlist: Collection, videoId: string) => {
+  const url = playlist.links.addVideo.getTemplatedLink({
+    video_id: videoId,
+  });
+
+  return axios.put(url);
+};
+
+export const doRemoveFromPlaylist = (playlist: Collection, videoId: string) => {
+  const url = playlist.links.removeVideo.getTemplatedLink({
+    video_id: videoId,
+  });
+
+  return axios.delete(url);
 };
 
 const doGetPlaylists = (client: BoclipsClient) =>

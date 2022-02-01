@@ -5,7 +5,7 @@ import { BoInput } from 'src/components/common/input/BoInput/BoInput';
 import PlusSign from 'resources/icons/plus-sign.svg';
 import { usePlaylistMutation } from 'src/hooks/api/playlistsQuery';
 import { useHistory } from 'react-router-dom';
-import { displayErrorNotification } from 'src/components/common/errors/displayErrorNotification';
+import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { BoTextArea } from '../common/input/BoInput/BoTextArea';
 import { Bodal } from '../common/bodal/Bodal';
 
@@ -50,7 +50,8 @@ export const LibraryHeader = () => {
 
   React.useEffect(() => {
     if (isError) {
-      displayErrorNotification(
+      displayNotification(
+        'error',
         'create-playlist',
         'Error: Failed to create new playlist',
         'Please refresh the page and try again',
