@@ -208,7 +208,7 @@ describe('CartView', () => {
     ).toBeInTheDocument();
   });
 
-  it('have href pointing to video page on cart item title', async () => {
+  it('takes you back to video page when cart item title is clicked', async () => {
     const fakeClient = new FakeBoclipsClient();
 
     fakeClient.videos.insertVideo(video);
@@ -216,9 +216,11 @@ describe('CartView', () => {
 
     const wrapper = renderCartView(fakeClient);
 
-    const title = (await wrapper.findByText('news video')).closest('a');
+    const title = await wrapper.findByText('news video');
 
-    expect(title).toHaveAttribute('href', `/videos/${video.id}`);
+    fireEvent.click(title);
+
+    expect(await wrapper.findByTestId('video-page')).toBeVisible();
   });
 
   it(`displays access denied if user has BOCLIPS_WEB_APP_DEMO role`, async () => {

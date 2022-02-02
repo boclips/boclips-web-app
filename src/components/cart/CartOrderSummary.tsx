@@ -19,8 +19,9 @@ interface CartSummaryItem {
 
 export const CartOrderSummary = ({ cart }: Props) => {
   const { isCartValid } = useCartValidation();
-  const [displayErrorMessage, setDisplayErrorMessage] =
-    useState<boolean>(false);
+  const [displayErrorMessage, setDisplayErrorMessage] = useState<boolean>(
+    false,
+  );
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const boclipsClient = useBoclipsClient();
   const { data: videos } = useGetVideos(cart.items.map((it) => it.videoId));
