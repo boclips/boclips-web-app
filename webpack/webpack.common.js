@@ -12,7 +12,6 @@ module.exports = {
 
   // Allows ts(x) and js files to be imported without extension
   resolve: {
-    fallback: { querystring: require.resolve('querystring-es3') },
     extensions: ['.ts', '.tsx', '.js', '.less'],
     alias: {
       src: srcPath,
