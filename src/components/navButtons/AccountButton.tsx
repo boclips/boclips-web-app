@@ -1,5 +1,5 @@
 import MyAccountSVG from 'src/resources/icons/my-account-icon.svg';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { Link } from 'react-router-dom';
 import { Loading } from 'src/components/common/Loading';
@@ -9,6 +9,7 @@ import { Constants } from 'src/AppConstants';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { FeatureGate } from 'src/components/common/FeatureGate';
+import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
 import s from './style.module.less';
 
 export const AccountButton = () => {
@@ -17,19 +18,7 @@ export const AccountButton = () => {
   const { data, isLoading } = useGetUserQuery();
   const ref = useRef(null);
 
-  // close modal on click outside
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setDisplayModal(false);
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [ref]);
+  CloseOnClickOutside(ref, setDisplayModal);
 
   const onClick = () => {
     setDisplayModal(!displayModal);

@@ -176,6 +176,32 @@ describe('Video card', () => {
       expect(checkbox.getAttribute('id')).toEqual('playlist-id');
     });
 
+    it('displays info if there is no playlists', async () => {
+      const fakeClient = new FakeBoclipsClient();
+
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          features: { BO_WEB_APP_ENABLE_PLAYLISTS: true },
+        }),
+      );
+
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={fakeClient}>
+            <VideoCardWrapper video={video} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      const playlistButton = await wrapper.findByLabelText('Add to playlist');
+
+      fireEvent.click(playlistButton);
+
+      expect(
+        await wrapper.findByText('You have no playlists yet'),
+      ).toBeInTheDocument();
+    });
+
     it('can add video to a playlist', async () => {
       const fakeClient = new FakeBoclipsClient();
 

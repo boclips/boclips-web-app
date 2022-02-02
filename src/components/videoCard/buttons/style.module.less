@@ -1,4 +1,5 @@
 @import '~@boclips-ui/styles/src/colors';
+@import '~@boclips-ui/styles/src/breakpoints';
 
 
 .iconOnlyButtons {
@@ -16,17 +17,11 @@
 }
 
 .popover {
-  position: absolute;
-  width: 320px;
-  max-height: 248px;
-  top: 40px;
-  left: 0;
   background-color: @white;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   z-index: 99;
-  border: 2px solid @blue-800;
   border-radius: 4px;
 }
 
@@ -35,9 +30,13 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  font-size: 1rem;
-  color: @gray-800;
-  font-weight: 500;
+
+  h5 {
+    font-size: 1rem;
+    color: @gray-800;
+    font-weight: 500;
+    margin: 0;
+  }
 
   button {
     padding: 0.5rem;
@@ -53,13 +52,14 @@
 .popoverContent {
   overflow: auto;
   padding-top: 0.5rem;
+  height: auto;
 
   li {
     margin-bottom: 0.75rem;
   }
 
-  label{
-    display:flex;
+  label {
+    display: flex;
     align-items: center;
     cursor: pointer;
 
@@ -71,5 +71,59 @@
 }
 
 .checkbox {
-  @apply checked:bg-blue-800 w-5 h-5 mr-3 hover:border-blue-800 hover:border-solid border-2 cursor-pointer;
+  width: 20px;
+  height: 20px;
+  margin-right: .5rem;
+  border: 2px solid @blue-500;
+
+  &:hover {
+    border-color: @blue-800;
+  }
+
+  &:checked {
+    background-color: @blue-800;
+  }
+}
+
+@media screen and (min-width: @screen-sm) {
+  .popover {
+    position: fixed;
+    width: 100vw;
+    max-height: 60vh;
+    min-height: 30vh;
+    bottom: 0;
+    left: 0;
+    transform-style: preserve-3d;
+
+    &:after {
+      content: '';
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(@gray-900, 0.55);
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 99;
+      transform: translateZ(-1px);
+      pointer-events: none;
+    }
+  }
+}
+
+@media screen and (min-width: @screen-md) {
+  .popover {
+    position: absolute;
+    width: 320px;
+    max-height: 248px;
+    min-height: unset;
+    top: 40px;
+    bottom: unset;
+    left: 0;
+    z-index: 99;
+    border: 2px solid @blue-800;
+
+    &:after {
+      content: none;
+    }
+  }
 }

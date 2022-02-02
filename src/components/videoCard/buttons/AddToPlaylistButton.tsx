@@ -2,7 +2,7 @@ import { Tooltip } from '@boclips-ui/tooltip';
 import Button from '@boclips-ui/button';
 import PlaylistAddIcon from 'src/resources/icons/playlist-add.svg';
 import PlaylistAddAlreadyAddedIcon from 'src/resources/icons/playlist-add-already-added.svg';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import CloseButton from 'src/resources/icons/cross-icon.svg';
 import {
   doAddToPlaylist,
@@ -13,6 +13,7 @@ import { Collection } from 'boclips-api-client/dist/sub-clients/collections/mode
 import c from 'classnames';
 import { useMutation } from 'react-query';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
+import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
 import s from './style.module.less';
 
 interface Props {
@@ -25,13 +26,15 @@ interface UpdatePlaylistProps {
 }
 
 export const AddToPlaylistButton = ({ videoId }: Props) => {
-  const [isAddToPlaylistVisible, setIsAddToPlaylistVisible] = useState<boolean>(
-    false,
-  );
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const [playlistsContainingVideo, setPlaylistsContainingVideo] = useState<
     string[]
   >([]);
+
+  const ref = useRef(null);
+
+  CloseOnClickOutside(ref, setIsOpen);
 
   const { data: playlists } = usePlaylistsQuery();
 
@@ -116,8 +119,8 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
   };
 
   return (
-    <div className={s.addToPlaylist}>
-      <Tooltip text="Add to playlist">
+    <div id={videoId} className={s.addToPlaylist}>
+      <Tooltip text="Add to playlist" placement="topRight">
         <span>
           <Button
             text="Add to playlist"
@@ -131,7 +134,7 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
               )
             }
             onClick={() => {
-              setIsAddToPlaylistVisible(!isAddToPlaylistVisible);
+              setIsOpen(!isOpen);
             }}
             type="outline"
             width="40px"
@@ -139,39 +142,45 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
           />
         </span>
       </Tooltip>
-      {isAddToPlaylistVisible && (
-        <div className={s.popover}>
+      {isOpen && (
+        <div ref={ref} className={s.popover}>
           <div className={s.popoverHeader}>
-            <div>Add to playlist</div>
+            <h5>Add to playlist</h5>
             <button
               type="button"
               aria-label="close add to playlist"
-              onClick={() => setIsAddToPlaylistVisible(false)}
+              onClick={() => setIsOpen(false)}
             >
               <CloseButton />
             </button>
           </div>
           <ul className={s.popoverContent}>
-            {playlists?.map((playlist: Collection) => {
-              const isSelected = playlistsContainingVideo.includes(playlist.id);
-              return (
-                <li key={playlist.id}>
-                  <label htmlFor={playlist.id}>
-                    <input
-                      onChange={onCheckboxChange}
-                      type="checkbox"
-                      className={s.checkbox}
-                      name={playlist.title}
-                      id={playlist.id}
-                      checked={isSelected}
-                    />
-                    <span className={c({ 'font-medium': isSelected })}>
-                      {playlist.title}
-                    </span>
-                  </label>
-                </li>
-              );
-            })}
+            {playlists?.length > 0 ? (
+              playlists.map((playlist: Collection) => {
+                const isSelected = playlistsContainingVideo.includes(
+                  playlist.id,
+                );
+                return (
+                  <li key={playlist.id}>
+                    <label htmlFor={playlist.id}>
+                      <input
+                        onChange={onCheckboxChange}
+                        type="checkbox"
+                        className={s.checkbox}
+                        name={playlist.title}
+                        id={playlist.id}
+                        checked={isSelected}
+                      />
+                      <span className={c({ 'font-medium': isSelected })}>
+                        {playlist.title}
+                      </span>
+                    </label>
+                  </li>
+                );
+              })
+            ) : (
+              <li>You have no playlists yet</li>
+            )}
           </ul>
         </div>
       )}
