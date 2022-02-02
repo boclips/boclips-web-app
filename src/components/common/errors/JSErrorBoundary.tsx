@@ -1,9 +1,8 @@
 import React from 'react';
 import * as Sentry from '@sentry/react';
-import { FallbackRender } from '@sentry/react/dist/errorboundary';
 
 interface Props {
-  fallback: React.ReactElement | FallbackRender;
+  fallback: React.ReactNode;
   children: React.ReactNode;
 }
 
