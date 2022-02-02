@@ -9,6 +9,7 @@ import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider
 const mockHistoryPush = jest.fn();
 
 jest.mock('react-router-dom', () => ({
+  // @ts-ignore
   ...jest.requireActual('react-router-dom'),
   useHistory: () => ({
     push: mockHistoryPush,
