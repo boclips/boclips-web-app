@@ -74,12 +74,41 @@ describe('LibraryView', () => {
       expect(await wrapper.findByText('Playlist 2')).toBeVisible();
     });
 
-    it('displays thumbnails for playlist', async () => {
+    it('displays first 3 thumbnails for playlist with 4 videos', async () => {
       const client = new FakeBoclipsClient();
       setPlaylistsFeature(client, true);
 
-      const video = VideoFactory.sample({
-        title: 'My amazing video',
+      const videos = [
+        createVideoWithThumbnail('1'),
+        createVideoWithThumbnail('2'),
+        createVideoWithThumbnail('3'),
+        createVideoWithThumbnail('4'),
+      ];
+
+      const playlist = CollectionFactory.sample({
+        id: '1',
+        title: 'My collection about cats',
+        videos,
+      });
+
+      client.collections.addToFake(playlist);
+      videos.forEach((it) => client.videos.insertVideo(it));
+
+      const wrapper = renderLibraryView(client);
+
+      expect(
+        await wrapper.findByText('My collection about cats'),
+      ).toBeVisible();
+      expect(wrapper.getByLabelText('Thumbnail of Title 1')).toBeVisible();
+      expect(wrapper.getByLabelText('Thumbnail of Title 2')).toBeVisible();
+      expect(wrapper.getByLabelText('Thumbnail of Title 3')).toBeVisible();
+      expect(wrapper.queryByLabelText('Thumbnail of Title 4')).toBeNull();
+    });
+
+    const createVideoWithThumbnail = (id: string) => {
+      return VideoFactory.sample({
+        id,
+        title: `Title ${id}`,
         playback: PlaybackFactory.sample({
           links: {
             thumbnail: new Link({ href: 'http://thumbnail.jpg' }),
@@ -87,25 +116,7 @@ describe('LibraryView', () => {
           },
         }),
       });
-
-      const playlist = CollectionFactory.sample({
-        id: '1',
-        title: 'My collection about cats',
-        videos: [video],
-      });
-
-      client.collections.addToFake(playlist);
-      client.videos.insertVideo(video);
-
-      const wrapper = renderLibraryView(client);
-
-      expect(
-        await wrapper.findByText('My collection about cats'),
-      ).toBeVisible();
-      expect(
-        await wrapper.findByLabelText('Thumbnail of My amazing video'),
-      ).toBeVisible();
-    });
+    };
 
     describe('Creating playlists', () => {
       it('shows Create new playlist button', async () => {
