@@ -13,7 +13,7 @@ const getDisciplineIllustration = (name: string): ReactElement => {
   switch (name) {
     case 'Business':
       return <BussinesIllustration />;
-    case 'Health and Medicine':
+    case 'Health and Nursing':
       return <HealthIllustration />;
     case 'Humanities':
       return <HumanitiesIllustration />;
