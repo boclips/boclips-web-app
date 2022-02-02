@@ -322,7 +322,8 @@ describe('Video card', () => {
         fireEvent.click(addToCart);
       });
 
-      const videoInteractedEvents = fakeClient.events.getEvents() as VideoInteractedWith[];
+      const videoInteractedEvents =
+        fakeClient.events.getEvents() as VideoInteractedWith[];
 
       expect(videoInteractedEvents.length).toEqual(1);
       expect(videoInteractedEvents[0].type).toEqual('VIDEO_INTERACTED_WITH');
@@ -363,7 +364,8 @@ describe('Video card', () => {
         fireEvent.click(title);
       });
 
-      const videoInteractedEvent = fakeClient.events.getEvents()[0] as VideoInteractedWith;
+      const videoInteractedEvent =
+        fakeClient.events.getEvents()[0] as VideoInteractedWith;
 
       expect(videoInteractedEvent.type).toEqual('VIDEO_INTERACTED_WITH');
       expect(videoInteractedEvent.subtype).toEqual('NAVIGATE_TO_VIDEO_DETAILS');

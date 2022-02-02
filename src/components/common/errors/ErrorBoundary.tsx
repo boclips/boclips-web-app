@@ -3,7 +3,7 @@ import { JSErrorBoundary } from './JSErrorBoundary';
 import { QueryErrorBoundary } from './QueryErrorBoundary';
 
 interface Props {
-  fallback: React.ReactNode;
+  fallback: any;
   children: React.ReactNode;
 }
 

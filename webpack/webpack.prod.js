@@ -5,7 +5,7 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
-const common = require('./webpack.common.js');
+const common = require('./webpack.common');
 
 const srcPath = path.resolve(__dirname, '../src');
 const kilobyte = 1024;

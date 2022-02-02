@@ -40,9 +40,8 @@ export const FilterOptionList = ({
 
   const optionsWithHits = options.filter((option) => option.hits > 0);
   const tooManyOptions = optionsWithHits.length > DEFAULT_VISIBLE_OPTIONS;
-  const optionsWithSelectedOnesFirst = divideOptionsByBeingSelected(
-    optionsWithHits,
-  );
+  const optionsWithSelectedOnesFirst =
+    divideOptionsByBeingSelected(optionsWithHits);
 
   return (
     <div className="flex flex-col mb-1 mt-4">

@@ -13,9 +13,8 @@ const DisciplineWidget = (): ReactElement => {
   const { data: disciplines, isLoading } = useGetDisciplinesQuery();
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedDiscipline, setSelectedDiscipline] = useState<
-    DisciplineWithSubjectOffering
-  >(null);
+  const [selectedDiscipline, setSelectedDiscipline] =
+    useState<DisciplineWithSubjectOffering>(null);
   const breakpoints = useMediaBreakPoint();
   const mobileView =
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';

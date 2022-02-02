@@ -26,9 +26,8 @@ export const useGetVideos = (videoIds: string[]) => {
 export const useFindOrGetVideo = (videoId?: string) => {
   const queryClient = useQueryClient();
   const apiClient = useBoclipsClient();
-  const cachedVideos = queryClient.getQueriesData<Pageable<Video>>(
-    SEARCH_BASE_KEY,
-  );
+  const cachedVideos =
+    queryClient.getQueriesData<Pageable<Video>>(SEARCH_BASE_KEY);
 
   return useQuery(['video', videoId], () => doGetVideo(videoId, apiClient), {
     initialData: () => findVideoInSearchCache(cachedVideos, videoId),

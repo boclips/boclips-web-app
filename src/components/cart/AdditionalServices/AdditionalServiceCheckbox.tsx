@@ -22,9 +22,8 @@ const AdditionalServicesCheckbox = ({
 
   const [serviceRequested, setServiceRequested] = useState<boolean>(isChecked);
 
-  const {
-    mutate: mutateAdditionalServices,
-  } = useCartItemAdditionalServicesMutation();
+  const { mutate: mutateAdditionalServices } =
+    useCartItemAdditionalServicesMutation();
 
   const onChangeCheckbox = (e) => {
     setServiceRequested(e.currentTarget.checked);

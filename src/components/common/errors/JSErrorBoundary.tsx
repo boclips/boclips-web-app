@@ -2,7 +2,7 @@ import React from 'react';
 import * as Sentry from '@sentry/react';
 
 interface Props {
-  fallback: React.ReactNode;
+  fallback: any;
   children: React.ReactNode;
 }
 

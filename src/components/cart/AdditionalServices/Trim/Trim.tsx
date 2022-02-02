@@ -17,9 +17,8 @@ interface Props {
 
 export const TrimService = ({ videoItem, cartItem, price }: Props) => {
   const { cartItemsValidation, setCartItemsValidation } = useCartValidation();
-  const {
-    mutate: mutateAdditionalServices,
-  } = useCartItemAdditionalServicesMutation();
+  const { mutate: mutateAdditionalServices } =
+    useCartItemAdditionalServicesMutation();
 
   const trimSet = !!cartItem?.additionalServices?.trim;
   const [trimChecked, setTrimChecked] = useState(trimSet);

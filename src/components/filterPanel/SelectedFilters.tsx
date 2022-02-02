@@ -59,9 +59,9 @@ export const SelectedFilters = ({ removeFilter, clearFilters }: Props) => {
         );
       });
 
-      const flattenedFiltersInUrl: SelectedFilter[] = ([] as SelectedFilter[]).concat(
-        ...filtersInUrl,
-      );
+      const flattenedFiltersInUrl: SelectedFilter[] = (
+        [] as SelectedFilter[]
+      ).concat(...filtersInUrl);
       setFiltersToRender(flattenedFiltersInUrl);
     }
     // eslint-disable-next-line

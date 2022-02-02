@@ -1,19 +1,11 @@
-import { fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import React from 'react';
 import { render } from 'src/testSupport/render';
 import { Search } from 'src/components/searchBar/SearchBar';
-import { MemoryRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
-
-const mockHistoryPush = jest.fn();
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
-}));
 
 describe('SearchBar', () => {
   it('renders with search button displayed', () => {
@@ -27,16 +19,18 @@ describe('SearchBar', () => {
   });
 
   it("new search strips out all URL query parameters except 'q' one", async () => {
+    const history = createBrowserHistory();
+    history.push({
+      pathname:
+        '/videos?q=dogs&page=5&video_type=INSTRUCTIONAL&duration=PT1M-PT5M',
+    });
+
     const wrapper = render(
-      <MemoryRouter
-        initialEntries={[
-          '/videos?q=dogs&page=5&video_type=INSTRUCTIONAL&duration=PT1M-PT5M',
-        ]}
-      >
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+      <BoclipsClientProvider client={new FakeBoclipsClient()}>
+        <Router history={history}>
           <Search size="big" showIconOnly={false} />
-        </BoclipsClientProvider>
-      </MemoryRouter>,
+        </Router>
+      </BoclipsClientProvider>,
     );
 
     expect((await wrapper.findByText('Search')).textContent).toEqual('Search');
@@ -47,11 +41,9 @@ describe('SearchBar', () => {
     const searchButton = wrapper.getByText('Search');
     fireEvent.click(searchButton);
 
-    await waitFor(() => {
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/videos',
-        search: 'q=cats&page=1&video_type=INSTRUCTIONAL&duration=PT1M-PT5M',
-      });
-    });
+    expect(history.location.pathname).toEqual('/videos');
+    expect(history.location.search).toEqual(
+      '?q=cats&page=1&video_type=INSTRUCTIONAL&duration=PT1M-PT5M',
+    );
   });
 });

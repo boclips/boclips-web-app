@@ -29,9 +29,8 @@ const SearchResultsView = () => {
   const queryClient = useQueryClient();
   const [searchLocation, setSearchLocation] = useSearchQueryLocationParams();
   const { query, page: currentPage, filters: filtersFromURL } = searchLocation;
-  const [newFiltersBeforeDebounce, setNewFiltersBeforeDebounce] = useState<
-    SearchFilters
-  >(filtersFromURL);
+  const [newFiltersBeforeDebounce, setNewFiltersBeforeDebounce] =
+    useState<SearchFilters>(filtersFromURL);
 
   const debouncedFilters = useDebounce(newFiltersBeforeDebounce, 1000);
 

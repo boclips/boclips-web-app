@@ -2,7 +2,7 @@ import React from 'react';
 import { useGlobalQueryError } from '../providers/GlobalQueryErrorProvider';
 
 interface Props {
-  fallback: React.ReactNode;
+  fallback: any;
   children: React.ReactNode;
 }
 

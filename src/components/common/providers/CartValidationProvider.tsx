@@ -39,9 +39,8 @@ export const useCartValidation = () => {
 };
 
 const useProvideValidation = () => {
-  const [cartItemsValidation, setCartItemsValidation] = useState<
-    CartItemValidationMap
-  >({});
+  const [cartItemsValidation, setCartItemsValidation] =
+    useState<CartItemValidationMap>({});
 
   const isCartValid = Object.values(cartItemsValidation).every((item) => {
     return (

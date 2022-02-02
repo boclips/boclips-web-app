@@ -24,9 +24,8 @@ export const EditRequest = ({ label, cartItem, price }: Props) => {
   const isChecked = !!cartItem?.additionalServices?.editRequest;
   const id = `${cartItem.videoId}editingRequested`;
 
-  const {
-    mutate: mutateAdditionalServices,
-  } = useCartItemAdditionalServicesMutation();
+  const { mutate: mutateAdditionalServices } =
+    useCartItemAdditionalServicesMutation();
 
   const [serviceRequested, setServiceRequested] = useState(isChecked);
 

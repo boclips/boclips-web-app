@@ -15,9 +15,8 @@ export const usePlaylistQuery = (id: string) => {
   const queryClient = useQueryClient();
   const client = useBoclipsClient();
 
-  const cachedPlaylists = queryClient.getQueryData<Pageable<Collection>>(
-    'playlists',
-  );
+  const cachedPlaylists =
+    queryClient.getQueryData<Pageable<Collection>>('playlists');
   return useQuery(['playlist', id], () => client.collections.get(id), {
     initialData: () => cachedPlaylists?.page?.find((c) => c.id === id),
   });
