@@ -2,7 +2,7 @@ import React from 'react';
 import CopyLinkIcon from 'src/resources/icons/copy-link-icon.svg';
 import CopiedLinkIcon from 'src/resources/icons/copied-link-icon.svg';
 import Button from '@boclips-ui/button';
-import { Tooltip } from '@boclips-ui/tooltip';
+import Tooltip from '@boclips-ui/tooltip';
 import s from './style.module.less';
 
 interface Props {
@@ -40,21 +40,19 @@ export const CopyLinkButton = ({
 
   return (
     <div className={s.copyLinkButton}>
-      <Tooltip text={copiedToClipboard ? 'Copier' : ariaLabel}>
-        <span>
-          <Button
-            aria-label={copiedToClipboard ? 'Copied' : ariaLabel}
-            data-qa={dataQa}
-            onClick={handleClick}
-            text={copiedToClipboard ? 'Copied' : title}
-            type="outline"
-            icon={copiedToClipboard ? <CopiedLinkIcon /> : <CopyLinkIcon />}
-            disabled={disabled}
-            width="40px"
-            height="40px"
-            iconOnly
-          />
-        </span>
+      <Tooltip text={copiedToClipboard ? 'Copied' : ariaLabel}>
+        <Button
+          aria-label={copiedToClipboard ? 'Copied' : ariaLabel}
+          data-qa={dataQa}
+          onClick={handleClick}
+          text={copiedToClipboard ? 'Copied' : title}
+          type="outline"
+          icon={copiedToClipboard ? <CopiedLinkIcon /> : <CopyLinkIcon />}
+          disabled={disabled}
+          width="40px"
+          height="40px"
+          iconOnly
+        />
       </Tooltip>
     </div>
   );

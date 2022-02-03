@@ -1,5 +1,5 @@
 import React from 'react';
-import { notification } from 'antd';
+import notification from 'antd/lib/notification';
 import CloseIcon from '../../../resources/icons/cross-icon.svg';
 import './displayNotification.less';
 

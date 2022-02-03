@@ -1,4 +1,4 @@
-import { Tooltip } from '@boclips-ui/tooltip';
+import Tooltip from '@boclips-ui/tooltip';
 import Button from '@boclips-ui/button';
 import PlaylistAddIcon from 'src/resources/icons/playlist-add.svg';
 import PlaylistAddAlreadyAddedIcon from 'src/resources/icons/playlist-add-already-added.svg';
@@ -120,27 +120,25 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
 
   return (
     <div id={videoId} className={s.addToPlaylist}>
-      <Tooltip text="Add to playlist" placement="topRight">
-        <span>
-          <Button
-            text="Add to playlist"
-            aria-label="Add to playlist"
-            iconOnly
-            icon={
-              playlistsContainingVideo.length === 0 ? (
-                <PlaylistAddIcon />
-              ) : (
-                <PlaylistAddAlreadyAddedIcon />
-              )
-            }
-            onClick={() => {
-              setIsOpen(!isOpen);
-            }}
-            type="outline"
-            width="40px"
-            height="40px"
-          />
-        </span>
+      <Tooltip text="Add to playlist">
+        <Button
+          text="Add to playlist"
+          aria-label="Add to playlist"
+          iconOnly
+          icon={
+            playlistsContainingVideo.length === 0 ? (
+              <PlaylistAddIcon />
+            ) : (
+              <PlaylistAddAlreadyAddedIcon />
+            )
+          }
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+          type="outline"
+          width="40px"
+          height="40px"
+        />
       </Tooltip>
       {isOpen && (
         <div ref={ref} className={s.popover}>
