@@ -1,7 +1,6 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const tsImportPluginFactory = require('ts-import-plugin');
-const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 const path = require('path');
 
@@ -101,7 +100,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new NodePolyfillPlugin(),
     new CopyWebpackPlugin({
       patterns: [{ from: resourcePath, to: 'assets' }],
     }),
