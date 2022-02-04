@@ -4,7 +4,6 @@ import { BoclipsClient } from 'boclips-api-client';
 import { CreateCollectionRequest } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
-import axios from 'axios';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 
 interface UpdatePlaylistProps {
@@ -28,26 +27,27 @@ export const usePlaylistQuery = (id: string) => {
   });
 };
 
-export const doAddToPlaylist = (playlist: Collection, videoId: string) => {
-  const url = playlist.links.addVideo.getTemplatedLink({
-    video_id: videoId,
-  });
-
-  return axios.put(url);
+export const doAddToPlaylist = (
+  playlist: Collection,
+  videoId: string,
+  client: BoclipsClient,
+) => {
+  return client.collections.addVideoToCollection(playlist, videoId);
 };
 
-export const doRemoveFromPlaylist = (playlist: Collection, videoId: string) => {
-  const url = playlist.links.removeVideo.getTemplatedLink({
-    video_id: videoId,
-  });
-
-  return axios.delete(url);
+export const doRemoveFromPlaylist = (
+  playlist: Collection,
+  videoId: string,
+  client: BoclipsClient,
+) => {
+  return client.collections.removeVideoFromCollection(playlist, videoId);
 };
 
 export const useAddToPlaylistMutation = (callback: (id) => void) => {
+  const client = useBoclipsClient();
   return useMutation(
     async ({ playlist, videoId }: UpdatePlaylistProps) =>
-      doAddToPlaylist(playlist, videoId),
+      doAddToPlaylist(playlist, videoId, client),
     {
       onSuccess: (_, { playlist, videoId }) => {
         displayNotification(
@@ -71,9 +71,11 @@ export const useAddToPlaylistMutation = (callback: (id) => void) => {
 };
 
 export const useRemoveFromPlaylistMutation = (callback: (id) => void) => {
+  const client = useBoclipsClient();
+
   return useMutation(
     async ({ playlist, videoId }: UpdatePlaylistProps) =>
-      doRemoveFromPlaylist(playlist, videoId),
+      doRemoveFromPlaylist(playlist, videoId, client),
     {
       onSuccess: (_, { playlist, videoId }) => {
         displayNotification(
