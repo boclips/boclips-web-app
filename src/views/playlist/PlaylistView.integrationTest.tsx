@@ -1,5 +1,5 @@
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { MemoryRouter, Router } from 'react-router-dom';
 import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import React from 'react';
@@ -11,6 +11,7 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { Link } from 'boclips-api-client/dist/types';
+import { createBrowserHistory } from 'history';
 
 describe('Playlist view', () => {
   it("shows Playlist's title and description if user can access", async () => {
@@ -108,6 +109,39 @@ describe('Playlist view', () => {
     expect(screen.getByLabelText('Thumbnail of Video Three 333')).toBeVisible();
     expect(screen.getByLabelText('Thumbnail of Video Four 444')).toBeVisible();
     expect(screen.getByLabelText('Thumbnail of Video Five 555')).toBeVisible();
+  });
+
+  it('navigates to the video page when clicked on video', async () => {
+    const client = new FakeBoclipsClient();
+    client.users.insertCurrentUser(
+      UserFactory.sample({ features: { BO_WEB_APP_ENABLE_PLAYLISTS: true } }),
+    );
+
+    const video = createVideoWithThumbnail('111', 'Video');
+
+    const playlist = CollectionFactory.sample({
+      id: '123',
+      title: 'Playlist title',
+      videos: [video],
+    });
+
+    client.collections.addToFake(playlist);
+    client.videos.insertVideo(video);
+
+    const history = createBrowserHistory();
+    history.push({ pathname: '/library/123' });
+
+    render(
+      <Router history={history}>
+        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+      </Router>,
+    );
+
+    const tile = await screen.findByLabelText('Open video about Video 111');
+    expect(tile).toBeVisible();
+    fireEvent.click(tile);
+
+    expect(history.location.pathname).toEqual('/videos/111');
   });
 
   const createVideoWithThumbnail = (id: string, videoTitle: string) => {

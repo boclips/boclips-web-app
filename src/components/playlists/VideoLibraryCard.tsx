@@ -1,6 +1,7 @@
 import React from 'react';
 import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import { Loading } from 'src/components/common/Loading';
+import { Link } from 'react-router-dom';
 import style from './style.module.less';
 
 interface Props {
@@ -29,10 +30,16 @@ const Thumbnail = ({ className, video }) => {
 export const VideoLibraryCard = ({ videoId }: Props) => {
   const { data: video, isLoading } = useFindOrGetVideo(videoId);
 
-  if (isLoading && !video) return <Loading />;
+  if (isLoading || !video) return <Loading />;
 
   return (
-    <div className={style.videoLibraryCardTile}>
+    <Link
+      to={{
+        pathname: `/videos/${video.id}`,
+      }}
+      aria-label={`Open video about ${video.title}`}
+      className={style.videoLibraryCardTile}
+    >
       <Thumbnail
         className={`${style.videoLibraryCardThumbnail} ${style.defaultThumbnail}`}
         video={video}
@@ -40,6 +47,6 @@ export const VideoLibraryCard = ({ videoId }: Props) => {
       <div className={`${style.videoTitle} text-sm text-grey-900 font-bold`}>
         {video.title}
       </div>
-    </div>
+    </Link>
   );
 };

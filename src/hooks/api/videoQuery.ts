@@ -35,18 +35,6 @@ export const useFindOrGetVideo = (videoId?: string) => {
   });
 };
 
-export const useFindOrGetVideos = (videoIds: string[]) => {
-  const queryClient = useQueryClient();
-  const apiClient = useBoclipsClient();
-  const cachedVideos =
-    queryClient.getQueriesData<Pageable<Video>>(SEARCH_BASE_KEY);
-
-  return useQuery(['video', videoIds], () => doGetVideos(videoIds, apiClient), {
-    initialData: () => findVideosInSearchCache(cachedVideos, videoIds),
-    enabled: !!videoIds,
-  });
-};
-
 const findVideoInSearchCache = (
   cache: [any, Pageable<Video>][],
   videoId: string,
@@ -59,17 +47,4 @@ const findVideoInSearchCache = (
   });
 
   return cachedVideoFromSearch;
-};
-
-const findVideosInSearchCache = (
-  cache: [any, Pageable<Video>][],
-  videoIds: string[],
-) => {
-  const cachedVideosFromSearch = [];
-
-  videoIds.forEach((id) =>
-    cachedVideosFromSearch.push(findVideoInSearchCache(cache, id)),
-  );
-
-  return cachedVideosFromSearch;
 };
