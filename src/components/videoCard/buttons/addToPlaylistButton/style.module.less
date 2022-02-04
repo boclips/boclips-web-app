@@ -3,9 +3,18 @@
 
 .addToPlaylist {
   position: relative;
-  --bo-ui-button-outline-svg-stroke: @blue-800;
-  --bo-ui-button-outline-svg-fill: none;
   --bo-ui-button-outline-background-color-hover: none;
+  --bo-ui-button-icon-only-padding: 0;
+
+  .addSvg{
+    --bo-ui-button-outline-svg-fill: none;
+  }
+
+  .removeSvg{
+    --bo-ui-button-outline-svg-fill-hover: @blue-800;
+    --bo-ui-button-outline-svg-fill: @blue-800;
+  }
+
   &.buttonActive{
     --bo-ui-button-outline-border: 2px solid @blue-800;
   }

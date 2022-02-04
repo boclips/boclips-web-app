@@ -86,9 +86,9 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
           iconOnly
           icon={
             playlistsContainingVideo.length === 0 ? (
-              <PlaylistAddIcon />
+              <PlaylistAddIcon className={s.addSvg} />
             ) : (
-              <PlaylistAddAlreadyAddedIcon />
+              <PlaylistAddAlreadyAddedIcon className={s.removeSvg} />
             )
           }
           onClick={() => {
