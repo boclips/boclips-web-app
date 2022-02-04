@@ -137,71 +137,6 @@ describe('Video card', () => {
       title: 'video killed the radio star',
     });
 
-    it('clicking on playlist button opens popover with playlists', async () => {
-      const fakeClient = new FakeBoclipsClient();
-
-      fakeClient.users.insertCurrentUser(
-        UserFactory.sample({
-          features: { BO_WEB_APP_ENABLE_PLAYLISTS: true },
-        }),
-      );
-
-      fakeClient.collections.addToFake(
-        CollectionFactory.sample({
-          id: 'playlist-id',
-          title: 'first playlist',
-          origin: 'BO_WEB_APP',
-        }),
-      );
-
-      const wrapper = render(
-        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-          <BoclipsClientProvider client={fakeClient}>
-            <VideoCardWrapper video={video} />
-          </BoclipsClientProvider>
-        </BoclipsSecurityProvider>,
-      );
-
-      const playlistButton = await wrapper.findByLabelText('Add to playlist');
-      expect(playlistButton).toBeInTheDocument();
-      fireEvent.click(playlistButton);
-
-      expect(await wrapper.findByText('Add to playlist')).toBeInTheDocument();
-      expect(
-        await wrapper.findByLabelText('first playlist'),
-      ).toBeInTheDocument();
-
-      const checkbox = await wrapper.findByRole('checkbox');
-      expect(checkbox).toBeInTheDocument();
-      expect(checkbox.getAttribute('id')).toEqual('playlist-id');
-    });
-
-    it('displays info if there is no playlists', async () => {
-      const fakeClient = new FakeBoclipsClient();
-
-      fakeClient.users.insertCurrentUser(
-        UserFactory.sample({
-          features: { BO_WEB_APP_ENABLE_PLAYLISTS: true },
-        }),
-      );
-
-      const wrapper = render(
-        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-          <BoclipsClientProvider client={fakeClient}>
-            <VideoCardWrapper video={video} />
-          </BoclipsClientProvider>
-        </BoclipsSecurityProvider>,
-      );
-
-      const playlistButton = await wrapper.findByLabelText('Add to playlist');
-
-      fireEvent.click(playlistButton);
-
-      expect(
-        await wrapper.findByText('You have no playlists yet'),
-      ).toBeInTheDocument();
-    });
-
     it('can add video to a playlist', async () => {
       const fakeClient = new FakeBoclipsClient();
 
@@ -277,30 +212,6 @@ describe('Video card', () => {
           false,
         );
       });
-    });
-
-    it('clicking on playlist button opens popover that can be closed with X button', async () => {
-      const fakeClient = new FakeBoclipsClient();
-
-      fakeClient.users.insertCurrentUser(
-        UserFactory.sample({
-          features: { BO_WEB_APP_ENABLE_PLAYLISTS: true },
-        }),
-      );
-
-      const wrapper = render(
-        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-          <BoclipsClientProvider client={fakeClient}>
-            <VideoCardWrapper video={video} />
-          </BoclipsClientProvider>
-        </BoclipsSecurityProvider>,
-      );
-
-      const playlistButton = await wrapper.findByLabelText('Add to playlist');
-      fireEvent.click(playlistButton);
-
-      fireEvent.click(await wrapper.findByLabelText('close add to playlist'));
-      expect(wrapper.queryByText('Add to playlist')).not.toBeInTheDocument();
     });
   });
 
