@@ -44,9 +44,7 @@ export const VideoLibraryCard = ({ videoId }: Props) => {
         className={`${style.videoLibraryCardThumbnail} ${style.defaultThumbnail}`}
         video={video}
       />
-      <div className={`${style.videoTitle} text-sm text-grey-900 font-bold`}>
-        {video.title}
-      </div>
+      <div className={`${style.videoTitle}`}>{video.title}</div>
     </Link>
   );
 };

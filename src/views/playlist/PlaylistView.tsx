@@ -21,14 +21,23 @@ const PlaylistView = () => {
             <h2 className="grid-row-start-2 col-start-2 col-end-26">
               {data.title}
             </h2>
-            <div className="grid-row-start-3 col-start-2 col-end-26">
-              {data.description}
-            </div>
-            <div className={s.videoLibraryCardWrapper}>
-              {!isLoading &&
-                data.videos?.map((v) => {
-                  return <VideoLibraryCard key={v.id} videoId={v.id} />;
-                })}
+            <div className="grid-row-start-3 grid-row-end-3 col-start-2 col-end-26">
+              <div className="grid">
+                <div className="grid-row-start-1 grid-row-end-1 col-start-1 col-end-26 pb-5">
+                  {data.description}
+                </div>
+                <h4 className="grid-row-start-2 grid-row-end-2 col-start-1 col-end-26 border-t pt-4">
+                  In this playlist:
+                </h4>
+                <div
+                  className={`${s.videoLibraryCardWrapper} grid-row-start-3 grid-row-end-3`}
+                >
+                  {!isLoading &&
+                    data.videos?.map((v) => {
+                      return <VideoLibraryCard key={v.id} videoId={v.id} />;
+                    })}
+                </div>
+              </div>
             </div>
           </>
         )}

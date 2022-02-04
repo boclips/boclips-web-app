@@ -109,6 +109,7 @@ describe('Playlist view', () => {
     expect(screen.getByLabelText('Thumbnail of Video Three 333')).toBeVisible();
     expect(screen.getByLabelText('Thumbnail of Video Four 444')).toBeVisible();
     expect(screen.getByLabelText('Thumbnail of Video Five 555')).toBeVisible();
+    expect(screen.getByText('In this playlist:')).toBeVisible();
   });
 
   it('navigates to the video page when clicked on video', async () => {
