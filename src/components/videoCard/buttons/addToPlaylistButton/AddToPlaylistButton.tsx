@@ -75,7 +75,10 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
   };
 
   return (
-    <div id={videoId} className={s.addToPlaylist}>
+    <div
+      id={videoId}
+      className={c(s.addToPlaylist, { [s.buttonActive]: isOpen })}
+    >
       <Tooltip text="Add to playlist">
         <Button
           text="Add to playlist"
