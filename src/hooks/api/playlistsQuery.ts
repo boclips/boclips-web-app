@@ -5,6 +5,12 @@ import { CreateCollectionRequest } from 'boclips-api-client/dist/sub-clients/col
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import axios from 'axios';
+import { displayNotification } from 'src/components/common/notification/displayNotification';
+
+interface UpdatePlaylistProps {
+  playlist: Collection;
+  videoId: string;
+}
 
 export const usePlaylistsQuery = () => {
   const client = useBoclipsClient();
@@ -36,6 +42,58 @@ export const doRemoveFromPlaylist = (playlist: Collection, videoId: string) => {
   });
 
   return axios.delete(url);
+};
+
+export const useAddToPlaylistMutation = (callback: (id) => void) => {
+  return useMutation(
+    async ({ playlist, videoId }: UpdatePlaylistProps) =>
+      doAddToPlaylist(playlist, videoId),
+    {
+      onSuccess: (_, { playlist, videoId }) => {
+        displayNotification(
+          'success',
+          `Video added to "${playlist.title}"`,
+          '',
+          `add-video-${videoId}-to-playlist`,
+        );
+      },
+      onError: (_, { playlist, videoId }: UpdatePlaylistProps) => {
+        displayNotification(
+          'error',
+          `Error: Failed to add video to ${playlist.title}`,
+          'Please refresh the page and try again',
+          `add-video-${videoId}-to-playlist`,
+        );
+        callback(playlist.id);
+      },
+    },
+  );
+};
+
+export const useRemoveFromPlaylistMutation = (callback: (id) => void) => {
+  return useMutation(
+    async ({ playlist, videoId }: UpdatePlaylistProps) =>
+      doRemoveFromPlaylist(playlist, videoId),
+    {
+      onSuccess: (_, { playlist, videoId }) => {
+        displayNotification(
+          'success',
+          `Video removed from "${playlist.title}"`,
+          '',
+          `add-video-${videoId}-to-playlist`,
+        );
+      },
+      onError: (_, { playlist, videoId }: UpdatePlaylistProps) => {
+        displayNotification(
+          'error',
+          `Error: Failed remove video from ${playlist.title}`,
+          'Please refresh the page and try again',
+          `add-video-${videoId}-to-playlist`,
+        );
+        callback(playlist.id);
+      },
+    },
+  );
 };
 
 const doGetPlaylists = (client: BoclipsClient) =>

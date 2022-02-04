@@ -124,6 +124,7 @@
     "react-query": "^3.34.0",
     "react-router-dom": "^5.2.0",
     "react-simple-timefield": "^3.2.3",
+    "react-toastify": "^8.1.1",
     "simple-currency-format": "^2.1.0",
     "sinon": "^9.2.4",
     "svg-react-loader": "^0.4.6",

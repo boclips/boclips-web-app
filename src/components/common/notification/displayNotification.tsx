@@ -1,32 +1,42 @@
 import React from 'react';
-import notification from 'antd/lib/notification';
-import CloseIcon from '../../../resources/icons/cross-icon.svg';
-import './displayNotification.less';
+import { toast, ToastOptions } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import c from 'classnames';
+import s from './displayNotification.module.less';
 
 export const displayNotification = (
   type: 'error' | 'success',
-  key: string,
   title: string,
   message?: string,
+  dataQa?: string,
 ) => {
-  const className =
-    type === 'success' ? 'success-notification' : 'error-notification';
-  const duration = type === 'success' ? 3 : 10;
+  const toastBody = (
+    <div data-qa={dataQa} className={s.body}>
+      <div className={s.title}>{title}</div>
+      {message && <div className={s.message}>{message}</div>}
+    </div>
+  );
 
-  notification.close(key);
-  notification.open({
-    message: <span className="font-medium">{title}</span>,
-    description: message ? (
-      <span className="font-normal">{message}</span>
-    ) : null,
-    key,
-    closeIcon: (
-      <div className="close-icon-wrapper">
-        <CloseIcon />
-      </div>
-    ),
-    placement: 'bottomRight',
-    duration,
-    className,
-  });
+  const options: ToastOptions = {
+    position: 'bottom-right',
+    autoClose: 125000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    icon: false,
+    theme: undefined,
+  };
+
+  if (type === 'error') {
+    toast.error(toastBody, { ...options, className: c(s.toastError, s.toast) });
+  }
+
+  if (type === 'success') {
+    toast.success(toastBody, {
+      ...options,
+      className: c(s.toastSuccess, s.toast),
+    });
+  }
 };

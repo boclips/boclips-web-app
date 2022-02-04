@@ -1,4 +1,5 @@
 import React from 'react';
+import { ToastContainer } from 'react-toastify';
 
 interface Props {
   rowsSetup: string;
@@ -19,5 +20,6 @@ export const Layout = ({
     style={{ minWidth: responsiveLayout ? '320px' : '1160px' }}
   >
     {children}
+    <ToastContainer />
   </div>
 );

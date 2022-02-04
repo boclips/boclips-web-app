@@ -25,6 +25,7 @@ export const LibraryHeader = () => {
     isError,
     isLoading,
   } = usePlaylistMutation();
+
   const history = useHistory();
 
   const handleConfirm = () => {
@@ -52,7 +53,6 @@ export const LibraryHeader = () => {
     if (isError) {
       displayNotification(
         'error',
-        'create-playlist',
         'Error: Failed to create new playlist',
         'Please refresh the page and try again',
       );

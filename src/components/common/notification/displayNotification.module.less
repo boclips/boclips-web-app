@@ -1,0 +1,53 @@
+@import '~@boclips-ui/styles/src/colors';
+
+#bodyAfter {
+  content: '';
+  width: 8px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.toast{
+  position: relative;
+  overflow: hidden;
+}
+
+.toastSuccess {
+  --toastify-color-light: @success-bg;
+
+  .body {
+    &:after {
+      #bodyAfter;
+      background: @success;
+    }
+  }
+}
+
+.toastError {
+  --toastify-color-light: @error-bg;
+
+  .body {
+    &:after {
+      #bodyAfter;
+      background: @error;
+    }
+  }
+}
+
+.body {
+  color: @gray-900;
+  font-family: 'Rubik', Helvetica Neue, Helvetica, Arial, sans-serif;
+  padding-left: 1rem;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.message {
+  font-weight: 400;
+  font-size: .75rem;
+}

@@ -5,24 +5,17 @@ import PlaylistAddAlreadyAddedIcon from 'src/resources/icons/playlist-add-alread
 import React, { useRef, useState } from 'react';
 import CloseButton from 'src/resources/icons/cross-icon.svg';
 import {
-  doAddToPlaylist,
-  doRemoveFromPlaylist,
+  useAddToPlaylistMutation,
   usePlaylistsQuery,
+  useRemoveFromPlaylistMutation,
 } from 'src/hooks/api/playlistsQuery';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import c from 'classnames';
-import { useMutation } from 'react-query';
-import { displayNotification } from 'src/components/common/notification/displayNotification';
 import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
 import s from './style.module.less';
 
 interface Props {
   videoId: string;
-}
-
-interface UpdatePlaylistProps {
-  playlist: Collection;
-  vidId: string;
 }
 
 export const AddToPlaylistButton = ({ videoId }: Props) => {
@@ -38,69 +31,32 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
 
   const { data: playlists } = usePlaylistsQuery();
 
-  const uncheckPlaylistForVideo = (playlistId: string) =>
+  const uncheckPlaylistForVideo = (id: string) =>
     setPlaylistsContainingVideo((prevState) =>
-      prevState.filter((plId) => plId !== playlistId),
+      prevState.filter((plId) => plId !== id),
     );
 
-  const checkPlaylistForVideo = (playlistId: string) =>
-    setPlaylistsContainingVideo((prevState) => [...prevState, playlistId]);
+  const checkPlaylistForVideo = (id: string) =>
+    setPlaylistsContainingVideo((prevState) => [...prevState, id]);
 
-  const { mutate: mutateAddToPlaylist } = useMutation(
-    async ({ playlist, vidId }: UpdatePlaylistProps) =>
-      doAddToPlaylist(playlist, vidId),
-    {
-      onSuccess: (_, { playlist, vidId }) => {
-        displayNotification(
-          'success',
-          `add-video-${vidId}-to-playlist`,
-          `Video saved to "${playlist.title}"`,
-          '',
-        );
-      },
-      onError: (_, { playlist, vidId }: UpdatePlaylistProps) => {
-        displayNotification(
-          'error',
-          `add-video-${vidId}-to-playlist`,
-          'Error: Failed to add video to playlist',
-          'Please refresh the page and try again',
-        );
-        uncheckPlaylistForVideo(playlist.id);
-      },
-    },
+  const { mutate: mutateRemoveFromPlaylist } = useRemoveFromPlaylistMutation(
+    (id) => checkPlaylistForVideo(id),
   );
 
-  const { mutate: mutateRemoveFromPlaylist } = useMutation(
-    async ({ playlist, vidId }: UpdatePlaylistProps) =>
-      doRemoveFromPlaylist(playlist, vidId),
-    {
-      onSuccess: (_, { playlist, vidId }) => {
-        displayNotification(
-          'success',
-          `remove-video-${vidId}-from-playlist`,
-          `Video removed from "${playlist.title}"`,
-        );
-      },
-      onError: (_, { playlist, vidId }: UpdatePlaylistProps) => {
-        displayNotification(
-          'error',
-          `remove-video-${vidId}-from-playlist`,
-          'Error: Failed to remove video from playlist',
-          'Please refresh the page and try again',
-        );
-        checkPlaylistForVideo(playlist.id);
-      },
-    },
+  const { mutate: mutateAddToPlaylist } = useAddToPlaylistMutation((id) =>
+    uncheckPlaylistForVideo(id),
   );
 
   React.useEffect(() => {
-    const playlistsTemp =
-      playlists
-        ?.filter((playlist) =>
+    if (playlists && videoId) {
+      const ids = playlists
+        .filter((playlist) =>
           playlist.videos.map((v) => v.id).includes(videoId),
         )
-        .map((playlist) => playlist.id) || [];
-    setPlaylistsContainingVideo(playlistsTemp);
+        .map((playlist) => playlist.id);
+
+      setPlaylistsContainingVideo(ids);
+    }
   }, [playlists, videoId]);
 
   const onCheckboxChange = (e) => {
@@ -111,10 +67,10 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
 
     if (playlistsContainingVideo.includes(playlistId)) {
       uncheckPlaylistForVideo(playlistId);
-      mutateRemoveFromPlaylist({ playlist: chosenPlaylist, vidId: videoId });
+      mutateRemoveFromPlaylist({ playlist: chosenPlaylist, videoId });
     } else {
       checkPlaylistForVideo(playlistId);
-      mutateAddToPlaylist({ playlist: chosenPlaylist, vidId: videoId });
+      mutateAddToPlaylist({ playlist: chosenPlaylist, videoId });
     }
   };
 

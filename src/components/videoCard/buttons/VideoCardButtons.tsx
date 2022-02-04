@@ -4,7 +4,7 @@ import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import c from 'classnames';
-import { AddToPlaylistButton } from 'src/components/videoCard/buttons/AddToPlaylistButton';
+import { AddToPlaylistButton } from 'src/components/videoCard/buttons/addToPlaylistButton/AddToPlaylistButton';
 import s from './style.module.less';
 import { CopyVideoLinkButton } from './CopyVideoLinkButton';
 import { CopyLegacyVideoLinkButton } from './CopyLegacyVideoLinkButton';
