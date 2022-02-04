@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const VideoPage = ({ video }: Props) => {
-  const history: any = useHistory();
+  const history = useHistory();
   const goToPreviousPage = () => {
     history.goBack();
   };

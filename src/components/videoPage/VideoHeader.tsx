@@ -6,7 +6,9 @@ import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import dateFormat from 'dateformat';
 import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import { FeatureGate } from 'src/components/common/FeatureGate';
+import { AddToPlaylistButton } from 'src/components/videoCard/buttons/addToPlaylistButton/AddToPlaylistButton';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
+import s from './style.module.less';
 
 interface Props {
   video: Video;
@@ -37,11 +39,18 @@ export const VideoHeader = ({ video }: Props) => {
           This is an agreed price for your organization
         </div>
       </FeatureGate>
-      <div className="flex flex-row justify-between" style={{ width: '100%' }}>
-        <CopyVideoLinkButton
-          video={video}
-          appcueEvent={AppcuesEvent.COPY_LINK_FROM_VIDEO_PAGE}
-        />
+
+      <div className={s.buttons}>
+        <div className={s.iconButtons}>
+          <FeatureGate feature="BO_WEB_APP_ENABLE_PLAYLISTS">
+            <AddToPlaylistButton videoId={video.id} />
+          </FeatureGate>
+
+          <CopyVideoLinkButton
+            video={video}
+            appcueEvent={AppcuesEvent.COPY_LINK_FROM_VIDEO_PAGE}
+          />
+        </div>
 
         <FeatureGate linkName="cart">
           <AddToCartButton

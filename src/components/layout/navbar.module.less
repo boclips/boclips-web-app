@@ -25,7 +25,7 @@
 @apply items-center h-full bg-white;
   position: sticky;
   top: 0px;
-  z-index: 50;
+  z-index: 101;
 
   .logo {
   @apply col-start-2 col-end-5 row-start-1 row-end-1;
@@ -131,6 +131,9 @@
 
 
 @media (min-width: @screen-sm) {
+  .navbarResponsive{
+    z-index: 50;
+  }
   .logo {
   @apply pt-4 pb-2;
   }
