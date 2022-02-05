@@ -20,7 +20,7 @@
   }
 }
 
-.popover {
+.playlistPanel {
   background-color: @white;
   padding: 1rem 0;
   display: flex;
@@ -29,7 +29,7 @@
   border-radius: 4px;
 }
 
-.popoverHeader {
+.header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -54,10 +54,25 @@
   }
 }
 
-.popoverContent {
+.content {
   overflow: auto;
   height: auto;
   padding: .5rem 1rem 0 1rem;
+
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: none
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #BCCDFF;
+    border-radius: 100vh;
+  }
+
 
   li {
     margin-bottom: 0.75rem;
@@ -77,7 +92,7 @@
 
 
 @media screen and (min-width: @screen-sm) {
-  .popover {
+  .playlistPanel {
     position: fixed;
     width: 100vw;
     max-height: 60vh;
@@ -102,7 +117,7 @@
 }
 
 @media screen and (min-width: @screen-md) {
-  .popover {
+  .playlistPanel {
     position: absolute;
     width: 320px;
     max-height: 248px;

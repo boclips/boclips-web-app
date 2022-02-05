@@ -101,8 +101,8 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
         />
       </Tooltip>
       {isOpen && (
-        <div ref={ref} className={s.popover}>
-          <div className={s.popoverHeader}>
+        <div ref={ref} className={s.playlistPanel}>
+          <div className={s.header}>
             <h5>Add to playlist</h5>
             <button
               type="button"
@@ -112,7 +112,7 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
               <CloseButton />
             </button>
           </div>
-          <ul className={s.popoverContent}>
+          <ul className={s.content}>
             {playlists?.length > 0 ? (
               playlists.map((playlist: Collection) => {
                 const isSelected = playlistsContainingVideo.includes(
