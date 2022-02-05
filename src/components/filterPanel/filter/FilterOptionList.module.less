@@ -1,5 +1,16 @@
+@import '~@boclips-ui/styles/src/colors';
+
+
 .filterOptions {
- @apply overflow-y-auto pr-3 -mr-3;
+  position: relative;
+  overflow: auto;
+  padding-top: .5rem;
+  margin: .5rem 0 0 0;
+
+
+  &.opened {
+    max-height: 250px;
+  }
 }
 
 .filterOptions::-webkit-scrollbar {
@@ -15,3 +26,24 @@
   background: #BCCDFF;
   border-radius: 100vh;
 }
+
+.checkboxItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: .25px;
+  padding: 0 1rem;
+  position: relative;
+
+}
+
+.showMoreButton {
+  width: max-content;
+  align-self: end;
+  margin: 1rem 0.75rem 0 0;
+  color: @blue-800;
+  border-bottom: 2px solid @blue-800;
+  font-weight: 500;
+}
+

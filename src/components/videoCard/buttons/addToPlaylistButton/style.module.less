@@ -6,23 +6,23 @@
   --bo-ui-button-outline-background-color-hover: none;
   --bo-ui-button-icon-only-padding: 0;
 
-  .addSvg{
+  .addSvg {
     --bo-ui-button-outline-svg-fill: none;
   }
 
-  .removeSvg{
+  .removeSvg {
     --bo-ui-button-outline-svg-fill-hover: @blue-800;
     --bo-ui-button-outline-svg-fill: @blue-800;
   }
 
-  &.buttonActive{
+  &.buttonActive {
     --bo-ui-button-outline-border: 2px solid @blue-800;
   }
 }
 
 .popover {
   background-color: @white;
-  padding: 1rem;
+  padding: 1rem 0;
   display: flex;
   flex-direction: column;
   z-index: 99;
@@ -34,6 +34,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 0 1rem;
 
   h5 {
     font-size: 1rem;
@@ -55,8 +56,8 @@
 
 .popoverContent {
   overflow: auto;
-  padding-top: 0.5rem;
   height: auto;
+  padding: .5rem 1rem 0 1rem;
 
   li {
     margin-bottom: 0.75rem;
@@ -74,20 +75,6 @@
   }
 }
 
-.checkbox {
-  width: 20px;
-  height: 20px;
-  margin-right: .5rem;
-  border: 2px solid @blue-500;
-
-  &:hover {
-    border-color: @blue-800;
-  }
-
-  &:checked {
-    background-color: @blue-800;
-  }
-}
 
 @media screen and (min-width: @screen-sm) {
   .popover {

@@ -24,7 +24,7 @@ export const DateFilter = ({ releaseDates, handleChange }: Props) => {
 
   return (
     <CollapsableFilter title="Release date">
-      <div className="mt-2 w-full">
+      <div className="mt-2 w-full px-4">
         <div data-qa="release_date_from">
           <div className="my-2">From:</div>
           <ReleaseDateFilter

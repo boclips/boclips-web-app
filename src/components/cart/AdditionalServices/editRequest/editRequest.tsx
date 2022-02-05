@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useCartItemAdditionalServicesMutation } from 'src/hooks/api/cartQuery';
 import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
 import { InputWithDebounce } from 'src/components/cart/InputWithDebounce';
-import c from 'classnames';
 import { useCartValidation } from 'src/components/common/providers/CartValidationProvider';
+import BoCheckbox from 'src/components/common/input/BoCheckbox';
 
 interface Props {
   label: string;
@@ -70,26 +70,15 @@ export const EditRequest = ({ label, cartItem, price }: Props) => {
 
   return (
     <>
-      <div className="h-9 flex flex-row w-full items-center justify-between">
-        <label className="cursor-pointer font-normal mr-8" htmlFor={id}>
-          <input
-            onChange={handleChange}
-            checked={serviceRequested}
-            type="checkbox"
-            id={id}
-            className="form-checkbox checked:bg-blue-800 w-5 h-5 mr-2 hover:border-blue-800 hover:border-solid border-2 cursor-pointer"
-          />
-          <span
-            className={c({
-              'font-medium': serviceRequested,
-            })}
-          >
-            {label}
-          </span>
-        </label>
-
+      <div className="flex flex-row w-full items-center justify-between mb-2">
+        <BoCheckbox
+          onChange={handleChange}
+          name={label}
+          id={id}
+          checked={serviceRequested}
+        />
         {price && (
-          <div className="flex h-full items-center text-lg font-normal">
+          <div className="flex h-full items-center text-md font-normal">
             {price}
           </div>
         )}

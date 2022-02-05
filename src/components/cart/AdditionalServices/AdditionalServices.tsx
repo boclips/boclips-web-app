@@ -13,7 +13,7 @@ interface Props {
 
 const AdditionalServices = ({ videoItem, cartItem }: Props) => {
   return (
-    <div className="text-gray-800">
+    <>
       <div className="text-base">Additional services</div>
       <TrimService videoItem={videoItem} cartItem={cartItem} price="Free" />
 
@@ -36,7 +36,7 @@ const AdditionalServices = ({ videoItem, cartItem }: Props) => {
         label="Request other type of editing"
         price="Free"
       />
-    </div>
+    </>
   );
 };
 

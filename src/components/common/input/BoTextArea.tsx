@@ -1,6 +1,6 @@
 import React, { forwardRef, Ref } from 'react';
 import c from 'classnames';
-import { BoInputProps } from 'src/components/common/input/BoInput/BoInput';
+import { BoInputProps } from 'src/components/common/input/BoInputText';
 import s from './style.module.less';
 
 export const BoTextArea = forwardRef(
@@ -19,7 +19,7 @@ export const BoTextArea = forwardRef(
     }: BoInputProps,
     ref: Ref<HTMLTextAreaElement>,
   ) => (
-    <label htmlFor={label} className="mb-6  flex flex-col">
+    <label htmlFor={label} className="mb-6 flex flex-col">
       <span className="flex flex-row">
         {constraints.required && (
           <span className="text-failure-message-border">*</span>

@@ -17,7 +17,5 @@ export const SubjectFilter = ({ options, handleChange }: Props) => {
       filterName="subject"
       handleChange={handleChange}
     />
-  ) : (
-    <></>
-  );
+  ) : null;
 };

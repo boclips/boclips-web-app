@@ -143,9 +143,9 @@ describe('LibraryView', () => {
         fireEvent.click(createPlaylistButton);
 
         expect(wrapper.getByLabelText('Create new playlist')).toBeVisible();
-        expect(wrapper.getByLabelText('*Playlist name')).toBeVisible();
-        expect(wrapper.getByPlaceholderText('Give it a name')).toBeVisible();
-        expect(wrapper.getByLabelText('Description')).toBeVisible();
+        expect(wrapper.getByLabelText('Playlist name')).toBeVisible();
+        expect(wrapper.getByPlaceholderText('Add name')).toBeVisible();
+        expect(wrapper.getByLabelText('Description (Optional)')).toBeVisible();
         expect(wrapper.getByPlaceholderText('Add description')).toBeVisible();
         expect(wrapper.getByRole('button', { name: 'Cancel' })).toBeVisible();
         expect(
@@ -247,10 +247,10 @@ describe('LibraryView', () => {
       ) => userEvent.type(wrapper.getByLabelText(label), value);
 
       const fillPlaylistName = (wrapper: RenderResult, value: string) =>
-        fillPlaylistField(wrapper, '*Playlist name', value);
+        fillPlaylistField(wrapper, 'Playlist name', value);
 
       const fillPlaylistDescription = (wrapper: RenderResult, value: string) =>
-        fillPlaylistField(wrapper, 'Description', value);
+        fillPlaylistField(wrapper, 'Description (Optional)', value);
 
       const confirmPlaylistCreationModal = (wrapper: RenderResult) =>
         fireEvent.click(

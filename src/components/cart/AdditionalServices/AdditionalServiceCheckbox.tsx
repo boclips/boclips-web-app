@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useCartItemAdditionalServicesMutation } from 'src/hooks/api/cartQuery';
 import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
-import c from 'classnames';
 import { AdditionalServices } from 'boclips-api-client/dist/sub-clients/carts/model/AdditionalServices';
+import BoCheckbox from 'src/components/common/input/BoCheckbox';
 
 interface Props {
   label: string;
@@ -35,28 +35,17 @@ const AdditionalServicesCheckbox = ({
   };
 
   return (
-    <div className="h-9 flex flex-row w-full items-center justify-between">
-      <label className="cursor-pointer font-normal mr-8" htmlFor={id}>
-        <input
-          onChange={onChangeCheckbox}
-          id={id}
-          checked={serviceRequested}
-          type="checkbox"
-          className="form-checkbox checked:bg-blue-800 w-5 h-5 mr-2 hover:border-blue-800 hover:border-solid border-2 cursor-pointer"
-        />
-        <span
-          className={c({
-            'font-medium': serviceRequested,
-          })}
-        >
-          {label}
-        </span>
-      </label>
-      {price && (
-        <div className="flex h-full items-center text-lg font-normal">
-          {price}
-        </div>
-      )}
+    <div className="flex flex-row w-full items-center justify-between mb-2">
+      <BoCheckbox
+        onChange={onChangeCheckbox}
+        name={label}
+        id={id}
+        checked={serviceRequested}
+      />
+
+      <div className="flex h-full items-center text-md font-normal">
+        {price}
+      </div>
     </div>
   );
 };

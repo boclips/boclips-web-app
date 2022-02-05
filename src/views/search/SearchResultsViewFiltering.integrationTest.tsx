@@ -280,9 +280,9 @@ describe('SearchResultsFiltering', () => {
         .getAllByRole('checkbox')
         .map((it) => it.closest('label'));
       expect(within(options[0]).getByText('Explainer')).toBeVisible();
-      expect(within(options[0]).getByText('22')).toBeVisible();
+      expect(wrapper.getByText('22')).toBeVisible();
       expect(within(options[1]).getByText('Hook')).toBeVisible();
-      expect(within(options[1]).getByText('12')).toBeVisible();
+      expect(wrapper.getByText('12')).toBeVisible();
     });
   });
 

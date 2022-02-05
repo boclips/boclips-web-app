@@ -10,7 +10,7 @@ interface Props {
 export const FilterHeader = ({ text, filterIsOpen, toggleFilter }: Props) => {
   return (
     <div
-      className="text-base text-blue-800 font-medium flex items-center cursor-pointer active:border-none"
+      className="text-base px-4 text-blue-800 font-medium flex items-center cursor-pointer active:border-none"
       onClick={toggleFilter}
       onKeyPress={(event) => handleEnterKeyDown(event, toggleFilter)}
       tabIndex={0}

@@ -10,6 +10,7 @@ interface Props {
   onSelect: (event, item) => void;
   selectedOptions: string[];
 }
+
 const DEFAULT_VISIBLE_OPTIONS = 5;
 
 export const FilterOptionList = ({
@@ -44,11 +45,11 @@ export const FilterOptionList = ({
     divideOptionsByBeingSelected(optionsWithHits);
 
   return (
-    <div className="flex flex-col mb-1 mt-4">
+    <div className="flex flex-col mb-1">
       <div
         data-qa="filter-option-list"
         className={c(s.filterOptions, {
-          'h-64': allExpanded && tooManyOptions,
+          [s.opened]: allExpanded && tooManyOptions,
         })}
       >
         {optionsWithSelectedOnesFirst
@@ -59,27 +60,26 @@ export const FilterOptionList = ({
               : DEFAULT_VISIBLE_OPTIONS,
           )
           .map((option) => (
-            <span key={option.id}>
-              <FilterOptionCheckbox
-                option={option}
-                selected={selectedOptions.includes(option.id)}
-                onSelect={onSelect}
-              />
-            </span>
+            <FilterOptionCheckbox
+              key={option.id}
+              dataQa={`${option.id}-checkbox`}
+              option={option}
+              selected={selectedOptions.includes(option.id)}
+              onSelect={onSelect}
+            />
           ))}
       </div>
       {tooManyOptions && (
-        <div
-          role="button"
-          tabIndex={0}
+        <button
+          type="button"
           onClick={() => setAllExpanded(!allExpanded)}
           onKeyPress={(event) => handleEnterKeyDown(event, toggleOptions)}
-          className="text-blue-800 underline font-medium text-right focus:outline-none"
+          className={s.showMoreButton}
         >
           {allExpanded
             ? 'Show less'
             : `Show all (${optionsWithSelectedOnesFirst.length})`}
-        </div>
+        </button>
       )}
     </div>
   );

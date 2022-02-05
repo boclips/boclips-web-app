@@ -37,7 +37,7 @@ export const CheckboxFilter = ({
 
   return (
     <CollapsableFilter title={title} handleFilterToggle={handleFilterToggle}>
-      {filtersSearch}
+      <div className="px-4">{filtersSearch}</div>
       <FilterOptionList
         options={options}
         onSelect={onSelectOption}

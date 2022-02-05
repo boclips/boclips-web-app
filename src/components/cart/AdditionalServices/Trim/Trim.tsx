@@ -3,9 +3,9 @@ import { useCartItemAdditionalServicesMutation } from 'src/hooks/api/cartQuery';
 import { AdditionalServices as AdditionalServicesApi } from 'boclips-api-client/dist/sub-clients/carts/model/AdditionalServices';
 import { Video } from 'boclips-api-client/dist/types';
 import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
-import c from 'classnames';
 import { useCartValidation } from 'src/components/common/providers/CartValidationProvider';
 import { useDebounce } from 'src/hooks/useDebounce';
+import BoCheckbox from 'src/components/common/input/BoCheckbox';
 import { DurationInput } from './DurationInput';
 import { isTrimFromValid, isTrimToValid } from './trimValidation';
 
@@ -143,37 +143,25 @@ export const TrimService = ({ videoItem, cartItem, price }: Props) => {
   return (
     <>
       <div className="h-9 flex flex-row w-full items-center justify-between">
-        <label
-          className="cursor-pointer font-normal mr-8"
-          htmlFor={videoItem.id}
-        >
-          <input
-            onChange={onChangeCheckbox}
-            id={videoItem.id}
-            checked={trimChecked}
-            type="checkbox"
-            className="form-checkbox checked:bg-blue-800 w-5 h-5 mr-2 hover:border-blue-800 hover:border-solid border-2 cursor-pointer"
-          />
-          <span
-            className={c({
-              'font-medium': trimChecked,
-            })}
-          >
-            Trim video
-          </span>
-        </label>
+        <BoCheckbox
+          onChange={onChangeCheckbox}
+          name="Trim video "
+          id={videoItem.id}
+          checked={trimChecked}
+        />
+
         {price && (
-          <div className="flex h-full items-center text-lg font-normal">
+          <div className="flex h-full items-center text-md font-normal">
             {price}
           </div>
         )}
       </div>
       {trimChecked && (
-        <div className="ml-7 -mt-1 font-normal">
+        <div className="ml-7 my-1 font-normal">
           <div className="text-xs mb-2">
             Specify how you’d like to trim the video
           </div>
-          <div className="text-md h-full flex flex-row font-normal mt-2">
+          <div className="text-md flex flex-row font-normal mt-2">
             <DurationInput
               label="From:"
               isValid={trimValidation?.isFromValid}
@@ -196,8 +184,8 @@ export const TrimService = ({ videoItem, cartItem, price }: Props) => {
             />
           </div>
           {!debouncedIsTrimValid && (
-            <div className="text-xs ml-12 text-red-error mt-1">
-              &nbsp;Specify your trimming options
+            <div className="text-xs text-red-error my-2">
+              Specify your trimming options
             </div>
           )}
         </div>

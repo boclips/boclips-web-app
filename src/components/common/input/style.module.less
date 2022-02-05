@@ -1,34 +1,103 @@
 @import '~@boclips-ui/styles/src/colors';
 
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+  position: relative;
+
+  .errorMessage {
+    position: absolute;
+    bottom: -22px;
+    color: @error;
+    font-size: 0.875rem;
+  }
+
+  .optional {
+    color: @gray-750;
+    letter-spacing: 0.0012em;
+  }
+}
+
 .input {
-  border: 2px solid @gray-500;
   border-radius: 4px;
-  min-height: 44px;
+  border: 2px solid @gray-700;
+  width: 100%;
+  min-height: 48px;
+
+  &::placeholder {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5rem;
+  }
+
+  &:active {
+    border-color: @blue-650;
+  }
+
+  &:hover {
+    border-color: @gray-600;
+  }
+
+  &:focus, &:focus-visible, &:focus-within {
+    outline: 4px solid @blue-650 !important;
+    outline-offset: 0px !important;
+  }
+
+
+  &.error {
+    border-color: @error;
+  }
+}
+
+
+.checkboxWrapper {
   display: flex;
   flex-direction: row;
   align-items: center;
+  cursor: pointer;
+  font-weight: normal;
 
-  :global .ant-input {
-    @apply text-body-16;
-    min-height: inherit;
-    transition: none !important;
+  span {
+    font-size: 1rem;
+    color: @gray-800;
+  }
+}
+
+.checkbox {
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin-right: .5rem;
+  background-color: @white;
+  border-radius: 4px;
+  border: 2px solid @gray-700;
+
+  &:checked {
+    background-color: @blue-800;
+    background-size: 70%;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='14' height='10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.75 5.75l3 3 7.5-7.5' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
   }
 
-  & input,
-  textarea {
-    border: none !important;
-    --tw-ring-shadow: none !important;
-    box-shadow: none;
+  &:hover {
+    border-color: @blue-650;
   }
 
-  ::placeholder {
-    color: var(--gray-500);
-    font-size: 16px;
+  &:focus, &:focus-visible, &:focus-within {
+    outline: 4px solid @blue-650;
+    outline-offset: 0px;
+    background-color: unset;
   }
 
-  &:active,
-  &:hover,
-  &:focus {
-    border: 2px solid @gray-600;
+  &:active {
+    border-color: @blue-900;
+    background-color: @blue-900;
+  }
+
+  &:checked:active,
+  &:checked:hover,
+  &:checked:focus {
+    background-color: @blue-900;
   }
 }

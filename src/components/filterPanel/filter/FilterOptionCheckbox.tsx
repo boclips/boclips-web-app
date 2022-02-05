@@ -1,37 +1,31 @@
 import React from 'react';
-import c from 'classnames';
 import { FilterOption } from 'src/types/FilterOption';
+import BoCheckbox from 'src/components/common/input/BoCheckbox';
+import s from './FilterOptionList.module.less';
 
 interface Props {
   option: FilterOption;
   selected: boolean;
   onSelect: (event, item) => void;
+  dataQa?: string;
 }
-export const FilterOptionCheckbox = ({ option, selected, onSelect }: Props) => {
+export const FilterOptionCheckbox = ({
+  option,
+  selected,
+  onSelect,
+  dataQa,
+}: Props) => {
   return (
-    <div key={option.id} className="mb-2">
-      <label
-        htmlFor={option.id}
-        className="flex items-start cursor-pointer text-gray-800"
-      >
-        <input
-          onChange={(event) => onSelect(event, option.id)}
-          className="checked:bg-blue-800 w-5 h-5 hover:border-blue-800 hover:border-solid border-2 cursor-pointer"
-          type="checkbox"
-          value={option.id}
-          checked={selected}
-          data-qa={`${option.id}-checkbox`}
-          id={option.id}
-        />
-        <span
-          className={c('text-sm ml-2 flex-grow text-left', {
-            'font-medium': selected,
-          })}
-        >
-          {option.label}
-        </span>
-        <span className="text-blue-700">{option.hits}</span>
-      </label>
+    <div key={option.id} className={s.checkboxItem}>
+      <BoCheckbox
+        onChange={(event) => onSelect(event, option.id)}
+        name={option.name}
+        id={option.id}
+        checked={selected}
+        dataQa={dataQa}
+        label={option.label}
+      />
+      <span className="text-blue-700">{option.hits}</span>
     </div>
   );
 };

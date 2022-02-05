@@ -26,12 +26,14 @@ describe('filterPanel', () => {
       key: 'video_type',
       id: 'stock',
       label: <span>Stock</span>,
+      name: 'Stock',
     }),
     FilterOptionFactory.sample({
       hits: 5,
       key: 'video_type',
       id: 'news',
       label: <span>News</span>,
+      name: 'News',
     }),
   ];
 

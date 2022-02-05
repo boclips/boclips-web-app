@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import PageHeader from 'src/components/pageTitle/PageHeader';
 import Button from '@boclips-ui/button';
-import { BoInput } from 'src/components/common/input/BoInput/BoInput';
+import { BoInputText } from 'src/components/common/input/BoInputText';
 import PlusSign from 'resources/icons/plus-sign.svg';
 import { usePlaylistMutation } from 'src/hooks/api/playlistsQuery';
 import { useHistory } from 'react-router-dom';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
-import { BoTextArea } from '../common/input/BoInput/BoTextArea';
 import { Bodal } from '../common/bodal/Bodal';
 
 interface PlaylistForm {
@@ -83,18 +82,20 @@ export const LibraryHeader = () => {
           onCancel={() => setModalOpen(false)}
           isLoading={isLoading}
         >
-          <BoInput
+          <BoInputText
             label="Playlist name"
-            placeholder="Give it a name"
+            placeholder="Add name"
             constraints={{ required: true }}
             onChange={handleTitleChange}
             error={titleError}
             errorMessage="Playlist name is required"
+            inputType="text"
           />
-          <BoTextArea
+          <BoInputText
             label="Description"
             placeholder="Add description"
             onChange={handleDescriptionChange}
+            inputType="textarea"
           />
         </Bodal>
       )}

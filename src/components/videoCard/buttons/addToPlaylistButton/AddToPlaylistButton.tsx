@@ -12,6 +12,7 @@ import {
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import c from 'classnames';
 import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
+import BoCheckbox from 'src/components/common/input/BoCheckbox';
 import s from './style.module.less';
 
 interface Props {
@@ -119,19 +120,12 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
                 );
                 return (
                   <li key={playlist.id}>
-                    <label htmlFor={playlist.id}>
-                      <input
-                        onChange={onCheckboxChange}
-                        type="checkbox"
-                        className={s.checkbox}
-                        name={playlist.title}
-                        id={playlist.id}
-                        checked={isSelected}
-                      />
-                      <span className={c({ 'font-medium': isSelected })}>
-                        {playlist.title}
-                      </span>
-                    </label>
+                    <BoCheckbox
+                      onChange={onCheckboxChange}
+                      name={playlist.title}
+                      id={playlist.id}
+                      checked={isSelected}
+                    />
                   </li>
                 );
               })
