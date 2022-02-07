@@ -6,11 +6,15 @@ import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable'
 import { SEARCH_BASE_KEY } from 'src/hooks/api/useSearchQuery';
 
 export const doGetVideos = (videoIds: string[], apiClient: BoclipsClient) => {
+  console.log(videoIds);
   return apiClient.videos
     .search({
       id: videoIds,
     })
-    .then((items) => items.page);
+    .then((items) => {
+      console.log(items);
+      return items.page;
+    });
 };
 
 export const doGetVideo = (id: string, apiClient: BoclipsClient) =>

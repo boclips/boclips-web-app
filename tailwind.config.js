@@ -26,6 +26,8 @@ module.exports = {
         'navbar-responsive': 'auto auto',
         'default-view': 'auto minmax(0, auto) 63px',
         'default-view-with-title': 'auto 50px minmax(0, auto) 63px',
+        'playlist-view':
+          'auto minmax(50px, auto) auto auto minmax(0, auto) 63px',
         'order-view': 'auto 21px minmax(0, auto) minmax(0, auto) 63px',
       },
       gridTemplateColumns: {

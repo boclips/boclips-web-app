@@ -10,23 +10,23 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 describe('Video Library Card', () => {
   it('has an href to single Video', async () => {
     const client = new FakeBoclipsClient();
+    const video = VideoFactory.sample({ id: 'video-123', title: 'Cats' });
 
-    client.videos.insertVideo(
-      VideoFactory.sample({ id: 'video-123', title: 'Cats' }),
-    );
+    client.videos.insertVideo(video);
 
     render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={client}>
           <MemoryRouter>
-            <VideoLibraryCard videoId="video-123" />
+            <VideoLibraryCard video={video} />
           </MemoryRouter>
         </BoclipsClientProvider>
       </QueryClientProvider>,
     );
 
-    expect(await screen.findByLabelText('Thumbnail of Cats')).toBeVisible();
-    expect(screen.getByLabelText('Open video about Cats')).toBeVisible();
+    expect(
+      await screen.findByLabelText('Thumbnail of Cats'),
+    ).toBeInTheDocument();
     expect(screen.getByRole('img').closest('a')).toHaveAttribute(
       'href',
       '/videos/video-123',

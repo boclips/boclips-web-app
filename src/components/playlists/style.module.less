@@ -9,33 +9,15 @@
   grid-gap:1.5rem;
 }
 
-.videoLibraryCardWrapper {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-column-start: 1;
-  grid-column-end: 26;
-  grid-gap:1.5rem;
+.videoLibraryCardTile {
+  width: 100%;
+  height: 300px;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
 }
 
 .playlistTile {
   width: 100%;
   height: 289px;
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
-  &.skeleton {
-    animation: skeleton ease-in 1s infinite;
-    background: linear-gradient(90deg,
-    @gray-100 25%,
-    @gray-300 37%,
-    @gray-100 63%);
-
-    background-size: 200% 200%;
-    border-color: @gray-200;
-  }
-}
-
-.videoLibraryCardTile {
-  width: 100%;
-  height: 300px;
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
   &.skeleton {
     animation: skeleton ease-in 1s infinite;
@@ -102,7 +84,7 @@
     grid-template-columns:repeat(1, minmax(0, 1fr));
   }
 
-  .videoLibraryCardWrapper{
+  .cardWrapper{
     grid-template-columns:repeat(1, minmax(0, 1fr));
   }
 }
@@ -112,7 +94,7 @@
     grid-template-columns:repeat(2, minmax(0, 1fr));
   }
 
-  .videoLibraryCardWrapper{
+  .cardWrapper{
     grid-template-columns:repeat(2, minmax(0, 1fr));
   }
 }
@@ -122,7 +104,7 @@
     grid-template-columns:repeat(4, minmax(0, 1fr));
   }
 
-  .videoLibraryCardWrapper{
+  .cardWrapper{
     grid-template-columns:repeat(4, minmax(0, 1fr));
   }
 }

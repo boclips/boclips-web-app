@@ -1,11 +1,10 @@
 import React from 'react';
-import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
-import { Loading } from 'src/components/common/Loading';
 import { Link } from 'react-router-dom';
-import style from './style.module.less';
+import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
+import s from './style.module.less';
 
 interface Props {
-  videoId: string;
+  video: Video;
 }
 
 const Thumbnail = ({ className, video }) => {
@@ -27,24 +26,19 @@ const Thumbnail = ({ className, video }) => {
   );
 };
 
-export const VideoLibraryCard = ({ videoId }: Props) => {
-  const { data: video, isLoading } = useFindOrGetVideo(videoId);
-
-  if (isLoading || !video) return <Loading />;
-
+export const VideoLibraryCard = ({ video }: Props) => {
   return (
     <Link
       to={{
         pathname: `/videos/${video.id}`,
       }}
-      aria-label={`Open video about ${video.title}`}
-      className={style.videoLibraryCardTile}
+      className={s.videoLibraryCardTile}
     >
       <Thumbnail
-        className={`${style.videoLibraryCardThumbnail} ${style.defaultThumbnail}`}
+        className={`${s.videoLibraryCardThumbnail} ${s.defaultThumbnail}`}
         video={video}
       />
-      <div className={`${style.videoTitle}`}>{video.title}</div>
+      <div className={s.videoTitle}>{video.title}</div>
     </Link>
   );
 };
