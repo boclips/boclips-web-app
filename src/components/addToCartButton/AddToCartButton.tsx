@@ -23,12 +23,14 @@ interface AddToCartButtonProps {
   video: Video;
   width?: string;
   appcueEvent?: AppcuesEvent;
+  labelAdd?: string;
 }
 
 export const AddToCartButton = ({
   video,
   width,
   appcueEvent,
+  labelAdd = 'Add to cart',
 }: AddToCartButtonProps) => {
   const queryClient = useQueryClient();
   const boclipsClient = useBoclipsClient();
@@ -94,7 +96,7 @@ export const AddToCartButton = ({
       {!cartItem ? (
         <Button
           onClick={addToCart}
-          text="Add to cart"
+          text={labelAdd}
           icon={<CartIcon />}
           width="100%"
           height="40px"

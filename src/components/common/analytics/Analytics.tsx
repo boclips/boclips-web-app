@@ -19,14 +19,18 @@ export const trackVideoAddedToCart = (
   video: Video,
   apiClient: BoclipsClient,
 ) => {
-  apiClient.events.trackVideoInteraction(video, 'VIDEO_ADDED_TO_CART');
+  if (video.links?.logInteraction) {
+    apiClient.events.trackVideoInteraction(video, 'VIDEO_ADDED_TO_CART');
+  }
 };
 
 export const trackVideoRemovedFromCart = (
   video: Video,
   apiClient: BoclipsClient,
 ) => {
-  apiClient.events.trackVideoInteraction(video, 'VIDEO_REMOVED_FROM_CART');
+  if (video.links?.logInteraction) {
+    apiClient.events.trackVideoInteraction(video, 'VIDEO_REMOVED_FROM_CART');
+  }
 };
 
 export const trackNavigateToVideoDetails = (

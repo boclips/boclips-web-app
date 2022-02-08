@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Router } from 'react-router-dom';
 import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
@@ -46,6 +46,7 @@ describe('Playlist view', () => {
 
   beforeEach(() => {
     client.collections.clear();
+    client.carts.clear();
     client.videos.clear();
 
     videos.forEach((it) => client.videos.insertVideo(it));
@@ -121,5 +122,48 @@ describe('Playlist view', () => {
     fireEvent.click(tile);
 
     expect(history.location.pathname).toEqual('/videos/111');
+  });
+
+  it('video can be added to cart by clicking the button', async () => {
+    client.carts.clear();
+    client.collections.clear();
+    const video = createVideoWithThumbnail('111', 'Video One');
+    client.videos.insertVideo(video);
+    client.collections.addToFake({ ...playlist, videos: [video] });
+
+    const history = createBrowserHistory();
+    history.push({ pathname: '/library/123' });
+
+    render(
+      <Router history={history}>
+        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+      </Router>,
+    );
+
+    fireEvent.click(await screen.findByText('Add'));
+
+    await waitFor(async () => {
+      expect((await client.carts.getCart()).items[0].videoId).toEqual('111');
+    });
+  });
+
+  it('video can be removed from cart by clicking the button', async () => {
+    client.videos.clear();
+    client.videos.insertVideo(createVideoWithThumbnail('111', 'Video One'));
+    await client.carts.addItemToCart(await client.carts.getCart(), '111');
+    const history = createBrowserHistory();
+    history.push({ pathname: '/library/123' });
+
+    render(
+      <Router history={history}>
+        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+      </Router>,
+    );
+
+    fireEvent.click(await screen.findByText('Remove'));
+
+    await waitFor(async () => {
+      expect((await client.carts.getCart()).items).toHaveLength(0);
+    });
   });
 });
