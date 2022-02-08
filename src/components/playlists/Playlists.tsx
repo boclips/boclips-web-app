@@ -16,7 +16,7 @@ const Playlists = () => {
         playlists?.map((playlist) => (
           <PlaylistCard
             key={playlist.id}
-            id={playlist.id}
+            link={`/library/${playlist.id}`}
             name={playlist.title}
             header={<Thumbnails videos={playlist.videos} />}
           />

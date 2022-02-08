@@ -12,7 +12,11 @@ describe('Playlist Card', () => {
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
           <MemoryRouter>
-            <PlaylistCard header={<div />} name="test name" id="test-id" />
+            <PlaylistCard
+              header={<div />}
+              name="test name"
+              link="/library/test-id"
+            />
           </MemoryRouter>
         </BoclipsClientProvider>
       </QueryClientProvider>,

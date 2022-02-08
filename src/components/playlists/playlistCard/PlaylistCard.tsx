@@ -4,15 +4,15 @@ import s from '../style.module.less';
 
 interface Props {
   name: string;
-  id: string;
+  link: string;
   header: React.ReactElement;
 }
 
-const PlaylistCard = ({ name, id, header }: Props) => {
+const PlaylistCard = ({ name, link, header }: Props) => {
   return (
     <Link
       to={{
-        pathname: `/library/${id}`,
+        pathname: link,
         state: { name },
       }}
       aria-label={`${name} playlist`}

@@ -24,8 +24,8 @@ const PlaylistBody = ({ videos }: Props) => {
         {videos.map((video) => {
           return (
             <PlaylistCard
+              link={`/videos/${video.id}`}
               name={video.title}
-              id={video.id}
               key={video.id}
               header={<Thumbnail video={video} />}
             />
