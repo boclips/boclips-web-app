@@ -1,5 +1,19 @@
 @import '~@boclips-ui/styles/src/colors';
 
+.header {
+  width: 60%;
+}
+
+.description {
+  width: 100%;
+  height: 150px;
+}
+
+.tab {
+  width: 30%;
+  height: 50px;
+}
+
 .skeleton {
   animation: skeleton ease-in 1s infinite;
   background: linear-gradient(90deg,
@@ -7,8 +21,23 @@
   @gray-300 37%,
   @gray-100 63%);
   background-size: 200% 200%;
-  border-color: @gray-200!important;
+  border-color: @gray-200 !important;
 }
+
+.skeleton {
+  &.body {
+    background: transparent;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 1rem;
+
+    & > div {
+      height: 270px;
+      width: 100%;
+    }
+  }
+}
+
 
 @keyframes skeleton {
   0% {

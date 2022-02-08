@@ -8,7 +8,7 @@ import Footer from 'src/components/layout/Footer';
 import PlaylistHeader from 'src/components/playlists/PlaylistHeader';
 import PlaylistDescription from 'src/components/playlists/PlaylistDescription';
 import PlaylistBody from 'src/components/playlists/PlaylistBody';
-import Skeleton from 'src/components/skeleton/Skeleton';
+import SkeletonPage from 'src/components/skeleton/SkeletonPage';
 
 const PlaylistView = () => {
   const { id } = useParams<{ id: string }>();
@@ -19,11 +19,13 @@ const PlaylistView = () => {
       <Navbar />
       <FeatureGate feature="BO_WEB_APP_ENABLE_PLAYLISTS">
         {playlistLoading ? (
-          <Skeleton />
+          <SkeletonPage />
         ) : (
           <>
             <PlaylistHeader title={playlist.title} />
-            <PlaylistDescription description={playlist.description} />
+            {playlist.description && (
+              <PlaylistDescription description={playlist.description} />
+            )}
             <PlaylistBody videos={playlist.videos} />
           </>
         )}
