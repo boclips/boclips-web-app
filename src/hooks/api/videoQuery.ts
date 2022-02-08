@@ -18,7 +18,7 @@ export const doGetVideo = (id: string, apiClient: BoclipsClient) =>
 
 export const useGetVideos = (videoIds: string[]) => {
   const apiClient = useBoclipsClient();
-  return useQuery('cartItemVideos', () => doGetVideos(videoIds, apiClient), {
+  return useQuery('multipleVideos', () => doGetVideos(videoIds, apiClient), {
     enabled: !!videoIds,
   });
 };

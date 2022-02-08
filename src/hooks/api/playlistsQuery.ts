@@ -100,7 +100,7 @@ export const useRemoveFromPlaylistMutation = (callback: (id) => void) => {
 
 const doGetPlaylists = (client: BoclipsClient) =>
   client.collections
-    .getMyCollections({ origin: 'BO_WEB_APP' })
+    .getMyCollections({ origin: 'BO_WEB_APP', projection: 'details' })
     .then((playlists) => playlists.page);
 
 export const usePlaylistMutation = () => {

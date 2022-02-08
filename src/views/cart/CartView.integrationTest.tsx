@@ -218,9 +218,7 @@ describe('CartView', () => {
 
     const title = await wrapper.findByText('news video');
 
-    fireEvent.click(title);
-
-    expect(await wrapper.findByTestId('video-page')).toBeVisible();
+    expect(title.closest('a')).toHaveAttribute('href', `/videos/${video.id}`);
   });
 
   it(`displays access denied if user has BOCLIPS_WEB_APP_DEMO role`, async () => {
