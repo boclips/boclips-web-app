@@ -20,7 +20,7 @@ const Thumbnails = ({ videos }: Props) => {
         if (thumbnails[i]) {
           return (
             <div
-              className={`${s.thumbnails}`}
+              className={s.thumbnails}
               key={thumbnails[i].id}
               role="img"
               aria-label={`Thumbnail of ${thumbnails[i].title}`}
@@ -31,7 +31,7 @@ const Thumbnails = ({ videos }: Props) => {
             />
           );
         }
-        return <div key={i} className={s.thumbnail} />;
+        return <div key={i} className={s.thumbnails} />;
       })}
     </div>
   );
