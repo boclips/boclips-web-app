@@ -4,9 +4,14 @@
 .disciplineWrapper {
   display: grid;
 
+  & > button {
+    background-color: white;
+  }
+
   .discipline {
-  @apply flex items-center rounded;
-    background: @white;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
     border: 1px solid @blue-400;
     height: 80px;
     padding: 0 1rem;
@@ -27,19 +32,6 @@
         width: 10px;
         stroke: @gray-800;
       }
-    }
-  }
-
-  .discipline {
-    &.skeleton {
-      animation: skeleton ease-in 1s infinite;
-      background: linear-gradient(90deg,
-      @gray-100 25%,
-      @gray-300 37%,
-      @gray-100 63%);
-
-      background-size: 200% 200%;
-      border-color: @gray-200;
     }
   }
 }
@@ -264,17 +256,5 @@
     .arrow {
       display: none;
     }
-  }
-}
-
-@keyframes skeleton {
-  0% {
-    background-position: 100% 50%;
-  }
-  50% {
-    background-position: 0 50%;
-  }
-  100% {
-    background-position: 100% 50%;
   }
 }

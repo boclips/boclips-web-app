@@ -1,0 +1,23 @@
+@import '~@boclips-ui/styles/src/colors';
+
+.skeleton {
+  animation: skeleton ease-in 1s infinite;
+  background: linear-gradient(90deg,
+  @gray-100 25%,
+  @gray-300 37%,
+  @gray-100 63%);
+  background-size: 200% 200%;
+  border-color: @gray-200;
+}
+
+@keyframes skeleton {
+  0% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 0 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}

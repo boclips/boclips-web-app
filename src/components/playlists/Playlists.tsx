@@ -1,6 +1,6 @@
 import React from 'react';
 import { usePlaylistsQuery } from 'src/hooks/api/playlistsQuery';
-import c from 'classnames';
+import SkeletonTiles from 'src/components/skeleton/Skeleton';
 import PlaylistTile from './playlistTile/PlaylistTile';
 import s from './style.module.less';
 
@@ -10,7 +10,7 @@ const Playlists = () => {
   return (
     <main className={s.playlistsWrapper}>
       {isLoading ? (
-        <SkeletonTiles />
+        <SkeletonTiles className={s.playlistTile} />
       ) : (
         playlists?.map((playlist) => (
           <PlaylistTile
@@ -21,19 +21,6 @@ const Playlists = () => {
         ))
       )}
     </main>
-  );
-};
-
-const SkeletonTiles = () => {
-  const numberOfTiles = 8;
-  const skeletonsToRender = Array.from(Array(numberOfTiles).keys());
-
-  return (
-    <>
-      {skeletonsToRender.map((i) => (
-        <div key={i} className={c(s.playlistTile, s.skeleton)} />
-      ))}
-    </>
   );
 };
 

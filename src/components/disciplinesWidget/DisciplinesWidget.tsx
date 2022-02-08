@@ -2,11 +2,11 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import DisciplineOverlayMenu from 'src/components/disciplinesWidget/DisciplineOverlayMenu';
 import DisciplineTile from 'src/components/disciplinesWidget/DisciplineTile';
-import c from 'classnames';
 import {
   DisciplineWithSubjectOffering,
   useGetDisciplinesQuery,
 } from 'src/hooks/api/disciplinesQuery';
+import SkeletonTiles from 'src/components/skeleton/Skeleton';
 import s from './style.module.less';
 
 const DisciplineWidget = (): ReactElement => {
@@ -53,7 +53,7 @@ const DisciplineWidget = (): ReactElement => {
       </h4>
       <div className={s.disciplineWrapper}>
         {isLoading ? (
-          <SkeletonTiles />
+          <SkeletonTiles className={s.discipline} />
         ) : (
           disciplines
             ?.sort((a, b) => a.name.localeCompare(b.name))
@@ -83,19 +83,6 @@ const DisciplineWidget = (): ReactElement => {
         />
       )}
     </main>
-  );
-};
-
-const SkeletonTiles = () => {
-  const numberOfTiles = 8;
-  const skeletonsToRender = Array.from(Array(numberOfTiles).keys());
-
-  return (
-    <>
-      {skeletonsToRender.map((i) => (
-        <div key={i} className={c(s.discipline, s.skeleton)} />
-      ))}
-    </>
   );
 };
 
