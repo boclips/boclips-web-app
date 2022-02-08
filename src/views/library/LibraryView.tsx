@@ -4,7 +4,7 @@ import Footer from 'src/components/layout/Footer';
 import { Layout } from 'src/components/layout/Layout';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import Playlists from 'src/components/playlists/Playlists';
-import { LibraryHeader } from 'src/components/playlists/LibraryHeader';
+import { LibraryHeader } from 'src/components/libraryHeader/LibraryHeader';
 
 const LibraryView = () => {
   return (

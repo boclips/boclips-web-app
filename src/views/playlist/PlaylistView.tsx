@@ -4,106 +4,32 @@ import { Layout } from 'src/components/layout/Layout';
 import { usePlaylistQuery } from 'src/hooks/api/playlistsQuery';
 import { useParams } from 'react-router-dom';
 import { FeatureGate } from 'src/components/common/FeatureGate';
-import c from 'classnames';
-import { VideoLibraryCard } from 'src/components/videoLibraryCard/VideoLibraryCard';
 import Footer from 'src/components/layout/Footer';
-import { useGetVideos } from 'src/hooks/api/videoQuery';
-import s from './style.module.less';
+import PlaylistHeader from 'src/components/playlists/PlaylistHeader';
+import PlaylistDescription from 'src/components/playlists/PlaylistDescription';
+import PlaylistBody from 'src/components/playlists/PlaylistBody';
+import Skeleton from 'src/components/skeleton/Skeleton';
 
 const PlaylistView = () => {
   const { id } = useParams<{ id: string }>();
-  const { data, isLoading: playlistLoading } = usePlaylistQuery(id);
-  const { data: videos, isLoading: videosLoading } = useGetVideos(
-    data?.videos.map((it) => it.id),
-  );
+  const { data: playlist, isLoading: playlistLoading } = usePlaylistQuery(id);
 
   return (
     <Layout rowsSetup="grid-rows-playlist-view" responsiveLayout>
       <Navbar />
       <FeatureGate feature="BO_WEB_APP_ENABLE_PLAYLISTS">
-        {playlistLoading || videosLoading ? (
+        {playlistLoading ? (
           <Skeleton />
         ) : (
           <>
-            <h2 className="grid-row-start-2 grid-row-end-2 col-start-2 col-end-26">
-              {data.title}
-            </h2>
-            <div
-              className={c(
-                s.description,
-                'grid-row-start-3 grid-row-end-3 col-start-2 col-end-26',
-              )}
-            >
-              {data.description}
-            </div>
-            <h4 className="grid-row-start-4 grid-row-end-4 col-start-2 col-end-26 mb-0">
-              In this playlist:
-            </h4>
-            <div
-              className={c(
-                s.cardWrapper,
-                'grid-row-start-5 grid-row-end-5 col-start-2 col-end-26',
-              )}
-            >
-              {videos.map((v) => {
-                return <VideoLibraryCard key={v.id} video={v} />;
-              })}
-            </div>
+            <PlaylistHeader title={playlist.title} />
+            <PlaylistDescription description={playlist.description} />
+            <PlaylistBody videos={playlist.videos} />
           </>
         )}
       </FeatureGate>
       <Footer columnPosition="col-start-2 col-end-26" />
     </Layout>
-  );
-};
-
-const Skeleton = () => {
-  return (
-    <>
-      <div
-        className={c(
-          s.skeleton,
-          s.header,
-          'grid-row-start-2 grid-row-end-2 col-start-2 col-end-26',
-        )}
-      />
-      <div
-        className={c(
-          s.skeleton,
-          s.description,
-          'grid-row-start-3 grid-row-end-3 col-start-2 col-end-26',
-        )}
-      />
-      <div
-        className={c(
-          s.skeleton,
-          s.tab,
-          'grid-row-start-4 grid-row-end-4 col-start-2 col-end-26',
-        )}
-      />
-      <div
-        className={c(
-          s.skeleton,
-          s.cardWrapper,
-          'grid-row-start-5 grid-row-end-5 col-start-2 col-end-26',
-        )}
-      >
-        <SkeletonTiles />
-      </div>
-    </>
-  );
-};
-
-const SkeletonTiles = () => {
-  const numberOfTiles = 8;
-  const skeletonsToRender = Array.from(Array(numberOfTiles).keys());
-
-  return (
-    <>
-      {skeletonsToRender.map((i) => (
-        <div key={i} />
-      ))}
-    </>
   );
 };
 

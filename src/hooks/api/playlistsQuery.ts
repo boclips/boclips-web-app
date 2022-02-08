@@ -22,9 +22,13 @@ export const usePlaylistQuery = (id: string) => {
 
   const cachedPlaylists =
     queryClient.getQueryData<Pageable<Collection>>('playlists');
-  return useQuery(['playlist', id], () => client.collections.get(id), {
-    initialData: () => cachedPlaylists?.page?.find((c) => c.id === id),
-  });
+  return useQuery(
+    ['playlist', id],
+    () => client.collections.get(id, 'details'),
+    {
+      initialData: () => cachedPlaylists?.page?.find((c) => c.id === id),
+    },
+  );
 };
 
 export const doAddToPlaylist = (

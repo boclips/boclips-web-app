@@ -120,6 +120,6 @@ describe('Playlist view', () => {
     expect(tile).toBeVisible();
     fireEvent.click(tile);
 
-    expect(history.location.pathname).toEqual('/videos/111');
+    expect(history.location.pathname).toEqual('/library/111');
   });
 });

@@ -25,19 +25,39 @@
   text-transform: capitalize;
 }
 
+.cardWrapper {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-gap: 1rem 1.5rem;
+}
+
+.description {
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid @blue-400;
+}
+
 @media screen and (min-width: @screen-sm) {
+  .cardWrapper {
+    grid-template-columns:repeat(1, minmax(0, 1fr));
+  }
   .playlistsWrapper {
     grid-template-columns:repeat(1, minmax(0, 1fr));
   }
 }
 
 @media screen and (min-width: @screen-md) {
+  .cardWrapper {
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+  }
   .playlistsWrapper {
     grid-template-columns:repeat(2, minmax(0, 1fr));
   }
 }
 
 @media screen and (min-width: @screen-lg) {
+  .cardWrapper {
+    grid-template-columns:repeat(4, minmax(0, 1fr));
+  }
   .playlistsWrapper {
     grid-template-columns:repeat(4, minmax(0, 1fr));
   }
