@@ -2,23 +2,18 @@
 @import '~@boclips-ui/styles/src/breakpoints';
 
 
-.playlistsWrapper{
+.playlistsWrapper {
   display: grid;
   grid-column-start: 2;
   grid-column-end: 26;
-  grid-gap:1.5rem;
-}
-
-.videoLibraryCardTile {
-  width: 100%;
-  height: 300px;
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+  grid-gap: 1.5rem;
 }
 
 .playlistTile {
   width: 100%;
   height: 289px;
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+
   &.skeleton {
     animation: skeleton ease-in 1s infinite;
     background: linear-gradient(90deg,
@@ -31,46 +26,21 @@
   }
 }
 
-.thumbnailsContainer{
+.thumbnailsContainer {
   display: grid;
-  grid-template-columns:repeat(2, minmax(0, 1fr)); ;
+  grid-template-columns:repeat(2, minmax(0, 1fr));;
   grid-column-gap: 0.25rem;
   grid-row-gap: 0.25rem;
   height: 174px;
 }
 
-.thumbnail{
+.thumbnail {
   border-radius: 0.25rem;
   height: 100%;
 }
 
-.videoLibraryCardThumbnail {
-  border-radius: 0.25rem;
-  height: 175px;
-}
-
-.defaultThumbnail {
-  background-color: @blue-400;
-}
-
-.header{
+.header {
   margin-top: 0.25rem;
-  padding: 0.25rem;
-  font-size: 1rem;
-  line-height: 1.5rem;
-  font-weight: 700;
-  color: @gray-900;
-  text-transform: capitalize;
-}
-
-.icon{
-  width: 0.75rem !important;
-}
-
-.videoTitle {
-  margin-top: 0.25rem;
-  margin-bottom: 2.09px;
-  margin-left: 4px;
   padding: 0.25rem;
   font-size: 1rem;
   line-height: 1.5rem;
@@ -80,31 +50,19 @@
 }
 
 @media screen and (min-width: @screen-sm) {
-  .playlistsWrapper{
-    grid-template-columns:repeat(1, minmax(0, 1fr));
-  }
-
-  .cardWrapper{
+  .playlistsWrapper {
     grid-template-columns:repeat(1, minmax(0, 1fr));
   }
 }
 
 @media screen and (min-width: @screen-md) {
-  .playlistsWrapper{
-    grid-template-columns:repeat(2, minmax(0, 1fr));
-  }
-
-  .cardWrapper{
+  .playlistsWrapper {
     grid-template-columns:repeat(2, minmax(0, 1fr));
   }
 }
 
 @media screen and (min-width: @screen-lg) {
-  .playlistsWrapper{
-    grid-template-columns:repeat(4, minmax(0, 1fr));
-  }
-
-  .cardWrapper{
+  .playlistsWrapper {
     grid-template-columns:repeat(4, minmax(0, 1fr));
   }
 }

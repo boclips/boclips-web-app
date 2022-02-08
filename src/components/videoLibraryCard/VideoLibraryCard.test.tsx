@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { VideoLibraryCard } from 'src/components/playlists/VideoLibraryCard';
+import { VideoLibraryCard } from 'src/components/videoLibraryCard/VideoLibraryCard';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 
 describe('Video Library Card', () => {

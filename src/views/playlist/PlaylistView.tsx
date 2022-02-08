@@ -5,7 +5,7 @@ import { usePlaylistQuery } from 'src/hooks/api/playlistsQuery';
 import { useParams } from 'react-router-dom';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import c from 'classnames';
-import { VideoLibraryCard } from 'src/components/playlists/VideoLibraryCard';
+import { VideoLibraryCard } from 'src/components/videoLibraryCard/VideoLibraryCard';
 import Footer from 'src/components/layout/Footer';
 import { useGetVideos } from 'src/hooks/api/videoQuery';
 import s from './style.module.less';

@@ -32,10 +32,10 @@ export const VideoLibraryCard = ({ video }: Props) => {
       to={{
         pathname: `/videos/${video.id}`,
       }}
-      className={s.videoLibraryCardTile}
+      className={s.card}
     >
       <Thumbnail
-        className={`${s.videoLibraryCardThumbnail} ${s.defaultThumbnail}`}
+        className={`${s.thumbnail} ${s.defaultThumbnail}`}
         video={video}
       />
       <div className={s.videoTitle}>{video.title}</div>
