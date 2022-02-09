@@ -75,7 +75,6 @@ const DisciplineWidget = (): ReactElement => {
             })
         )}
       </div>
-
       {modalOpen && mobileView && (
         <DisciplineOverlayMenu
           selectedDiscipline={selectedDiscipline}

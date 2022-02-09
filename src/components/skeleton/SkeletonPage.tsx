@@ -1,6 +1,6 @@
 import React from 'react';
 import c from 'classnames';
-import SkeletonTiles from 'src/components/skeleton/Skeleton';
+import SkeletonTiles from './Skeleton';
 import s from './style.module.less';
 
 const SkeletonPage = () => {
