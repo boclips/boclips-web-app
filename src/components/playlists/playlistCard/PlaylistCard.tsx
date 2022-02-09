@@ -18,7 +18,6 @@ const PlaylistCard = ({ name, link, header, footer }: Props) => {
           state: { name },
         }}
         aria-label={`${name} playlist`}
-        className={s.playlistCard}
       >
         {header}
         <div className={s.header}>{name}</div>

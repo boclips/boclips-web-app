@@ -6,6 +6,7 @@ import Thumbnail from 'src/components/playlists/playlistCard/Thumbnail';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
+import { AddToPlaylistButton } from 'src/components/videoCard/buttons/addToPlaylistButton/AddToPlaylistButton';
 import s from './style.module.less';
 
 interface Props {
@@ -14,16 +15,21 @@ interface Props {
 
 const PlaylistBody = ({ videos }: Props) => {
   const buttons = (video: Video) => (
-    <div className="flex flex-row justify-end p-1">
-      <FeatureGate linkName="cart">
-        <AddToCartButton
-          video={video}
-          key="cart-button"
-          width="120px"
-          labelAdd="Add"
-          appcueEvent={AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE}
-        />
-      </FeatureGate>
+    <div className="flex flex-row justify-between">
+      <div className="p-1">
+        <AddToPlaylistButton videoId={video.id} />
+      </div>
+      <div className="justify-end p-1">
+        <FeatureGate linkName="cart">
+          <AddToCartButton
+            video={video}
+            key="cart-button"
+            width="120px"
+            labelAdd="Add"
+            appcueEvent={AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE}
+          />
+        </FeatureGate>
+      </div>
     </div>
   );
 
