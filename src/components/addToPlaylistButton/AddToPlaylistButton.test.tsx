@@ -4,7 +4,7 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { fireEvent } from '@testing-library/react';
 import React from 'react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { AddToPlaylistButton } from 'src/components/videoCard/buttons/addToPlaylistButton/AddToPlaylistButton';
+import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 
 describe('Add to playlist button', () => {
   const video = VideoFactory.sample({

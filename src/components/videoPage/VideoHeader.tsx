@@ -6,7 +6,7 @@ import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import dateFormat from 'dateformat';
 import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import { FeatureGate } from 'src/components/common/FeatureGate';
-import { AddToPlaylistButton } from 'src/components/videoCard/buttons/addToPlaylistButton/AddToPlaylistButton';
+import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
 

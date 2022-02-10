@@ -7,7 +7,7 @@ import Thumbnail from 'src/components/playlists/playlistCard/Thumbnail';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
-import { AddToPlaylistButton } from 'src/components/videoCard/buttons/addToPlaylistButton/AddToPlaylistButton';
+import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import s from './style.module.less';
 
 interface Props {
