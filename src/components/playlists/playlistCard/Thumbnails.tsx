@@ -31,7 +31,13 @@ const Thumbnails = ({ videos }: Props) => {
             />
           );
         }
-        return <div key={i} className={s.thumbnails} />;
+        return (
+          <div
+            key={`default-thumnail-${i}`}
+            data-qa={`default-thumnail-${i}`}
+            className={s.thumbnails}
+          />
+        );
       })}
     </div>
   );

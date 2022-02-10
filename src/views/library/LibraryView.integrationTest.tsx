@@ -74,7 +74,7 @@ describe('LibraryView', () => {
       expect(await wrapper.findByText('Playlist 2')).toBeVisible();
     });
 
-    it('displays first 3 thumbnails for playlist with 4 videos', async () => {
+    it('displays first 3 thumbnails', async () => {
       const client = new FakeBoclipsClient();
       setPlaylistsFeature(client, true);
 
@@ -103,6 +103,33 @@ describe('LibraryView', () => {
       expect(wrapper.getByLabelText('Thumbnail of Title 2')).toBeVisible();
       expect(wrapper.getByLabelText('Thumbnail of Title 3')).toBeVisible();
       expect(wrapper.queryByLabelText('Thumbnail of Title 4')).toBeNull();
+    });
+
+    it('displays default thumbnail if there is less than 3 videos in a playlist', async () => {
+      const client = new FakeBoclipsClient();
+      setPlaylistsFeature(client, true);
+
+      const videos = [
+        createVideoWithThumbnail('1'),
+        createVideoWithThumbnail('2'),
+      ];
+
+      const playlist = CollectionFactory.sample({
+        id: '1',
+        title: 'My collection about cats',
+        videos,
+      });
+
+      client.collections.addToFake(playlist);
+      videos.forEach((it) => client.videos.insertVideo(it));
+
+      const wrapper = renderLibraryView(client);
+
+      expect(
+        await wrapper.findByText('My collection about cats'),
+      ).toBeVisible();
+      expect(wrapper.getByLabelText('Thumbnail of Title 1')).toBeVisible();
+      expect(wrapper.getByTestId('default-thumnail-2')).toBeVisible();
     });
 
     const createVideoWithThumbnail = (id: string) => {
