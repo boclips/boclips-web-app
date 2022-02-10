@@ -1,6 +1,7 @@
 import React from 'react';
 import c from 'classnames';
 import PlaylistCard from 'src/components/playlists/playlistCard/PlaylistCard';
+import PlaylistAddIcon from 'src/resources/icons/playlist-add.svg';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import Thumbnail from 'src/components/playlists/playlistCard/Thumbnail';
 import { FeatureGate } from 'src/components/common/FeatureGate';
@@ -33,7 +34,20 @@ const PlaylistBody = ({ videos }: Props) => {
     </div>
   );
 
-  return (
+  return videos && videos.length === 0 ? (
+    <div
+      className={c(
+        s.emptyPlaylistWrapper,
+        'grid-row-start-4 grid-row-end-4 col-start-2 col-end-26',
+      )}
+    >
+      <div data-qa="emptyPlaylistText">
+        Save interesting videos to this playlist. Simply click the
+        <PlaylistAddIcon className={s.addSvg} role="img" />
+        on any video card to get started.
+      </div>
+    </div>
+  ) : (
     <>
       <h4 className="grid-row-start-4 grid-row-end-4 col-start-2 col-end-26 mb-0">
         In this playlist:

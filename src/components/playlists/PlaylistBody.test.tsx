@@ -10,7 +10,7 @@ import PlaylistBody from 'src/components/playlists/PlaylistBody';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 describe('Playlist Body', () => {
-  it('has add to playlist button', async () => {
+  it('has add to playlist button when playlist has one video', async () => {
     const fakeClient = new FakeBoclipsClient();
     const videos = [VideoFactory.sample({ id: 'video-1', title: 'Video One' })];
 
@@ -31,5 +31,35 @@ describe('Playlist Body', () => {
     });
 
     expect(addToPlaylistButton).toBeVisible();
+  });
+
+  it('has information message when no video on a playlist', async () => {
+    const fakeClient = new FakeBoclipsClient();
+
+    const wrapper = render(
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={new QueryClient()}>
+            <MemoryRouter>
+              <PlaylistBody videos={[]} />
+            </MemoryRouter>
+          </QueryClientProvider>
+        </BoclipsClientProvider>
+      </BoclipsSecurityProvider>,
+    );
+
+    expect(
+      await wrapper.queryByText('In this playlist:'),
+    ).not.toBeInTheDocument();
+
+    const textElement = wrapper.getByTestId('emptyPlaylistText');
+
+    expect(
+      textElement.innerHTML.includes(
+        'Save interesting videos to this playlist. Simply click the on any video card to get started.',
+      ),
+    );
+    expect(textElement).toBeVisible();
+    expect(wrapper.getByRole('img')).toBeVisible();
   });
 });

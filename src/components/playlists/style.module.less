@@ -47,6 +47,31 @@
   border-bottom: 2px solid @blue-400;
 }
 
+.emptyPlaylistWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 134px;
+  background-color: @blue-100;
+  border-radius: 4px;
+
+  div {
+    text-align: center;
+    max-width: 540px;
+    padding: 0 1rem;
+  }
+
+  svg {
+    margin-right: 0.25rem;
+    margin-left: 0.25rem;
+    display: inline;
+
+    path {
+      stroke: @gray-800;
+    }
+  }
+}
+
 @media screen and (min-width: @screen-sm) {
   .cardWrapper {
     grid-template-columns:repeat(1, minmax(0, 1fr));
