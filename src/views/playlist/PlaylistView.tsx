@@ -23,9 +23,7 @@ const PlaylistView = () => {
         ) : (
           <>
             <PlaylistHeader title={playlist.title} />
-            {playlist.description && (
-              <PlaylistDescription description={playlist.description} />
-            )}
+            <PlaylistDescription description={playlist.description} />
             <PlaylistBody videos={playlist.videos} />
           </>
         )}
