@@ -44,7 +44,7 @@ const PlaylistBody = ({ videos }: Props) => {
       <div data-qa="emptyPlaylistText">
         Save interesting videos to this playlist. Simply click the
         <PlaylistAddIcon className={s.addSvg} role="img" />
-        on any video card to get started.
+        button on any video to get started.
       </div>
     </div>
   ) : (

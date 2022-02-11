@@ -55,10 +55,15 @@ describe('Playlist Body', () => {
     const textElement = wrapper.getByTestId('emptyPlaylistText');
 
     expect(
-      textElement.innerHTML.includes(
-        'Save interesting videos to this playlist. Simply click the on any video card to get started.',
+      textElement.innerHTML.startsWith(
+        'Save interesting videos to this playlist. Simply click the',
       ),
-    );
+    ).toEqual(true);
+
+    expect(
+      textElement.innerHTML.endsWith('button on any video to get started.'),
+    ).toEqual(true);
+
     expect(textElement).toBeVisible();
     expect(wrapper.getByRole('img')).toBeVisible();
   });
