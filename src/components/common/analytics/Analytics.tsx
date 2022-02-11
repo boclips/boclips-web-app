@@ -19,7 +19,7 @@ export const trackVideoAddedToCart = (
   video: Video,
   apiClient: BoclipsClient,
 ) => {
-  if (video.links?.logInteraction) {
+  if (video.links.logInteraction) {
     apiClient.events.trackVideoInteraction(video, 'VIDEO_ADDED_TO_CART');
   }
 };
@@ -28,7 +28,7 @@ export const trackVideoRemovedFromCart = (
   video: Video,
   apiClient: BoclipsClient,
 ) => {
-  if (video.links?.logInteraction) {
+  if (video.links.logInteraction) {
     apiClient.events.trackVideoInteraction(video, 'VIDEO_REMOVED_FROM_CART');
   }
 };
