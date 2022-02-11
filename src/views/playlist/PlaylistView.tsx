@@ -22,7 +22,7 @@ const PlaylistView = () => {
           <SkeletonPage />
         ) : (
           <>
-            <PlaylistHeader title={playlist.title} />
+            <PlaylistHeader title={playlist.title} playlistId={playlist.id} />
             <PlaylistDescription description={playlist.description} />
             <PlaylistBody videos={playlist.videos} />
           </>
