@@ -66,7 +66,7 @@ describe('convertFacets', () => {
     const filterOptions = convertFacetsToFilterOptions(facets, null);
     expect(filterOptions.videoTypes[0].name).toEqual('News');
     expect(filterOptions.videoTypes[1].name).toEqual('Instructional');
-    expect(filterOptions.videoTypes[2].name).toEqual('Raw Footage');
+    expect(filterOptions.videoTypes[2].name).toEqual('Stock Footage');
   });
 
   it('converts duration facet name to display name', () => {

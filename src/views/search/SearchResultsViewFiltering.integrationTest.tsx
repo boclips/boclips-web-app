@@ -104,7 +104,7 @@ describe('SearchResultsFiltering', () => {
 
       expect(await wrapper.findByText('Video type')).toBeInTheDocument();
       expect(await wrapper.findByText('Instructional')).toBeInTheDocument();
-      expect(await wrapper.findByText('Raw Footage')).toBeInTheDocument();
+      expect(await wrapper.findByText('Stock Footage')).toBeInTheDocument();
       expect(await wrapper.findByText('News')).toBeInTheDocument();
 
       expect(await wrapper.findByText('888')).toBeInTheDocument();
@@ -142,7 +142,7 @@ describe('SearchResultsFiltering', () => {
 
       expect(wrapper.queryByText('Instructional')).toBeNull();
       expect(await wrapper.findByText('News')).toBeInTheDocument();
-      expect(await wrapper.findByText('Raw Footage')).toBeInTheDocument();
+      expect(await wrapper.findByText('Stock Footage')).toBeInTheDocument();
 
       await waitFor(async () => {
         expect(await wrapper.findByText('news video')).toBeInTheDocument();
