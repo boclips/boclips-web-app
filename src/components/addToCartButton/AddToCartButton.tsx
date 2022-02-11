@@ -22,6 +22,7 @@ import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 interface AddToCartButtonProps {
   video: Video;
   width?: string;
+  removeButtonWidth?: string;
   appcueEvent?: AppcuesEvent;
   labelAdd?: string;
 }
@@ -31,6 +32,7 @@ export const AddToCartButton = ({
   width,
   appcueEvent,
   labelAdd = 'Add to cart',
+  removeButtonWidth,
 }: AddToCartButtonProps) => {
   const queryClient = useQueryClient();
   const boclipsClient = useBoclipsClient();
@@ -86,9 +88,13 @@ export const AddToCartButton = ({
     mutateDeleteFromCart(cartItem.id);
   };
 
+  const addToCartButtonWidth = width;
+  const removeFromCartButtonWidth = removeButtonWidth || width;
   return (
     <div
-      style={{ width }}
+      style={{
+        width: !cartItem ? addToCartButtonWidth : removeFromCartButtonWidth,
+      }}
       className={c(`flex justify-end ${s.svgOutlineNone}`, {
         [s.svgOutline]: cartItem,
       })}

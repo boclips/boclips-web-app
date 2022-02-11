@@ -25,7 +25,8 @@ const PlaylistBody = ({ videos }: Props) => {
           <AddToCartButton
             video={video}
             key="cart-button"
-            width="120px"
+            width="100px"
+            removeButtonWidth="120px"
             labelAdd="Add"
             appcueEvent={AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE}
           />
