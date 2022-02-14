@@ -15,11 +15,10 @@ module.exports = merge(common, {
     // chunkFilename: '[name].chunk.js',
   },
   devServer: {
-    contentBase: [distPath, path.resolve(__dirname, '../assets')],
+    static: [distPath, path.resolve(__dirname, '../assets')],
     historyApiFallback: true,
     port: 9000,
     hot: true,
-    lazy: false,
   },
   plugins: [
     new MiniCssExtractPlugin({ filename: '[name].css', ignoreOrder: true }),
