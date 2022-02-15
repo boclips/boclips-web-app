@@ -5,10 +5,10 @@
   flex-direction: column;
   margin-bottom: 1.5rem;
   position: relative;
+  font-size: 1rem;
 
   .errorMessage {
-    position: absolute;
-    bottom: -22px;
+    position: relative;
     color: @error;
     font-size: 0.875rem;
   }
@@ -29,6 +29,7 @@
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5rem;
+    color: @gray-700;
   }
 
   &:active {
@@ -43,7 +44,6 @@
     outline: 4px solid @blue-650 !important;
     outline-offset: 0px !important;
   }
-
 
   &.error {
     border-color: @error;
