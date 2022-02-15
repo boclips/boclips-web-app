@@ -17,7 +17,7 @@ export const CartDetails = ({ cart }: Props) => {
   );
 
   return (
-    <div className="col-start-2 col-end-19 font-medium text-md row-start-3 row-end-3 flex flex-col">
+    <div className="col-start-2 col-end-19 font-medium text-md flex flex-col">
       <CartNote
         currentValue={cart?.note}
         onUpdate={onUpdateNote}
