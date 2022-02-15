@@ -12,10 +12,6 @@ describe('Playlist Header', () => {
     },
   });
 
-  Object.assign(window, {
-    location: 'blah',
-  });
-
   it('has visible playlist title', async () => {
     const title = 'test playlist';
     const playlist = CollectionFactory.sample({

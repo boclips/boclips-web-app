@@ -1,4 +1,5 @@
 import {
+  act,
   fireEvent,
   render,
   RenderResult,
@@ -18,6 +19,7 @@ import { QueryClient } from 'react-query';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { Link } from 'boclips-api-client/dist/types';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
+import { Constants } from 'src/AppConstants';
 
 const setPlaylistsFeature = (client: FakeBoclipsClient, enabled: boolean) =>
   client.users.insertCurrentUser(
@@ -72,6 +74,38 @@ describe('LibraryView', () => {
 
       expect(await wrapper.findByText('Playlist 1')).toBeVisible();
       expect(await wrapper.findByText('Playlist 2')).toBeVisible();
+    });
+
+    it('has a share button that copies playlist link to clipboard', async () => {
+      Object.assign(navigator, {
+        clipboard: {
+          writeText: () => Promise.resolve(),
+        },
+      });
+
+      jest.spyOn(navigator.clipboard, 'writeText');
+
+      const client = new FakeBoclipsClient();
+      setPlaylistsFeature(client, true);
+
+      const playlists = [
+        CollectionFactory.sample({ id: '1', title: 'Playlist 1' }),
+        CollectionFactory.sample({ id: '2', title: 'Playlist 2' }),
+      ];
+
+      playlists.forEach((it) => client.collections.addToFake(it));
+
+      const wrapper = renderLibraryView(client);
+
+      const shareButton = await wrapper.findByTestId(`share-playlist-button-1`);
+
+      await act(async () => {
+        fireEvent.click(shareButton);
+      });
+
+      expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+        `${Constants.HOST}/library/1`,
+      );
     });
 
     it('displays first 3 thumbnails', async () => {

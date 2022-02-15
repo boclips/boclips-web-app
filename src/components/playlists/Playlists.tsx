@@ -2,6 +2,8 @@ import React from 'react';
 import { usePlaylistsQuery } from 'src/hooks/api/playlistsQuery';
 import SkeletonTiles from 'src/components/skeleton/Skeleton';
 import Thumbnails from 'src/components/playlists/playlistCard/Thumbnails';
+import { CopyLinkButton } from 'src/components/common/copyLinkButton/CopyLinkButton';
+import { Constants } from 'src/AppConstants';
 import PlaylistCard from './playlistCard/PlaylistCard';
 import s from './style.module.less';
 
@@ -19,6 +21,16 @@ const Playlists = () => {
             link={`/library/${playlist.id}`}
             name={playlist.title}
             header={<Thumbnails videos={playlist.videos} />}
+            footer={
+              <div className="w-fit	self-end p-1">
+                <CopyLinkButton
+                  ariaLabel="Copy playlist link"
+                  title="Copy link"
+                  link={`${Constants.HOST}/library/${playlist.id}`}
+                  dataQa={`share-playlist-button-${playlist.id}`}
+                />
+              </div>
+            }
           />
         ))
       )}
