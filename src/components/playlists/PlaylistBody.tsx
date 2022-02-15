@@ -3,38 +3,35 @@ import c from 'classnames';
 import PlaylistCard from 'src/components/playlists/playlistCard/PlaylistCard';
 import PlaylistAddIcon from 'src/resources/icons/playlist-add.svg';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import Thumbnail from 'src/components/playlists/playlistCard/Thumbnail';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
+import CoverWithVideo from 'src/components/playlists/coverWithVideo/CoverWithVideo';
 import s from './style.module.less';
 
 interface Props {
   videos: Video[];
 }
 
-const PlaylistBody = ({ videos }: Props) => {
-  const buttons = (video: Video) => (
-    <div className="flex flex-row justify-between">
-      <div className="p-1">
-        <AddToPlaylistButton videoId={video.id} />
-      </div>
-      <div className="justify-end p-1">
-        <FeatureGate linkName="cart">
-          <AddToCartButton
-            video={video}
-            key="cart-button"
-            width="100px"
-            removeButtonWidth="120px"
-            labelAdd="Add"
-            appcueEvent={AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE}
-          />
-        </FeatureGate>
-      </div>
-    </div>
-  );
+const buttons = (video: Video) => (
+  <div className="flex flex-row justify-between p-1 self-end">
+    <AddToPlaylistButton videoId={video.id} />
 
+    <FeatureGate linkName="cart">
+      <AddToCartButton
+        video={video}
+        key="cart-button"
+        width="100px"
+        removeButtonWidth="120px"
+        labelAdd="Add"
+        appcueEvent={AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE}
+      />
+    </FeatureGate>
+  </div>
+);
+
+const PlaylistBody = ({ videos }: Props) => {
   return videos && videos.length === 0 ? (
     <div
       className={c(
@@ -63,9 +60,9 @@ const PlaylistBody = ({ videos }: Props) => {
           return (
             <PlaylistCard
               link={`/videos/${video.id}`}
-              name={video.title}
               key={video.id}
-              header={<Thumbnail video={video} />}
+              name={video.title}
+              header={<CoverWithVideo video={video} />}
               footer={buttons(video)}
             />
           );

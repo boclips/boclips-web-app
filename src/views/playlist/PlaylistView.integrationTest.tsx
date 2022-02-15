@@ -88,23 +88,11 @@ describe('Playlist view', () => {
       </MemoryRouter>,
     );
 
-    expect(
-      await screen.findByLabelText('Thumbnail of Video One 111'),
-    ).toBeVisible();
-
-    expect(
-      await screen.findByLabelText('Thumbnail of Video Two 222'),
-    ).toBeVisible();
-    expect(
-      await screen.findByLabelText('Thumbnail of Video Three 333'),
-    ).toBeVisible();
-    expect(
-      await screen.findByLabelText('Thumbnail of Video Four 444'),
-    ).toBeVisible();
-    expect(
-      await screen.findByLabelText('Thumbnail of Video Five 555'),
-    ).toBeVisible();
-    expect(screen.getByText('In this playlist:')).toBeVisible();
+    expect(await screen.findByTestId(videos[0].id)).toBeVisible();
+    expect(await screen.findByTestId(videos[1].id)).toBeVisible();
+    expect(await screen.findByTestId(videos[2].id)).toBeVisible();
+    expect(await screen.findByTestId(videos[3].id)).toBeVisible();
+    expect(await screen.findByTestId(videos[4].id)).toBeVisible();
   });
 
   it('navigates to the video page when clicked on video', async () => {

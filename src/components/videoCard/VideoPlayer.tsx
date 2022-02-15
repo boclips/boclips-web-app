@@ -62,12 +62,14 @@ interface Props {
   video: Video;
   controls?: 'cart';
   showDurationBadge?: boolean;
+  setRef?: any;
 }
 
 export const VideoPlayer = ({
   video,
   controls,
   showDurationBadge = false,
+  setRef = () => null,
 }: Props) => {
   const options = getPlayerOptions(
     useBoclipsSecurity(),
@@ -75,10 +77,15 @@ export const VideoPlayer = ({
     showDurationBadge,
   );
 
+  const videoLink =
+    // @ts-ignore
+    video?.links?.self.getOriginalLink() || video?._links?.self?.href;
+
   return (
     <div className={s.playerWrapper}>
       <Player
-        videoUri={video.links.self.getOriginalLink()}
+        playerRef={setRef}
+        videoUri={videoLink}
         borderRadius="4px"
         options={options}
       />

@@ -12,16 +12,18 @@ interface Props {
 const PlaylistCard = ({ name, link, header, footer }: Props) => {
   return (
     <div className={s.playlistCard}>
-      <Link
-        to={{
-          pathname: link,
-          state: { name },
-        }}
-        aria-label={`${name} playlist`}
-      >
-        {header}
-        <div className={s.header}>{name}</div>
-      </Link>
+      {header}
+      <div className={s.header}>
+        <Link
+          to={{
+            pathname: link,
+            state: { name },
+          }}
+          aria-label={`${name} playlist`}
+        >
+          {name}
+        </Link>
+      </div>
       {footer}
     </div>
   );
