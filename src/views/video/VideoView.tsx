@@ -8,9 +8,9 @@ import { Loading } from 'src/components/common/Loading';
 import { Helmet } from 'react-helmet';
 import { Layout } from 'src/components/layout/Layout';
 import { ErrorBoundary } from 'src/components/common/errors/ErrorBoundary';
-import RefreshPageError from 'src/components/common/errors/refreshPageError/RefreshPageError';
 import { BoclipsApiError } from 'boclips-api-client/dist/types';
-import { PageNotFoundError } from 'src/components/common/errors/pageNotFound/PageNotFoundError';
+import { Main } from 'src/components/layout/Main';
+import { Fallback } from 'src/views/video/Fallback';
 
 const VideoView = () => {
   const videoId = useGetIdFromLocation('videos');
@@ -26,13 +26,13 @@ const VideoView = () => {
     <Layout dataQa="video-page" rowsSetup="grid-rows-default-view">
       {video?.title && <Helmet title={video.title} />}
       <Navbar />
-      <ErrorBoundary
-        fallback={
-          isVideoNotFound ? <PageNotFoundError /> : <RefreshPageError />
-        }
-      >
-        <VideoPage video={video} />
-      </ErrorBoundary>
+      <Main>
+        <ErrorBoundary
+          fallback={<Fallback isVideoNotFound={isVideoNotFound} />}
+        >
+          <VideoPage video={video} />
+        </ErrorBoundary>
+      </Main>
       <Footer />
     </Layout>
   );
