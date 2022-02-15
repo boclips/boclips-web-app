@@ -6,7 +6,6 @@ import { useParams } from 'react-router-dom';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import Footer from 'src/components/layout/Footer';
 import PlaylistHeader from 'src/components/playlists/PlaylistHeader';
-import PlaylistDescription from 'src/components/playlists/PlaylistDescription';
 import PlaylistBody from 'src/components/playlists/PlaylistBody';
 import SkeletonPage from 'src/components/skeleton/SkeletonPage';
 
@@ -22,8 +21,7 @@ const PlaylistView = () => {
           <SkeletonPage />
         ) : (
           <>
-            <PlaylistHeader title={playlist.title} playlistId={playlist.id} />
-            <PlaylistDescription description={playlist.description} />
+            <PlaylistHeader playlist={playlist} />
             <PlaylistBody videos={playlist.videos} />
           </>
         )}

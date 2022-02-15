@@ -2,6 +2,8 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import PlaylistHeader from 'src/components/playlists/PlaylistHeader';
 import { Constants } from 'src/AppConstants';
+import { ToastContainer } from 'react-toastify';
+import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 
 describe('Playlist Header', () => {
   Object.assign(navigator, {
@@ -16,8 +18,13 @@ describe('Playlist Header', () => {
 
   it('has visible playlist title', async () => {
     const title = 'test playlist';
+    const playlist = CollectionFactory.sample({
+      id: '123',
+      title,
+      description: 'Description',
+    });
 
-    const wrapper = render(<PlaylistHeader title={title} playlistId="" />);
+    const wrapper = render(<PlaylistHeader playlist={playlist} />);
 
     const titleElement = await wrapper.findByTestId('playlistTitle');
 
@@ -26,32 +33,49 @@ describe('Playlist Header', () => {
   });
 
   it('has a share button', async () => {
-    const wrapper = render(
-      <PlaylistHeader title="Playlist title" playlistId="" />,
-    );
-
-    const shareButton = await wrapper.findByRole('button', {
-      name: 'Get shareable link',
+    const playlist = CollectionFactory.sample({
+      id: '123',
+      title: 'Playlist title',
+      description: 'Description',
     });
+
+    const wrapper = render(<PlaylistHeader playlist={playlist} />);
+
+    const shareButton = await wrapper.findByTestId('share-playlist-button');
 
     expect(shareButton).toBeVisible();
   });
 
-  it('copies the playlist link on the playlist page', async () => {
+  it('copies the playlist link on the playlist page and shows notification', async () => {
     jest.spyOn(navigator.clipboard, 'writeText');
+    const playlist = CollectionFactory.sample({
+      id: '123',
+      title: 'Playlist title',
+      description: 'Description',
+    });
 
     const wrapper = render(
-      <PlaylistHeader title="Playlist title" playlistId="123" />,
+      <>
+        <ToastContainer />
+        <PlaylistHeader playlist={playlist} />
+      </>,
     );
 
-    const shareButton = await wrapper.findByRole('button', {
-      name: 'Get shareable link',
-    });
+    const shareButton = await wrapper.findByTestId('share-playlist-button');
 
     fireEvent.click(shareButton);
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
       `${Constants.HOST}/library/123`,
+    );
+
+    const notification = await wrapper.findByTestId(
+      'playlist-link-copied-notification',
+    );
+    expect(notification).toBeVisible();
+    expect(notification.children.item(0).textContent).toEqual('Link copied!');
+    expect(notification.children.item(1).textContent).toEqual(
+      'You can now share this playlist using the copied link',
     );
   });
 });

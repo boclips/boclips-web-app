@@ -8,12 +8,7 @@ interface Props {
 
 const PlaylistDescription = ({ description }: Props) => {
   return (
-    <div
-      className={c(
-        s.description,
-        'grid-row-start-3 grid-row-end-3 col-start-2 col-end-26',
-      )}
-    >
+    <div className={c(s.description, 'md:order-last sm:order-2')}>
       {description}
     </div>
   );
