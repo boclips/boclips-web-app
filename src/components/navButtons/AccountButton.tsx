@@ -38,13 +38,31 @@ export const AccountButton = () => {
 
   const boclipsSecurity = useBoclipsSecurity();
 
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setDisplayModal(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <div
       onMouseEnter={onMouseEnterAction}
       onMouseLeave={onMouseLeaveAction}
       className={c(s.navButton, { [s.active]: displayModal || onMouseEnter })}
     >
-      <button type="button" onClick={onClick} data-qa="account-menu">
+      <button
+        type="button"
+        onClick={onClick}
+        data-qa="account-menu"
+        aria-expanded={displayModal}
+        aria-haspopup
+      >
         <MyAccountSVG />
         <span>Account</span>
       </button>
@@ -61,25 +79,28 @@ export const AccountButton = () => {
             {data.firstName} {data.lastName}
           </div>
           <div className="text-xs text-gray-800">{data.email}</div>
-          <FeatureGate linkName="userOrders">
-            <div className="pt-4 text-sm">
-              <Link onClick={ordersOpenedEvent} to="/orders">
-                Your orders
-              </Link>
-            </div>
-          </FeatureGate>
+          <div role="menu" aria-label="Account menu">
+            <FeatureGate linkName="userOrders">
+              <div className="pt-4 text-sm">
+                <Link onClick={ordersOpenedEvent} to="/orders">
+                  Your orders
+                </Link>
+              </div>
+            </FeatureGate>
 
-          <div className="pt-1 text-sm">
-            <button
-              type="button"
-              onClick={() =>
-                boclipsSecurity.logout({
-                  redirectUri: `${Constants.HOST}/`,
-                })
-              }
-            >
-              Log out
-            </button>
+            <div className="pt-1 text-sm">
+              <button
+                className="button-link"
+                type="button"
+                onClick={() =>
+                  boclipsSecurity.logout({
+                    redirectUri: `${Constants.HOST}/`,
+                  })
+                }
+              >
+                Log out
+              </button>
+            </div>
           </div>
         </div>
       )}

@@ -8,6 +8,7 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { Constants } from 'src/AppConstants';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import userEvent from '@testing-library/user-event';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
 
@@ -109,5 +110,40 @@ describe('account button', () => {
     expect(stubBoclipsSecurity.logout).toHaveBeenCalledWith({
       redirectUri: `${Constants.HOST}/`,
     });
+  });
+
+  it('closes the dialog on esc', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const user = {
+      id: '123',
+      firstName: 'Eddie',
+      lastName: 'Bravo',
+      email: 'eddie@10thplanetjj.com',
+      features: {
+        LTI_COPY_RESOURCE_LINK: true,
+      },
+      organisation: {
+        id: '321',
+        name: '10th planet jj',
+      },
+    };
+
+    fakeClient.users.insertCurrentUser(user);
+
+    const navbar = render(
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <BoclipsClientProvider client={fakeClient}>
+          <Navbar />
+        </BoclipsClientProvider>
+        ,
+      </BoclipsSecurityProvider>,
+    );
+
+    expect(await navbar.findByText('Account')).toBeInTheDocument();
+
+    fireEvent.click(navbar.getByText('Account'));
+    userEvent.type(navbar.getByText('Log out'), '{esc}');
+
+    expect(navbar.queryByText('Log out')).not.toBeInTheDocument();
   });
 });
