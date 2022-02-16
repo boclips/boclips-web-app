@@ -6,7 +6,7 @@ git pull -r
 
 npm i
 
-npm run lint
+npm run lint:errors
 npm run compile
 npm run test
 npm run build
