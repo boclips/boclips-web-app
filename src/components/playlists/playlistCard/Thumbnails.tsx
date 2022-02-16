@@ -10,8 +10,7 @@ const Thumbnails = ({ videos }: Props) => {
   const thumbnails = videos.map((it) => ({
     id: it.id,
     title: it.title,
-    // @ts-ignore
-    href: it.playback?._links?.thumbnail?.href,
+    href: it.playback?.links?.thumbnail?.getOriginalLink(),
   }));
 
   return (

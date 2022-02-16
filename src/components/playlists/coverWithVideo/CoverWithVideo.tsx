@@ -3,6 +3,7 @@ import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import s from 'src/components/playlists/style.module.less';
 import { handleEnterKeyDown } from 'src/services/handleEnterKeyDown';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
+import { BoclipsPlayer } from 'boclips-player/lib/BoclipsPlayer/BoclipsPlayer';
 
 interface Props {
   video: Video;
@@ -10,30 +11,23 @@ interface Props {
 
 const CoverWithVideo = ({ video }: Props) => {
   const [showPlayer, setShowPlayer] = useState<boolean>(false);
-  const [ref, setRef] = useState();
+  const [ref, setRef] = useState<BoclipsPlayer>();
 
   useEffect(() => {
     if (ref) {
       // @ts-ignore
       ref.container?.querySelector('video').oncanplay = () => {
-        // @ts-ignore
         ref.play();
       };
     }
   }, [ref]);
 
-  if (showPlayer)
-    return (
-      <div data-qa="player">
-        <VideoPlayer setRef={setRef} video={video} />
-      </div>
-    );
+  if (showPlayer) return <VideoPlayer setRef={setRef} video={video} />;
 
   return (
     <div
       style={{
-        // @ts-ignore
-        backgroundImage: `url(${video?.playback?._links?.thumbnail?.href})`,
+        backgroundImage: `url(${video?.playback?.links?.thumbnail?.getOriginalLink()})`,
       }}
       className={s.cover}
       data-qa={video.id}
@@ -42,9 +36,7 @@ const CoverWithVideo = ({ video }: Props) => {
         type="button"
         aria-labelledby={`${video.id}-label`}
         aria-describedby={`${video.id}-description`}
-        onClick={() => {
-          setShowPlayer(true);
-        }}
+        onClick={() => setShowPlayer(true)}
         onKeyDown={(e) => handleEnterKeyDown(e, () => setShowPlayer(true))}
       >
         <div className={s.play} />

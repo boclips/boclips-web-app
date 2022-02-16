@@ -77,15 +77,11 @@ export const VideoPlayer = ({
     showDurationBadge,
   );
 
-  const videoLink =
-    // @ts-ignore
-    video?.links?.self.getOriginalLink() || video?._links?.self?.href;
-
   return (
-    <div className={s.playerWrapper}>
+    <div data-qa="player" className={s.playerWrapper}>
       <Player
         playerRef={setRef}
-        videoUri={videoLink}
+        videoUri={video?.links?.self.getOriginalLink()}
         borderRadius="4px"
         options={options}
       />

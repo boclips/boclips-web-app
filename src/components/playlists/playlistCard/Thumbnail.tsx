@@ -10,8 +10,7 @@ const Thumbnail = ({ video }: Props) => {
   const thumbnail = {
     id: video.id,
     title: video.title,
-    // @ts-ignore
-    href: video.playback?._links?.thumbnail?.href,
+    href: video.playback?.links?.thumbnail?.getOriginalLink(),
   };
 
   return (
