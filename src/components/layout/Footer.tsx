@@ -1,4 +1,5 @@
 import React from 'react';
+import s from './footer.module.less';
 
 interface Props {
   columnPosition?: string;
@@ -16,7 +17,7 @@ const Footer = ({ columnPosition }: Props) => {
           <span className="pl-6">
             <a
               rel="noopener noreferrer"
-              className="text-primary-link"
+              className={s.link}
               href="https://www.boclips.com/terms-and-conditions"
               target="_blank"
             >
@@ -25,7 +26,7 @@ const Footer = ({ columnPosition }: Props) => {
             &nbsp;•&nbsp;
             <a
               rel="noopener noreferrer"
-              className="text-primary-link"
+              className={s.link}
               href="https://www.boclips.com/privacy-policy"
               target="_blank"
             >
