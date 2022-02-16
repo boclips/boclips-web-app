@@ -12,7 +12,7 @@ const Logo = (): ReactElement => {
     : 'Boclips logo';
 
   return (
-    <Link to="/" title={logoTitle} className={s.logo}>
+    <Link to="/" aria-label={logoTitle} className={s.logo}>
       {user?.organisation?.logoUrl ? (
         <img alt={logoTitle} src={user?.organisation?.logoUrl} />
       ) : (
