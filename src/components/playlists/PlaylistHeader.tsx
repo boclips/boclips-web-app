@@ -27,7 +27,9 @@ const PlaylistHeader = ({ playlist }: Props) => {
           {playlist.title}
         </h2>
         <PlaylistShareButton link={toLibraryLink(playlist.id)} />
-        <PlaylistDescription description={playlist.description} />
+        {playlist.description && (
+          <PlaylistDescription description={playlist.description} />
+        )}
       </div>
     </>
   );
