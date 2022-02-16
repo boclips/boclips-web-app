@@ -39,7 +39,7 @@ export function SearchResults({
   };
 
   return (
-    <div className="col-start-8 col-end-26">
+    <main className="col-start-8 col-end-26">
       {query && <Helmet title={`${query} videos`} />}
       <SearchResultsSummary
         count={results?.pageSpec?.totalElements}
@@ -47,6 +47,6 @@ export function SearchResults({
       />
 
       {renderVideoCardList()}
-    </div>
+    </main>
   );
 }

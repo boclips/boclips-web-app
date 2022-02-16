@@ -23,7 +23,7 @@ export const OrdersTable = ({ orders, paginationPage }: Props) => {
   const mobileView = currentBreakpoint.type === 'mobile';
 
   return (
-    <div className="col-start-2 col-end-26 row-start-3 row-end-4 flex items-center">
+    <main className="col-start-2 col-end-26 row-start-3 row-end-4 flex items-center">
       <List
         className="w-full"
         itemLayout="vertical"
@@ -53,6 +53,6 @@ export const OrdersTable = ({ orders, paginationPage }: Props) => {
         dataSource={orders.page}
         renderItem={(order: Order) => <OrdersCard order={order} />}
       />
-    </div>
+    </main>
   );
 };

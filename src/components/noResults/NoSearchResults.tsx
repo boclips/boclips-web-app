@@ -17,7 +17,7 @@ const NoResultsCopy = ({ header, copy }) => {
 
 export const NoSearchResults = ({ areFiltersApplied, query }: Props) => {
   return (
-    <div className="flex flex-col items-center col-start-8 col-end-26 text-lg text-gray-800 mt-10 ">
+    <main className="flex flex-col items-center col-start-8 col-end-26 text-lg text-gray-800 mt-10 ">
       <NoResultsIcon className="h-80 w-80 mb-6" />
       {areFiltersApplied ? (
         <NoResultsCopy
@@ -30,6 +30,6 @@ export const NoSearchResults = ({ areFiltersApplied, query }: Props) => {
           copy="Please check the spelling or try searching something else"
         />
       )}
-    </div>
+    </main>
   );
 };

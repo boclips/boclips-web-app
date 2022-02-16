@@ -9,7 +9,6 @@ import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import CoverWithVideo from 'src/components/playlists/coverWithVideo/CoverWithVideo';
 import s from './style.module.less';
-import { Main } from '../layout/Main';
 
 interface Props {
   videos: Video[];
@@ -33,7 +32,7 @@ const buttons = (video: Video) => (
 );
 
 const EmptyPlaylist = () => (
-  <div
+  <main
     className={c(
       s.emptyPlaylistWrapper,
       'grid-row-start-4 grid-row-end-4 col-start-2 col-end-26',
@@ -44,39 +43,35 @@ const EmptyPlaylist = () => (
       <PlaylistAddIcon className={s.addSvg} role="img" />
       button on any video to get started.
     </div>
-  </div>
+  </main>
 );
 
 const PlaylistBody = ({ videos }: Props) => {
   return videos && videos.length === 0 ? (
-    <Main>
-      <EmptyPlaylist />
-    </Main>
+    <EmptyPlaylist />
   ) : (
     <>
       <h4 className="grid-row-start-4 grid-row-end-4 col-start-2 col-end-26 mb-0">
         In this playlist:
       </h4>
-      <Main>
-        <div
-          className={c(
-            s.cardWrapper,
-            'grid-row-start-5 grid-row-end-5 col-start-2 col-end-26',
-          )}
-        >
-          {videos.map((video) => {
-            return (
-              <PlaylistCard
-                link={`/videos/${video.id}`}
-                key={video.id}
-                name={video.title}
-                header={<CoverWithVideo video={video} />}
-                footer={buttons(video)}
-              />
-            );
-          })}
-        </div>
-      </Main>
+      <main
+        className={c(
+          s.cardWrapper,
+          'grid-row-start-5 grid-row-end-5 col-start-2 col-end-26',
+        )}
+      >
+        {videos.map((video) => {
+          return (
+            <PlaylistCard
+              link={`/videos/${video.id}`}
+              key={video.id}
+              name={video.title}
+              header={<CoverWithVideo video={video} />}
+              footer={buttons(video)}
+            />
+          );
+        })}
+      </main>
     </>
   );
 };

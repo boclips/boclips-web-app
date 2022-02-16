@@ -22,7 +22,6 @@ import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import { ErrorBoundary } from 'src/components/common/errors/ErrorBoundary';
 import RefreshPageError from 'src/components/common/errors/refreshPageError/RefreshPageError';
 import { Layout } from 'src/components/layout/Layout';
-import { Main } from 'src/components/layout/Main';
 
 export const PAGE_SIZE = 30;
 
@@ -137,34 +136,32 @@ const SearchResultsView = () => {
   return (
     <Layout rowsSetup="grid-rows-default-view">
       <Navbar />
-      <Main>
-        <ErrorBoundary fallback={<RefreshPageError row="2" />}>
-          <FilterPanel
-            facets={data?.facets}
-            dateFilters={dateFilters}
-            handleChange={handleFilterChange}
-            removeFilter={removeFilter}
-            removeAllFilters={removeAllFilters}
-            resultsFound={!isNoSearchResults}
-            areFiltersApplied={areFiltersApplied(filtersFromURL)}
-          />
+      <ErrorBoundary fallback={<RefreshPageError row="2" />}>
+        <FilterPanel
+          facets={data?.facets}
+          dateFilters={dateFilters}
+          handleChange={handleFilterChange}
+          removeFilter={removeFilter}
+          removeAllFilters={removeAllFilters}
+          resultsFound={!isNoSearchResults}
+          areFiltersApplied={areFiltersApplied(filtersFromURL)}
+        />
 
-          {isNoSearchResults ? (
-            <NoSearchResults
-              areFiltersApplied={areFiltersApplied(filtersFromURL)}
-              query={query}
-            />
-          ) : (
-            <SearchResults
-              results={data}
-              query={query}
-              handlePageChange={handlePageChange}
-              currentPage={currentPage}
-              isFetching={isFetching && isPreviousData}
-            />
-          )}
-        </ErrorBoundary>
-      </Main>
+        {isNoSearchResults ? (
+          <NoSearchResults
+            areFiltersApplied={areFiltersApplied(filtersFromURL)}
+            query={query}
+          />
+        ) : (
+          <SearchResults
+            results={data}
+            query={query}
+            handlePageChange={handlePageChange}
+            currentPage={currentPage}
+            isFetching={isFetching && isPreviousData}
+          />
+        )}
+      </ErrorBoundary>
       <Footer />
     </Layout>
   );

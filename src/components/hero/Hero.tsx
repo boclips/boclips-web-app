@@ -28,7 +28,7 @@ export const Hero = ({
       >
         {icon}
       </div>
-      <div
+      <main
         className={`${s.heroCopyWrapper} col-start-13 col-end-24 lg:col-start-13 lg:col-end-22 row-start-${row} row-end-${row} text-blue-800 flex flex-col justify-center`}
       >
         <h2 className="blue-800 font-medium text-4xl">{title}</h2>
@@ -43,7 +43,7 @@ export const Hero = ({
         {actions && (
           <div className="mt-8 flex flex-row items-center">{actions}</div>
         )}
-      </div>
+      </main>
     </>
   );
 };

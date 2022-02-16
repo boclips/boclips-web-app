@@ -7,7 +7,6 @@ import { Loading } from 'src/components/common/Loading';
 import { EmptyCart } from 'src/components/cart/EmptyCart';
 import { Layout } from 'src/components/layout/Layout';
 import PageHeader from 'src/components/pageTitle/PageHeader';
-import { Main } from 'src/components/layout/Main';
 
 const CartView = () => {
   const { data: cart, isLoading: isCartLoading } = useCartQuery();
@@ -26,7 +25,7 @@ const CartView = () => {
     <Layout rowsSetup="grid-rows-default-view-with-title">
       <Navbar />
       <PageHeader title="Shopping cart" cartItems={cartInfo} />
-      <Main>{hasItemsInCart ? <Cart cart={cart} /> : <EmptyCart />}</Main>
+      {hasItemsInCart ? <Cart cart={cart} /> : <EmptyCart />}
       <Footer />
     </Layout>
   );
