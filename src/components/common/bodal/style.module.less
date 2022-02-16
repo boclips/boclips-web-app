@@ -1,10 +1,13 @@
 @import '@boclips-ui/styles/src/colors';
 @import '~@boclips-ui/styles/src/breakpoints';
 
+.modalWrapper {
+  @apply w-screen h-screen fixed;
+  z-index: 51; // header is set to 50
+}
+
 @media screen and (min-width: @screen-md) {
   .modalWrapper {
-    @apply w-screen h-screen fixed;
-    z-index: 51; // header is set to 50
 
     &:after {
       content: '';
@@ -32,11 +35,6 @@
 
     .modalHeader {
       @apply flex flex-row justify-between w-full mb-3 font-normal bg-white;
-
-      svg {
-        width: 20px !important;
-        height: 20px !important;
-      }
     }
 
     .modalFooter {
@@ -48,16 +46,15 @@
   }
 }
 
-@media screen and (max-width: @screen-md) {
+@media screen and (max-width: @screen-md - 1) {
   .modalWrapper {
-    @apply bg-white w-screen h-screen fixed;
-    z-index: 51; // header is set to 50
+    @apply bg-white;
 
     .modalContent {
       @apply p-4;
     }
     .modalHeader {
-      @apply items-center mb-7 h-8 text-lg font-medium;
+      @apply flex justify-between items-center mb-7 h-8 text-lg font-medium;
     }
     .modalFooter {
       @apply flex justify-between mt-6 p-4 w-screen absolute bottom-0;
