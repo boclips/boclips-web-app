@@ -3,6 +3,8 @@ import { OrdersPage } from 'boclips-api-client/dist/sub-clients/orders/model/Ord
 import { PlaceOrderRequest } from 'boclips-api-client/dist/sub-clients/orders/model/PlaceOrderRequest';
 import { BoclipsClient } from 'boclips-api-client';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
+import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
+import { Order } from 'boclips-api-client/dist/sub-clients/orders/model/Order';
 
 export interface OrdersQuery {
   page: number;
@@ -14,8 +16,10 @@ export const doPlaceOrder = (
   client: BoclipsClient,
 ) => client.orders.placeOrder(request);
 
-export const getOrders = ({ page, size }: OrdersQuery, client: BoclipsClient) =>
-  client.orders.getUserOrders(page, size);
+export const getOrders = (
+  { page, size }: OrdersQuery,
+  client: BoclipsClient,
+): Promise<Pageable<Order>> => client.orders.getUserOrders(page, size);
 
 export const getOrder = (id: string, client: BoclipsClient) =>
   client.orders.get(id);

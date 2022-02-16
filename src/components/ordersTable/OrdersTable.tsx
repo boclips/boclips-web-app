@@ -2,11 +2,14 @@ import React from 'react';
 import List from 'antd/lib/list';
 import { OrdersCard } from 'src/components/ordersTable/OrdersCard';
 import { Order } from 'boclips-api-client/dist/sub-clients/orders/model/Order';
-import { PaginationButtons } from 'src/components/common/PaginationButtons';
-import s from '../common/pagination.module.less';
+import c from 'classnames';
+import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
+import Pagination from '@boclips-ui/pagination';
+import s from '../common/pagination/pagination.module.less';
 
 interface Props {
-  orders: any;
+  orders: Pageable<Order>;
   paginationPage: any;
 }
 
@@ -16,6 +19,9 @@ export const OrdersTable = ({ orders, paginationPage }: Props) => {
     paginationPage(newPage - 1);
   };
 
+  const currentBreakpoint = useMediaBreakPoint();
+  const mobileView = currentBreakpoint.type === 'mobile';
+
   return (
     <div className="col-start-2 col-end-26 row-start-3 row-end-4 flex items-center">
       <List
@@ -23,15 +29,28 @@ export const OrdersTable = ({ orders, paginationPage }: Props) => {
         itemLayout="vertical"
         size="large"
         pagination={{
-          total: orders.page.totalElements,
+          total: orders.pageSpec.totalElements,
           pageSize: 10,
+          hideOnSinglePage: true,
           showSizeChanger: false,
           onChange: handlePageChange,
-          current: orders.page.number + 1,
-          className: s.pagination,
-          itemRender: PaginationButtons,
+          current: orders.pageSpec.number + 1,
+          className: c(s.pagination, {
+            [s.paginationEmpty]: !orders.pageSpec.totalElements,
+          }),
+          showLessItems: mobileView,
+          prefixCls: 'bo-pagination',
+          itemRender: (page, type) => (
+            <Pagination
+              buttonType={type}
+              page={page}
+              mobileView={mobileView}
+              currentPage={orders.pageSpec.number + 1}
+              totalItems={orders.pageSpec.totalPages}
+            />
+          ),
         }}
-        dataSource={orders.orders}
+        dataSource={orders.page}
         renderItem={(order: Order) => <OrdersCard order={order} />}
       />
     </div>

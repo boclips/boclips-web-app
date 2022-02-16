@@ -26,7 +26,7 @@ const OrdersView = () => {
     setPage(pageNum);
   };
 
-  const hasOrders = orders?.orders.length > 0;
+  const hasOrders = orders?.page.length > 0;
 
   if (isLoading && !hasOrders) return <Loading />;
 

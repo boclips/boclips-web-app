@@ -1,0 +1,42 @@
+@import '~@boclips-ui/styles/src/colors';
+
+.paginationEmpty {
+  display: none;
+}
+
+.pagination {
+  padding: 0px;
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  margin: 24px 0;
+  justify-content: center;
+  line-height: 19px;
+
+  :global(.ant-pagination-item) {
+    border: none;
+  }
+
+  :global(.ant-pagination-disabled) {
+    display: none;
+  }
+
+  :global(.ant-pagination-item-active) {
+    .paginationButton {
+      background-color: @blue-800 !important;
+      border: none !important;
+
+      .copy {
+        color: white;
+      }
+
+      .mobileNavigationButton {
+        width: 42px;
+      }
+    }
+  }
+
+  :global(.ant-pagination-item):focus {
+    outline: none;
+  }
+}
