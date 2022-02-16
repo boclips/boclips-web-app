@@ -1,10 +1,8 @@
 import React, { PropsWithChildren, ReactElement } from 'react';
-import c from 'classnames';
 import Button from '@boclips-ui/button';
 import CloseIconSVG from 'src/resources/icons/cross-icon.svg';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
-import { Overlay } from 'src/components/common/overlay/Overlay';
 import s from './style.module.less';
 
 export interface Props {
@@ -27,6 +25,9 @@ export const Bodal: React.FC<Props> = ({
   dataQa = 'modal',
   children,
 }: PropsWithChildren<Props>) => {
+  const breakpoints = useMediaBreakPoint();
+  const mobileView = breakpoints.type === 'mobile';
+
   const getSpinner = (): ReactElement =>
     isLoading && (
       <span data-qa="spinner" className="pb-2">
@@ -35,6 +36,7 @@ export const Bodal: React.FC<Props> = ({
     );
   const header = (
     <>
+      {mobileView && <span />}
       <span className="text-gray-900 text-xl font-medium" id="bodal-title">
         {title}
       </span>
@@ -47,9 +49,6 @@ export const Bodal: React.FC<Props> = ({
       </button>
     </>
   );
-  const breakpoints = useMediaBreakPoint();
-  const mobileView =
-    breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
 
   const footer = (
     <>
@@ -62,23 +61,20 @@ export const Bodal: React.FC<Props> = ({
       />
     </>
   );
-  return mobileView ? (
-    <Overlay header={header} footer={footer}>
-      {children}
-    </Overlay>
-  ) : (
+
+  return (
     <div
       role="dialog"
       aria-labelledby="bodal-title"
       data-qa={dataQa}
-      className={c(s.modalWrapper, { [s.showModal]: true })} // TODO
+      className={s.modalWrapper}
     >
       <div className={s.modal}>
         <div className={s.modalContent}>
           <div className={s.modalHeader}>{header}</div>
           {children}
-          <div className={s.buttons}>{footer}</div>
         </div>
+        <div className={s.modalFooter}>{footer}</div>
       </div>
     </div>
   );

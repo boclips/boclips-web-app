@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 
@@ -106,20 +106,5 @@ describe('The mighty Bodal', () => {
 
     fireEvent.click(wrapper.getByText('Hello'));
     expect(handleCancel).toBeCalledTimes(1);
-  });
-
-  it(`displays as an overlay on small viewports`, () => {
-    window.resizeTo(768, 1024);
-    render(
-      <Bodal
-        isLoading={false}
-        onConfirm={jest.fn}
-        title="The Bodal"
-        confirmButtonText="confirm with spinner"
-      />,
-    );
-
-    expect(screen.getByText('The Bodal')).toBeVisible();
-    expect(screen.getByTestId('overlay')).toBeVisible();
   });
 });

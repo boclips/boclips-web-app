@@ -1,65 +1,68 @@
 @import '@boclips-ui/styles/src/colors';
+@import '~@boclips-ui/styles/src/breakpoints';
 
-.modalWrapper {
-  display: none;
-  position: fixed;
-  z-index: 51; // header is set to 50
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  &.showModal {
-    display: block;
-  }
+@media screen and (min-width: @screen-md) {
+  .modalWrapper {
+    @apply w-screen h-screen fixed;
+    z-index: 51; // header is set to 50
 
-  &:after {
-    content: '';
-    width: 100vw;
-    height: 100vh;
-    background: rgba(black, 0.5);
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: -1;
-  }
-
-  .modal {
-    position: relative;
-    top: 60px;
-    background: white;
-    border-radius: 4px;
-    max-width: 819px;
-    height: auto;
-    margin: auto;
-    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.13);
-  }
-
-  .modalContent {
-    padding: 2rem;
-  }
-
-  .modalHeader {
-    @apply flex flex-row justify-between w-full mb-3 font-normal;
-    background: white;
-
-    svg {
-      width: 20px !important;
-      height: 20px !important;
+    &:after {
+      content: '';
+      width: 100vw;
+      height: 100vh;
+      background: rgba(black, 0.5);
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: -1;
     }
-  }
 
-  .buttons {
-    height: 44px;
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    margin-top: 1.5rem;
-    button {
-      &:not(span button) {
-        margin-right: 0.5rem;
+    .modal {
+      position: relative;
+      top: 60px;
+      background: white;
+      border-radius: 4px;
+      width: 819px;
+      max-width: 85vw;
+      height: auto;
+      margin: auto;
+      box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.13);
+      padding: 2rem;
+    }
+
+    .modalHeader {
+      @apply flex flex-row justify-between w-full mb-3 font-normal bg-white;
+
+      svg {
+        width: 20px !important;
+        height: 20px !important;
       }
     }
 
-    --bo-ui-button-outline-border: none;
+    .modalFooter {
+      @apply flex justify-between;
+      height: 44px;
+      width: 100%;
+      margin-top: 1.5rem;
+    }
+  }
+}
+
+@media screen and (max-width: @screen-md) {
+  .modalWrapper {
+    @apply bg-white w-screen h-screen fixed;
+    z-index: 51; // header is set to 50
+
+    .modalContent {
+      @apply p-4;
+    }
+    .modalHeader {
+      @apply items-center mb-7 h-8 text-lg font-medium;
+    }
+    .modalFooter {
+      @apply flex justify-between mt-6 p-4 w-screen absolute bottom-0;
+      border-radius: 4px;
+      box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.13);
+    }
   }
 }
