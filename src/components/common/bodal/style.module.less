@@ -2,35 +2,54 @@
 @import '~@boclips-ui/styles/src/breakpoints';
 
 .modalWrapper {
-  @apply w-screen h-screen fixed;
+  @apply bg-white w-screen h-screen fixed;
   z-index: 51; // header is set to 50
+
+  .modalContent {
+    @apply p-4;
+  }
+
+  .modalHeader {
+    @apply flex justify-between items-center mb-7 h-8 text-lg font-medium;
+
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
+  .modalFooter {
+      @apply flex justify-between absolute bottom-0 mt-6 px-4 py-2 w-screen rounded;
+      box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.13);
+
+    button {
+      @apply h-12;
+    }
+  }
 }
 
 @media screen and (min-width: @screen-md) {
   .modalWrapper {
+    background-color: transparent;
 
     &:after {
+      @apply w-screen h-screen fixed left-0 top-0;
       content: '';
-      width: 100vw;
-      height: 100vh;
       background: rgba(black, 0.5);
-      position: fixed;
-      left: 0;
-      top: 0;
       z-index: -1;
     }
 
     .modal {
+      @apply p-8 bg-white rounded h-auto m-auto;
       position: relative;
       top: 60px;
-      background: white;
-      border-radius: 4px;
       width: 819px;
       max-width: 85vw;
-      height: auto;
-      margin: auto;
       box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.13);
-      padding: 2rem;
+    }
+
+    .modalContent {
+      @apply p-0;
     }
 
     .modalHeader {
@@ -38,36 +57,13 @@
     }
 
     .modalFooter {
-      @apply flex justify-between;
-      height: 44px;
-      width: 100%;
-      margin-top: 1.5rem;
+      @apply flex relative justify-between mt-8 p-0 w-auto h-11 rounded-none;
+      box-shadow: none;
 
       button {
-        height: 44px;
+        @apply h-11;
       }
     }
   }
 }
 
-@media screen and (max-width: @screen-md - 1) {
-  .modalWrapper {
-    @apply bg-white;
-
-    .modalContent {
-      @apply p-4;
-    }
-    .modalHeader {
-      @apply flex justify-between items-center mb-7 h-8 text-lg font-medium;
-    }
-    .modalFooter {
-      @apply flex justify-between mt-6 p-4 w-screen absolute bottom-0;
-      border-radius: 4px;
-      box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.13);
-
-      button {
-        height: 48px;
-      }
-    }
-  }
-}
