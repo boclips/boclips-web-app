@@ -28,7 +28,7 @@ export const CollapsableFilter = ({
         filterIsOpen={open}
         toggleFilter={toggleFilter}
       />
-      {open && <>{children}</>}
+      {open && <div id={`${title}-filter`}>{children}</div>}
     </div>
   );
 };

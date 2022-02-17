@@ -7,19 +7,21 @@ interface Props {
   filterIsOpen: boolean;
   toggleFilter: () => void;
 }
+
 export const FilterHeader = ({ text, filterIsOpen, toggleFilter }: Props) => {
   return (
-    <div
-      className="text-base px-4 text-blue-800 font-medium flex items-center cursor-pointer active:border-none"
+    <button
+      type="button"
+      className="text-base px-4 text-blue-800 font-medium flex items-center cursor-pointer active:border-none justify-between w-full"
+      aria-expanded={filterIsOpen}
+      aria-controls={`${text}-filter`}
       onClick={toggleFilter}
       onKeyPress={(event) => handleEnterKeyDown(event, toggleFilter)}
-      tabIndex={0}
-      role="listbox"
     >
-      <span className="flex-grow">{text}</span>{' '}
+      <span>{text}</span>
       <FilterArrow
         className={`${filterIsOpen ? 'transform rotate-180' : ''}`}
       />
-    </div>
+    </button>
   );
 };
