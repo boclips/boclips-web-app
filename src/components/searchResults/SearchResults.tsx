@@ -13,13 +13,13 @@ interface Props {
   isFetching: boolean;
 }
 
-export function SearchResults({
+export const SearchResults = ({
   results,
   query,
   handlePageChange,
   currentPage,
   isFetching,
-}: Props) {
+}: Props) => {
   const renderVideoCardList = () => {
     if (!isFetching && results)
       return (
@@ -49,4 +49,4 @@ export function SearchResults({
       {renderVideoCardList()}
     </main>
   );
-}
+};

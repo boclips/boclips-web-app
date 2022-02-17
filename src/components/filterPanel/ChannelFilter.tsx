@@ -17,7 +17,5 @@ export const ChannelFilter = ({ options, handleChange }: Props) => {
       filterName="channel"
       handleChange={handleChange}
     />
-  ) : (
-    <></>
-  );
+  ) : null;
 };

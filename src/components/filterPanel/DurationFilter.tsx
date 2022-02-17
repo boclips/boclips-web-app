@@ -18,7 +18,5 @@ export const DurationFilter = ({ options, handleChange }: Props) => {
       filterName="duration"
       handleChange={handleChange}
     />
-  ) : (
-    <></>
-  );
+  ) : null;
 };

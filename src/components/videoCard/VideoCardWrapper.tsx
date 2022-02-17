@@ -16,21 +16,20 @@ interface Props {
   video: Video;
 }
 
-export const VideoCardWrapper = ({ video }: Props) => {
+const VideoCardTitle = ({ video }: Props) => {
   const boclipsClient = useBoclipsClient();
-
-  const VideoCardTitle = () => {
-    const onClick = () => {
-      AnalyticsFactory.getAppcues().sendEvent(AppcuesEvent.VIDEO_PAGE_OPENED);
-      trackNavigateToVideoDetails(video, boclipsClient);
-    };
-    return (
-      <Link onClick={onClick} to={`/videos/${video.id}`}>
-        <div className="text-gray-900">{video?.title}</div>
-      </Link>
-    );
+  const onClick = () => {
+    AnalyticsFactory.getAppcues().sendEvent(AppcuesEvent.VIDEO_PAGE_OPENED);
+    trackNavigateToVideoDetails(video, boclipsClient);
   };
+  return (
+    <Link onClick={onClick} to={`/videos/${video.id}`}>
+      <div className="text-gray-900">{video?.title}</div>
+    </Link>
+  );
+};
 
+export const VideoCardWrapper = ({ video }: Props) => {
   return (
     <div className={s.videoCard}>
       <VideoCard
@@ -39,7 +38,7 @@ export const VideoCardWrapper = ({ video }: Props) => {
         videoPlayer={<VideoPlayer video={video} showDurationBadge />}
         border="bottom"
         topBadge={<PriceBadge price={video.price} className="text-xl" />}
-        title={<VideoCardTitle />}
+        title={<VideoCardTitle video={video} />}
         actions={[
           <VideoCardButtons
             video={video}

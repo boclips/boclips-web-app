@@ -12,10 +12,19 @@ interface Props {
   cart: ApiCart;
 }
 
-interface CartSummaryItem {
+interface CartSummaryItemProps {
   label: string | ReactElement;
   value: string | ReactElement;
 }
+
+const CartSummaryItem = ({ label, value }: CartSummaryItemProps) => {
+  return (
+    <div className="flex justify-between my-3">
+      <span>{label}</span>
+      <span>{value}</span>
+    </div>
+  );
+};
 
 export const CartOrderSummary = ({ cart }: Props) => {
   const { isCartValid } = useCartValidation();
@@ -30,15 +39,6 @@ export const CartOrderSummary = ({ cart }: Props) => {
       trackOrderConfirmationModalOpened(boclipsClient);
     }
   }, [modalOpen, boclipsClient]);
-
-  const CartSummaryItem = ({ label, value }: CartSummaryItem) => {
-    return (
-      <div className="flex justify-between my-3">
-        <span>{label}</span>
-        <span>{value}</span>
-      </div>
-    );
-  };
 
   React.useEffect(() => {
     if (isCartValid) {

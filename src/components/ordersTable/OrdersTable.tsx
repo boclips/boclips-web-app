@@ -22,6 +22,19 @@ export const OrdersTable = ({ orders, paginationPage }: Props) => {
   const currentBreakpoint = useMediaBreakPoint();
   const mobileView = currentBreakpoint.type === 'mobile';
 
+  const itemRender = React.useCallback(
+    (page, type) => (
+      <Pagination
+        buttonType={type}
+        page={page}
+        mobileView={mobileView}
+        currentPage={orders.pageSpec.number + 1}
+        totalItems={orders.pageSpec.totalPages}
+      />
+    ),
+    [mobileView, orders.pageSpec.number, orders.pageSpec.totalPages],
+  );
+
   return (
     <main className="col-start-2 col-end-26 row-start-3 row-end-4 flex items-center">
       <List
@@ -40,15 +53,7 @@ export const OrdersTable = ({ orders, paginationPage }: Props) => {
           }),
           showLessItems: mobileView,
           prefixCls: 'bo-pagination',
-          itemRender: (page, type) => (
-            <Pagination
-              buttonType={type}
-              page={page}
-              mobileView={mobileView}
-              currentPage={orders.pageSpec.number + 1}
-              totalItems={orders.pageSpec.totalPages}
-            />
-          ),
+          itemRender,
         }}
         dataSource={orders.page}
         renderItem={(order: Order) => <OrdersCard order={order} />}

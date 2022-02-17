@@ -13,8 +13,10 @@ const queryClientContext = createContext<{ isError: boolean }>({
 export const GlobalQueryErrorProvider = ({ children }: Props) => {
   const isError = useProvideError();
 
+  const value = React.useMemo(() => ({ isError }), [isError]);
+
   return (
-    <queryClientContext.Provider value={{ isError }}>
+    <queryClientContext.Provider value={value}>
       {children}
     </queryClientContext.Provider>
   );

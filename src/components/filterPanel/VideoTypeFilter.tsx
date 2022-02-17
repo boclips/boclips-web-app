@@ -18,7 +18,5 @@ export const VideoTypeFilter = ({ options = [], handleChange }: Props) => {
       handleChange={handleChange}
       filterName="video_type"
     />
-  ) : (
-    <></>
-  );
+  ) : null;
 };

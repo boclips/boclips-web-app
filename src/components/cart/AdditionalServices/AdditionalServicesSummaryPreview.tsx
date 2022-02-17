@@ -27,9 +27,9 @@ export const AdditionalServicesSummaryPreview = ({
       : 'Additional Services';
   };
 
-  const Price = () => {
+  const Price = React.useCallback(() => {
     return <div className="absolute right-0 top-0">Free</div>;
-  };
+  }, []);
 
   return (
     <div

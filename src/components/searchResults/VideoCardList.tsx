@@ -24,6 +24,21 @@ export const VideoCardList = ({
   const currentBreakpoint = useMediaBreakPoint();
   const mobileView = currentBreakpoint.type === 'mobile';
 
+  const itemRender = React.useCallback(
+    (page, type) => {
+      return (
+        <Pagination
+          buttonType={type}
+          page={page}
+          mobileView={mobileView}
+          currentPage={currentPage}
+          totalItems={Math.ceil(totalSearchResults / PAGE_SIZE)}
+        />
+      );
+    },
+    [currentPage, mobileView, totalSearchResults],
+  );
+
   return (
     <List
       itemLayout="vertical"
@@ -40,15 +55,7 @@ export const VideoCardList = ({
         current: currentPage,
         showLessItems: mobileView,
         prefixCls: 'bo-pagination',
-        itemRender: (page, type) => (
-          <Pagination
-            buttonType={type}
-            page={page}
-            mobileView={mobileView}
-            currentPage={currentPage}
-            totalItems={Math.ceil(totalSearchResults / PAGE_SIZE)}
-          />
-        ),
+        itemRender,
       }}
       dataSource={videos}
       renderItem={(video: Video) => (

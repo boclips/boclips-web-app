@@ -21,7 +21,5 @@ export const PriceFilter = ({ options, handleChange }: Props) => {
         handleChange={handleChange}
       />
     </FeatureGate>
-  ) : (
-    <></>
-  );
+  ) : null;
 };

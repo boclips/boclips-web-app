@@ -18,7 +18,5 @@ export const BestForFilter = ({ options = [], handleChange }: Props) => {
       handleChange={handleChange}
       filterName="best_for"
     />
-  ) : (
-    <></>
-  );
+  ) : null;
 };

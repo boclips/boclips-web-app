@@ -16,22 +16,20 @@ const PlaylistHeader = ({ playlist }: Props) => {
   };
 
   return (
-    <>
-      <div
-        className={c(
-          s.playlistHeaderContainer,
-          'grid-row-start-2 grid-row-end-2 col-start-2 col-end-26',
-        )}
-      >
-        <h2 className="order-first" data-qa="playlistTitle">
-          {playlist.title}
-        </h2>
-        <PlaylistShareButton link={toLibraryLink(playlist.id)} />
-        {playlist.description && (
-          <PlaylistDescription description={playlist.description} />
-        )}
-      </div>
-    </>
+    <div
+      className={c(
+        s.playlistHeaderContainer,
+        'grid-row-start-2 grid-row-end-2 col-start-2 col-end-26',
+      )}
+    >
+      <h2 className="order-first" data-qa="playlistTitle">
+        {playlist.title}
+      </h2>
+      <PlaylistShareButton link={toLibraryLink(playlist.id)} />
+      {playlist.description && (
+        <PlaylistDescription description={playlist.description} />
+      )}
+    </div>
   );
 };
 
