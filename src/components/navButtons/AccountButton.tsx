@@ -36,12 +36,22 @@ export const AccountButton = () => {
     AnalyticsFactory.getAppcues().sendEvent(AppcuesEvent.YOUR_ORDERS_OPENED);
   };
 
+  const closeDialog = () => {
+    setDisplayModal(false);
+  };
+
+  const handleDialogBlur: React.FocusEventHandler = (event) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      closeDialog();
+    }
+  };
+
   const boclipsSecurity = useBoclipsSecurity();
 
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setDisplayModal(false);
+        closeDialog();
       }
     };
 
@@ -74,7 +84,7 @@ export const AccountButton = () => {
       )}
 
       {displayModal && (
-        <div ref={ref} className={s.tooltip}>
+        <div ref={ref} className={s.tooltip} onBlur={handleDialogBlur}>
           <div className="font-medium">
             {data.firstName} {data.lastName}
           </div>

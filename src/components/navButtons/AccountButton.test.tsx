@@ -2,8 +2,6 @@ import { fireEvent, waitFor } from '@testing-library/react';
 import Navbar from 'src/components/layout/Navbar';
 import React from 'react';
 import { render } from 'src/testSupport/render';
-import { MemoryRouter } from 'react-router-dom';
-import App from 'src/App';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { Constants } from 'src/AppConstants';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
@@ -13,36 +11,33 @@ import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
 
 describe('account button', () => {
+  let fakeClient: FakeBoclipsClient;
+
   beforeEach(() => {
     window.resizeTo(1680, 1024);
+
+    fakeClient = new FakeBoclipsClient();
   });
 
-  it('opens the tooltip when clicked and close the tooltip when clicked on the body', async () => {
-    const fakeClient = new FakeBoclipsClient();
-    const user = {
-      id: '123',
-      firstName: 'Eddie',
-      lastName: 'Bravo',
-      email: 'eddie@10thplanetjj.com',
-      features: {
-        LTI_COPY_RESOURCE_LINK: true,
-      },
-      organisation: {
-        id: '321',
-        name: '10th planet jj',
-      },
-    };
-
-    fakeClient.users.insertCurrentUser(user);
-
-    const navbar = render(
+  const renderAccountButton = () =>
+    render(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
         <BoclipsClientProvider client={fakeClient}>
           <Navbar />
         </BoclipsClientProvider>
-        ,
       </BoclipsSecurityProvider>,
     );
+
+  it('opens the tooltip when clicked and close the tooltip when clicked on the body', async () => {
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({
+        firstName: 'Eddie',
+        lastName: 'Bravo',
+        email: 'eddie@10thplanetjj.com',
+      }),
+    );
+
+    const navbar = renderAccountButton();
 
     expect(await navbar.findByText('Account')).toBeInTheDocument();
 
@@ -57,24 +52,17 @@ describe('account button', () => {
   });
 
   it('does not contain your orders link in tooltip when user does not have userOrders link', async () => {
-    const fakeClient = new FakeBoclipsClient();
-    const user = UserFactory.sample({
-      id: '123',
-      firstName: 'yo',
-      lastName: 'yo',
-      email: 'yoyo@ma.com',
-    });
-    fakeClient.users.insertCurrentUser(user);
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({
+        id: '123',
+        firstName: 'yo',
+        lastName: 'yo',
+        email: 'yoyo@ma.com',
+      }),
+    );
     fakeClient.links.userOrders = null;
 
-    const navbar = render(
-      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <BoclipsClientProvider client={fakeClient}>
-          <Navbar />
-        </BoclipsClientProvider>
-        ,
-      </BoclipsSecurityProvider>,
-    );
+    const navbar = renderAccountButton();
 
     expect(await navbar.findByText('Account')).toBeInTheDocument();
 
@@ -93,15 +81,9 @@ describe('account button', () => {
    * Ideally we'd test that we'd actually get back to the home page, somehow.
    */
   it('redirects to / on logout', async () => {
-    const fakeClient = new FakeBoclipsClient();
-
     fakeClient.users.insertCurrentUser(UserFactory.sample());
 
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/cart']}>
-        <App apiClient={fakeClient} boclipsSecurity={stubBoclipsSecurity} />
-      </MemoryRouter>,
-    );
+    const wrapper = renderAccountButton();
 
     fireEvent.click(await wrapper.findByText('Account'));
 
@@ -113,31 +95,8 @@ describe('account button', () => {
   });
 
   it('closes the dialog on esc', async () => {
-    const fakeClient = new FakeBoclipsClient();
-    const user = {
-      id: '123',
-      firstName: 'Eddie',
-      lastName: 'Bravo',
-      email: 'eddie@10thplanetjj.com',
-      features: {
-        LTI_COPY_RESOURCE_LINK: true,
-      },
-      organisation: {
-        id: '321',
-        name: '10th planet jj',
-      },
-    };
-
-    fakeClient.users.insertCurrentUser(user);
-
-    const navbar = render(
-      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <BoclipsClientProvider client={fakeClient}>
-          <Navbar />
-        </BoclipsClientProvider>
-        ,
-      </BoclipsSecurityProvider>,
-    );
+    fakeClient.users.insertCurrentUser(UserFactory.sample());
+    const navbar = renderAccountButton();
 
     expect(await navbar.findByText('Account')).toBeInTheDocument();
 
@@ -145,5 +104,29 @@ describe('account button', () => {
     userEvent.type(navbar.getByText('Log out'), '{esc}');
 
     expect(navbar.queryByText('Log out')).not.toBeInTheDocument();
+  });
+
+  it('closes the dialog when the dialog loses focus', async () => {
+    fakeClient.users.insertCurrentUser(UserFactory.sample());
+    const navbar = renderAccountButton();
+
+    expect(await navbar.findByText('Account')).toBeInTheDocument();
+
+    fireEvent.click(navbar.getByText('Account'));
+    fireEvent.blur(navbar.getByText('Log out'));
+
+    expect(navbar.queryByText('Log out')).not.toBeInTheDocument();
+  });
+
+  it('does not close the dialog when a child gains focus', async () => {
+    fakeClient.users.insertCurrentUser(UserFactory.sample());
+    const navbar = renderAccountButton();
+
+    expect(await navbar.findByText('Account')).toBeVisible();
+
+    fireEvent.click(navbar.getByText('Account'));
+    fireEvent.focus(navbar.getByText('Log out'));
+
+    expect(navbar.getByText('Log out')).toBeVisible();
   });
 });
