@@ -52,7 +52,13 @@ export const Bodal: React.FC<Props> = ({
 
   const footer = (
     <>
-      <Button onClick={onCancel} text={cancelButtonText} type="outline" />
+      <button
+        className="text-blue-700 text-base font-medium"
+        onClick={onCancel}
+        type="button"
+      >
+        {cancelButtonText}
+      </button>
       <Button
         onClick={onConfirm}
         text={confirmButtonText}

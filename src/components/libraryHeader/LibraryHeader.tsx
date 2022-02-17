@@ -71,6 +71,7 @@ export const LibraryHeader = () => {
             text="Create new playlist"
             onClick={() => setModalOpen(true)}
             width="206px"
+            height="48px"
           />
         }
       />
