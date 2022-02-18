@@ -42,6 +42,7 @@ export const FilterPanel = ({
   return (
     <div className="col-start-2 col-end-8">
       <div
+        id="filter_by"
         className={c('text-primary text-lg font-medium', {
           'pb-4': areFiltersApplied,
         })}
@@ -55,7 +56,7 @@ export const FilterPanel = ({
         />
       )}
       {resultsFound && (
-        <>
+        <div role="group" aria-labelledby="filter_by">
           <SubjectFilter
             options={options.subjects}
             handleChange={handleChange}
@@ -78,7 +79,7 @@ export const FilterPanel = ({
           />
           <DateFilter releaseDates={dateFilters} handleChange={handleChange} />
           <PriceFilter options={options.prices} handleChange={handleChange} />
-        </>
+        </div>
       )}
     </div>
   );
