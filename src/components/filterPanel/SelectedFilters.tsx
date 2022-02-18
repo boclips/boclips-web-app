@@ -79,15 +79,22 @@ export const SelectedFilters = ({ removeFilter, clearFilters }: Props) => {
   ]);
 
   return (
-    <div>
+    <>
       <div
+        role="group"
         className="mb-4 font-medium flex justify-between items-center"
         style={{ height: '1.9375rem' }}
       >
-        <span className="text-base">Selected filters</span>
+        <span id="selected_filters_panel" className="text-base">
+          Selected filters
+        </span>
         <TextButton onClick={clearFilters} text="Clear all" fontSize="small" />
       </div>
-      <div className="flex flex-wrap " data-qa="applied-filter-tags">
+      <div
+        className="flex flex-wrap"
+        aria-labelledby="selected_filters_panel"
+        data-qa="applied-filter-tags"
+      >
         {filtersToRender.map((filter) => (
           <SelectedFilterTag
             key={`${filter.name}-${filter.id}`}
@@ -96,6 +103,6 @@ export const SelectedFilters = ({ removeFilter, clearFilters }: Props) => {
           />
         ))}
       </div>
-    </div>
+    </>
   );
 };
