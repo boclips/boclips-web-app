@@ -15,6 +15,7 @@ export const FilterHeader = ({ text, filterIsOpen, toggleFilter }: Props) => {
       className="text-base px-4 text-blue-800 font-medium flex items-center cursor-pointer active:border-none justify-between w-full"
       aria-expanded={filterIsOpen}
       aria-controls={`${text}-filter`}
+      aria-label={`${text} filter panel`}
       onClick={toggleFilter}
       onKeyPress={(event) => handleEnterKeyDown(event, toggleFilter)}
     >
