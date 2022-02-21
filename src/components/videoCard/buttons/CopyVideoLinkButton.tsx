@@ -33,7 +33,6 @@ export const CopyVideoLinkButton = ({ video, appcueEvent }: Props) => {
   return (
     <CopyLinkButton
       ariaLabel="Copy video link"
-      title="Copy link"
       onCopy={handleCopied}
       link={link}
       disabled={!isFetched}

@@ -25,7 +25,6 @@ const Playlists = () => {
               <div className="w-fit	self-end p-1">
                 <CopyLinkButton
                   ariaLabel="Copy playlist link"
-                  title="Copy link"
                   link={`${Constants.HOST}/library/${playlist.id}`}
                   dataQa={`share-playlist-button-${playlist.id}`}
                 />

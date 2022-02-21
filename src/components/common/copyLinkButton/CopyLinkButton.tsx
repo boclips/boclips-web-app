@@ -6,16 +6,14 @@ import Tooltip from '@boclips-ui/tooltip';
 import s from './style.module.less';
 
 interface Props {
-  title: string;
   onCopy?: () => void;
   link: string;
   disabled?: boolean;
   dataQa?: string;
-  ariaLabel?: string;
+  ariaLabel: string;
 }
 
 export const CopyLinkButton = ({
-  title,
   onCopy,
   link,
   disabled,
@@ -45,13 +43,13 @@ export const CopyLinkButton = ({
           aria-label={copiedToClipboard ? 'Copied' : ariaLabel}
           data-qa={dataQa}
           onClick={handleClick}
-          text={copiedToClipboard ? 'Copied' : title}
           type="outline"
           icon={copiedToClipboard ? <CopiedLinkIcon /> : <CopyLinkIcon />}
           disabled={disabled}
           width="40px"
           height="40px"
           iconOnly
+          role={copiedToClipboard ? 'alert' : 'button'}
         />
       </Tooltip>
     </div>
