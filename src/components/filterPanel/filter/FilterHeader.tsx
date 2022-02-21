@@ -1,5 +1,5 @@
 import React from 'react';
-import { handleEnterKeyDown } from 'src/services/handleEnterKeyDown';
+import { handleEnterKeyEvent } from 'src/services/handleKeyEvent';
 import FilterArrow from '../../../resources/icons/blue-arrow.svg';
 
 interface Props {
@@ -17,7 +17,7 @@ export const FilterHeader = ({ text, filterIsOpen, toggleFilter }: Props) => {
       aria-controls={`${text}-filter`}
       aria-label={`${text} filter panel`}
       onClick={toggleFilter}
-      onKeyPress={(event) => handleEnterKeyDown(event, toggleFilter)}
+      onKeyPress={(event) => handleEnterKeyEvent(event, toggleFilter)}
     >
       <span>{text}</span>
       <FilterArrow

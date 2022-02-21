@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import c from 'classnames';
-import { handleEnterKeyDown } from 'src/services/handleEnterKeyDown';
 import { FilterOption } from 'src/types/FilterOption';
 import { FilterOptionCheckbox } from 'src/components/filterPanel/filter/FilterOptionCheckbox';
+import { handleEnterKeyEvent } from 'src/services/handleKeyEvent';
 import s from './FilterOptionList.module.less';
 
 interface Props {
@@ -73,7 +73,7 @@ export const FilterOptionList = ({
         <button
           type="button"
           onClick={() => setAllExpanded(!allExpanded)}
-          onKeyPress={(event) => handleEnterKeyDown(event, toggleOptions)}
+          onKeyPress={(event) => handleEnterKeyEvent(event, toggleOptions)}
           className={s.showMoreButton}
         >
           {allExpanded

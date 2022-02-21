@@ -51,7 +51,11 @@ describe('The mighty Bodal', () => {
   it('can change the name of the confirm button', () => {
     const handleConfirm = jest.fn();
     const wrapper = render(
-      <Bodal title="Title" confirmButtonText="Press me!" onConfirm={handleConfirm} />,
+      <Bodal
+        title="Title"
+        confirmButtonText="Press me!"
+        onConfirm={handleConfirm}
+      />,
     );
     const button = wrapper.getByRole('button', { name: 'Press me!' });
     fireEvent.click(button);
@@ -62,7 +66,11 @@ describe('The mighty Bodal', () => {
   it('can change the name of the cancel button', () => {
     const handleCancel = jest.fn();
     const wrapper = render(
-      <Bodal title="Title" cancelButtonText="Press me!" onCancel={handleCancel} />,
+      <Bodal
+        title="Title"
+        cancelButtonText="Press me!"
+        onCancel={handleCancel}
+      />,
     );
     const button = wrapper.getByRole('button', { name: 'Press me!' });
     fireEvent.click(button);
@@ -101,6 +109,15 @@ describe('The mighty Bodal', () => {
     expect(onConfirmSpy).not.toBeCalled();
 
     expect(wrapper.getByTestId('spinner')).toBeInTheDocument();
+  });
+
+  it(`attempts to cancel on pressing esc`, () => {
+    const cancelSpy = jest.fn();
+    const wrapper = render(<Bodal title="test" onCancel={cancelSpy} />);
+
+    fireEvent.keyDown(wrapper.getByRole('dialog'), { key: 'Escape' });
+
+    expect(cancelSpy).toHaveBeenCalledTimes(1);
   });
 
   // Nice to have for later

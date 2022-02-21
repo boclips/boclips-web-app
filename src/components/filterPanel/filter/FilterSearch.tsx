@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SearchIconSVG from 'resources/icons/search-icon.svg';
 import CrossIconSVG from 'resources/icons/cross-icon.svg';
-import { handleEnterKeyDown } from 'src/services/handleEnterKeyDown';
+import { handleEnterKeyEvent } from 'src/services/handleKeyEvent';
 
 interface Props {
   placeholderText?: string;
@@ -33,7 +33,7 @@ export const FilterSearch = ({
           onClick={(_: any) => setText('')}
           role="button"
           tabIndex={0}
-          onKeyPress={(event) => handleEnterKeyDown(event, setText(''))}
+          onKeyPress={(event) => handleEnterKeyEvent(event, setText(''))}
         >
           <CrossIconSVG className="stroke-current text-gray-600 stroke-2 h-4 w-4 object-fill" />
         </div>

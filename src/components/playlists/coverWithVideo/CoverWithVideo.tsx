@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import s from 'src/components/playlists/style.module.less';
-import { handleEnterKeyDown } from 'src/services/handleEnterKeyDown';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { BoclipsPlayer } from 'boclips-player/lib/BoclipsPlayer/BoclipsPlayer';
+import { handleEnterKeyEvent } from 'src/services/handleKeyEvent';
 
 interface Props {
   video: Video;
@@ -37,7 +37,7 @@ const CoverWithVideo = ({ video }: Props) => {
         aria-labelledby={`${video.id}-label`}
         aria-describedby={`${video.id}-description`}
         onClick={() => setShowPlayer(true)}
-        onKeyDown={(e) => handleEnterKeyDown(e, () => setShowPlayer(true))}
+        onKeyDown={(e) => handleEnterKeyEvent(e, () => setShowPlayer(true))}
       >
         <div className={s.play} />
       </button>
