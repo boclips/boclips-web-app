@@ -3,6 +3,7 @@ import Button from '@boclips-ui/button';
 import CloseIconSVG from 'src/resources/icons/cross-icon.svg';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import { TextButton } from 'src/components/common/textButton/TextButton';
 import s from './style.module.less';
 
 export interface Props {
@@ -52,13 +53,7 @@ export const Bodal: React.FC<Props> = ({
 
   const footer = (
     <>
-      <button
-        className="text-blue-700 text-base font-medium"
-        onClick={onCancel}
-        type="button"
-      >
-        {cancelButtonText}
-      </button>
+      <TextButton onClick={onCancel} text={cancelButtonText} />
       <Button
         onClick={onConfirm}
         text={confirmButtonText}
