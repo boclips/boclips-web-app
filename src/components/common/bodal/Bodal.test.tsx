@@ -1,6 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { Bodal } from 'src/components/common/bodal/Bodal';
+import { BoInputText } from 'src/components/common/input/BoInputText';
 
 describe('The mighty Bodal', () => {
   beforeEach(() => {
@@ -118,6 +119,20 @@ describe('The mighty Bodal', () => {
     fireEvent.keyDown(wrapper.getByRole('dialog'), { key: 'Escape' });
 
     expect(cancelSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it(`sets focus on requested element`, () => {
+    const inputRef = React.createRef<HTMLInputElement>();
+
+    const wrapper = render(
+      <Bodal title="test" initialFocusInputRef={inputRef}>
+        <div>skip focus</div>
+        <BoInputText label="dont-focus-input" inputType="text" />
+        <BoInputText ref={inputRef} label="Focus me" inputType="text" />
+      </Bodal>,
+    );
+
+    expect(wrapper.getByLabelText('Focus me (Optional)')).toHaveFocus();
   });
 
   // Nice to have for later

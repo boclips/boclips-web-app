@@ -205,6 +205,7 @@ describe('LibraryView', () => {
 
         expect(wrapper.getByLabelText('Create new playlist')).toBeVisible();
         expect(wrapper.getByLabelText('Playlist name')).toBeVisible();
+        expect(wrapper.getByLabelText('Playlist name')).toHaveFocus();
         expect(wrapper.getByPlaceholderText('Add name')).toBeVisible();
         expect(wrapper.getByLabelText('Description (Optional)')).toBeVisible();
         expect(wrapper.getByPlaceholderText('Add description')).toBeVisible();

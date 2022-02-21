@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, ReactElement } from 'react';
+import React, { PropsWithChildren, ReactElement, useEffect } from 'react';
 import Button from '@boclips-ui/button';
 import CloseIconSVG from 'src/resources/icons/cross-icon.svg';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -15,6 +15,7 @@ export interface Props {
   isLoading?: boolean;
   cancelButtonText?: string;
   dataQa?: string;
+  initialFocusInputRef?: React.RefObject<HTMLElement>;
 }
 
 export const Bodal: React.FC<Props> = ({
@@ -26,6 +27,7 @@ export const Bodal: React.FC<Props> = ({
   cancelButtonText = 'Cancel',
   dataQa = 'modal',
   children,
+  initialFocusInputRef,
 }: PropsWithChildren<Props>) => {
   const breakpoints = useMediaBreakPoint();
   const mobileView = breakpoints.type === 'mobile';
@@ -63,6 +65,10 @@ export const Bodal: React.FC<Props> = ({
       />
     </>
   );
+
+  useEffect(() => {
+    initialFocusInputRef?.current.focus();
+  }, [initialFocusInputRef]);
 
   return (
     // Below should be fine according to https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/479

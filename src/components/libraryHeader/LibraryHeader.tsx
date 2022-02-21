@@ -60,6 +60,7 @@ export const LibraryHeader = () => {
       history.push(`/library/${data}`);
     }
   }, [data, history, isSuccess, isError]);
+  const playlistNameRef = React.useRef();
 
   return (
     <>
@@ -82,6 +83,7 @@ export const LibraryHeader = () => {
           onConfirm={handleConfirm}
           onCancel={() => setModalOpen(false)}
           isLoading={isLoading}
+          initialFocusInputRef={playlistNameRef}
         >
           <BoInputText
             label="Playlist name"
@@ -91,6 +93,7 @@ export const LibraryHeader = () => {
             error={titleError}
             errorMessage="Playlist name is required"
             inputType="text"
+            ref={playlistNameRef}
           />
           <BoInputText
             label="Description"
