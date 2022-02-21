@@ -7,7 +7,7 @@ import { TextButton } from 'src/components/common/textButton/TextButton';
 import s from './style.module.less';
 
 export interface Props {
-  title?: string;
+  title: string;
   onConfirm?: () => void;
   onCancel?: () => void;
   confirmButtonText?: string;
@@ -69,7 +69,11 @@ export const Bodal: React.FC<Props> = ({
       aria-labelledby="bodal-title"
       data-qa={dataQa}
       className={s.modalWrapper}
+      aria-describedby="bodal-description"
     >
+      <div id="bodal-description" hidden>
+        {`This is a dialog for ${title}. Escape will cancel and close the window.`}
+      </div>
       <div className={s.modal}>
         <div className={s.modalContent}>
           <div className={s.modalHeader}>{header}</div>

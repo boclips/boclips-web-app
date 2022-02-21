@@ -7,7 +7,7 @@ describe('The mighty Bodal', () => {
     window.resizeTo(1680, 1024);
   });
   it('can find the modal by role=dialog', () => {
-    const wrapper = render(<Bodal />);
+    const wrapper = render(<Bodal title="Title" />);
     expect(wrapper.getByRole('dialog')).toBeVisible();
   });
 
@@ -20,9 +20,21 @@ describe('The mighty Bodal', () => {
     expect(wrapper.getByText('Hello Bodal')).toBeVisible();
   });
 
+  it('has describedby attribute assigned to the modal', () => {
+    const wrapper = render(<Bodal title="Hello Bodal" />);
+    const modal = wrapper.getByRole('dialog');
+    const screenReaderText = wrapper.getByText(
+      'This is a dialog for Hello Bodal. Escape will cancel and close the window.',
+    );
+
+    expect(modal.getAttribute('aria-describedby')).toEqual('bodal-description');
+    expect(screenReaderText.getAttribute('id')).toEqual('bodal-description');
+    expect(screenReaderText).not.toBeVisible();
+  });
+
   it('calls onConfirm when confirm button is clicked', () => {
     const handleConfirm = jest.fn();
-    const wrapper = render(<Bodal onConfirm={handleConfirm} />);
+    const wrapper = render(<Bodal title="Title" onConfirm={handleConfirm} />);
     const button = wrapper.getByRole('button', { name: 'Confirm' });
     fireEvent.click(button);
     expect(handleConfirm).toBeCalledTimes(1);
@@ -30,7 +42,7 @@ describe('The mighty Bodal', () => {
 
   it('calls onCancel when cancel button is clicked', () => {
     const handleCancel = jest.fn();
-    const wrapper = render(<Bodal onCancel={handleCancel} />);
+    const wrapper = render(<Bodal title="Title" onCancel={handleCancel} />);
     const button = wrapper.getByRole('button', { name: 'Cancel' });
     fireEvent.click(button);
     expect(handleCancel).toBeCalledTimes(1);
@@ -39,7 +51,7 @@ describe('The mighty Bodal', () => {
   it('can change the name of the confirm button', () => {
     const handleConfirm = jest.fn();
     const wrapper = render(
-      <Bodal confirmButtonText="Press me!" onConfirm={handleConfirm} />,
+      <Bodal title="Title" confirmButtonText="Press me!" onConfirm={handleConfirm} />,
     );
     const button = wrapper.getByRole('button', { name: 'Press me!' });
     fireEvent.click(button);
@@ -50,7 +62,7 @@ describe('The mighty Bodal', () => {
   it('can change the name of the cancel button', () => {
     const handleCancel = jest.fn();
     const wrapper = render(
-      <Bodal cancelButtonText="Press me!" onCancel={handleCancel} />,
+      <Bodal title="Title" cancelButtonText="Press me!" onCancel={handleCancel} />,
     );
     const button = wrapper.getByRole('button', { name: 'Press me!' });
     fireEvent.click(button);
@@ -60,7 +72,7 @@ describe('The mighty Bodal', () => {
 
   it('renders content', () => {
     const content = <div>Hello</div>;
-    const wrapper = render(<Bodal>{content}</Bodal>);
+    const wrapper = render(<Bodal title="Title">{content}</Bodal>);
     const renderedContent = wrapper.getByText('Hello');
     expect(renderedContent).toBeVisible();
   });
@@ -98,7 +110,7 @@ describe('The mighty Bodal', () => {
     const wrapper = render(
       <div>
         <div>
-          <Bodal onCancel={handleCancel} />
+          <Bodal title="Title" onCancel={handleCancel} />
         </div>
         <div>Hello</div>
       </div>,
