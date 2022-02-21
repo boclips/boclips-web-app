@@ -8,8 +8,8 @@ const Logo = (): ReactElement => {
   const { data: user } = useGetUserQuery();
 
   const logoTitle = user?.organisation?.name
-    ? `${user.organisation.name} logo`
-    : 'Boclips logo';
+    ? `${user.organisation.name} logo - Home`
+    : 'Boclips logo - Home';
 
   return (
     <Link to="/" aria-label={logoTitle} className={s.logo}>

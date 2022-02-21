@@ -17,7 +17,7 @@ describe('logo', () => {
       </BoclipsSecurityProvider>,
     );
 
-    expect(navbar.getByLabelText('Boclips logo')).toBeInTheDocument();
+    expect(navbar.getByLabelText('Boclips logo - Home')).toBeInTheDocument();
   });
 
   it('does renders the organisation logo if logo url is provided', async () => {
@@ -41,6 +41,8 @@ describe('logo', () => {
       </BoclipsSecurityProvider>,
     );
 
-    expect(await navbar.findByLabelText('Pearson logo')).toBeInTheDocument();
+    expect(
+      await navbar.findByLabelText('Pearson logo - Home'),
+    ).toBeInTheDocument();
   });
 });
