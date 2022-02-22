@@ -42,6 +42,11 @@ export const LibraryHeader = () => {
     });
   };
 
+  const handleModalClose = () => {
+    setModalOpen(false);
+    createButtonRef.current.focus();
+  };
+
   const handleTitleChange = (title: string) =>
     setPlaylistForm({ ...playlistForm, title });
 
@@ -61,6 +66,7 @@ export const LibraryHeader = () => {
     }
   }, [data, history, isSuccess, isError]);
   const playlistNameRef = React.useRef();
+  const createButtonRef: React.RefObject<HTMLButtonElement> = React.useRef();
 
   return (
     <>
@@ -73,6 +79,7 @@ export const LibraryHeader = () => {
             onClick={() => setModalOpen(true)}
             width="206px"
             height="48px"
+            ref={createButtonRef}
           />
         }
       />
@@ -81,7 +88,7 @@ export const LibraryHeader = () => {
           title="Create new playlist"
           confirmButtonText="Create playlist"
           onConfirm={handleConfirm}
-          onCancel={() => setModalOpen(false)}
+          onCancel={handleModalClose}
           isLoading={isLoading}
           initialFocusInputRef={playlistNameRef}
         >

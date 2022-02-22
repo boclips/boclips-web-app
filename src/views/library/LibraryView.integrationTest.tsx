@@ -297,6 +297,19 @@ describe('LibraryView', () => {
         });
       });
 
+      it(`returns focus to create playlist button after playlist creation cancelled`, async () => {
+        const client = new FakeBoclipsClient();
+        setPlaylistsFeature(client, true);
+        const wrapper = renderLibraryView(client);
+        await openPlaylistCreationModal(wrapper);
+
+        fireEvent.keyDown(wrapper.getByRole('dialog'), { key: 'Escape' });
+
+        expect(
+          await wrapper.findByRole('button', { name: 'Create new playlist' }),
+        ).toHaveFocus();
+      });
+
       const openPlaylistCreationModal = async (wrapper: RenderResult) =>
         fireEvent.click(
           await wrapper.findByRole('button', { name: 'Create new playlist' }),
