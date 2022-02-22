@@ -1,5 +1,6 @@
 import React, { Ref } from 'react';
 import c from 'classnames';
+import ErrorIconSVG from 'resources/icons/error-icon.svg';
 import s from './style.module.less';
 
 export interface BoInputProps {
@@ -82,7 +83,12 @@ export const BoInputText = React.forwardRef(
             <span className={s.optional}>(Optional)</span>
           )}
         </div>
-        {error && <span className={s.errorMessage}>{errorMessage}</span>}
+        {error && (
+          <span className={s.errorMessage}>
+            <ErrorIconSVG />
+            {errorMessage}
+          </span>
+        )}
         {renderInput()}
       </label>
     );
