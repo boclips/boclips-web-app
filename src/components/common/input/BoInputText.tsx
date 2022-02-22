@@ -82,8 +82,8 @@ export const BoInputText = React.forwardRef(
             <span className={s.optional}>(Optional)</span>
           )}
         </div>
-        {renderInput()}
         {error && <span className={s.errorMessage}>{errorMessage}</span>}
+        {renderInput()}
       </label>
     );
   },
