@@ -84,7 +84,7 @@
     "@boclips-ui/styles": "^3.1.0",
     "@boclips-ui/subject-badge": "^2.0.15",
     "@boclips-ui/tooltip": "2.0.1",
-    "@boclips-ui/typography": "^1.0.2",
+    "@boclips-ui/typography": "^1.0.3",
     "@boclips-ui/use-media-breakpoints": "^2.0.3",
     "@boclips-ui/video": "^3.0.2",
     "@boclips-ui/video-card": "^5.0.7",

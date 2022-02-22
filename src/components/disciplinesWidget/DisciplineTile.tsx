@@ -5,6 +5,7 @@ import c from 'classnames';
 import { DisciplineWithSubjectOffering } from 'src/hooks/api/disciplinesQuery';
 import s from './style.module.less';
 import SubjectsPanel from './SubjectsPanel';
+import { DisciplineTileHeader } from './DisciplineTileHeader';
 
 interface Props {
   discipline: DisciplineWithSubjectOffering;
@@ -55,9 +56,10 @@ const DisciplineTile = ({
         <span className={s.illustration}>
           {getDisciplineIllustration(discipline.name)}
         </span>
-        <span className="flex items-center font-medium text-md w-full lg:pt-4 lg:justify-center">
-          {discipline.name}
-        </span>
+        <DisciplineTileHeader
+          title={discipline.name}
+          isMobileView={isMobileView}
+        />
         <span className={s.arrow}>
           <ArrowRight />
         </span>
