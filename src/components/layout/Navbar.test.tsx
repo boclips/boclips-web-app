@@ -19,7 +19,7 @@ describe('Desktop & Mobile - Navbar', () => {
     );
 
     expect(
-      await screen.findByRole('combobox', { name: /search/i }),
+      await screen.getByPlaceholderText('Search for videos'),
     ).toBeVisible();
   });
 });

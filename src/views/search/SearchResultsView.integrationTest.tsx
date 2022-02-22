@@ -90,9 +90,9 @@ describe('SearchResults', () => {
       '2',
     );
 
-    const searchBar = wrapper.getByRole('combobox', {
-      name: /search/i,
-    }) as HTMLInputElement;
+    const searchBar = wrapper.getByPlaceholderText(
+      'Search for videos',
+    ) as HTMLInputElement;
 
     fireEvent.change(searchBar, { target: { value: 'artist' } });
     fireEvent.keyDown(searchBar, { key: 'Enter', code: 'Enter' });
@@ -127,9 +127,9 @@ describe('SearchResults', () => {
 
     expect(await wrapper.findByText('dogs are nice')).toBeVisible();
 
-    const searchBar = wrapper.getByRole('combobox', {
-      name: /search/i,
-    }) as HTMLInputElement;
+    const searchBar = wrapper.getByPlaceholderText(
+      'Search for videos',
+    ) as HTMLInputElement;
 
     fireEvent.change(searchBar, { target: { value: 'cats' } });
     fireEvent.keyDown(searchBar, { key: 'Enter', code: 'Enter' });

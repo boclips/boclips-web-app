@@ -6,16 +6,14 @@ import {
   useLocationParams,
   useSearchQueryLocationParams,
 } from 'src/hooks/useLocationParams';
-import c from 'classnames';
 import s from './style.module.less';
 
 interface Props {
-  size: 'big' | 'small' | 'responsive';
   showIconOnly: boolean;
   onSearch?: (query: string) => void;
 }
 
-export const Search = ({ size, showIconOnly, onSearch }: Props) => {
+export const Search = ({ showIconOnly, onSearch }: Props) => {
   const history = useHistory();
   const [searchLocation] = useSearchQueryLocationParams();
   const query = useLocationParams().get('q');
@@ -37,19 +35,13 @@ export const Search = ({ size, showIconOnly, onSearch }: Props) => {
   };
 
   return (
-    <div
-      className={c(s.searchWrapper, {
-        [s.big]: size === 'big',
-        [s.small]: size !== 'big',
-        [s.responsive]: size === 'responsive',
-      })}
-    >
+    <div className={s.searchWrapper}>
       <SearchBar
-        placeholder="Search by topic or keyword"
+        placeholder="Search for videos"
         iconOnlyButton={showIconOnly}
-        autocomplete={false}
         onSearch={handleSearch}
         initialQuery={query}
+        data-qa="search-input"
       />
     </div>
   );

@@ -11,7 +11,7 @@ describe('SearchBar', () => {
   it('renders with search button displayed', () => {
     const search = render(
       <BoclipsClientProvider client={new FakeBoclipsClient()}>
-        <Search size="big" showIconOnly={false} />
+        <Search showIconOnly={false} />
       </BoclipsClientProvider>,
     );
 
@@ -28,14 +28,16 @@ describe('SearchBar', () => {
     const wrapper = render(
       <BoclipsClientProvider client={new FakeBoclipsClient()}>
         <Router history={history}>
-          <Search size="big" showIconOnly={false} />
+          <Search showIconOnly={false} />
         </Router>
       </BoclipsClientProvider>,
     );
 
     expect((await wrapper.findByText('Search')).textContent).toEqual('Search');
 
-    const searchInput = wrapper.getByTestId('search-input') as HTMLInputElement;
+    const searchInput = wrapper.getByPlaceholderText(
+      'Search for videos',
+    ) as HTMLInputElement;
     fireEvent.change(searchInput, { target: { value: 'cats' } });
 
     const searchButton = wrapper.getByText('Search');

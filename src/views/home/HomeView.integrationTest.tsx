@@ -81,6 +81,8 @@ describe('HomeView', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByTestId('search-input')).toBeInTheDocument();
+    expect(
+      await wrapper.getByPlaceholderText('Search for videos'),
+    ).toBeInTheDocument();
   });
 });
