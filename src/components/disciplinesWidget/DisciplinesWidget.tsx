@@ -8,6 +8,7 @@ import {
 } from 'src/hooks/api/disciplinesQuery';
 import SkeletonTiles from 'src/components/skeleton/Skeleton';
 import s from './style.module.less';
+import { DisciplineHeader } from './DisciplineHeader';
 
 const DisciplineWidget = (): ReactElement => {
   const { data: disciplines, isLoading } = useGetDisciplinesQuery();
@@ -48,9 +49,7 @@ const DisciplineWidget = (): ReactElement => {
 
   return (
     <main className="col-start-2 col-end-26 row-start-2 row-end-2 lg:col-start-4 lg:col-end-24 md:pt-4">
-      <h4 className="text-center md:text-4xl">
-        Let’s find the videos you need
-      </h4>
+      <DisciplineHeader />
       <div className={s.disciplineWrapper}>
         {isLoading ? (
           <SkeletonTiles className={s.discipline} />
