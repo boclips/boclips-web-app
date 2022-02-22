@@ -5,6 +5,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import { TextButton } from 'src/components/common/textButton/TextButton';
 import { handleEscapeKeyEvent } from 'src/services/handleKeyEvent';
+import FocusTrap from 'focus-trap-react';
 import s from './style.module.less';
 
 export interface Props {
@@ -71,26 +72,28 @@ export const Bodal: React.FC<Props> = ({
   }, [initialFocusInputRef]);
 
   return (
-    // Below should be fine according to https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/479
-    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-    <div
-      role="dialog"
-      aria-labelledby="bodal-title"
-      data-qa={dataQa}
-      className={s.modalWrapper}
-      aria-describedby="bodal-description"
-      onKeyDown={(event) => handleEscapeKeyEvent(event, onCancel)}
-    >
-      <div id="bodal-description" hidden>
-        {`This is a dialog for ${title}. Escape will cancel and close the window.`}
-      </div>
-      <div className={s.modal}>
-        <div className={s.modalContent}>
-          <div className={s.modalHeader}>{header}</div>
-          {children}
+    <FocusTrap>
+      {/* Below should be fine according to https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/479 */}
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+      <div
+        role="dialog"
+        aria-labelledby="bodal-title"
+        data-qa={dataQa}
+        className={s.modalWrapper}
+        aria-describedby="bodal-description"
+        onKeyDown={(event) => handleEscapeKeyEvent(event, onCancel)}
+      >
+        <div id="bodal-description" hidden>
+          {`This is a dialog for ${title}. Escape will cancel and close the window.`}
         </div>
-        <div className={s.modalFooter}>{footer}</div>
+        <div className={s.modal}>
+          <div className={s.modalContent}>
+            <div className={s.modalHeader}>{header}</div>
+            {children}
+          </div>
+          <div className={s.modalFooter}>{footer}</div>
+        </div>
       </div>
-    </div>
+    </FocusTrap>
   );
 };

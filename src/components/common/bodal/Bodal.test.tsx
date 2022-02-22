@@ -2,6 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import { BoInputText } from 'src/components/common/input/BoInputText';
+import userEvent from '@testing-library/user-event';
 
 describe('The mighty Bodal', () => {
   beforeEach(() => {
@@ -133,6 +134,31 @@ describe('The mighty Bodal', () => {
     );
 
     expect(wrapper.getByLabelText('Focus me (Optional)')).toHaveFocus();
+  });
+
+  it(`traps focus to bodal`, () => {
+    const inputRef = React.createRef<HTMLInputElement>();
+
+    const wrapper = render(
+      <div data-qa="main">
+        <Bodal title="test" initialFocusInputRef={inputRef}>
+          <BoInputText ref={inputRef} label="Focus me" inputType="text" />
+        </Bodal>
+        <BoInputText label="Don't focus me" inputType="text" />
+      </div>,
+    );
+
+    expect(wrapper.getByLabelText('Focus me (Optional)')).toHaveFocus();
+    userEvent.tab();
+    expect(wrapper.getByRole('button', { name: 'Cancel' })).toHaveFocus();
+    userEvent.tab();
+    expect(wrapper.getByRole('button', { name: 'Confirm' })).toHaveFocus();
+    userEvent.tab();
+
+    expect(wrapper.getByLabelText('Close test modal')).toHaveFocus();
+    expect(
+      wrapper.getByLabelText("Don't focus me (Optional)"),
+    ).not.toHaveFocus();
   });
 
   // Nice to have for later
