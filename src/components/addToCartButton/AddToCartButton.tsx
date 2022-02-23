@@ -16,6 +16,7 @@ import {
   trackVideoRemovedFromCart,
 } from 'src/components/common/analytics/Analytics';
 import { Video } from 'boclips-api-client/dist/types';
+import { displayNotification } from 'src/components/common/notification/displayNotification';
 import s from './style.module.less';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 
@@ -54,6 +55,13 @@ export const AddToCartButton = ({
           items: [...old.items, it],
         }));
 
+        displayNotification(
+          'success',
+          'Video added to cart',
+          '',
+          `add-video-${it.id}-to-cart-notification`,
+        );
+
         if (appcueEvent) {
           AnalyticsFactory.getAppcues().sendEvent(appcueEvent);
         }
@@ -74,6 +82,13 @@ export const AddToCartButton = ({
           ...old,
           items: [...old.items.filter((item) => item.id !== it)],
         }));
+
+        displayNotification(
+          'success',
+          'Video removed from cart',
+          '',
+          `remove-video-${it}-from-cart-notification`,
+        );
       },
     },
   );

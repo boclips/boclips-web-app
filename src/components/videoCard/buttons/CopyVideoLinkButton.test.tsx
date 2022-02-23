@@ -1,11 +1,18 @@
 import React from 'react';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  waitFor,
+  within,
+} from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { VideoInteractedWith } from 'boclips-api-client/dist/sub-clients/events/model/EventRequest';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { buildVideoDetailsLink } from 'src/services/buildVideoDetailsLink';
+import { ToastContainer } from 'react-toastify';
 import { CopyVideoLinkButton } from './CopyVideoLinkButton';
 
 describe('CopyLinkButton', () => {
@@ -21,6 +28,7 @@ describe('CopyLinkButton', () => {
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={fakeClient}>
+          <ToastContainer />
           <CopyVideoLinkButton video={video} />
         </BoclipsClientProvider>
       </QueryClientProvider>,
@@ -49,6 +57,7 @@ describe('CopyLinkButton', () => {
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={fakeClient}>
+          <ToastContainer />
           <CopyVideoLinkButton video={video} />
         </BoclipsClientProvider>
       </QueryClientProvider>,
@@ -60,9 +69,11 @@ describe('CopyLinkButton', () => {
       fireEvent.click(button);
     });
 
-    expect(await wrapper.findByLabelText('Copied')).toBeVisible();
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
       buildVideoDetailsLink(video, user),
     );
+
+    const notification = await wrapper.findByRole('alert');
+    expect(within(notification).getByText('Link copied!')).toBeVisible();
   });
 });
