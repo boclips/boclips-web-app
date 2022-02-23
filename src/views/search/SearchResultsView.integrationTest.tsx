@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor, within } from '@testing-library/react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
@@ -297,13 +297,10 @@ describe('SearchResults', () => {
       });
 
       expect(wrapper.getByText('Remove')).toBeInTheDocument();
-      const addNotification = wrapper.getByTestId(
-        'add-video-1-to-cart-notification',
-      );
-      expect(addNotification).toBeVisible();
-      expect(addNotification.children.item(0).textContent).toEqual(
-        'Video added to cart',
-      );
+      const addNotification = wrapper.getByRole('alert');
+      expect(
+        within(addNotification).getByText('Video added to cart'),
+      ).toBeVisible();
 
       fireEvent(
         wrapper.getByText('Remove'),
@@ -316,13 +313,12 @@ describe('SearchResults', () => {
       await waitFor(() => {
         expect(cart.items).toHaveLength(0);
       });
-      const removeNotification = wrapper.getByTestId(
-        'remove-video-1-from-cart-notification',
-      );
-      expect(removeNotification).toBeVisible();
-      expect(removeNotification.children.item(0).textContent).toEqual(
-        'Video removed from cart',
-      );
+
+      // selecting second alert element, as addNotification is the first one
+      const removeNotification = wrapper.getAllByRole('alert')[1];
+      expect(
+        within(removeNotification).getByText('Video removed from cart'),
+      ).toBeVisible();
     });
 
     it('basket counter goes up when item added to cart in navbar', async () => {

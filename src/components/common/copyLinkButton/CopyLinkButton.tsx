@@ -20,34 +20,26 @@ export const CopyLinkButton = ({
   dataQa,
   ariaLabel,
 }: Props) => {
-  const [copiedToClipboard, setCopiedToClipboard] = React.useState(false);
-
   const handleClick = () => {
     navigator.clipboard.writeText(link).then(() => {
-      setCopiedToClipboard(true);
-
       if (onCopy) {
         onCopy();
       }
+
+      displayNotification(
+        'success',
+        'Link copied!',
+        '',
+        'video-link-copied-notification',
+      );
     });
-
-    displayNotification(
-      'success',
-      'Link copied!',
-      '',
-      'video-link-copied-notification',
-    );
-
-    setTimeout(() => {
-      setCopiedToClipboard(false);
-    }, 1500);
   };
 
   return (
     <div className={s.copyLinkButton}>
-      <Tooltip text={copiedToClipboard ? 'Copied' : ariaLabel}>
+      <Tooltip text={ariaLabel}>
         <Button
-          aria-label={copiedToClipboard ? 'Copied' : ariaLabel}
+          aria-label={ariaLabel}
           data-qa={dataQa}
           onClick={handleClick}
           type="outline"

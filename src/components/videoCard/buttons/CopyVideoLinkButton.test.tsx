@@ -1,6 +1,12 @@
 import React from 'react';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  waitFor,
+  within,
+} from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { VideoInteractedWith } from 'boclips-api-client/dist/sub-clients/events/model/EventRequest';
@@ -63,12 +69,11 @@ describe('CopyLinkButton', () => {
       fireEvent.click(button);
     });
 
-    expect(await wrapper.findByLabelText('Copied')).toBeVisible();
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
       buildVideoDetailsLink(video, user),
     );
-    const notification = wrapper.getByTestId('video-link-copied-notification');
-    expect(notification).toBeVisible();
-    expect(notification.children.item(0).textContent).toEqual('Link copied!');
+
+    const notification = await wrapper.findByRole('alert');
+    expect(within(notification).getByText('Link copied!')).toBeVisible();
   });
 });

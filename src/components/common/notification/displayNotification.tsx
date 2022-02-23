@@ -17,8 +17,8 @@ export const displayNotification = (
     </div>
   );
 
-  // set autoclose depending on message length
-  const msgLength = message ? message.length : 0;
+  // set autoClose depending on the length of the notification title and message
+  const msgLength = title.length + (message?.length ?? 0);
   const autoClose = Math.min(Math.max(msgLength * 50, 2000), 7000);
 
   const options: ToastOptions = {

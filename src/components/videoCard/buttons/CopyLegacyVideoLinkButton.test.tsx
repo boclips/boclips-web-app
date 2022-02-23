@@ -1,10 +1,11 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, within } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { render } from 'src/testSupport/render';
+import { ToastContainer } from 'react-toastify';
 import { CopyLegacyVideoLinkButton } from './CopyLegacyVideoLinkButton';
 
 describe('CopyLegacyVideoLinkButton', () => {
@@ -28,6 +29,7 @@ describe('CopyLegacyVideoLinkButton', () => {
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={fakeClient}>
+          <ToastContainer />
           <CopyLegacyVideoLinkButton video={video} />
         </BoclipsClientProvider>
       </QueryClientProvider>,
@@ -37,7 +39,8 @@ describe('CopyLegacyVideoLinkButton', () => {
 
     fireEvent.click(button);
 
-    expect(await wrapper.findByLabelText('Copied')).toBeVisible();
+    const notification = await wrapper.findByRole('alert');
+    expect(within(notification).getByText('Link copied!')).toBeVisible();
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
       'https://myoldvideo.com/videos/this-is-a-test',
     );
