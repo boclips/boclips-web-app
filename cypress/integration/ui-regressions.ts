@@ -46,8 +46,7 @@ context('UI Regression', () => {
 
     cy.bo((bo) => bo.create.fixtureSet.eelsBiologyGeography());
 
-    cy.get('[data-qa="search-input"]').type('eel');
-    cy.get('button[aria-label="search"]').click();
+    cy.findByPlaceholderText('Search for videos').type('{enter}');
 
     cy.get('[data-qa="video-card-wrapper"]').should((videoCard) => {
       expect(videoCard.length).to.equal(2);
