@@ -1,4 +1,11 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved,
+  within,
+} from '@testing-library/react';
 import { MemoryRouter, Router } from 'react-router-dom';
 import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
@@ -42,6 +49,8 @@ describe('Playlist view', () => {
     title: 'Hello there',
     description: 'Very nice description',
     videos,
+    owner: 'myuserid',
+    mine: true,
   });
 
   beforeEach(() => {
@@ -50,8 +59,12 @@ describe('Playlist view', () => {
     client.videos.clear();
 
     videos.forEach((it) => client.videos.insertVideo(it));
+    client.collections.setCurrentUser('myuserid');
     client.users.insertCurrentUser(
-      UserFactory.sample({ features: { BO_WEB_APP_ENABLE_PLAYLISTS: true } }),
+      UserFactory.sample({
+        id: 'myuserid',
+        features: { BO_WEB_APP_ENABLE_PLAYLISTS: true },
+      }),
     );
     client.collections.addToFake(playlist);
   });
@@ -153,5 +166,35 @@ describe('Playlist view', () => {
     await waitFor(async () => {
       expect((await client.carts.getCart()).items).toHaveLength(0);
     });
+  });
+
+  it('video can be removed from the playlist', async () => {
+    const history = createBrowserHistory();
+    history.push({ pathname: '/playlists/123' });
+
+    render(
+      <Router history={history}>
+        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+      </Router>,
+    );
+
+    await screen.findByText('Video One 111');
+
+    const videoToRemove = screen.getByTestId('playlist-card-for-Video One 111');
+    const videoToRemoveButton = within(videoToRemove).getByRole('button', {
+      name: 'Add to playlist',
+    });
+
+    fireEvent.click(videoToRemoveButton);
+
+    const playlistCheckbox = screen.getByRole('checkbox', {
+      name: 'Hello there',
+    });
+
+    fireEvent.click(playlistCheckbox);
+
+    await waitForElementToBeRemoved(screen.queryByText('Video One 111'));
+    const remainingVideos = screen.getAllByLabelText('Add to playlist');
+    expect(remainingVideos).toHaveLength(4);
   });
 });
