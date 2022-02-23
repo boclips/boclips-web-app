@@ -179,7 +179,7 @@ const App = ({
                     />
                     <Route
                       exact
-                      path="/library/:id"
+                      path="/playlists/:id"
                       render={({ location }) => (
                         <>
                           <Helmet title={location.state?.name || 'Playlist'} />

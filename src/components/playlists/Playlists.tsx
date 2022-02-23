@@ -18,7 +18,7 @@ const Playlists = () => {
         playlists?.map((playlist) => (
           <PlaylistCard
             key={playlist.id}
-            link={`/library/${playlist.id}`}
+            link={`/playlists/${playlist.id}`}
             name={playlist.title}
             overlay={
               playlist.mine === false && (
@@ -30,7 +30,7 @@ const Playlists = () => {
               <div className="w-fit	self-end p-1">
                 <CopyLinkButton
                   ariaLabel="Copy playlist link"
-                  link={`${Constants.HOST}/library/${playlist.id}`}
+                  link={`${Constants.HOST}/playlists/${playlist.id}`}
                   dataQa={`share-playlist-button-${playlist.id}`}
                 />
               </div>

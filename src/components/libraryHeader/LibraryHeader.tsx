@@ -62,7 +62,7 @@ export const LibraryHeader = () => {
       );
     }
     if (isSuccess) {
-      history.push(`/library/${data}`);
+      history.push(`/playlists/${data}`);
     }
   }, [data, history, isSuccess, isError]);
   const playlistNameRef = React.useRef();
