@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import c from 'classnames';
 import { Subject } from 'boclips-api-client/dist/types';
+import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 import { ExtraSubjects } from './ExtraSubjects';
 
@@ -39,7 +40,7 @@ const SubjectsPanel = React.forwardRef(
                       search: `?subject=${subject.id}`,
                     }}
                   >
-                    <span className="text-md">{subject.name}</span>
+                    <Typography.Body>{subject.name}</Typography.Body>
                   </Link>
                 </div>
               );
