@@ -7,6 +7,7 @@ import dateFormat from 'dateformat';
 import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
+import { Typography } from '@boclips-ui/typography';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
 
@@ -17,26 +18,35 @@ interface Props {
 export const VideoHeader = ({ video }: Props) => {
   return (
     <>
-      <div className="text-2xl font-bold text-gray-900 mb-2">
+      <Typography.H3 className="text-gray-900 mb-2">
         {video?.title}
+      </Typography.H3>
+      <div className="mb-1">
+        <Typography.Body
+          size="small"
+          className="text-gray-800"
+        >{`ID: ${video?.id}`}</Typography.Body>
       </div>
-      <div className="font-extralight mb-1 text-gray-800">{`ID: ${video?.id}`}</div>
       <div className="flex flex-row mb-6 text-gray-800">
-        <div>
+        <Typography.Body>
           {`Released on ${dateFormat(video?.releasedOn, 'mediumDate')} by`}
-        </div>
-        <div className="font-medium ml-1">{video?.createdBy}</div>
+        </Typography.Body>
+        <Typography.Body weight="medium" className="font-medium ml-1">
+          {video?.createdBy}
+        </Typography.Body>
       </div>
-      <div className="font-bold text-2xl text-gray-900">
+      <Typography.H4 className="text-gray-900">
         {createPriceDisplayValue(
           video?.price?.amount,
           video?.price?.currency,
           getBrowserLocale(),
         )}
-      </div>
+      </Typography.H4>
       <FeatureGate feature="BO_WEB_APP_PRICES">
         <div className="grey-800 mb-4">
-          This is an agreed price for your organization
+          <Typography.Body>
+            This is an agreed price for your organization
+          </Typography.Body>
         </div>
       </FeatureGate>
 
