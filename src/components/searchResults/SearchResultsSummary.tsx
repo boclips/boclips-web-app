@@ -1,3 +1,4 @@
+import { Typography } from '@boclips-ui/typography';
 import React from 'react';
 
 interface Props {
@@ -7,7 +8,7 @@ interface Props {
 
 export const SearchResultsSummary = ({ count, query }: Props) => {
   return (
-    <div className="text-lg text-gray-800 font-normal mb-4">
+    <Typography.H4 className="text-lg text-gray-800 mb-4">
       Showing{' '}
       <span data-qa="search-hits" className="font-extrabold">
         {count}
@@ -15,6 +16,6 @@ export const SearchResultsSummary = ({ count, query }: Props) => {
       videos for &quot;
       {query}
       &quot;
-    </div>
+    </Typography.H4>
   );
 };
