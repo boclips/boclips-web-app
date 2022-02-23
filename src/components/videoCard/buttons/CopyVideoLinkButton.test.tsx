@@ -6,6 +6,7 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { VideoInteractedWith } from 'boclips-api-client/dist/sub-clients/events/model/EventRequest';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { buildVideoDetailsLink } from 'src/services/buildVideoDetailsLink';
+import { ToastContainer } from 'react-toastify';
 import { CopyVideoLinkButton } from './CopyVideoLinkButton';
 
 describe('CopyLinkButton', () => {
@@ -49,6 +50,7 @@ describe('CopyLinkButton', () => {
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={fakeClient}>
+          <ToastContainer />
           <CopyVideoLinkButton video={video} />
         </BoclipsClientProvider>
       </QueryClientProvider>,
@@ -64,5 +66,6 @@ describe('CopyLinkButton', () => {
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
       buildVideoDetailsLink(video, user),
     );
+    expect(wrapper.getByTestId('copied-link')).toBeVisible();
   });
 });

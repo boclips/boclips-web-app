@@ -1,8 +1,8 @@
 import React from 'react';
 import CopyLinkIcon from 'src/resources/icons/copy-link-icon.svg';
-import CopiedLinkIcon from 'src/resources/icons/copied-link-icon.svg';
 import Button from '@boclips-ui/button';
 import Tooltip from '@boclips-ui/tooltip';
+import { displayNotification } from 'src/components/common/notification/displayNotification';
 import s from './style.module.less';
 
 interface Props {
@@ -31,6 +31,8 @@ export const CopyLinkButton = ({
       }
     });
 
+    displayNotification('success', 'Copied link', '', 'copied-link');
+
     setTimeout(() => {
       setCopiedToClipboard(false);
     }, 1500);
@@ -44,12 +46,11 @@ export const CopyLinkButton = ({
           data-qa={dataQa}
           onClick={handleClick}
           type="outline"
-          icon={copiedToClipboard ? <CopiedLinkIcon /> : <CopyLinkIcon />}
+          icon={<CopyLinkIcon />}
           disabled={disabled}
           width="40px"
           height="40px"
           iconOnly
-          role={copiedToClipboard ? 'alert' : 'button'}
         />
       </Tooltip>
     </div>

@@ -297,7 +297,7 @@ describe('SearchResults', () => {
       });
 
       expect(wrapper.getByText('Remove')).toBeInTheDocument();
-      expect(wrapper.getByTestId('add-video-1-to-cart')).toBeInTheDocument();
+      expect(wrapper.getByTestId('add-video-1-to-cart')).toBeVisible();
 
       fireEvent(
         wrapper.getByText('Remove'),
@@ -310,9 +310,7 @@ describe('SearchResults', () => {
       await waitFor(() => {
         expect(cart.items).toHaveLength(0);
       });
-      expect(
-        wrapper.getByTestId('remove-video-1-from-cart'),
-      ).toBeInTheDocument();
+      expect(wrapper.getByTestId('remove-video-1-from-cart')).toBeVisible();
     });
 
     it('basket counter goes up when item added to cart in navbar', async () => {
