@@ -58,7 +58,7 @@ describe('Playlist view', () => {
 
   it("shows Playlist's title and description if user can access", async () => {
     render(
-      <MemoryRouter initialEntries={['/library/123']}>
+      <MemoryRouter initialEntries={['/playlists/123']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -69,7 +69,7 @@ describe('Playlist view', () => {
 
   it('displays video title for all videos in the playlist', async () => {
     render(
-      <MemoryRouter initialEntries={['/library/123']}>
+      <MemoryRouter initialEntries={['/playlists/123']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -83,7 +83,7 @@ describe('Playlist view', () => {
 
   it('displays thumbnails for all videos in the playlist', async () => {
     render(
-      <MemoryRouter initialEntries={['/library/123']}>
+      <MemoryRouter initialEntries={['/playlists/123']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -97,7 +97,7 @@ describe('Playlist view', () => {
 
   it('navigates to the video page when clicked on video', async () => {
     const history = createBrowserHistory();
-    history.push({ pathname: '/library/123' });
+    history.push({ pathname: '/playlists/123' });
 
     render(
       <Router history={history}>
@@ -120,7 +120,7 @@ describe('Playlist view', () => {
     client.collections.addToFake({ ...playlist, videos: [video] });
 
     const history = createBrowserHistory();
-    history.push({ pathname: '/library/123' });
+    history.push({ pathname: '/playlists/123' });
 
     render(
       <Router history={history}>
@@ -140,7 +140,7 @@ describe('Playlist view', () => {
     client.videos.insertVideo(createVideoWithThumbnail('111', 'Video One'));
     await client.carts.addItemToCart(await client.carts.getCart(), '111');
     const history = createBrowserHistory();
-    history.push({ pathname: '/library/123' });
+    history.push({ pathname: '/playlists/123' });
 
     render(
       <Router history={history}>

@@ -120,7 +120,7 @@ describe('LibraryView', () => {
       });
 
       expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
-        `${Constants.HOST}/library/1`,
+        `${Constants.HOST}/playlists/1`,
       );
     });
 

@@ -12,7 +12,7 @@ interface Props {
 
 const PlaylistHeader = ({ playlist }: Props) => {
   const toLibraryLink = (id) => {
-    return `${Constants.HOST}/library/${id}`;
+    return `${Constants.HOST}/playlists/${id}`;
   };
 
   return (

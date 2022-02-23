@@ -62,7 +62,7 @@ describe('Playlist Header', () => {
     fireEvent.click(shareButton);
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
-      `${Constants.HOST}/library/123`,
+      `${Constants.HOST}/playlists/123`,
     );
 
     const notification = await wrapper.findByTestId(

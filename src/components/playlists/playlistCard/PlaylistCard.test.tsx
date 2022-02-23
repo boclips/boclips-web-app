@@ -10,14 +10,14 @@ describe('Playlist Card', () => {
         <PlaylistCard
           header={<div />}
           name="test name"
-          link="/library/test-id"
+          link="/playlists/test-id"
         />
       </MemoryRouter>,
     );
 
     expect(screen.getByText('test name').closest('a')).toHaveAttribute(
       'href',
-      '/library/test-id',
+      '/playlists/test-id',
     );
   });
 });
