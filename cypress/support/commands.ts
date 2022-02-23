@@ -24,6 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 import '@percy/cypress';
+import '@testing-library/cypress/add-commands';
 
 Cypress.Commands.add('bo', (callback) => {
   cy.window().then(({ bo }) => {
