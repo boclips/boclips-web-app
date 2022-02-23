@@ -12,7 +12,7 @@ interface Props {
 
 const PlaylistCard = ({ name, link, header, footer, overlay }: Props) => {
   return (
-    <div className={s.playlistCard}>
+    <div className={s.playlistCard} data-qa={`playlist-card-for-${name}`}>
       {overlay}
       {header}
       <div className={s.header}>

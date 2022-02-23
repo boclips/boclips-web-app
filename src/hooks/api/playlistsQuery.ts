@@ -83,6 +83,7 @@ export const useAddToPlaylistMutation = (callback: (id) => void) => {
 
 export const useRemoveFromPlaylistMutation = (callback: (id) => void) => {
   const client = useBoclipsClient();
+  const queryClient = useQueryClient();
 
   return useMutation(
     async ({ playlist, videoId }: UpdatePlaylistProps) =>
@@ -104,6 +105,9 @@ export const useRemoveFromPlaylistMutation = (callback: (id) => void) => {
           `add-video-${videoId}-to-playlist`,
         );
         callback(playlist.id);
+      },
+      onSettled: (_data, _error, variables) => {
+        queryClient.invalidateQueries(['playlist', variables.playlist.id]);
       },
     },
   );
