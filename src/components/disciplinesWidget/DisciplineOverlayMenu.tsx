@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import getDisciplineIllustration from 'src/services/getDisciplineIllustration';
 import { DisciplineWithSubjectOffering } from 'src/hooks/api/disciplinesQuery';
+import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 import { ExtraSubjects } from './ExtraSubjects';
 
@@ -28,9 +29,9 @@ const DisciplineOverlayMenu = ({ onClick, selectedDiscipline }: Props) => {
       </div>
       <div data-qa="discipline-title" className={s.selectedDiscipline}>
         {getDisciplineIllustration(selectedDiscipline.name)}
-        <span className="flex items-center font-medium w-full">
+        <Typography.Body weight="medium" className="flex items-center w-full">
           {selectedDiscipline?.name}
-        </span>
+        </Typography.Body>
       </div>
       <div className={s.subjects}>
         {selectedDiscipline?.subjects?.map((subject) => {
@@ -42,7 +43,7 @@ const DisciplineOverlayMenu = ({ onClick, selectedDiscipline }: Props) => {
                 search: `?subject=${subject.id}`,
               }}
             >
-              <span className="text-md">{subject.name}</span>
+              <Typography.Body>{subject.name}</Typography.Body>
               <span>
                 <ArrowRight />
               </span>
