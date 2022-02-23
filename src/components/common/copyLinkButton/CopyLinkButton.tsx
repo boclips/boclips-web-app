@@ -31,7 +31,12 @@ export const CopyLinkButton = ({
       }
     });
 
-    displayNotification('success', 'Copied link', '', 'copied-link');
+    displayNotification(
+      'success',
+      'Link copied!',
+      '',
+      'video-link-copied-notification',
+    );
 
     setTimeout(() => {
       setCopiedToClipboard(false);

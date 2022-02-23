@@ -22,6 +22,7 @@ describe('CopyLinkButton', () => {
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={fakeClient}>
+          <ToastContainer />
           <CopyVideoLinkButton video={video} />
         </BoclipsClientProvider>
       </QueryClientProvider>,
@@ -66,6 +67,8 @@ describe('CopyLinkButton', () => {
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
       buildVideoDetailsLink(video, user),
     );
-    expect(wrapper.getByTestId('copied-link')).toBeVisible();
+    const notification = wrapper.getByTestId('video-link-copied-notification');
+    expect(notification).toBeVisible();
+    expect(notification.children.item(0).textContent).toEqual('Link copied!');
   });
 });

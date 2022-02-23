@@ -297,7 +297,13 @@ describe('SearchResults', () => {
       });
 
       expect(wrapper.getByText('Remove')).toBeInTheDocument();
-      expect(wrapper.getByTestId('add-video-1-to-cart')).toBeVisible();
+      const addNotification = wrapper.getByTestId(
+        'add-video-1-to-cart-notification',
+      );
+      expect(addNotification).toBeVisible();
+      expect(addNotification.children.item(0).textContent).toEqual(
+        'Video added to cart',
+      );
 
       fireEvent(
         wrapper.getByText('Remove'),
@@ -310,7 +316,13 @@ describe('SearchResults', () => {
       await waitFor(() => {
         expect(cart.items).toHaveLength(0);
       });
-      expect(wrapper.getByTestId('remove-video-1-from-cart')).toBeVisible();
+      const removeNotification = wrapper.getByTestId(
+        'remove-video-1-from-cart-notification',
+      );
+      expect(removeNotification).toBeVisible();
+      expect(removeNotification.children.item(0).textContent).toEqual(
+        'Video removed from cart',
+      );
     });
 
     it('basket counter goes up when item added to cart in navbar', async () => {

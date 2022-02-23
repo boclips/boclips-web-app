@@ -17,9 +17,13 @@ export const displayNotification = (
     </div>
   );
 
+  // set autoclose depending on message length
+  const msgLength = message ? message.length : 0;
+  const autoClose = Math.min(Math.max(msgLength * 50, 2000), 7000);
+
   const options: ToastOptions = {
     position: 'top-right',
-    autoClose: 125000,
+    autoClose,
     hideProgressBar: true,
     closeOnClick: true,
     pauseOnHover: true,

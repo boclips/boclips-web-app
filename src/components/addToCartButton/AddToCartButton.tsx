@@ -59,7 +59,7 @@ export const AddToCartButton = ({
           'success',
           'Video added to cart',
           '',
-          `add-video-${it.id}-to-cart`,
+          `add-video-${it.id}-to-cart-notification`,
         );
 
         if (appcueEvent) {
@@ -87,7 +87,7 @@ export const AddToCartButton = ({
           'success',
           'Video removed from cart',
           '',
-          `remove-video-${it}-from-cart`,
+          `remove-video-${it}-from-cart-notification`,
         );
       },
     },
