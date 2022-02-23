@@ -6,8 +6,8 @@ import React, { useRef, useState } from 'react';
 import CloseButton from 'src/resources/icons/cross-icon.svg';
 import {
   useAddToPlaylistMutation,
-  usePlaylistsQuery,
   useRemoveFromPlaylistMutation,
+  useOwnPlaylistsQuery,
 } from 'src/hooks/api/playlistsQuery';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import c from 'classnames';
@@ -30,7 +30,7 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
 
   CloseOnClickOutside(ref, setIsOpen);
 
-  const { data: playlists } = usePlaylistsQuery();
+  const { data: playlists } = useOwnPlaylistsQuery();
 
   const uncheckPlaylistForVideo = (id: string) =>
     setPlaylistsContainingVideo((prevState) =>

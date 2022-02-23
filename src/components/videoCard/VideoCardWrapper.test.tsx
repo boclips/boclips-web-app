@@ -146,11 +146,13 @@ describe('Video card', () => {
         }),
       );
 
+      fakeClient.collections.setCurrentUser('i-am-user-id');
       fakeClient.collections.addToFake(
         CollectionFactory.sample({
           id: 'playlist-id',
           title: 'first playlist',
           origin: 'BO_WEB_APP',
+          owner: 'i-am-user-id',
         }),
       );
 
@@ -184,11 +186,13 @@ describe('Video card', () => {
         }),
       );
 
+      fakeClient.collections.setCurrentUser('i-am-user-id');
       fakeClient.collections.addToFake(
         CollectionFactory.sample({
           id: 'playlist-id',
           title: 'first playlist',
           origin: 'BO_WEB_APP',
+          owner: 'i-am-user-id',
           videos: [VideoFactory.sample({ id: video.id })],
         }),
       );
