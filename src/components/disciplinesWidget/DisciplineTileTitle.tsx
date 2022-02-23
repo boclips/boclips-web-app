@@ -6,7 +6,7 @@ interface Props {
   title: string;
 }
 
-export const DisciplineTileHeader: React.FC<Props> = ({
+export const DisciplineTileTitle: React.FC<Props> = ({
   isMobileView,
   title,
 }: Props) => {
