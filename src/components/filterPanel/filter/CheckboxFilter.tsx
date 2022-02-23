@@ -1,3 +1,4 @@
+import { Typography } from '@boclips-ui/typography';
 import React from 'react';
 import { FilterOptionList } from 'src/components/filterPanel/filter/FilterOptionList';
 import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
@@ -37,7 +38,9 @@ export const CheckboxFilter = ({
 
   return (
     <CollapsableFilter title={title} handleFilterToggle={handleFilterToggle}>
-      <div className="px-4">{filtersSearch}</div>
+      <div className="px-4">
+        <Typography.Body>{filtersSearch}</Typography.Body>
+      </div>
       <FilterOptionList
         options={options}
         onSelect={onSelectOption}

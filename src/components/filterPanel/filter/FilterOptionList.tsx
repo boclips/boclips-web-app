@@ -3,6 +3,7 @@ import c from 'classnames';
 import { FilterOption } from 'src/types/FilterOption';
 import { FilterOptionCheckbox } from 'src/components/filterPanel/filter/FilterOptionCheckbox';
 import { handleEnterKeyEvent } from 'src/services/handleKeyEvent';
+import { Typography } from '@boclips-ui/typography';
 import s from './FilterOptionList.module.less';
 
 interface Props {
@@ -76,9 +77,11 @@ export const FilterOptionList = ({
           onKeyPress={(event) => handleEnterKeyEvent(event, toggleOptions)}
           className={s.showMoreButton}
         >
-          {allExpanded
-            ? 'Show less'
-            : `Show all (${optionsWithSelectedOnesFirst.length})`}
+          <Typography.Body size="small" weight="medium">
+            {allExpanded
+              ? 'Show less'
+              : `Show all (${optionsWithSelectedOnesFirst.length})`}
+          </Typography.Body>
         </button>
       )}
     </div>

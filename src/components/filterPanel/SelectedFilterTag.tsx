@@ -2,6 +2,7 @@ import React from 'react';
 import { FilterKey } from 'src/types/search/FilterKey';
 import CrossIconSVG from 'src/resources/icons/cross-icon.svg';
 import { SelectedFilter } from 'src/components/filterPanel/SelectedFilters';
+import { Typography } from '@boclips-ui/typography';
 
 interface Props {
   filter: SelectedFilter;
@@ -10,7 +11,10 @@ interface Props {
 
 export const SelectedFilterTag = ({ filter, removeFilter }: Props) => {
   return (
-    <span className="py-1 pl-2 mr-1 mb-1 border-solid border-2 border-blue-700 rounded flex flex-nowrap items-center">
+    <Typography.Body
+      size="small"
+      className="py-1 pl-2 mr-1 mb-1 border-solid border-2 border-blue-700 rounded flex flex-nowrap items-center"
+    >
       {filter.name}
       <span
         role="button"
@@ -22,6 +26,6 @@ export const SelectedFilterTag = ({ filter, removeFilter }: Props) => {
       >
         <CrossIconSVG className="stroke-current  stroke-2 h-3 w-3" />
       </span>
-    </span>
+    </Typography.Body>
   );
 };

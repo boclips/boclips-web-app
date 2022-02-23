@@ -6,6 +6,7 @@ import { getFilterLabel } from 'src/services/convertFacetsToFilterOptions';
 import { useGetChannelsQuery } from 'src/hooks/api/channelQuery';
 import { useGetSubjectsQuery } from 'src/hooks/api/subjectQuery';
 import { TextButton } from 'src/components/common/textButton/TextButton';
+import { Typography } from '@boclips-ui/typography';
 
 interface Props {
   removeFilter?: (filter: FilterKey, value: string) => void;
@@ -82,12 +83,12 @@ export const SelectedFilters = ({ removeFilter, clearFilters }: Props) => {
     <>
       <div
         role="group"
-        className="mb-4 font-medium flex justify-between items-center"
+        className="mb-4 flex justify-between items-center"
         style={{ height: '1.9375rem' }}
       >
-        <span id="selected_filters_panel" className="text-base">
+        <Typography.Body weight="medium" id="selected_filters_panel">
           Selected filters
-        </span>
+        </Typography.Body>
         <TextButton onClick={clearFilters} text="Clear all" fontSize="small" />
       </div>
       <div

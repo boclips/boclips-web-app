@@ -1,6 +1,7 @@
 import React from 'react';
 import { FilterOption } from 'src/types/FilterOption';
 import BoCheckbox from 'src/components/common/input/BoCheckbox';
+import { Typography } from '@boclips-ui/typography';
 import s from './FilterOptionList.module.less';
 
 interface Props {
@@ -25,7 +26,7 @@ export const FilterOptionCheckbox = ({
         dataQa={dataQa}
         label={option.label}
       />
-      <span className="text-blue-700">{option.hits}</span>
+      <Typography.Body className="text-blue-700">{option.hits}</Typography.Body>
     </div>
   );
 };
