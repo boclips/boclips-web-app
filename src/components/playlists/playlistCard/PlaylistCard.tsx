@@ -7,11 +7,13 @@ interface Props {
   link: string;
   header: React.ReactElement;
   footer?: React.ReactElement;
+  overlay?: React.ReactElement;
 }
 
-const PlaylistCard = ({ name, link, header, footer }: Props) => {
+const PlaylistCard = ({ name, link, header, footer, overlay }: Props) => {
   return (
     <div className={s.playlistCard}>
+      {overlay}
       {header}
       <div className={s.header}>
         <Link

@@ -11,9 +11,16 @@ interface UpdatePlaylistProps {
   videoId: string;
 }
 
-export const usePlaylistsQuery = () => {
+export const useOwnAndSharedPlaylistsQuery = () => {
   const client = useBoclipsClient();
-  return useQuery('playlists', () => doGetPlaylists(client));
+  return useQuery('ownAndSharedPlaylists', () =>
+    doGetOwnAndSharedPlaylists(client),
+  );
+};
+
+export const useOwnPlaylistsQuery = () => {
+  const client = useBoclipsClient();
+  return useQuery('ownPlaylists', () => doGetOwnPlaylists(client));
 };
 
 export const usePlaylistQuery = (id: string) => {
@@ -102,9 +109,14 @@ export const useRemoveFromPlaylistMutation = (callback: (id) => void) => {
   );
 };
 
-const doGetPlaylists = (client: BoclipsClient) =>
+const doGetOwnPlaylists = (client: BoclipsClient) =>
   client.collections
     .getMyCollections({ origin: 'BO_WEB_APP', projection: 'details' })
+    .then((playlists) => playlists.page);
+
+const doGetOwnAndSharedPlaylists = (client: BoclipsClient) =>
+  client.collections
+    .getMySavedCollections({ origin: 'BO_WEB_APP', projection: 'details' })
     .then((playlists) => playlists.page);
 
 export const usePlaylistMutation = () => {

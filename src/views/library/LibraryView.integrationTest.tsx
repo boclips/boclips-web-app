@@ -76,6 +76,22 @@ describe('LibraryView', () => {
       expect(await wrapper.findByText('Playlist 2')).toBeVisible();
     });
 
+    it('displays shared playlists', async () => {
+      const client = new FakeBoclipsClient();
+      setPlaylistsFeature(client, true);
+
+      const playlists = [
+        CollectionFactory.sample({ id: '1', title: 'Playlist 1', mine: false }),
+      ];
+
+      playlists.forEach((it) => client.collections.addToFake(it));
+
+      const wrapper = renderLibraryView(client);
+
+      expect(await wrapper.findByText('Playlist 1')).toBeVisible();
+      expect(await wrapper.findByText('Shared with you')).toBeVisible();
+    });
+
     it('has a share button that copies playlist link to clipboard', async () => {
       Object.assign(navigator, {
         clipboard: {
