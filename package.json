@@ -6,8 +6,8 @@
   "scripts": {
     "audit": "audit-ci --critical",
     "test": "jest --maxWorkers=50%",
-    "test-visual": "percy exec ./node_modules/.bin/cypress run",
-    "test-visual:open": "percy exec ./node_modules/.bin/cypress open",
+    "test-visual": "percy exec -- ./node_modules/.bin/cypress run",
+    "test-visual:open": "percy exec -- ./node_modules/.bin/cypress open",
     "dev": "NODE_ENV=development TAILWIND_MODE=watch webpack serve --config webpack/webpack.dev.js",
     "fake": "NODE_ENV=development TAILWIND_MODE=watch webpack serve --config webpack/webpack.fake.js",
     "compile": "tsc -p . --noEmit",
@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/boclips/publishers#readme",
   "devDependencies": {
-    "@percy/cli": "^1.0.0-beta.73",
+    "@percy/cli": "^1.0.0-beta.75",
     "@percy/cypress": "^3.1.1",
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^12.7.3",
