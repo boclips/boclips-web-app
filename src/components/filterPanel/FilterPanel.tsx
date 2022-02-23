@@ -9,6 +9,7 @@ import { PriceFilter } from 'src/components/filterPanel/PriceFilter';
 import c from 'classnames';
 import { DateFilter } from 'src/components/filterPanel/DateFilter';
 import { BestForFilter } from 'src/components/filterPanel/BestForFilter';
+import { Typography } from '@boclips-ui/typography';
 import { SelectedFilters } from './SelectedFilters';
 
 export interface DateFilters {
@@ -41,14 +42,14 @@ export const FilterPanel = ({
 
   return (
     <div className="col-start-2 col-end-8">
-      <div
+      <Typography.H5
         id="filter_by"
-        className={c('text-primary text-lg font-medium', {
-          'pb-4': areFiltersApplied,
+        className={c('text-primary', {
+          'pb-2': areFiltersApplied,
         })}
       >
         Filter by:
-      </div>
+      </Typography.H5>
       {areFiltersApplied && (
         <SelectedFilters
           removeFilter={removeFilter}
