@@ -8,15 +8,6 @@
   grid-gap: 1.5rem;
 }
 
-.playlistCard {
-  width: 100%;
-  position: relative;
-  min-height: 289px;
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
-  display: grid;
-  grid-template-rows: minmax(min-content, max-content) auto auto;
-}
-
 .sharedWithYouOverlay {
   font-size: 0.875rem;
   border-radius: 4px 4px 0 0;
@@ -29,25 +20,6 @@
   font-weight: 500;
   width: 100%;
   height: 40px;
-}
-
-.header {
-  padding: 0.25rem;
-
-  a {
-    font-size: 1rem;
-    line-height: 1.5rem;
-    font-weight: 700;
-    color: @gray-900 !important;
-    text-transform: capitalize;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    &:focus {
-      background-color: unset;
-    }
-  }
 }
 
 .cardWrapper {
@@ -129,6 +101,7 @@
   aspect-ratio: 16/9;
   background-repeat: no-repeat;
   min-height: 100%;
+  border-radius: 4px;
 
   button {
     width: 100%;

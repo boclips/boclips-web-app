@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import s from '../style.module.less';
+import s from './style.module.less';
 
 interface Props {
   name: string;
@@ -10,9 +10,9 @@ interface Props {
   overlay?: React.ReactElement;
 }
 
-const PlaylistCard = ({ name, link, header, footer, overlay }: Props) => {
+const GridCard = ({ name, link, header, footer, overlay }: Props) => {
   return (
-    <div className={s.playlistCard} data-qa={`playlist-card-for-${name}`}>
+    <div className={s.gridCard} data-qa={`grid-card-for-${name}`}>
       {overlay}
       {header}
       <div className={s.header}>
@@ -21,7 +21,7 @@ const PlaylistCard = ({ name, link, header, footer, overlay }: Props) => {
             pathname: link,
             state: { name },
           }}
-          aria-label={`${name} playlist`}
+          aria-label={`${name} grid card`}
         >
           {name}
         </Link>
@@ -31,4 +31,4 @@ const PlaylistCard = ({ name, link, header, footer, overlay }: Props) => {
   );
 };
 
-export default PlaylistCard;
+export default GridCard;

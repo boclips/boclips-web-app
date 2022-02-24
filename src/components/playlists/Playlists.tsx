@@ -1,10 +1,10 @@
 import React from 'react';
 import { useOwnAndSharedPlaylistsQuery } from 'src/hooks/api/playlistsQuery';
 import SkeletonTiles from 'src/components/skeleton/Skeleton';
-import Thumbnails from 'src/components/playlists/playlistCard/Thumbnails';
+import Thumbnails from 'src/components/playlists/thumbnails/Thumbnails';
 import { CopyLinkButton } from 'src/components/common/copyLinkButton/CopyLinkButton';
 import { Constants } from 'src/AppConstants';
-import PlaylistCard from './playlistCard/PlaylistCard';
+import GridCard from '../common/gridCard/GridCard';
 import s from './style.module.less';
 
 const Playlists = () => {
@@ -16,7 +16,7 @@ const Playlists = () => {
         <SkeletonTiles className={s.playlistCard} />
       ) : (
         playlists?.map((playlist) => (
-          <PlaylistCard
+          <GridCard
             key={playlist.id}
             link={`/playlists/${playlist.id}`}
             name={playlist.title}

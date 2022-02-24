@@ -180,7 +180,7 @@ describe('Playlist view', () => {
 
     await screen.findByText('Video One 111');
 
-    const videoToRemove = screen.getByTestId('playlist-card-for-Video One 111');
+    const videoToRemove = screen.getByTestId('grid-card-for-Video One 111');
     const videoToRemoveButton = within(videoToRemove).getByRole('button', {
       name: 'Add to playlist',
     });

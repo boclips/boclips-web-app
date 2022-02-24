@@ -1,6 +1,6 @@
 import React from 'react';
 import c from 'classnames';
-import PlaylistCard from 'src/components/playlists/playlistCard/PlaylistCard';
+import GridCard from 'src/components/common/gridCard/GridCard';
 import PlaylistAddIcon from 'src/resources/icons/playlist-add.svg';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { FeatureGate } from 'src/components/common/FeatureGate';
@@ -62,7 +62,7 @@ const PlaylistBody = ({ videos }: Props) => {
       >
         {videos.map((video) => {
           return (
-            <PlaylistCard
+            <GridCard
               link={`/videos/${video.id}`}
               key={video.id}
               name={video.title}
