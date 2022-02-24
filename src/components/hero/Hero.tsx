@@ -1,3 +1,4 @@
+import { Typography } from '@boclips-ui/typography';
 import React from 'react';
 import s from './style.module.less';
 
@@ -31,14 +32,20 @@ export const Hero = ({
       <main
         className={`${s.heroCopyWrapper} col-start-13 col-end-24 lg:col-start-13 lg:col-end-22 row-start-${row} row-end-${row} text-blue-800 flex flex-col justify-center`}
       >
-        <h2 className="blue-800 font-medium text-4xl">{title}</h2>
+        <Typography.H2 className="blue-800 ">{title}</Typography.H2>
         {description && (
-          <p className="text-gray-800 text-lg" data-qa="description">
+          <Typography.Body
+            as="p"
+            className="text-gray-800"
+            data-qa="description"
+          >
             {description}
-          </p>
+          </Typography.Body>
         )}
         {moreDescription && (
-          <p className="text-gray-800 text-lg mt-6">{moreDescription}</p>
+          <Typography.Body as="p" className="text-gray-800 mt-6">
+            {moreDescription}
+          </Typography.Body>
         )}
         {actions && (
           <div className="mt-8 flex flex-row items-center">{actions}</div>

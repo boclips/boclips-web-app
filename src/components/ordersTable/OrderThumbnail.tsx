@@ -1,6 +1,7 @@
 import React from 'react';
 import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import { OrderItem } from 'boclips-api-client/dist/sub-clients/orders/model/OrderItem';
+import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 
 interface Props {
@@ -21,13 +22,15 @@ export const OrderThumbnail = ({ items }: Props) => {
         }}
       >
         <div className="text-white z-10 relative flex flex-col h-full items-center justify-center">
-          <div
+          <Typography.H1
             data-qa="order-item-count"
-            className="font-bold text-5xl leading-8"
+            className="tabular-nums -mt-2"
           >
             {count}
-          </div>
-          <span className="text-xl">{count > 1 ? 'videos' : 'video'}</span>
+          </Typography.H1>
+          <Typography.H4 className="-mt-2">
+            {count > 1 ? 'videos' : 'video'}
+          </Typography.H4>
         </div>
       </div>
     </div>

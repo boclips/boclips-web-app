@@ -1,5 +1,6 @@
 import React from 'react';
 import dateFormat from 'dateformat';
+import { Typography } from '@boclips-ui/typography';
 import { OrderInformationField } from './OrderInformationField';
 
 interface Props {
@@ -9,11 +10,11 @@ interface Props {
 
 export const OrderDateField = ({ date, fieldName }: Props) => (
   <OrderInformationField fieldName={fieldName}>
-    <div
-      className="text-base"
+    <Typography.Body
+      as="div"
       data-qa={`${fieldName.replace(' ', '-').toLowerCase()}-field`}
     >
       {date ? dateFormat(date, 'dd/mm/yy') : '-'}
-    </div>
+    </Typography.Body>
   </OrderInformationField>
 );

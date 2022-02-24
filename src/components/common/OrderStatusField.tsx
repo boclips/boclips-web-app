@@ -3,6 +3,7 @@ import { OrderStatus } from 'boclips-api-client/dist/sub-clients/orders/model/Or
 import { orderDeliveryStatus } from 'src/components/ordersTable/OrderDeliveryStatus';
 import c from 'classnames';
 import { OrderInformationField } from 'src/components/common/OrderInformationField';
+import { Typography } from '@boclips-ui/typography';
 
 interface Props {
   status: OrderStatus;
@@ -13,14 +14,16 @@ export const OrderStatusField = ({ status }: Props) => {
 
   return (
     <OrderInformationField fieldName="Status">
-      <div
+      <Typography.Body
+        as="div"
+        weight="medium"
         data-qa="order-status-field"
-        className={c('text-gray-800 text-base font-medium', {
+        className={c('text-gray-800', {
           'text-blue-700': deliveryStatus === 'PROCESSING',
         })}
       >
         {deliveryStatus || '-'}
-      </div>
+      </Typography.Body>
     </OrderInformationField>
   );
 };
