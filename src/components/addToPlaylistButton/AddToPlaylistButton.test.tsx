@@ -86,4 +86,28 @@ describe('Add to playlist button', () => {
     expect(await wrapper.findByText('Playlist 2')).toBeInTheDocument();
     expect(wrapper.queryByText('Playlist 3')).not.toBeInTheDocument();
   });
+
+  it('can create playlist', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.collections.setCurrentUser('user-123');
+
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeClient}>
+        <AddToPlaylistButton videoId={video.id} />
+      </BoclipsClientProvider>,
+    );
+
+    fireEvent.click(await wrapper.findByLabelText('Add to playlist'));
+    fireEvent.click(
+      await wrapper.findByRole('button', { name: 'Create new playlist' }),
+    );
+    fireEvent.change(await wrapper.findByPlaceholderText('Add playlist name'), {
+      target: { value: 'ornament' },
+    });
+    fireEvent.click(await wrapper.findByRole('button', { name: 'Create' }));
+
+    expect(
+      await wrapper.findByRole('checkbox', { name: 'ornament' }),
+    ).toBeVisible();
+  });
 });

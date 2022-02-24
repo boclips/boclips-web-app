@@ -125,7 +125,14 @@ const doGetOwnAndSharedPlaylists = (client: BoclipsClient) =>
 
 export const usePlaylistMutation = () => {
   const client = useBoclipsClient();
-  return useMutation((request: CreateCollectionRequest) =>
-    client.collections.create(request),
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    (request: CreateCollectionRequest) => client.collections.create(request),
+    {
+      onSettled: () => {
+        queryClient.invalidateQueries('ownPlaylists');
+      },
+    },
   );
 };

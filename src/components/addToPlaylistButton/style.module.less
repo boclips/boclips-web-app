@@ -22,7 +22,7 @@
 
 .playlistPanel {
   background-color: @white;
-  padding: 1rem 0;
+  padding-top: 1rem;
   display: flex;
   flex-direction: column;
   z-index: 99;
@@ -80,6 +80,15 @@
   }
 }
 
+.createPlaylistForm {
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  column-gap: 0.5rem;
+  label {
+    margin: 0;
+  }
+}
 
 @media screen and (min-width: @screen-sm) {
   .playlistPanel {
