@@ -20,10 +20,11 @@ import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFa
 import { Link } from 'boclips-api-client/dist/types';
 import { createBrowserHistory } from 'history';
 import PlaylistView from 'src/views/playlist/PlaylistView';
-import { BookmarkPlaylist } from 'src/services/bookmarkPlaylist';
+import { FollowPlaylist } from 'src/services/followPlaylist';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
+import { CollectionFactory as collectionFactory } from 'src/testSupport/CollectionFactory';
 
 const createVideoWithThumbnail = (id: string, videoTitle: string) => {
   return VideoFactory.sample({
@@ -37,6 +38,9 @@ const createVideoWithThumbnail = (id: string, videoTitle: string) => {
     }),
   });
 };
+
+// eslint-disable-next-line no-promise-executor-return
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('Playlist view', () => {
   const client = new FakeBoclipsClient();
@@ -203,29 +207,103 @@ describe('Playlist view', () => {
     expect(remainingVideos).toHaveLength(4);
   });
 
-  it(`invokes bookmark command when playlist is opened`, async () => {
-    const bookmarkService = new BookmarkPlaylist(client.collections);
-    const bookmarkFunction = jest.spyOn(bookmarkService, 'bookmark');
+  describe('following a playlist', () => {
+    beforeEach(() => {
+      client.collections.clear();
+    });
 
-    const history = createBrowserHistory();
-    history.push({ pathname: '/playlists/123' });
+    it(`invokes bookmark command when playlist is opened`, async () => {
+      client.collections.addToFake(playlist);
 
-    render(
-      <Router history={history}>
-        <Route path="/playlists/:id">
-          <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-            <BoclipsClientProvider client={client}>
-              <QueryClientProvider client={new QueryClient()}>
-                <PlaylistView bookmarkPlaylist={bookmarkService} />
-              </QueryClientProvider>
-            </BoclipsClientProvider>
-          </BoclipsSecurityProvider>
-        </Route>
-      </Router>,
-    );
+      const bookmarkService = new FollowPlaylist(client.collections);
+      const bookmarkFunction = jest.spyOn(bookmarkService, 'follow');
 
-    await waitFor(() => {
-      expect(bookmarkFunction).toHaveBeenCalledWith(playlist);
+      const history = createBrowserHistory();
+      history.push({ pathname: '/playlists/123' });
+
+      render(
+        <Router history={history}>
+          <Route path="/playlists/:id">
+            <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+              <BoclipsClientProvider client={client}>
+                <QueryClientProvider client={new QueryClient()}>
+                  <PlaylistView followPlaylist={bookmarkService} />
+                </QueryClientProvider>
+              </BoclipsClientProvider>
+            </BoclipsSecurityProvider>
+          </Route>
+        </Router>,
+      );
+
+      await waitFor(() => {
+        expect(bookmarkFunction).toHaveBeenCalledWith(playlist);
+      });
+    });
+
+    it(`shows toast notification when playlist is bookmarked`, async () => {
+      const bookmarkablePlaylist = CollectionFactory.sample({
+        id: '111',
+        title: 'Hello test',
+        description: 'Very nice description',
+        videos,
+        owner: 'myuserid',
+        mine: false,
+        links: collectionFactory.sampleLinks({}),
+      });
+
+      client.collections.addToFake(bookmarkablePlaylist);
+
+      const history = createBrowserHistory();
+      history.push({ pathname: '/playlists/111' });
+
+      const wrapper = render(
+        <Router history={history}>
+          <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+        </Router>,
+      );
+
+      expect(
+        await wrapper.findByText(
+          "Playlist 'Hello test' has been added to your Library",
+        ),
+      ).toBeVisible();
+    });
+
+    it(`does not display notification when playlist is already bookmarked`, async () => {
+      const alreadyBookmarkedPlaylist = CollectionFactory.sample({
+        id: '222',
+        title: 'Hello test',
+        description: 'Very nice description',
+        videos,
+        owner: 'myuserid',
+        mine: false,
+        links: collectionFactory.sampleLinks({
+          bookmark: undefined,
+          unbookmark: new Link({
+            href: 'https://api.boclips.com/v1/collections/1?bookmarked=false',
+          }),
+        }),
+      });
+
+      client.collections.addToFake(alreadyBookmarkedPlaylist);
+
+      const history = createBrowserHistory();
+      history.push({ pathname: '/playlists/222' });
+
+      const wrapper = render(
+        <Router history={history}>
+          <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+        </Router>,
+      );
+
+      // Wait until the toast is (potentially) rendered
+      await sleep(1000);
+
+      expect(
+        wrapper.queryByText(
+          "Playlist 'Hello test' has been added to your Library",
+        ),
+      ).toBeNull();
     });
   });
 });

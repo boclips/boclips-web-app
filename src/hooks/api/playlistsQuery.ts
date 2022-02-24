@@ -5,6 +5,7 @@ import { CreateCollectionRequest } from 'boclips-api-client/dist/sub-clients/col
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
+import { CollectionsClient } from 'boclips-api-client/dist/sub-clients/collections/client/CollectionsClient';
 
 interface UpdatePlaylistProps {
   playlist: Collection;
@@ -52,6 +53,13 @@ export const doRemoveFromPlaylist = (
   client: BoclipsClient,
 ) => {
   return client.collections.removeVideoFromCollection(playlist, videoId);
+};
+
+export const doFollowPlaylist = (
+  playlist: Collection,
+  collectionsClient: CollectionsClient,
+) => {
+  return collectionsClient.bookmark(playlist);
 };
 
 export const useAddToPlaylistMutation = (callback: (id) => void) => {

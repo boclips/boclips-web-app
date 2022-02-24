@@ -8,21 +8,41 @@ import Footer from 'src/components/layout/Footer';
 import PlaylistHeader from 'src/components/playlists/PlaylistHeader';
 import PlaylistBody from 'src/components/playlists/PlaylistBody';
 import SkeletonPage from 'src/components/skeleton/SkeletonPage';
-import { BookmarkPlaylist } from 'src/services/bookmarkPlaylist';
+import { FollowPlaylist } from 'src/services/followPlaylist';
+import { displayNotification } from 'src/components/common/notification/displayNotification';
 
-const PlaylistView = ({
-  bookmarkPlaylist,
-}: {
-  bookmarkPlaylist: BookmarkPlaylist;
-}) => {
+interface Props {
+  followPlaylist: FollowPlaylist;
+}
+
+const PlaylistView = ({ followPlaylist }: Props) => {
   const { id } = useParams<{ id: string }>();
   const { data: playlist, isLoading: playlistLoading } = usePlaylistQuery(id);
 
   useEffect(() => {
     if (playlist) {
-      bookmarkPlaylist.bookmark(playlist).then();
+      followPlaylist
+        .follow(playlist)
+        .then((hasBeenBookmarked) => {
+          if (hasBeenBookmarked) {
+            displayNotification(
+              'success',
+              `Playlist '${playlist.title}' has been added to your Library`,
+              '',
+              `playlist-has-been-followed`,
+            );
+          }
+        })
+        .catch(() => {
+          displayNotification(
+            'error',
+            `Playlist '${playlist.title}' could not be added`,
+            '',
+            `playlist-has-not-been-followed`,
+          );
+        });
     }
-  }, [playlist]);
+  }, [followPlaylist, playlist]);
 
   return (
     <Layout rowsSetup="grid-rows-playlist-view" responsiveLayout>

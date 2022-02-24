@@ -1,4 +1,4 @@
-import { BookmarkPlaylist } from 'src/services/bookmarkPlaylist';
+import { FollowPlaylist } from 'src/services/followPlaylist';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
@@ -6,7 +6,7 @@ import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntit
 describe('bookmark playlist', () => {
   it(`bookmarks unbookmarked collection`, async () => {
     const collectionsClient = new FakeBoclipsClient().collections;
-    const bookmarkPlaylist = new BookmarkPlaylist(collectionsClient);
+    const bookmarkPlaylist = new FollowPlaylist(collectionsClient);
 
     const unbookmarkedCollection = CollectionFactory.sample({
       id: '123',
@@ -20,7 +20,7 @@ describe('bookmark playlist', () => {
     });
     collectionsClient.addToFake(unbookmarkedCollection);
 
-    await bookmarkPlaylist.bookmark(unbookmarkedCollection);
+    await bookmarkPlaylist.follow(unbookmarkedCollection);
 
     const expected = await collectionsClient.get('123');
     expect(expected.links.bookmark).not.toBeDefined();
@@ -29,7 +29,7 @@ describe('bookmark playlist', () => {
 
   it('can gracefully handle an already bookmarked collection', async () => {
     const collectionsClient = new FakeBoclipsClient().collections;
-    const bookmarkPlaylist = new BookmarkPlaylist(collectionsClient);
+    const bookmarkPlaylist = new FollowPlaylist(collectionsClient);
 
     const bookmarkFn = spyOn(collectionsClient, 'bookmark');
 
@@ -45,7 +45,7 @@ describe('bookmark playlist', () => {
     });
     collectionsClient.addToFake(bookmarkedCollection);
 
-    await bookmarkPlaylist.bookmark(bookmarkedCollection);
+    await bookmarkPlaylist.follow(bookmarkedCollection);
 
     const expected = await collectionsClient.get('123');
     expect(expected.links.bookmark).not.toBeDefined();
@@ -55,7 +55,7 @@ describe('bookmark playlist', () => {
 
   it(`should not bookmark owned collection`, async () => {
     const collectionsClient = new FakeBoclipsClient().collections;
-    const bookmarkPlaylist = new BookmarkPlaylist(collectionsClient);
+    const followPlaylist = new FollowPlaylist(collectionsClient);
 
     const bookmarkFn = spyOn(collectionsClient, 'bookmark');
 
@@ -70,7 +70,7 @@ describe('bookmark playlist', () => {
     });
     collectionsClient.addToFake(ownedCollection);
 
-    await bookmarkPlaylist.bookmark(ownedCollection);
+    await followPlaylist.follow(ownedCollection);
 
     const expected = await collectionsClient.get('123');
     expect(expected.links.bookmark).toBeDefined();

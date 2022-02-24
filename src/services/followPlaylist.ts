@@ -1,26 +1,27 @@
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { CollectionsClient } from 'boclips-api-client/dist/sub-clients/collections/client/CollectionsClient';
+import { doFollowPlaylist } from 'src/hooks/api/playlistsQuery';
 
-export class BookmarkPlaylist {
+export class FollowPlaylist {
   private client: CollectionsClient;
 
   public constructor(client: CollectionsClient) {
     this.client = client;
   }
 
-  private static canBeBookmarked(collection: Collection): boolean {
+  private static canBeFollowed(collection: Collection): boolean {
     return !!collection.links.bookmark;
   }
 
-  public async bookmark(collection: Collection): Promise<void> {
+  public async follow(collection: Collection): Promise<boolean> {
     if (collection.mine) {
-      return;
+      return false;
     }
 
-    if (!BookmarkPlaylist.canBeBookmarked(collection)) {
-      return;
+    if (!FollowPlaylist.canBeFollowed(collection)) {
+      return false;
     }
 
-    await this.client.bookmark(collection);
+    return doFollowPlaylist(collection, this.client).then(() => true);
   }
 }
