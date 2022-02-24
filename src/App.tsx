@@ -16,6 +16,7 @@ import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
 import { WithValidRoles } from 'src/components/common/errors/WithValidRoles';
 import { ROLES } from 'src/types/Roles';
 import { lazyWithRetry } from 'src/services/lazyWithRetry';
+import { BookmarkPlaylist } from 'src/services/bookmarkPlaylist';
 import { BoclipsClientProvider } from './components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSecurityProvider';
 import Appcues from './services/analytics/Appcues';
@@ -183,7 +184,11 @@ const App = ({
                       render={({ location }) => (
                         <>
                           <Helmet title={location.state?.name || 'Playlist'} />
-                          <PlaylistView />
+                          <PlaylistView
+                            bookmarkPlaylist={
+                              new BookmarkPlaylist(apiClient.collections)
+                            }
+                          />
                         </>
                       )}
                     />

@@ -14,18 +14,27 @@ export class CollectionFactory {
       createdBy: 'user',
       subjects: [],
       ageRange: null,
-      links: {
-        self: new Link({
-          href: 'https://api.boclips.com/v1/collections/1',
-        }),
-        addVideo: new Link({
-          href: 'https://api.boclips.com/v1/collections/1/videos/{video_id}',
-        }),
-        removeVideo: new Link({
-          href: 'https://api.boclips.com/v1/collections/1/videos/{video_id}',
-        }),
-      },
+      links: this.sampleLinks({}),
       ...collection,
+    };
+  }
+
+  static sampleLinks(links: Partial<{ bookmark?: Link; unbookmark?: Link }>) {
+    return {
+      self: new Link({
+        href: 'https://api.boclips.com/v1/collections/1',
+      }),
+      addVideo: new Link({
+        href: 'https://api.boclips.com/v1/collections/1/videos/{video_id}',
+      }),
+      removeVideo: new Link({
+        href: 'https://api.boclips.com/v1/collections/1/videos/{video_id}',
+      }),
+      bookmark: new Link({
+        href: 'https://api.boclips.com/v1/collections/1?bookmarked=true',
+      }),
+      unbookmark: undefined,
+      ...links,
     };
   }
 }

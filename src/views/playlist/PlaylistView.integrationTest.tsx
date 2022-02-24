@@ -6,7 +6,7 @@ import {
   waitForElementToBeRemoved,
   within,
 } from '@testing-library/react';
-import { MemoryRouter, Router } from 'react-router-dom';
+import { MemoryRouter, Route, Router } from 'react-router-dom';
 import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import React from 'react';
@@ -19,6 +19,11 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { Link } from 'boclips-api-client/dist/types';
 import { createBrowserHistory } from 'history';
+import PlaylistView from 'src/views/playlist/PlaylistView';
+import { BookmarkPlaylist } from 'src/services/bookmarkPlaylist';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 
 const createVideoWithThumbnail = (id: string, videoTitle: string) => {
   return VideoFactory.sample({
@@ -196,5 +201,31 @@ describe('Playlist view', () => {
     await waitForElementToBeRemoved(screen.queryByText('Video One 111'));
     const remainingVideos = screen.getAllByLabelText('Add to playlist');
     expect(remainingVideos).toHaveLength(4);
+  });
+
+  it(`invokes bookmark command when playlist is opened`, async () => {
+    const bookmarkService = new BookmarkPlaylist(client.collections);
+    const bookmarkFunction = jest.spyOn(bookmarkService, 'bookmark');
+
+    const history = createBrowserHistory();
+    history.push({ pathname: '/playlists/123' });
+
+    render(
+      <Router history={history}>
+        <Route path="/playlists/:id">
+          <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+            <BoclipsClientProvider client={client}>
+              <QueryClientProvider client={new QueryClient()}>
+                <PlaylistView bookmarkPlaylist={bookmarkService} />
+              </QueryClientProvider>
+            </BoclipsClientProvider>
+          </BoclipsSecurityProvider>
+        </Route>
+      </Router>,
+    );
+
+    await waitFor(() => {
+      expect(bookmarkFunction).toHaveBeenCalledWith(playlist);
+    });
   });
 });

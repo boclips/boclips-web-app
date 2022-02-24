@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from 'src/components/layout/Navbar';
 import { Layout } from 'src/components/layout/Layout';
 import { usePlaylistQuery } from 'src/hooks/api/playlistsQuery';
@@ -8,10 +8,21 @@ import Footer from 'src/components/layout/Footer';
 import PlaylistHeader from 'src/components/playlists/PlaylistHeader';
 import PlaylistBody from 'src/components/playlists/PlaylistBody';
 import SkeletonPage from 'src/components/skeleton/SkeletonPage';
+import { BookmarkPlaylist } from 'src/services/bookmarkPlaylist';
 
-const PlaylistView = () => {
+const PlaylistView = ({
+  bookmarkPlaylist,
+}: {
+  bookmarkPlaylist: BookmarkPlaylist;
+}) => {
   const { id } = useParams<{ id: string }>();
   const { data: playlist, isLoading: playlistLoading } = usePlaylistQuery(id);
+
+  useEffect(() => {
+    if (playlist) {
+      bookmarkPlaylist.bookmark(playlist).then();
+    }
+  }, [playlist]);
 
   return (
     <Layout rowsSetup="grid-rows-playlist-view" responsiveLayout>
