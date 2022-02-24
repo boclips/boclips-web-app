@@ -1,3 +1,4 @@
+import { Typography } from '@boclips-ui/typography';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import s from './style.module.less';
@@ -23,7 +24,7 @@ const GridCard = ({ name, link, header, footer, overlay }: Props) => {
           }}
           aria-label={`${name} grid card`}
         >
-          {name}
+          <Typography.Title2>{name}</Typography.Title2>
         </Link>
       </div>
       {footer}
