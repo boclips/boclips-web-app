@@ -62,7 +62,7 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
     }
   }, [playlists, videoId]);
 
-  const { mutate: onSaveNewPlaylist } = usePlaylistMutation();
+  const { mutate: onSaveNewPlaylist, isLoading } = usePlaylistMutation();
   const handleNewPlaylistRequest = (name: string) => {
     onSaveNewPlaylist({
       title: name,
@@ -145,7 +145,10 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
               <li>You have no playlists yet</li>
             )}
           </ul>
-          <CreateNewPlaylistButton onCreate={handleNewPlaylistRequest} />
+          <CreateNewPlaylistButton
+            isLoading={isLoading}
+            onCreate={handleNewPlaylistRequest}
+          />
         </div>
       )}
     </div>

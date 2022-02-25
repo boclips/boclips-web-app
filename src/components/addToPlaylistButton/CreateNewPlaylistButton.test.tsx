@@ -48,4 +48,21 @@ describe('Create new playlist button', () => {
     fireEvent.click(wrapper.getByRole('button', { name: 'Create' }));
     expect(createSpy).toHaveBeenCalledWith('worship');
   });
+
+  it(`disables the button and show loader when loading`, () => {
+    const createSpy = jest.fn();
+    const wrapper = render(
+      <CreateNewPlaylistButton isLoading onCreate={createSpy} />,
+    );
+    const button = wrapper.getByRole('button', { name: 'Create new playlist' });
+    fireEvent.click(button);
+
+    fireEvent.change(wrapper.getByPlaceholderText('Add playlist name'), {
+      target: { value: 'worship' },
+    });
+
+    expect(wrapper.getByRole('button', { name: /Create$/ })).toBeDisabled();
+    expect(createSpy).not.toBeCalled();
+    expect(wrapper.getByTestId('spinner')).toBeInTheDocument();
+  });
 });
