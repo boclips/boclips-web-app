@@ -13,7 +13,7 @@ const Playlists = () => {
   return (
     <main className={s.playlistsWrapper}>
       {isLoading ? (
-        <SkeletonTiles className={s.playlistCard} />
+        <SkeletonTiles className={s.skeletonCard} />
       ) : (
         playlists?.map((playlist) => (
           <GridCard
