@@ -8,7 +8,6 @@ import {
   useAddToPlaylistMutation,
   useRemoveFromPlaylistMutation,
   useOwnPlaylistsQuery,
-  usePlaylistMutation,
 } from 'src/hooks/api/playlistsQuery';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import c from 'classnames';
@@ -61,16 +60,6 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
       setPlaylistsContainingVideo(ids);
     }
   }, [playlists, videoId]);
-
-  const { mutate: onSaveNewPlaylist, isLoading } = usePlaylistMutation();
-  const handleNewPlaylistRequest = (name: string) => {
-    onSaveNewPlaylist({
-      title: name,
-      origin: 'BO_WEB_APP',
-      videos: [videoId],
-      description: '',
-    });
-  };
 
   const onCheckboxChange = (e) => {
     const playlistId = e.target.id;
@@ -145,10 +134,7 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
               <li>You have no playlists yet</li>
             )}
           </ul>
-          <CreateNewPlaylistButton
-            isLoading={isLoading}
-            onCreate={handleNewPlaylistRequest}
-          />
+          <CreateNewPlaylistButton videoId={videoId} />
         </div>
       )}
     </div>

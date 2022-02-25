@@ -3,19 +3,37 @@ import Button from '@boclips-ui/button';
 import { BoInputText } from 'src/components/common/input/BoInputText';
 import s from 'src/components/addToPlaylistButton/style.module.less';
 import { LoadingOutlined } from '@ant-design/icons';
+import { usePlaylistMutation } from 'src/hooks/api/playlistsQuery';
 import PlusIcon from '../../resources/icons/plus-sign.svg';
 
 interface Props {
-  isLoading?: boolean;
-  onCreate: (string) => void;
+  videoId: string;
 }
 
-export const CreateNewPlaylistButton = ({
-  isLoading = false,
-  onCreate,
-}: Props) => {
+export const CreateNewPlaylistButton = ({ videoId }: Props) => {
   const [showAddPlaylistInput, setShowAddPlaylistInput] = useState(false);
   const [newPlaylistName, setNewPlaylistName] = useState('');
+
+  const {
+    mutate: onSaveNewPlaylist,
+    isSuccess,
+    isLoading,
+  } = usePlaylistMutation();
+
+  React.useEffect(() => {
+    if (isSuccess) {
+      setShowAddPlaylistInput(false);
+    }
+  }, [isSuccess]);
+
+  const handleNewPlaylistRequest = (name: string) => {
+    onSaveNewPlaylist({
+      title: name,
+      origin: 'BO_WEB_APP',
+      videos: [videoId],
+      description: '',
+    });
+  };
 
   const getSpinner = (): ReactElement =>
     isLoading && (
@@ -36,7 +54,7 @@ export const CreateNewPlaylistButton = ({
       {newPlaylistName.length > 0 && (
         <Button
           disabled={isLoading}
-          onClick={() => onCreate(newPlaylistName)}
+          onClick={() => handleNewPlaylistRequest(newPlaylistName)}
           icon={getSpinner()}
           text="Create"
         />

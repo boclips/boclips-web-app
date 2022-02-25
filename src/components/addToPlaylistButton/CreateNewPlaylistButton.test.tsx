@@ -2,16 +2,18 @@ import { render } from 'src/testSupport/render';
 import { fireEvent } from '@testing-library/react';
 import React from 'react';
 import { CreateNewPlaylistButton } from 'src/components/addToPlaylistButton/CreateNewPlaylistButton';
+import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 
 describe('Create new playlist button', () => {
   it('displays create new playlist button', async () => {
-    const wrapper = render(<CreateNewPlaylistButton onCreate={jest.fn} />);
+    const wrapper = renderWrapper();
 
     expect(await wrapper.findByText('Create new playlist')).toBeInTheDocument();
   });
 
   it(`button displays a text input when clicked`, () => {
-    const wrapper = render(<CreateNewPlaylistButton onCreate={jest.fn} />);
+    const wrapper = renderWrapper();
 
     const button = wrapper.getByRole('button', {
       name: 'Create new playlist',
@@ -23,7 +25,7 @@ describe('Create new playlist button', () => {
   });
 
   it(`displays the create button when playlist name is entered`, () => {
-    const wrapper = render(<CreateNewPlaylistButton onCreate={jest.fn} />);
+    const wrapper = renderWrapper();
 
     const button = wrapper.getByRole('button', { name: 'Create new playlist' });
     fireEvent.click(button);
@@ -36,9 +38,8 @@ describe('Create new playlist button', () => {
     expect(wrapper.getByRole('button', { name: 'Create' })).toBeVisible();
   });
 
-  it(`calls on create when create button is clicked`, () => {
-    const createSpy = jest.fn();
-    const wrapper = render(<CreateNewPlaylistButton onCreate={createSpy} />);
+  it(`displays Create new playlist button on successful creation`, async () => {
+    const wrapper = renderWrapper();
     const button = wrapper.getByRole('button', { name: 'Create new playlist' });
     fireEvent.click(button);
 
@@ -46,23 +47,18 @@ describe('Create new playlist button', () => {
       target: { value: 'worship' },
     });
     fireEvent.click(wrapper.getByRole('button', { name: 'Create' }));
-    expect(createSpy).toHaveBeenCalledWith('worship');
+
+    expect(
+      await wrapper.findByRole('button', { name: 'Create new playlist' }),
+    ).toBeVisible();
   });
 
-  it(`disables the button and show loader when loading`, () => {
-    const createSpy = jest.fn();
-    const wrapper = render(
-      <CreateNewPlaylistButton isLoading onCreate={createSpy} />,
+  const renderWrapper = () => {
+    const fakeClient = new FakeBoclipsClient();
+    return render(
+      <BoclipsClientProvider client={fakeClient}>
+        <CreateNewPlaylistButton videoId="123" />
+      </BoclipsClientProvider>,
     );
-    const button = wrapper.getByRole('button', { name: 'Create new playlist' });
-    fireEvent.click(button);
-
-    fireEvent.change(wrapper.getByPlaceholderText('Add playlist name'), {
-      target: { value: 'worship' },
-    });
-
-    expect(wrapper.getByRole('button', { name: /Create$/ })).toBeDisabled();
-    expect(createSpy).not.toBeCalled();
-    expect(wrapper.getByTestId('spinner')).toBeInTheDocument();
-  });
+  };
 });
