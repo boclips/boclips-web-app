@@ -108,6 +108,6 @@ describe('Add to playlist button', () => {
 
     expect(
       await wrapper.findByRole('checkbox', { name: 'ornament' }),
-    ).toBeVisible();
+    ).toBeChecked();
   });
 });
