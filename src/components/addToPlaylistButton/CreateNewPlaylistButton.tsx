@@ -65,6 +65,14 @@ export const CreateNewPlaylistButton = ({ videoId }: Props) => {
       </span>
     );
 
+  const triggerFocus = (
+    input: HTMLInputElement | HTMLTextAreaElement | null,
+  ) => {
+    if (!input) return;
+    input.focus();
+    input.disabled = isLoading;
+  };
+
   const playlistForm = () => (
     <div className={s.createPlaylistForm}>
       <BoInputText
@@ -73,6 +81,7 @@ export const CreateNewPlaylistButton = ({ videoId }: Props) => {
         label=""
         constraints={{ required: true }}
         onChange={(name) => setNewPlaylistName(name)}
+        ref={triggerFocus}
       />
       {newPlaylistName.length > 0 && (
         <Button

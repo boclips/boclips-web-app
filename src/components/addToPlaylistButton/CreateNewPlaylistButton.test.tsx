@@ -71,6 +71,57 @@ describe('Create new playlist button', () => {
     ).toBeVisible();
   });
 
+  it(`displays a spinner when loading`, async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.collections.create = jest.fn(
+      () =>
+        new Promise((resolve) => {
+          setTimeout(() => resolve('success'), 100);
+        }),
+    );
+    const wrapper = renderWrapper(fakeClient);
+    createPlaylist(wrapper, 'sloth');
+
+    expect(await wrapper.findByTestId('spinner')).toBeVisible();
+  });
+
+  it(`sets focus on playlist name input`, async () => {
+    const wrapper = renderWrapper();
+    fireEvent.click(
+      wrapper.getByRole('button', { name: 'Create new playlist' }),
+    );
+
+    expect(wrapper.getByPlaceholderText('Add playlist name')).toHaveFocus();
+  });
+
+  it(`disables input when loading`, async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.collections.create = jest.fn(
+      () =>
+        new Promise((resolve) => {
+          setTimeout(() => resolve('success'), 100);
+        }),
+    );
+    const wrapper = renderWrapper(fakeClient);
+    createPlaylist(wrapper, 'sloth');
+
+    expect(
+      await wrapper.findByPlaceholderText('Add playlist name'),
+    ).toBeDisabled();
+  });
+
+  it(`focuses add name input on failure`, async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.collections.create = jest.fn(() => Promise.reject());
+
+    const wrapper = renderWrapper(fakeClient);
+    createPlaylist(wrapper, 'abba');
+
+    const input = await wrapper.findByPlaceholderText('Add playlist name');
+    expect(input).toBeEnabled();
+    expect(input).toHaveFocus();
+  });
+
   const renderWrapper = (fakeClient = new FakeBoclipsClient()) => {
     return render(
       <BoclipsClientProvider client={fakeClient}>
@@ -81,9 +132,9 @@ describe('Create new playlist button', () => {
   };
 
   const createPlaylist = (wrapper: RenderResult, playlistName: string) => {
-    const button = wrapper.getByRole('button', { name: 'Create new playlist' });
-    fireEvent.click(button);
-
+    fireEvent.click(
+      wrapper.getByRole('button', { name: 'Create new playlist' }),
+    );
     fireEvent.change(wrapper.getByPlaceholderText('Add playlist name'), {
       target: { value: playlistName },
     });
