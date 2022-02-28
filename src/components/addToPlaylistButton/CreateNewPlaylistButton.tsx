@@ -4,6 +4,7 @@ import { BoInputText } from 'src/components/common/input/BoInputText';
 import s from 'src/components/addToPlaylistButton/style.module.less';
 import { LoadingOutlined } from '@ant-design/icons';
 import { usePlaylistMutation } from 'src/hooks/api/playlistsQuery';
+import { displayNotification } from 'src/components/common/notification/displayNotification';
 import PlusIcon from '../../resources/icons/plus-sign.svg';
 
 interface Props {
@@ -23,6 +24,12 @@ export const CreateNewPlaylistButton = ({ videoId }: Props) => {
   React.useEffect(() => {
     if (isSuccess) {
       setShowAddPlaylistInput(false);
+      displayNotification(
+        'success',
+        `Video added to "${newPlaylistName}"`,
+        '',
+        `add-video-${videoId}-to-playlist`,
+      );
     }
   }, [isSuccess]);
 
