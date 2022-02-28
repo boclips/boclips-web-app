@@ -29,11 +29,7 @@ export const AdditionalServicesSummaryPreview = ({
   };
 
   const Price = React.useCallback(() => {
-    return (
-      <Typography.Body as="div" size="small" className="absolute right-0 top-0">
-        Free
-      </Typography.Body>
-    );
+    return <div className="absolute right-0 top-0">Free</div>;
   }, []);
 
   return (
@@ -43,47 +39,37 @@ export const AdditionalServicesSummaryPreview = ({
       data-qa="order-summary-item-additional-services"
       className={`flex flex-col text-gray-800 w-full ${s.additionalServices}`}
     >
-      <Typography.Body size="small" weight="medium">
+      <Typography.Body size={fontSize} weight="medium">
         {getHeaderCopy()}
       </Typography.Body>
       {captionsRequested && (
-        <Typography.Body
-          size="small"
+        <span
           className="relative"
           data-qa="order-summary-item-captions-requested"
         >
           English captions requested {displayPrice && <Price />}
-        </Typography.Body>
+        </span>
       )}
 
       {transcriptRequested && (
-        <Typography.Body
-          size="small"
+        <span
           className="relative"
           data-qa="order-summary-item-transcripts-requested"
         >
           Transcripts requested {displayPrice && <Price />}
-        </Typography.Body>
+        </span>
       )}
 
       {trim && (
-        <Typography.Body
-          size="small"
-          className="relative"
-          data-qa="order-summary-item-trim"
-        >
+        <span className="relative" data-qa="order-summary-item-trim">
           Trim: {trim} {displayPrice && <Price />}
-        </Typography.Body>
+        </span>
       )}
 
       {editRequest && (
-        <Typography.Body
-          size="small"
-          className="relative"
-          data-qa="order-summary-item-editing"
-        >
+        <span className="relative" data-qa="order-summary-item-editing">
           Other type of editing: {editRequest} {displayPrice && <Price />}
-        </Typography.Body>
+        </span>
       )}
     </Typography.Body>
   );

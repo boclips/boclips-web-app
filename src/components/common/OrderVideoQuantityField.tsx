@@ -1,3 +1,4 @@
+import { Typography } from '@boclips-ui/typography';
 import React from 'react';
 import { OrderInformationField } from 'src/components/common/OrderInformationField';
 
@@ -8,8 +9,8 @@ interface Props {
 
 export const OrderVideoQuantity = ({ videoQuantity, fieldName }: Props) => (
   <OrderInformationField fieldName={fieldName}>
-    <div data-qa="video-quantity" className="text-base">
+    <Typography.Body as="div" data-qa="video-quantity">
       {videoQuantity}
-    </div>
+    </Typography.Body>
   </OrderInformationField>
 );

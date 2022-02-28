@@ -5,6 +5,7 @@ import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
 import { AdditionalServicesSummaryPreview } from 'src/components/cart/AdditionalServices/AdditionalServicesSummaryPreview';
 import { Link } from 'react-router-dom';
 import { getBrowserLocale } from 'src/services/getBrowserLocale';
+import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 
 interface Props {
@@ -32,22 +33,22 @@ export const OrderItemCard = ({ item }: Props) => {
         }}
       />
       <div className="flex flex-col w-full relative pl-8">
-        <span className="text-base absolute right-0">
+        <Typography.Title1 className="absolute right-0">
           {createPriceDisplayValue(
             item?.price?.value,
             item?.price?.currency,
             getBrowserLocale(),
           )}
-        </span>
+        </Typography.Title1>
 
         <div className="flex flex-col">
           <Link
             to={`/videos/${item.video.id}`}
             className="font-medium text-base text-gray-900 hover:text-gray-900"
           >
-            {item.video.title}
+            <Typography.Title1>{item.video.title}</Typography.Title1>
           </Link>
-          <span>ID: {item.video.id}</span>
+          <Typography.Body size="small">ID: {item.video.id}</Typography.Body>
         </div>
 
         <AdditionalServicesSummaryPreview

@@ -5,6 +5,7 @@ import { OrderDateField } from 'src/components/common/OrderDateField';
 import { OrderStatusField } from 'src/components/common/OrderStatusField';
 import { OrderInformationField } from 'src/components/common/OrderInformationField';
 import { OrderVideoQuantity } from 'src/components/common/OrderVideoQuantityField';
+import { Typography } from '@boclips-ui/typography';
 import { OrderTotalPriceField } from '../common/OrderTotalPriceField';
 
 interface Props {
@@ -15,15 +16,18 @@ export const OrderSummary = ({ order }: Props) => {
   return (
     <div className="grid-row-start-3 grid-row-end-3 col-start-2 col-end-26">
       <div className="flex justify-between mb-3">
-        <div className="text-2xl font-bold text-gray-800 mb-4 ">{`Order ${order?.id}`}</div>
+        <Typography.H3 className="text-gray-800 mb-4 ">{`Order ${order?.id}`}</Typography.H3>
         <div className="text-base text-right w-64">
           To edit or cancel this order, please contact{' '}
-          <a
+          <Typography.Body
+            as="a"
+            weight="medium"
+            // @ts-ignore Props is not typed smart enough to recognise href is valid for a tag
             href="mailto:delivery@boclips.com"
-            className="font-medium text-blue-800"
+            className=" text-blue-800"
           >
             delivery@boclips.com
-          </a>
+          </Typography.Body>
         </div>
       </div>
       <div className="flex flex-row flex-wrap border-2 border-blue-500 rounded p-6">
@@ -40,7 +44,7 @@ export const OrderSummary = ({ order }: Props) => {
         {order?.note && (
           <span className="mt-4 w-full">
             <OrderInformationField fieldName="Notes">
-              <div className="text-base">{order.note}</div>
+              <Typography.Body as="div">{order.note}</Typography.Body>
             </OrderInformationField>
           </span>
         )}

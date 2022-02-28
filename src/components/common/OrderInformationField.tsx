@@ -1,3 +1,4 @@
+import { Typography } from '@boclips-ui/typography';
 import React, { ReactElement } from 'react';
 
 interface ItemProps {
@@ -8,7 +9,14 @@ interface ItemProps {
 export const OrderInformationField = ({ fieldName, children }: ItemProps) => {
   return (
     <div className="flex flex-col flex-grow text-sm px-2">
-      <div className="text-sm text-grey-700 font-medium">{fieldName}</div>
+      <Typography.Body
+        as="div"
+        size="small"
+        weight="medium"
+        className="text-grey-700"
+      >
+        {fieldName}
+      </Typography.Body>
       {children}
     </div>
   );
