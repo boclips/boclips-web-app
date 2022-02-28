@@ -15,6 +15,7 @@ import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
 import BoCheckbox from 'src/components/common/input/BoCheckbox';
 import { CreateNewPlaylistButton } from 'src/components/addToPlaylistButton/CreateNewPlaylistButton';
 import FocusTrap from 'focus-trap-react';
+import { handleEscapeKeyEvent } from 'src/services/handleKeyEvent';
 import s from './style.module.less';
 
 interface Props {
@@ -104,7 +105,17 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
       </Tooltip>
       {isOpen && (
         <FocusTrap>
-          <div ref={ref} className={s.playlistPanel}>
+          {/* Below should be fine according to https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/479 */}
+          {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+          <div
+            ref={ref}
+            role="dialog"
+            className={s.playlistPanel}
+            data-qa="add-to-playlist-pop-up"
+            onKeyDown={(event) =>
+              handleEscapeKeyEvent(event, () => setIsOpen(false))
+            }
+          >
             <div className={s.header}>
               <h5>Add to playlist</h5>
               <button

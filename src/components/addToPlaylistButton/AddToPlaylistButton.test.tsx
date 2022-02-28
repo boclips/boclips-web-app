@@ -144,4 +144,26 @@ describe('Add to playlist button', () => {
       await wrapper.findByLabelText('close add to playlist'),
     ).toHaveFocus();
   });
+
+  it('closes the pop-up on escape key down', async () => {
+    const fakeClient = new FakeBoclipsClient();
+
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeClient}>
+        <AddToPlaylistButton videoId={video.id} />
+      </BoclipsClientProvider>,
+    );
+
+    const playlistButton = await wrapper.findByLabelText('Add to playlist');
+    fireEvent.click(playlistButton);
+
+    expect(wrapper.getByTestId('add-to-playlist-pop-up')).toBeVisible();
+    expect(wrapper.queryByText('Add to playlist')).toBeInTheDocument();
+
+    fireEvent.keyDown(wrapper.getByTestId('add-to-playlist-pop-up'), {
+      key: 'Escape',
+    });
+
+    expect(wrapper.queryByText('Add to playlist')).not.toBeInTheDocument();
+  });
 });
