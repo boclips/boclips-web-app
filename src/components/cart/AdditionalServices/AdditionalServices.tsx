@@ -5,6 +5,7 @@ import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartIt
 import { TrimService } from 'src/components/cart/AdditionalServices/Trim/Trim';
 import AdditionalServiceCheckbox from 'src/components/cart/AdditionalServices/AdditionalServiceCheckbox';
 import { EditRequest } from 'src/components/cart/AdditionalServices/editRequest/editRequest';
+import { Typography } from '@boclips-ui/typography';
 
 interface Props {
   videoItem: Video;
@@ -14,7 +15,9 @@ interface Props {
 const AdditionalServices = ({ videoItem, cartItem }: Props) => {
   return (
     <>
-      <div className="text-base">Additional services</div>
+      <Typography.Body as="div" weight="medium">
+        Additional services
+      </Typography.Body>
       <TrimService videoItem={videoItem} cartItem={cartItem} price="Free" />
 
       <AdditionalServiceCheckbox

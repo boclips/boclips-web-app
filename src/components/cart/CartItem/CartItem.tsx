@@ -10,6 +10,7 @@ import { TextButton } from 'src/components/common/textButton/TextButton';
 import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import VideoCardPlaceholder from '@boclips-ui/video-card-placeholder';
+import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 
 interface Props {
@@ -57,16 +58,17 @@ const CartItem = ({ cartItem }: Props) => {
           <div className="flex flex-row justify-between">
             <Link
               to={`/videos/${videoItem.id}`}
-              className="text-base text-gray-900 hover:text-gray-900"
+              className="text-gray-900 hover:text-gray-900"
             >
-              {videoItem.title}
+              <Typography.Title1>{videoItem.title}</Typography.Title1>
             </Link>
-            <PriceBadge
-              className="text-gray-900 text-lg"
-              price={videoItem.price}
-            />
+            <PriceBadge className="text-gray-900" price={videoItem.price} />
           </div>
-          <div className="text-sm text-gray-800 font-normal">{`ID: ${videoItem.id}`}</div>
+          <Typography.Body
+            as="div"
+            size="small"
+            className="text-gray-800"
+          >{`ID: ${videoItem.id}`}</Typography.Body>
           <TextButton
             onClick={cartItemAnimate}
             text="Remove"

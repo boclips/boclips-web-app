@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react';
-import c from 'classnames';
+import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 
 interface Props {
@@ -23,7 +23,9 @@ const BoCheckbox = ({ dataQa, onChange, name, id, checked, label }: Props) => {
         checked={checked}
         data-qa={dataQa}
       />
-      <span className={c({ 'font-medium': checked })}>{label || name}</span>
+      <Typography.Body weight={checked ? 'medium' : null}>
+        {label || name}
+      </Typography.Body>
     </label>
   );
 };

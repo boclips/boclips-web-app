@@ -5,7 +5,7 @@ import { Constants } from 'src/AppConstants';
 import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
 import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
-import c from 'classnames';
+import { Typography } from '@boclips-ui/typography';
 
 interface Props {
   price?: Price;
@@ -24,12 +24,12 @@ export const PriceBadge = ({ price, className }: Props) => {
   return shouldShowPriceUnavailableBadge ? (
     <PriceUnavailableBadge />
   ) : (
-    <span className={c(className, 'font-bold text-xl')} data-qa="price-badge">
+    <Typography.Title1 className={className} data-qa="price-badge">
       {createPriceDisplayValue(
         price?.amount,
         price?.currency,
         getBrowserLocale(),
       )}
-    </span>
+    </Typography.Title1>
   );
 };

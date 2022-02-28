@@ -15,7 +15,7 @@ describe('additional services summary preview', () => {
         transcriptRequested={transcriptRequested}
         trim={trim}
         editRequest={editRequest}
-        fontSize="text-xs"
+        fontSize="small"
         displayPrice
       />,
     );

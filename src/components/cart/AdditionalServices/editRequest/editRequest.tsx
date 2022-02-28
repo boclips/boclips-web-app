@@ -4,6 +4,7 @@ import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartIt
 import { InputWithDebounce } from 'src/components/cart/InputWithDebounce';
 import { useCartValidation } from 'src/components/common/providers/CartValidationProvider';
 import BoCheckbox from 'src/components/common/input/BoCheckbox';
+import { Typography } from '@boclips-ui/typography';
 
 interface Props {
   label: string;
@@ -78,16 +79,16 @@ export const EditRequest = ({ label, cartItem, price }: Props) => {
           checked={serviceRequested}
         />
         {price && (
-          <div className="flex h-full items-center text-md font-normal">
+          <Typography.Body as="div" className="flex h-full items-center">
             {price}
-          </div>
+          </Typography.Body>
         )}
       </div>
       {serviceRequested && (
         <div className="ml-7 -mt-1 font-normal">
-          <div className="text-xs mb-2">
+          <Typography.Body as="div" size="small" className="mb-2">
             Specify how you’d like to edit the video
-          </div>
+          </Typography.Body>
           <InputWithDebounce
             currentValue={cartItem.additionalServices?.editRequest}
             enableValidation={(enabled: boolean) =>
@@ -99,9 +100,13 @@ export const EditRequest = ({ label, cartItem, price }: Props) => {
             onUpdateWithoutDebounce={setEditRequestWithoutDebounce}
           />
           {!isEditRequestValid && (
-            <div className="text-xs text-red-error mb-2">
+            <Typography.Body
+              as="div"
+              size="small"
+              className="text-red-error mb-2"
+            >
               Specify your editing requirements
-            </div>
+            </Typography.Body>
           )}
         </div>
       )}

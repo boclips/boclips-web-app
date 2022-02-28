@@ -3,6 +3,7 @@ import { useCartItemAdditionalServicesMutation } from 'src/hooks/api/cartQuery';
 import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
 import { AdditionalServices } from 'boclips-api-client/dist/sub-clients/carts/model/AdditionalServices';
 import BoCheckbox from 'src/components/common/input/BoCheckbox';
+import { Typography } from '@boclips-ui/typography';
 
 interface Props {
   label: string;
@@ -43,9 +44,9 @@ const AdditionalServicesCheckbox = ({
         checked={serviceRequested}
       />
 
-      <div className="flex h-full items-center text-md font-normal">
+      <Typography.Body as="div" className="flex h-full items-center">
         {price}
-      </div>
+      </Typography.Body>
     </div>
   );
 };

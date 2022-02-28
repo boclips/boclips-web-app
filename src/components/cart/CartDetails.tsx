@@ -17,13 +17,13 @@ export const CartDetails = ({ cart }: Props) => {
   );
 
   return (
-    <main className="col-start-2 col-end-19 font-medium text-md flex flex-col">
+    <main className="col-start-2 col-end-19 flex flex-col">
       <CartNote
         currentValue={cart?.note}
         onUpdate={onUpdateNote}
         placeholder="Add a note about this order (optional)"
       />
-      <div className="pt-4 font-medium text-sm col-start-1 col-span-20 border-b-2">
+      <div className="pt-4 col-start-1 col-span-20 border-b-2">
         {cart.items.map((item) => (
           <CartItem key={item.id} cartItem={item} />
         ))}

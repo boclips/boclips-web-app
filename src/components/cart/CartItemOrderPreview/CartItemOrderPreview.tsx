@@ -29,7 +29,7 @@ export const CartItemOrderPreview = ({ videos }: Props) => {
         transcriptRequested={cartItem?.additionalServices?.transcriptRequested}
         trim={trimLabel}
         editRequest={cartItem?.additionalServices?.editRequest}
-        fontSize="text-xs"
+        fontSize="small"
         displayPrice
       />
     );
@@ -53,20 +53,18 @@ export const CartItemOrderPreview = ({ videos }: Props) => {
             />
           </div>
           <div className="ml-5 w-full">
-            <div className="text-gray-900 flex justify-between">
-              <Typography.Body size="small" weight="medium">
-                {video.title}
-              </Typography.Body>
-              {video.price && (
-                <Typography.Body>
-                  {createPriceDisplayValue(
-                    video.price.amount,
-                    video.price.currency,
-                    getBrowserLocale(),
-                  )}
-                </Typography.Body>
-              )}
-            </div>
+            <Typography.Title2
+              as="div"
+              className="text-gray-900 flex justify-between"
+            >
+              <span>{video.title}</span>
+              {video.price &&
+                createPriceDisplayValue(
+                  video.price.amount,
+                  video.price.currency,
+                  getBrowserLocale(),
+                )}
+            </Typography.Title2>
             <Typography.Body
               as="div"
               size="small"

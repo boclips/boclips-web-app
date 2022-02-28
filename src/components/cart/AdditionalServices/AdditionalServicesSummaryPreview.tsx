@@ -7,7 +7,7 @@ interface Props {
   transcriptRequested?: boolean;
   trim?: string;
   editRequest?: string;
-  fontSize?: 'text-base' | 'text-xs';
+  fontSize?: 'small';
   displayPrice?: boolean;
 }
 
@@ -17,7 +17,7 @@ export const AdditionalServicesSummaryPreview = ({
   trim,
   editRequest,
   displayPrice = false,
-  fontSize = 'text-base',
+  fontSize,
 }: Props) => {
   const noAdditionalServices =
     !captionsRequested && !transcriptRequested && !editRequest && !trim;
@@ -37,9 +37,11 @@ export const AdditionalServicesSummaryPreview = ({
   }, []);
 
   return (
-    <div
+    <Typography.Body
+      as="div"
+      size={fontSize}
       data-qa="order-summary-item-additional-services"
-      className={`flex flex-col text-gray-800 w-full ${fontSize} ${s.additionalServices}`}
+      className={`flex flex-col text-gray-800 w-full ${s.additionalServices}`}
     >
       <Typography.Body size="small" weight="medium">
         {getHeaderCopy()}
@@ -83,6 +85,6 @@ export const AdditionalServicesSummaryPreview = ({
           Other type of editing: {editRequest} {displayPrice && <Price />}
         </Typography.Body>
       )}
-    </div>
+    </Typography.Body>
   );
 };

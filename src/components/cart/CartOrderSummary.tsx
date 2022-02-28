@@ -5,6 +5,7 @@ import { useCartValidation } from 'src/components/common/providers/CartValidatio
 import { OrderModal } from 'src/components/orderModal/OrderModal';
 import { Cart as ApiCart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
 import { useGetVideos } from 'src/hooks/api/videoQuery';
+import { Typography } from '@boclips-ui/typography';
 import { trackOrderConfirmationModalOpened } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 
@@ -19,10 +20,10 @@ interface CartSummaryItemProps {
 
 const CartSummaryItem = ({ label, value }: CartSummaryItemProps) => {
   return (
-    <div className="flex justify-between my-3">
+    <Typography.Body as="div" className="flex justify-between my-3">
       <span>{label}</span>
       <span>{value}</span>
-    </div>
+    </Typography.Body>
   );
 };
 
@@ -63,7 +64,7 @@ export const CartOrderSummary = ({ cart }: Props) => {
     <>
       <div className="col-start-19 col-end-26">
         <div className="border-blue-500 border-2 flex flex-col rounded p-5">
-          <div className="border-b border-blue-500 mb-4 font-normal text-base">
+          <div className="border-b border-blue-500 mb-4">
             <CartSummaryItem
               label={
                 <div>
@@ -84,12 +85,12 @@ export const CartOrderSummary = ({ cart }: Props) => {
             )}
             {trimRequested && <CartSummaryItem label="Trimming" value="Free" />}
           </div>
-          <div className="flex font-bold text-lg text-gray-900 justify-between mb-6">
+          <Typography.H5 className="flex text-gray-900 justify-between mb-6">
             <span>Total</span>
             <span data-qa="total-price">
               {`${getTotalPriceDisplayValue(videos)}`}
             </span>
-          </div>
+          </Typography.H5>
           <Button
             onClick={() => {
               setDisplayErrorMessage(!isCartValid);
@@ -100,10 +101,14 @@ export const CartOrderSummary = ({ cart }: Props) => {
             width="100%"
           />
           {displayErrorMessage && (
-            <div className="text-red-error text-xs mt-2">
+            <Typography.Body
+              as="div"
+              size="small"
+              className="text-red-error mt-2"
+            >
               There are some errors. Please review your shopping cart and
               correct the mistakes.
-            </div>
+            </Typography.Body>
           )}
         </div>
       </div>

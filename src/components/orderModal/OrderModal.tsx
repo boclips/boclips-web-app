@@ -67,10 +67,12 @@ export const OrderModal = ({ setModalOpen, videos, cart }: Props) => {
       <div className={s.modalItemsList}>
         <CartItemOrderPreview videos={videos} />
       </div>
-      <Typography.Title1 className={s.modalTotalPrice}>
-        <span>Total</span>
-        {`${getTotalPriceDisplayValue(videos)}`}
-      </Typography.Title1>
+      <div>
+        <Typography.Title1 as="div" className={s.modalTotalPrice}>
+          <div>Total</div>
+          <div>{getTotalPriceDisplayValue(videos)}</div>
+        </Typography.Title1>
+      </div>
     </Bodal>
   );
 };

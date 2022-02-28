@@ -6,6 +6,7 @@ import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartIt
 import { useCartValidation } from 'src/components/common/providers/CartValidationProvider';
 import { useDebounce } from 'src/hooks/useDebounce';
 import BoCheckbox from 'src/components/common/input/BoCheckbox';
+import { Typography } from '@boclips-ui/typography';
 import { DurationInput } from './DurationInput';
 import { isTrimFromValid, isTrimToValid } from './trimValidation';
 
@@ -151,17 +152,17 @@ export const TrimService = ({ videoItem, cartItem, price }: Props) => {
         />
 
         {price && (
-          <div className="flex h-full items-center text-md font-normal">
+          <Typography.Body as="div" className="flex h-full items-center">
             {price}
-          </div>
+          </Typography.Body>
         )}
       </div>
       {trimChecked && (
         <div className="ml-7 my-1 font-normal">
-          <div className="text-xs mb-2">
+          <Typography.Body size="small" as="div" className="mb-2">
             Specify how you’d like to trim the video
-          </div>
-          <div className="text-md flex flex-row font-normal mt-2">
+          </Typography.Body>
+          <Typography.Body as="div" className="flex flex-row mt-2">
             <DurationInput
               label="From:"
               isValid={trimValidation?.isFromValid}
@@ -182,11 +183,15 @@ export const TrimService = ({ videoItem, cartItem, price }: Props) => {
               id={`${videoItem.id}-to`}
               value={trimValue.trim.to}
             />
-          </div>
+          </Typography.Body>
           {!debouncedIsTrimValid && (
-            <div className="text-xs text-red-error my-2">
+            <Typography.Body
+              as="div"
+              size="small"
+              className="text-red-error my-2"
+            >
               Specify your trimming options
-            </div>
+            </Typography.Body>
           )}
         </div>
       )}
