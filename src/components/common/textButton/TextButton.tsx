@@ -7,11 +7,10 @@ interface Props {
   onClick: () => void;
   text: string;
   icon?: React.ReactElement;
-  fontSize?: 'small' | 'large';
 }
 
-export const TextButton = ({ onClick, text, icon, fontSize }: Props) => (
-  <div className={c(s.textButton, { [s.smallFont]: fontSize === 'small' })}>
+export const TextButton = ({ onClick, text, icon }: Props) => (
+  <div className={c(s.textButton)}>
     <Button onClick={onClick} text={text} icon={icon} />
   </div>
 );

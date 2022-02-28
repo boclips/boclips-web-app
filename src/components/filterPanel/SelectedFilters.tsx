@@ -89,7 +89,7 @@ export const SelectedFilters = ({ removeFilter, clearFilters }: Props) => {
         <Typography.Body weight="medium" id="selected_filters_panel">
           Selected filters
         </Typography.Body>
-        <TextButton onClick={clearFilters} text="Clear all" fontSize="small" />
+        <TextButton onClick={clearFilters} text="Clear all" />
       </div>
       <div
         className="flex flex-wrap"
