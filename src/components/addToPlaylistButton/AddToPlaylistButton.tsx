@@ -14,6 +14,7 @@ import c from 'classnames';
 import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
 import BoCheckbox from 'src/components/common/input/BoCheckbox';
 import { CreateNewPlaylistButton } from 'src/components/addToPlaylistButton/CreateNewPlaylistButton';
+import FocusTrap from 'focus-trap-react';
 import s from './style.module.less';
 
 interface Props {
@@ -102,40 +103,42 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
         />
       </Tooltip>
       {isOpen && (
-        <div ref={ref} className={s.playlistPanel}>
-          <div className={s.header}>
-            <h5>Add to playlist</h5>
-            <button
-              type="button"
-              aria-label="close add to playlist"
-              onClick={() => setIsOpen(false)}
-            >
-              <CloseButton />
-            </button>
+        <FocusTrap>
+          <div ref={ref} className={s.playlistPanel}>
+            <div className={s.header}>
+              <h5>Add to playlist</h5>
+              <button
+                type="button"
+                aria-label="close add to playlist"
+                onClick={() => setIsOpen(false)}
+              >
+                <CloseButton />
+              </button>
+            </div>
+            <ul className={s.content}>
+              {playlists?.length > 0 ? (
+                playlists.map((playlist: Collection) => {
+                  const isSelected = playlistsContainingVideo.includes(
+                    playlist.id,
+                  );
+                  return (
+                    <li key={playlist.id}>
+                      <BoCheckbox
+                        onChange={onCheckboxChange}
+                        name={playlist.title}
+                        id={playlist.id}
+                        checked={isSelected}
+                      />
+                    </li>
+                  );
+                })
+              ) : (
+                <li>You have no playlists yet</li>
+              )}
+            </ul>
+            <CreateNewPlaylistButton videoId={videoId} />
           </div>
-          <ul className={s.content}>
-            {playlists?.length > 0 ? (
-              playlists.map((playlist: Collection) => {
-                const isSelected = playlistsContainingVideo.includes(
-                  playlist.id,
-                );
-                return (
-                  <li key={playlist.id}>
-                    <BoCheckbox
-                      onChange={onCheckboxChange}
-                      name={playlist.title}
-                      id={playlist.id}
-                      checked={isSelected}
-                    />
-                  </li>
-                );
-              })
-            ) : (
-              <li>You have no playlists yet</li>
-            )}
-          </ul>
-          <CreateNewPlaylistButton videoId={videoId} />
-        </div>
+        </FocusTrap>
       )}
     </div>
   );

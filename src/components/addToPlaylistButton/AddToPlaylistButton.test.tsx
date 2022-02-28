@@ -6,6 +6,7 @@ import React from 'react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+import userEvent from '@testing-library/user-event';
 
 describe('Add to playlist button', () => {
   const video = VideoFactory.sample({
@@ -109,5 +110,38 @@ describe('Add to playlist button', () => {
     expect(
       await wrapper.findByRole('checkbox', { name: 'ornament' }),
     ).toBeChecked();
+  });
+
+  it('traps focus in the pop-up', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.collections.setCurrentUser('user-123');
+
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeClient}>
+        <AddToPlaylistButton videoId={video.id} />
+      </BoclipsClientProvider>,
+    );
+
+    const playlistButton = await wrapper.findByLabelText('Add to playlist');
+    fireEvent.click(playlistButton);
+
+    userEvent.tab();
+
+    expect(
+      await wrapper.findByLabelText('close add to playlist'),
+    ).toHaveFocus();
+    userEvent.tab();
+
+    expect(
+      await wrapper.findByRole('button', {
+        name: 'Create new playlist',
+      }),
+    ).toHaveFocus();
+
+    userEvent.tab();
+
+    expect(
+      await wrapper.findByLabelText('close add to playlist'),
+    ).toHaveFocus();
   });
 });
