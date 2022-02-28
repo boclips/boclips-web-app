@@ -1,5 +1,5 @@
 import { render } from 'src/testSupport/render';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, RenderResult } from '@testing-library/react';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { CreateNewPlaylistButton } from 'src/components/addToPlaylistButton/CreateNewPlaylistButton';
@@ -41,13 +41,7 @@ describe('Create new playlist button', () => {
 
   it(`displays Create new playlist button on successful creation`, async () => {
     const wrapper = renderWrapper();
-    const button = wrapper.getByRole('button', { name: 'Create new playlist' });
-    fireEvent.click(button);
-
-    fireEvent.change(wrapper.getByPlaceholderText('Add playlist name'), {
-      target: { value: 'worship' },
-    });
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create' }));
+    createPlaylist(wrapper, 'beach');
 
     expect(
       await wrapper.findByRole('button', { name: 'Create new playlist' }),
@@ -56,25 +50,41 @@ describe('Create new playlist button', () => {
 
   it(`displays notification on successful creation`, async () => {
     const wrapper = renderWrapper();
-    const button = wrapper.getByRole('button', { name: 'Create new playlist' });
-    fireEvent.click(button);
+    createPlaylist(wrapper, 'river');
 
-    fireEvent.change(wrapper.getByPlaceholderText('Add playlist name'), {
-      target: { value: 'worship' },
-    });
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create' }));
     expect(
       await wrapper.findByTestId('add-video-123-to-playlist'),
     ).toBeVisible();
   });
 
-  const renderWrapper = () => {
+  it(`displays notification on failure`, async () => {
     const fakeClient = new FakeBoclipsClient();
+    fakeClient.collections.create = jest.fn(() => Promise.reject());
+
+    const wrapper = renderWrapper(fakeClient);
+    createPlaylist(wrapper, 'worship');
+
+    expect(
+      await wrapper.findByTestId('create-playlist-worship-failed'),
+    ).toBeVisible();
+  });
+
+  const renderWrapper = (fakeClient = new FakeBoclipsClient()) => {
     return render(
       <BoclipsClientProvider client={fakeClient}>
         <ToastContainer />
         <CreateNewPlaylistButton videoId="123" />
       </BoclipsClientProvider>,
     );
+  };
+
+  const createPlaylist = (wrapper: RenderResult, playlistName: string) => {
+    const button = wrapper.getByRole('button', { name: 'Create new playlist' });
+    fireEvent.click(button);
+
+    fireEvent.change(wrapper.getByPlaceholderText('Add playlist name'), {
+      target: { value: playlistName },
+    });
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create' }));
   };
 });

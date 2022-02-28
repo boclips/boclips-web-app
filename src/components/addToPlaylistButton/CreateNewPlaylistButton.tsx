@@ -18,6 +18,7 @@ export const CreateNewPlaylistButton = ({ videoId }: Props) => {
   const {
     mutate: onSaveNewPlaylist,
     isSuccess,
+    isError,
     isLoading,
   } = usePlaylistMutation();
 
@@ -31,7 +32,16 @@ export const CreateNewPlaylistButton = ({ videoId }: Props) => {
         `add-video-${videoId}-to-playlist`,
       );
     }
-  }, [isSuccess]);
+
+    if (isError) {
+      displayNotification(
+        'error',
+        `Error: Failed to create playlist ${newPlaylistName}`,
+        'Please try again',
+        `create-playlist-${newPlaylistName}-failed`,
+      );
+    }
+  }, [isSuccess, isError]);
 
   const handleNewPlaylistRequest = (name: string) => {
     onSaveNewPlaylist({
