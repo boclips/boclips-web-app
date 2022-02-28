@@ -27,6 +27,12 @@ export const CreateNewPlaylistButton = ({ videoId }: Props) => {
       setShowAddPlaylistInput(false);
       displayNotification(
         'success',
+        `Playlist "${newPlaylistName}" created`,
+        '',
+        `create-${newPlaylistName}-playlist`,
+      );
+      displayNotification(
+        'success',
         `Video added to "${newPlaylistName}"`,
         '',
         `add-video-${videoId}-to-playlist`,

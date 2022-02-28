@@ -48,9 +48,11 @@ describe('Create new playlist button', () => {
     ).toBeVisible();
   });
 
-  it(`displays notification on successful creation`, async () => {
+  it(`displays notifications on successful creation`, async () => {
     const wrapper = renderWrapper();
     createPlaylist(wrapper, 'river');
+
+    expect(await wrapper.findByTestId('create-river-playlist')).toBeVisible();
 
     expect(
       await wrapper.findByTestId('add-video-123-to-playlist'),
