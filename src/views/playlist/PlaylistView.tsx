@@ -17,7 +17,11 @@ interface Props {
 
 const PlaylistView = ({ followPlaylist }: Props) => {
   const { id } = useParams<{ id: string }>();
-  const { data: playlist, isLoading: playlistLoading } = usePlaylistQuery(id);
+  const {
+    data: playlist,
+    isLoading: playlistLoading,
+    remove,
+  } = usePlaylistQuery(id);
 
   useEffect(() => {
     if (playlist) {
@@ -31,6 +35,7 @@ const PlaylistView = ({ followPlaylist }: Props) => {
               '',
               `playlist-has-been-followed`,
             );
+            remove();
           }
         })
         .catch(() => {
