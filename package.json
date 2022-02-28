@@ -81,7 +81,7 @@
     "@boclips-ui/link": "^1.0.18",
     "@boclips-ui/pagination": "^1.0.5",
     "@boclips-ui/release-date-filter": "^1.0.10",
-    "@boclips-ui/search-bar": "^3.0.1",
+    "@boclips-ui/search-bar": "^4.2.0",
     "@boclips-ui/styles": "^3.1.0",
     "@boclips-ui/subject-badge": "^2.0.15",
     "@boclips-ui/tooltip": "2.0.1",
