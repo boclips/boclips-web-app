@@ -6,6 +6,7 @@ import { Layout } from 'src/components/layout/Layout';
 import Button from '@boclips-ui/button';
 import { Hero } from 'src/components/hero/Hero';
 import OrderConfirmedSVG from 'src/resources/icons/order-confirmed.svg';
+import { Typography } from '@boclips-ui/typography';
 
 interface OrderConfirmedInterface {
   state: any;
@@ -52,8 +53,8 @@ const OrderConfirmationView = ({ state }: OrderConfirmedInterface) => {
               height="44px"
               width="170px"
             />
-            <Link className="font-medium text-base ml-6" to="/orders">
-              View all orders
+            <Link className="ml-6" to="/orders" data-qa="view-orders">
+              <Typography.Body weight="medium">View all orders</Typography.Body>
             </Link>
           </>
         }

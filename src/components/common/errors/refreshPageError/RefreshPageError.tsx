@@ -2,6 +2,7 @@ import React from 'react';
 import ErrorEngineer from 'resources/icons/errro-engineer.svg';
 import Button from '@boclips-ui/button';
 import { Hero } from 'src/components/hero/Hero';
+import { Typography } from '@boclips-ui/typography';
 
 interface Props {
   row?: string;
@@ -26,9 +27,9 @@ const RefreshPageError = ({ row }: Props) => {
             height="44px"
             width="145px"
           />
-          <div className="font-medium ml-6 blue-800 text-base ">
+          <Typography.Body weight="medium" as="div" className="ml-6 blue-800">
             <a href="mailto:support@boclips.com">Contact support</a>
-          </div>
+          </Typography.Body>
         </>
       }
     />

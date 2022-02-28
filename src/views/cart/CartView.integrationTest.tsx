@@ -131,10 +131,9 @@ describe('CartView', () => {
 
     expect(await wrapper.findByText('Your order is confirmed')).toBeVisible();
 
-    expect(await wrapper.findByText('View all orders')).toHaveAttribute(
-      'href',
-      '/orders',
-    );
+    const viewOrdersLink = await wrapper.findByTestId('view-orders');
+    expect(viewOrdersLink).toHaveAttribute('href', '/orders');
+    expect(within(viewOrdersLink).getByText('View all orders')).toBeVisible();
 
     expect(lastEvent(fakeClient, 'PLATFORM_INTERACTED_WITH')).toEqual({
       type: 'PLATFORM_INTERACTED_WITH',
