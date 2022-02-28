@@ -6,6 +6,7 @@ import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import { TextButton } from 'src/components/common/textButton/TextButton';
 import { handleEscapeKeyEvent } from 'src/services/handleKeyEvent';
 import FocusTrap from 'focus-trap-react';
+import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 
 export interface Props {
@@ -42,9 +43,9 @@ export const Bodal: React.FC<Props> = ({
   const header = (
     <>
       {mobileView && <span />}
-      <span className="text-gray-900 text-xl font-medium" id="bodal-title">
+      <Typography.H4 className="text-gray-900" id="bodal-title">
         {title}
-      </span>
+      </Typography.H4>
       <button
         type="button"
         aria-label={`Close ${title} modal`}

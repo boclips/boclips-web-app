@@ -1,6 +1,7 @@
 import React, { Ref } from 'react';
 import c from 'classnames';
 import ErrorIconSVG from 'resources/icons/error-icon.svg';
+import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 
 export interface BoInputProps {
@@ -77,12 +78,12 @@ export const BoInputText = React.forwardRef(
 
     return (
       <label htmlFor={label} className={s.inputWrapper}>
-        <div>
+        <Typography.Body as="div">
           {label}{' '}
           {!constraints.required && (
             <span className={s.optional}>(Optional)</span>
           )}
-        </div>
+        </Typography.Body>
         {error && (
           <span className={s.errorMessage}>
             <ErrorIconSVG />

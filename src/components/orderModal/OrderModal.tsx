@@ -8,6 +8,7 @@ import { getTotalPriceDisplayValue } from 'src/services/getTotalPriceDisplayValu
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { Cart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
+import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 import { trackOrderConfirmed } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
@@ -60,18 +61,16 @@ export const OrderModal = ({ setModalOpen, videos, cart }: Props) => {
       dataQa="order-modal"
       cancelButtonText="Go back to cart"
     >
-      <span className="text-base">
+      <Typography.Body>
         Please confirm you want to place the following order:
-      </span>
+      </Typography.Body>
       <div className={s.modalItemsList}>
         <CartItemOrderPreview videos={videos} />
       </div>
-      <div>
-        <div className={s.modalTotalPrice}>
-          <span>Total</span>
-          {`${getTotalPriceDisplayValue(videos)}`}
-        </div>
-      </div>
+      <Typography.Title1 className={s.modalTotalPrice}>
+        <span>Total</span>
+        {`${getTotalPriceDisplayValue(videos)}`}
+      </Typography.Title1>
     </Bodal>
   );
 };

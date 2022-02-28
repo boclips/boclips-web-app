@@ -1,4 +1,5 @@
 import React from 'react';
+import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 
 interface Props {
@@ -28,7 +29,11 @@ export const AdditionalServicesSummaryPreview = ({
   };
 
   const Price = React.useCallback(() => {
-    return <div className="absolute right-0 top-0">Free</div>;
+    return (
+      <Typography.Body as="div" size="small" className="absolute right-0 top-0">
+        Free
+      </Typography.Body>
+    );
   }, []);
 
   return (
@@ -36,36 +41,47 @@ export const AdditionalServicesSummaryPreview = ({
       data-qa="order-summary-item-additional-services"
       className={`flex flex-col text-gray-800 w-full ${fontSize} ${s.additionalServices}`}
     >
-      <span className="font-medium">{getHeaderCopy()}</span>
-
+      <Typography.Body size="small" weight="medium">
+        {getHeaderCopy()}
+      </Typography.Body>
       {captionsRequested && (
-        <span
+        <Typography.Body
+          size="small"
           className="relative"
           data-qa="order-summary-item-captions-requested"
         >
           English captions requested {displayPrice && <Price />}
-        </span>
+        </Typography.Body>
       )}
 
       {transcriptRequested && (
-        <span
+        <Typography.Body
+          size="small"
           className="relative"
           data-qa="order-summary-item-transcripts-requested"
         >
           Transcripts requested {displayPrice && <Price />}
-        </span>
+        </Typography.Body>
       )}
 
       {trim && (
-        <span className="relative" data-qa="order-summary-item-trim">
+        <Typography.Body
+          size="small"
+          className="relative"
+          data-qa="order-summary-item-trim"
+        >
           Trim: {trim} {displayPrice && <Price />}
-        </span>
+        </Typography.Body>
       )}
 
       {editRequest && (
-        <span className="relative" data-qa="order-summary-item-editing">
+        <Typography.Body
+          size="small"
+          className="relative"
+          data-qa="order-summary-item-editing"
+        >
           Other type of editing: {editRequest} {displayPrice && <Price />}
-        </span>
+        </Typography.Body>
       )}
     </div>
   );

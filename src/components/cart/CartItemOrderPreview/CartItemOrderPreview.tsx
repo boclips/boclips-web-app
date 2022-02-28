@@ -6,6 +6,7 @@ import { AdditionalServicesSummaryPreview } from 'src/components/cart/Additional
 import c from 'classnames';
 import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
 import { getBrowserLocale } from 'src/services/getBrowserLocale';
+import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 
 interface Props {
@@ -52,24 +53,28 @@ export const CartItemOrderPreview = ({ videos }: Props) => {
             />
           </div>
           <div className="ml-5 w-full">
-            <div className="text-sm text-gray-900 font-medium flex justify-between">
-              <span>{video.title}</span>
+            <div className="text-gray-900 flex justify-between">
+              <Typography.Body size="small" weight="medium">
+                {video.title}
+              </Typography.Body>
               {video.price && (
-                <span className="text-base font-normal">
+                <Typography.Body>
                   {createPriceDisplayValue(
                     video.price.amount,
                     video.price.currency,
                     getBrowserLocale(),
                   )}
-                </span>
+                </Typography.Body>
               )}
             </div>
-            <div
-              className="text-xs text-gray-800"
+            <Typography.Body
+              as="div"
+              size="small"
+              className="text-gray-800"
               data-qa="order-summary-item-video-id"
             >
               ID: {video.id}
-            </div>
+            </Typography.Body>
             {getAdditionalServicesSummary(
               cart?.items?.find((cartItem) => cartItem.videoId === video.id),
             )}
