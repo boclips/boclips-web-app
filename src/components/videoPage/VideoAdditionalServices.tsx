@@ -2,6 +2,7 @@ import InfoIcon from 'resources/icons/info.svg';
 import React from 'react';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { Constants } from 'src/AppConstants';
+import { Typography } from '@boclips-ui/typography';
 
 export const VideoAdditionalServices = () => {
   const { data: user, isLoading: isLoadingUser } = useGetUserQuery();
@@ -17,9 +18,11 @@ export const VideoAdditionalServices = () => {
 
   return (
     <div className="mt-4 bg-blue-100 border-blue-400 border-2 p-6 rounded text-gray-800">
-      <div className="flex flex-row font-medium text-base items-center mb-2 text-gray-900">
+      <div className="flex flex-row items-center mb-2 text-gray-900">
         <InfoIcon />
-        <div className="ml-2">Additional services</div>
+        <Typography.Body weight="medium" className="ml-2">
+          Additional services
+        </Typography.Body>
       </div>
       {!isLoadingUser && <div className="text-sm">{message}</div>}
     </div>

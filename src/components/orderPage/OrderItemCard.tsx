@@ -44,7 +44,7 @@ export const OrderItemCard = ({ item }: Props) => {
         <div className="flex flex-col">
           <Link
             to={`/videos/${item.video.id}`}
-            className="font-medium text-base text-gray-900 hover:text-gray-900"
+            className="text-gray-900 hover:text-gray-900"
           >
             <Typography.Title1>{item.video.title}</Typography.Title1>
           </Link>

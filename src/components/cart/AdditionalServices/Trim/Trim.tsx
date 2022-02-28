@@ -158,7 +158,7 @@ export const TrimService = ({ videoItem, cartItem, price }: Props) => {
         )}
       </div>
       {trimChecked && (
-        <div className="ml-7 my-1 font-normal">
+        <div className="ml-7 my-1">
           <Typography.Body size="small" as="div" className="mb-2">
             Specify how you’d like to trim the video
           </Typography.Body>

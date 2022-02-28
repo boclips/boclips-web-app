@@ -7,6 +7,7 @@ import { VideoHeader } from 'src/components/videoPage/VideoHeader';
 import { useHistory } from 'react-router-dom';
 import BackArrow from 'resources/icons/back-arrow.svg';
 import { FeatureGate } from 'src/components/common/FeatureGate';
+import { Typography } from '@boclips-ui/typography';
 
 interface Props {
   video: Video;
@@ -27,11 +28,13 @@ export const VideoPage = ({ video }: Props) => {
         {userNavigatedToPageViaApp && (
           <button
             type="button"
-            className="text-blue-800 text-base font-xs font-medium flex flex-row items-center mb-4"
+            className="text-blue-800 flex flex-row items-center mb-4"
             onClick={goToPreviousPage}
           >
             <BackArrow className="mr-4" />
-            Back
+            <Typography.Body size="small" weight="medium">
+              Back
+            </Typography.Body>
           </button>
         )}
 
