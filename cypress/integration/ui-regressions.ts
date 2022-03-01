@@ -88,6 +88,11 @@ context('UI Regression', () => {
     cy.wait(100);
     cy.get('button').contains('View order details').click();
 
+    cy.findByRole('heading', { name: /Order/i }).should('exist');
+    cy.findByText('To edit or cancel this order, please contact').should(
+      'exist',
+    );
+
     cy.percySnapshot('Order view', {
       widths: snapshotViewWidths,
     });
