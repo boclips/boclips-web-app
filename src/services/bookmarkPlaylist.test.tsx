@@ -31,7 +31,7 @@ describe('bookmark playlist', () => {
     const collectionsClient = new FakeBoclipsClient().collections;
     const bookmarkPlaylist = new FollowPlaylist(collectionsClient);
 
-    const bookmarkFn = spyOn(collectionsClient, 'bookmark');
+    const bookmarkFn = jest.spyOn(collectionsClient, 'bookmark');
 
     const bookmarkedCollection = CollectionFactory.sample({
       id: '123',
@@ -57,7 +57,7 @@ describe('bookmark playlist', () => {
     const collectionsClient = new FakeBoclipsClient().collections;
     const followPlaylist = new FollowPlaylist(collectionsClient);
 
-    const bookmarkFn = spyOn(collectionsClient, 'bookmark');
+    const bookmarkFn = jest.spyOn(collectionsClient, 'bookmark');
 
     const ownedCollection = CollectionFactory.sample({
       id: '123',

@@ -26,7 +26,9 @@ export const FilterOptionCheckbox = ({
         dataQa={dataQa}
         label={option.label}
       />
-      <Typography.Body className="text-blue-700">{option.hits}</Typography.Body>
+      <Typography.Body data-qa="option-hits" className="text-blue-700">
+        {option.hits}
+      </Typography.Body>
     </div>
   );
 };

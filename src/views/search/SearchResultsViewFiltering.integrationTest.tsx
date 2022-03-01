@@ -250,7 +250,7 @@ describe('SearchResultsFiltering', () => {
 
       expect(await wrapper.findByText('Subject')).toBeInTheDocument();
       expect(await wrapper.findByText('History')).toBeInTheDocument();
-      expect(await wrapper.findByText('12')).toBeInTheDocument();
+      expect(await wrapper.findByTestId('option-hits')).toHaveTextContent('12');
     });
   });
 
@@ -276,13 +276,16 @@ describe('SearchResultsFiltering', () => {
       const wrapper = renderSearchResultsView(['/videos?q=video']);
 
       expect(await wrapper.findByText('Best for')).toBeVisible();
+
       const options = wrapper
         .getAllByRole('checkbox')
         .map((it) => it.closest('label'));
       expect(within(options[0]).getByText('Explainer')).toBeVisible();
-      expect(wrapper.getByText('22')).toBeVisible();
       expect(within(options[1]).getByText('Hook')).toBeVisible();
-      expect(wrapper.getByText('12')).toBeVisible();
+
+      expect(await wrapper.findAllByTestId('option-hits')).toHaveLength(2);
+      expect(wrapper.getAllByTestId('option-hits')[0]).toHaveTextContent('22');
+      expect(wrapper.getAllByTestId('option-hits')[1]).toHaveTextContent('12');
     });
   });
 
@@ -310,13 +313,13 @@ describe('SearchResultsFiltering', () => {
 
       expect(await wrapper.findByText('Duration')).toBeInTheDocument();
 
-      expect(await wrapper.findByText('80')).toBeInTheDocument();
-      expect(await wrapper.findByText('120')).toBeInTheDocument();
-      expect(await wrapper.findByText('10')).toBeInTheDocument();
+      expect(wrapper.getAllByTestId('option-hits')[0]).toHaveTextContent('10');
+      expect(wrapper.getAllByTestId('option-hits')[1]).toHaveTextContent('120');
+      expect(wrapper.getAllByTestId('option-hits')[2]).toHaveTextContent('80');
 
-      expect(await wrapper.findByText('Up to 1 min')).toBeInTheDocument();
-      expect(await wrapper.findByText('5 - 10 min')).toBeInTheDocument();
-      expect(await wrapper.findByText('20 min +')).toBeInTheDocument();
+      expect(wrapper.getByText('Up to 1 min')).toBeInTheDocument();
+      expect(wrapper.getByText('5 - 10 min')).toBeInTheDocument();
+      expect(wrapper.getByText('20 min +')).toBeInTheDocument();
       expect(wrapper.queryByText('1 - 5 min')).not.toBeInTheDocument();
       expect(wrapper.queryByText('10 - 20 min')).not.toBeInTheDocument();
     });
@@ -486,7 +489,7 @@ describe('SearchResultsFiltering', () => {
       expect(await wrapper.findByText('From:')).toBeVisible();
       expect(await wrapper.findByText('To:')).toBeVisible();
 
-      expect(wrapper.getAllByPlaceholderText('MM-DD-YYYY')).toHaveLength(2);
+      expect(wrapper.getAllByPlaceholderText('DD-MM-YYYY')).toHaveLength(2);
     });
 
     it('gets the to and from filters from the URL', async () => {
@@ -497,14 +500,16 @@ describe('SearchResultsFiltering', () => {
         }),
       );
 
-      const toDate = dayjs('2020-12-01');
-      const fromDate = dayjs('2018-12-01');
+      const toDate = '2020-12-01';
+      const fromDate = '2018-12-01';
       const wrapper = renderSearchResultsView([
-        `/videos?q=video&release_date_to=${toDate.toISOString()}&release_date_from=${fromDate.toISOString()}`,
+        `/videos?q=video&release_date_to=${toDate}&release_date_from=${fromDate}`,
       ]);
 
-      expect(await wrapper.findByDisplayValue('12-01-2020')).toBeVisible();
-      expect(await wrapper.findByDisplayValue('12-01-2018')).toBeVisible();
+      const inputs = await wrapper.findAllByPlaceholderText('DD-MM-YYYY');
+
+      expect(inputs[0].nextSibling).toHaveAttribute('value', '2018-12-01');
+      expect(inputs[1].nextSibling).toHaveAttribute('value', '2020-12-01');
     });
 
     it('resets the date filter when clearing all filters', async () => {
@@ -515,27 +520,25 @@ describe('SearchResultsFiltering', () => {
         }),
       );
 
-      const toDate = dayjs('2020-12-01');
-      const fromDate = dayjs('2018-12-01');
+      const toDate = '2020-12-01';
+      const fromDate = '2018-12-01';
       const wrapper = renderSearchResultsView([
-        `/videos?q=video&release_date_to=${toDate.toISOString()}&release_date_from=${fromDate.toISOString()}`,
+        `/videos?q=video&release_date_to=${toDate}&release_date_from=${fromDate}`,
       ]);
 
-      expect(await wrapper.findByDisplayValue('12-01-2020')).toBeVisible();
-      expect(await wrapper.findByDisplayValue('12-01-2018')).toBeVisible();
+      const inputs = await wrapper.findAllByPlaceholderText('DD-MM-YYYY');
+
+      expect(inputs[0].nextSibling).toHaveAttribute('value', '2018-12-01');
+      expect(inputs[1].nextSibling).toHaveAttribute('value', '2020-12-01');
 
       fireEvent.click(await wrapper.findByText('Clear all'));
 
-      expect(wrapper.getAllByPlaceholderText('MM-DD-YYYY')).toHaveLength(2);
-      await waitFor(() => {
-        expect(
-          wrapper.queryByDisplayValue('12-01-2020'),
-        ).not.toBeInTheDocument();
+      expect(await wrapper.findAllByPlaceholderText('DD-MM-YYYY')).toHaveLength(
+        2,
+      );
 
-        expect(
-          wrapper.queryByDisplayValue('12-01-2018'),
-        ).not.toBeInTheDocument();
-      });
+      expect(inputs[0].nextSibling).not.toHaveAttribute('value');
+      expect(inputs[1].nextSibling).not.toHaveAttribute('value');
     });
 
     it('filters by date when selecting changing the date in the filter', async () => {
@@ -559,7 +562,7 @@ describe('SearchResultsFiltering', () => {
 
       const fromDatePicker = await within(
         await wrapper.findByTestId('release_date_from'),
-      ).findByPlaceholderText('MM-DD-YYYY');
+      ).findByPlaceholderText('DD-MM-YYYY');
 
       fireEvent.focus(fromDatePicker);
       userEvent.type(fromDatePicker, '01-01-2020 {enter}');

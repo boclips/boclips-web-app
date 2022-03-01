@@ -22,7 +22,7 @@ export const CollapsableFilter = ({
   };
 
   return (
-    <div className="bg-blue-100 mt-6 py-4 border-solid border border-blue-300 rounded">
+    <div className="bg-blue-100 mt-6 py-4 rounded">
       <FilterHeader
         text={title}
         filterIsOpen={open}
