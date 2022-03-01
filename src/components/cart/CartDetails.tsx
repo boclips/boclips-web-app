@@ -23,7 +23,7 @@ export const CartDetails = ({ cart }: Props) => {
         onUpdate={onUpdateNote}
         placeholder="Add a note about this order (optional)"
       />
-      <div className="pt-4 col-start-1 col-span-20 border-b-2">
+      <div className="pt-4 col-start-1 col-span-20">
         {cart.items.map((item) => (
           <CartItem key={item.id} cartItem={item} />
         ))}
