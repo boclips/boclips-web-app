@@ -17,7 +17,7 @@ export const CartDetails = ({ cart }: Props) => {
   );
 
   return (
-    <main className="col-start-2 col-end-19 flex flex-col">
+    <main tabIndex={-1} className="col-start-2 col-end-19 flex flex-col">
       <CartNote
         currentValue={cart?.note}
         onUpdate={onUpdateNote}

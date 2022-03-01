@@ -22,6 +22,18 @@ describe('Desktop & Mobile - Navbar', () => {
       await screen.getByPlaceholderText('Search for videos'),
     ).toBeVisible();
   });
+
+  it('renders skip to main content button', async () => {
+    const wrapper = render(
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <NavbarResponsive />
+        </BoclipsClientProvider>
+      </BoclipsSecurityProvider>,
+    );
+
+    expect(await wrapper.findByTestId('skip_to_content')).toBeInTheDocument();
+  });
 });
 
 describe('Mobile - Navbar', () => {

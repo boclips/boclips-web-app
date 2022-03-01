@@ -12,6 +12,7 @@ import { Constants } from 'src/AppConstants';
 import { useBoclipsSecurity } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import LibraryButton from 'src/components/navButtons/LibraryButton';
+import SkipLink from 'src/components/skipLink/SkipLink';
 import s from './navbar.module.less';
 import { Search } from '../searchBar/SearchBar';
 
@@ -54,6 +55,8 @@ const NavbarResponsive = (): ReactElement => {
         <div className={s.logo}>
           <Logo />
         </div>
+
+        <SkipLink />
 
         {mobileView ? (
           <div className={s.buttons}>

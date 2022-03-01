@@ -17,7 +17,10 @@ const NoResultsCopy = ({ header, copy }) => {
 
 export const NoSearchResults = ({ areFiltersApplied, query }: Props) => {
   return (
-    <main className="flex flex-col items-center col-start-8 col-end-26 text-lg text-gray-800 mt-10 ">
+    <main
+      tabIndex={-1}
+      className="flex flex-col items-center col-start-8 col-end-26 text-lg text-gray-800 mt-10 "
+    >
       <NoResultsIcon className="h-80 w-80 mb-6" />
       {areFiltersApplied ? (
         <NoResultsCopy

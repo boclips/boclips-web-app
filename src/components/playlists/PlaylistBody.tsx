@@ -33,6 +33,7 @@ const buttons = (video: Video) => (
 
 const EmptyPlaylist = () => (
   <main
+    tabIndex={-1}
     className={c(
       s.emptyPlaylistWrapper,
       'grid-row-start-4 grid-row-end-4 col-start-2 col-end-26',
@@ -55,6 +56,7 @@ const PlaylistBody = ({ videos }: Props) => {
         In this playlist:
       </h4>
       <main
+        tabIndex={-1}
         className={c(
           s.cardWrapper,
           'grid-row-start-5 grid-row-end-5 col-start-2 col-end-26',

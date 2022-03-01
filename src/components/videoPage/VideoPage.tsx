@@ -24,7 +24,10 @@ export const VideoPage = ({ video }: Props) => {
 
   return (
     <>
-      <main className="col-start-2 col-end-18 row-start-2 row-end-2 h-full">
+      <main
+        tabIndex={-1}
+        className="col-start-2 col-end-18 row-start-2 row-end-2 h-full"
+      >
         {userNavigatedToPageViaApp && (
           <button
             type="button"

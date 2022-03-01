@@ -8,7 +8,7 @@ interface Props {
 
 export const OrderVideoList = ({ order }: Props) => {
   return (
-    <main className="col-start-2 col-end-26">
+    <main tabIndex={-1} className="col-start-2 col-end-26">
       {order?.items.map((orderItem) => (
         <OrderItemCard item={orderItem} key={`id-${orderItem.id}`} />
       ))}

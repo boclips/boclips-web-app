@@ -11,7 +11,7 @@ const Playlists = () => {
   const { data: playlists, isLoading } = useOwnAndSharedPlaylistsQuery();
 
   return (
-    <main className={s.playlistsWrapper}>
+    <main tabIndex={-1} className={s.playlistsWrapper}>
       {isLoading ? (
         <SkeletonTiles className={s.skeletonCard} />
       ) : (
