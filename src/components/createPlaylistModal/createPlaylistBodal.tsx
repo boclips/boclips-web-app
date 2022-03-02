@@ -9,12 +9,14 @@ interface PlaylistForm {
 }
 
 export interface Props {
+  videoId?: string;
   onCancel: () => void;
-  onSuccess: (playlistId: string) => void;
+  onSuccess: (playlistId?: string, playlistName?: string) => void;
   onError: (playlistName: string) => void;
 }
 
 export const CreatePlaylistBodal = ({
+  videoId = null,
   onCancel,
   onSuccess,
   onError,
@@ -35,7 +37,7 @@ export const CreatePlaylistBodal = ({
       onError(playlistForm.title);
     }
     if (isSuccess) {
-      onSuccess(data);
+      onSuccess(data, playlistForm.title);
     }
   }, [data, onSuccess, isSuccess, isError]);
 
@@ -52,11 +54,16 @@ export const CreatePlaylistBodal = ({
       return;
     }
 
+    let videos = [];
+    if (videoId) {
+      videos = [videoId];
+    }
+
     createPlaylist({
       title,
       description: playlistForm.description,
       origin: 'BO_WEB_APP',
-      videos: [],
+      videos,
     });
   };
   return (

@@ -1,7 +1,6 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { render } from 'src/testSupport/render';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import { ToastContainer } from 'react-toastify';
 import React from 'react';
 import { CreatePlaylistBodal } from 'src/components/createPlaylistModal/createPlaylistBodal';
 import { fireEvent, waitFor } from '@testing-library/react';
@@ -105,7 +104,6 @@ const renderWrapper = (
 ) => {
   return render(
     <BoclipsClientProvider client={fakeClient}>
-      <ToastContainer />
       <CreatePlaylistBodal
         onCancel={onCancel}
         onSuccess={onSuccess}

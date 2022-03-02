@@ -13,9 +13,11 @@ import { Collection } from 'boclips-api-client/dist/sub-clients/collections/mode
 import c from 'classnames';
 import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
 import BoCheckbox from 'src/components/common/input/BoCheckbox';
-import { CreateNewPlaylistButton } from 'src/components/addToPlaylistButton/CreateNewPlaylistButton';
 import FocusTrap from 'focus-trap-react';
 import { handleEscapeKeyEvent } from 'src/services/handleKeyEvent';
+import { CreatePlaylistBodal } from 'src/components/createPlaylistModal/createPlaylistBodal';
+import { displayNotification } from 'src/components/common/notification/displayNotification';
+import PlusIcon from 'src/resources/icons/plus-sign.svg';
 import s from './style.module.less';
 
 interface Props {
@@ -24,6 +26,8 @@ interface Props {
 
 export const AddToPlaylistButton = ({ videoId }: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [showCreatePlaylistModal, setShowCreatePlaylistModal] =
+    useState<boolean>(false);
 
   const [playlistsContainingVideo, setPlaylistsContainingVideo] = useState<
     string[]
@@ -78,11 +82,46 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
     }
   };
 
+  const handlePlaylistCreationError = (playlistName: string) => {
+    displayNotification(
+      'error',
+      `Error: Failed to create playlist ${playlistName}`,
+      'Please try again',
+      `create-playlist-${playlistName}-failed`,
+    );
+  };
+
+  const handlePlaylistCreationSuccess = (_: string, playlistName: string) => {
+    setShowCreatePlaylistModal(false);
+    displayNotification(
+      'success',
+      `Playlist "${playlistName}" created`,
+      '',
+      `create-${playlistName}-playlist`,
+    );
+    displayNotification(
+      'success',
+      `Video added to "${playlistName}"`,
+      '',
+      `add-video-to-${playlistName}-playlist`,
+    );
+  };
+
   return (
     <div
       id={videoId}
       className={c(s.addToPlaylist, { [s.buttonActive]: isOpen })}
     >
+      {showCreatePlaylistModal && (
+        <div className={s.createPlaylistModalWrapper}>
+          <CreatePlaylistBodal
+            videoId={videoId}
+            onCancel={() => setShowCreatePlaylistModal(false)}
+            onSuccess={handlePlaylistCreationSuccess}
+            onError={handlePlaylistCreationError}
+          />
+        </div>
+      )}
       <Tooltip text="Add to playlist">
         <Button
           text="Add to playlist"
@@ -103,7 +142,7 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
           height="40px"
         />
       </Tooltip>
-      {isOpen && (
+      {isOpen && !showCreatePlaylistModal && (
         <FocusTrap>
           {/* Below should be fine according to https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/479 */}
           {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
@@ -147,7 +186,14 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
                 <li>You have no playlists yet</li>
               )}
             </ul>
-            <CreateNewPlaylistButton videoId={videoId} />
+            <div>
+              <Button
+                onClick={() => setShowCreatePlaylistModal(true)}
+                text="Create new playlist"
+                type="label"
+                icon={<PlusIcon />}
+              />
+            </div>
           </div>
         </FocusTrap>
       )}
