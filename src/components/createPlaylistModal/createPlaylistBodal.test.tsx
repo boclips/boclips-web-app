@@ -3,7 +3,7 @@ import { render } from 'src/testSupport/render';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { ToastContainer } from 'react-toastify';
 import React from 'react';
-import { CreatePlaylistBodal } from 'src/components/createPlaylistModal/createPlaylistModal';
+import { CreatePlaylistBodal } from 'src/components/createPlaylistModal/createPlaylistBodal';
 import { fireEvent, waitFor } from '@testing-library/react';
 
 describe('Create new playlist modal', () => {
@@ -71,13 +71,20 @@ describe('Create new playlist modal', () => {
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create playlist' }));
 
+    expect(wrapper.queryByTestId('create-playlist-modal')).toBeInTheDocument();
     await waitFor(() => expect(handleOnSuccess).toBeCalledTimes(1));
   });
 
-  it('displays error when playlist creation fails', async () => {
+  it('call handleError when playlist creation fails', async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.collections.create = jest.fn(() => Promise.reject());
-    const wrapper = renderWrapper(fakeClient, jest.fn(), jest.fn());
+    const handleOnError = jest.fn();
+    const wrapper = renderWrapper(
+      fakeClient,
+      jest.fn(),
+      jest.fn(),
+      handleOnError,
+    );
 
     fireEvent.change(wrapper.getByPlaceholderText('Add name'), {
       target: { value: 'prove' },
@@ -85,9 +92,8 @@ describe('Create new playlist modal', () => {
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create playlist' }));
 
-    expect(
-      await wrapper.findByTestId('create-playlist-prove-failed'),
-    ).toBeVisible();
+    expect(wrapper.queryByTestId('create-playlist-modal')).toBeInTheDocument();
+    await waitFor(() => expect(handleOnError).toBeCalledTimes(1));
   });
 });
 
@@ -95,11 +101,16 @@ const renderWrapper = (
   fakeClient = new FakeBoclipsClient(),
   onCancel = jest.fn(),
   onSuccess = jest.fn(),
+  onError = jest.fn(),
 ) => {
   return render(
     <BoclipsClientProvider client={fakeClient}>
       <ToastContainer />
-      <CreatePlaylistBodal onCancel={onCancel} onSuccess={onSuccess} />
+      <CreatePlaylistBodal
+        onCancel={onCancel}
+        onSuccess={onSuccess}
+        onError={onError}
+      />
     </BoclipsClientProvider>,
   );
 };
