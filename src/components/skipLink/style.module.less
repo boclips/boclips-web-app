@@ -2,20 +2,24 @@
 @apply col-start-2 col-end-5 row-start-1 row-end-1;
   position: relative;
   z-index: 1;
+
   button {
     opacity: 0;
+    pointer-events: none;
   }
 
-  &.focused{
+  &.focused {
     button {
       opacity: 0;
+      pointer-events: all;
 
       &:focus {
         opacity: 1;
       }
     }
   }
-  &:focus-within{
+
+  &:focus-within {
     z-index: 3;
   }
 }
