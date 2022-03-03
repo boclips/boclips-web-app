@@ -44,7 +44,7 @@ export const VideoHeader = ({ video }: Props) => {
       </Typography.H4>
       <FeatureGate feature="BO_WEB_APP_PRICES">
         <div className="grey-800 mb-4">
-          <Typography.Body>
+          <Typography.Body className="text-gray-700">
             This is an agreed price for your organization
           </Typography.Body>
         </div>

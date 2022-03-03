@@ -13,7 +13,7 @@ export const FilterHeader = ({ text, filterIsOpen, toggleFilter }: Props) => {
   return (
     <button
       type="button"
-      className="px-4 text-blue-800 flex items-center cursor-pointer active:border-none justify-between w-full"
+      className="px-4 text-gray-800 flex items-center cursor-pointer active:border-none justify-between w-full"
       aria-expanded={filterIsOpen}
       aria-controls={`${text}-filter`}
       aria-label={`${text} filter panel`}

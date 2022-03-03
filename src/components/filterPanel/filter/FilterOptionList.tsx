@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import c from 'classnames';
 import { FilterOption } from 'src/types/FilterOption';
 import { FilterOptionCheckbox } from 'src/components/filterPanel/filter/FilterOptionCheckbox';
-import { handleEnterKeyEvent } from 'src/services/handleKeyEvent';
-import { Typography } from '@boclips-ui/typography';
+import { TextButton } from 'src/components/common/textButton/TextButton';
 import s from './FilterOptionList.module.less';
 
 interface Props {
@@ -20,8 +19,6 @@ export const FilterOptionList = ({
   selectedOptions,
 }: Props) => {
   const [allExpanded, setAllExpanded] = useState<boolean>(false);
-
-  const toggleOptions = () => setAllExpanded(!allExpanded);
 
   const divideOptionsByBeingSelected = (
     toDivide: FilterOption[],
@@ -71,18 +68,15 @@ export const FilterOptionList = ({
           ))}
       </div>
       {tooManyOptions && (
-        <button
-          type="button"
-          onClick={() => setAllExpanded(!allExpanded)}
-          onKeyPress={(event) => handleEnterKeyEvent(event, toggleOptions)}
+        <TextButton
           className={s.showMoreButton}
-        >
-          <Typography.Body size="small" weight="medium">
-            {allExpanded
+          onClick={() => setAllExpanded(!allExpanded)}
+          text={
+            allExpanded
               ? 'Show less'
-              : `Show all (${optionsWithSelectedOnesFirst.length})`}
-          </Typography.Body>
-        </button>
+              : `Show all (${optionsWithSelectedOnesFirst.length})`
+          }
+        />
       )}
     </div>
   );

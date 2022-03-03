@@ -18,10 +18,14 @@ export const VideoDescription = ({ video }: Props) => {
         ))}
       </div>
       <div className="mt-4">
-        <Typography.Body> {video?.description}</Typography.Body>
+        <Typography.Body className="text-gray-800">
+          {video?.description}
+        </Typography.Body>
       </div>
       <div className="mt-4">
-        <Typography.Body>{video?.additionalDescription}</Typography.Body>
+        <Typography.Body className="text-gray-800">
+          {video?.additionalDescription}
+        </Typography.Body>
       </div>
     </div>
   );

@@ -11,20 +11,17 @@ interface Props {
 
 export const SelectedFilterTag = ({ filter, removeFilter }: Props) => {
   return (
-    <Typography.Body
-      size="small"
-      className="py-1 pl-2 mr-1 mb-1 border-solid border-2 border-blue-700 rounded flex flex-nowrap items-center"
-    >
+    <Typography.Body className="py-1 pl-2 mr-1 mb-1 border-solid border-2 border-gray-500 rounded flex flex-nowrap items-center">
       {filter.name}
       <span
         role="button"
         data-qa="remove-filter"
-        className="mx-1 rounded p-1 text-gray-600 hover:text-blue-800 hover:border-blue-500 hover:bg-blue-400 h-5 w-5"
+        className="mx-1 rounded p-1 text-gray-900 hover:text-blue-800 hover:border-blue-500 hover:bg-blue-400 h-5 w-5"
         tabIndex={0}
         onKeyPress={(_) => removeFilter(filter.key, filter.id)}
         onClick={() => removeFilter(filter.key, filter.id)}
       >
-        <CrossIconSVG className="stroke-current  stroke-2 h-3 w-3" />
+        <CrossIconSVG className="stroke-current stroke-2 h-3 w-3" />
       </span>
     </Typography.Body>
   );
