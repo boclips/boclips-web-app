@@ -1,4 +1,6 @@
 import React from 'react';
+import { Typography } from '@boclips-ui/typography';
+import c from 'classnames';
 import s from './footer.module.less';
 
 interface Props {
@@ -8,38 +10,40 @@ interface Props {
 const Footer = ({ columnPosition }: Props) => {
   return (
     <footer
-      className={`col-start-2 col-end-26 row-end-last ${columnPosition}`}
+      className={c(`${columnPosition}`, s.footer)}
       aria-label="Boclips footer"
     >
-      <div className="border-t text-xxs text-footer pt-4 font-thin ">
-        <div>
-          <span> Copyright © 2021 Boclips. All rights reserved. </span>
-          <span className="pl-6">
-            <a
-              rel="noopener noreferrer"
-              className={s.link}
-              href="https://www.boclips.com/terms-and-conditions"
-              target="_blank"
-            >
-              Terms &amp; Conditions
-            </a>
-            &nbsp;•&nbsp;
-            <a
-              rel="noopener noreferrer"
-              className={s.link}
-              href="https://www.boclips.com/privacy-policy"
-              target="_blank"
-            >
-              Privacy Policy
-            </a>
-          </span>
-        </div>
-        <p>
-          All trademarks, service marks, trade names, product names and logos
-          appearing on the site are the property of their respective owners. Any
-          rights not expressly granted herein are reserved.
-        </p>
+      <div className="flex flex-row items-center">
+        <Typography.Body size="small">
+          Copyright © 2021 Boclips. All rights reserved.
+        </Typography.Body>
+        <a
+          rel="noopener noreferrer"
+          className={c(s.link, 'inline-blue')}
+          href="https://www.boclips.com/terms-and-conditions"
+          target="_blank"
+        >
+          <Typography.Body size="small" weight="medium">
+            Terms &amp; Conditions
+          </Typography.Body>
+        </a>
+        <a
+          rel="noopener noreferrer"
+          className={c(s.link, 'inline-blue')}
+          href="https://www.boclips.com/privacy-policy"
+          target="_blank"
+        >
+          <Typography.Body size="small" weight="medium">
+            Privacy Policy
+          </Typography.Body>
+        </a>
       </div>
+
+      <Typography.Body size="small">
+        All trademarks, service marks, trade names, product names and logos
+        appearing on the site are the property of their respective owners. Any
+        rights not expressly granted herein are reserved.
+      </Typography.Body>
     </footer>
   );
 };

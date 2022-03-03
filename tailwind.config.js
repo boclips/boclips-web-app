@@ -21,14 +21,14 @@ module.exports = {
     },
     extend: {
       gridTemplateRows: {
-        home: 'auto minmax(0, 458px) 63px',
-        'home-responsive': 'auto minmax(100%, auto) 63px',
+        home: 'auto minmax(0, 458px) auto',
+        'home-responsive': 'auto minmax(100%, auto) auto',
         'navbar-responsive': 'auto auto',
-        'default-view': 'auto minmax(0, auto) 63px',
-        'default-view-with-title': 'auto 50px minmax(0, auto) 63px',
+        'default-view': 'auto minmax(0, auto) auto',
+        'default-view-with-title': 'auto 50px minmax(0, auto) auto',
         'playlist-view':
-          'auto minmax(50px, auto) auto auto minmax(0, auto) 63px',
-        'order-view': 'auto 21px minmax(0, auto) minmax(0, auto) 63px',
+          'auto minmax(50px, auto) auto auto minmax(0, auto) auto',
+        'order-view': 'auto 21px minmax(0, auto) minmax(0, auto) auto',
       },
       gridTemplateColumns: {
         container:
@@ -98,7 +98,6 @@ module.exports = {
         gray: {
           100: 'var(--gray-100)',
           200: 'var(--gray-200)',
-          300: 'var(--gray-300)',
           400: 'var(--gray-400)',
           500: 'var(--gray-500)',
           600: 'var(--gray-600)',

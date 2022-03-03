@@ -22,20 +22,46 @@
   }
 
   a, .button-link {
-    color: @blue-800 !important;
+    color: @gray-900;
+    font-weight: 500;
 
     &:hover {
-      text-decoration: underline;
-      color: @blue-800;
+      color: @gray-800;
+      text-decoration-line: underline;
     }
 
     &:active {
-      color: @blue-900;
+      color: @gray-900;
+      text-decoration-line: underline;
     }
 
-    &:focus {
-      background: #FFC966;
+    &.inline-gray {
+      text-decoration-line: underline;
+      color: @gray-800;
+
+      &:hover {
+        color: @blue-700;
+      }
+
+      &:active {
+        color: @blue-700;
+      }
     }
+
+    &.inline-blue {
+      text-decoration-line: underline;
+      color: @blue-800;
+
+      &:hover {
+        color: @blue-900;
+      }
+
+      &:active {
+        color: @blue-900;
+      }
+    }
+
+    #focus;
   }
 
   .container {

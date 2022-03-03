@@ -11,7 +11,7 @@ export const ExtraSubjects: React.FC<Props> = ({
 }: Props) => {
   return (
     <div
-      className="border-t-2 border-blue-400 mt-1 lg:mt-6 pt-6"
+      className="border-t-2 border-gray-400 mt-1 lg:mt-6 pt-6"
       aria-label={`We also offer subjects in ${subjectsWeAlsoOffer
         .map((subject) => subject.name)
         .join(', ')}`}
@@ -23,14 +23,16 @@ export const ExtraSubjects: React.FC<Props> = ({
           .map((subject) => {
             return (
               <div key={subject.id}>
-                <Typography.Body> {subject.name}</Typography.Body>
+                <Typography.Body>{subject.name}</Typography.Body>
               </div>
             );
           })}
       </div>
       <Typography.Body>
         Get in touch with us at{' '}
-        <a href="mailto:support@boclips.com">support@boclips.com</a>
+        <a className="inline-blue" href="mailto:support@boclips.com">
+          support@boclips.com
+        </a>
       </Typography.Body>
     </div>
   );

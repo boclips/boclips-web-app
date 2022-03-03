@@ -1,5 +1,6 @@
 @import '~@boclips-ui/styles/src/colors';
 @import '~@boclips-ui/styles/src/breakpoints';
+@import '~@boclips-ui/styles/src/focus';
 
 .disciplineWrapper {
   display: grid;
@@ -12,9 +13,10 @@
     display: flex;
     align-items: center;
     border-radius: 4px;
-    border: 1px solid @blue-400;
     height: 80px;
     padding: 0 1rem;
+    box-shadow: 0 .5rem .75rem rgba(0, 0, 0, 0.05);
+    #focus;
 
     &&:last-of-type {
       margin-bottom: 0;
@@ -121,6 +123,11 @@
   }
 }
 
+
+.disciplineTitle{
+  font-weight: 400!important;
+}
+
 @media screen and (min-width: @screen-sm) {
   .disciplineWrapper {
     margin-top: 1rem;
@@ -140,6 +147,13 @@
         }
       }
     }
+  }
+
+  .disciplineTitle{
+    padding-top: 0;
+    font-size: 1rem;
+    width: 100%;
+    text-align: left;
   }
 
   .overlay {
@@ -188,8 +202,8 @@
       position: relative;
 
       &:hover {
-        box-shadow: 0px 5px 48px rgba(0, 0, 0, 0.08);
-        border: 2px solid @blue-600;
+        box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.08);
+        border: 2px solid @gray-700;
       }
 
       .illustration {
@@ -201,8 +215,8 @@
       }
 
       &.selectedItem {
-        border: 2px solid @blue-600;
-        box-shadow: 0px 5px 48px rgba(0, 0, 0, 0.08);
+        border: 2px solid @gray-700;
+        box-shadow: 0 1.5rem 3rem -1rem rgba(0, 0, 0, 0.08);
         z-index: 3;
 
         &:after {
@@ -210,8 +224,8 @@
           width: 15px;
           height: 15px;
 
-          border-right: 1px solid @blue-400;
-          border-bottom: 1px solid @blue-400;
+          border-right: 1px solid @gray-400;
+          border-bottom: 1px solid @gray-400;
           position: absolute;
           background: white;
           z-index: 2;
@@ -239,7 +253,7 @@
 
     .subjectsPanel {
     @apply col-span-full row-start-2 row-end-2 rounded;
-      border: 1px solid @blue-400;
+      border: 1px solid @gray-400;
       padding: 1.5rem;
 
       background: @white;
@@ -256,5 +270,10 @@
     .arrow {
       display: none;
     }
+  }
+
+  .disciplineTitle{
+    padding-top: 1rem;
+    text-align: center;
   }
 }

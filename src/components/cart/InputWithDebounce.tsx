@@ -36,10 +36,9 @@ export const InputWithDebounce = ({
   return (
     <textarea
       className={c(
-        'rounded border-gray-500 w-full placeholder-gray-600 text-gray-900 p-3 bg-scroll resize-none',
+        'rounded border-gray-500 w-full border-2 placeholder-gray-600 text-gray-900 p-3 bg-scroll resize-none',
         {
-          'border-2 border-blue-300': isValid,
-          'border-red-error border-1 focus:outline-none': !isValid,
+          'border-red-error focus:outline-none': !isValid,
         },
       )}
       placeholder={placeholder}

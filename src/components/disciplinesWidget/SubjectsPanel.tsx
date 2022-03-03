@@ -30,19 +30,18 @@ const SubjectsPanel = React.forwardRef(
             ?.sort((s1, s2) => s1.name.localeCompare(s2.name))
             .map((subject) => {
               return (
-                <div key={subject.id} className={s.linkWrapper}>
-                  <Link
-                    tabIndex={0}
-                    className="hover:underline"
-                    aria-label={`Search for videos with subject ${subject.name}`}
-                    to={{
-                      pathname: '/videos',
-                      search: `?subject=${subject.id}`,
-                    }}
-                  >
-                    <Typography.Body>{subject.name}</Typography.Body>
-                  </Link>
-                </div>
+                <Link
+                  key={subject.id}
+                  aria-label={`Search for videos with subject ${subject.name}`}
+                  to={{
+                    pathname: '/videos',
+                    search: `?subject=${subject.id}`,
+                  }}
+                >
+                  <Typography.Body weight="medium">
+                    {subject.name}
+                  </Typography.Body>
+                </Link>
               );
             })}
         </div>

@@ -56,10 +56,7 @@ const DisciplineTile = ({
         <span className={s.illustration}>
           {getDisciplineIllustration(discipline.name)}
         </span>
-        <DisciplineTileTitle
-          title={discipline.name}
-          isMobileView={isMobileView}
-        />
+        <DisciplineTileTitle title={discipline.name} />
         <span className={s.arrow}>
           <ArrowRight />
         </span>
