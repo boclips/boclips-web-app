@@ -20,13 +20,13 @@ export const VideoPage = ({ video }: Props) => {
   };
 
   const userNavigatedToPageViaApp = history.action === 'PUSH';
-  const videoMetadataTopMargin = userNavigatedToPageViaApp ? 'mt-8' : '';
+  const videoMetadataTopMargin = userNavigatedToPageViaApp ? 'lg:mt-8' : '';
 
   return (
     <>
       <main
         tabIndex={-1}
-        className="col-start-2 col-end-18 row-start-2 row-end-2 h-full"
+        className="col-start-2 col-end-26 row-start-2 h-full lg:col-start-2 lg:col-end-18 lg:row-end-6"
       >
         {userNavigatedToPageViaApp && (
           <button
@@ -42,13 +42,22 @@ export const VideoPage = ({ video }: Props) => {
         )}
 
         <VideoPlayer video={video} />
-        <VideoDescription video={video} />
-      </main>
 
+        {/* Hide the video description on smaller screens,
+        so it can be placed between header and additional services on tablet/mobile  */}
+        <div className="hidden lg:block">
+          <VideoDescription video={video} />
+        </div>
+      </main>
       <div
-        className={`col-start-18 col-end-26 row-start-2 row-end-2 ${videoMetadataTopMargin}`}
+        className={`col-start-2 col-end-26 row-start-3 row-end-3 ${videoMetadataTopMargin} lg:col-start-18 lg:col-end-26 lg:row-start-auto lg:row-end-auto`}
       >
         <VideoHeader video={video} />
+      </div>
+      <div className="col-start-2 col-end-26 row-start-4 row-end-4 -mt-2 lg:hidden">
+        <VideoDescription video={video} />
+      </div>
+      <div className="col-start-2 col-end-26 row-start-5 row-end-5 -mt-6 lg:col-start-18 lg:col-end-26 lg:row-start-auto lg:row-end-auto">
         <FeatureGate feature="BO_WEB_APP_ADDITIONAL_SERVICES">
           <VideoAdditionalServices />
         </FeatureGate>

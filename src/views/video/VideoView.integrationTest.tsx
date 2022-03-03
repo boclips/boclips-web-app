@@ -71,12 +71,14 @@ describe('Video View', () => {
     expect(
       await wrapper.findByText('the coolest video you ever did see'),
     ).toBeVisible();
-    expect(await wrapper.findByText('this is so cool')).toBeVisible();
+
+    // Small hack as we're rendering one of them invisible
+    expect(await wrapper.findAllByText('this is so cool')).toHaveLength(2);
     expect(
       await wrapper.findByText('This is an agreed price for your organization'),
     ).toBeVisible();
     expect(wrapper.queryByText('Ages 10-14')).not.toBeInTheDocument();
-    expect(await wrapper.findByText('history')).toBeVisible();
+    expect(await wrapper.findAllByText('history')).toHaveLength(2);
     expect(await wrapper.findByText('cool videos r us')).toBeVisible();
     expect(
       await wrapper.findByText('Released on Dec 17, 2015 by'),
