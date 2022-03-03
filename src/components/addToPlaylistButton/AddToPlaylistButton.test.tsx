@@ -173,6 +173,7 @@ describe('Add to playlist button', () => {
 
       createPlaylist(wrapper, 'ornament');
 
+      fireEvent.click(await wrapper.findByLabelText('Add to playlist'));
       expect(
         await wrapper.findByRole('checkbox', { name: 'ornament' }),
       ).toBeChecked();
@@ -192,16 +193,17 @@ describe('Add to playlist button', () => {
       ).toBeVisible();
     });
 
-    it('closes the bodal and shows pop up on successful creation of playlist', async () => {
+    it('closes the bodal and pop up on successful creation of playlist', async () => {
       const wrapper = renderWrapper();
       createPlaylist(wrapper, 'jazz');
+
       await waitFor(() =>
         expect(
           wrapper.queryByTestId('create-playlist-modal'),
         ).not.toBeInTheDocument(),
       );
 
-      expect(wrapper.queryByText('Add to playlist')).toBeInTheDocument();
+      expect(wrapper.queryByText('Add to playlist')).not.toBeInTheDocument();
     });
 
     it(`displays notification on failure`, async () => {

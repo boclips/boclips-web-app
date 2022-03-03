@@ -93,6 +93,7 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
 
   const handlePlaylistCreationSuccess = (_: string, playlistName: string) => {
     setShowCreatePlaylistModal(false);
+    setIsOpen(false);
     displayNotification(
       'success',
       `Playlist "${playlistName}" created`,
