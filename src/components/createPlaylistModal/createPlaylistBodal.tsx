@@ -23,7 +23,8 @@ export const CreatePlaylistBodal = ({
 }: Props) => {
   const [playlistForm, setPlaylistForm] = useState<PlaylistForm>({});
   const [titleError, setTitleError] = useState<boolean>(false);
-  const playlistNameRef = React.useRef();
+  const inputTextRef = React.useRef();
+
   const {
     mutate: createPlaylist,
     isSuccess,
@@ -66,6 +67,7 @@ export const CreatePlaylistBodal = ({
       videos,
     });
   };
+
   return (
     <Bodal
       title="Create new playlist"
@@ -73,21 +75,26 @@ export const CreatePlaylistBodal = ({
       onConfirm={handleConfirm}
       onCancel={onCancel}
       isLoading={isLoading}
-      initialFocusInputRef={playlistNameRef}
       dataQa="create-playlist-modal"
+      initialFocusRef={inputTextRef}
     >
+      <div className="pb-6">
+        <BoInputText
+          id="playlist-name"
+          labelText="Playlist name"
+          placeholder="Add name"
+          constraints={{ required: true }}
+          onChange={handleTitleChange}
+          error={titleError}
+          errorMessage="Playlist name is required"
+          inputType="text"
+          ref={inputTextRef}
+          height="48px"
+        />
+      </div>
       <BoInputText
-        label="Playlist name"
-        placeholder="Add name"
-        constraints={{ required: true }}
-        onChange={handleTitleChange}
-        error={titleError}
-        errorMessage="Playlist name is required"
-        inputType="text"
-        ref={playlistNameRef}
-      />
-      <BoInputText
-        label="Description"
+        id="playlist-description"
+        labelText="Description"
         placeholder="Add description"
         onChange={handleDescriptionChange}
         inputType="textarea"

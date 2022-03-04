@@ -126,10 +126,21 @@ describe('The mighty Bodal', () => {
     const inputRef = React.createRef<HTMLInputElement>();
 
     const wrapper = render(
-      <Bodal title="test" initialFocusInputRef={inputRef}>
+      <Bodal title="test" initialFocusRef={inputRef}>
         <div>skip focus</div>
-        <BoInputText label="dont-focus-input" inputType="text" />
-        <BoInputText ref={inputRef} label="Focus me" inputType="text" />
+        <BoInputText
+          onChange={jest.fn()}
+          id="no-focus-text"
+          labelText="dont-focus-input"
+          inputType="text"
+        />
+        <BoInputText
+          onChange={jest.fn()}
+          id="focus-text"
+          ref={inputRef}
+          labelText="Focus me"
+          inputType="text"
+        />
       </Bodal>,
     );
 
@@ -141,10 +152,21 @@ describe('The mighty Bodal', () => {
 
     const wrapper = render(
       <div data-qa="main">
-        <Bodal title="test" initialFocusInputRef={inputRef}>
-          <BoInputText ref={inputRef} label="Focus me" inputType="text" />
+        <Bodal title="test" initialFocusRef={inputRef}>
+          <BoInputText
+            onChange={jest.fn()}
+            id="focus-text"
+            ref={inputRef}
+            labelText="Focus me"
+            inputType="text"
+          />
         </Bodal>
-        <BoInputText label="Don't focus me" inputType="text" />
+        <BoInputText
+          id="no-focus-text"
+          labelText="Don't focus me"
+          inputType="text"
+          onChange={jest.fn()}
+        />
       </div>,
     );
 

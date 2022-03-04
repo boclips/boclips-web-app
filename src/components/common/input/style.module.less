@@ -1,12 +1,10 @@
 @import '~@boclips-ui/styles/src/colors';
 @import '~@boclips-ui/styles/src/focus';
 
-.inputWrapper {
+.wrapper {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1.5rem;
   position: relative;
-  font-size: 1rem;
 
   .errorMessage {
     position: relative;
@@ -22,38 +20,56 @@
     color: @gray-800;
     letter-spacing: 0.0012em;
   }
+
+  .inputWrapper {
+    position: relative;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .icon {
+    position: absolute;
+    left: 10px;
+    width: 15px;
+    height: 15px;
+  }
+
+  .clearButton {
+    position: absolute;
+    right: 8px;
+
+    #focus;
+  }
 }
 
 .input {
   border-radius: 4px;
-  border: 2px solid @gray-700;
+  border: 2px solid @gray-500;
   width: 100%;
-  min-height: 48px;
+  height: 100%;
 
   &::placeholder {
     font-size: 1rem;
     font-weight: 400;
-    line-height: 1.5rem;
-    color: @gray-700;
+    line-height: 150%;
+    color: @gray-600;
   }
 
-  &:active {
-    border-color: @blue-700;
+  &:hover,
+  &:active,
+  &:focus-visible {
+    border-color: @gray-700;
   }
 
-  &:hover {
-    border-color: @gray-600;
-  }
-
-  &:focus,
-  &:focus-visible,
-  &:focus-within {
-    outline: 4px solid @blue-700 !important;
-    outline-offset: 0px !important;
-  }
+  #focus;
 
   &.error {
     border: 3px solid @error;
+  }
+
+  &.withIcon {
+    padding-left: 2.25rem;
   }
 }
 
@@ -95,6 +111,7 @@
   &:active {
     border-color: @blue-900;
     background-color: @blue-900;
+    outline: none;
   }
 
   &:checked:active,

@@ -17,7 +17,7 @@ export interface Props {
   isLoading?: boolean;
   cancelButtonText?: string;
   dataQa?: string;
-  initialFocusInputRef?: React.RefObject<HTMLElement>;
+  initialFocusRef?: React.RefObject<HTMLElement>;
 }
 
 export const Bodal: React.FC<Props> = ({
@@ -29,7 +29,7 @@ export const Bodal: React.FC<Props> = ({
   cancelButtonText = 'Cancel',
   dataQa = 'modal',
   children,
-  initialFocusInputRef,
+  initialFocusRef,
 }: PropsWithChildren<Props>) => {
   const breakpoints = useMediaBreakPoint();
   const mobileView = breakpoints.type === 'mobile';
@@ -69,8 +69,8 @@ export const Bodal: React.FC<Props> = ({
   );
 
   useEffect(() => {
-    initialFocusInputRef?.current.focus();
-  }, [initialFocusInputRef]);
+    initialFocusRef?.current.focus();
+  }, [initialFocusRef]);
 
   return (
     <FocusTrap>
@@ -85,7 +85,7 @@ export const Bodal: React.FC<Props> = ({
         onKeyDown={(event) => handleEscapeKeyEvent(event, onCancel)}
       >
         <div id="bodal-description" hidden>
-          {`This is a dialog for ${title}. Escape will cancel and close the window.`}
+          This is a dialog for {title}. Escape will cancel and close the window.
         </div>
         <div className={s.modal}>
           <div className={s.modalContent}>
