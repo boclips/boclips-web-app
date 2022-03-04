@@ -9,6 +9,7 @@ import './style.less';
 interface Props {
   label: string | React.ReactElement;
   onChange: (date: any) => void;
+  id?: string;
   value?: string;
   onFocus?: () => void;
   onBlur?: () => void;
@@ -20,6 +21,7 @@ const DateSelect = ({
   onChange,
   label,
   value,
+  id = 'date',
   ...props
 }: Props): React.ReactElement => {
   defineCustomElements(window);
@@ -35,13 +37,11 @@ const DateSelect = ({
   }, [ref.current]);
 
   return (
-    <div>
-      <label htmlFor="date" className="pb-4">
-        {label}
-      </label>
+    <label htmlFor={id} className="pb-4">
+      {label}
       {/* eslint-disable-next-line react/jsx-props-no-spreading  */ /* prettier-ignore */ /* @ts-ignore */}
-      <duet-date-picker {...props} value={value} ref={ref} identifier="date" />
-    </div>
+      <duet-date-picker {...props} value={value} ref={ref} identifier={id} />
+    </label>
   );
 };
 

@@ -23,7 +23,7 @@ const BoCheckbox = ({ dataQa, onChange, name, id, checked, label }: Props) => {
         checked={checked}
         data-qa={dataQa}
       />
-      <Typography.Body weight={checked ? 'medium' : null}>
+      <Typography.Body size="small" weight={checked ? 'medium' : null}>
         {label || name}
       </Typography.Body>
     </label>

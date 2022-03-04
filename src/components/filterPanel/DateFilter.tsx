@@ -25,8 +25,9 @@ export const DateFilter = ({ releaseDates, handleChange }: Props) => {
   return (
     <CollapsableFilter title="Release date">
       <div className="mt-2 w-full px-4">
-        <div data-qa="release_date_from">
+        <div className="pb-4" data-qa="release_date_from">
           <ReleaseDateFilter
+            id="date-from"
             label={<Typography.Body size="small">From:</Typography.Body>}
             value={releasedFrom[0]}
             onChange={(date) => setFromDateFilter(date.detail.value)}
@@ -34,6 +35,7 @@ export const DateFilter = ({ releaseDates, handleChange }: Props) => {
         </div>
         <div data-qa="release_date_to">
           <ReleaseDateFilter
+            id="date-to"
             label={<Typography.Body size="small">To:</Typography.Body>}
             value={releasedTo[0]}
             onChange={(date) => setToDateFilter(date.detail.value)}

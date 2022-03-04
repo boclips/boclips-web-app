@@ -11,13 +11,13 @@ describe('date-select', () => {
   it('adds onChange event listener', () => {
     const spy = jest.fn();
 
-    render(<DateSelect label="date-select" onChange={spy} />);
+    render(<DateSelect label="date-select" id="date" onChange={spy} />);
 
     const duetChangeEvent = new Event('duetChange');
 
     screen
       .getByText('date-select')
-      .nextElementSibling!.dispatchEvent(duetChangeEvent);
+      .lastElementChild.dispatchEvent(duetChangeEvent);
 
     expect(spy).toHaveBeenCalled();
   });
