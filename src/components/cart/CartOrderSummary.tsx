@@ -66,12 +66,7 @@ export const CartOrderSummary = ({ cart }: Props) => {
         <div className="border-blue-500 border-2 flex flex-col rounded p-5">
           <div className="border-b border-blue-500 mb-4">
             <CartSummaryItem
-              label={
-                <div>
-                  Vide
-                  <span className="tracking-tightestest">o(s)</span> total
-                </div>
-              }
+              label={<Typography.Body>Video(s) total</Typography.Body>}
               value={getTotalPriceDisplayValue(videos)}
             />
             {captionsRequested && (
