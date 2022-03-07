@@ -108,6 +108,10 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
     );
   };
 
+  const videoNotAddedToAnyPlaylist = playlistsContainingVideo.length === 0;
+  const buttonDescription = videoNotAddedToAnyPlaylist
+    ? 'Add to playlist'
+    : 'Add or remove from playlist';
   return (
     <div
       id={videoId}
@@ -123,13 +127,13 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
           />
         </div>
       )}
-      <Tooltip text="Add to playlist">
+      <Tooltip text={buttonDescription}>
         <Button
-          text="Add to playlist"
-          aria-label="Add to playlist"
+          text={buttonDescription}
+          aria-label={buttonDescription}
           iconOnly
           icon={
-            playlistsContainingVideo.length === 0 ? (
+            videoNotAddedToAnyPlaylist ? (
               <PlaylistAddIcon className={s.addSvg} />
             ) : (
               <PlaylistAddAlreadyAddedIcon className={s.removeSvg} />

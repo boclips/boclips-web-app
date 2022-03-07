@@ -191,7 +191,7 @@ describe('Playlist view', () => {
 
     const videoToRemove = screen.getByTestId('grid-card-for-Video One 111');
     const videoToRemoveButton = within(videoToRemove).getByRole('button', {
-      name: 'Add to playlist',
+      name: 'Add or remove from playlist',
     });
 
     fireEvent.click(videoToRemoveButton);
@@ -203,7 +203,9 @@ describe('Playlist view', () => {
     fireEvent.click(playlistCheckbox);
 
     await waitForElementToBeRemoved(screen.queryByText('Video One 111'));
-    const remainingVideos = screen.getAllByLabelText('Add to playlist');
+    const remainingVideos = screen.getAllByLabelText(
+      'Add or remove from playlist',
+    );
     expect(remainingVideos).toHaveLength(4);
   });
 
