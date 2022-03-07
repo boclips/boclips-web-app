@@ -11,18 +11,18 @@ interface Props {
 
 export const VideoDescription = ({ video }: Props) => {
   return (
-    <div className="mt-4 flex flex-col">
+    <div className="lg:mt-4 flex flex-col">
       <div className={s.badges}>
         {video?.subjects?.map((subject) => (
           <SubjectBadge key={subject.id} subject={subject} />
         ))}
       </div>
-      <div className="mt-4">
+      <div className="lg:mt-4">
         <Typography.Body className="text-gray-800">
           {video?.description}
         </Typography.Body>
       </div>
-      <div className="mt-4">
+      <div className="lg:mt-4">
         <Typography.Body className="text-gray-800">
           {video?.additionalDescription}
         </Typography.Body>

@@ -18,16 +18,16 @@ interface Props {
 export const VideoHeader = ({ video }: Props) => {
   return (
     <>
-      <Typography.H3 className="text-gray-900 mb-2">
+      <Typography.H3 className="text-gray-900 lg:mb-2">
         {video?.title}
       </Typography.H3>
-      <div className="mb-1">
+      <div className="lg:mb-1">
         <Typography.Body
           size="small"
           className="text-gray-800"
         >{`ID: ${video?.id}`}</Typography.Body>
       </div>
-      <div className="flex flex-row mb-6 text-gray-800">
+      <div className="flex flex-row lg:mb-6 text-gray-800">
         <Typography.Body>
           {`Released on ${dateFormat(video?.releasedOn, 'mediumDate')} by`}
         </Typography.Body>

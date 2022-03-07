@@ -8,6 +8,8 @@ import { useHistory } from 'react-router-dom';
 import BackArrow from 'resources/icons/back-arrow.svg';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { Typography } from '@boclips-ui/typography';
+import c from 'classnames';
+import s from './videoPage.module.less';
 
 interface Props {
   video: Video;
@@ -20,14 +22,11 @@ export const VideoPage = ({ video }: Props) => {
   };
 
   const userNavigatedToPageViaApp = history.action === 'PUSH';
-  const videoMetadataTopMargin = userNavigatedToPageViaApp ? 'mt-8' : '';
+  const videoMetadataTopMargin = userNavigatedToPageViaApp ? 'lg:mt-8' : '';
 
   return (
     <>
-      <main
-        tabIndex={-1}
-        className="col-start-2 col-end-18 row-start-2 row-end-2 h-full"
-      >
+      <main tabIndex={-1} className={s.playerSection}>
         {userNavigatedToPageViaApp && (
           <button
             type="button"
@@ -42,13 +41,14 @@ export const VideoPage = ({ video }: Props) => {
         )}
 
         <VideoPlayer video={video} />
-        <VideoDescription video={video} />
       </main>
-
-      <div
-        className={`col-start-18 col-end-26 row-start-2 row-end-2 ${videoMetadataTopMargin}`}
-      >
+      <div className={c(s.headerSection, videoMetadataTopMargin)}>
         <VideoHeader video={video} />
+      </div>
+      <div className={s.descriptionSection}>
+        <VideoDescription video={video} />
+      </div>
+      <div className={s.additionalServicesSection}>
         <FeatureGate feature="BO_WEB_APP_ADDITIONAL_SERVICES">
           <VideoAdditionalServices />
         </FeatureGate>

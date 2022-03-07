@@ -71,6 +71,7 @@ describe('Video View', () => {
     expect(
       await wrapper.findByText('the coolest video you ever did see'),
     ).toBeVisible();
+
     expect(await wrapper.findByText('this is so cool')).toBeVisible();
     expect(
       await wrapper.findByText('This is an agreed price for your organization'),
