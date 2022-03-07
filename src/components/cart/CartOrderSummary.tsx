@@ -80,12 +80,16 @@ export const CartOrderSummary = ({ cart }: Props) => {
             )}
             {trimRequested && <CartSummaryItem label="Trimming" value="Free" />}
           </div>
-          <Typography.H5 className="flex text-gray-900 justify-between mb-6">
+          <Typography.H1
+            size="xs"
+            weight="regular"
+            className="flex text-gray-900 justify-between mb-6"
+          >
             <span>Total</span>
             <span data-qa="total-price">
               {`${getTotalPriceDisplayValue(videos)}`}
             </span>
-          </Typography.H5>
+          </Typography.H1>
           <Button
             onClick={() => {
               setDisplayErrorMessage(!isCartValid);

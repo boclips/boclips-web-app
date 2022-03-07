@@ -8,6 +8,7 @@ import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import CoverWithVideo from 'src/components/playlists/coverWithVideo/CoverWithVideo';
+import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 
 interface Props {
@@ -52,9 +53,12 @@ const PlaylistBody = ({ videos }: Props) => {
     <EmptyPlaylist />
   ) : (
     <>
-      <h4 className="grid-row-start-4 grid-row-end-4 col-start-2 col-end-26 mb-0">
+      <Typography.H2
+        size="sm"
+        className="grid-row-start-4 grid-row-end-4 col-start-2 col-end-26 mb-0"
+      >
         In this playlist:
-      </h4>
+      </Typography.H2>
       <main
         tabIndex={-1}
         className={c(

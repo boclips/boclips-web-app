@@ -28,9 +28,9 @@ export const OrderThumbnail = ({ items }: Props) => {
           >
             {count}
           </Typography.H1>
-          <Typography.H4 className="-mt-2">
+          <Typography.H2 size="sm" className="-mt-2">
             {count > 1 ? 'videos' : 'video'}
-          </Typography.H4>
+          </Typography.H2>
         </div>
       </div>
     </div>

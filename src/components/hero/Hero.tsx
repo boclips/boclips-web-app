@@ -33,7 +33,9 @@ export const Hero = ({
         tabIndex={-1}
         className={`${s.heroCopyWrapper} col-start-13 col-end-24 lg:col-start-13 lg:col-end-22 row-start-${row} row-end-${row} text-blue-800 flex flex-col justify-center`}
       >
-        <Typography.H2 className="blue-800 ">{title}</Typography.H2>
+        <Typography.H1 size="lg" className="blue-800 ">
+          {title}
+        </Typography.H1>
         {description && (
           <Typography.Body
             as="p"

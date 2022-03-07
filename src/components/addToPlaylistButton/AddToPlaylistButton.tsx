@@ -18,6 +18,7 @@ import { handleEscapeKeyEvent } from 'src/services/handleKeyEvent';
 import { CreatePlaylistBodal } from 'src/components/createPlaylistModal/createPlaylistBodal';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import PlusIcon from 'src/resources/icons/plus-sign.svg';
+import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 
 interface Props {
@@ -161,7 +162,7 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
             }
           >
             <div className={s.header}>
-              <h5>Add to playlist</h5>
+              <Typography.Body weight="medium">Add to playlist</Typography.Body>
               <button
                 type="button"
                 aria-label="close add to playlist"

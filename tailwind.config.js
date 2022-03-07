@@ -121,10 +121,6 @@ module.exports = {
         xxs: '0.75rem',
         xs: '0.875rem',
         md: '1rem',
-        h1: '2.5rem',
-        h2: '2rem',
-        h3: '1.5rem',
-        h4: '1.25rem',
       },
       spacing: {
         14: '3.5rem',

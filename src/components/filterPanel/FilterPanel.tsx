@@ -42,14 +42,16 @@ export const FilterPanel = ({
 
   return (
     <div className="col-start-2 col-end-8">
-      <Typography.H5
+      <Typography.H1
+        size="xs"
+        weight="medium"
         id="filter_by"
         className={c('text-primary', {
           'pb-2': areFiltersApplied,
         })}
       >
         Filter by:
-      </Typography.H5>
+      </Typography.H1>
       {areFiltersApplied && (
         <SelectedFilters
           removeFilter={removeFilter}

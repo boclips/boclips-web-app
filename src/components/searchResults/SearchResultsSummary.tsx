@@ -8,7 +8,11 @@ interface Props {
 
 export const SearchResultsSummary = ({ count, query }: Props) => {
   return (
-    <Typography.H4 className="text-lg text-gray-800 mb-4" aria-live="polite">
+    <Typography.H1
+      size="md"
+      className="text-lg text-gray-800 mb-4"
+      aria-live="polite"
+    >
       Showing{' '}
       <span data-qa="search-hits" className="font-extrabold">
         {count}
@@ -16,6 +20,6 @@ export const SearchResultsSummary = ({ count, query }: Props) => {
       videos for &quot;
       {query}
       &quot;
-    </Typography.H4>
+    </Typography.H1>
   );
 };

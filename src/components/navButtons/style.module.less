@@ -13,26 +13,26 @@
 }
 
 .navButton {
-@apply items-center justify-center relative;
+  @apply items-center justify-center relative;
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  padding: 0 .75rem;
+  padding: 0 0.75rem;
   margin: 0 0.25rem;
 
-  &:last-child{
+  &:last-child {
     margin-right: 0;
   }
 
   &:hover {
     &::after {
-      #barOnBottom
+      #barOnBottom;
     }
   }
 
   &.active {
     &::after {
-      #barOnBottom
+      #barOnBottom;
     }
   }
 
@@ -46,7 +46,7 @@
     #focus;
 
     span {
-    @apply text-xxs mt-1 font-medium;
+      @apply text-xxs mt-1 font-medium;
       color: @gray-900;
       line-height: 1.125rem;
     }
@@ -99,10 +99,6 @@
   color: @gray-900;
   justify-content: center;
   cursor: auto;
-
-  h3 {
-    margin: 0;
-  }
 
   a,
   button {

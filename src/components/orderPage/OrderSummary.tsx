@@ -16,7 +16,10 @@ export const OrderSummary = ({ order }: Props) => {
   return (
     <div className="grid-row-start-3 grid-row-end-3 col-start-2 col-end-26">
       <div className="flex justify-between mb-3">
-        <Typography.H3 className="text-gray-800 mb-4 ">{`Order ${order?.id}`}</Typography.H3>
+        <Typography.H1
+          size="md"
+          className="text-gray-800 mb-4 "
+        >{`Order ${order?.id}`}</Typography.H1>
         <Typography.Body className="text-right w-64">
           To edit or cancel this order, please contact{' '}
           <Typography.Body

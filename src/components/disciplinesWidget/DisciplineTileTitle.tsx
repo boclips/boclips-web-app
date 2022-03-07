@@ -7,5 +7,9 @@ interface Props {
 }
 
 export const DisciplineTileTitle: React.FC<Props> = ({ title }: Props) => {
-  return <Typography.H5 className={s.disciplineTitle}>{title}</Typography.H5>;
+  return (
+    <Typography.H2 size="xs" weight="regular" className={s.disciplineTitle}>
+      {title}
+    </Typography.H2>
+  );
 };

@@ -43,9 +43,9 @@ export const Bodal: React.FC<Props> = ({
   const header = (
     <>
       {mobileView && <span />}
-      <Typography.H4 className="text-gray-900" id="bodal-title">
+      <Typography.H1 size="sm" className="text-gray-900" id="bodal-title">
         {title}
-      </Typography.H4>
+      </Typography.H1>
       <button
         type="button"
         aria-label={`Close ${title} modal`}

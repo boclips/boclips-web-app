@@ -1,10 +1,10 @@
 import { LoadingOutlined } from '@ant-design/icons';
+import { Typography } from '@boclips-ui/typography';
 import React from 'react';
 
 export const Loading = () => (
-  <h3 className="flex justify-center mt-16 text-lg">
+  <Typography.H1 size="xs" className="flex justify-center mt-16">
     <LoadingOutlined className="mr-2" />
-    {/*  @ts-ignore */}
-    <span style={{ fontWeight: '500' }}>Loading</span>
-  </h3>
+    <span>Loading</span>
+  </Typography.H1>
 );

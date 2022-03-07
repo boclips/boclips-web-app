@@ -18,9 +18,9 @@ interface Props {
 export const VideoHeader = ({ video }: Props) => {
   return (
     <>
-      <Typography.H3 className="text-gray-900 lg:mb-2">
+      <Typography.H1 size="md" className="text-gray-900 lg:mb-2">
         {video?.title}
-      </Typography.H3>
+      </Typography.H1>
       <div className="lg:mb-1">
         <Typography.Body
           size="small"
@@ -35,13 +35,13 @@ export const VideoHeader = ({ video }: Props) => {
           {video?.createdBy}
         </Typography.Body>
       </div>
-      <Typography.H4 className="text-gray-900">
+      <Typography.H2 size="sm" className="text-gray-900">
         {createPriceDisplayValue(
           video?.price?.amount,
           video?.price?.currency,
           getBrowserLocale(),
         )}
-      </Typography.H4>
+      </Typography.H2>
       <FeatureGate feature="BO_WEB_APP_PRICES">
         <div className="grey-800 mb-4">
           <Typography.Body className="text-gray-700">
