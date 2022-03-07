@@ -9,6 +9,7 @@ import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { trackNavigateToVideoDetails } from 'src/components/common/analytics/Analytics';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
+import { Typography } from '@boclips-ui/typography';
 import { VideoCardButtons } from './buttons/VideoCardButtons';
 import s from './VideoCardWrapper.module.less';
 
@@ -23,8 +24,8 @@ const VideoCardTitle = ({ video }: Props) => {
     trackNavigateToVideoDetails(video, boclipsClient);
   };
   return (
-    <Link onClick={onClick} to={`/videos/${video.id}`}>
-      <div className="text-gray-900">{video?.title}</div>
+    <Link className="inline-flex" onClick={onClick} to={`/videos/${video.id}`}>
+      <Typography.Link className="truncate">{video?.title}</Typography.Link>
     </Link>
   );
 };

@@ -90,7 +90,7 @@
     "@boclips-ui/typography": "^2.3.1",
     "@boclips-ui/use-media-breakpoints": "^2.0.3",
     "@boclips-ui/video": "^3.0.2",
-    "@boclips-ui/video-card": "^5.1.9",
+    "@boclips-ui/video-card": "^5.2.4",
     "@boclips-ui/video-card-placeholder": "^2.0.14",
     "@hot-loader/react-dom": "^17.0.1",
     "@sentry/integrations": "^6.1.0",
