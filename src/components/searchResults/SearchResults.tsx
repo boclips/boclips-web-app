@@ -21,21 +21,23 @@ export const SearchResults = ({
   isFetching,
 }: Props) => {
   const renderVideoCardList = () => {
-    if (!isFetching && results)
-      return (
-        <VideoCardList
-          videos={results.page}
-          currentPage={currentPage}
-          handlePageChange={handlePageChange}
-          totalSearchResults={results.pageSpec?.totalElements}
-        />
-      );
-
-    return results.page.map((video) => (
-      <div className="mb-8" key={`placeholder-${video?.id}`}>
-        <VideoCardPlaceholder />
-      </div>
-    ));
+    switch (!isFetching && !!results) {
+      case true:
+        return (
+          <VideoCardList
+            videos={results.page}
+            currentPage={currentPage}
+            handlePageChange={handlePageChange}
+            totalSearchResults={results.pageSpec?.totalElements}
+          />
+        );
+      default:
+        return results.page.map((video) => (
+          <div className="mb-8" key={`placeholder-${video?.id}`}>
+            <VideoCardPlaceholder />
+          </div>
+        ));
+    }
   };
 
   return (
