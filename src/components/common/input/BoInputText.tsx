@@ -8,7 +8,9 @@ import s from './style.module.less';
 export interface BoInputProps extends InputProps {
   id: string;
   onChange: (text: string) => void;
-  error?: boolean;
+  onFocus?: () => void;
+  onBlur?: () => void;
+  isError?: boolean;
   errorMessage?: string;
   icon?: React.ReactElement;
   allowClear?: boolean;
@@ -33,7 +35,9 @@ export const BoInputText = React.forwardRef(
   (
     {
       onChange,
-      error = false,
+      onFocus,
+      onBlur,
+      isError = false,
       errorMessage = 'there is an error',
       placeholder = 'Search...',
       id,
@@ -69,11 +73,13 @@ export const BoInputText = React.forwardRef(
               id={id}
               onChange={(e) => (onChange ? setValue(e.target.value) : {})}
               className={c(s.input, {
-                [s.error]: error,
+                [s.error]: isError,
                 [s.withIcon]: icon,
               })}
               value={value}
               ref={ref as Ref<HTMLInputElement>}
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
           );
         case 'textarea':
@@ -85,10 +91,12 @@ export const BoInputText = React.forwardRef(
               id={id}
               onChange={(e) => (onChange ? setValue(e.target.value) : {})}
               className={c(s.input, {
-                [s.error]: error,
+                [s.error]: isError,
               })}
               value={value}
               ref={ref as Ref<HTMLTextAreaElement>}
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
           );
         default:
@@ -110,7 +118,7 @@ export const BoInputText = React.forwardRef(
             )}
           </Typography.Body>
         )}
-        {error && (
+        {isError && (
           <span className={s.errorMessage}>
             <ErrorIconSVG />
             {errorMessage}

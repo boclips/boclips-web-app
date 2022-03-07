@@ -8,7 +8,7 @@ describe('boInput', () => {
     const wrapper = render(
       <BoInputText
         id="Input"
-        error={false}
+        isError={false}
         errorMessage={"Shouldn't see me"}
         inputType="text"
         onChange={jest.fn()}
@@ -22,7 +22,7 @@ describe('boInput', () => {
     const wrapper = render(
       <BoInputText
         id="Input"
-        error
+        isError
         errorMessage="Should see me"
         inputType="text"
         onChange={jest.fn()}

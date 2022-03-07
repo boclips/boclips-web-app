@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDebounce } from 'src/hooks/useDebounce';
-import c from 'classnames';
+import { BoInputText } from 'src/components/common/input/BoInputText';
 
 interface Props {
   currentValue?: string;
@@ -10,6 +10,7 @@ interface Props {
   enableValidation?: (enabled: boolean) => void;
   onUpdateWithoutDebounce?: (note: string) => void;
 }
+
 export const InputWithDebounce = ({
   currentValue,
   onUpdate,
@@ -22,8 +23,8 @@ export const InputWithDebounce = ({
   const debouncedValue = useDebounce(value, 1000);
 
   const handleOnChange = (e: any) => {
-    setValue(e.target.value);
-    onUpdateWithoutDebounce(e.target.value);
+    setValue(e);
+    onUpdateWithoutDebounce(e);
   };
 
   useEffect(() => {
@@ -31,22 +32,19 @@ export const InputWithDebounce = ({
       onUpdate(debouncedValue);
     }
     // eslint-disable-next-line
-  }, [debouncedValue]);
+    }, [debouncedValue]);
 
   return (
-    <textarea
-      className={c(
-        'rounded border-gray-500 w-full border-2 placeholder-gray-600 text-gray-900 p-3 bg-scroll resize-none',
-        {
-          'border-red-error focus:outline-none': !isValid,
-        },
-      )}
-      placeholder={placeholder}
+    <BoInputText
+      id="cart-note"
       onChange={handleOnChange}
       onFocus={() => enableValidation(false)}
       onBlur={() => enableValidation(true)}
-      value={value}
-      rows={2}
+      inputType="textarea"
+      isError={!isValid}
+      placeholder={placeholder}
+      showLabelText={false}
+      defaultValue={value}
     />
   );
 };
