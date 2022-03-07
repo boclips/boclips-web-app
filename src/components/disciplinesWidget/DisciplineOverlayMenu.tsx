@@ -38,6 +38,7 @@ const DisciplineOverlayMenu = ({ onClick, selectedDiscipline }: Props) => {
           return (
             <Link
               key={subject.name}
+              className=""
               to={{
                 pathname: '/videos',
                 search: `?subject=${subject.id}`,

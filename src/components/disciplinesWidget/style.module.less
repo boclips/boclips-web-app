@@ -80,7 +80,7 @@
   .selectedDiscipline {
   @apply flex items-center rounded;
     width: 100%;
-    border: 1px solid @blue-400;
+    border: 2px solid @gray-700;
     height: 56px;
     padding: 0 1rem;
     margin-top: 1rem;
@@ -99,20 +99,21 @@
   .subjects {
     display: flex;
     flex-direction: column;
-    margin-top: 1rem;
 
     a {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.875rem;
-      color: @blue-800;
-      height: 24px;
-      margin-bottom: 1.5rem;
+      padding: 1rem 0;
 
-      &&:last-of-type {
-        margin-bottom: 2rem;
+      &:first-of-type {
+        padding-top: 1.5rem;
       }
+
+      &:last-of-type {
+        margin-bottom: 1.5rem;
+      }
+
     }
 
     svg {
@@ -124,8 +125,8 @@
 }
 
 
-.disciplineTitle{
-  font-weight: 400!important;
+.disciplineTitle {
+  font-weight: 400 !important;
 }
 
 @media screen and (min-width: @screen-sm) {
@@ -149,7 +150,7 @@
     }
   }
 
-  .disciplineTitle{
+  .disciplineTitle {
     padding-top: 0;
     font-size: 1rem;
     width: 100%;
@@ -272,7 +273,7 @@
     }
   }
 
-  .disciplineTitle{
+  .disciplineTitle {
     padding-top: 1rem;
     text-align: center;
   }
