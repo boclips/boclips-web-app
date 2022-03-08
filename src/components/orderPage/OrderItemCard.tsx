@@ -3,10 +3,10 @@ import React from 'react';
 import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
 import { AdditionalServicesSummaryPreview } from 'src/components/cart/AdditionalServices/AdditionalServicesSummaryPreview';
-import { Link } from 'react-router-dom';
 import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
+import { Link } from '../common/Link';
 
 interface Props {
   item: OrderItem;

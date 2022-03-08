@@ -30,8 +30,10 @@ export const ExtraSubjects: React.FC<Props> = ({
       </div>
       <Typography.Body>
         Get in touch with us at{' '}
-        <a className="inline-blue" href="mailto:support@boclips.com">
-          support@boclips.com
+        <a href="mailto:support@boclips.com">
+          <Typography.Link type="inline-blue">
+            support@boclips.com
+          </Typography.Link>
         </a>
       </Typography.Body>
     </div>
