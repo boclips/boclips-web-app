@@ -67,7 +67,7 @@ describe('Video View', () => {
 
     const wrapper = renderVideoView(['/videos/video-id']);
 
-    expect(await wrapper.findByText('ID: video-id')).toBeVisible();
+    expect(await wrapper.findByText('video-id')).toBeVisible();
     expect(
       await wrapper.findByText('the coolest video you ever did see'),
     ).toBeVisible();
@@ -79,9 +79,7 @@ describe('Video View', () => {
     expect(wrapper.queryByText('Ages 10-14')).not.toBeInTheDocument();
     expect(await wrapper.findByText('history')).toBeVisible();
     expect(await wrapper.findByText('cool videos r us')).toBeVisible();
-    expect(
-      await wrapper.findByText('Released on Dec 17, 2015 by'),
-    ).toBeVisible();
+    expect(await wrapper.findByText('17 Dec 2015')).toBeVisible();
     expect(await wrapper.findByLabelText('Copy video link')).toBeVisible();
     expect(await wrapper.findByText('Additional services')).toBeVisible();
   });
@@ -97,7 +95,7 @@ describe('Video View', () => {
 
     const wrapper = renderVideoView(['/videos/video-id']);
 
-    expect(await wrapper.findByText('ID: video-id')).toBeVisible();
+    expect(await wrapper.findByText('video-id')).toBeVisible();
     expect(wrapper.queryByText('Additional services')).toBeNull();
   });
 
@@ -112,7 +110,7 @@ describe('Video View', () => {
 
     const wrapper = renderVideoView(['/videos/video-id']);
 
-    expect(await wrapper.findByText('ID: video-id')).toBeVisible();
+    expect(await wrapper.findByText('video-id')).toBeVisible();
     expect(
       wrapper.queryByText('This is an agreed price for your organization'),
     ).toBeNull();
@@ -124,7 +122,7 @@ describe('Video View', () => {
 
     const wrapper = renderVideoView(['/videos/video-id']);
 
-    expect(await wrapper.findByText('ID: video-id')).toBeVisible();
+    expect(await wrapper.findByText('video-id')).toBeVisible();
     expect(wrapper.queryByText('Add to cart')).toBeNull();
   });
 

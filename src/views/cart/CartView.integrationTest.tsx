@@ -70,7 +70,7 @@ describe('CartView', () => {
         expect(await wrapper.findByText('Shopping cart')).toBeInTheDocument();
         expect(await wrapper.findByText('(1 item)')).toBeInTheDocument();
         expect(await wrapper.findByText('news video')).toBeInTheDocument();
-        expect(await wrapper.findByText('ID: video-id')).toBeInTheDocument();
+        expect(await wrapper.findByText('video-id')).toBeInTheDocument();
         expect(
           await wrapper.findByText('Additional services'),
         ).toBeInTheDocument();
