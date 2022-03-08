@@ -12,55 +12,17 @@
     max-width: none !important;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     margin: 0;
     padding: 0;
   }
 
-  main{
-    #focus;
-  }
-
-  a, .button-link {
-    color: @gray-900;
-    font-weight: 500;
-
-    &:hover {
-      color: @gray-800;
-      text-decoration-line: underline;
-    }
-
-    &:active {
-      color: @gray-900;
-      text-decoration-line: underline;
-    }
-
-    &.inline-gray {
-      text-decoration-line: underline;
-      color: @gray-800;
-
-      &:hover {
-        color: @blue-700;
-      }
-
-      &:active {
-        color: @blue-700;
-      }
-    }
-
-    &.inline-blue {
-      text-decoration-line: underline;
-      color: @blue-800;
-
-      &:hover {
-        color: @blue-900;
-      }
-
-      &:active {
-        color: @blue-900;
-      }
-    }
-
+  main {
     #focus;
   }
 
@@ -70,7 +32,7 @@
 }
 
 @layer utilities {
-  .truncate{
+  .truncate {
     white-space: break-spaces;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -79,8 +41,6 @@
     text-overflow: ellipsis;
   }
 }
-
-
 
 * {
   -webkit-font-smoothing: antialiased;

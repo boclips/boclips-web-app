@@ -13,31 +13,35 @@ const Footer = ({ columnPosition }: Props) => {
       className={c(`${columnPosition}`, s.footer)}
       aria-label="Boclips footer"
     >
-      <div className="flex flex-row items-center">
-        <Typography.Body size="small">
-          Copyright © 2021 Boclips. All rights reserved.
-        </Typography.Body>
+      <Typography.Body
+        size="small"
+        as="div"
+        className="flex flex-row items-center"
+      >
+        Copyright © 2021 Boclips. All rights reserved.
         <a
           rel="noopener noreferrer"
-          className={c(s.link, 'inline-blue')}
+          className={s.link}
           href="https://www.boclips.com/terms-and-conditions"
           target="_blank"
         >
           <Typography.Body size="small" weight="medium">
-            Terms &amp; Conditions
+            <Typography.Link type="inline-blue">
+              Terms &amp; Conditions
+            </Typography.Link>
           </Typography.Body>
         </a>
         <a
           rel="noopener noreferrer"
-          className={c(s.link, 'inline-blue')}
+          className={s.link}
           href="https://www.boclips.com/privacy-policy"
           target="_blank"
         >
           <Typography.Body size="small" weight="medium">
-            Privacy Policy
+            <Typography.Link type="inline-blue">Privacy Policy</Typography.Link>
           </Typography.Body>
         </a>
-      </div>
+      </Typography.Body>
 
       <Typography.Body size="small">
         All trademarks, service marks, trade names, product names and logos

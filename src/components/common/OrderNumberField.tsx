@@ -1,6 +1,6 @@
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from './Link';
 import { OrderInformationField } from './OrderInformationField';
 
 interface Props {
@@ -11,12 +11,8 @@ interface Props {
 export const OrderNumberField = ({ id, isLink = false }: Props) => (
   <OrderInformationField fieldName="Order number">
     {isLink ? (
-      <Link data-qa="order-id" to={`/orders/${id}`}>
-        <Typography.Body
-          as="div"
-          weight="medium"
-          className="text-blue-800 underline"
-        >
+      <Link type="inline-blue" data-qa="order-id" to={`/orders/${id}`}>
+        <Typography.Body as="div" weight="medium">
           {id}
         </Typography.Body>
       </Link>
