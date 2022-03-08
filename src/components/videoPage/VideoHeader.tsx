@@ -7,7 +7,7 @@ import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import { Typography } from '@boclips-ui/typography';
-import ReleasedOn from '@boclips-ui/released-on';
+import { VideoInfo } from 'src/components/common/videoInfo/VideoInfo';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
 
@@ -21,17 +21,7 @@ export const VideoHeader = ({ video }: Props) => {
       <Typography.H1 size="md" className="text-gray-900 lg:mb-2">
         {video?.title}
       </Typography.H1>
-      <section className={`lg:mb-4 ${s.videoInfo}`}>
-        <ReleasedOn releasedOn={video?.releasedOn} />
-
-        <Typography.Body as="div" size="small">
-          {video?.id}
-        </Typography.Body>
-
-        <Typography.Body as="div" className={s.createdBy} size="small">
-          {video?.createdBy}
-        </Typography.Body>
-      </section>
+      <VideoInfo video={video} />
       <Typography.H2 size="sm" className="text-gray-900">
         {createPriceDisplayValue(
           video?.price?.amount,

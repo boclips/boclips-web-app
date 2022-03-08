@@ -1,7 +1,7 @@
 @import '~@boclips-ui/styles/src/colors';
 
 .badges {
-@apply flex flex-row flex-wrap;
+  @apply flex flex-row flex-wrap;
   --bo-ui-badge-border: none;
   --bo-ui-badge-margin: 0 2px 4px 2px;
 }
@@ -17,25 +17,5 @@
 
   button {
     margin-right: 0.25rem;
-  }
-}
-
-.videoInfo {
-  display: flex;
-  flex-direction: row;
-  color: @gray-700;
-
-  & > * {
-    min-width: max-content;
-  }
-
-  & > div:after {
-    content: "•";
-    padding: 0.25rem;
-    color: @blue-800;
-  }
-
-  & > div:last-child:after {
-    content: "";
   }
 }
