@@ -13,7 +13,7 @@ export const OrderInformationField = ({ fieldName, children }: ItemProps) => {
         as="div"
         size="small"
         weight="medium"
-        className="text-grey-700"
+        className="text-gray-700"
       >
         {fieldName}
       </Typography.Body>

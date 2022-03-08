@@ -25,11 +25,15 @@ export const AdditionalServicesSummaryPreview = ({
   const getHeaderCopy = () => {
     return noAdditionalServices
       ? 'No additional services selected'
-      : 'Additional Services';
+      : 'Additional Services:';
   };
 
   const Price = React.useCallback(() => {
-    return <div className="absolute right-0 top-0">Free</div>;
+    return (
+      <Typography.H6 className="absolute right-0 top-0 text-gray-800">
+        Free
+      </Typography.H6>
+    );
   }, []);
 
   return (

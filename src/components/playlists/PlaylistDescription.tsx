@@ -10,7 +10,7 @@ interface Props {
 const PlaylistDescription = ({ description }: Props) => {
   return (
     <div className={c(s.description, 'md:order-last sm:order-2')}>
-      <Typography.Body>{description}</Typography.Body>
+      <Typography.Body className="text-gray-900">{description}</Typography.Body>
     </div>
   );
 };

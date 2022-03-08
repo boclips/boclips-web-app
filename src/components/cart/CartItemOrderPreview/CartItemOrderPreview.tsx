@@ -43,7 +43,7 @@ export const CartItemOrderPreview = ({ videos }: Props) => {
           key={video.id}
           className={c(
             s.orderSummaryWrapper,
-            'flex flex-row py-3 border-b-2 border-blue-300 rounded',
+            'flex flex-row py-3 border-b-2 border-blue-400 rounded',
           )}
         >
           <div className={s.imgWrapper}>
@@ -68,7 +68,7 @@ export const CartItemOrderPreview = ({ videos }: Props) => {
             <Typography.Body
               as="div"
               size="small"
-              className="text-gray-800"
+              className="text-gray-700"
               data-qa="order-summary-item-video-id"
             >
               ID: {video.id}

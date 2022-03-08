@@ -40,11 +40,11 @@ const EmptyPlaylist = () => (
       'grid-row-start-4 grid-row-end-4 col-start-2 col-end-26',
     )}
   >
-    <div data-qa="emptyPlaylistText">
+    <Typography.H3 size="xs" weight="regular" data-qa="emptyPlaylistText">
       Save interesting videos to this playlist. Simply click the
       <PlaylistAddIcon className={s.addSvg} role="img" />
       button on any video to get started.
-    </div>
+    </Typography.H3>
   </main>
 );
 
@@ -55,7 +55,7 @@ const PlaylistBody = ({ videos }: Props) => {
     <>
       <Typography.H2
         size="sm"
-        className="grid-row-start-4 grid-row-end-4 col-start-2 col-end-26 mb-0"
+        className="grid-row-start-4 grid-row-end-4 col-start-2 col-end-26 mb-0 text-gray-900"
       >
         In this playlist:
       </Typography.H2>
