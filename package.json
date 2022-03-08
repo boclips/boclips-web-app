@@ -5,7 +5,7 @@
   "main": "index.tsx",
   "scripts": {
     "audit": "audit-ci --critical",
-    "test": "jest --maxWorkers=50%",
+    "test": "n auto; jest --maxWorkers=50%",
     "test-visual": "percy exec -- ./node_modules/.bin/cypress run",
     "test-visual:open": "percy exec -- ./node_modules/.bin/cypress open",
     "dev": "NODE_ENV=development TAILWIND_MODE=watch webpack serve --config webpack/webpack.dev.js",
