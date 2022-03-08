@@ -17,9 +17,7 @@ export const VideoCardButtons = ({ video }: VideoCardButtonsProps) => {
   return (
     <div className="flex flex-row justify-between" key={`copy-${video.id}`}>
       <div className={c(s.iconOnlyButtons)}>
-        <FeatureGate feature="BO_WEB_APP_ENABLE_PLAYLISTS">
-          <AddToPlaylistButton videoId={video.id} />
-        </FeatureGate>
+        <AddToPlaylistButton videoId={video.id} />
 
         <FeatureGate feature="BO_WEB_APP_COPY_OLD_LINK_BUTTON">
           <CopyLegacyVideoLinkButton video={video} />

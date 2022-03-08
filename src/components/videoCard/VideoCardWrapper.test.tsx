@@ -140,11 +140,7 @@ describe('Video card', () => {
     it('can add video to a playlist', async () => {
       const fakeClient = new FakeBoclipsClient();
 
-      fakeClient.users.insertCurrentUser(
-        UserFactory.sample({
-          features: { BO_WEB_APP_ENABLE_PLAYLISTS: true },
-        }),
-      );
+      fakeClient.users.insertCurrentUser(UserFactory.sample());
 
       fakeClient.collections.setCurrentUser('i-am-user-id');
       fakeClient.collections.addToFake(
@@ -180,11 +176,7 @@ describe('Video card', () => {
     it('can remove video from a playlist', async () => {
       const fakeClient = new FakeBoclipsClient();
 
-      fakeClient.users.insertCurrentUser(
-        UserFactory.sample({
-          features: { BO_WEB_APP_ENABLE_PLAYLISTS: true },
-        }),
-      );
+      fakeClient.users.insertCurrentUser(UserFactory.sample());
 
       fakeClient.collections.setCurrentUser('i-am-user-id');
       fakeClient.collections.addToFake(

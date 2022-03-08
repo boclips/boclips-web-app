@@ -39,9 +39,7 @@ export const VideoHeader = ({ video }: Props) => {
 
       <div className={s.buttons}>
         <div className={s.iconButtons}>
-          <FeatureGate feature="BO_WEB_APP_ENABLE_PLAYLISTS">
-            <AddToPlaylistButton videoId={video.id} />
-          </FeatureGate>
+          <AddToPlaylistButton videoId={video.id} />
 
           <CopyVideoLinkButton
             video={video}

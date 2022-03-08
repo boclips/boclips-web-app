@@ -26,6 +26,8 @@ export interface Bo {
     subject: (subject: Subject) => void;
     cartWithVideos: () => void;
     disciplines: () => void;
+    emptyPlaylist: () => void;
+    playlistWithVideos: () => void;
   };
   inspect: () => FakeBoclipsClient;
   set: {
@@ -54,6 +56,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
   const boSetFeatures = (features: {
     [key in UserFeatureKey]?: boolean;
   }) => {
+    console.log(features);
     apiClient.users.setCurrentUserFeatures(features);
   };
 
@@ -159,6 +162,22 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
 
         apiClient.carts.addItemToCart(null, '5f75b73f22a6495bdf2c2d14');
         apiClient.carts.addItemToCart(null, '123');
+      },
+
+      emptyPlaylist: () => {
+        apiClient.collections.create({
+          videos: [],
+          title: 'My empty playlist',
+          description: 'My empty playlist description',
+        });
+      },
+
+      playlistWithVideos: () => {
+        apiClient.collections.create({
+          title: 'My playlist',
+          description: 'My playlist description',
+          videos: ['videos5f75b73f22a6495bdf2c2d14', 'videos123'],
+        });
       },
 
       fixtureSet: {

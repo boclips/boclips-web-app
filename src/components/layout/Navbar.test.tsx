@@ -97,13 +97,11 @@ describe('Mobile - Navbar', () => {
     expect(screen.queryByText('Ricky Julian')).not.toBeInTheDocument();
   });
 
-  describe('when playlist feature is enabled', () => {
+  describe('playlist feature', () => {
     const client = new FakeBoclipsClient();
 
     beforeEach(() => {
-      client.users.insertCurrentUser(
-        UserFactory.sample({ features: { BO_WEB_APP_ENABLE_PLAYLISTS: true } }),
-      );
+      client.users.insertCurrentUser(UserFactory.sample());
     });
 
     it('does render your library', async () => {
@@ -119,32 +117,6 @@ describe('Mobile - Navbar', () => {
       expect(screen.getByText('Your library')).toBeVisible();
     });
   });
-
-  describe('when playlist feature is disabled', () => {
-    const client = new FakeBoclipsClient();
-
-    beforeEach(() => {
-      client.users.insertCurrentUser(
-        UserFactory.sample({
-          features: { BO_WEB_APP_ENABLE_PLAYLISTS: false },
-        }),
-      );
-    });
-
-    it('does not render your library', async () => {
-      render(
-        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-          <BoclipsClientProvider client={client}>
-            <NavbarResponsive />
-          </BoclipsClientProvider>
-        </BoclipsSecurityProvider>,
-      );
-
-      fireEvent.click(await screen.findByTestId('side-menu'));
-
-      expect(screen.queryByText('Your library')).not.toBeInTheDocument();
-    });
-  });
 });
 
 describe('Desktop - Navbar', () => {
@@ -154,11 +126,9 @@ describe('Desktop - Navbar', () => {
     window.resizeTo(1680, 1024);
   });
 
-  describe('when playlist feature is enabled', () => {
+  describe('playlist feature', () => {
     beforeEach(() => {
-      client.users.insertCurrentUser(
-        UserFactory.sample({ features: { BO_WEB_APP_ENABLE_PLAYLISTS: true } }),
-      );
+      client.users.insertCurrentUser(UserFactory.sample());
     });
 
     it('does render your library and icon', async () => {
@@ -173,30 +143,6 @@ describe('Desktop - Navbar', () => {
       await waitFor(() => {
         expect(screen.getByTestId('library-button')).toBeVisible();
         expect(screen.getByText('Your Library')).toBeVisible();
-      });
-    });
-  });
-
-  describe('when playlist feature is disabled', () => {
-    beforeEach(() => {
-      client.users.insertCurrentUser(
-        UserFactory.sample({
-          features: { BO_WEB_APP_ENABLE_PLAYLISTS: false },
-        }),
-      );
-    });
-
-    it('does not render your library and icon', async () => {
-      render(
-        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-          <BoclipsClientProvider client={client}>
-            <NavbarResponsive />
-          </BoclipsClientProvider>
-        </BoclipsSecurityProvider>,
-      );
-
-      await waitFor(() => {
-        expect(screen.queryByTestId('library-button')).not.toBeInTheDocument();
       });
     });
   });
