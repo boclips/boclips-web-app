@@ -14,7 +14,7 @@ export const OrderTotalPriceField = ({ totalPrice, highlighted }: Props) => (
     <Typography.Body
       data-qa="total-price-field"
       weight={highlighted ? 'medium' : null}
-      className="text-gray-800"
+      className="text-gray-900"
     >
       {createPriceDisplayValue(
         totalPrice?.value,

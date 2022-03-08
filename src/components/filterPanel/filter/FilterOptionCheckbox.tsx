@@ -25,6 +25,7 @@ export const FilterOptionCheckbox = ({
         checked={selected}
         dataQa={dataQa}
         label={option.label}
+        defaultSize={false}
       />
       <Typography.Body
         size="small"

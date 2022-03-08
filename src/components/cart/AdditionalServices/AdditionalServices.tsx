@@ -15,7 +15,7 @@ interface Props {
 const AdditionalServices = ({ videoItem, cartItem }: Props) => {
   return (
     <>
-      <Typography.Body as="div" weight="medium">
+      <Typography.Body as="div" weight="medium" className="text-gray-800">
         Additional services
       </Typography.Body>
       <TrimService videoItem={videoItem} cartItem={cartItem} price="Free" />

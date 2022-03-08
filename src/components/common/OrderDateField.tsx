@@ -13,6 +13,7 @@ export const OrderDateField = ({ date, fieldName }: Props) => (
     <Typography.Body
       as="div"
       data-qa={`${fieldName.replace(' ', '-').toLowerCase()}-field`}
+      className="text-gray-900"
     >
       {date ? dateFormat(date, 'dd/mm/yy') : '-'}
     </Typography.Body>

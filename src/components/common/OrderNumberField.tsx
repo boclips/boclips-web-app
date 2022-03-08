@@ -12,7 +12,11 @@ export const OrderNumberField = ({ id, isLink = false }: Props) => (
   <OrderInformationField fieldName="Order number">
     {isLink ? (
       <Link data-qa="order-id" to={`/orders/${id}`}>
-        <Typography.Body as="div" className="text-blue-800 underline">
+        <Typography.Body
+          as="div"
+          weight="medium"
+          className="text-blue-800 underline"
+        >
           {id}
         </Typography.Body>
       </Link>

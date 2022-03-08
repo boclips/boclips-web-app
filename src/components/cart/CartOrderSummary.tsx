@@ -6,6 +6,7 @@ import { OrderModal } from 'src/components/orderModal/OrderModal';
 import { Cart as ApiCart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
 import { useGetVideos } from 'src/hooks/api/videoQuery';
 import { Typography } from '@boclips-ui/typography';
+import s from './style.module.less';
 import { trackOrderConfirmationModalOpened } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 
@@ -20,7 +21,10 @@ interface CartSummaryItemProps {
 
 const CartSummaryItem = ({ label, value }: CartSummaryItemProps) => {
   return (
-    <Typography.Body as="div" className="flex justify-between my-3">
+    <Typography.Body
+      as="div"
+      className="flex justify-between my-3 text-gray-800"
+    >
       <span>{label}</span>
       <span>{value}</span>
     </Typography.Body>
@@ -63,8 +67,9 @@ export const CartOrderSummary = ({ cart }: Props) => {
   return (
     <>
       <div className="col-start-19 col-end-26">
-        <div className="border-blue-500 border-2 flex flex-col rounded p-5">
-          <div className="border-b border-blue-500 mb-4">
+        <div className={`flex flex-col p-5 ${s.summary}`}>
+          <Typography.H4 className="text-gray-900">Summary</Typography.H4>
+          <div className="border-b border-gray-400 mb-4">
             <CartSummaryItem
               label={<Typography.Body>Video(s) total</Typography.Body>}
               value={getTotalPriceDisplayValue(videos)}

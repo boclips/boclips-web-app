@@ -9,9 +9,18 @@ interface Props {
   checked: boolean;
   label?: React.ReactElement | string;
   dataQa?: string;
+  defaultSize?: boolean;
 }
 
-const BoCheckbox = ({ dataQa, onChange, name, id, checked, label }: Props) => {
+const BoCheckbox = ({
+  dataQa,
+  onChange,
+  name,
+  id,
+  checked,
+  label,
+  defaultSize = true,
+}: Props) => {
   return (
     <label className={s.checkboxWrapper} htmlFor={id}>
       <input
@@ -23,7 +32,10 @@ const BoCheckbox = ({ dataQa, onChange, name, id, checked, label }: Props) => {
         checked={checked}
         data-qa={dataQa}
       />
-      <Typography.Body size="small" weight={checked ? 'medium' : null}>
+      <Typography.Body
+        size={defaultSize ? null : 'small'}
+        weight={checked ? 'medium' : null}
+      >
         {label || name}
       </Typography.Body>
     </label>

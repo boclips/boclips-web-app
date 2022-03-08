@@ -22,7 +22,7 @@ export const OrdersCard = ({ order }: Props) => {
   };
 
   return (
-    <div className="flex flex-row flex-nowrap content-start items-center border-b-2 py-6 text-grey-700">
+    <div className="flex flex-row flex-nowrap content-start items-center border-b-2 border-gray-400 py-6 text-gray-700">
       <OrderThumbnail items={order.items} />
       <OrderDateField fieldName="Order date" date={order.createdAt} />
       <OrderNumberField id={order.id} isLink />

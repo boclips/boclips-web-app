@@ -2,11 +2,31 @@
 
 .cartItemWrapper {
   @apply flex pt-6 pb-2 flex-row justify-start relative;
-  border-top: 2px solid @gray-500;
+  border-top: 2px solid @gray-400;
   overflow: hidden;
 
   .videoWrapper {
     min-width: 280px;
+  }
+
+  .videoInfo {
+    display: flex;
+    flex-direction: row;
+    color: @gray-700;
+
+    & > * {
+      min-width: max-content;
+    }
+
+    & > div:after {
+      content: "•";
+      padding: 0.25rem;
+      color: @blue-800;
+    }
+
+    & > div:last-child:after {
+      content: "";
+    }
   }
 
   &:before {

@@ -18,7 +18,7 @@ export const VideoAdditionalServices = () => {
 
   return (
     <div className="mt-2 lg:mt-4 bg-blue-100 border-blue-100 border-2 p-6 rounded text-gray-800">
-      <div className="flex flex-row items-center mb-2 text-gray-900">
+      <div className="flex flex-row items-center mb-2">
         <InfoIcon />
         <Typography.Body weight="medium" className="ml-2">
           Additional services
