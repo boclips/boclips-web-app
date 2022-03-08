@@ -9,7 +9,7 @@ interface Props {
 export const SearchResultsSummary = ({ count, query }: Props) => {
   return (
     <Typography.H1
-      size="md"
+      size="sm"
       className="text-lg text-gray-800 mb-4"
       aria-live="polite"
     >
