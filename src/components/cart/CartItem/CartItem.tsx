@@ -11,6 +11,7 @@ import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import VideoCardPlaceholder from '@boclips-ui/video-card-placeholder';
 import { Typography } from '@boclips-ui/typography';
+import { VideoInfo } from 'src/components/common/videoInfo/VideoInfo';
 import s from './style.module.less';
 
 interface Props {
@@ -64,11 +65,7 @@ const CartItem = ({ cartItem }: Props) => {
             </Link>
             <PriceBadge className="text-gray-900" price={videoItem.price} />
           </div>
-          <Typography.Body
-            as="div"
-            size="small"
-            className="text-gray-800"
-          >{`ID: ${videoItem.id}`}</Typography.Body>
+          <VideoInfo video={videoItem} />
           <TextButton
             onClick={cartItemAnimate}
             text="Remove"
