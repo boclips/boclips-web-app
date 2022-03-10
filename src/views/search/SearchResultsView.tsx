@@ -22,6 +22,7 @@ import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import { ErrorBoundary } from 'src/components/common/errors/ErrorBoundary';
 import RefreshPageError from 'src/components/common/errors/refreshPageError/RefreshPageError';
 import { Layout } from 'src/components/layout/Layout';
+import { ContentPackagePreviewBanner } from 'src/components/contentPackagePreviewBanner/ContentPackagePreviewBanner';
 
 export const PAGE_SIZE = 30;
 
@@ -171,6 +172,9 @@ const SearchResultsView = () => {
             currentPage={currentPage}
             isFetching={isFetching && isPreviousData}
           />
+        )}
+        {contentPackage && (
+          <ContentPackagePreviewBanner packageId={contentPackage} />
         )}
       </ErrorBoundary>
       <Footer />
