@@ -63,7 +63,7 @@ export const CartOrderSummary = ({ cart }: Props) => {
   return (
     <>
       <div className="col-start-19 col-end-26">
-        <div className="border-blue-500 border-2 flex flex-col rounded p-5">
+        <div className="flex flex-col rounded p-5 shadow">
           <div className="border-b border-blue-500 mb-4">
             <CartSummaryItem
               label={<Typography.Body>Video(s) total</Typography.Body>}

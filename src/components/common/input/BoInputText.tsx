@@ -111,7 +111,7 @@ export const BoInputText = React.forwardRef(
     return (
       <label htmlFor={id} className={s.wrapper}>
         {showLabelText && (
-          <Typography.Body as="div">
+          <Typography.Body as="div" className="text-gray-800">
             {labelText}{' '}
             {!constraints.required && (
               <span className={s.optional}>(Optional)</span>
