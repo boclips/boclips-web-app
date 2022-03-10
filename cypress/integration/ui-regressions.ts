@@ -23,7 +23,7 @@ context('UI Regression', () => {
     cy.percySnapshot('Home Page', {
       widths: snapshotViewWidths,
     });
-
+    cy.get('button').contains('Business').should('be.visible');
     cy.get('button').contains('Business').click();
 
     cy.percySnapshot('Home Page with subjects', {
@@ -98,6 +98,7 @@ context('UI Regression', () => {
   it('renders empty library', () => {
     cy.visit(`${endpoint}/`);
     cy.get('[data-qa="library-button"]').click();
+    cy.get('button').contains('Create new playlist').should('be.visible');
     cy.percySnapshot('Empty library view', { widths: snapshotViewWidths });
   });
 
@@ -117,6 +118,8 @@ context('UI Regression', () => {
     cy.findByLabelText('Close Create new playlist modal').click();
     cy.findByText('My playlist').click();
 
+    cy.get('[data-qa="playlistTitle"]').should('be.visible');
+
     cy.percySnapshot('Playlist with videos view', {
       widths: snapshotViewWidths,
     });
@@ -128,6 +131,8 @@ context('UI Regression', () => {
     cy.get('[data-qa="library-button"]').click();
 
     cy.findByText('My empty playlist').click();
+
+    cy.get('[data-qa="playlistTitle"]').should('be.visible');
 
     cy.percySnapshot('Empty playlist view', {
       widths: snapshotViewWidths,
