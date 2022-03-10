@@ -40,7 +40,9 @@ export const VideoPage = ({ video }: Props) => {
           </button>
         )}
 
-        <VideoPlayer video={video} />
+        <div className="flex-1 min-h-0">
+          <VideoPlayer video={video} />
+        </div>
       </main>
       <div className={c(s.headerSection, videoMetadataTopMargin)}>
         <VideoHeader video={video} />
