@@ -12,6 +12,7 @@ interface Props {
 export const OrderTotalValueField = ({ totalPrice, highlighted }: Props) => (
   <OrderInformationField fieldName="Total value">
     <Typography.Body
+      data-qa="total-value-field"
       weight={highlighted ? 'medium' : null}
       className="text-gray-900"
     >
