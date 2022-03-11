@@ -98,6 +98,7 @@ context('UI Regression', () => {
   it('renders empty library', () => {
     cy.visit(`${endpoint}/`);
     cy.get('[data-qa="library-button"]').click();
+    cy.wait(100);
     cy.get('button').contains('Create new playlist').should('be.visible');
     cy.percySnapshot('Empty library view', { widths: snapshotViewWidths });
   });
