@@ -42,7 +42,7 @@ export const SearchResults = ({
 
   return (
     <main tabIndex={-1} className="col-start-8 col-end-26">
-      {query && <Helmet title={`${query} videos`} />}
+      {query && <Helmet title={`Search results for ${query}`} />}
       <SearchResultsSummary
         count={results?.pageSpec?.totalElements}
         query={query}
