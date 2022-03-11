@@ -11,7 +11,7 @@ export const ExtraSubjects: React.FC<Props> = ({
 }: Props) => {
   return (
     <div
-      className="border-t-2 border-gray-400 border-solid mt-1 lg:mt-6 pt-6"
+      className="border-t-2 border-gray-400 mt-1 lg:mt-6 pt-6"
       aria-label={`We also offer subjects in ${subjectsWeAlsoOffer
         .map((subject) => subject.name)
         .join(', ')}`}
