@@ -368,7 +368,7 @@ describe('SearchResults', () => {
       const helmet = Helmet.peek();
 
       await waitFor(() => {
-        expect(helmet.title).toEqual('hello videos');
+        expect(helmet.title).toEqual('Search results for hello');
       });
     });
 
