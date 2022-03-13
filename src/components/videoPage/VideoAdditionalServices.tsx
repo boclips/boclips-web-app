@@ -17,7 +17,7 @@ export const VideoAdditionalServices = () => {
       'available upon request from your shopping cart.';
 
   return (
-    <div className="mt-2 lg:mt-4 bg-blue-100 border-blue-100 border-2 p-6 border-solid rounded text-gray-800">
+    <div className="mt-2 lg:mt-4 bg-blue-100 border-blue-100 border-2 p-6 rounded text-gray-800">
       <div className="flex flex-row items-center mb-2 text-gray-900">
         <InfoIcon />
         <Typography.Body weight="medium" className="ml-2">
