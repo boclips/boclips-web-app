@@ -167,7 +167,9 @@ describe('SearchResultsFiltering', () => {
         expect(wrapper.queryByText('stock video')).toBeNull();
       });
 
-      expect(await wrapper.findByLabelText(/News/)).toBeInTheDocument();
+      wrapper.debug(wrapper.baseElement, 9999999999);
+
+      expect(await wrapper.findByLabelText('News')).toBeInTheDocument();
       expect(await wrapper.findByText('news video')).toBeInTheDocument();
 
       const selectedFiltersSection = wrapper.getByTestId('applied-filter-tags');
