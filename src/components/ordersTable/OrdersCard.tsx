@@ -7,6 +7,7 @@ import { OrderStatusField } from 'src/components/common/OrderStatusField';
 import { OrderDateField } from 'src/components/common/OrderDateField';
 import { OrderNumberField } from 'src/components/common/OrderNumberField';
 import { OrderTotalValueField } from '../common/OrderTotalValueField';
+import s from './style.module.less';
 
 interface Props {
   order: Order;
@@ -22,7 +23,7 @@ export const OrdersCard = ({ order }: Props) => {
   };
 
   return (
-    <div className="flex flex-row flex-nowrap content-start items-center border-b-2 border-gray-400 py-6 text-gray-700 last:border-0">
+    <div className={s.orderCard}>
       <OrderThumbnail items={order.items} />
       <OrderDateField fieldName="Order date" date={order.createdAt} />
       <OrderNumberField id={order.id} isLink />
