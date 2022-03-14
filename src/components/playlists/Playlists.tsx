@@ -4,9 +4,9 @@ import SkeletonTiles from 'src/components/skeleton/Skeleton';
 import Thumbnails from 'src/components/playlists/thumbnails/Thumbnails';
 import { CopyLinkButton } from 'src/components/common/copyLinkButton/CopyLinkButton';
 import { Constants } from 'src/AppConstants';
+import { Link } from 'react-router-dom';
 import GridCard from '../common/gridCard/GridCard';
 import s from './style.module.less';
-import { Link } from 'react-router-dom';
 
 const Playlists = () => {
   const { data: playlists, isLoading } = useOwnAndSharedPlaylistsQuery();
