@@ -706,11 +706,9 @@ describe('SearchResultsFiltering', () => {
       expect(await wrapper.findByText('news video')).toBeInTheDocument();
       expect(await wrapper.queryByText('stock video')).toBeNull();
 
-      expect(
-        await wrapper.findByText(
-          'You’re now previewing: my content package to preview',
-        ),
-      ).toBeInTheDocument();
+      expect(await wrapper.findByRole('banner')).toHaveTextContent(
+        'You’re now previewing: my content package to preview',
+      );
     });
   });
 

@@ -96,6 +96,10 @@ module.exports = {
         red: {
           error: 'var(--red-error)',
         },
+        yellow: {
+          warning: 'var(--yellow-warning)',
+          'warning-border': 'var(--yellow-warning-border)',
+        },
         gray: {
           100: 'var(--gray-100)',
           200: 'var(--gray-200)',
