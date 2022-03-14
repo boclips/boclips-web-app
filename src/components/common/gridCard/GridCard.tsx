@@ -1,6 +1,6 @@
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '../Link';
 import s from './style.module.less';
 
 interface Props {

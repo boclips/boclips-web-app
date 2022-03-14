@@ -6,7 +6,8 @@ import { OrderStatusField } from 'src/components/common/OrderStatusField';
 import { OrderInformationField } from 'src/components/common/OrderInformationField';
 import { OrderVideoQuantity } from 'src/components/common/OrderVideoQuantityField';
 import { Typography } from '@boclips-ui/typography';
-import { OrderTotalPriceField } from '../common/OrderTotalPriceField';
+import { OrderTotalValueField } from '../common/OrderTotalValueField';
+import { Link } from '../common/Link';
 
 interface Props {
   order: Order;
@@ -18,26 +19,14 @@ export const OrderSummary = ({ order }: Props) => {
       <div className="flex justify-between mb-3">
         <Typography.H1
           size="md"
-          className="text-gray-800 mb-4 "
+          className="text-gray-800 mb-4"
         >{`Order ${order?.id}`}</Typography.H1>
-        <Typography.Body className="text-right w-64">
-          To edit or cancel this order, please contact{' '}
-          <Typography.Body
-            as="a"
-            weight="medium"
-            // @ts-ignore Props is not typed smart enough to recognise href is valid for a tag
-            href="mailto:delivery@boclips.com"
-            className=" text-blue-800"
-          >
-            delivery@boclips.com
-          </Typography.Body>
-        </Typography.Body>
       </div>
-      <div className="flex flex-row flex-wrap border-2 border-blue-500 rounded p-6">
+      <div className="flex flex-row flex-wrap border-2 border-gray-400 rounded p-6 mb-4">
         <OrderDateField fieldName="Order date" date={order?.createdAt} />
         <OrderStatusField status={order?.status} />
         <OrderDateField fieldName="Delivery date" date={order?.deliveredAt} />
-        <OrderTotalPriceField highlighted totalPrice={order?.totalPrice} />
+        <OrderTotalValueField highlighted totalPrice={order?.totalPrice} />
         <OrderVideoQuantity
           videoQuantity={`${order?.items.length} video${
             order?.items.length > 1 ? 's' : ''
@@ -52,6 +41,14 @@ export const OrderSummary = ({ order }: Props) => {
           </span>
         )}
       </div>
+      <Typography.Body className="w-64 text-gray-900">
+        To edit or cancel this order, please contact{' '}
+        <Link isMail to="mailto:delivery@boclips.com">
+          <Typography.Body as="a" weight="medium" className="text-blue-800">
+            delivery@boclips.com
+          </Typography.Body>
+        </Link>
+      </Typography.Body>
     </div>
   );
 };

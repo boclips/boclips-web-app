@@ -23,7 +23,11 @@ const PlaylistHeader = ({ playlist }: Props) => {
         'grid-row-start-2 grid-row-end-2 col-start-2 col-end-26',
       )}
     >
-      <Typography.H1 size="lg" className="order-first" data-qa="playlistTitle">
+      <Typography.H1
+        size="md"
+        className="order-first text-gray-900"
+        data-qa="playlistTitle"
+      >
         {playlist.title}
       </Typography.H1>
       <PlaylistShareButton link={toLibraryLink(playlist.id)} />

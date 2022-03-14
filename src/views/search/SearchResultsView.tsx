@@ -28,7 +28,12 @@ export const PAGE_SIZE = 30;
 const SearchResultsView = () => {
   const queryClient = useQueryClient();
   const [searchLocation, setSearchLocation] = useSearchQueryLocationParams();
-  const { query, page: currentPage, filters: filtersFromURL } = searchLocation;
+  const {
+    query,
+    page: currentPage,
+    filters: filtersFromURL,
+    content_package: contentPackage,
+  } = searchLocation;
   const [newFiltersBeforeDebounce, setNewFiltersBeforeDebounce] =
     useState<SearchFilters>(filtersFromURL);
 
@@ -40,6 +45,7 @@ const SearchResultsView = () => {
     query,
     page: currentPage - 1,
     pageSize: PAGE_SIZE,
+    contentPackage,
     filters: debouncedFilters,
   });
 
@@ -55,6 +61,7 @@ const SearchResultsView = () => {
           pageSize: PAGE_SIZE,
           page: currentPage,
           filters: debouncedFilters,
+          contentPackage,
         },
         boclipsClient,
       );
@@ -66,6 +73,7 @@ const SearchResultsView = () => {
     queryClient,
     boclipsClient,
     hasNextPage,
+    contentPackage,
   ]);
 
   const handlePageChange = (page: number) => {
@@ -74,6 +82,7 @@ const SearchResultsView = () => {
     setSearchLocation({
       query,
       page,
+      content_package: contentPackage,
       filters: filtersFromURL,
     });
   };
@@ -88,6 +97,7 @@ const SearchResultsView = () => {
       setSearchLocation({
         query,
         page: 1,
+        content_package: contentPackage,
         filters: newFilters,
       });
       setNewFiltersBeforeDebounce(newFilters);
@@ -95,7 +105,7 @@ const SearchResultsView = () => {
         filters: newFilters,
       });
     },
-    [filtersFromURL, query, setSearchLocation],
+    [filtersFromURL, query, setSearchLocation, contentPackage],
   );
 
   const removeFilter = (key: FilterKey, value: string) => {
@@ -119,6 +129,7 @@ const SearchResultsView = () => {
     setSearchLocation({
       query,
       page: 1,
+      content_package: '',
       filters: emptyFilters,
     });
     setNewFiltersBeforeDebounce(emptyFilters);

@@ -7,14 +7,15 @@ import { AccountButton } from 'src/components/navButtons/AccountButton';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import CartButton from 'src/components/navButtons/CartButton';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
-import { Link } from 'react-router-dom';
 import { Constants } from 'src/AppConstants';
 import { useBoclipsSecurity } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import LibraryButton from 'src/components/navButtons/LibraryButton';
 import SkipLink from 'src/components/skipLink/SkipLink';
+import { Typography } from '@boclips-ui/typography';
 import s from './navbar.module.less';
 import { Search } from '../searchBar/SearchBar';
+import { Link } from '../common/Link';
 
 const NavbarResponsive = (): ReactElement => {
   const [showSideMenu, setShowSideMenu] = useState(false);
@@ -70,9 +71,7 @@ const NavbarResponsive = (): ReactElement => {
           </div>
         ) : (
           <div className={s.buttonsDesktop}>
-            <FeatureGate feature="BO_WEB_APP_ENABLE_PLAYLISTS">
-              <LibraryButton />
-            </FeatureGate>
+            <LibraryButton />
             <AccountButton />
             <FeatureGate linkName="cart">
               <CartButton />
@@ -90,15 +89,13 @@ const NavbarResponsive = (): ReactElement => {
             <span>{user.email}</span>
           </div>
           <div className={s.buttons}>
-            <FeatureGate feature="BO_WEB_APP_ENABLE_PLAYLISTS">
-              <Link to="/library">Your library</Link>
-            </FeatureGate>
+            <Link to="/library">Your library</Link>
             <Link to="/orders">Your orders</Link>
             <FeatureGate linkName="cart">
               <Link to="/cart">Cart</Link>
             </FeatureGate>
             <button type="button" onClick={logOut}>
-              Log out
+              <Typography.Link>Log out</Typography.Link>
             </button>
           </div>
         </div>

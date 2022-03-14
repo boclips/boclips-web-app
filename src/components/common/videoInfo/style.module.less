@@ -1,0 +1,22 @@
+@import '@boclips-ui/styles/src/colors';
+
+.videoInfo {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  color: @gray-700;
+
+  & > * {
+    min-width: max-content;
+  }
+
+  & > div:after {
+    content: '\00B7';
+    padding: 0.25rem;
+    color: @blue-800;
+  }
+
+  & > div:last-child:after {
+    content: '';
+  }
+}

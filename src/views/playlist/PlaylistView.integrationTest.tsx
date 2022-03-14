@@ -72,7 +72,6 @@ describe('Playlist view', () => {
     client.users.insertCurrentUser(
       UserFactory.sample({
         id: 'myuserid',
-        features: { BO_WEB_APP_ENABLE_PLAYLISTS: true },
       }),
     );
     client.collections.addToFake(playlist);

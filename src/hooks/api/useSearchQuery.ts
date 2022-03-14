@@ -12,11 +12,12 @@ export interface SearchQuery {
   query: string;
   page: number;
   pageSize: number;
+  contentPackage?: string;
   filters?: { [key in FilterKey]: string[] };
 }
 
 const doSearch = (
-  { query, page, pageSize, filters }: SearchQuery,
+  { query, page, pageSize, filters, contentPackage }: SearchQuery,
   apiClient: BoclipsClient,
 ) =>
   apiClient.videos.search({
@@ -39,11 +40,18 @@ const doSearch = (
       dayjs(filters?.release_date_from[0]).format('YYYY-MM-DD'),
     duration_facets: DEFAULT_DURATIONS,
     include_channel_facets: true,
+    content_package: contentPackage,
   });
 
-const generateSearchKey = ({ query, page, pageSize, filters }: SearchQuery) => [
+const generateSearchKey = ({
+  query,
+  page,
+  pageSize,
+  filters,
+  contentPackage,
+}: SearchQuery) => [
   SEARCH_BASE_KEY,
-  { query, page, pageSize, filters },
+  { query, page, pageSize, filters, contentPackage },
 ];
 
 export const useSearchQuery = (searchQuery: SearchQuery) => {

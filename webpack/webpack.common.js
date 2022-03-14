@@ -96,11 +96,6 @@ module.exports = {
         test: /.svg$/i,
         exclude: /node_modules/,
         loader: 'svg-react-loader',
-        options: {
-          props: {
-            role: 'img',
-          },
-        },
       },
     ],
   },

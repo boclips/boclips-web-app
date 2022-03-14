@@ -7,7 +7,6 @@ context('UI Regression', () => {
 
   it('has a homepage', () => {
     cy.visit(`${endpoint}/`);
-
     cy.bo((bo) =>
       bo.interact((apiClient) => {
         disciplines.forEach((discipline) => {
@@ -24,7 +23,7 @@ context('UI Regression', () => {
     cy.percySnapshot('Home Page', {
       widths: snapshotViewWidths,
     });
-
+    cy.get('button').contains('Business').should('be.visible');
     cy.get('button').contains('Business').click();
 
     cy.percySnapshot('Home Page with subjects', {
@@ -43,7 +42,6 @@ context('UI Regression', () => {
 
   it('applies filters', () => {
     cy.visit(`${endpoint}/`);
-
     cy.bo((bo) => bo.create.fixtureSet.eelsBiologyGeography());
 
     cy.findByPlaceholderText('Search for videos');
@@ -69,7 +67,6 @@ context('UI Regression', () => {
 
   it('renders the cart and order flow', () => {
     cy.visit(`${endpoint}/`);
-
     cy.bo((bo) => bo.create.cartWithVideos());
 
     cy.get('[data-qa="cart-button"]').click();
@@ -94,6 +91,51 @@ context('UI Regression', () => {
     );
 
     cy.percySnapshot('Order view', {
+      widths: snapshotViewWidths,
+    });
+  });
+
+  it('renders empty library', () => {
+    cy.visit(`${endpoint}/`);
+    cy.get('[data-qa="library-button"]').click();
+    cy.wait(100);
+    cy.get('button').contains('Create new playlist').should('be.visible');
+    cy.percySnapshot('Empty library view', { widths: snapshotViewWidths });
+  });
+
+  it('renders playlist with videos', () => {
+    cy.visit(`${endpoint}/`);
+    cy.bo((bo) => bo.create.playlistWithVideos());
+    cy.get('[data-qa="library-button"]').click();
+    cy.percySnapshot('Library with playlist view', {
+      widths: snapshotViewWidths,
+    });
+
+    cy.get('button').contains('Create new playlist').click();
+    cy.percySnapshot('Create new playlist modal view', {
+      widths: snapshotViewWidths,
+    });
+
+    cy.findByLabelText('Close Create new playlist modal').click();
+    cy.findByText('My playlist').click();
+
+    cy.get('[data-qa="playlistTitle"]').should('be.visible');
+
+    cy.percySnapshot('Playlist with videos view', {
+      widths: snapshotViewWidths,
+    });
+  });
+
+  it('renders empty playlist', () => {
+    cy.visit(`${endpoint}/`);
+    cy.bo((bo) => bo.create.emptyPlaylist());
+    cy.get('[data-qa="library-button"]').click();
+
+    cy.findByText('My empty playlist').click();
+
+    cy.get('[data-qa="playlistTitle"]').should('be.visible');
+
+    cy.percySnapshot('Empty playlist view', {
       widths: snapshotViewWidths,
     });
   });

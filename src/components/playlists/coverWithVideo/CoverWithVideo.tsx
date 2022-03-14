@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import s from 'src/components/playlists/style.module.less';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import { BoclipsPlayer } from 'boclips-player/lib/BoclipsPlayer/BoclipsPlayer';
+import { BoclipsPlayer } from 'boclips-player/dist/BoclipsPlayer/BoclipsPlayer';
 import { handleEnterKeyEvent } from 'src/services/handleKeyEvent';
 
 interface Props {

@@ -12,6 +12,7 @@ export type SearchFilters = { [key in FilterKey]: string[] };
 export interface SearchQueryLocationParams {
   query: string;
   page: number;
+  content_package: string;
   filters: SearchFilters;
 }
 
@@ -23,6 +24,7 @@ export const useSearchQueryLocationParams = (): [
   const searchQueryLocationParams = {
     query: locationParams.get('q') || '',
     page: Number(locationParams.get('page')) || 1,
+    content_package: locationParams.get('content_package'),
     filters: {
       video_type: locationParams.getAll('video_type'),
       best_for: locationParams.getAll('best_for'),

@@ -1,7 +1,6 @@
 import MyAccountSVG from 'src/resources/icons/my-account-icon.svg';
 import React, { useRef, useState } from 'react';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
-import { Link } from 'react-router-dom';
 import { Loading } from 'src/components/common/Loading';
 import c from 'classnames';
 import { useBoclipsSecurity } from 'src/components/common/providers/BoclipsSecurityProvider';
@@ -10,7 +9,9 @@ import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
+import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
+import { Link } from '../common/Link';
 
 export const AccountButton = () => {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
@@ -88,28 +89,38 @@ export const AccountButton = () => {
           <div className="font-medium">
             {data.firstName} {data.lastName}
           </div>
-          <div className="text-xs text-gray-800">{data.email}</div>
+          <Typography.Body as="div" size="small" className="text-gray-800">
+            {data.email}
+          </Typography.Body>
           <div role="menu" aria-label="Account menu">
             <FeatureGate linkName="userOrders">
-              <div className="pt-4 text-sm">
+              <div className="pt-4">
                 <Link onClick={ordersOpenedEvent} to="/orders">
-                  Your orders
+                  <Typography.Body size="small" weight="medium">
+                    Your orders
+                  </Typography.Body>
                 </Link>
               </div>
             </FeatureGate>
 
-            <div className="pt-1 text-sm">
-              <button
-                className="button-link"
-                type="button"
-                onClick={() =>
-                  boclipsSecurity.logout({
-                    redirectUri: `${Constants.HOST}/`,
-                  })
-                }
-              >
-                Log out
-              </button>
+            <div className="pt-1">
+              <Typography.Link>
+                <Typography.Body
+                  as="button"
+                  weight="medium"
+                  size="small"
+                  // Props aren't smart enough to know type does exist on button
+                  // @ts-ignore
+                  type="button"
+                  onClick={() =>
+                    boclipsSecurity.logout({
+                      redirectUri: `${Constants.HOST}/`,
+                    })
+                  }
+                >
+                  Log out
+                </Typography.Body>
+              </Typography.Link>
             </div>
           </div>
         </div>

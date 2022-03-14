@@ -3,11 +3,11 @@ import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import dateFormat from 'dateformat';
 import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import { Typography } from '@boclips-ui/typography';
+import { VideoInfo } from 'src/components/common/videoInfo/VideoInfo';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
 
@@ -21,20 +21,7 @@ export const VideoHeader = ({ video }: Props) => {
       <Typography.H1 size="md" className="text-gray-900 lg:mb-2">
         {video?.title}
       </Typography.H1>
-      <div className="lg:mb-1">
-        <Typography.Body
-          size="small"
-          className="text-gray-800"
-        >{`ID: ${video?.id}`}</Typography.Body>
-      </div>
-      <div className="flex flex-row lg:mb-6 text-gray-800">
-        <Typography.Body>
-          {`Released on ${dateFormat(video?.releasedOn, 'mediumDate')} by`}
-        </Typography.Body>
-        <Typography.Body weight="medium" className="font-medium ml-1">
-          {video?.createdBy}
-        </Typography.Body>
-      </div>
+      <VideoInfo video={video} />
       <Typography.H2 size="sm" className="text-gray-900">
         {createPriceDisplayValue(
           video?.price?.amount,
@@ -43,8 +30,8 @@ export const VideoHeader = ({ video }: Props) => {
         )}
       </Typography.H2>
       <FeatureGate feature="BO_WEB_APP_PRICES">
-        <div className="grey-800 mb-4">
-          <Typography.Body className="text-gray-700">
+        <div className="mb-4">
+          <Typography.Body size="small" className="text-gray-700">
             This is an agreed price for your organization
           </Typography.Body>
         </div>
@@ -52,9 +39,7 @@ export const VideoHeader = ({ video }: Props) => {
 
       <div className={s.buttons}>
         <div className={s.iconButtons}>
-          <FeatureGate feature="BO_WEB_APP_ENABLE_PLAYLISTS">
-            <AddToPlaylistButton videoId={video.id} />
-          </FeatureGate>
+          <AddToPlaylistButton videoId={video.id} />
 
           <CopyVideoLinkButton
             video={video}

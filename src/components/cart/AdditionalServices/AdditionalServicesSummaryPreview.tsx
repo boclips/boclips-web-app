@@ -25,11 +25,11 @@ export const AdditionalServicesSummaryPreview = ({
   const getHeaderCopy = () => {
     return noAdditionalServices
       ? 'No additional services selected'
-      : 'Additional Services';
+      : 'Additional Services:';
   };
 
   const Price = React.useCallback(() => {
-    return <div className="absolute right-0 top-0">Free</div>;
+    return <Typography.Body>Free</Typography.Body>;
   }, []);
 
   return (
@@ -37,14 +37,14 @@ export const AdditionalServicesSummaryPreview = ({
       as="div"
       size={fontSize}
       data-qa="order-summary-item-additional-services"
-      className={`flex flex-col text-gray-800 w-full ${s.additionalServices}`}
+      className="flex flex-col text-gray-900 w-full"
     >
       <Typography.Body size={fontSize} weight="medium">
         {getHeaderCopy()}
       </Typography.Body>
       {captionsRequested && (
         <span
-          className="relative"
+          className={s.additionalItem}
           data-qa="order-summary-item-captions-requested"
         >
           English captions requested {displayPrice && <Price />}
@@ -53,7 +53,7 @@ export const AdditionalServicesSummaryPreview = ({
 
       {transcriptRequested && (
         <span
-          className="relative"
+          className={s.additionalItem}
           data-qa="order-summary-item-transcripts-requested"
         >
           Transcripts requested {displayPrice && <Price />}
@@ -61,13 +61,13 @@ export const AdditionalServicesSummaryPreview = ({
       )}
 
       {trim && (
-        <span className="relative" data-qa="order-summary-item-trim">
+        <span className={s.additionalItem} data-qa="order-summary-item-trim">
           Trim: {trim} {displayPrice && <Price />}
         </span>
       )}
 
       {editRequest && (
-        <span className="relative" data-qa="order-summary-item-editing">
+        <span className={s.additionalItem} data-qa="order-summary-item-editing">
           Other type of editing: {editRequest} {displayPrice && <Price />}
         </span>
       )}

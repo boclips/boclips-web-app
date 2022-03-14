@@ -139,7 +139,7 @@ describe('order table', () => {
 
     expect(await wrapper.findByText('Order date')).toBeVisible();
     expect(await wrapper.findByText('Quantity')).toBeVisible();
-    expect(await wrapper.findByText('Total price')).toBeVisible();
+    expect(await wrapper.findByText('Total value')).toBeVisible();
     expect(await wrapper.findByText('Status')).toBeVisible();
     expect(await wrapper.findByText('Delivery date')).toBeVisible();
     expect(await wrapper.findByText('Notes')).toBeVisible();

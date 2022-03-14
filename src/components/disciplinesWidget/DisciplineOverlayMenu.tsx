@@ -1,11 +1,11 @@
 import ArrowRight from 'src/resources/icons/arrow-no-size.svg';
-import { Link } from 'react-router-dom';
 import React from 'react';
 import getDisciplineIllustration from 'src/services/getDisciplineIllustration';
 import { DisciplineWithSubjectOffering } from 'src/hooks/api/disciplinesQuery';
 import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 import { ExtraSubjects } from './ExtraSubjects';
+import { Link } from '../common/Link';
 
 interface Props {
   onClick: (discipline: DisciplineWithSubjectOffering) => void;
@@ -38,7 +38,7 @@ const DisciplineOverlayMenu = ({ onClick, selectedDiscipline }: Props) => {
           return (
             <Link
               key={subject.name}
-              className=""
+              className={s.link}
               to={{
                 pathname: '/videos',
                 search: `?subject=${subject.id}`,

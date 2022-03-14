@@ -43,8 +43,8 @@ export const InputWithDebounce = ({
       inputType="textarea"
       isError={!isValid}
       placeholder={placeholder}
-      showLabelText={false}
       defaultValue={value}
+      labelText="Note"
     />
   );
 };

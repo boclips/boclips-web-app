@@ -15,7 +15,7 @@
     border-radius: 4px;
     height: 80px;
     padding: 0 1rem;
-    box-shadow: 0 .5rem .75rem rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0.5rem 0.75rem rgba(0, 0, 0, 0.05);
     #focus;
 
     &&:last-of-type {
@@ -49,7 +49,7 @@
   padding: 1rem;
 
   .overlayHeader {
-  @apply flex flex-row items-center;
+    @apply flex flex-row items-center;
     height: 32px;
     font-size: 1.125rem;
     text-align: center;
@@ -78,7 +78,7 @@
   }
 
   .selectedDiscipline {
-  @apply flex items-center rounded;
+    @apply flex items-center rounded;
     width: 100%;
     border: 2px solid @gray-700;
     height: 56px;
@@ -100,12 +100,14 @@
     display: flex;
     flex-direction: column;
 
-    a {
+    .link {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 1rem 0;
+    }
 
+    a {
       &:first-of-type {
         padding-top: 1.5rem;
       }
@@ -113,7 +115,6 @@
       &:last-of-type {
         margin-bottom: 1.5rem;
       }
-
     }
 
     svg {
@@ -123,7 +124,6 @@
     }
   }
 }
-
 
 .disciplineTitle {
   font-weight: 400 !important;
@@ -185,7 +185,7 @@
     position: relative;
 
     &:after {
-    @apply rounded;
+      @apply rounded;
       content: '';
       width: 120%;
       height: 100%;
@@ -253,14 +253,14 @@
     }
 
     .subjectsPanel {
-    @apply col-span-full row-start-2 row-end-2 rounded;
+      @apply col-span-full row-start-2 row-end-2 rounded;
       border: 1px solid @gray-400;
       padding: 1.5rem;
 
       background: @white;
 
       &.placeBottom {
-      @apply row-start-3 row-end-3;
+        @apply row-start-3 row-end-3;
       }
 
       .linkWrapper {

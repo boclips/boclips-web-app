@@ -5,12 +5,13 @@ import { CartItem as ApiCartItem } from 'boclips-api-client/dist/sub-clients/car
 import RemoveFromCartIcon from 'src/resources/icons/bin.svg';
 import { useCartMutation } from 'src/hooks/api/cartQuery';
 import c from 'classnames';
-import { Link } from 'react-router-dom';
 import { TextButton } from 'src/components/common/textButton/TextButton';
 import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import VideoCardPlaceholder from '@boclips-ui/video-card-placeholder';
 import { Typography } from '@boclips-ui/typography';
+import { VideoInfo } from 'src/components/common/videoInfo/VideoInfo';
+import { Link } from 'src/components/common/Link';
 import s from './style.module.less';
 
 interface Props {
@@ -56,19 +57,12 @@ const CartItem = ({ cartItem }: Props) => {
         </div>
         <div className="flex flex-col w-full ml-3">
           <div className="flex flex-row justify-between">
-            <Link
-              to={`/videos/${videoItem.id}`}
-              className="text-gray-900 hover:text-gray-900"
-            >
-              <Typography.Title1>{videoItem.title}</Typography.Title1>
+            <Link to={`/videos/${videoItem.id}`}>
+              <Typography.Title1> {videoItem.title}</Typography.Title1>
             </Link>
             <PriceBadge className="text-gray-900" price={videoItem.price} />
           </div>
-          <Typography.Body
-            as="div"
-            size="small"
-            className="text-gray-800"
-          >{`ID: ${videoItem.id}`}</Typography.Body>
+          <VideoInfo video={videoItem} />
           <TextButton
             onClick={cartItemAnimate}
             text="Remove"
