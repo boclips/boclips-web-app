@@ -10,7 +10,7 @@ export const ContentPackagePreviewBanner = ({ packageId }: Props) => {
 
   return (
     <div
-      className="w-full mx-auto fixed bottom-0 py-6 bg-yellow-warning z-10 flex justify-center border-yellow-warning-border border-t-2"
+      className="w-full mx-auto fixed bottom-0 py-6 bg-yellow-warning z-20 flex justify-center border-yellow-warning-border border-t-2"
       role="banner"
     >
       <span className="text-base">
