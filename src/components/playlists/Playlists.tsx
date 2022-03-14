@@ -6,6 +6,7 @@ import { CopyLinkButton } from 'src/components/common/copyLinkButton/CopyLinkBut
 import { Constants } from 'src/AppConstants';
 import GridCard from '../common/gridCard/GridCard';
 import s from './style.module.less';
+import { Link } from 'react-router-dom';
 
 const Playlists = () => {
   const { data: playlists, isLoading } = useOwnAndSharedPlaylistsQuery();
@@ -25,7 +26,11 @@ const Playlists = () => {
                 <div className={s.sharedWithYouOverlay}>Shared with you</div>
               )
             }
-            header={<Thumbnails videos={playlist.videos} />}
+            header={
+              <Link to={`/playlists/${playlist.id}`}>
+                <Thumbnails videos={playlist.videos} />
+              </Link>
+            }
             footer={
               <div className="w-fit	self-end p-1">
                 <CopyLinkButton
