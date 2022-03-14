@@ -25,7 +25,7 @@ export const CartDetails = ({ cart }: Props) => {
       />
       <div className="pt-4 col-start-1 col-span-20">
         {cart.items.map((item) => (
-          <CartItem key={item.id} cartItem={item} />
+          <CartItem key={item.videoId} cartItem={item} />
         ))}
       </div>
     </main>

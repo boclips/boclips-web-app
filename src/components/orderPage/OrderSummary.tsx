@@ -8,6 +8,7 @@ import { OrderVideoQuantity } from 'src/components/common/OrderVideoQuantityFiel
 import { Typography } from '@boclips-ui/typography';
 import { OrderTotalValueField } from '../common/OrderTotalValueField';
 import { Link } from '../common/Link';
+import s from './style.module.less';
 
 interface Props {
   order: Order;
@@ -22,7 +23,7 @@ export const OrderSummary = ({ order }: Props) => {
           className="text-gray-800 mb-4"
         >{`Order ${order?.id}`}</Typography.H1>
       </div>
-      <div className="flex flex-row flex-wrap border-2 border-gray-400 rounded p-6 mb-4">
+      <div className={s.orderSummary}>
         <OrderDateField fieldName="Order date" date={order?.createdAt} />
         <OrderStatusField status={order?.status} />
         <OrderDateField fieldName="Delivery date" date={order?.deliveredAt} />

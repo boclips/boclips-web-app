@@ -16,7 +16,7 @@ export const SelectedFilterTag = ({ filter, removeFilter }: Props) => {
       <button
         type="button"
         data-qa="remove-filter"
-        className="mx-1 rounded p-1 text-gray-900 hover:text-blue-800 hover:border-blue-500 hover:border-solid hover:bg-blue-400 h-5 w-5"
+        className="mx-1 rounded flex items-center justify-center p-1 text-gray-900 hover:text-blue-800 hover:bg-blue-400 h-5 w-5"
         onKeyPress={(_) => removeFilter(filter.key, filter.id)}
         onClick={() => removeFilter(filter.key, filter.id)}
         aria-label={`remove ${filter.name} filter`}

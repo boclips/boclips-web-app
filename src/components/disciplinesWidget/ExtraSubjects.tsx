@@ -1,6 +1,7 @@
 import React from 'react';
 import { Subject } from 'boclips-api-client/dist/types';
 import { Typography } from '@boclips-ui/typography';
+import s from './style.module.less';
 
 interface Props {
   subjectsWeAlsoOffer: Subject[];
@@ -11,7 +12,7 @@ export const ExtraSubjects: React.FC<Props> = ({
 }: Props) => {
   return (
     <div
-      className="border-t-2 border-gray-400 mt-1 lg:mt-6 pt-6"
+      className={s.extraSubjects}
       aria-label={`We also offer subjects in ${subjectsWeAlsoOffer
         .map((subject) => subject.name)
         .join(', ')}`}

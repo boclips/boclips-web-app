@@ -33,7 +33,11 @@ export const SearchResults = ({
         );
       default:
         return results.page.map((video) => (
-          <div className="mb-8" key={`placeholder-${video?.id}`}>
+          <div
+            className="mb-8"
+            style={{ maxHeight: '265px' }}
+            key={`placeholder-${video?.id}`}
+          >
             <VideoCardPlaceholder />
           </div>
         ));

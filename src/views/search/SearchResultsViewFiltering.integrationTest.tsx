@@ -167,8 +167,6 @@ describe('SearchResultsFiltering', () => {
         expect(wrapper.queryByText('stock video')).toBeNull();
       });
 
-      wrapper.debug(wrapper.baseElement, 9999999999);
-
       expect(await wrapper.findByLabelText('News')).toBeInTheDocument();
       expect(await wrapper.findByText('news video')).toBeInTheDocument();
 
@@ -590,6 +588,7 @@ describe('SearchResultsFiltering', () => {
           ],
         }),
       );
+
       const videos = [
         VideoFactory.sample({
           id: '1',
@@ -673,6 +672,43 @@ describe('SearchResultsFiltering', () => {
         expect(await wrapper.findByText('cheap video')).toBeInTheDocument();
         expect(await wrapper.findByText('expensive video')).toBeInTheDocument();
       });
+    });
+  });
+
+  describe('content package filter', () => {
+    beforeEach(() => {
+      fakeClient = new FakeBoclipsClient();
+      const videos = [
+        VideoFactory.sample({
+          id: '1',
+          title: 'stock video',
+          types: [{ name: 'STOCK', id: 1 }],
+        }),
+        VideoFactory.sample({
+          id: '2',
+          title: 'news video',
+          types: [{ name: 'NEWS', id: 2 }],
+        }),
+      ];
+
+      videos.forEach((v) => fakeClient.videos.insertVideo(v));
+      fakeClient.contentPackages.create({
+        id: 'abc',
+        name: 'my content package to preview',
+        accessRules: [{ type: 'IncludedVideos', videoIds: ['2'] }],
+        accountsConnected: [],
+      });
+    });
+
+    it('displays the content package preview banner', async () => {
+      const wrapper = renderSearchResultsView(['/videos?&content_package=abc']);
+
+      expect(await wrapper.findByText('news video')).toBeInTheDocument();
+      expect(await wrapper.queryByText('stock video')).toBeNull();
+
+      expect(await wrapper.findByRole('banner')).toHaveTextContent(
+        'You’re now previewing: my content package to preview',
+      );
     });
   });
 

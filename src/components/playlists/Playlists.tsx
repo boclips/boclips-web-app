@@ -4,6 +4,7 @@ import SkeletonTiles from 'src/components/skeleton/Skeleton';
 import Thumbnails from 'src/components/playlists/thumbnails/Thumbnails';
 import { CopyLinkButton } from 'src/components/common/copyLinkButton/CopyLinkButton';
 import { Constants } from 'src/AppConstants';
+import { Link } from 'react-router-dom';
 import GridCard from '../common/gridCard/GridCard';
 import s from './style.module.less';
 
@@ -25,7 +26,11 @@ const Playlists = () => {
                 <div className={s.sharedWithYouOverlay}>Shared with you</div>
               )
             }
-            header={<Thumbnails videos={playlist.videos} />}
+            header={
+              <Link to={`/playlists/${playlist.id}`}>
+                <Thumbnails videos={playlist.videos} />
+              </Link>
+            }
             footer={
               <div className="w-fit	self-end p-1">
                 <CopyLinkButton
