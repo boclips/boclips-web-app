@@ -1,5 +1,14 @@
 @import '~@boclips-ui/styles/src/colors';
 
+@keyframes movePrice {
+  from {
+    top: -30px;
+  }
+  to {
+    top: 0px;
+  }
+}
+
 .gridCard {
   width: 100%;
   position: relative;
@@ -7,6 +16,21 @@
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
   display: grid;
   grid-template-rows: minmax(min-content, max-content) auto auto;
+
+  &:hover {
+    .price {
+      z-index: 3;
+    }
+  }
+}
+
+.price {
+  position: absolute;
+  top: .25rem;
+  right: .25rem;
+  border-radius: .25rem;
+  background-color: @white;
+  padding: 0 .25rem;
 }
 
 .header {
@@ -19,8 +43,10 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+
     &:focus {
       background-color: unset;
     }
   }
 }
+

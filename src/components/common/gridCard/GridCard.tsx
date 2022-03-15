@@ -9,13 +9,15 @@ interface Props {
   header: React.ReactElement;
   footer?: React.ReactElement;
   overlay?: React.ReactElement;
+  price?: React.ReactElement;
 }
 
-const GridCard = ({ name, link, header, footer, overlay }: Props) => {
+const GridCard = ({ name, link, header, footer, overlay, price }: Props) => {
   return (
     <div className={s.gridCard} data-qa={`grid-card-for-${name}`}>
       {overlay}
       {header}
+      <div className={s.price}>{price}</div>
       <div className={s.header}>
         <Link
           to={{

@@ -9,6 +9,7 @@ import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import CoverWithVideo from 'src/components/playlists/coverWithVideo/CoverWithVideo';
 import { Typography } from '@boclips-ui/typography';
+import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import s from './style.module.less';
 
 interface Props {
@@ -49,37 +50,45 @@ const EmptyPlaylist = () => (
 );
 
 const PlaylistBody = ({ videos }: Props) => {
-  return videos && videos.length === 0 ? (
-    <EmptyPlaylist />
-  ) : (
-    <>
-      <Typography.H2
-        size="sm"
-        className="grid-row-start-4 grid-row-end-4 col-start-2 col-end-26 mb-0 text-gray-900"
-      >
-        In this playlist:
-      </Typography.H2>
-      <main
-        tabIndex={-1}
-        className={c(
-          s.cardWrapper,
-          'grid-row-start-5 grid-row-end-5 col-start-2 col-end-26',
-        )}
-      >
-        {videos.map((video) => {
-          return (
-            <GridCard
-              link={`/videos/${video.id}`}
-              key={video.id}
-              name={video.title}
-              header={<CoverWithVideo video={video} />}
-              footer={buttons(video)}
-            />
-          );
-        })}
-      </main>
-    </>
-  );
+  switch (videos && videos.length === 0) {
+    case true:
+      return <EmptyPlaylist />;
+    default:
+      return (
+        <>
+          <Typography.H2
+            size="sm"
+            className="grid-row-start-4 grid-row-end-4 col-start-2 col-end-26 mb-0 text-gray-900"
+          >
+            In this playlist:
+          </Typography.H2>
+          <main
+            tabIndex={-1}
+            className={c(
+              s.cardWrapper,
+              'grid-row-start-5 grid-row-end-5 col-start-2 col-end-26',
+            )}
+          >
+            {videos.map((video) => {
+              return (
+                <GridCard
+                  link={`/videos/${video.id}`}
+                  key={video.id}
+                  name={video.title}
+                  header={<CoverWithVideo video={video} />}
+                  price={
+                    video.price && (
+                      <PriceBadge price={video.price} className="text-xl" />
+                    )
+                  }
+                  footer={buttons(video)}
+                />
+              );
+            })}
+          </main>
+        </>
+      );
+  }
 };
 
 export default PlaylistBody;
