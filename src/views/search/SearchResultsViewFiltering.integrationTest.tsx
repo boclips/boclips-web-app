@@ -1,6 +1,7 @@
 import {
   ChannelFactory,
   FakeBoclipsClient,
+  SubjectFactory,
 } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import {
@@ -678,6 +679,14 @@ describe('SearchResultsFiltering', () => {
   describe('content package filter', () => {
     beforeEach(() => {
       fakeClient = new FakeBoclipsClient();
+      const englishSubject = SubjectFactory.sample({
+        id: '123',
+        name: 'english',
+      });
+      const frenchSubject = SubjectFactory.sample({
+        id: '456',
+        name: 'french',
+      });
       const videos = [
         VideoFactory.sample({
           id: '1',
@@ -687,17 +696,38 @@ describe('SearchResultsFiltering', () => {
         VideoFactory.sample({
           id: '2',
           title: 'news video',
+          subjects: [englishSubject],
+          types: [{ name: 'NEWS', id: 2 }],
+        }),
+
+        VideoFactory.sample({
+          id: '3',
+          title: 'french news video',
+          subjects: [frenchSubject],
           types: [{ name: 'NEWS', id: 2 }],
         }),
       ];
+      fakeClient.subjects.insertSubject(englishSubject);
+      fakeClient.subjects.insertSubject(frenchSubject);
 
       videos.forEach((v) => fakeClient.videos.insertVideo(v));
       fakeClient.contentPackages.create({
         id: 'abc',
         name: 'my content package to preview',
-        accessRules: [{ type: 'IncludedVideos', videoIds: ['2'] }],
+        accessRules: [{ type: 'IncludedVideos', videoIds: ['2', '3'] }],
         accountsConnected: [],
       });
+      fakeClient.videos.setFacets(
+        FacetsFactory.sample({
+          subjects: [
+            FacetFactory.sample({
+              id: frenchSubject.id,
+              hits: 1,
+              name: frenchSubject.name,
+            }),
+          ],
+        }),
+      );
     });
 
     it('displays the content package preview banner', async () => {
@@ -709,6 +739,34 @@ describe('SearchResultsFiltering', () => {
       expect(await wrapper.findByRole('banner')).toHaveTextContent(
         'You’re now previewing: my content package to preview',
       );
+    });
+
+    it(`can apply additional filters`, async () => {
+      const wrapper = renderSearchResultsView([
+        '/videos?q=video&content_package=abc',
+      ]);
+
+      expect(await wrapper.findByText('news video')).toBeInTheDocument();
+      expect(await wrapper.findByText('french news video')).toBeInTheDocument();
+      expect(await wrapper.queryByText('stock video')).toBeNull();
+
+      expect(await wrapper.findByRole('banner')).toHaveTextContent(
+        'You’re now previewing: my content package to preview',
+      );
+
+      fireEvent.click(wrapper.getByTestId('456-checkbox'));
+      expect(wrapper.getByTestId('456-checkbox')).toHaveProperty(
+        'checked',
+        true,
+      );
+      await waitFor(async () => {
+        expect(wrapper.getByText('french news video')).toBeInTheDocument();
+        expect(wrapper.queryByText('news video')).toBeNull();
+        expect(wrapper.queryByText('stock video')).toBeNull();
+        expect(await wrapper.findByRole('banner')).toHaveTextContent(
+          'You’re now previewing: my content package to preview',
+        );
+      });
     });
   });
 
