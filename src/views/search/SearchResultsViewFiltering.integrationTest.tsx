@@ -712,6 +712,62 @@ describe('SearchResultsFiltering', () => {
     });
   });
 
+  describe('education level filters', () => {
+    it('displays education level filters with facet counts', async () => {
+      const facets = {
+        educationLevels: [
+          {
+            hits: 22,
+            id: 'EL1',
+            name: 'EL1 label',
+          },
+          {
+            hits: 33,
+            id: 'EL2',
+            name: 'EL2 label',
+          },
+        ],
+        subjects: [],
+        ageRanges: [],
+        bestForTags: [],
+        durations: [],
+        resourceTypes: [],
+        channels: [],
+        videoTypes: [],
+        prices: [],
+      };
+
+      const videos = [
+        VideoFactory.sample({
+          id: '1',
+          title: 'hello 1',
+        }),
+        VideoFactory.sample({
+          title: '2',
+          description: 'hello 2',
+        }),
+      ];
+
+      fakeClient.users.insertCurrentUser(UserFactory.sample());
+      videos.forEach((v) => {
+        fakeClient.videos.insertVideo(v);
+      });
+      fakeClient.videos.setFacets(facets);
+
+      const wrapper = renderSearchResultsView(['/videos?q=hello']);
+
+      await waitFor(() => {
+        expect(wrapper.getByText('Education Level')).toBeInTheDocument();
+
+        expect(wrapper.getByText('EL1 label')).toBeInTheDocument();
+        expect(wrapper.getByTestId('EL1-checkbox')).toBeInTheDocument();
+
+        expect(wrapper.getByText('EL2 label')).toBeInTheDocument();
+        expect(wrapper.getByTestId('EL2-checkbox')).toBeInTheDocument();
+      });
+    });
+  });
+
   describe('no results', () => {
     it('shows a no results page without filters', async () => {
       const wrapper = renderSearchResultsView(['/videos?q=shark']);

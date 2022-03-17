@@ -12,6 +12,7 @@ import { FilterKey } from 'src/types/search/FilterKey';
 import { Channel } from 'boclips-api-client/dist/sub-clients/channels/model/Channel';
 import { Subject } from 'boclips-api-client/dist/sub-clients/subjects/model/Subject';
 import dayjs from 'dayjs';
+import { EducationLevel } from 'boclips-api-client/dist/sub-clients/educationLevels/model/EducationLevel';
 
 export const convertFacetsToFilterOptions = (
   facets?: VideoFacets,
@@ -24,6 +25,7 @@ export const convertFacetsToFilterOptions = (
     videoTypes: facets?.videoTypes || [],
     durations: facets?.durations || [],
     prices: facets?.prices || [],
+    educationLevels: facets?.educationLevels || [],
   };
 
   return {
@@ -60,6 +62,11 @@ export const convertFacetsToFilterOptions = (
       'prices',
       getPriceLabel,
     ),
+    educationLevels: createFilterOptions(
+      safeFacets.educationLevels,
+      appliedFilters?.education_level || [],
+      'education_level',
+    ),
   };
 };
 
@@ -86,6 +93,7 @@ export const getFilterLabel = (
   id,
   channels?: Channel[],
   subjects?: Subject[],
+  educationLevels?: EducationLevel[],
 ): string => {
   switch (key) {
     case 'video_type':
@@ -100,6 +108,8 @@ export const getFilterLabel = (
       return getSubjectsLabel(id, subjects);
     case 'best_for':
       return id;
+    case 'education_level':
+      return getEducationLevelsLabel(id, educationLevels);
     case 'release_date_from':
       return `From: ${dayjs(id).format('MM-DD-YYYY')}`;
     case 'release_date_to':
@@ -152,4 +162,13 @@ const getPriceLabel = (name: string): string => {
     name.length - 2,
   )}`;
   return createPriceDisplayValue(parseFloat(price), 'USD') || name;
+};
+
+const getEducationLevelsLabel = (
+  code: string,
+  educationLevels?: EducationLevel[],
+) => {
+  return educationLevels
+    ? educationLevels.find((it) => it.code === code).label
+    : code;
 };

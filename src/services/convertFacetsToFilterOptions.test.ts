@@ -14,6 +14,10 @@ describe('convertFacets', () => {
       videoTypes: [FacetFactory.sample({ id: '3' })],
       channels: [FacetFactory.sample({ id: '4' })],
       prices: [FacetFactory.sample({ id: '5' })],
+      educationLevels: [
+        FacetFactory.sample({ id: 'EL1', hits: 9, name: 'EL1 label' }),
+        FacetFactory.sample({ id: 'EL2', hits: 52, name: 'EL2 label' }),
+      ],
     });
 
     const searchFilters: SearchFilters = {
@@ -25,9 +29,11 @@ describe('convertFacets', () => {
       prices: [],
       release_date_from: [],
       release_date_to: [],
+      education_level: [],
     };
 
     const filterOptions = convertFacetsToFilterOptions(facets, searchFilters);
+
     expect(filterOptions.channels[0].id).toEqual('4');
     expect(filterOptions.channels[0].key).toEqual('channel');
     expect(filterOptions.videoTypes[0].id).toEqual('3');
@@ -41,6 +47,16 @@ describe('convertFacets', () => {
     expect(filterOptions.subjects[0].key).toEqual('subject');
     expect(filterOptions.prices[0].id).toEqual('5');
     expect(filterOptions.prices[0].key).toEqual('prices');
+
+    expect(filterOptions.educationLevels[0].id).toEqual('EL1');
+    expect(filterOptions.educationLevels[0].key).toEqual('education_level');
+    expect(filterOptions.educationLevels[0].hits).toEqual(9);
+    expect(filterOptions.educationLevels[0].name).toEqual('EL1 label');
+
+    expect(filterOptions.educationLevels[1].id).toEqual('EL2');
+    expect(filterOptions.educationLevels[1].key).toEqual('education_level');
+    expect(filterOptions.educationLevels[1].hits).toEqual(52);
+    expect(filterOptions.educationLevels[1].name).toEqual('EL2 label');
   });
 
   it('returns empty lists when facets are null', () => {

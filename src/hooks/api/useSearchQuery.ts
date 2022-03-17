@@ -40,6 +40,8 @@ const doSearch = (
       dayjs(filters?.release_date_from[0]).format('YYYY-MM-DD'),
     duration_facets: DEFAULT_DURATIONS,
     include_channel_facets: true,
+    include_education_level_facets: true,
+    education_level: filters?.education_level,
     content_package: contentPackage,
   });
 
