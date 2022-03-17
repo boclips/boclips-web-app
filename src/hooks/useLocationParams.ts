@@ -12,7 +12,7 @@ export type SearchFilters = { [key in FilterKey]: string[] };
 export interface SearchQueryLocationParams {
   query: string;
   page: number;
-  content_package: string;
+  content_package?: string;
   filters: SearchFilters;
 }
 
@@ -60,6 +60,10 @@ export const convertToURLSearchParams = (
   const params = new URLSearchParams();
   params.append('q', search.query);
   params.append('page', `${search.page}`);
+
+  if (search?.content_package) {
+    params.append('content_package', `${search.content_package}`);
+  }
 
   Object.entries(search.filters).forEach(([key, values]) =>
     // We need to loop through filters as you can't append an array for URLSearchParams

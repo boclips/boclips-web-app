@@ -27,7 +27,7 @@ const Playlists = () => {
               )
             }
             header={
-              <Link to={`/playlists/${playlist.id}`}>
+              <Link tabIndex={-1} to={`/playlists/${playlist.id}`}>
                 <Thumbnails videos={playlist.videos} />
               </Link>
             }

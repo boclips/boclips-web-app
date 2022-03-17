@@ -131,7 +131,6 @@ const SearchResultsView = () => {
     setSearchLocation({
       query,
       page: 1,
-      content_package: '',
       filters: emptyFilters,
     });
     setNewFiltersBeforeDebounce(emptyFilters);

@@ -3,8 +3,6 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import PlaylistBody from 'src/components/playlists/PlaylistBody';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -15,15 +13,13 @@ describe('Playlist Body', () => {
     const videos = [VideoFactory.sample({ id: 'video-1', title: 'Video One' })];
 
     const wrapper = render(
-      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <BoclipsClientProvider client={fakeClient}>
-          <QueryClientProvider client={new QueryClient()}>
-            <MemoryRouter>
-              <PlaylistBody videos={videos} />
-            </MemoryRouter>
-          </QueryClientProvider>
-        </BoclipsClientProvider>
-      </BoclipsSecurityProvider>,
+      <BoclipsClientProvider client={fakeClient}>
+        <QueryClientProvider client={new QueryClient()}>
+          <MemoryRouter>
+            <PlaylistBody videos={videos} />
+          </MemoryRouter>
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
     );
 
     const addToPlaylistButton = await wrapper.findByRole('button', {
@@ -37,15 +33,11 @@ describe('Playlist Body', () => {
     const fakeClient = new FakeBoclipsClient();
 
     const wrapper = render(
-      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <BoclipsClientProvider client={fakeClient}>
-          <QueryClientProvider client={new QueryClient()}>
-            <MemoryRouter>
-              <PlaylistBody videos={[]} />
-            </MemoryRouter>
-          </QueryClientProvider>
-        </BoclipsClientProvider>
-      </BoclipsSecurityProvider>,
+      <BoclipsClientProvider client={fakeClient}>
+        <MemoryRouter>
+          <PlaylistBody videos={[]} />
+        </MemoryRouter>
+      </BoclipsClientProvider>,
     );
 
     expect(
@@ -66,5 +58,29 @@ describe('Playlist Body', () => {
 
     expect(textElement).toBeVisible();
     expect(wrapper.getByRole('img')).toBeVisible();
+  });
+
+  it('playlist card has price info', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const videoWithPrice = VideoFactory.sample({
+      title: 'video with price',
+      price: {
+        currency: 'USD',
+        amount: 150,
+      },
+    });
+
+    const wrapper = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={fakeClient}>
+          <MemoryRouter>
+            <PlaylistBody videos={[videoWithPrice]} />
+          </MemoryRouter>
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
+
+    expect(wrapper.getByText(videoWithPrice.title)).toBeInTheDocument();
+    expect(wrapper.getByText('$150')).toBeInTheDocument();
   });
 });
