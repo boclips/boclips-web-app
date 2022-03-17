@@ -10,6 +10,7 @@ import c from 'classnames';
 import { DateFilter } from 'src/components/filterPanel/DateFilter';
 import { BestForFilter } from 'src/components/filterPanel/BestForFilter';
 import { Typography } from '@boclips-ui/typography';
+import { EducationLevelFilter } from 'src/components/filterPanel/EducationLevelFilter';
 import { SelectedFilters } from './SelectedFilters';
 
 export interface DateFilters {
@@ -66,6 +67,10 @@ export const FilterPanel = ({
           />
           <BestForFilter
             options={options.bestFor}
+            handleChange={handleChange}
+          />
+          <EducationLevelFilter
+            options={options.educationLevels}
             handleChange={handleChange}
           />
           <VideoTypeFilter

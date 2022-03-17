@@ -5,6 +5,7 @@ import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
 import { getFilterLabel } from 'src/services/convertFacetsToFilterOptions';
 import { useGetChannelsQuery } from 'src/hooks/api/channelQuery';
 import { useGetSubjectsQuery } from 'src/hooks/api/subjectQuery';
+import { useGetEducationLevelsQuery } from 'src/hooks/api/educationLevelQuery';
 import { TextButton } from 'src/components/common/textButton/TextButton';
 import { Typography } from '@boclips-ui/typography';
 
@@ -25,6 +26,7 @@ export const SelectedFilters = ({ removeFilter, clearFilters }: Props) => {
   const [filtersToRender, setFiltersToRender] = useState<SelectedFilter[]>([]);
   const { data: channels } = useGetChannelsQuery();
   const { data: subjects } = useGetSubjectsQuery();
+  const { data: educationLevels } = useGetEducationLevelsQuery();
 
   const buildSelectedFilter = (
     selectedFilterId: string,
@@ -37,6 +39,7 @@ export const SelectedFilters = ({ removeFilter, clearFilters }: Props) => {
         selectedFilterId,
         channels.page,
         subjects,
+        educationLevels,
       ),
       key: filterKey,
     };
@@ -73,6 +76,7 @@ export const SelectedFilters = ({ removeFilter, clearFilters }: Props) => {
     searchQueryLocationParams.filters.subject.length,
     searchQueryLocationParams.filters.prices.length,
     searchQueryLocationParams.filters.best_for.length,
+    searchQueryLocationParams.filters.education_level.length,
     releaseDateFrom,
     releaseDateTo,
     channels,
