@@ -36,6 +36,10 @@ describe('Video View', () => {
       currency: 'USD',
       amount: 600,
     },
+    educationLevels: [
+      { code: 'EL1', label: 'EL1 label' },
+      { code: 'EL2', label: 'EL2 label' },
+    ],
   });
 
   const renderVideoView = (initialEntries: string[]) => {
@@ -82,6 +86,24 @@ describe('Video View', () => {
     expect(await wrapper.findByText('17 Dec 2015')).toBeVisible();
     expect(await wrapper.findByLabelText('Copy video link')).toBeVisible();
     expect(await wrapper.findByText('Additional services')).toBeVisible();
+  });
+
+  it('on video page education level badges are rendered', async () => {
+    fakeClient.videos.insertVideo(exampleVideo);
+
+    const wrapper = renderVideoView(['/videos/video-id']);
+
+    await waitFor(async () => {
+      expect(
+        wrapper.getByTestId('EL1-education-level-badge'),
+      ).toBeInTheDocument();
+      expect(
+        wrapper.getByTestId('EL2-education-level-badge'),
+      ).toBeInTheDocument();
+
+      expect(wrapper.getByText('EL1 label')).toBeVisible();
+      expect(wrapper.getByText('EL2 label')).toBeVisible();
+    });
   });
 
   it(`video page does not display additional services when disabled by user's feature`, async () => {
