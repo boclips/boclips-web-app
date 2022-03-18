@@ -19,10 +19,7 @@ export const VideoDescription = ({ video }: Props) => {
         ))}
 
         {video?.educationLevels?.map((level) => (
-          <EducationLevelBadge
-            key={level.code}
-            educationLevel={{ code: level.code, label: level.label }}
-          />
+          <EducationLevelBadge key={level.code} educationLevel={level} />
         ))}
       </div>
       <div className="lg:mt-4">

@@ -20,6 +20,7 @@ export const convertVideoFromApi = (video: ClientVideo): UiVideo => {
     promoted,
     language,
     attachments,
+    educationLevels,
     links,
   } = video;
 
@@ -41,6 +42,7 @@ export const convertVideoFromApi = (video: ClientVideo): UiVideo => {
     promoted,
     language,
     attachments,
+    educationLevels,
     links: {
       self: convertFromApiClientLink(links.self),
       rate: convertFromApiClientLink(links.rate),
