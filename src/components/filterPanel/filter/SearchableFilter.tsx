@@ -29,7 +29,7 @@ export const SearchableFilter = ({
       title={title}
       options={filteredOptions}
       handleChange={handleChange}
-      filtersSearch={<FilterSearch onSearch={setSearchText} />}
+      filtersSearch={<FilterSearch id={title} onSearch={setSearchText} />}
       handleFilterToggle={() => setSearchText('')}
     />
   );

@@ -92,6 +92,7 @@ export const SelectedFilters = ({ removeFilter, clearFilters }: Props) => {
         <TextButton onClick={clearFilters} text="Clear all" />
       </div>
       <div
+        role="region"
         className="flex flex-wrap"
         aria-labelledby="selected_filters_panel"
         data-qa="applied-filter-tags"

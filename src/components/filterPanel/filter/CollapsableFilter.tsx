@@ -28,7 +28,7 @@ export const CollapsableFilter = ({
         filterIsOpen={open}
         toggleFilter={toggleFilter}
       />
-      {open && <div id={`${title}-filter`}>{children}</div>}
+      {open && <div id={`${title.replace(' ', '')}-filter`}>{children}</div>}
     </div>
   );
 };
