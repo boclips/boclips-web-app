@@ -15,7 +15,7 @@ export const FilterHeader = ({ text, filterIsOpen, toggleFilter }: Props) => {
       type="button"
       className="px-4 text-gray-800 flex items-center cursor-pointer active:border-none justify-between w-full"
       aria-expanded={filterIsOpen}
-      aria-controls={`${text}-filter`}
+      aria-controls={`${text.replace(' ', '')}-filter`}
       aria-label={`${text} filter panel`}
       onClick={toggleFilter}
       onKeyPress={(event) => handleEnterKeyEvent(event, toggleFilter)}

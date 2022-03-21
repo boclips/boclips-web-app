@@ -5,10 +5,12 @@ import SearchIcon from 'resources/icons/search-icon.svg';
 interface Props {
   placeholderText?: string;
   onSearch: (text) => void;
+  id?: string;
 }
 export const FilterSearch = ({
   placeholderText = 'Search...',
   onSearch,
+  id,
 }: Props) => {
   const [searchText, setSearchText] = useState<string>('');
   const setText = (text: string) => {
@@ -20,7 +22,7 @@ export const FilterSearch = ({
       defaultValue={searchText}
       height="40px"
       inputType="text"
-      id="search-filter"
+      id={`search-filter-${id.replace(' ', '')}`}
       placeholder={placeholderText}
       icon={<SearchIcon />}
       showLabelText={false}
