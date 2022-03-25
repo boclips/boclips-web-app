@@ -8,6 +8,7 @@ import { useGetVideos } from 'src/hooks/api/videoQuery';
 import { Typography } from '@boclips-ui/typography';
 import { trackOrderConfirmationModalOpened } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
+import s from './style.module.less';
 
 interface Props {
   cart: ApiCart;
@@ -64,7 +65,7 @@ export const CartOrderSummary = ({ cart }: Props) => {
     <>
       <div className="col-start-19 col-end-26">
         <div className="flex flex-col rounded p-5 shadow">
-          <div className="border-b border-blue-500 mb-4">
+          <div className={s.cartInfoWrapper}>
             <CartSummaryItem
               label={<Typography.Body>Video(s) total</Typography.Body>}
               value={getTotalPriceDisplayValue(videos)}

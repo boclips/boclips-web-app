@@ -74,7 +74,6 @@ describe('SearchResultsFiltering', () => {
 
     const stockCheckbox = await wrapper.findByTestId('STOCK-checkbox');
     expect(stockCheckbox).toHaveProperty('checked', true);
-    expect(await wrapper.findByText('Selected filters')).toBeVisible();
   });
 
   describe('video type filters', () => {

@@ -11,6 +11,7 @@ import { DateFilter } from 'src/components/filterPanel/DateFilter';
 import { BestForFilter } from 'src/components/filterPanel/BestForFilter';
 import { Typography } from '@boclips-ui/typography';
 import { EducationLevelFilter } from 'src/components/filterPanel/EducationLevelFilter';
+import { TextButton } from 'src/components/common/textButton/TextButton';
 import { SelectedFilters } from './SelectedFilters';
 
 export interface DateFilters {
@@ -43,22 +44,31 @@ export const FilterPanel = ({
 
   return (
     <div className="col-start-2 col-end-8">
-      <Typography.H1
-        size="xs"
-        weight="medium"
-        id="filter_by"
-        className={c('text-primary', {
-          'pb-2': areFiltersApplied,
-        })}
+      <div
+        role="group"
+        className="mb-4 flex justify-between items-center"
+        style={{ height: '1.9375rem' }}
       >
-        Filter by:
-      </Typography.H1>
-      {areFiltersApplied && (
-        <SelectedFilters
-          removeFilter={removeFilter}
-          clearFilters={removeAllFilters}
-        />
-      )}
+        <Typography.H2
+          size="xs"
+          weight="medium"
+          id="filter_by"
+          className={c('text-gray-800', {
+            'pb-2': areFiltersApplied,
+          })}
+        >
+          Filter by:
+        </Typography.H2>
+
+        {areFiltersApplied && (
+          <TextButton
+            onClick={removeAllFilters}
+            ariaLabel="Clear all filters"
+            text="Clear all"
+          />
+        )}
+      </div>
+      {areFiltersApplied && <SelectedFilters removeFilter={removeFilter} />}
       {resultsFound && (
         <div role="group" aria-labelledby="filter_by">
           <SubjectFilter

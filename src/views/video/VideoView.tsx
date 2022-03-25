@@ -15,8 +15,6 @@ const VideoView = () => {
   const videoId = useGetIdFromLocation('videos');
   const { data: video, isLoading, error } = useFindOrGetVideo(videoId);
 
-  // TODO: FIX INFINITE LOADING IF ERROR
-
   if (isLoading && !video) return <Loading />;
 
   const isVideoNotFound = (error as BoclipsApiError)?.status === 404;

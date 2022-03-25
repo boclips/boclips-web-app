@@ -27,3 +27,16 @@
   @apply flex flex-row flex-wrap rounded p-6 mb-4;
   border: 2px solid @gray-400;
 }
+
+.orderItemWrapper{
+  display:flex;
+  flex-direction: row;
+  border-bottom: 2px solid @gray-400;
+  padding: .875rem 0;
+  &:first-of-type{
+    padding-top: 0;
+  }
+  &:last-of-type{
+    border: none;
+  }
+}

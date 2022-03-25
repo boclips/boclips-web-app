@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BoInputText } from 'src/components/common/input/BoInputText';
 import SearchIcon from 'resources/icons/search-icon.svg';
+import s from './FilterSearch.module.less';
 
 interface Props {
   placeholderText?: string;
@@ -28,6 +29,7 @@ export const FilterSearch = ({
       showLabelText={false}
       onChange={setText}
       allowClear
+      className={s.filterInput}
     />
   );
 };

@@ -8,10 +8,17 @@ interface Props {
   text: string;
   className?: string;
   icon?: React.ReactElement;
+  ariaLabel?: string;
 }
 
-export const TextButton = ({ onClick, text, className, icon }: Props) => (
+export const TextButton = ({
+  onClick,
+  text,
+  className,
+  icon,
+  ariaLabel,
+}: Props) => (
   <div className={c(s.textButton, { [className]: className })}>
-    <Button onClick={onClick} text={text} icon={icon} />
+    <Button ariaLabel={ariaLabel} onClick={onClick} text={text} icon={icon} />
   </div>
 );

@@ -7,8 +7,8 @@ import { VideoHeader } from 'src/components/videoPage/VideoHeader';
 import { useHistory } from 'react-router-dom';
 import BackArrow from 'resources/icons/back-arrow.svg';
 import { FeatureGate } from 'src/components/common/FeatureGate';
-import { Typography } from '@boclips-ui/typography';
 import c from 'classnames';
+import { TextButton } from 'src/components/common/textButton/TextButton';
 import s from './videoPage.module.less';
 
 interface Props {
@@ -28,18 +28,12 @@ export const VideoPage = ({ video }: Props) => {
     <>
       <main tabIndex={-1} className={s.playerSection}>
         {userNavigatedToPageViaApp && (
-          <button
-            type="button"
-            className="text-blue-800 flex flex-row items-center mb-4"
+          <TextButton
             onClick={goToPreviousPage}
-          >
-            <BackArrow className="mr-4" />
-            <Typography.Body size="small" weight="medium">
-              Back
-            </Typography.Body>
-          </button>
+            icon={<BackArrow />}
+            text="Back"
+          />
         )}
-
         <VideoPlayer video={video} />
       </main>
       <div className={c(s.headerSection, videoMetadataTopMargin)}>

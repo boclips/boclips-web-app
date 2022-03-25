@@ -24,6 +24,7 @@ interface InputProps {
   height?: string;
   constraints?: BoInputConstraints;
   labelText?: string;
+  className?: string;
 }
 
 interface BoInputConstraints {
@@ -52,6 +53,7 @@ export const BoInputText = React.forwardRef(
       showLabelText = true,
       labelText,
       allowClear = false,
+      className,
     }: BoInputProps,
     ref: React.Ref<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -72,7 +74,7 @@ export const BoInputText = React.forwardRef(
               type="text"
               id={id}
               onChange={(e) => (onChange ? setValue(e.target.value) : {})}
-              className={c(s.input, {
+              className={c(s.input, className, {
                 [s.error]: isError,
                 [s.withIcon]: icon,
               })}

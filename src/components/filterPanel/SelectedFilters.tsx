@@ -6,12 +6,9 @@ import { getFilterLabel } from 'src/services/convertFacetsToFilterOptions';
 import { useGetChannelsQuery } from 'src/hooks/api/channelQuery';
 import { useGetSubjectsQuery } from 'src/hooks/api/subjectQuery';
 import { useGetEducationLevelsQuery } from 'src/hooks/api/educationLevelQuery';
-import { TextButton } from 'src/components/common/textButton/TextButton';
-import { Typography } from '@boclips-ui/typography';
 
 interface Props {
   removeFilter?: (filter: FilterKey, value: string) => void;
-  clearFilters?: () => void;
 }
 
 export interface SelectedFilter {
@@ -20,7 +17,7 @@ export interface SelectedFilter {
   key: FilterKey;
 }
 
-export const SelectedFilters = ({ removeFilter, clearFilters }: Props) => {
+export const SelectedFilters = ({ removeFilter }: Props) => {
   const [searchQueryLocationParams] = useSearchQueryLocationParams();
 
   const [filtersToRender, setFiltersToRender] = useState<SelectedFilter[]>([]);
@@ -84,31 +81,19 @@ export const SelectedFilters = ({ removeFilter, clearFilters }: Props) => {
   ]);
 
   return (
-    <>
-      <div
-        role="group"
-        className="mb-4 flex justify-between items-center"
-        style={{ height: '1.9375rem' }}
-      >
-        <Typography.Body weight="medium" id="selected_filters_panel">
-          Selected filters
-        </Typography.Body>
-        <TextButton onClick={clearFilters} text="Clear all" />
-      </div>
-      <div
-        role="region"
-        className="flex flex-wrap"
-        aria-labelledby="selected_filters_panel"
-        data-qa="applied-filter-tags"
-      >
-        {filtersToRender.map((filter) => (
-          <SelectedFilterTag
-            key={`${filter.name}-${filter.id}`}
-            filter={filter}
-            removeFilter={removeFilter}
-          />
-        ))}
-      </div>
-    </>
+    <div
+      role="region"
+      className="flex flex-wrap"
+      aria-labelledby="selected_filters_panel"
+      data-qa="applied-filter-tags"
+    >
+      {filtersToRender.map((filter) => (
+        <SelectedFilterTag
+          key={`${filter.name}-${filter.id}`}
+          filter={filter}
+          removeFilter={removeFilter}
+        />
+      ))}
+    </div>
   );
 };
