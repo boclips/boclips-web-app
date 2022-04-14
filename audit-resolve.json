@@ -1,0 +1,11 @@
+{
+  "decisions": {
+    "1069976|webpack-dev-server>portfinder>async": {
+      "decision": "ignore",
+      "madeAt": 1649934808466,
+      "expiresAt": 1652526790141
+    }
+  },
+  "rules": {},
+  "version": 1
+}
