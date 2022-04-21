@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { CartValidationProvider } from 'src/components/common/providers/CartValidationProvider';
 
 describe('AdditionalServices component', () => {
-  it('should display a price for all of the services', async () => {
+  it('should not display a price for all of the services', async () => {
     const cartItem = CartItemFactory.sample({
       id: 'cart-item-id-1',
       videoId: '123',
@@ -32,6 +32,6 @@ describe('AdditionalServices component', () => {
       </BoclipsClientProvider>,
     );
 
-    expect(await renderedElement.findAllByText('Free')).toHaveLength(4);
+    expect(await renderedElement.queryByText('Free')).toBeNull();
   });
 });
