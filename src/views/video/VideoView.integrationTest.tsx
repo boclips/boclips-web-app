@@ -59,7 +59,6 @@ describe('Video View', () => {
     fakeClient.users.insertCurrentUser(
       UserFactory.sample({
         features: {
-          BO_WEB_APP_ADDITIONAL_SERVICES: true,
           BO_WEB_APP_PRICES: true,
         },
       }),
@@ -85,7 +84,6 @@ describe('Video View', () => {
     expect(await wrapper.findByText('cool videos r us')).toBeVisible();
     expect(await wrapper.findByText('17 Dec 2015')).toBeVisible();
     expect(await wrapper.findByLabelText('Copy video link')).toBeVisible();
-    expect(await wrapper.findByText('Additional services')).toBeVisible();
   });
 
   it('on video page education level badges are rendered', async () => {
@@ -104,21 +102,6 @@ describe('Video View', () => {
       expect(wrapper.getByText('EL1 label')).toBeVisible();
       expect(wrapper.getByText('EL2 label')).toBeVisible();
     });
-  });
-
-  it(`video page does not display additional services when disabled by user's feature`, async () => {
-    fakeClient.users.insertCurrentUser(
-      UserFactory.sample({
-        features: { BO_WEB_APP_ADDITIONAL_SERVICES: false },
-      }),
-    );
-
-    fakeClient.videos.insertVideo(exampleVideo);
-
-    const wrapper = renderVideoView(['/videos/video-id']);
-
-    expect(await wrapper.findByText('video-id')).toBeVisible();
-    expect(wrapper.queryByText('Additional services')).toBeNull();
   });
 
   it(`video page does not display price info disabled by user's features`, async () => {
