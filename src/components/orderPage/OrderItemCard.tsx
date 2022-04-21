@@ -58,7 +58,6 @@ export const OrderItemCard = ({ item }: Props) => {
           transcriptRequested={item.transcriptRequested}
           trim={item.trim}
           editRequest={item.editRequest}
-          displayPrice
         />
       </div>
     </div>

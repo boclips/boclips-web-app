@@ -16,7 +16,6 @@ describe('additional services summary preview', () => {
         trim={trim}
         editRequest={editRequest}
         fontSize="small"
-        displayPrice
       />,
     );
 
@@ -30,5 +29,6 @@ describe('additional services summary preview', () => {
     expect(
       await wrapper.findByText('Other type of editing: this is edit request'),
     ).toBeInTheDocument();
+    expect(wrapper.queryByText('Free')).toBeNull();
   });
 });

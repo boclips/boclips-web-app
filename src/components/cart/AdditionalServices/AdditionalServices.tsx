@@ -32,10 +32,7 @@ const AdditionalServices = ({ videoItem, cartItem }: Props) => {
         label="Request English captions"
       />
 
-      <EditRequest
-        cartItem={cartItem}
-        label="Request other type of editing"
-      />
+      <EditRequest cartItem={cartItem} label="Request other type of editing" />
     </>
   );
 };

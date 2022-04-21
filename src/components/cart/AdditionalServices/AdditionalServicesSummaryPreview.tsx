@@ -8,7 +8,6 @@ interface Props {
   trim?: string;
   editRequest?: string;
   fontSize?: 'small';
-  displayPrice?: boolean;
 }
 
 export const AdditionalServicesSummaryPreview = ({
@@ -16,7 +15,6 @@ export const AdditionalServicesSummaryPreview = ({
   transcriptRequested,
   trim,
   editRequest,
-  displayPrice = false,
   fontSize,
 }: Props) => {
   const noAdditionalServices =
@@ -27,10 +25,6 @@ export const AdditionalServicesSummaryPreview = ({
       ? 'No additional services selected'
       : 'Additional Services:';
   };
-
-  const Price = React.useCallback(() => {
-    return <Typography.Body>Free</Typography.Body>;
-  }, []);
 
   return (
     <Typography.Body
@@ -47,7 +41,7 @@ export const AdditionalServicesSummaryPreview = ({
           className={s.additionalItem}
           data-qa="order-summary-item-captions-requested"
         >
-          English captions requested {displayPrice && <Price />}
+          English captions requested
         </span>
       )}
 
@@ -56,19 +50,19 @@ export const AdditionalServicesSummaryPreview = ({
           className={s.additionalItem}
           data-qa="order-summary-item-transcripts-requested"
         >
-          Transcripts requested {displayPrice && <Price />}
+          Transcripts requested
         </span>
       )}
 
       {trim && (
         <span className={s.additionalItem} data-qa="order-summary-item-trim">
-          Trim: {trim} {displayPrice && <Price />}
+          Trim: {trim}
         </span>
       )}
 
       {editRequest && (
         <span className={s.additionalItem} data-qa="order-summary-item-editing">
-          Other type of editing: {editRequest} {displayPrice && <Price />}
+          Other type of editing: {editRequest}
         </span>
       )}
     </Typography.Body>
