@@ -16,7 +16,7 @@ interface Props {
 
 interface CartSummaryItemProps {
   label: string | ReactElement;
-  value: string | ReactElement;
+  value?: string | ReactElement;
 }
 
 const CartSummaryItem = ({ label, value }: CartSummaryItemProps) => {
@@ -70,16 +70,10 @@ export const CartOrderSummary = ({ cart }: Props) => {
               label={<Typography.Body>Video(s) total</Typography.Body>}
               value={getTotalPriceDisplayValue(videos)}
             />
-            {captionsRequested && (
-              <CartSummaryItem label="Captions" value="Free" />
-            )}
-            {editingRequested && (
-              <CartSummaryItem label="Editing" value="Free" />
-            )}
-            {transcriptsRequested && (
-              <CartSummaryItem label="Transcripts" value="Free" />
-            )}
-            {trimRequested && <CartSummaryItem label="Trimming" value="Free" />}
+            {captionsRequested && <CartSummaryItem label="Captions" />}
+            {editingRequested && <CartSummaryItem label="Editing" />}
+            {transcriptsRequested && <CartSummaryItem label="Transcripts" />}
+            {trimRequested && <CartSummaryItem label="Trimming" />}
           </div>
           <Typography.H1
             size="xs"
