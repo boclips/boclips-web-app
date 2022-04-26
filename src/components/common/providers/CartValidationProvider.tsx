@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import useFeatureFlags from 'src/hooks/useFeatureFlags';
 
 interface Props {
   children: React.ReactNode;
@@ -42,11 +43,16 @@ const useProvideValidation = () => {
   const [cartItemsValidation, setCartItemsValidation] =
     useState<CartItemValidationMap>({});
 
+  const flags = useFeatureFlags();
   const isCartValid = Object.values(cartItemsValidation).every((item) => {
     return (
-      item.trim?.isFromValid &&
-      item.trim?.isToValid &&
-      item.editRequest?.isValid
+      ((flags.BO_WEB_APP_REQUEST_TRIMMING &&
+        item.trim?.isFromValid &&
+        item.trim?.isToValid) ||
+        !flags.BO_WEB_APP_REQUEST_TRIMMING) &&
+      ((flags.BO_WEB_APP_REQUEST_ADDITIONAL_EDITING &&
+        item.editRequest?.isValid) ||
+        !flags.BO_WEB_APP_REQUEST_ADDITIONAL_EDITING)
     );
   });
 
