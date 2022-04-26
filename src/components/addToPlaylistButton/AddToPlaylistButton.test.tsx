@@ -8,6 +8,10 @@ import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPla
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import userEvent from '@testing-library/user-event';
 import { ToastContainer } from 'react-toastify';
+import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
+import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import HotjarFactory from 'src/services/hotjar/HotjarFactory';
 
 describe('Add to playlist button', () => {
   const video = VideoFactory.sample({
@@ -144,6 +148,109 @@ describe('Add to playlist button', () => {
     expect(wrapper.queryByText('Add to playlist')).not.toBeInTheDocument();
   });
 
+  it('video added event sent as Hotjar user attributes', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const hotjarVideoAddedToPlaylist = jest.spyOn(
+      HotjarFactory.hotjar(),
+      'videoAddedToPlaylist',
+    );
+    const user = UserFactory.sample({
+      id: 'user-100',
+      organisation: {
+        id: 'org-1',
+        name: 'Org 1',
+      },
+    });
+    const playlist = CollectionFactory.sample({
+      id: 'playlist-332',
+      title: 'Playlist 332',
+      owner: user.id,
+      mine: true,
+    });
+
+    fakeClient.users.insertCurrentUser(user);
+    fakeClient.collections.setCurrentUser(user.id);
+    fakeClient.collections.addToFake(playlist);
+
+    const wrapper = render(
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <BoclipsClientProvider client={fakeClient}>
+          <AddToPlaylistButton videoId={video.id} />
+        </BoclipsClientProvider>
+      </BoclipsSecurityProvider>,
+    );
+
+    const playlistButton = await wrapper.findByLabelText('Add to playlist');
+
+    fireEvent.click(playlistButton);
+
+    const playlistCheckbox = await wrapper.findByLabelText(playlist.title);
+
+    fireEvent.click(playlistCheckbox);
+
+    await waitFor(() =>
+      expect(hotjarVideoAddedToPlaylist).toHaveBeenCalledWith({
+        userId: user.id,
+        organisationId: user.organisation.id,
+        organisationName: user.organisation.name,
+        playlistId: playlist.id,
+        videoId: video.id,
+      }),
+    );
+  });
+
+  it('video removed event sent as Hotjar user attributes', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const hotjarVideoRemovedFromPlaylist = jest.spyOn(
+      HotjarFactory.hotjar(),
+      'videoRemovedFromPlaylist',
+    );
+    const user = UserFactory.sample({
+      id: 'user-2211',
+      organisation: {
+        id: 'org-12',
+        name: 'Org 12',
+      },
+    });
+    const playlist = CollectionFactory.sample({
+      id: 'playlist-2222',
+      title: 'Playlist 6777',
+      owner: user.id,
+      mine: true,
+      videos: [video],
+    });
+
+    fakeClient.users.insertCurrentUser(user);
+    fakeClient.collections.setCurrentUser(user.id);
+    fakeClient.collections.addToFake(playlist);
+
+    const wrapper = render(
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <BoclipsClientProvider client={fakeClient}>
+          <AddToPlaylistButton videoId={video.id} />
+        </BoclipsClientProvider>
+      </BoclipsSecurityProvider>,
+    );
+
+    const playlistButton = await wrapper.findByLabelText('Add to playlist');
+
+    fireEvent.click(playlistButton);
+
+    const playlistCheckbox = await wrapper.findByLabelText(playlist.title);
+
+    fireEvent.click(playlistCheckbox);
+
+    await waitFor(() =>
+      expect(hotjarVideoRemovedFromPlaylist).toHaveBeenCalledWith({
+        userId: user.id,
+        organisationId: user.organisation.id,
+        organisationName: user.organisation.name,
+        playlistId: playlist.id,
+        videoId: video.id,
+      }),
+    );
+  });
+
   describe('create playlist', () => {
     it('shows create playlist modal', async () => {
       const wrapper = renderWrapper();
@@ -193,7 +300,7 @@ describe('Add to playlist button', () => {
       ).toBeVisible();
     });
 
-    it('closes the bodal and pop up on successful creation of playlist', async () => {
+    it('closes the modal and pop up on successful creation of playlist', async () => {
       const wrapper = renderWrapper();
       createPlaylist(wrapper, 'jazz');
 
@@ -218,6 +325,49 @@ describe('Add to playlist button', () => {
       ).toBeVisible();
     });
 
+    it('video added event sent to Hotjar', async () => {
+      const fakeClient = new FakeBoclipsClient();
+      const hotjarVideoAddedToPlaylist = jest.spyOn(
+        HotjarFactory.hotjar(),
+        'videoAddedToPlaylist',
+      );
+      const user = UserFactory.sample({
+        id: 'user-100',
+        organisation: {
+          id: 'org-1',
+          name: 'Org 1',
+        },
+      });
+
+      fakeClient.users.insertCurrentUser(user);
+      fakeClient.collections.setCurrentUser(user.id);
+
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={fakeClient}>
+            <ToastContainer />
+            <AddToPlaylistButton videoId={video.id} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      createPlaylist(wrapper, 'ornament');
+
+      fireEvent.click(await wrapper.findByLabelText('Add to playlist'));
+
+      const createdPlaylists = await fakeClient.collections.getCollections({});
+
+      await waitFor(() =>
+        expect(hotjarVideoAddedToPlaylist).toHaveBeenCalledWith({
+          userId: user.id,
+          organisationId: user.organisation.id,
+          organisationName: user.organisation.name,
+          playlistId: createdPlaylists.page[0].id,
+          videoId: video.id,
+        }),
+      );
+    });
+
     const createPlaylist = (wrapper: RenderResult, playlistName: string) => {
       fireEvent.click(wrapper.getByLabelText('Add to playlist'));
       fireEvent.click(
@@ -231,12 +381,11 @@ describe('Add to playlist button', () => {
   });
 
   const renderWrapper = (fakeClient = new FakeBoclipsClient()) => {
-    const wrapper = render(
+    return render(
       <BoclipsClientProvider client={fakeClient}>
         <ToastContainer />
         <AddToPlaylistButton videoId={video.id} />
       </BoclipsClientProvider>,
     );
-    return wrapper;
   };
 });

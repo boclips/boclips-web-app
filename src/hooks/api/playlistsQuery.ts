@@ -62,7 +62,10 @@ export const doFollowPlaylist = (
   return collectionsClient.bookmark(playlist);
 };
 
-export const useAddToPlaylistMutation = (callback: (id) => void) => {
+export const useAddToPlaylistMutation = (
+  on_success: (playlistId) => void,
+  on_error: (playlistId) => void,
+) => {
   const client = useBoclipsClient();
   return useMutation(
     async ({ playlist, videoId }: UpdatePlaylistProps) =>
@@ -75,6 +78,7 @@ export const useAddToPlaylistMutation = (callback: (id) => void) => {
           '',
           `add-video-${videoId}-to-playlist`,
         );
+        on_success(playlist.id);
       },
       onError: (_, { playlist, videoId }: UpdatePlaylistProps) => {
         displayNotification(
@@ -83,13 +87,16 @@ export const useAddToPlaylistMutation = (callback: (id) => void) => {
           'Please refresh the page and try again',
           `add-video-${videoId}-to-playlist`,
         );
-        callback(playlist.id);
+        on_error(playlist.id);
       },
     },
   );
 };
 
-export const useRemoveFromPlaylistMutation = (callback: (id) => void) => {
+export const useRemoveFromPlaylistMutation = (
+  on_success: (playlistId) => void,
+  on_error: (playlistId) => void,
+) => {
   const client = useBoclipsClient();
   const queryClient = useQueryClient();
 
@@ -104,6 +111,7 @@ export const useRemoveFromPlaylistMutation = (callback: (id) => void) => {
           '',
           `add-video-${videoId}-to-playlist`,
         );
+        on_success(playlist.id);
       },
       onError: (_, { playlist, videoId }: UpdatePlaylistProps) => {
         displayNotification(
@@ -112,7 +120,7 @@ export const useRemoveFromPlaylistMutation = (callback: (id) => void) => {
           'Please refresh the page and try again',
           `add-video-${videoId}-to-playlist`,
         );
-        callback(playlist.id);
+        on_error(playlist.id);
       },
       onSettled: (_data, _error, variables) => {
         queryClient.invalidateQueries(['playlist', variables.playlist.id]);

@@ -21,7 +21,7 @@ import HotjarFactory from 'src/services/hotjar/HotjarFactory';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import s from './style.module.less';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
-import { VideoAddedToCart } from 'src/services/hotjar/events/VideoAddedToCart';
+import { VideoAddedToCart } from '../../services/hotjar/events/VideoAddedToCart';
 
 interface AddToCartButtonProps {
   video: Video;
