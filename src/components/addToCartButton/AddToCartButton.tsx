@@ -17,8 +17,11 @@ import {
 } from 'src/components/common/analytics/Analytics';
 import { Video } from 'boclips-api-client/dist/types';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
+import HotjarFactory from 'src/services/hotjar/HotjarFactory';
+import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import s from './style.module.less';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
+import { VideoAddedToCart } from 'src/services/hotjar/events/VideoAddedToCart';
 
 interface AddToCartButtonProps {
   video: Video;
@@ -37,7 +40,9 @@ export const AddToCartButton = ({
 }: AddToCartButtonProps) => {
   const queryClient = useQueryClient();
   const boclipsClient = useBoclipsClient();
+
   const { data: cart } = useCartQuery();
+  const { data: user } = useGetUserQuery();
 
   const cartItem = cart?.items?.find((it) => it?.videoId === video.id);
 
@@ -65,6 +70,8 @@ export const AddToCartButton = ({
         if (appcueEvent) {
           AnalyticsFactory.getAppcues().sendEvent(appcueEvent);
         }
+
+        videoAddedHotjarEvent(it.videoId);
       },
     },
   );
@@ -96,6 +103,11 @@ export const AddToCartButton = ({
   const addToCart = () => {
     trackVideoAddedToCart(video, boclipsClient);
     mutateAddToCart(video.id);
+  };
+
+  const videoAddedHotjarEvent = (videoId: string) => {
+    const event = new VideoAddedToCart(user, videoId);
+    HotjarFactory.hotjar().videoAddedToCart(event);
   };
 
   const removeFromCart = () => {

@@ -6,8 +6,8 @@ import React, { useRef, useState } from 'react';
 import CloseButton from 'src/resources/icons/cross-icon.svg';
 import {
   useAddToPlaylistMutation,
-  useRemoveFromPlaylistMutation,
   useOwnPlaylistsQuery,
+  useRemoveFromPlaylistMutation,
 } from 'src/hooks/api/playlistsQuery';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import c from 'classnames';
@@ -76,10 +76,16 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
 
     if (playlistsContainingVideo.includes(playlistId)) {
       uncheckPlaylistForVideo(playlistId);
-      mutateRemoveFromPlaylist({ playlist: chosenPlaylist, videoId });
+      mutateRemoveFromPlaylist({
+        playlist: chosenPlaylist,
+        videoId,
+      });
     } else {
       checkPlaylistForVideo(playlistId);
-      mutateAddToPlaylist({ playlist: chosenPlaylist, videoId });
+      mutateAddToPlaylist({
+        playlist: chosenPlaylist,
+        videoId,
+      });
     }
   };
 

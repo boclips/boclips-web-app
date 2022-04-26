@@ -3,7 +3,7 @@ import { AnalyticsUserProfile } from 'src/services/analytics/AnalyticsUserProfil
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 
 export class AnalyticsService {
-  private appcuesInstance?: Appcues;
+  private readonly appcuesInstance?: Appcues;
 
   public constructor(appcues?: Appcues) {
     if (!appcues) {

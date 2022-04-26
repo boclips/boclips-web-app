@@ -26,6 +26,7 @@ import { JSErrorBoundary } from './components/common/errors/JSErrorBoundary';
 declare global {
   interface Window {
     Appcues: Appcues;
+    hj: (api: string, id?: string, payload?: object) => void;
   }
 }
 

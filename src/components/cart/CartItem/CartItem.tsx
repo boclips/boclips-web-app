@@ -13,6 +13,9 @@ import { Typography } from '@boclips-ui/typography';
 import { VideoInfo } from 'src/components/common/videoInfo/VideoInfo';
 import { Link } from 'src/components/common/Link';
 import s from './style.module.less';
+import { useGetUserQuery } from 'src/hooks/api/userQuery';
+import HotjarFactory from 'src/services/hotjar/HotjarFactory';
+import VideoRemovedFromCart from 'src/services/hotjar/events/VideoRemovedFromCart';
 
 interface Props {
   cartItem: ApiCartItem;
@@ -21,7 +24,9 @@ interface Props {
 const CartItem = ({ cartItem }: Props) => {
   const [startAnimation, setStartAnimation] = useState<boolean>(false);
   const [shrinkAnimation, setShrinkAnimation] = useState<boolean>(false);
+
   const { data: videoItem } = useFindOrGetVideo(cartItem.videoId);
+  const { data: user } = useGetUserQuery();
 
   const { mutate: mutateDeleteFromCart, error } = useCartMutation();
 
@@ -34,6 +39,14 @@ const CartItem = ({ cartItem }: Props) => {
     setTimeout(() => {
       mutateDeleteFromCart(cartItem.id);
     }, 600);
+
+    videoRemovedHotjarEvent(cartItem.videoId);
+  };
+
+  const videoRemovedHotjarEvent = (videoId: string) => {
+    const event = new VideoRemovedFromCart(user, videoId);
+
+    HotjarFactory.hotjar().videoRemovedFromCart(event);
   };
 
   useEffect(() => {
