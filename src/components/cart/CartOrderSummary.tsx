@@ -61,6 +61,21 @@ export const CartOrderSummary = ({ cart }: Props) => {
     (item) => item?.additionalServices?.editRequest,
   );
 
+  const additionalServicesPricingCopy = (
+    <div
+      className="bg-blue-100 p-4 mb-4 rounded"
+      data-qa="additional-services-summary"
+    >
+      <Typography.Body>
+        Please contact your Account Manager or{' '}
+        <Typography.Link type="inline-blue">
+          <a href="mailto:support@boclips.com">support@boclips.com</a>
+        </Typography.Link>{' '}
+        for details on potential fees for additional services.
+      </Typography.Body>
+    </div>
+  );
+
   return (
     <>
       <div className="col-start-19 col-end-26">
@@ -85,6 +100,11 @@ export const CartOrderSummary = ({ cart }: Props) => {
               {`${getTotalPriceDisplayValue(videos)}`}
             </span>
           </Typography.H1>
+          {(captionsRequested ||
+            editingRequested ||
+            transcriptsRequested ||
+            trimRequested) &&
+            additionalServicesPricingCopy}
           <Button
             onClick={() => {
               setDisplayErrorMessage(!isCartValid);
