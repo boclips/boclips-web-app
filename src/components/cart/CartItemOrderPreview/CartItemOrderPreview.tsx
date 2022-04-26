@@ -30,7 +30,6 @@ export const CartItemOrderPreview = ({ videos }: Props) => {
         trim={trimLabel}
         editRequest={cartItem?.additionalServices?.editRequest}
         fontSize="small"
-        displayPrice
       />
     );
   };

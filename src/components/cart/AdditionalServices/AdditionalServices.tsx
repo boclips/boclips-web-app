@@ -18,27 +18,21 @@ const AdditionalServices = ({ videoItem, cartItem }: Props) => {
       <Typography.Body as="div" weight="medium">
         Additional services
       </Typography.Body>
-      <TrimService videoItem={videoItem} cartItem={cartItem} price="Free" />
+      <TrimService videoItem={videoItem} cartItem={cartItem} />
 
       <AdditionalServiceCheckbox
         cartItem={cartItem}
         type="transcriptRequested"
         label="Request transcripts"
-        price="Free"
       />
 
       <AdditionalServiceCheckbox
         cartItem={cartItem}
         type="captionsRequested"
         label="Request English captions"
-        price="Free"
       />
 
-      <EditRequest
-        cartItem={cartItem}
-        label="Request other type of editing"
-        price="Free"
-      />
+      <EditRequest cartItem={cartItem} label="Request other type of editing" />
     </>
   );
 };
