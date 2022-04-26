@@ -21,7 +21,7 @@ describe('HotjarService', () => {
 
   beforeEach(() => {
     hotjar = new Hotjar();
-    jest.spyOn(hotjar, 'sendIdentity');
+    jest.spyOn(hotjar, 'identify');
 
     hotjarService = new HotjarService(hotjar);
   });
@@ -38,7 +38,7 @@ describe('HotjarService', () => {
 
     hotjarService.videoAddedToCart(event);
 
-    expect(hotjar.sendIdentity).toHaveBeenCalledWith(user.id, {
+    expect(hotjar.identify).toHaveBeenCalledWith(user.id, {
       organisation_id: undefined,
       organisation_name: undefined,
       video_id_added_to_cart: event.videoId,
@@ -50,7 +50,7 @@ describe('HotjarService', () => {
 
     hotjarService.videoAddedToCart(event);
 
-    expect(hotjar.sendIdentity).toHaveBeenCalledWith(user.id, {
+    expect(hotjar.identify).toHaveBeenCalledWith(user.id, {
       organisation_id: user.organisation.id,
       organisation_name: user.organisation.name,
       video_id_added_to_cart: event.videoId,
@@ -62,7 +62,7 @@ describe('HotjarService', () => {
 
     hotjarService.videoRemovedFromCart(event);
 
-    expect(hotjar.sendIdentity).toHaveBeenCalledWith(user.id, {
+    expect(hotjar.identify).toHaveBeenCalledWith(user.id, {
       organisation_id: user.organisation.id,
       organisation_name: user.organisation.name,
       video_id_removed_from_cart: event.videoId,
@@ -74,7 +74,7 @@ describe('HotjarService', () => {
 
     hotjarService.videoAddedToPlaylist(event);
 
-    expect(hotjar.sendIdentity).toHaveBeenCalledWith(user.id, {
+    expect(hotjar.identify).toHaveBeenCalledWith(user.id, {
       organisation_id: user.organisation.id,
       organisation_name: user.organisation.name,
       playlist_id_video_was_added_to: event.playlistId,
@@ -87,7 +87,7 @@ describe('HotjarService', () => {
 
     hotjarService.videoRemovedFromPlaylist(event);
 
-    expect(hotjar.sendIdentity).toHaveBeenCalledWith(user.id, {
+    expect(hotjar.identify).toHaveBeenCalledWith(user.id, {
       organisation_id: user.organisation.id,
       organisation_name: user.organisation.name,
       playlist_id_video_was_removed_from: event.playlistId,

@@ -18,11 +18,11 @@ export default class Hotjar {
     }
   }
 
-  public sendEvent(event: string) {
+  public event(event: string) {
     this.hj('event', event);
   }
 
-  public sendIdentity(id: string, payload: object) {
-    this.hj('identity', id, payload);
+  public identify(id: string, payload: object) {
+    this.hj('identify', id, payload);
   }
 }

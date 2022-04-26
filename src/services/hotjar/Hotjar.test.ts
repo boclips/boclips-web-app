@@ -23,26 +23,26 @@ describe('Hotjar', () => {
     hotjar = new Hotjar();
 
     expect(() => {
-      hotjar.sendEvent('some_event');
-      hotjar.sendIdentity('id-77', {});
+      hotjar.event('some_event');
+      hotjar.identify('id-77', {});
     }).not.toThrowError();
   });
 
-  it('sends identity', () => {
+  it('identifies', () => {
     const id = 'id-1';
     const payload = {
       when: '2022-04-25',
     };
 
-    hotjar.sendIdentity(id, payload);
+    hotjar.identify(id, payload);
 
-    expect(mockHotjar).toHaveBeenCalledWith('identity', id, {
+    expect(mockHotjar).toHaveBeenCalledWith('identify', id, {
       when: '2022-04-25',
     });
   });
 
   it('sends event', () => {
-    hotjar.sendEvent('SomethingOccurred');
+    hotjar.event('SomethingOccurred');
 
     expect(mockHotjar).toHaveBeenCalledWith('event', 'SomethingOccurred');
   });

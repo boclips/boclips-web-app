@@ -28,7 +28,7 @@ export default class HotjarService {
 
     payload[userAttributes.videoIdAddedToCart] = event.videoId;
 
-    this.hotjar.sendIdentity(event.userId, payload);
+    this.hotjar.identify(event.userId, payload);
   }
 
   public videoRemovedFromCart(event: VideoRemovedFromCart) {
@@ -36,7 +36,7 @@ export default class HotjarService {
 
     payload[userAttributes.videoIdRemovedFromCart] = event.videoId;
 
-    this.hotjar.sendIdentity(event.userId, payload);
+    this.hotjar.identify(event.userId, payload);
   }
 
   public videoAddedToPlaylist(event: VideoAddedToPlaylist) {
@@ -45,7 +45,7 @@ export default class HotjarService {
     payload[userAttributes.playlistIdVideoWasAddedTo] = event.playlistId;
     payload[userAttributes.videoIdAddedToPlaylist] = event.videoId;
 
-    this.hotjar.sendIdentity(event.userId, payload);
+    this.hotjar.identify(event.userId, payload);
   }
 
   public videoRemovedFromPlaylist(event: VideoRemovedFromPlaylist) {
@@ -54,7 +54,7 @@ export default class HotjarService {
     payload[userAttributes.playlistIdVideoWasRemovedFrom] = event.playlistId;
     payload[userAttributes.videoIdRemovedFromPlaylist] = event.videoId;
 
-    this.hotjar.sendIdentity(event.userId, payload);
+    this.hotjar.identify(event.userId, payload);
   }
 
   private static organisation(event: BaseEvent): object {
