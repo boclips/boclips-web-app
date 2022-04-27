@@ -63,12 +63,12 @@ const CartItem = ({ cartItem }: Props) => {
             <PriceBadge className="text-gray-900" price={videoItem.price} />
           </div>
           <VideoInfo video={videoItem} />
+          <AdditionalServices videoItem={videoItem} cartItem={cartItem} />
           <TextButton
             onClick={cartItemAnimate}
             text="Remove"
             icon={<RemoveFromCartIcon />}
           />
-          <AdditionalServices videoItem={videoItem} cartItem={cartItem} />
         </div>
       </div>
     );
