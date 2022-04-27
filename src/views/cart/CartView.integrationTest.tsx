@@ -94,8 +94,14 @@ describe('CartView', () => {
 
     fakeClient.videos.insertVideo(video);
     fakeClient.videos.insertVideo(instructionalVideo);
-    fakeClient.carts.insertCartItem({ videoId: 'video-id' });
+    fakeClient.carts.insertCartItem({
+      videoId: 'video-id',
+      additionalServices: { transcriptRequested: true },
+    });
     fakeClient.carts.insertCartItem({ videoId: 'instructional-video-id' });
+    fakeClient.users.setCurrentUserFeatures({
+      BO_WEB_APP_REQUEST_TRIMMING: true,
+    });
 
     const wrapper = renderCartView(fakeClient);
 
@@ -111,12 +117,43 @@ describe('CartView', () => {
     expect(await within(modal).findByText('$400')).toBeVisible();
     expect(await within(modal).findByText('$1,000')).toBeVisible();
     expect(await within(modal).findByText('Go back to cart')).toBeVisible();
+    expect(
+      await within(modal).findByTestId('additional-services-summary'),
+    ).toBeVisible();
 
     expect(lastEvent(fakeClient)).toEqual({
       type: 'PLATFORM_INTERACTED_WITH',
       subtype: 'ORDER_CONFIRMATION_MODAL_OPENED',
       anonymous: false,
     });
+  });
+
+  it('does not display additional services message in order modal if none selected', async () => {
+    const fakeClient = new FakeBoclipsClient();
+
+    fakeClient.videos.insertVideo(video);
+    fakeClient.carts.insertCartItem({
+      videoId: 'video-id',
+      additionalServices: {
+        captionsRequested: false,
+        transcriptRequested: false,
+        trim: null,
+        editRequest: null,
+      },
+    });
+
+    const wrapper = renderCartView(fakeClient);
+
+    const placeOrder = await wrapper.findByText('Place order');
+    act(() => {
+      fireEvent.click(placeOrder);
+    });
+
+    const modal = await wrapper.findByTestId('order-modal');
+    expect(await within(modal).findByText('news video')).toBeVisible();
+    expect(
+      await within(modal).queryByTestId('additional-services-summary'),
+    ).toBeNull();
   });
 
   it('places order when confirmation button is clicked', async () => {
