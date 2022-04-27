@@ -16,7 +16,7 @@ interface Props {
 const AdditionalServices = ({ videoItem, cartItem }: Props) => {
   return (
     <>
-      <Typography.Body as="div" weight="medium">
+      <Typography.Body as="div" weight="medium" className="mb-1">
         Additional services
       </Typography.Body>
 
