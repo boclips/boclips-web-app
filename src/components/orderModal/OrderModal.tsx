@@ -9,6 +9,7 @@ import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { Cart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
 import { Typography } from '@boclips-ui/typography';
+import { AdditionalServicesPricingMessage } from 'src/components/cart/AdditionalServices/AdditionalServicesPricingMessage';
 import s from './style.module.less';
 import { trackOrderConfirmed } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
@@ -51,6 +52,15 @@ export const OrderModal = ({ setModalOpen, videos, cart }: Props) => {
     AnalyticsFactory.getAppcues().sendEvent(AppcuesEvent.ORDER_CONFIRMED);
     placeOrder({ cart, user });
   };
+  const additionalServicesRequested =
+    cart.items.filter(
+      (item) =>
+        item.additionalServices?.transcriptRequested === true ||
+        item.additionalServices?.captionsRequested === true ||
+        item.additionalServices?.trim !== null ||
+        item.additionalServices?.editRequest !== null,
+    ).length > 0;
+
   return (
     <Bodal
       title="Order summary"
@@ -72,6 +82,7 @@ export const OrderModal = ({ setModalOpen, videos, cart }: Props) => {
           <div>Total</div>
           <div>{getTotalPriceDisplayValue(videos)}</div>
         </Typography.Title1>
+        {additionalServicesRequested && <AdditionalServicesPricingMessage />}
       </div>
     </Bodal>
   );

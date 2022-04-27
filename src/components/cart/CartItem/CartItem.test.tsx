@@ -56,6 +56,10 @@ describe('CartItem', () => {
 
   it('displays cart item with title and additional services', async () => {
     const fakeApiClient = new FakeBoclipsClient();
+    fakeApiClient.users.setCurrentUserFeatures({
+      BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
+      BO_WEB_APP_REQUEST_TRIMMING: true,
+    });
     const cartItem = setupCartItemWithVideo(
       fakeApiClient,
       CartItemFactory.sample({
@@ -89,7 +93,9 @@ describe('CartItem', () => {
 
   it('opens trim video options on when checkbox is checked', async () => {
     const fakeApiClient = new FakeBoclipsClient();
-
+    fakeApiClient.users.setCurrentUserFeatures({
+      BO_WEB_APP_REQUEST_TRIMMING: true,
+    });
     const cartItem = setupCartItemWithVideo(
       fakeApiClient,
       CartItemFactory.sample({}),
@@ -115,7 +121,9 @@ describe('CartItem', () => {
 
     const fakeClient = new FakeBoclipsClient();
     fakeClient.videos.insertVideo(video);
-
+    fakeClient.users.setCurrentUserFeatures({
+      BO_WEB_APP_REQUEST_TRIMMING: true,
+    });
     let cart = await fakeClient.carts.getCart();
 
     const cartItemFromCart = await fakeClient.carts.addItemToCart(
@@ -150,7 +158,9 @@ describe('CartItem', () => {
 
   it('displays the trim values if cart item has trim info specified', async () => {
     const fakeApiClient = new FakeBoclipsClient();
-
+    fakeApiClient.users.setCurrentUserFeatures({
+      BO_WEB_APP_REQUEST_TRIMMING: true,
+    });
     const cartItem = setupCartItemWithVideo(
       fakeApiClient,
       CartItemFactory.sample({
@@ -180,6 +190,9 @@ describe('CartItem', () => {
 
   it('sets trim to null when trim checkbox is unset', async () => {
     const fakeApiClient = new FakeBoclipsClient();
+    fakeApiClient.users.setCurrentUserFeatures({
+      BO_WEB_APP_REQUEST_TRIMMING: true,
+    });
 
     const cartItem = setupCartItemWithVideo(
       fakeApiClient,
@@ -292,6 +305,9 @@ describe('CartItem', () => {
 
   it('Opens a input box when you tick edit request', async () => {
     const fakeClient = new FakeBoclipsClient();
+    fakeClient.users.setCurrentUserFeatures({
+      BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
+    });
 
     const cartItem = setupCartItemWithVideo(
       fakeClient,
@@ -317,6 +333,9 @@ describe('CartItem', () => {
 
   it('Saves edit request to cart', async () => {
     const fakeClient = new FakeBoclipsClient();
+    fakeClient.users.setCurrentUserFeatures({
+      BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
+    });
 
     const cartItem = setupCartItemWithVideo(
       fakeClient,
@@ -357,6 +376,9 @@ describe('CartItem', () => {
 
   it('Can set an edit request to null', async () => {
     const fakeClient = new FakeBoclipsClient();
+    fakeClient.users.setCurrentUserFeatures({
+      BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
+    });
 
     const cartItem = setupCartItemWithVideo(
       fakeClient,

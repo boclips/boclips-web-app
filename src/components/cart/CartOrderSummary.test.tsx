@@ -12,11 +12,7 @@ import { CartValidationProvider } from 'src/components/common/providers/CartVali
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 
 describe('Cart Order Summary', () => {
-  it('shows pricing for all additional services', async () => {
-    window.Environment = {
-      PEARSON_ORGANISATION_ID: '123',
-    };
-
+  it('displays copy describing pricing for additional services if selected', async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.videos.insertVideo(
       VideoFactory.sample({
@@ -24,6 +20,7 @@ describe('Cart Order Summary', () => {
         id: 'video-id-1',
       }),
     );
+
     const cart = CartsFactory.sample({
       items: [
         CartItemFactory.sample({
@@ -47,5 +44,41 @@ describe('Cart Order Summary', () => {
     );
 
     expect(await wrapper.queryByText('Free')).toBeNull();
+    expect(
+      wrapper.getByTestId('additional-services-summary'),
+    ).toHaveTextContent(
+      'Please contact your Account Manager or support@boclips.com for details on potential fees for additional services.',
+    );
+  });
+
+  it('does not mention additional services pricing if none selected', async () => {
+    const apiClient = new FakeBoclipsClient();
+    apiClient.videos.insertVideo(
+      VideoFactory.sample({
+        price: { amount: 300, currency: 'USD' },
+        id: 'video-id-1',
+      }),
+    );
+
+    const cart = CartsFactory.sample({
+      items: [
+        CartItemFactory.sample({
+          videoId: 'video-id-1',
+          additionalServices: {},
+        }),
+      ],
+    });
+
+    const wrapper = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={apiClient}>
+          <CartValidationProvider>
+            <CartOrderSummary cart={cart} />
+          </CartValidationProvider>
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
+
+    expect(wrapper.queryByTestId('additional-services-summary')).toBeNull();
   });
 });

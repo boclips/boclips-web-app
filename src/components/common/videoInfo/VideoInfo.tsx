@@ -10,7 +10,7 @@ interface Props {
 
 export const VideoInfo = ({ video }: Props) => {
   return (
-    <div className={`lg:mb-4 ${s.videoInfo}`}>
+    <div className={`lg:mb-2 ${s.videoInfo}`}>
       <ReleasedOn releasedOn={video?.releasedOn} />
 
       <Typography.Body as="div" size="small">

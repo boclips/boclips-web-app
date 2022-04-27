@@ -59,6 +59,10 @@ describe('CartView', () => {
 
   it('when videos in cart, displays video player with information and prices', async () => {
     const fakeClient = new FakeBoclipsClient();
+    fakeClient.users.setCurrentUserFeatures({
+      BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
+      BO_WEB_APP_REQUEST_TRIMMING: true,
+    });
 
     fakeClient.videos.insertVideo(video);
     fakeClient.carts.insertCartItem({ videoId: 'video-id' });
@@ -90,8 +94,14 @@ describe('CartView', () => {
 
     fakeClient.videos.insertVideo(video);
     fakeClient.videos.insertVideo(instructionalVideo);
-    fakeClient.carts.insertCartItem({ videoId: 'video-id' });
+    fakeClient.carts.insertCartItem({
+      videoId: 'video-id',
+      additionalServices: { transcriptRequested: true },
+    });
     fakeClient.carts.insertCartItem({ videoId: 'instructional-video-id' });
+    fakeClient.users.setCurrentUserFeatures({
+      BO_WEB_APP_REQUEST_TRIMMING: true,
+    });
 
     const wrapper = renderCartView(fakeClient);
 
@@ -107,12 +117,43 @@ describe('CartView', () => {
     expect(await within(modal).findByText('$400')).toBeVisible();
     expect(await within(modal).findByText('$1,000')).toBeVisible();
     expect(await within(modal).findByText('Go back to cart')).toBeVisible();
+    expect(
+      await within(modal).findByTestId('additional-services-summary'),
+    ).toBeVisible();
 
     expect(lastEvent(fakeClient)).toEqual({
       type: 'PLATFORM_INTERACTED_WITH',
       subtype: 'ORDER_CONFIRMATION_MODAL_OPENED',
       anonymous: false,
     });
+  });
+
+  it('does not display additional services message in order modal if none selected', async () => {
+    const fakeClient = new FakeBoclipsClient();
+
+    fakeClient.videos.insertVideo(video);
+    fakeClient.carts.insertCartItem({
+      videoId: 'video-id',
+      additionalServices: {
+        captionsRequested: false,
+        transcriptRequested: false,
+        trim: null,
+        editRequest: null,
+      },
+    });
+
+    const wrapper = renderCartView(fakeClient);
+
+    const placeOrder = await wrapper.findByText('Place order');
+    act(() => {
+      fireEvent.click(placeOrder);
+    });
+
+    const modal = await wrapper.findByTestId('order-modal');
+    expect(await within(modal).findByText('news video')).toBeVisible();
+    expect(
+      await within(modal).queryByTestId('additional-services-summary'),
+    ).toBeNull();
   });
 
   it('places order when confirmation button is clicked', async () => {
@@ -243,6 +284,10 @@ describe('CartView', () => {
   describe('interacting with additional services', () => {
     it('adds additional services to the cart summary when selected', async () => {
       const fakeClient = new FakeBoclipsClient();
+      fakeClient.users.setCurrentUserFeatures({
+        BO_WEB_APP_REQUEST_TRIMMING: true,
+        BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
+      });
 
       fakeClient.videos.insertVideo(
         VideoFactory.sample({
@@ -303,6 +348,10 @@ describe('CartView', () => {
     it('displays error when trying to place order with invalid trim values and then removes the error when trim becomes valid again', async () => {
       const fakeClient = new FakeBoclipsClient();
       jest.spyOn(fakeClient.carts, 'updateCartItemAdditionalServices');
+      fakeClient.users.setCurrentUserFeatures({
+        BO_WEB_APP_REQUEST_TRIMMING: true,
+      });
+
       fakeClient.videos.insertVideo(
         VideoFactory.sample({
           price: { amount: 300, currency: 'USD' },
@@ -356,6 +405,9 @@ describe('CartView', () => {
 
     it('displays error when leaving empty edit request and then removes the error when trim becomes valid again', async () => {
       const fakeClient = new FakeBoclipsClient();
+      fakeClient.users.setCurrentUserFeatures({
+        BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
+      });
 
       fakeClient.videos.insertVideo(
         VideoFactory.sample({
@@ -405,6 +457,9 @@ describe('CartView', () => {
 
     it('allows an order to be placed when trim is ticked but never touched', async () => {
       const fakeClient = new FakeBoclipsClient();
+      fakeClient.users.setCurrentUserFeatures({
+        BO_WEB_APP_REQUEST_TRIMMING: true,
+      });
 
       fakeClient.videos.insertVideo(
         VideoFactory.sample({
@@ -442,6 +497,9 @@ describe('CartView', () => {
 
     it('allows an order to be placed when edit request is ticked but never touched', async () => {
       const fakeClient = new FakeBoclipsClient();
+      fakeClient.users.setCurrentUserFeatures({
+        BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
+      });
 
       fakeClient.videos.insertVideo(
         VideoFactory.sample({
@@ -481,6 +539,10 @@ describe('CartView', () => {
 
     it('prevents from typing non digit or colon characters', async () => {
       const fakeClient = new FakeBoclipsClient();
+
+      fakeClient.users.setCurrentUserFeatures({
+        BO_WEB_APP_REQUEST_TRIMMING: true,
+      });
 
       fakeClient.videos.insertVideo(
         VideoFactory.sample({
@@ -561,6 +623,29 @@ describe('CartView', () => {
       await waitFor(() => {
         expect(cart.note).toEqual('i am a note');
       });
+    });
+  });
+
+  describe(`additional editing options`, () => {
+    it(`only displays editing options that user has enabled by feature flag`, async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.videos.insertVideo(video);
+      fakeClient.carts.insertCartItem({ videoId: 'video-id' });
+      fakeClient.users.setCurrentUserFeatures({
+        BO_WEB_APP_REQUEST_TRIMMING: false,
+        BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
+      });
+
+      const wrapper = renderCartView(fakeClient);
+
+      expect(
+        await wrapper.findByText('Request English captions'),
+      ).toBeVisible();
+      expect(await wrapper.findByText('Request transcripts')).toBeVisible();
+      expect(await wrapper.queryByText('Trim video')).toBeNull();
+      expect(
+        await wrapper.findByText('Request other type of editing'),
+      ).toBeVisible();
     });
   });
 

@@ -6,6 +6,7 @@ import { OrderModal } from 'src/components/orderModal/OrderModal';
 import { Cart as ApiCart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
 import { useGetVideos } from 'src/hooks/api/videoQuery';
 import { Typography } from '@boclips-ui/typography';
+import { AdditionalServicesPricingMessage } from 'src/components/cart/AdditionalServices/AdditionalServicesPricingMessage';
 import { trackOrderConfirmationModalOpened } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 import s from './style.module.less';
@@ -61,6 +62,12 @@ export const CartOrderSummary = ({ cart }: Props) => {
     (item) => item?.additionalServices?.editRequest,
   );
 
+  const additionalServicesRequested =
+    captionsRequested ||
+    editingRequested ||
+    transcriptsRequested ||
+    trimRequested;
+
   return (
     <>
       <div className="col-start-19 col-end-26">
@@ -85,6 +92,7 @@ export const CartOrderSummary = ({ cart }: Props) => {
               {`${getTotalPriceDisplayValue(videos)}`}
             </span>
           </Typography.H1>
+          {additionalServicesRequested && <AdditionalServicesPricingMessage />}
           <Button
             onClick={() => {
               setDisplayErrorMessage(!isCartValid);
