@@ -77,7 +77,7 @@ describe('Playlist Header', () => {
     );
   });
 
-  it('sends Horjar link copied event', async () => {
+  it('sends Hotjar link copied event', async () => {
     const hotjarEventSent = jest.spyOn(HotjarFactory.hotjar(), 'event');
 
     const playlist = CollectionFactory.sample({

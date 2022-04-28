@@ -18,7 +18,7 @@ import {
 import { Video } from 'boclips-api-client/dist/types';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import HotjarFactory from 'src/services/hotjar/HotjarFactory';
-import { HotjarEvents } from 'src/services/hotjar/Events';
+import { HotjarEvents } from '../../services/hotjar/Events';
 import s from './style.module.less';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 

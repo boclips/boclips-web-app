@@ -12,6 +12,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { CartValidationProvider } from 'src/components/common/providers/CartValidationProvider';
 import { Video } from 'boclips-api-client/dist/types';
 import { CartItem as CartItemType } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
+import HotjarFactory from 'src/services/hotjar/HotjarFactory';
+import { HotjarEvents } from 'src/services/hotjar/Events';
 
 describe('CartItem', () => {
   let client: any;
@@ -412,5 +414,40 @@ describe('CartItem', () => {
       );
       expect(updatedCartItem?.additionalServices.editRequest).toBeNull();
     });
+  });
+
+  it('sends video removed from cart Hotjar event', async () => {
+    const fakeApiClient = new FakeBoclipsClient();
+    const hotjarVideoRemovedFromCart = jest.spyOn(
+      HotjarFactory.hotjar(),
+      'event',
+    );
+    const video = VideoFactory.sample({
+      id: '123',
+      title: 'this is cart item test',
+    });
+    const cartItem = setupCartItemWithVideo(
+      fakeApiClient,
+      CartItemFactory.sample({
+        id: 'cart-item-id-1',
+        videoId: video.id,
+      }),
+      video,
+    );
+
+    const wrapper = renderCartItem(
+      <CartItem cartItem={cartItem} />,
+      fakeApiClient,
+    );
+
+    const removeFromCartButton = await wrapper.findByText('Remove');
+
+    fireEvent.click(removeFromCartButton);
+
+    await waitFor(() =>
+      expect(hotjarVideoRemovedFromCart).toHaveBeenCalledWith(
+        HotjarEvents.VideoRemovedFromCart.toString(),
+      ),
+    );
   });
 });
