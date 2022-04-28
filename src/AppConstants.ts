@@ -18,8 +18,7 @@ export class AppConstants {
   }
 
   public get IS_HOTJAR_ENABLED(): boolean {
-    //return this.window.Environment.IS_HOTJAR_ENABLED === 'true';
-    return true;
+    return this.window.Environment.IS_HOTJAR_ENABLED === 'true';
   }
 
   public get IS_SENTRY_ENABLED(): boolean {

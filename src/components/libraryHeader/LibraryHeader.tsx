@@ -26,9 +26,8 @@ export const LibraryHeader = () => {
     );
   };
   const handleSuccess = (data: string) => {
-    history.push(`/playlists/${data}`);
-
     HotjarFactory.hotjar().event(HotjarEvents.PlaylistCreatedFromLibrary);
+    history.push(`/playlists/${data}`);
   };
 
   const createButtonRef: React.RefObject<HTMLButtonElement> = React.useRef();

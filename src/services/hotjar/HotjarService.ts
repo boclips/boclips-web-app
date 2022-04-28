@@ -11,13 +11,9 @@ export default class HotjarService {
 
   public event(event: HotjarEvents) {
     this.hotjar.event(event);
-
-    console.log('Hotjar event sent: ' + event);
   }
 
   public userAttributes(user: UserAttributes) {
     this.hotjar.identify(user.userId(), user.attributes());
-
-    console.log(user.attributes());
   }
 }
