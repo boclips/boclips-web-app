@@ -6,7 +6,7 @@ import React from 'react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import HotjarFactory from 'src/services/hotjar/HotjarFactory';
-import { Events } from 'src/services/hotjar/Events';
+import { HotjarEvents } from 'src/services/hotjar/Events';
 
 describe('Add to cart button', () => {
   const video = VideoFactory.sample({
@@ -45,7 +45,7 @@ describe('Add to cart button', () => {
 
     await waitFor(() =>
       expect(hotjarVideoAddedToCart).toHaveBeenCalledWith(
-        Events.VideoAddedToCart,
+        HotjarEvents.VideoAddedToCart,
       ),
     );
   });
@@ -72,7 +72,7 @@ describe('Add to cart button', () => {
 
     await waitFor(() =>
       expect(hotjarVideoAddedToCart).toHaveBeenCalledWith(
-        Events.VideoRemovedFromCart,
+        HotjarEvents.VideoRemovedFromCart,
       ),
     );
   });

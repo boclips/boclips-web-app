@@ -20,6 +20,8 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { Link } from 'boclips-api-client/dist/types';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { Constants } from 'src/AppConstants';
+import HotjarFactory from 'src/services/hotjar/HotjarFactory';
+import { HotjarEvents } from 'src/services/hotjar/Events';
 
 const insertUser = (client: FakeBoclipsClient) =>
   client.users.insertCurrentUser(UserFactory.sample());
@@ -257,6 +259,26 @@ describe('LibraryView', () => {
 
       expect(await wrapper.findByText('My new playlist')).toBeVisible();
       expect(await wrapper.findByText('Blabla new playlist')).toBeVisible();
+    });
+
+    it('sends playlist created Hotjar event', async () => {
+      const hotjarPlaylistCreated = jest.spyOn(HotjarFactory.hotjar(), 'event');
+
+      const client = new FakeBoclipsClient();
+      insertUser(client);
+      const wrapper = renderLibraryView(client);
+
+      await openPlaylistCreationModal(wrapper);
+
+      fillPlaylistName(wrapper, 'My new playlist');
+      fillPlaylistDescription(wrapper, 'Blabla new playlist');
+      confirmPlaylistCreationModal(wrapper);
+
+      await waitFor(() =>
+        expect(hotjarPlaylistCreated).toHaveBeenCalledWith(
+          HotjarEvents.PlaylistCreatedFromLibrary.toString(),
+        ),
+      );
     });
 
     it('can display an error message on failed playlist creation', async () => {

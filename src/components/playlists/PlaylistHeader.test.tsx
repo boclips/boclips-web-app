@@ -5,7 +5,7 @@ import { Constants } from 'src/AppConstants';
 import { ToastContainer } from 'react-toastify';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import HotjarFactory from 'src/services/hotjar/HotjarFactory';
-import { Events } from 'src/services/hotjar/Events';
+import { HotjarEvents } from 'src/services/hotjar/Events';
 
 describe('Playlist Header', () => {
   Object.assign(navigator, {
@@ -99,7 +99,7 @@ describe('Playlist Header', () => {
 
     await waitFor(() =>
       expect(hotjarEventSent).toHaveBeenCalledWith(
-        Events.PlaylistShareableLinkCopied,
+        HotjarEvents.PlaylistShareableLinkCopied,
       ),
     );
   });

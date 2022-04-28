@@ -1,6 +1,6 @@
 import Hotjar from 'src/services/hotjar/Hotjar';
 import HotjarService from 'src/services/hotjar/HotjarService';
-import { Events } from 'src/services/hotjar/Events';
+import { HotjarEvents } from 'src/services/hotjar/Events';
 import UserAttributes from 'src/services/hotjar/UserAttributes';
 
 describe('HotjarService', () => {
@@ -16,10 +16,10 @@ describe('HotjarService', () => {
   });
 
   it('sends event as a string', () => {
-    hotjarService.event(Events.VideoAddedToCart);
+    hotjarService.event(HotjarEvents.VideoAddedToCart);
 
     expect(hotjar.event).toHaveBeenCalledWith(
-      Events.VideoAddedToCart.toString(),
+      HotjarEvents.VideoAddedToCart.toString(),
     );
   });
 

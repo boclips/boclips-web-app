@@ -20,7 +20,7 @@ import { displayNotification } from 'src/components/common/notification/displayN
 import PlusIcon from 'src/resources/icons/plus-sign.svg';
 import { Typography } from '@boclips-ui/typography';
 import HotjarFactory from 'src/services/hotjar/HotjarFactory';
-import { Events } from 'src/services/hotjar/Events';
+import { HotjarEvents } from 'src/services/hotjar/Events';
 import s from './style.module.less';
 
 interface Props {
@@ -42,11 +42,14 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
 
   const { data: playlists } = useOwnPlaylistsQuery();
 
+  const playlistCreatedHotjarEvent = () => {
+    HotjarFactory.hotjar().event(HotjarEvents.PlaylistCreatedFromVideo);
+  };
   const videoAddedHotjarEvent = () => {
-    HotjarFactory.hotjar().event(Events.VideoAddedToPlaylist);
+    HotjarFactory.hotjar().event(HotjarEvents.VideoAddedToPlaylist);
   };
   const videoRemovedHotjarEvent = () => {
-    HotjarFactory.hotjar().event(Events.VideoRemovedFromPlaylist);
+    HotjarFactory.hotjar().event(HotjarEvents.VideoRemovedFromPlaylist);
   };
 
   const uncheckPlaylistForVideo = (id: string) =>
@@ -125,6 +128,7 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
       `add-video-to-${playlistName}-playlist`,
     );
     videoAddedHotjarEvent();
+    playlistCreatedHotjarEvent();
   };
 
   const videoNotAddedToAnyPlaylist = playlistsContainingVideo.length === 0;

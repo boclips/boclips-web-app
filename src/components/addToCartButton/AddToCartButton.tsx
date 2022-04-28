@@ -18,7 +18,7 @@ import {
 import { Video } from 'boclips-api-client/dist/types';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import HotjarFactory from 'src/services/hotjar/HotjarFactory';
-import { Events } from 'src/services/hotjar/Events';
+import { HotjarEvents } from 'src/services/hotjar/Events';
 import s from './style.module.less';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 
@@ -105,11 +105,11 @@ export const AddToCartButton = ({
   };
 
   const videoAddedHotjarEvent = () => {
-    HotjarFactory.hotjar().event(Events.VideoAddedToCart);
+    HotjarFactory.hotjar().event(HotjarEvents.VideoAddedToCart);
   };
 
   const videoRemovedHotjarEvent = () => {
-    HotjarFactory.hotjar().event(Events.VideoRemovedFromCart);
+    HotjarFactory.hotjar().event(HotjarEvents.VideoRemovedFromCart);
   };
 
   const removeFromCart = () => {

@@ -4,7 +4,7 @@ import { displayNotification } from 'src/components/common/notification/displayN
 import CopyLinkIcon from 'src/resources/icons/copy-link-icon.svg';
 import c from 'classnames';
 import HotjarFactory from 'src/services/hotjar/HotjarFactory';
-import { Events } from 'src/services/hotjar/Events';
+import { HotjarEvents } from 'src/services/hotjar/Events';
 import s from './style.module.less';
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 
 export const PlaylistShareButton = ({ link }: Props) => {
   const linkCopiedHotjarEvent = () =>
-    HotjarFactory.hotjar().event(Events.PlaylistShareableLinkCopied);
+    HotjarFactory.hotjar().event(HotjarEvents.PlaylistShareableLinkCopied);
 
   const handleClick = () => {
     navigator.clipboard.writeText(link).then(() => {

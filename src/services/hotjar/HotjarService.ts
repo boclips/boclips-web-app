@@ -1,5 +1,5 @@
 import Hotjar from 'src/services/hotjar/Hotjar';
-import { Events } from 'src/services/hotjar/Events';
+import { HotjarEvents } from 'src/services/hotjar/Events';
 import UserAttributes from 'src/services/hotjar/UserAttributes';
 
 export default class HotjarService {
@@ -9,7 +9,7 @@ export default class HotjarService {
     this.hotjar = hotjar;
   }
 
-  public event(event: Events) {
+  public event(event: HotjarEvents) {
     this.hotjar.event(event);
 
     console.log('Hotjar event sent: ' + event);

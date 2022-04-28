@@ -1,6 +1,6 @@
-export const enum Events {
+export const enum HotjarEvents {
   PlaylistCreatedFromLibrary = 'playlist_created_from_library',
-  PlaylistCreatedFromSearchResults = 'playlist_created_from_search_results',
+  PlaylistCreatedFromVideo = 'playlist_created_from_video',
   PlaylistShareableLinkCopied = 'playlist_shareable_link_copied',
   PlaylistLinkCopied = 'playlist_link_copied',
 
@@ -9,5 +9,5 @@ export const enum Events {
   VideoAddedToPlaylist = 'video_added_to_playlist',
   VideoRemovedFromPlaylist = 'video_removed_from_playlist',
 
-  OrderPlaced = 'order_placed',
+  OrderConfirmed = 'order_placed',
 }

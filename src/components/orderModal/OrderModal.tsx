@@ -14,6 +14,8 @@ import s from './style.module.less';
 import { trackOrderConfirmed } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 import { Bodal } from '../common/bodal/Bodal';
+import HotjarFactory from 'src/services/hotjar/HotjarFactory';
+import { HotjarEvents } from 'src/services/hotjar/Events';
 
 export interface Props {
   setModalOpen: (boolean) => void;
@@ -50,6 +52,7 @@ export const OrderModal = ({ setModalOpen, videos, cart }: Props) => {
   const handleConfirm = () => {
     trackOrderConfirmed(boclipsClient);
     AnalyticsFactory.getAppcues().sendEvent(AppcuesEvent.ORDER_CONFIRMED);
+    HotjarFactory.hotjar().event(HotjarEvents.OrderConfirmed);
     placeOrder({ cart, user });
   };
   const additionalServicesRequested =
