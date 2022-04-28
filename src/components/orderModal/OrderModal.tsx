@@ -10,12 +10,12 @@ import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { Cart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
 import { Typography } from '@boclips-ui/typography';
 import { AdditionalServicesPricingMessage } from 'src/components/cart/AdditionalServices/AdditionalServicesPricingMessage';
+import HotjarFactory from 'src/services/hotjar/HotjarFactory';
+import { HotjarEvents } from 'src/services/hotjar/Events';
 import s from './style.module.less';
 import { trackOrderConfirmed } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 import { Bodal } from '../common/bodal/Bodal';
-import HotjarFactory from 'src/services/hotjar/HotjarFactory';
-import { HotjarEvents } from 'src/services/hotjar/Events';
 
 export interface Props {
   setModalOpen: (boolean) => void;
