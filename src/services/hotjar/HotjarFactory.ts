@@ -1,11 +1,14 @@
 import HotjarService from 'src/services/hotjar/HotjarService';
 import Hotjar from 'src/services/hotjar/Hotjar';
 
-const hotjar = new Hotjar(window.hj);
-const hotjarService = new HotjarService(hotjar);
-
 export default class HotjarFactory {
+  private static hotjarService: HotjarService;
+
   public static hotjar(): HotjarService {
-    return hotjarService;
+    if (!HotjarFactory.hotjarService) {
+      HotjarFactory.hotjarService = new HotjarService(new Hotjar(window.hj));
+    }
+
+    return HotjarFactory.hotjarService;
   }
 }

@@ -5,10 +5,15 @@ import Thumbnails from 'src/components/playlists/thumbnails/Thumbnails';
 import { CopyLinkButton } from 'src/components/common/copyLinkButton/CopyLinkButton';
 import { Constants } from 'src/AppConstants';
 import { Link } from 'react-router-dom';
+import HotjarFactory from 'src/services/hotjar/HotjarFactory';
+import { Events } from 'src/services/hotjar/Events';
 import GridCard from '../common/gridCard/GridCard';
 import s from './style.module.less';
 
 const Playlists = () => {
+  const linkCopiedHotjarEvent = () =>
+    HotjarFactory.hotjar().event(Events.PlaylistLinkCopied);
+
   const { data: playlists, isLoading } = useOwnAndSharedPlaylistsQuery();
 
   return (
@@ -37,6 +42,7 @@ const Playlists = () => {
                   ariaLabel="Copy playlist link"
                   link={`${Constants.HOST}/playlists/${playlist.id}`}
                   dataQa={`share-playlist-button-${playlist.id}`}
+                  onCopy={linkCopiedHotjarEvent}
                 />
               </div>
             }

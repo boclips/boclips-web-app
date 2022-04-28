@@ -17,6 +17,8 @@ import { WithValidRoles } from 'src/components/common/errors/WithValidRoles';
 import { ROLES } from 'src/types/Roles';
 import { lazyWithRetry } from 'src/services/lazyWithRetry';
 import { FollowPlaylist } from 'src/services/followPlaylist';
+import HotjarFactory from 'src/services/hotjar/HotjarFactory';
+import UserAttributes from 'src/services/hotjar/UserAttributes';
 import { BoclipsClientProvider } from './components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSecurityProvider';
 import Appcues from './services/analytics/Appcues';
@@ -86,13 +88,14 @@ const App = ({
   useEffect(() => {
     apiClient.users
       .getCurrentUser()
-      .then((user) =>
+      .then((user) => {
         analyticsService.identify({
           email: user.email,
           firstName: user.firstName,
           id: user.id,
-        }),
-      )
+        });
+        HotjarFactory.hotjar().userAttributes(new UserAttributes(user));
+      })
       .then(() => {
         AnalyticsFactory.getAppcues().sendEvent(AppcuesEvent.LOGGED_IN);
       });
