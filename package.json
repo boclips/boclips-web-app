@@ -67,7 +67,7 @@
     "tailwindcss-debug-screens": "^1.1.0",
     "terser-webpack-plugin": "^5.0.3",
     "webpack": "^5.67.0",
-    "webpack-bundle-analyzer": "^3.9.0",
+    "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.8.1",
     "webpack-merge": "^5.2.0"
