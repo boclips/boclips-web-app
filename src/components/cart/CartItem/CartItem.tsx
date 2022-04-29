@@ -21,16 +21,18 @@ interface Props {
 }
 
 const CartItem = ({ cartItem }: Props) => {
+  const videoRemovedHotjarEvent = () => {
+    AnalyticsFactory.hotjar().event(HotjarEvents.VideoRemovedFromCart);
+  };
+
   const [startAnimation, setStartAnimation] = useState<boolean>(false);
   const [shrinkAnimation, setShrinkAnimation] = useState<boolean>(false);
 
   const { data: videoItem } = useFindOrGetVideo(cartItem.videoId);
 
-  const { mutate: mutateDeleteFromCart, error } = useCartMutation();
-
-  const videoRemovedHotjarEvent = () => {
-    AnalyticsFactory.hotjar().event(HotjarEvents.VideoRemovedFromCart);
-  };
+  const { mutate: mutateDeleteFromCart, error } = useCartMutation({
+    onSuccess: videoRemovedHotjarEvent,
+  });
 
   const cartItemAnimate = () => {
     setStartAnimation(true);
@@ -42,10 +44,6 @@ const CartItem = ({ cartItem }: Props) => {
     setTimeout(() => {
       mutateDeleteFromCart(cartItem.id);
     }, 600);
-
-    setTimeout(() => {
-      videoRemovedHotjarEvent();
-    }, 800);
   };
 
   useEffect(() => {
