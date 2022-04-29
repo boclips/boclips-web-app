@@ -4,8 +4,8 @@ import PlaylistHeader from 'src/components/playlists/PlaylistHeader';
 import { Constants } from 'src/AppConstants';
 import { ToastContainer } from 'react-toastify';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
-import HotjarFactory from 'src/services/hotjar/HotjarFactory';
-import { HotjarEvents } from 'src/services/hotjar/Events';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 
 describe('Playlist Header', () => {
   Object.assign(navigator, {
@@ -78,7 +78,7 @@ describe('Playlist Header', () => {
   });
 
   it('sends Hotjar link copied event', async () => {
-    const hotjarEventSent = jest.spyOn(HotjarFactory.hotjar(), 'event');
+    const hotjarEventSent = jest.spyOn(AnalyticsFactory.hotjar(), 'event');
 
     const playlist = CollectionFactory.sample({
       id: '123',

@@ -12,8 +12,8 @@ import VideoCardPlaceholder from '@boclips-ui/video-card-placeholder';
 import { Typography } from '@boclips-ui/typography';
 import { VideoInfo } from 'src/components/common/videoInfo/VideoInfo';
 import { Link } from 'src/components/common/Link';
-import { HotjarEvents } from 'src/services/hotjar/Events';
-import HotjarFactory from 'src/services/hotjar/HotjarFactory';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import s from './style.module.less';
 
 interface Props {
@@ -29,7 +29,7 @@ const CartItem = ({ cartItem }: Props) => {
   const { mutate: mutateDeleteFromCart, error } = useCartMutation();
 
   const videoRemovedHotjarEvent = () => {
-    HotjarFactory.hotjar().event(HotjarEvents.VideoRemovedFromCart);
+    AnalyticsFactory.hotjar().event(HotjarEvents.VideoRemovedFromCart);
   };
 
   const cartItemAnimate = () => {

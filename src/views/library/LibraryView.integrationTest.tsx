@@ -20,8 +20,8 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { Link } from 'boclips-api-client/dist/types';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { Constants } from 'src/AppConstants';
-import HotjarFactory from 'src/services/hotjar/HotjarFactory';
-import { HotjarEvents } from 'src/services/hotjar/Events';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 
 const insertUser = (client: FakeBoclipsClient) =>
   client.users.insertCurrentUser(UserFactory.sample());
@@ -262,7 +262,10 @@ describe('LibraryView', () => {
     });
 
     it('sends playlist created Hotjar event', async () => {
-      const hotjarPlaylistCreated = jest.spyOn(HotjarFactory.hotjar(), 'event');
+      const hotjarPlaylistCreated = jest.spyOn(
+        AnalyticsFactory.hotjar(),
+        'event',
+      );
 
       const client = new FakeBoclipsClient();
       insertUser(client);

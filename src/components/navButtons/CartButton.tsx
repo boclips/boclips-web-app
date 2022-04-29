@@ -15,7 +15,7 @@ const CartButton = () => {
   const isOnCartPage = location.pathname.includes('cart');
 
   const cartOpenedEvent = () => {
-    AnalyticsFactory.getAppcues().sendEvent(AppcuesEvent.CART_OPENED);
+    AnalyticsFactory.appcues().sendEvent(AppcuesEvent.CART_OPENED);
     history.push({
       pathname: '/cart',
     });

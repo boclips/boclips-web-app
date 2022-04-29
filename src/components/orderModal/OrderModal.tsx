@@ -10,8 +10,7 @@ import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { Cart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
 import { Typography } from '@boclips-ui/typography';
 import { AdditionalServicesPricingMessage } from 'src/components/cart/AdditionalServices/AdditionalServicesPricingMessage';
-import HotjarFactory from 'src/services/hotjar/HotjarFactory';
-import { HotjarEvents } from 'src/services/hotjar/Events';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import s from './style.module.less';
 import { trackOrderConfirmed } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
@@ -51,8 +50,8 @@ export const OrderModal = ({ setModalOpen, videos, cart }: Props) => {
 
   const handleConfirm = () => {
     trackOrderConfirmed(boclipsClient);
-    AnalyticsFactory.getAppcues().sendEvent(AppcuesEvent.ORDER_CONFIRMED);
-    HotjarFactory.hotjar().event(HotjarEvents.OrderConfirmed);
+    AnalyticsFactory.appcues().sendEvent(AppcuesEvent.ORDER_CONFIRMED);
+    AnalyticsFactory.hotjar().event(HotjarEvents.OrderConfirmed);
     placeOrder({ cart, user });
   };
   const additionalServicesRequested =

@@ -1,4 +1,4 @@
-import { AnalyticsService } from 'src/services/analytics/AnalyticsService';
+import { AnalyticsService } from 'src/services/analytics/appcues/AnalyticsService';
 
 export const analyticsMock = {
   sendEvent: jest.fn(),

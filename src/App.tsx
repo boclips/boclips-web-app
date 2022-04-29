@@ -7,7 +7,6 @@ import { hot } from 'react-hot-loader/root';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
 import { trackPageRendered } from 'src/components/common/analytics/Analytics';
-import { AnalyticsService } from 'src/services/analytics/AnalyticsService';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import ScrollToTop from 'src/hooks/scrollToTop';
@@ -17,18 +16,17 @@ import { WithValidRoles } from 'src/components/common/errors/WithValidRoles';
 import { ROLES } from 'src/types/Roles';
 import { lazyWithRetry } from 'src/services/lazyWithRetry';
 import { FollowPlaylist } from 'src/services/followPlaylist';
-import HotjarFactory from 'src/services/hotjar/HotjarFactory';
-import UserAttributes from 'src/services/hotjar/UserAttributes';
+import UserAttributes from 'src/services/analytics/hotjar/UserAttributes';
 import { BoclipsClientProvider } from './components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSecurityProvider';
-import Appcues from './services/analytics/Appcues';
+import Appcues from './services/analytics/appcues/Appcues';
 import { GlobalQueryErrorProvider } from './components/common/providers/GlobalQueryErrorProvider';
 import { JSErrorBoundary } from './components/common/errors/JSErrorBoundary';
 
 declare global {
   interface Window {
     Appcues: Appcues;
-    hj: (api: string, id?: string, payload?: object) => void;
+    hj: (command: string, id?: string, payload?: object) => void;
   }
 }
 
@@ -75,7 +73,6 @@ interface Props {
   reactQueryClient?: QueryClient;
 }
 
-const analyticsService = new AnalyticsService(window.Appcues);
 const queryClient = new QueryClient(queryClientConfig);
 
 const App = ({
@@ -89,22 +86,22 @@ const App = ({
     apiClient.users
       .getCurrentUser()
       .then((user) => {
-        analyticsService.identify({
+        AnalyticsFactory.appcues().identify({
           email: user.email,
           firstName: user.firstName,
           id: user.id,
         });
-        HotjarFactory.hotjar().userAttributes(new UserAttributes(user));
+        AnalyticsFactory.hotjar().userAttributes(new UserAttributes(user));
       })
       .then(() => {
-        AnalyticsFactory.getAppcues().sendEvent(AppcuesEvent.LOGGED_IN);
+        AnalyticsFactory.appcues().sendEvent(AppcuesEvent.LOGGED_IN);
       });
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     trackPageRendered(currentLocation, apiClient);
-    analyticsService.pageChanged();
+    AnalyticsFactory.appcues().pageChanged();
   }, [currentLocation, apiClient]);
 
   return (

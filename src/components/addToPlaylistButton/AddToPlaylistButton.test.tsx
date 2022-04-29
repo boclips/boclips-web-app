@@ -8,8 +8,8 @@ import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPla
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import userEvent from '@testing-library/user-event';
 import { ToastContainer } from 'react-toastify';
-import HotjarFactory from 'src/services/hotjar/HotjarFactory';
-import { HotjarEvents } from 'src/services/hotjar/Events';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 
 describe('Add to playlist button', () => {
   const video = VideoFactory.sample({
@@ -149,7 +149,7 @@ describe('Add to playlist button', () => {
   it('video added event sent as Hotjar event', async () => {
     const fakeClient = new FakeBoclipsClient();
     const hotjarVideoAddedToPlaylist = jest.spyOn(
-      HotjarFactory.hotjar(),
+      AnalyticsFactory.hotjar(),
       'event',
     );
     const userId = 'user-100';
@@ -183,7 +183,7 @@ describe('Add to playlist button', () => {
   it('video removed event sent as Hotjar event', async () => {
     const fakeClient = new FakeBoclipsClient();
     const hotjarVideoRemovedFromPlaylist = jest.spyOn(
-      HotjarFactory.hotjar(),
+      AnalyticsFactory.hotjar(),
       'event',
     );
     const userId = 'user-2211';
@@ -292,7 +292,7 @@ describe('Add to playlist button', () => {
     it('video added event sent to Hotjar', async () => {
       const fakeClient = new FakeBoclipsClient();
       const hotjarVideoAddedToPlaylist = jest.spyOn(
-        HotjarFactory.hotjar(),
+        AnalyticsFactory.hotjar(),
         'event',
       );
       const userId = 'user-100';
@@ -312,7 +312,10 @@ describe('Add to playlist button', () => {
 
     it('play list created event sent to Hotjar', async () => {
       const fakeClient = new FakeBoclipsClient();
-      const hotjarPlaylistCreated = jest.spyOn(HotjarFactory.hotjar(), 'event');
+      const hotjarPlaylistCreated = jest.spyOn(
+        AnalyticsFactory.hotjar(),
+        'event',
+      );
       const userId = 'user-100';
 
       fakeClient.collections.setCurrentUser(userId);

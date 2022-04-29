@@ -5,8 +5,8 @@ import { fireEvent, waitFor } from '@testing-library/react';
 import React from 'react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
-import HotjarFactory from 'src/services/hotjar/HotjarFactory';
-import { HotjarEvents } from 'src/services/hotjar/Events';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 
 describe('Add to cart button', () => {
   const video = VideoFactory.sample({
@@ -31,7 +31,10 @@ describe('Add to cart button', () => {
 
   it('sends video added to cart Hotjar event', async () => {
     const apiClient = new FakeBoclipsClient();
-    const hotjarVideoAddedToCart = jest.spyOn(HotjarFactory.hotjar(), 'event');
+    const hotjarVideoAddedToCart = jest.spyOn(
+      AnalyticsFactory.hotjar(),
+      'event',
+    );
 
     const wrapper = render(
       <BoclipsClientProvider client={apiClient}>
@@ -58,7 +61,10 @@ describe('Add to cart button', () => {
       links: null,
     });
 
-    const hotjarVideoAddedToCart = jest.spyOn(HotjarFactory.hotjar(), 'event');
+    const hotjarVideoAddedToCart = jest.spyOn(
+      AnalyticsFactory.hotjar(),
+      'event',
+    );
 
     const wrapper = render(
       <BoclipsClientProvider client={apiClient}>

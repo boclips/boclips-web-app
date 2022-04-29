@@ -5,14 +5,14 @@ import Thumbnails from 'src/components/playlists/thumbnails/Thumbnails';
 import { CopyLinkButton } from 'src/components/common/copyLinkButton/CopyLinkButton';
 import { Constants } from 'src/AppConstants';
 import { Link } from 'react-router-dom';
-import HotjarFactory from 'src/services/hotjar/HotjarFactory';
-import { HotjarEvents } from 'src/services/hotjar/Events';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import GridCard from '../common/gridCard/GridCard';
 import s from './style.module.less';
 
 const Playlists = () => {
   const linkCopiedHotjarEvent = () =>
-    HotjarFactory.hotjar().event(HotjarEvents.PlaylistLinkCopied);
+    AnalyticsFactory.hotjar().event(HotjarEvents.PlaylistLinkCopied);
 
   const { data: playlists, isLoading } = useOwnAndSharedPlaylistsQuery();
 

@@ -3,8 +3,8 @@ import Button from '@boclips-ui/button';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import CopyLinkIcon from 'src/resources/icons/copy-link-icon.svg';
 import c from 'classnames';
-import HotjarFactory from 'src/services/hotjar/HotjarFactory';
-import { HotjarEvents } from 'src/services/hotjar/Events';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import s from './style.module.less';
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 
 export const PlaylistShareButton = ({ link }: Props) => {
   const linkCopiedHotjarEvent = () =>
-    HotjarFactory.hotjar().event(HotjarEvents.PlaylistShareableLinkCopied);
+    AnalyticsFactory.hotjar().event(HotjarEvents.PlaylistShareableLinkCopied);
 
   const handleClick = () => {
     navigator.clipboard.writeText(link).then(() => {

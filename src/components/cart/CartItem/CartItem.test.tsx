@@ -12,8 +12,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { CartValidationProvider } from 'src/components/common/providers/CartValidationProvider';
 import { Video } from 'boclips-api-client/dist/types';
 import { CartItem as CartItemType } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
-import HotjarFactory from 'src/services/hotjar/HotjarFactory';
-import { HotjarEvents } from 'src/services/hotjar/Events';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 
 describe('CartItem', () => {
   let client: any;
@@ -419,7 +419,7 @@ describe('CartItem', () => {
   it('sends video removed from cart Hotjar event', async () => {
     const fakeApiClient = new FakeBoclipsClient();
     const hotjarVideoRemovedFromCart = jest.spyOn(
-      HotjarFactory.hotjar(),
+      AnalyticsFactory.hotjar(),
       'event',
     );
     const video = VideoFactory.sample({

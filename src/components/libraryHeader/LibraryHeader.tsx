@@ -5,8 +5,8 @@ import PlusSign from 'resources/icons/plus-sign.svg';
 import { useHistory } from 'react-router-dom';
 import { CreatePlaylistBodal } from 'src/components/createPlaylistModal/createPlaylistBodal';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
-import HotjarFactory from 'src/services/hotjar/HotjarFactory';
-import { HotjarEvents } from 'src/services/hotjar/Events';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 
 export const LibraryHeader = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -26,7 +26,7 @@ export const LibraryHeader = () => {
     );
   };
   const handleSuccess = (data: string) => {
-    HotjarFactory.hotjar().event(HotjarEvents.PlaylistCreatedFromLibrary);
+    AnalyticsFactory.hotjar().event(HotjarEvents.PlaylistCreatedFromLibrary);
     history.push(`/playlists/${data}`);
   };
 

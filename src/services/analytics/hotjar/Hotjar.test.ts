@@ -1,4 +1,4 @@
-import Hotjar from 'src/services/hotjar/Hotjar';
+import Hotjar from 'src/services/analytics/hotjar/Hotjar';
 
 describe('Hotjar', () => {
   let mockHotjar: (service: string, id: string, payload?: object) => void;

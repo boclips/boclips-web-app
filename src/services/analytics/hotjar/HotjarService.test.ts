@@ -1,7 +1,7 @@
-import Hotjar from 'src/services/hotjar/Hotjar';
-import HotjarService from 'src/services/hotjar/HotjarService';
-import { HotjarEvents } from 'src/services/hotjar/Events';
-import UserAttributes from 'src/services/hotjar/UserAttributes';
+import Hotjar from 'src/services/analytics/hotjar/Hotjar';
+import HotjarService from 'src/services/analytics/hotjar/HotjarService';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import UserAttributes from 'src/services/analytics/hotjar/UserAttributes';
 
 describe('HotjarService', () => {
   let hotjar: Hotjar;

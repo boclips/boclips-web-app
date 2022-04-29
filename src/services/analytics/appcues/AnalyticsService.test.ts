@@ -1,6 +1,6 @@
-import { AnalyticsService } from 'src/services/analytics/AnalyticsService';
-import Appcues from 'src/services/analytics/Appcues';
-import { AnalyticsUserProfile } from 'src/services/analytics/AnalyticsUserProfile';
+import { AnalyticsService } from 'src/services/analytics/appcues/AnalyticsService';
+import Appcues from 'src/services/analytics/appcues/Appcues';
+import { AnalyticsUserProfile } from 'src/services/analytics/appcues/AnalyticsUserProfile';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 
 describe('AnalyticsService', () => {

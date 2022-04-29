@@ -26,7 +26,7 @@ export const CopyVideoLinkButton = ({ video, appcueEvent }: Props) => {
     trackCopyVideoShareLink(video, apiClient);
 
     if (appcueEvent) {
-      AnalyticsFactory.getAppcues().sendEvent(appcueEvent);
+      AnalyticsFactory.appcues().sendEvent(appcueEvent);
     }
   };
 

@@ -12,6 +12,11 @@ interface UpdatePlaylistProps {
   videoId: string;
 }
 
+interface PlaylistMutationCallbacks {
+  onSuccess: (playlistId: string) => void;
+  onError: (playlistId: string) => void;
+}
+
 export const useOwnAndSharedPlaylistsQuery = () => {
   const client = useBoclipsClient();
   return useQuery('ownAndSharedPlaylists', () =>
@@ -63,8 +68,7 @@ export const doFollowPlaylist = (
 };
 
 export const useAddToPlaylistMutation = (
-  on_success: (playlistId) => void,
-  on_error: (playlistId) => void,
+  callbacks: PlaylistMutationCallbacks,
 ) => {
   const client = useBoclipsClient();
   return useMutation(
@@ -78,7 +82,7 @@ export const useAddToPlaylistMutation = (
           '',
           `add-video-${videoId}-to-playlist`,
         );
-        on_success(playlist.id);
+        callbacks.onSuccess(playlist.id);
       },
       onError: (_, { playlist, videoId }: UpdatePlaylistProps) => {
         displayNotification(
@@ -87,15 +91,14 @@ export const useAddToPlaylistMutation = (
           'Please refresh the page and try again',
           `add-video-${videoId}-to-playlist`,
         );
-        on_error(playlist.id);
+        callbacks.onError(playlist.id);
       },
     },
   );
 };
 
 export const useRemoveFromPlaylistMutation = (
-  on_success: (playlistId) => void,
-  on_error: (playlistId) => void,
+  callbacks: PlaylistMutationCallbacks,
 ) => {
   const client = useBoclipsClient();
   const queryClient = useQueryClient();
@@ -111,7 +114,7 @@ export const useRemoveFromPlaylistMutation = (
           '',
           `add-video-${videoId}-to-playlist`,
         );
-        on_success(playlist.id);
+        callbacks.onSuccess(playlist.id);
       },
       onError: (_, { playlist, videoId }: UpdatePlaylistProps) => {
         displayNotification(
@@ -120,7 +123,7 @@ export const useRemoveFromPlaylistMutation = (
           'Please refresh the page and try again',
           `add-video-${videoId}-to-playlist`,
         );
-        on_error(playlist.id);
+        callbacks.onError(playlist.id);
       },
       onSettled: (_data, _error, variables) => {
         queryClient.invalidateQueries(['playlist', variables.playlist.id]);
