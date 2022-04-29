@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter, Router } from 'react-router-dom';
 import App from 'src/App';
@@ -9,8 +9,12 @@ import { Helmet } from 'react-helmet';
 import { disciplines } from 'src/components/disciplinesWidget/disciplinesFixture';
 import { createBrowserHistory } from 'history';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { resizeToDesktop } from 'src/testSupport/resizeTo';
 
 describe('HomeView', () => {
+  beforeEach(() => {
+    resizeToDesktop(1024);
+  });
   it('loads the home view text', async () => {
     const wrapper = render(
       <MemoryRouter>
@@ -41,7 +45,7 @@ describe('HomeView', () => {
     expect(helmet.title).toEqual('Boclips');
   });
 
-  it('redirects to search (video) page with selected subject', async () => {
+  it('redirects to search (video) page with selected subject filter and query', async () => {
     const fakeClient = new FakeBoclipsClient();
     const client = new QueryClient();
 
@@ -51,11 +55,12 @@ describe('HomeView', () => {
     });
 
     const expectedPathname = '/videos';
-    const expectedSearch = `?subject=${disciplines[0].subjects[0].id}`;
+    const subjectNameLink = disciplines[0].subjects[1].name.replace(/ /g, '+');
+    const expectedSearch = `?q=${subjectNameLink}&subject=${disciplines[0].subjects[1].id}`;
 
     const history = createBrowserHistory();
 
-    render(
+    const wrapper = render(
       <QueryClientProvider client={client}>
         <Router history={history}>
           <App apiClient={fakeClient} boclipsSecurity={stubBoclipsSecurity} />
@@ -63,9 +68,12 @@ describe('HomeView', () => {
       </QueryClientProvider>,
     );
 
-    fireEvent.click(await screen.findByText('Business'));
+    fireEvent.click(await wrapper.findByText(disciplines[0].name));
+    console.log('printing panel');
 
-    fireEvent.click(await screen.findByText(disciplines[0].subjects[0].name));
+    const subject = await wrapper.findByText(disciplines[0].subjects[1].name);
+
+    fireEvent.click(subject);
 
     expect(history.location.pathname).toEqual(expectedPathname);
     expect(history.location.search).toEqual(expectedSearch); // search = query parameters

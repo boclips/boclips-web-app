@@ -3,9 +3,9 @@ import React from 'react';
 import getDisciplineIllustration from 'src/services/getDisciplineIllustration';
 import { DisciplineWithSubjectOffering } from 'src/hooks/api/disciplinesQuery';
 import { Typography } from '@boclips-ui/typography';
+import { SubjectLink } from 'src/components/disciplinesWidget/SubjectLink';
 import s from './style.module.less';
 import { ExtraSubjects } from './ExtraSubjects';
-import { Link } from '../common/Link';
 
 interface Props {
   onClick: (discipline: DisciplineWithSubjectOffering) => void;
@@ -36,19 +36,12 @@ const DisciplineOverlayMenu = ({ onClick, selectedDiscipline }: Props) => {
       <div className={s.subjects}>
         {selectedDiscipline?.subjects?.map((subject) => {
           return (
-            <Link
-              key={subject.name}
-              className={s.link}
-              to={{
-                pathname: '/videos',
-                search: `?subject=${subject.id}`,
-              }}
-            >
+            <SubjectLink subject={subject} className={s.link}>
               <Typography.Body>{subject.name}</Typography.Body>
               <span>
                 <ArrowRight />
               </span>
-            </Link>
+            </SubjectLink>
           );
         })}
       </div>

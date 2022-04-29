@@ -2,9 +2,9 @@ import React from 'react';
 import c from 'classnames';
 import { Subject } from 'boclips-api-client/dist/types';
 import { Typography } from '@boclips-ui/typography';
+import { SubjectLink } from 'src/components/disciplinesWidget/SubjectLink';
 import s from './style.module.less';
 import { ExtraSubjects } from './ExtraSubjects';
-import { Link } from '../common/Link';
 
 interface Props {
   positionTop: boolean;
@@ -29,19 +29,15 @@ const SubjectsPanel = React.forwardRef(
           {subjects
             ?.sort((s1, s2) => s1.name.localeCompare(s2.name))
             .map((subject) => {
+              const link = new URLSearchParams();
+              link.append('q', subject.name);
+              link.append('subject', subject.id);
               return (
-                <Link
-                  key={subject.id}
-                  aria-label={`Search for videos with subject ${subject.name}`}
-                  to={{
-                    pathname: '/videos',
-                    search: `?subject=${subject.id}`,
-                  }}
-                >
+                <SubjectLink subject={subject}>
                   <Typography.Body weight="medium">
                     {subject.name}
                   </Typography.Body>
-                </Link>
+                </SubjectLink>
               );
             })}
         </div>
