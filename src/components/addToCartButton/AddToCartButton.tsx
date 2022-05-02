@@ -17,6 +17,7 @@ import {
 } from 'src/components/common/analytics/Analytics';
 import { Video } from 'boclips-api-client/dist/types';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import s from './style.module.less';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 
@@ -37,6 +38,7 @@ export const AddToCartButton = ({
 }: AddToCartButtonProps) => {
   const queryClient = useQueryClient();
   const boclipsClient = useBoclipsClient();
+
   const { data: cart } = useCartQuery();
 
   const cartItem = cart?.items?.find((it) => it?.videoId === video.id);
@@ -63,8 +65,9 @@ export const AddToCartButton = ({
         );
 
         if (appcueEvent) {
-          AnalyticsFactory.getAppcues().sendEvent(appcueEvent);
+          AnalyticsFactory.appcues().sendEvent(appcueEvent);
         }
+        videoAddedHotjarEvent();
       },
     },
   );
@@ -89,6 +92,8 @@ export const AddToCartButton = ({
           '',
           `remove-video-${it}-from-cart-notification`,
         );
+
+        videoRemovedHotjarEvent();
       },
     },
   );
@@ -96,6 +101,14 @@ export const AddToCartButton = ({
   const addToCart = () => {
     trackVideoAddedToCart(video, boclipsClient);
     mutateAddToCart(video.id);
+  };
+
+  const videoAddedHotjarEvent = () => {
+    AnalyticsFactory.hotjar().event(HotjarEvents.VideoAddedToCart);
+  };
+
+  const videoRemovedHotjarEvent = () => {
+    AnalyticsFactory.hotjar().event(HotjarEvents.VideoRemovedFromCart);
   };
 
   const removeFromCart = () => {

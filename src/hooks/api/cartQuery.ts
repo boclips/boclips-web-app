@@ -41,6 +41,11 @@ interface AdditionalServicesUpdateRequest {
   additionalServices: AdditionalServices;
 }
 
+interface CartMutationCallbacks {
+  onSuccess?: (cartItemId: string) => void;
+  onError?: (cartItemId: string) => void;
+}
+
 export const useCartItemAdditionalServicesMutation = () => {
   const boclipsClient = useBoclipsClient();
   const queryClient = useQueryClient();
@@ -86,7 +91,7 @@ export const useCartItemAdditionalServicesMutation = () => {
   );
 };
 
-export const useCartMutation = () => {
+export const useCartMutation = (callbacks?: CartMutationCallbacks) => {
   const boclipsClient = useBoclipsClient();
   const queryClient = useQueryClient();
   const { data: cart } = useCartQuery();
@@ -110,10 +115,20 @@ export const useCartMutation = () => {
         }));
 
         queryClient.setQueryData('multipleVideos', (videos: Video[]) => [
-          ...videos.filter((item) => {
+          ...(videos || []).filter((item) => {
             return item.id !== cartItemToRemove.videoId;
           }),
         ]);
+      },
+      onSuccess: (_, cartItemId: string) => {
+        if (callbacks?.onSuccess) {
+          callbacks.onSuccess(cartItemId);
+        }
+      },
+      onError: (_, cartItemId: string) => {
+        if (callbacks?.onError) {
+          callbacks.onError(cartItemId);
+        }
       },
       onSettled: () => {
         queryClient.invalidateQueries('cart');

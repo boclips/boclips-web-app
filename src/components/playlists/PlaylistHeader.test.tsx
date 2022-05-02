@@ -1,9 +1,11 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import PlaylistHeader from 'src/components/playlists/PlaylistHeader';
 import { Constants } from 'src/AppConstants';
 import { ToastContainer } from 'react-toastify';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 
 describe('Playlist Header', () => {
   Object.assign(navigator, {
@@ -72,6 +74,33 @@ describe('Playlist Header', () => {
     expect(notification.children.item(0).textContent).toEqual('Link copied!');
     expect(notification.children.item(1).textContent).toEqual(
       'You can now share this playlist using the copied link',
+    );
+  });
+
+  it('sends Hotjar link copied event', async () => {
+    const hotjarEventSent = jest.spyOn(AnalyticsFactory.hotjar(), 'event');
+
+    const playlist = CollectionFactory.sample({
+      id: '123',
+      title: 'Playlist title',
+      description: 'Description',
+    });
+
+    const wrapper = render(
+      <>
+        <ToastContainer />
+        <PlaylistHeader playlist={playlist} />
+      </>,
+    );
+
+    const shareButton = await wrapper.findByTestId('share-playlist-button');
+
+    fireEvent.click(shareButton);
+
+    await waitFor(() =>
+      expect(hotjarEventSent).toHaveBeenCalledWith(
+        HotjarEvents.PlaylistShareableLinkCopied,
+      ),
     );
   });
 });

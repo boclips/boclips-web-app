@@ -1,9 +1,9 @@
-import Appcues from 'src/services/analytics/Appcues';
-import { AnalyticsUserProfile } from 'src/services/analytics/AnalyticsUserProfile';
+import Appcues from 'src/services/analytics/appcues/Appcues';
+import { AnalyticsUserProfile } from 'src/services/analytics/appcues/AnalyticsUserProfile';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 
 export class AnalyticsService {
-  private appcuesInstance?: Appcues;
+  private readonly appcuesInstance?: Appcues;
 
   public constructor(appcues?: Appcues) {
     if (!appcues) {

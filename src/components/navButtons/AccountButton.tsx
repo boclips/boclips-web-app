@@ -34,7 +34,7 @@ export const AccountButton = () => {
   };
 
   const ordersOpenedEvent = () => {
-    AnalyticsFactory.getAppcues().sendEvent(AppcuesEvent.YOUR_ORDERS_OPENED);
+    AnalyticsFactory.appcues().sendEvent(AppcuesEvent.YOUR_ORDERS_OPENED);
   };
 
   const closeDialog = () => {

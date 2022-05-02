@@ -20,7 +20,7 @@ interface Props {
 const VideoCardTitle = ({ video }: Props) => {
   const boclipsClient = useBoclipsClient();
   const onClick = () => {
-    AnalyticsFactory.getAppcues().sendEvent(AppcuesEvent.VIDEO_PAGE_OPENED);
+    AnalyticsFactory.appcues().sendEvent(AppcuesEvent.VIDEO_PAGE_OPENED);
     trackNavigateToVideoDetails(video, boclipsClient);
   };
   return (

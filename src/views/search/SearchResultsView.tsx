@@ -102,7 +102,7 @@ const SearchResultsView = () => {
         filters: newFilters,
       });
       setNewFiltersBeforeDebounce(newFilters);
-      AnalyticsFactory.getAppcues().sendEvent(AppcuesEvent.FILTERS_APPLIED, {
+      AnalyticsFactory.appcues().sendEvent(AppcuesEvent.FILTERS_APPLIED, {
         filters: newFilters,
       });
     },

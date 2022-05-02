@@ -12,6 +12,11 @@ interface UpdatePlaylistProps {
   videoId: string;
 }
 
+interface PlaylistMutationCallbacks {
+  onSuccess: (playlistId: string) => void;
+  onError: (playlistId: string) => void;
+}
+
 export const useOwnAndSharedPlaylistsQuery = () => {
   const client = useBoclipsClient();
   return useQuery('ownAndSharedPlaylists', () =>
@@ -62,7 +67,9 @@ export const doFollowPlaylist = (
   return collectionsClient.bookmark(playlist);
 };
 
-export const useAddToPlaylistMutation = (callback: (id) => void) => {
+export const useAddToPlaylistMutation = (
+  callbacks: PlaylistMutationCallbacks,
+) => {
   const client = useBoclipsClient();
   return useMutation(
     async ({ playlist, videoId }: UpdatePlaylistProps) =>
@@ -75,6 +82,7 @@ export const useAddToPlaylistMutation = (callback: (id) => void) => {
           '',
           `add-video-${videoId}-to-playlist`,
         );
+        callbacks.onSuccess(playlist.id);
       },
       onError: (_, { playlist, videoId }: UpdatePlaylistProps) => {
         displayNotification(
@@ -83,13 +91,15 @@ export const useAddToPlaylistMutation = (callback: (id) => void) => {
           'Please refresh the page and try again',
           `add-video-${videoId}-to-playlist`,
         );
-        callback(playlist.id);
+        callbacks.onError(playlist.id);
       },
     },
   );
 };
 
-export const useRemoveFromPlaylistMutation = (callback: (id) => void) => {
+export const useRemoveFromPlaylistMutation = (
+  callbacks: PlaylistMutationCallbacks,
+) => {
   const client = useBoclipsClient();
   const queryClient = useQueryClient();
 
@@ -104,6 +114,7 @@ export const useRemoveFromPlaylistMutation = (callback: (id) => void) => {
           '',
           `add-video-${videoId}-to-playlist`,
         );
+        callbacks.onSuccess(playlist.id);
       },
       onError: (_, { playlist, videoId }: UpdatePlaylistProps) => {
         displayNotification(
@@ -112,7 +123,7 @@ export const useRemoveFromPlaylistMutation = (callback: (id) => void) => {
           'Please refresh the page and try again',
           `add-video-${videoId}-to-playlist`,
         );
-        callback(playlist.id);
+        callbacks.onError(playlist.id);
       },
       onSettled: (_data, _error, variables) => {
         queryClient.invalidateQueries(['playlist', variables.playlist.id]);

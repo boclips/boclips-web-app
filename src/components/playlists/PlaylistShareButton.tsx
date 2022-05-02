@@ -3,6 +3,8 @@ import Button from '@boclips-ui/button';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import CopyLinkIcon from 'src/resources/icons/copy-link-icon.svg';
 import c from 'classnames';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import s from './style.module.less';
 
 interface Props {
@@ -10,6 +12,9 @@ interface Props {
 }
 
 export const PlaylistShareButton = ({ link }: Props) => {
+  const linkCopiedHotjarEvent = () =>
+    AnalyticsFactory.hotjar().event(HotjarEvents.PlaylistShareableLinkCopied);
+
   const handleClick = () => {
     navigator.clipboard.writeText(link).then(() => {
       displayNotification(
@@ -18,6 +23,8 @@ export const PlaylistShareButton = ({ link }: Props) => {
         'You can now share this playlist using the copied link',
         'playlist-link-copied-notification',
       );
+
+      linkCopiedHotjarEvent();
     });
   };
 

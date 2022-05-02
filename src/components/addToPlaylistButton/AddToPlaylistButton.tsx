@@ -6,8 +6,8 @@ import React, { useRef, useState } from 'react';
 import CloseButton from 'src/resources/icons/cross-icon.svg';
 import {
   useAddToPlaylistMutation,
-  useRemoveFromPlaylistMutation,
   useOwnPlaylistsQuery,
+  useRemoveFromPlaylistMutation,
 } from 'src/hooks/api/playlistsQuery';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import c from 'classnames';
@@ -19,6 +19,8 @@ import { CreatePlaylistBodal } from 'src/components/createPlaylistModal/createPl
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import PlusIcon from 'src/resources/icons/plus-sign.svg';
 import { Typography } from '@boclips-ui/typography';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import s from './style.module.less';
 
 interface Props {
@@ -40,6 +42,16 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
 
   const { data: playlists } = useOwnPlaylistsQuery();
 
+  const playlistCreatedHotjarEvent = () => {
+    AnalyticsFactory.hotjar().event(HotjarEvents.PlaylistCreatedFromVideo);
+  };
+  const videoAddedHotjarEvent = () => {
+    AnalyticsFactory.hotjar().event(HotjarEvents.VideoAddedToPlaylist);
+  };
+  const videoRemovedHotjarEvent = () => {
+    AnalyticsFactory.hotjar().event(HotjarEvents.VideoRemovedFromPlaylist);
+  };
+
   const uncheckPlaylistForVideo = (id: string) =>
     setPlaylistsContainingVideo((prevState) =>
       prevState.filter((plId) => plId !== id),
@@ -48,13 +60,15 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
   const checkPlaylistForVideo = (id: string) =>
     setPlaylistsContainingVideo((prevState) => [...prevState, id]);
 
-  const { mutate: mutateRemoveFromPlaylist } = useRemoveFromPlaylistMutation(
-    (id) => checkPlaylistForVideo(id),
-  );
+  const { mutate: mutateRemoveFromPlaylist } = useRemoveFromPlaylistMutation({
+    onSuccess: videoRemovedHotjarEvent,
+    onError: checkPlaylistForVideo,
+  });
 
-  const { mutate: mutateAddToPlaylist } = useAddToPlaylistMutation((id) =>
-    uncheckPlaylistForVideo(id),
-  );
+  const { mutate: mutateAddToPlaylist } = useAddToPlaylistMutation({
+    onSuccess: videoAddedHotjarEvent,
+    onError: uncheckPlaylistForVideo,
+  });
 
   React.useEffect(() => {
     if (playlists && videoId) {
@@ -76,10 +90,16 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
 
     if (playlistsContainingVideo.includes(playlistId)) {
       uncheckPlaylistForVideo(playlistId);
-      mutateRemoveFromPlaylist({ playlist: chosenPlaylist, videoId });
+      mutateRemoveFromPlaylist({
+        playlist: chosenPlaylist,
+        videoId,
+      });
     } else {
       checkPlaylistForVideo(playlistId);
-      mutateAddToPlaylist({ playlist: chosenPlaylist, videoId });
+      mutateAddToPlaylist({
+        playlist: chosenPlaylist,
+        videoId,
+      });
     }
   };
 
@@ -92,7 +112,7 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
     );
   };
 
-  const handlePlaylistCreationSuccess = (_: string, playlistName: string) => {
+  const handlePlaylistCreationSuccess = (_, playlistName: string) => {
     setShowCreatePlaylistModal(false);
     setIsOpen(false);
     displayNotification(
@@ -107,6 +127,8 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
       '',
       `add-video-to-${playlistName}-playlist`,
     );
+    videoAddedHotjarEvent();
+    playlistCreatedHotjarEvent();
   };
 
   const videoNotAddedToAnyPlaylist = playlistsContainingVideo.length === 0;

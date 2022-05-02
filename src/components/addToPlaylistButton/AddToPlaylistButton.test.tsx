@@ -8,6 +8,8 @@ import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPla
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import userEvent from '@testing-library/user-event';
 import { ToastContainer } from 'react-toastify';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 
 describe('Add to playlist button', () => {
   const video = VideoFactory.sample({
@@ -144,6 +146,75 @@ describe('Add to playlist button', () => {
     expect(wrapper.queryByText('Add to playlist')).not.toBeInTheDocument();
   });
 
+  it('video added event sent as Hotjar event', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const hotjarVideoAddedToPlaylist = jest.spyOn(
+      AnalyticsFactory.hotjar(),
+      'event',
+    );
+    const userId = 'user-100';
+    const playlist = CollectionFactory.sample({
+      id: 'playlist-332',
+      title: 'Playlist 332',
+      owner: userId,
+      mine: true,
+    });
+
+    fakeClient.collections.setCurrentUser(userId);
+    fakeClient.collections.addToFake(playlist);
+
+    const wrapper = renderWrapper(fakeClient);
+
+    const playlistButton = await wrapper.findByLabelText('Add to playlist');
+
+    fireEvent.click(playlistButton);
+
+    const playlistCheckbox = await wrapper.findByLabelText(playlist.title);
+
+    fireEvent.click(playlistCheckbox);
+
+    await waitFor(() =>
+      expect(hotjarVideoAddedToPlaylist).toHaveBeenCalledWith(
+        HotjarEvents.VideoAddedToPlaylist.toString(),
+      ),
+    );
+  });
+
+  it('video removed event sent as Hotjar event', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const hotjarVideoRemovedFromPlaylist = jest.spyOn(
+      AnalyticsFactory.hotjar(),
+      'event',
+    );
+    const userId = 'user-2211';
+    const playlist = CollectionFactory.sample({
+      id: 'playlist-2222',
+      title: 'Playlist 6777',
+      owner: userId,
+      mine: true,
+      videos: [video],
+    });
+
+    fakeClient.collections.setCurrentUser(userId);
+    fakeClient.collections.addToFake(playlist);
+
+    const wrapper = renderWrapper(fakeClient);
+
+    const playlistButton = await wrapper.findByLabelText('Add to playlist');
+
+    fireEvent.click(playlistButton);
+
+    const playlistCheckbox = await wrapper.findByLabelText(playlist.title);
+
+    fireEvent.click(playlistCheckbox);
+
+    await waitFor(() =>
+      expect(hotjarVideoRemovedFromPlaylist).toHaveBeenCalledWith(
+        HotjarEvents.VideoRemovedFromPlaylist,
+      ),
+    );
+  });
+
   describe('create playlist', () => {
     it('shows create playlist modal', async () => {
       const wrapper = renderWrapper();
@@ -193,7 +264,7 @@ describe('Add to playlist button', () => {
       ).toBeVisible();
     });
 
-    it('closes the bodal and pop up on successful creation of playlist', async () => {
+    it('closes the modal and pop up on successful creation of playlist', async () => {
       const wrapper = renderWrapper();
       createPlaylist(wrapper, 'jazz');
 
@@ -218,6 +289,48 @@ describe('Add to playlist button', () => {
       ).toBeVisible();
     });
 
+    it('video added event sent to Hotjar', async () => {
+      const fakeClient = new FakeBoclipsClient();
+      const hotjarVideoAddedToPlaylist = jest.spyOn(
+        AnalyticsFactory.hotjar(),
+        'event',
+      );
+      const userId = 'user-100';
+
+      fakeClient.collections.setCurrentUser(userId);
+
+      const wrapper = renderWrapper(fakeClient);
+
+      createPlaylist(wrapper, 'ornament');
+
+      await waitFor(() =>
+        expect(hotjarVideoAddedToPlaylist).toHaveBeenCalledWith(
+          HotjarEvents.VideoAddedToPlaylist.toString(),
+        ),
+      );
+    });
+
+    it('play list created event sent to Hotjar', async () => {
+      const fakeClient = new FakeBoclipsClient();
+      const hotjarPlaylistCreated = jest.spyOn(
+        AnalyticsFactory.hotjar(),
+        'event',
+      );
+      const userId = 'user-100';
+
+      fakeClient.collections.setCurrentUser(userId);
+
+      const wrapper = renderWrapper(fakeClient);
+
+      createPlaylist(wrapper, 'ornament');
+
+      await waitFor(() =>
+        expect(hotjarPlaylistCreated).toHaveBeenCalledWith(
+          HotjarEvents.PlaylistCreatedFromVideo.toString(),
+        ),
+      );
+    });
+
     const createPlaylist = (wrapper: RenderResult, playlistName: string) => {
       fireEvent.click(wrapper.getByLabelText('Add to playlist'));
       fireEvent.click(
@@ -231,12 +344,11 @@ describe('Add to playlist button', () => {
   });
 
   const renderWrapper = (fakeClient = new FakeBoclipsClient()) => {
-    const wrapper = render(
+    return render(
       <BoclipsClientProvider client={fakeClient}>
         <ToastContainer />
         <AddToPlaylistButton videoId={video.id} />
       </BoclipsClientProvider>,
     );
-    return wrapper;
   };
 });
