@@ -171,7 +171,14 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
         />
       </Tooltip>
       {isOpen && !showCreatePlaylistModal && (
-        <FocusTrap>
+        <FocusTrap
+          focusTrapOptions={{
+            initialFocus:
+              playlists?.length > 0
+                ? `input[id='${playlists[0].id}']`
+                : '#create-new-playlist-button',
+          }}
+        >
           {/* Below should be fine according to https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/479 */}
           {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
           <div
@@ -219,6 +226,7 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
                 onClick={() => setShowCreatePlaylistModal(true)}
                 text="Create new playlist"
                 type="label"
+                id="create-new-playlist-button"
                 icon={<PlusIcon />}
               />
             </div>

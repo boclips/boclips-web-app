@@ -91,59 +91,100 @@ describe('Add to playlist button', () => {
     expect(wrapper.queryByText('Playlist 3')).not.toBeInTheDocument();
   });
 
-  it('traps focus in the pop-up', async () => {
-    const fakeClient = new FakeBoclipsClient();
-    fakeClient.collections.setCurrentUser('user-123');
+  describe('traps focus in the pop-up', () => {
+    it('focus on the first playlist from a list', async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.collections.setCurrentUser('user-123');
+      const playlist = CollectionFactory.sample({
+        id: 'playlist-id',
+        title: 'Playlist 6777',
+        owner: 'user-123',
+        mine: true,
+        videos: [video],
+      });
+      fakeClient.collections.addToFake(playlist);
 
-    const wrapper = render(
-      <BoclipsClientProvider client={fakeClient}>
-        <AddToPlaylistButton videoId={video.id} />
-      </BoclipsClientProvider>,
-    );
+      const wrapper = render(
+        <BoclipsClientProvider client={fakeClient}>
+          <AddToPlaylistButton videoId={video.id} />
+        </BoclipsClientProvider>,
+      );
 
-    const playlistButton = await wrapper.findByLabelText('Add to playlist');
-    fireEvent.click(playlistButton);
+      const playlistButton = await wrapper.findByLabelText('Add to playlist');
+      fireEvent.click(playlistButton);
 
-    userEvent.tab();
+      userEvent.tab();
 
-    expect(
-      await wrapper.findByLabelText('close add to playlist'),
-    ).toHaveFocus();
-    userEvent.tab();
+      expect(
+        await wrapper.findByRole('checkbox', {
+          name: 'Playlist 6777',
+        }),
+      ).toHaveFocus();
 
-    expect(
-      await wrapper.findByRole('button', {
-        name: 'Create new playlist',
-      }),
-    ).toHaveFocus();
+      userEvent.tab();
 
-    userEvent.tab();
+      expect(
+        await wrapper.findByRole('button', {
+          name: 'Create new playlist',
+        }),
+      ).toHaveFocus();
 
-    expect(
-      await wrapper.findByLabelText('close add to playlist'),
-    ).toHaveFocus();
-  });
+      userEvent.tab();
 
-  it('closes the pop-up on escape key down', async () => {
-    const fakeClient = new FakeBoclipsClient();
-
-    const wrapper = render(
-      <BoclipsClientProvider client={fakeClient}>
-        <AddToPlaylistButton videoId={video.id} />
-      </BoclipsClientProvider>,
-    );
-
-    const playlistButton = await wrapper.findByLabelText('Add to playlist');
-    fireEvent.click(playlistButton);
-
-    expect(wrapper.getByTestId('add-to-playlist-pop-up')).toBeVisible();
-    expect(wrapper.queryByText('Add to playlist')).toBeInTheDocument();
-
-    fireEvent.keyDown(wrapper.getByTestId('add-to-playlist-pop-up'), {
-      key: 'Escape',
+      expect(
+        await wrapper.findByLabelText('close add to playlist'),
+      ).toHaveFocus();
     });
 
-    expect(wrapper.queryByText('Add to playlist')).not.toBeInTheDocument();
+    it('focus on create new playlist button when there are no playlists', async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.collections.setCurrentUser('user-123');
+
+      const wrapper = render(
+        <BoclipsClientProvider client={fakeClient}>
+          <AddToPlaylistButton videoId={video.id} />
+        </BoclipsClientProvider>,
+      );
+
+      const playlistButton = await wrapper.findByLabelText('Add to playlist');
+      fireEvent.click(playlistButton);
+
+      userEvent.tab();
+
+      expect(
+        await wrapper.findByRole('button', {
+          name: 'Create new playlist',
+        }),
+      ).toHaveFocus();
+
+      userEvent.tab();
+
+      expect(
+        await wrapper.findByLabelText('close add to playlist'),
+      ).toHaveFocus();
+    });
+
+    it('closes the pop-up on escape key down', async () => {
+      const fakeClient = new FakeBoclipsClient();
+
+      const wrapper = render(
+        <BoclipsClientProvider client={fakeClient}>
+          <AddToPlaylistButton videoId={video.id} />
+        </BoclipsClientProvider>,
+      );
+
+      const playlistButton = await wrapper.findByLabelText('Add to playlist');
+      fireEvent.click(playlistButton);
+
+      expect(wrapper.getByTestId('add-to-playlist-pop-up')).toBeVisible();
+      expect(wrapper.queryByText('Add to playlist')).toBeInTheDocument();
+
+      fireEvent.keyDown(wrapper.getByTestId('add-to-playlist-pop-up'), {
+        key: 'Escape',
+      });
+
+      expect(wrapper.queryByText('Add to playlist')).not.toBeInTheDocument();
+    });
   });
 
   it('video added event sent as Hotjar event', async () => {
