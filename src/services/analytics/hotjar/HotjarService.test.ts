@@ -23,6 +23,24 @@ describe('HotjarService', () => {
     );
   });
 
+  it('user id is not sent with user attributes', () => {
+    const user = {
+      id: 'user-998',
+      firstName: 'Jack',
+      lastName: 'Sparrow',
+      email: 'jack@voclips.com',
+      organisation: undefined,
+    };
+    const attributes = new UserAttributes(user);
+
+    hotjarService.userAttributes(attributes);
+
+    expect(hotjar.identify).toHaveBeenCalledWith(null, {
+      organisation_id: null,
+      organisation_name: null,
+    });
+  });
+
   it('sends user organisation as user attributes', () => {
     const user = {
       id: 'user-998',
@@ -38,30 +56,9 @@ describe('HotjarService', () => {
 
     hotjarService.userAttributes(attributes);
 
-    expect(hotjar.identify).toHaveBeenCalledWith(user.id, {
+    expect(hotjar.identify).toHaveBeenCalledWith(null, {
       organisation_id: user.organisation.id,
       organisation_name: user.organisation.name,
-      account_id: null,
-    });
-  });
-
-  it('sends account id as user attributes', () => {
-    const user = {
-      id: 'user-998',
-      firstName: 'Jack',
-      lastName: 'Sparrow',
-      email: 'jack@voclips.com',
-      accountId: 'acc-7766',
-      organisation: null,
-    };
-    const attributes = new UserAttributes(user);
-
-    hotjarService.userAttributes(attributes);
-
-    expect(hotjar.identify).toHaveBeenCalledWith(user.id, {
-      organisation_id: null,
-      organisation_name: null,
-      account_id: user.accountId,
     });
   });
 });

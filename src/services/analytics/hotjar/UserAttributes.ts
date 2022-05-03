@@ -3,7 +3,6 @@ import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/Us
 const enum Attributes {
   OrganisationId = 'organisation_id',
   OrganisationName = 'organisation_name',
-  AccountId = 'account_id',
 }
 
 export default class UserAttributes {
@@ -13,18 +12,12 @@ export default class UserAttributes {
     this.user = user;
   }
 
-  public userId(): string {
-    return this.user.id;
-  }
-
   public attributes(): object {
     const attributes = {};
 
     attributes[Attributes.OrganisationId] = this.user.organisation?.id || null;
     attributes[Attributes.OrganisationName] =
       this.user.organisation?.name || null;
-
-    attributes[Attributes.AccountId] = this.user.accountId || null;
 
     return attributes;
   }

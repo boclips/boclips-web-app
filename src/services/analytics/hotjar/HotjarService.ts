@@ -14,6 +14,6 @@ export default class HotjarService {
   }
 
   public userAttributes(user: UserAttributes) {
-    this.hotjar.identify(user.userId(), user.attributes());
+    this.hotjar.identify(null, user.attributes());
   }
 }
