@@ -256,6 +256,42 @@ describe('Add to playlist button', () => {
     );
   });
 
+  it('invokes callback when removing video', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.collections.setCurrentUser('user-123');
+
+    fakeClient.collections.addToFake(
+      CollectionFactory.sample({
+        id: '123',
+        owner: 'user-123',
+        mine: true,
+        videos: [video],
+        title: 'Courage the Cowardly Dog',
+      }),
+    );
+
+    const mock = jest.fn();
+
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeClient}>
+        <AddToPlaylistButton
+          videoId={video.id}
+          onRemoveVideo={mock}
+          playlistContextId="123"
+        />
+      </BoclipsClientProvider>,
+    );
+
+    fireEvent.click(
+      await wrapper.findByLabelText('Add or remove from playlist'),
+    );
+    fireEvent.click(
+      wrapper.getByRole('checkbox', { name: 'Courage the Cowardly Dog' }),
+    );
+
+    await waitFor(() => expect(mock).toHaveBeenCalled());
+  });
+
   describe('create playlist', () => {
     it('shows create playlist modal', async () => {
       const wrapper = renderWrapper();

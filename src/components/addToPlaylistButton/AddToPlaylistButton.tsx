@@ -25,9 +25,15 @@ import s from './style.module.less';
 
 interface Props {
   videoId: string;
+  playlistContextId?: string;
+  onRemoveVideo?: () => void;
 }
 
-export const AddToPlaylistButton = ({ videoId }: Props) => {
+export const AddToPlaylistButton = ({
+  videoId,
+  playlistContextId,
+  onRemoveVideo,
+}: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [showCreatePlaylistModal, setShowCreatePlaylistModal] =
     useState<boolean>(false);
@@ -61,7 +67,13 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
     setPlaylistsContainingVideo((prevState) => [...prevState, id]);
 
   const { mutate: mutateRemoveFromPlaylist } = useRemoveFromPlaylistMutation({
-    onSuccess: videoRemovedHotjarEvent,
+    onSuccess: (playlistId: string) => {
+      videoRemovedHotjarEvent();
+      if (playlistContextId === playlistId) {
+        setIsOpen(false);
+        onRemoveVideo();
+      }
+    },
     onError: checkPlaylistForVideo,
   });
 
@@ -178,6 +190,7 @@ export const AddToPlaylistButton = ({ videoId }: Props) => {
                 ? `input[id='${playlists[0].id}']`
                 : '#create-new-playlist-button',
           }}
+          active={isOpen}
         >
           {/* Below should be fine according to https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/479 */}
           {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}

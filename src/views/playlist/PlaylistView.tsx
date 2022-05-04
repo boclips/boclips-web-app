@@ -56,7 +56,7 @@ const PlaylistView = ({ followPlaylist }: Props) => {
       ) : (
         <>
           <PlaylistHeader playlist={playlist} />
-          <PlaylistBody videos={playlist.videos} />
+          <PlaylistBody playlist={playlist} />
         </>
       )}
       <Footer columnPosition="col-start-2 col-end-26" />
