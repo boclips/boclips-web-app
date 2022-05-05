@@ -274,11 +274,7 @@ describe('Add to playlist button', () => {
 
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
-        <AddToPlaylistButton
-          videoId={video.id}
-          onRemoveVideo={mock}
-          playlistContextId="123"
-        />
+        <AddToPlaylistButton videoId={video.id} onCleanup={mock} />
       </BoclipsClientProvider>,
     );
 

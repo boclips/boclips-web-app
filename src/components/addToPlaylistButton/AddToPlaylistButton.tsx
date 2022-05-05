@@ -25,15 +25,10 @@ import s from './style.module.less';
 
 interface Props {
   videoId: string;
-  playlistContextId?: string;
-  onRemoveVideo?: () => void;
+  onCleanup?: (playlistId: string, buttonCleanUp: () => void) => void;
 }
 
-export const AddToPlaylistButton = ({
-  videoId,
-  playlistContextId,
-  onRemoveVideo,
-}: Props) => {
+export const AddToPlaylistButton = ({ videoId, onCleanup }: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [showCreatePlaylistModal, setShowCreatePlaylistModal] =
     useState<boolean>(false);
@@ -69,10 +64,9 @@ export const AddToPlaylistButton = ({
   const { mutate: mutateRemoveFromPlaylist } = useRemoveFromPlaylistMutation({
     onSuccess: (playlistId: string) => {
       videoRemovedHotjarEvent();
-      if (playlistContextId === playlistId) {
-        setIsOpen(false);
-        onRemoveVideo();
-      }
+      // Needed to be able to deactivate the FocusTrap before moving the focus
+      // upon removing a video from the playlist this button is rendered inside
+      onCleanup(playlistId, () => setIsOpen(false));
     },
     onError: checkPlaylistForVideo,
   });

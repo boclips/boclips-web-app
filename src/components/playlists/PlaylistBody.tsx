@@ -22,8 +22,14 @@ const PlaylistBody = ({ playlist }: Props) => {
 
   const isEmptyPlaylist = playlist.videos && playlist.videos.length === 0;
 
-  const onRemoveVideoFromPlaylist = () => {
-    mainRef.current.focus();
+  const shouldRemoveVideoCardFromView = (
+    playlistId: string,
+    cleanUp: () => void,
+  ) => {
+    if (playlistId === playlist.id) {
+      cleanUp();
+      mainRef.current.focus();
+    }
   };
 
   const renderVideoCardWithButtons = (video: Video) => (
@@ -39,8 +45,7 @@ const PlaylistBody = ({ playlist }: Props) => {
         <div className="flex flex-row justify-between p-1 self-end">
           <AddToPlaylistButton
             videoId={video.id}
-            onRemoveVideo={onRemoveVideoFromPlaylist}
-            playlistContextId={playlist.id}
+            onCleanup={shouldRemoveVideoCardFromView}
           />
 
           <FeatureGate linkName="cart">
