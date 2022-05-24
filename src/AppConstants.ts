@@ -28,7 +28,7 @@ export class AppConstants {
   public get IS_HUBSPOT_ENABLED(): boolean {
     return this.window.Environment.IS_HUBSPOT_ENABLED === 'true';
   }
-
+``
   public get API_PREFIX(): string {
     return this.window.Environment.API_PREFIX;
   }
