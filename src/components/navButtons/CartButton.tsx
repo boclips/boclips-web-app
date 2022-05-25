@@ -29,7 +29,7 @@ const CartButton = () => {
           Cart
           {cart?.items?.length > 0 && (
             <div data-qa="cart-counter" className={s.basketCounter}>
-              {cart.items.length}
+              {cart.items.length} <span className="sr-only">items in cart</span>
             </div>
           )}
         </span>
