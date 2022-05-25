@@ -348,8 +348,10 @@ describe('SearchResults', () => {
       const cart = await fakeClient.carts.getCart();
 
       await waitFor(() => {
-        const cartCounter = wrapper.getByTestId('cart-counter').innerHTML;
-        expect(cartCounter).toBe(cart.items.length.toString());
+        const cartCounter = wrapper.getByTestId('cart-counter');
+        expect(cartCounter.textContent).toBe(
+          `${cart.items.length.toString()} items in cart`,
+        );
       });
     });
   });
