@@ -8,6 +8,11 @@ import PhysicalSciencesIllustration from 'resources/disciplines/physical-science
 import SocialSciencesIllustration from 'resources/disciplines/social-sciences.svg';
 import TechnologyIllustration from 'resources/disciplines/technology.svg';
 import WorldLanguagesIllustration from 'resources/disciplines/world-languages.svg';
+import HealthAndPEIllustration from 'resources/disciplines/health-and-pe.svg';
+import EnglishLanguageArtsIllustration from 'resources/disciplines/english-language-arts.svg';
+import ScienceIllustration from 'resources/disciplines/science.svg';
+import SocialStudiesIllustration from 'resources/disciplines/social-studies.svg';
+import TheArtsIllustration from 'resources/disciplines/the-arts.svg';
 
 const getDisciplineIllustration = (name: string): ReactElement => {
   switch (name) {
@@ -29,6 +34,16 @@ const getDisciplineIllustration = (name: string): ReactElement => {
       return <TechnologyIllustration />;
     case 'World Languages':
       return <WorldLanguagesIllustration />;
+    case 'Health and PE':
+      return <HealthAndPEIllustration />;
+    case 'English Language Arts':
+      return <EnglishLanguageArtsIllustration />;
+    case 'Science':
+      return <ScienceIllustration />;
+    case 'Social Studies':
+      return <SocialStudiesIllustration />;
+    case 'The Arts':
+      return <TheArtsIllustration />;
     default:
       return null;
   }
