@@ -13,13 +13,6 @@ export const doGetVideos = (videoIds: string[], apiClient: BoclipsClient) => {
     .then((items) => items.page);
 };
 
-export const doGetVideoRecommendations = (
-  video: Video,
-  apiClient: BoclipsClient,
-) => {
-  return apiClient.videos.getRecommendations(video);
-};
-
 export const doGetVideo = (id: string, apiClient: BoclipsClient) =>
   apiClient.videos.get(id);
 
@@ -28,13 +21,6 @@ export const useGetVideos = (videoIds: string[]) => {
   return useQuery('multipleVideos', () => doGetVideos(videoIds, apiClient), {
     enabled: !!videoIds,
   });
-};
-
-export const useGetVideoRecommendations = (video: Video) => {
-  const apiClient = useBoclipsClient();
-  return useQuery(`getVideoRecommendations-${video.id}`, () =>
-    doGetVideoRecommendations(video, apiClient),
-  );
 };
 
 export const useFindOrGetVideo = (videoId?: string) => {

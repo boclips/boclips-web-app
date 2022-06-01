@@ -1,11 +1,16 @@
 import React from 'react';
 import c from 'classnames';
+import GridCard from 'src/components/common/gridCard/GridCard';
 import PlaylistAddIcon from 'src/resources/icons/playlist-add.svg';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
+import { FeatureGate } from 'src/components/common/FeatureGate';
+import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
+import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
+import CoverWithVideo from 'src/components/playlists/coverWithVideo/CoverWithVideo';
 import { Typography } from '@boclips-ui/typography';
+import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
-import VideoGridCard from 'src/components/common/gridCard/VideoGridCard';
 import s from './style.module.less';
 
 interface Props {
@@ -28,10 +33,33 @@ const PlaylistBody = ({ playlist }: Props) => {
   };
 
   const renderVideoCardWithButtons = (video: Video) => (
-    <VideoGridCard
-      video={video}
-      addToCartAppCuesEvent={AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE}
-      onCleanupAddToPlaylist={shouldRemoveVideoCardFromView}
+    <GridCard
+      link={`/videos/${video.id}`}
+      key={video.id}
+      name={video.title}
+      header={<CoverWithVideo video={video} />}
+      price={
+        video.price && <PriceBadge price={video.price} className="text-xl" />
+      }
+      footer={
+        <div className="flex flex-row justify-between p-1 self-end">
+          <AddToPlaylistButton
+            videoId={video.id}
+            onCleanup={shouldRemoveVideoCardFromView}
+          />
+
+          <FeatureGate linkName="cart">
+            <AddToCartButton
+              video={video}
+              key="cart-button"
+              width="100px"
+              removeButtonWidth="120px"
+              labelAdd="Add"
+              appcueEvent={AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE}
+            />
+          </FeatureGate>
+        </div>
+      }
     />
   );
 

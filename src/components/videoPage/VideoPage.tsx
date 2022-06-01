@@ -7,7 +7,6 @@ import { useHistory } from 'react-router-dom';
 import BackArrow from 'resources/icons/back-arrow.svg';
 import c from 'classnames';
 import { TextButton } from 'src/components/common/textButton/TextButton';
-import VideoRecommendations from 'src/components/videoPage/VideoRecommendations';
 import s from './videoPage.module.less';
 
 interface Props {
@@ -41,7 +40,6 @@ export const VideoPage = ({ video }: Props) => {
       <div className={s.descriptionSection}>
         <VideoDescription video={video} />
       </div>
-      <VideoRecommendations video={video} />
     </>
   );
 };

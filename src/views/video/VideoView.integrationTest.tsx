@@ -60,7 +60,6 @@ describe('Video View', () => {
       UserFactory.sample({
         features: {
           BO_WEB_APP_PRICES: true,
-          BO_WEB_APP_VIDEO_RECOMMENDATIONS: false,
         },
       }),
     );
@@ -257,46 +256,6 @@ describe('Video View', () => {
       const helmet = Helmet.peek();
       expect(helmet.title).toEqual('Boclips');
       console.error = originalConsoleError;
-    });
-  });
-
-  describe('explore similar videos', () => {
-    it(`section is not present when feature is disabled`, async () => {
-      fakeClient.users.insertCurrentUser(
-        UserFactory.sample({
-          features: { BO_WEB_APP_VIDEO_RECOMMENDATIONS: false },
-        }),
-      );
-
-      fakeClient.videos.insertVideo(exampleVideo);
-      fakeClient.videos.setRecommendationsForVideo(exampleVideo.id, [
-        VideoFactory.sample({ title: 'I am recommended' }),
-      ]);
-
-      const wrapper = renderVideoView(['/videos/video-id']);
-
-      expect(await wrapper.queryByText('Explore similar videos')).toBeNull();
-      expect(await wrapper.queryByText('I am recommended')).toBeNull();
-    });
-
-    it(`section is present when feature is disabled`, async () => {
-      fakeClient.users.insertCurrentUser(
-        UserFactory.sample({
-          features: { BO_WEB_APP_VIDEO_RECOMMENDATIONS: true },
-        }),
-      );
-
-      fakeClient.videos.insertVideo(exampleVideo);
-      fakeClient.videos.setRecommendationsForVideo(exampleVideo.id, [
-        VideoFactory.sample({ title: 'I am recommended' }),
-      ]);
-
-      const wrapper = renderVideoView(['/videos/video-id']);
-
-      expect(
-        await wrapper.findByText('Explore similar videos'),
-      ).toBeInTheDocument();
-      expect(await wrapper.findByText('I am recommended')).toBeInTheDocument();
     });
   });
 });
