@@ -183,7 +183,6 @@
 @media screen and (min-width: @screen-lg) {
   .disciplineWrapper {
     margin-top: 1.5rem;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: auto auto auto;
     grid-column-gap: 1.5rem;
     grid-row-gap: 1.5rem;
@@ -276,6 +275,14 @@
     .arrow {
       display: none;
     }
+  }
+
+  .disciplineWrapperThreeColumn {
+    @apply grid-cols-3;
+  }
+
+  .disciplineWrapperFourColumn {
+    @apply grid-cols-4;
   }
 
   .disciplineTitle {

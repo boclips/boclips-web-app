@@ -7,6 +7,7 @@ import {
   useGetDisciplinesQuery,
 } from 'src/hooks/api/disciplinesQuery';
 import SkeletonTiles from 'src/components/skeleton/Skeleton';
+import c from 'classnames';
 import s from './style.module.less';
 import { DisciplineHeader } from './DisciplineHeader';
 
@@ -19,6 +20,7 @@ const DisciplineWidget = (): ReactElement => {
   const breakpoints = useMediaBreakPoint();
   const mobileView =
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
+  const [gridSizeClass, setGridSizeClass] = useState('');
 
   useEffect(() => {
     if (modalOpen && mobileView) {
@@ -27,6 +29,16 @@ const DisciplineWidget = (): ReactElement => {
       document.querySelector('body').style.overflow = null;
     }
   }, [modalOpen, mobileView]);
+
+  useEffect(() => {
+    if (disciplines) {
+      if (disciplines.length === 6) {
+        setGridSizeClass(s.disciplineWrapperThreeColumn);
+      } else {
+        setGridSizeClass(s.disciplineWrapperFourColumn);
+      }
+    }
+  }, [disciplines]);
 
   const onClick = (discipline: DisciplineWithSubjectOffering) => {
     if (mobileView) {
@@ -53,7 +65,7 @@ const DisciplineWidget = (): ReactElement => {
       className="col-start-2 col-end-26 row-start-2 row-end-2 lg:col-start-4 lg:col-end-24 md:pt-4"
     >
       <DisciplineHeader />
-      <div className={s.disciplineWrapper}>
+      <div className={c(s.disciplineWrapper, { [gridSizeClass]: !isLoading })}>
         {isLoading ? (
           <SkeletonTiles className={s.discipline} />
         ) : (
