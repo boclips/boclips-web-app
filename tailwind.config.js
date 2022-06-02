@@ -29,7 +29,7 @@ module.exports = {
         'playlist-view':
           'auto minmax(50px, auto) auto auto minmax(0, auto) auto',
         'order-view': 'auto 21px minmax(0, auto) minmax(0, auto) auto',
-        'video-view': 'auto repeat(4,auto) auto',
+        'video-view': 'auto repeat(6,auto) auto',
       },
       gridTemplateColumns: {
         container:
