@@ -66,7 +66,9 @@ export const AddToPlaylistButton = ({ videoId, onCleanup }: Props) => {
       videoRemovedHotjarEvent();
       // Needed to be able to deactivate the FocusTrap before moving the focus
       // upon removing a video from the playlist this button is rendered inside
-      onCleanup(playlistId, () => setIsOpen(false));
+      if (onCleanup) {
+        onCleanup(playlistId, () => setIsOpen(false));
+      }
     },
     onError: checkPlaylistForVideo,
   });
