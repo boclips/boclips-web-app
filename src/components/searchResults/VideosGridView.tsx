@@ -60,7 +60,7 @@ export const VideosGridView = ({
       }}
       dataSource={videos}
       renderItem={(video: Video) => (
-        <li className="mb-4" data-qa="video-card-wrapper">
+        <li data-qa="video-card-wrapper">
           <VideoGridCard
             video={video}
             addToCartAppCuesEvent={AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE}
