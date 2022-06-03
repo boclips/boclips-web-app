@@ -26,15 +26,15 @@ interface AddToCartButtonProps {
   width?: string;
   removeButtonWidth?: string;
   appcueEvent?: AppcuesEvent;
-  labelAdd?: string;
+  iconOnly?: boolean;
 }
 
 export const AddToCartButton = ({
   video,
   width,
   appcueEvent,
-  labelAdd = 'Add to cart',
   removeButtonWidth,
+  iconOnly = false,
 }: AddToCartButtonProps) => {
   const queryClient = useQueryClient();
   const boclipsClient = useBoclipsClient();
@@ -130,19 +130,25 @@ export const AddToCartButton = ({
       {!cartItem ? (
         <Button
           onClick={addToCart}
-          text={labelAdd}
+          dataQa="add-to-cart-button"
+          text="Add to cart"
+          ariaLabel="Add to cart"
           icon={<CartIcon />}
-          width="100%"
+          width={iconOnly ? '40px' : '100%'}
           height="40px"
+          iconOnly={iconOnly}
         />
       ) : (
         <Button
           onClick={removeFromCart}
+          dataQa="remove-from-cart-button"
           type="outline"
           text="Remove"
+          ariaLabel="Remove from cart"
           icon={<CartIcon />}
-          width="100%"
+          width={iconOnly ? '40px' : '100%'}
           height="40px"
+          iconOnly={iconOnly}
         />
       )}
     </div>

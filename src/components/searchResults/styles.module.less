@@ -1,0 +1,27 @@
+@import '~@boclips-ui/styles/src/colors';
+
+.viewButton {
+  --bo-ui-button-outline-svg-fill: transparent;
+  --bo-ui-button-outline-svg-stroke: @gray-700;
+  --bo-ui-button-outline-border: none;
+  --bo-ui-button-outline-border-hover: none;
+  --bo-ui-button-outline-border-active: none;
+  --bo-ui-button-outline-border-focus: none;
+  --bo-ui-button-outline-background-color-hover: none;
+  --bo-ui-button-background-color: @blue-400;
+  --bo-ui-button-svg-stroke-colour: @blue-800;
+  --bo-ui-button-svg-stroke-colour-active: @blue-800;
+  --bo-ui-button-svg-stroke-colour-focus: @blue-700;
+  --bo-ui-button-background-color-hover: @blue-400;
+  --bo-ui-button-background-color-active: @blue-400;
+  --bo-ui-button-focus-outline: 2px solid @blue-700;
+  --bo-ui-button-focus-outline-offset: 0px;
+}
+
+.gridView {
+  :global(.ant-list-items) {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-gap: 1rem 1.5rem;
+  }
+}

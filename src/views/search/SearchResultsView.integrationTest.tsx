@@ -391,4 +391,48 @@ describe('SearchResults', () => {
       });
     });
   });
+
+  describe('view type', () => {
+    it('is set to list view by default', async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.users.insertCurrentUser(UserFactory.sample());
+      const videos = [VideoFactory.sample({ id: '1', title: 'nanana' })];
+
+      videos.forEach((v) => fakeClient.videos.insertVideo(v));
+
+      const wrapper = render(
+        <MemoryRouter initialEntries={['/videos?q=nanana']}>
+          <App apiClient={fakeClient} boclipsSecurity={stubBoclipsSecurity} />
+        </MemoryRouter>,
+      );
+
+      await waitFor(() => {
+        expect(wrapper.getByTestId('video-card')).toBeVisible();
+      });
+    });
+
+    it('can be changed to grid view', async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.users.insertCurrentUser(UserFactory.sample());
+      const videos = [VideoFactory.sample({ id: '1', title: 'nanana' })];
+
+      videos.forEach((v) => fakeClient.videos.insertVideo(v));
+
+      const wrapper = render(
+        <MemoryRouter initialEntries={['/videos?q=nanana']}>
+          <App apiClient={fakeClient} boclipsSecurity={stubBoclipsSecurity} />
+        </MemoryRouter>,
+      );
+
+      await waitFor(async () => {
+        fireEvent.click(wrapper.getByTestId('grid-view-button'));
+        expect(
+          await wrapper.findByTestId('grid-card-for-nanana'),
+        ).toBeVisible();
+        expect(
+          await wrapper.queryByTestId('video-card'),
+        ).not.toBeInTheDocument();
+      });
+    });
+  });
 });

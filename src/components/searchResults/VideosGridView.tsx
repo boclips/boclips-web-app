@@ -1,12 +1,14 @@
 import { Video } from 'boclips-api-client/dist/types';
-import List from 'antd/lib/list';
 import { PAGE_SIZE } from 'src/views/search/SearchResultsView';
 import React from 'react';
-import { VideoCardWrapper } from 'src/components/videoCard/VideoCardWrapper';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import Pagination from '@boclips-ui/pagination';
 import c from 'classnames';
-import s from '../common/pagination/pagination.module.less';
+import { AppcuesEvent } from 'src/types/AppcuesEvent';
+import VideoGridCard from 'src/components/common/gridCard/VideoGridCard';
+import List from 'antd/lib/list';
+import s from './styles.module.less';
+import paginationStyles from '../common/pagination/pagination.module.less';
 
 interface Props {
   videos: Video[];
@@ -15,7 +17,7 @@ interface Props {
   currentPage: number;
 }
 
-export const VideoCardList = ({
+export const VideosGridView = ({
   videos,
   totalSearchResults,
   handlePageChange,
@@ -41,12 +43,11 @@ export const VideoCardList = ({
 
   return (
     <List
-      itemLayout="vertical"
-      size="large"
+      className={s.gridView}
       pagination={{
         total: totalSearchResults,
-        className: c(s.pagination, {
-          [s.paginationEmpty]: !videos.length,
+        className: c(paginationStyles.pagination, {
+          [paginationStyles.paginationEmpty]: !videos.length,
         }),
         hideOnSinglePage: true,
         pageSize: PAGE_SIZE,
@@ -60,7 +61,10 @@ export const VideoCardList = ({
       dataSource={videos}
       renderItem={(video: Video) => (
         <li className="mb-4" data-qa="video-card-wrapper">
-          <VideoCardWrapper video={video} />
+          <VideoGridCard
+            video={video}
+            addToCartAppCuesEvent={AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE}
+          />
         </li>
       )}
     />

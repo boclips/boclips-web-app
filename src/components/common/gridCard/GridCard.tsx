@@ -7,12 +7,21 @@ interface Props {
   name: string;
   link: string;
   header: React.ReactElement;
+  subheader?: React.ReactElement;
   footer?: React.ReactElement;
   overlay?: React.ReactElement;
   price?: React.ReactElement;
 }
 
-const GridCard = ({ name, link, header, footer, overlay, price }: Props) => {
+const GridCard = ({
+  name,
+  link,
+  header,
+  footer,
+  overlay,
+  price,
+  subheader,
+}: Props) => {
   return (
     <div className={s.gridCard} data-qa={`grid-card-for-${name}`}>
       {overlay}
@@ -29,6 +38,7 @@ const GridCard = ({ name, link, header, footer, overlay, price }: Props) => {
           <Typography.Title2>{name}</Typography.Title2>
         </Link>
       </div>
+      <div>{subheader}</div>
       {footer}
     </div>
   );

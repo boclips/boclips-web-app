@@ -3,10 +3,10 @@
 .gridCard {
   width: 100%;
   position: relative;
-  min-height: 289px;
+  min-height: 330px;
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
   display: grid;
-  grid-template-rows: minmax(min-content, max-content) auto auto;
+  grid-template-rows: minmax(min-content, max-content) minmax(min-content, max-content) auto auto;
 
   &:hover {
     .price {
@@ -26,6 +26,7 @@
 
 .header {
   padding: 0.25rem;
+  height: auto;
 
   a {
     color: @gray-900 !important;
@@ -38,6 +39,35 @@
     &:focus {
       background-color: unset;
     }
+  }
+}
+
+.videoSubheader {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  color: @gray-700;
+  margin-left: 0.25rem;
+
+  & > div:nth-child(2) {
+    min-width: max-content;
+  }
+
+  .createdBy {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  & > div:after {
+    content: "\00B7";
+    padding: 0.25rem;
+    color: @blue-800;
+  }
+
+  & > div:last-child:after {
+    content: "";
   }
 }
 

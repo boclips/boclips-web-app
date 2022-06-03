@@ -149,7 +149,7 @@ describe('Playlist view', () => {
       </Router>,
     );
 
-    fireEvent.click(await screen.findByText('Add'));
+    fireEvent.click(await screen.findByTestId('add-to-cart-button'));
 
     await waitFor(async () => {
       expect((await client.carts.getCart()).items[0].videoId).toEqual('111');
@@ -169,7 +169,7 @@ describe('Playlist view', () => {
       </Router>,
     );
 
-    fireEvent.click(await screen.findByText('Remove'));
+    fireEvent.click(await screen.findByTestId('remove-from-cart-button'));
 
     await waitFor(async () => {
       expect((await client.carts.getCart()).items).toHaveLength(0);
