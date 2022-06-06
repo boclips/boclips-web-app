@@ -1,4 +1,7 @@
-import { disciplines } from '../../src/components/disciplinesWidget/disciplinesFixture';
+import {
+  disciplines,
+  k12Disciplines,
+} from '../../src/components/disciplinesWidget/disciplinesFixture';
 
 context('UI Regression', () => {
   const endpoint = 'http://localhost:9000';
@@ -20,13 +23,36 @@ context('UI Regression', () => {
 
     cy.get('img').click();
 
+    cy.get('button').contains('Business').should('be.visible');
+
     cy.percySnapshot('Home Page', {
       widths: snapshotViewWidths,
     });
-    cy.get('button').contains('Business').should('be.visible');
     cy.get('button').contains('Business').click();
 
     cy.percySnapshot('Home Page with subjects', {
+      widths: snapshotViewWidths,
+    });
+  });
+
+  it('has a homepage for k12 disciplines', () => {
+    cy.visit(`${endpoint}/`);
+    cy.bo((bo) =>
+      bo.interact((apiClient) => {
+        k12Disciplines.forEach((discipline) => {
+          apiClient.disciplines.insertMyDiscipline(discipline);
+          discipline.subjects.forEach((subject) =>
+            apiClient.subjects.insertSubject(subject),
+          );
+        });
+      }),
+    );
+
+    cy.get('img').click();
+
+    cy.get('button').contains('English Language Arts').should('be.visible');
+
+    cy.percySnapshot('K12 Home Page', {
       widths: snapshotViewWidths,
     });
   });
