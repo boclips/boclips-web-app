@@ -825,6 +825,51 @@ describe('SearchResultsFiltering', () => {
     });
   });
 
+  describe('search topic filters', () => {
+    it('displays search topic filters, ordered by score', async () => {
+      const facets = FacetsFactory.sample({
+        topics: [
+          {
+            hits: 22,
+            score: 5.0,
+            id: 'boats',
+            name: 'boats',
+          },
+          {
+            hits: 33,
+            score: 13.0,
+            id: 'cars',
+            name: 'cars',
+          },
+        ],
+      });
+
+      fakeClient.users.insertCurrentUser(UserFactory.sample());
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '1',
+          title: 'hello 1',
+        }),
+      );
+      fakeClient.videos.setFacets(facets);
+
+      const wrapper = renderSearchResultsView(['/videos?q=hello']);
+
+      await waitFor(() => {
+        expect(wrapper.getByText('cars')).toBeInTheDocument();
+
+        expect(wrapper.getByText('cars')).toBeInTheDocument();
+        expect(wrapper.getByText('boats')).toBeInTheDocument();
+        expect(wrapper.getAllByTestId('search-topic')[0]).toHaveTextContent(
+          'cars',
+        );
+        expect(wrapper.getAllByTestId('search-topic')[1]).toHaveTextContent(
+          'boats',
+        );
+      });
+    });
+  });
+
   describe('no results', () => {
     it('shows a no results page without filters', async () => {
       const wrapper = renderSearchResultsView(['/videos?q=shark']);

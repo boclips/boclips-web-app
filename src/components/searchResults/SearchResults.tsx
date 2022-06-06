@@ -8,6 +8,7 @@ import ViewButtons, {
   ViewType,
 } from 'src/components/searchResults/ViewButtons';
 import { VideosGridView } from 'src/components/searchResults/VideosGridView';
+import { SearchTopics } from 'src/components/searchResults/SearchTopics';
 
 interface Props {
   results?: VideoSearchResults;
@@ -68,6 +69,7 @@ export const SearchResults = ({
   return (
     <main tabIndex={-1} className="col-start-8 col-end-26">
       {query && <Helmet title={`Search results for ${query}`} />}
+      <SearchTopics topics={results?.facets.topics} />
       <div className="flex flex-row justify-between">
         <SearchResultsSummary
           count={results?.pageSpec?.totalElements}
