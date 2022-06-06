@@ -112,7 +112,7 @@
     "antd": "4.15.2",
     "axios": "^0.26.0",
     "babel-loader": "^8.1.0",
-    "boclips-api-client": "^48.2.0",
+    "boclips-api-client": "^48.4.2",
     "boclips-js-security": "^9.0.0",
     "boclips-player": "7.3.0",
     "boclips-player-react": "2.4.0",

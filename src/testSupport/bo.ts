@@ -147,6 +147,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
         apiClient.videos.insertVideo(
           VideoFactory.sample({
             id: '5f75b73f22a6495bdf2c2d14',
+            releasedOn: new Date(2011, 11, 1),
             title:
               'TED-Ed: No one can figure out how eels have sex | Lucy Cooke',
           }),
@@ -155,6 +156,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
         apiClient.videos.insertVideo(
           VideoFactory.sample({
             id: '123',
+            releasedOn: new Date(2011, 11, 1),
             title:
               'Jason & The Argonauts - The Epic Quest for the Golden Fleece (Greek Mythology)',
           }),
