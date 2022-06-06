@@ -11,13 +11,24 @@ import { CopyLegacyVideoLinkButton } from './CopyLegacyVideoLinkButton';
 
 interface VideoCardButtonsProps {
   video: Video;
+  addToCartAppCuesEvent?: AppcuesEvent;
+  onCleanupAddToPlaylist?: (playlistId: string, cleanUp: () => void) => void;
+  iconOnly?: boolean;
 }
 
-export const VideoCardButtons = ({ video }: VideoCardButtonsProps) => {
+export const VideoCardButtons = ({
+  video,
+  addToCartAppCuesEvent = AppcuesEvent.ADD_TO_CART_FROM_SEARCH_RESULTS,
+  onCleanupAddToPlaylist,
+  iconOnly = false,
+}: VideoCardButtonsProps) => {
   return (
     <div className="flex flex-row justify-between" key={`copy-${video.id}`}>
       <div className={c(s.iconOnlyButtons)}>
-        <AddToPlaylistButton videoId={video.id} />
+        <AddToPlaylistButton
+          videoId={video.id}
+          onCleanup={onCleanupAddToPlaylist}
+        />
 
         <FeatureGate feature="BO_WEB_APP_COPY_OLD_LINK_BUTTON">
           <CopyLegacyVideoLinkButton video={video} />
@@ -34,7 +45,8 @@ export const VideoCardButtons = ({ video }: VideoCardButtonsProps) => {
           video={video}
           key="cart-button"
           width="148px"
-          appcueEvent={AppcuesEvent.ADD_TO_CART_FROM_SEARCH_RESULTS}
+          appcueEvent={addToCartAppCuesEvent}
+          iconOnly={iconOnly}
         />
       </FeatureGate>
     </div>

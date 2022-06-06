@@ -1,15 +1,13 @@
 import CoverWithVideo from 'src/components/playlists/coverWithVideo/CoverWithVideo';
-import { PriceBadge } from 'src/components/common/price/PriceBadge';
-import ReleasedOn from '@boclips-ui/released-on';
-import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
-import { FeatureGate } from 'src/components/common/FeatureGate';
-import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import GridCard from 'src/components/common/gridCard/GridCard';
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { Typography } from '@boclips-ui/typography';
 import s from 'src/components/common/gridCard/style.module.less';
+import { VideoCardButtons } from 'src/components/videoCard/buttons/VideoCardButtons';
+import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
+import { getBrowserLocale } from 'src/services/getBrowserLocale';
 
 interface Props {
   video: Video;
@@ -27,37 +25,37 @@ const VideoGridCard = ({
     key={video.id}
     name={video.title}
     header={<CoverWithVideo video={video} />}
-    price={
-      video.price && <PriceBadge price={video.price} className="text-xl" />
+    playerBadge={
+      video.playback.duration && (
+        <div className="text-white">
+          {video.playback.duration.format('mm:ss')}
+        </div>
+      )
     }
     subheader={
       <div className={s.videoSubheader}>
-        <Typography.Body as="div" size="small">
-          {video.playback.duration.format('mm:ss')}
-        </Typography.Body>
-        <ReleasedOn releasedOn={video.releasedOn} />
+        {video.price && (
+          <Typography.Body as="div" size="small">
+            {createPriceDisplayValue(
+              video.price?.amount,
+              video.price?.currency,
+              getBrowserLocale(),
+            )}
+          </Typography.Body>
+        )}
         <Typography.Body as="div" size="small">
           {video.createdBy}
         </Typography.Body>
       </div>
     }
     footer={
-      <div className="flex flex-row justify-between p-1 self-end">
-        <AddToPlaylistButton
-          videoId={video.id}
-          onCleanup={onCleanupAddToPlaylist}
+      <div className="p-1 self-end">
+        <VideoCardButtons
+          video={video}
+          onCleanupAddToPlaylist={onCleanupAddToPlaylist}
+          addToCartAppCuesEvent={addToCartAppCuesEvent}
+          iconOnly
         />
-
-        <FeatureGate linkName="cart">
-          <AddToCartButton
-            video={video}
-            key="cart-button"
-            width="100px"
-            removeButtonWidth="120px"
-            appcueEvent={addToCartAppCuesEvent}
-            iconOnly
-          />
-        </FeatureGate>
       </div>
     }
   />
