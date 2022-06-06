@@ -67,7 +67,7 @@ const DisciplineWidget = (): ReactElement => {
       <DisciplineHeader />
       <div className={c(s.disciplineWrapper, { [gridSizeClass]: !isLoading })}>
         {isLoading ? (
-          <SkeletonTiles className={s.discipline} />
+          <SkeletonTiles className={s.discipline} numberOfTiles={4} />
         ) : (
           disciplines
             ?.sort((a, b) => a.name.localeCompare(b.name))
