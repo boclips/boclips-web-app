@@ -18,11 +18,11 @@ describe('SearchBar', () => {
     expect(search.queryByText('Search')).toBeInTheDocument();
   });
 
-  it("new search strips out all URL query parameters except 'q' one", async () => {
+  it('new search preserves URL query parameters except query, page, and topics', async () => {
     const history = createBrowserHistory();
     history.push({
       pathname:
-        '/videos?q=dogs&page=5&video_type=INSTRUCTIONAL&duration=PT1M-PT5M',
+        '/videos?q=dogs&page=5&video_type=INSTRUCTIONAL&duration=PT1M-PT5M&topics=blah',
     });
 
     const wrapper = render(

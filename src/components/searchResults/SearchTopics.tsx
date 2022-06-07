@@ -3,6 +3,7 @@ import { Facet } from 'boclips-api-client/dist/sub-clients/videos/model/VideoFac
 import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
 import { Bubble } from 'src/components/searchResults/Bubble';
 import { FilterKey } from 'src/types/search/FilterKey';
+import { FeatureGate } from 'src/components/common/FeatureGate';
 
 interface Props {
   topics: Facet[];
@@ -24,27 +25,29 @@ export const SearchTopics = ({ topics, handleFilterChange }: Props) => {
 
   return (
     topics.length > 0 && (
-      <div className="overflow-hidden h-20 mb-2">
-        {searchLocation.filters.topics.map((selectedTopic) => (
-          <Bubble
-            selected
-            handleClick={() => handleClick(selectedTopic)}
-            topic={{ name: atob(selectedTopic), id: selectedTopic, hits: 0 }}
-          />
-        ))}
-        {topics
-          .filter(
-            (topic) => searchLocation.filters.topics.indexOf(topic.id) === -1,
-          )
-          .sort((topicA, topicB) => topicB.score - topicA.score)
-          .map((topic) => (
+      <FeatureGate feature="VIDEO_TOPIC_AGGREGATION">
+        <div className="overflow-hidden h-20 mb-2">
+          {searchLocation.filters.topics.map((selectedTopic) => (
             <Bubble
-              topic={topic}
-              handleClick={() => handleClick(topic.id)}
-              selected={searchLocation.filters.topics.indexOf(topic.id) > -1}
+              selected
+              handleClick={() => handleClick(selectedTopic)}
+              topic={{ name: atob(selectedTopic), id: selectedTopic, hits: 0 }}
             />
           ))}
-      </div>
+          {topics
+            .filter(
+              (topic) => searchLocation.filters.topics.indexOf(topic.id) === -1,
+            )
+            .sort((topicA, topicB) => topicB.score - topicA.score)
+            .map((topic) => (
+              <Bubble
+                topic={topic}
+                handleClick={() => handleClick(topic.id)}
+                selected={searchLocation.filters.topics.indexOf(topic.id) > -1}
+              />
+            ))}
+        </div>
+      </FeatureGate>
     )
   );
 };

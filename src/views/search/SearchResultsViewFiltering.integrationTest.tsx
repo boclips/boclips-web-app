@@ -818,7 +818,37 @@ describe('SearchResultsFiltering', () => {
   });
 
   describe('search topic filters', () => {
-    it('displays search topic filters, ordered by score', async () => {
+    it(`does not display if user does not have the feature`, async () => {
+      fakeClient.users.setCurrentUserFeatures({
+        VIDEO_TOPIC_AGGREGATION: true,
+      });
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '1',
+          title: 'hello 1',
+        }),
+      );
+      fakeClient.videos.setFacets(
+        FacetsFactory.sample({
+          topics: [
+            {
+              hits: 22,
+              score: 5.0,
+              id: 'boats',
+              name: 'boats',
+            },
+          ],
+        }),
+      );
+
+      const wrapper = renderSearchResultsView(['/videos?q=hello']);
+      await waitFor(() => {
+        expect(wrapper.getByText('hello 1')).toBeInTheDocument();
+        expect(wrapper.queryByText('boats')).toBeNull();
+      });
+    });
+
+    it('displays search topic filters, ordered by score if user has feature', async () => {
       const facets = FacetsFactory.sample({
         topics: [
           {
@@ -837,6 +867,9 @@ describe('SearchResultsFiltering', () => {
       });
 
       fakeClient.users.insertCurrentUser(UserFactory.sample());
+      fakeClient.users.setCurrentUserFeatures({
+        VIDEO_TOPIC_AGGREGATION: true,
+      });
       fakeClient.videos.insertVideo(
         VideoFactory.sample({
           id: '1',
@@ -880,6 +913,10 @@ describe('SearchResultsFiltering', () => {
       });
 
       fakeClient.users.insertCurrentUser(UserFactory.sample());
+      fakeClient.users.setCurrentUserFeatures({
+        VIDEO_TOPIC_AGGREGATION: true,
+      });
+
       fakeClient.videos.insertVideo(
         VideoFactory.sample({
           id: '1',

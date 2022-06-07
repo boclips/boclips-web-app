@@ -27,6 +27,7 @@ export const Search = ({ showIconOnly, onSearch }: Props) => {
 
     const params = convertToURLSearchParams(searchLocation);
     params.set('page', '1');
+    params.delete('topics');
 
     return history.push({
       pathname: '/videos',
