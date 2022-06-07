@@ -7,4 +7,5 @@ export type FilterKey =
   | 'prices'
   | 'release_date_to'
   | 'release_date_from'
-  | 'education_level';
+  | 'education_level'
+  | 'topics';

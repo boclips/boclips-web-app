@@ -43,6 +43,7 @@ const doSearch = (
     include_education_level_facets: true,
     education_level: filters?.education_level,
     content_package: contentPackage,
+    topics: filters?.topics,
   });
 
 const generateSearchKey = ({
@@ -51,10 +52,9 @@ const generateSearchKey = ({
   pageSize,
   filters,
   contentPackage,
-}: SearchQuery) => [
-  SEARCH_BASE_KEY,
-  { query, page, pageSize, filters, contentPackage },
-];
+}: SearchQuery) => {
+  return [SEARCH_BASE_KEY, { query, page, pageSize, filters, contentPackage }];
+};
 
 export const useSearchQuery = (searchQuery: SearchQuery) => {
   const apiClient = useBoclipsClient();

@@ -35,10 +35,10 @@ const SearchResultsView = () => {
     filters: filtersFromURL,
     content_package: contentPackage,
   } = searchLocation;
-  const [newFiltersBeforeDebounce, setNewFiltersBeforeDebounce] =
+  const [filtersToDebounce, setFiltersToDebounce] =
     useState<SearchFilters>(filtersFromURL);
 
-  const debouncedFilters = useDebounce(newFiltersBeforeDebounce, 1000);
+  const debouncedFilters = useDebounce(filtersToDebounce, 1000);
 
   const boclipsClient = useBoclipsClient();
 
@@ -47,7 +47,7 @@ const SearchResultsView = () => {
     page: currentPage - 1,
     pageSize: PAGE_SIZE,
     contentPackage,
-    filters: debouncedFilters,
+    filters: { ...debouncedFilters, topics: filtersFromURL.topics },
   });
 
   const hasNextPage = currentPage < data?.pageSpec?.totalPages;
@@ -101,7 +101,10 @@ const SearchResultsView = () => {
         content_package: contentPackage,
         filters: newFilters,
       });
-      setNewFiltersBeforeDebounce(newFilters);
+      if (key !== 'topics') {
+        setFiltersToDebounce(newFilters);
+      }
+
       AnalyticsFactory.appcues().sendEvent(AppcuesEvent.FILTERS_APPLIED, {
         filters: newFilters,
       });
@@ -126,6 +129,7 @@ const SearchResultsView = () => {
       release_date_from: [],
       release_date_to: [],
       education_level: [],
+      topics: [],
     };
 
     setSearchLocation({
@@ -133,7 +137,7 @@ const SearchResultsView = () => {
       page: 1,
       filters: emptyFilters,
     });
-    setNewFiltersBeforeDebounce(emptyFilters);
+    setFiltersToDebounce(emptyFilters);
   }, [query, setSearchLocation]);
 
   const isNoSearchResults = data?.pageSpec?.totalElements === 0;
@@ -156,18 +160,19 @@ const SearchResultsView = () => {
           removeFilter={removeFilter}
           removeAllFilters={removeAllFilters}
           resultsFound={!isNoSearchResults}
-          areFiltersApplied={areFiltersApplied(filtersFromURL)}
+          areFiltersApplied={areFiltersApplied(debouncedFilters)}
         />
 
         {isNoSearchResults ? (
           <NoSearchResults
-            areFiltersApplied={areFiltersApplied(filtersFromURL)}
+            areFiltersApplied={areFiltersApplied(debouncedFilters)}
             query={query}
           />
         ) : (
           <SearchResults
             results={data}
             query={query}
+            handleFilterChange={handleFilterChange}
             handlePageChange={handlePageChange}
             currentPage={currentPage}
             isFetching={isFetching && isPreviousData}
@@ -184,8 +189,9 @@ const SearchResultsView = () => {
 
 const areFiltersApplied = (currentFilters: SearchFilters): boolean => {
   return (
-    Object.keys(currentFilters).find((key) => currentFilters[key]?.length > 0)
-      ?.length > 0
+    Object.keys(currentFilters).find(
+      (key) => key !== 'topics' && currentFilters[key]?.length > 0,
+    )?.length > 0
   );
 };
 

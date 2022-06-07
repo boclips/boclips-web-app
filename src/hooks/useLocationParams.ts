@@ -35,6 +35,7 @@ export const useSearchQueryLocationParams = (): [
       prices: locationParams.getAll('prices'),
       release_date_from: locationParams.getAll('release_date_from'),
       release_date_to: locationParams.getAll('release_date_to'),
+      topics: locationParams.getAll('topics'),
     },
   };
 
@@ -69,6 +70,7 @@ export const convertToURLSearchParams = (
     // We need to loop through filters as you can't append an array for URLSearchParams
     values.forEach((value) => params.append(key, value)),
   );
+  console.log('got params ', params.get('topics'));
   return params;
 };
 

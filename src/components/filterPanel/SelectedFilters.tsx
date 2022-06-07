@@ -54,11 +54,13 @@ export const SelectedFilters = ({ removeFilter }: Props) => {
     if (searchQueryLocationParams && channels && subjects) {
       const filtersInUrl: SelectedFilter[][] = Object.entries(
         searchQueryLocationParams.filters,
-      ).map(([filterKey, appliedFilters]) => {
-        return appliedFilters.map((appliedFilterId) =>
-          buildSelectedFilter(appliedFilterId, filterKey as FilterKey),
-        );
-      });
+      )
+        .filter(([filterKey, _values]) => filterKey !== 'topics')
+        .map(([filterKey, appliedFilters]) => {
+          return appliedFilters.map((appliedFilterId) =>
+            buildSelectedFilter(appliedFilterId, filterKey as FilterKey),
+          );
+        });
 
       const flattenedFiltersInUrl: SelectedFilter[] = (
         [] as SelectedFilter[]
@@ -74,6 +76,7 @@ export const SelectedFilters = ({ removeFilter }: Props) => {
     searchQueryLocationParams.filters.prices.length,
     searchQueryLocationParams.filters.best_for.length,
     searchQueryLocationParams.filters.education_level.length,
+    searchQueryLocationParams.filters.topics.length,
     releaseDateFrom,
     releaseDateTo,
     channels,

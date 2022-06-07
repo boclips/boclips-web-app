@@ -771,7 +771,7 @@ describe('SearchResultsFiltering', () => {
 
   describe('education level filters', () => {
     it('displays education level filters with facet counts', async () => {
-      const facets = {
+      const facets = FacetsFactory.sample({
         educationLevels: [
           {
             hits: 22,
@@ -784,15 +784,7 @@ describe('SearchResultsFiltering', () => {
             name: 'EL2 label',
           },
         ],
-        subjects: [],
-        ageRanges: [],
-        bestForTags: [],
-        durations: [],
-        resourceTypes: [],
-        channels: [],
-        videoTypes: [],
-        prices: [],
-      };
+      });
 
       const videos = [
         VideoFactory.sample({
@@ -866,6 +858,55 @@ describe('SearchResultsFiltering', () => {
         expect(wrapper.getAllByTestId('search-topic')[1]).toHaveTextContent(
           'boats',
         );
+      });
+    });
+
+    it('can filter by search topic', async () => {
+      const facets = FacetsFactory.sample({
+        topics: [
+          {
+            hits: 22,
+            score: 5.0,
+            id: 'boats',
+            name: 'boats',
+          },
+          {
+            hits: 33,
+            score: 13.0,
+            id: 'cars',
+            name: 'cars',
+          },
+        ],
+      });
+
+      fakeClient.users.insertCurrentUser(UserFactory.sample());
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '1',
+          title: 'hello 1',
+          topics: ['cars'],
+        }),
+      );
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '2',
+          title: 'hello 2',
+          topics: ['boats'],
+        }),
+      );
+      fakeClient.videos.setFacets(facets);
+
+      const wrapper = renderSearchResultsView(['/videos?q=hello']);
+      await waitFor(() => {
+        expect(wrapper.getByText('cars')).toBeInTheDocument();
+        expect(wrapper.getByText('boats')).toBeInTheDocument();
+      });
+
+      fireEvent.click(wrapper.getByText('cars'));
+
+      await waitFor(() => {
+        expect(wrapper.getByText('hello 1')).toBeVisible();
+        expect(wrapper.queryByText('hello 2')).toBeNull();
       });
     });
   });

@@ -9,6 +9,7 @@ import ViewButtons, {
 } from 'src/components/searchResults/ViewButtons';
 import { VideosGridView } from 'src/components/searchResults/VideosGridView';
 import { SearchTopics } from 'src/components/searchResults/SearchTopics';
+import { FilterKey } from 'src/types/search/FilterKey';
 
 interface Props {
   results?: VideoSearchResults;
@@ -16,6 +17,7 @@ interface Props {
   handlePageChange: (page: number) => void;
   currentPage: number;
   isFetching: boolean;
+  handleFilterChange: (filterKey: FilterKey, values: string[]) => void;
 }
 
 export const SearchResults = ({
@@ -24,6 +26,7 @@ export const SearchResults = ({
   handlePageChange,
   currentPage,
   isFetching,
+  handleFilterChange,
 }: Props) => {
   const [view, setView] = useState<ViewType>();
 
@@ -69,7 +72,10 @@ export const SearchResults = ({
   return (
     <main tabIndex={-1} className="col-start-8 col-end-26">
       {query && <Helmet title={`Search results for ${query}`} />}
-      <SearchTopics topics={results?.facets.topics} />
+      <SearchTopics
+        topics={results?.facets.topics}
+        handleFilterChange={handleFilterChange}
+      />
       <div className="flex flex-row justify-between">
         <SearchResultsSummary
           count={results?.pageSpec?.totalElements}

@@ -30,6 +30,7 @@ describe('convertFacets', () => {
       release_date_from: [],
       release_date_to: [],
       education_level: [],
+      topics: [],
     };
 
     const filterOptions = convertFacetsToFilterOptions(facets, searchFilters);
