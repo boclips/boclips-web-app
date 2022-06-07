@@ -40,6 +40,7 @@ const SubjectsPanel = React.forwardRef(
                 </SubjectLink>
               );
             })}
+          O
         </div>
         <div>
           {subjectsWeAlsoOffer && subjectsWeAlsoOffer.length > 0 && (

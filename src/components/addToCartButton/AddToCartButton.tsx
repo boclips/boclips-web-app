@@ -18,6 +18,7 @@ import {
 import { Video } from 'boclips-api-client/dist/types';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import Tooltip from '@boclips-ui/tooltip';
 import s from './style.module.less';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 
@@ -116,9 +117,11 @@ export const AddToCartButton = ({
     mutateDeleteFromCart(cartItem.id);
   };
 
-  const addToCartButtonWidth = width;
-  const removeFromCartButtonWidth = removeButtonWidth || width;
-  return (
+  const addToCartButtonWidth = iconOnly ? '40px' : width;
+  const removeFromCartButtonWidth = iconOnly
+    ? '40px'
+    : removeButtonWidth || width;
+  const button = (
     <div
       style={{
         width: !cartItem ? addToCartButtonWidth : removeFromCartButtonWidth,
@@ -152,6 +155,13 @@ export const AddToCartButton = ({
         />
       )}
     </div>
+  );
+  return iconOnly ? (
+    <Tooltip text={cartItem ? 'Remove from cart' : 'Add to cart'}>
+      {button}
+    </Tooltip>
+  ) : (
+    button
   );
 };
 
