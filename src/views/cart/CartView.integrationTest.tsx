@@ -18,9 +18,9 @@ import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
 import { QueryClient } from 'react-query';
 import { Helmet } from 'react-helmet';
 import userEvent from '@testing-library/user-event';
-import { EventRequest } from 'boclips-api-client/dist/sub-clients/events/model/EventRequest';
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
+import { lastEvent } from 'src/testSupport/lastEvent';
 
 describe('CartView', () => {
   const video = VideoFactory.sample({
@@ -696,11 +696,4 @@ function renderCartView(client: FakeBoclipsClient) {
       />
     </MemoryRouter>,
   );
-}
-
-function lastEvent(client: FakeBoclipsClient, type?: string): EventRequest {
-  return client.events
-    .getEvents()
-    .filter((event) => !type || event.type === type)
-    .pop();
 }
