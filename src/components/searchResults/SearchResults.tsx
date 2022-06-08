@@ -76,7 +76,7 @@ export const SearchResults = ({
         topics={results?.facets.topics}
         handleFilterChange={handleFilterChange}
       />
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row justify-between my-2.5">
         <SearchResultsSummary
           count={results?.pageSpec?.totalElements}
           query={query}
