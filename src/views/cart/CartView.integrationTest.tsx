@@ -321,8 +321,9 @@ describe('CartView', () => {
         target: { value: 'please do some lovely editing' },
       });
 
-      fireEvent.click(await wrapper.findByText('Request transcripts'));
-      fireEvent.click(await wrapper.findByText('Request English captions'));
+      fireEvent.click(
+        await wrapper.findByText('Request English Caption and Transcript file'),
+      );
       fireEvent.click(await wrapper.findByText('Trim video'));
 
       fireEvent.change(await wrapper.findByLabelText('trim-from'), {
@@ -639,9 +640,8 @@ describe('CartView', () => {
       const wrapper = renderCartView(fakeClient);
 
       expect(
-        await wrapper.findByText('Request English captions'),
+        await wrapper.findByText('Request English Caption and Transcript file'),
       ).toBeVisible();
-      expect(await wrapper.findByText('Request transcripts')).toBeVisible();
       expect(await wrapper.queryByText('Trim video')).toBeNull();
       expect(
         await wrapper.findByText('Request other type of editing'),

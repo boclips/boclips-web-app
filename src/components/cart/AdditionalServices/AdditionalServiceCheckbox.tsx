@@ -1,25 +1,20 @@
 import React, { useState } from 'react';
 import { useCartItemAdditionalServicesMutation } from 'src/hooks/api/cartQuery';
 import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
-import { AdditionalServices } from 'boclips-api-client/dist/sub-clients/carts/model/AdditionalServices';
 import BoCheckbox from 'src/components/common/input/BoCheckbox';
 import { Typography } from '@boclips-ui/typography';
 
 interface Props {
   label: string;
-  type: keyof Omit<AdditionalServices, 'trim' | 'editRequest'>;
   cartItem: CartItem;
   price?: string;
 }
 
-const AdditionalServicesCheckbox = ({
-  label,
-  type,
-  cartItem,
-  price,
-}: Props) => {
-  const id = cartItem.videoId + type;
-  const isChecked = !!cartItem?.additionalServices?.[type];
+const AdditionalServicesCheckbox = ({ label, cartItem, price }: Props) => {
+  const id = `${cartItem.videoId}captionsAndTranscriptRequested`;
+  const isChecked =
+    !!cartItem?.additionalServices?.captionsRequested &&
+    !!cartItem?.additionalServices?.transcriptRequested;
 
   const [serviceRequested, setServiceRequested] = useState<boolean>(isChecked);
 
@@ -31,7 +26,10 @@ const AdditionalServicesCheckbox = ({
 
     mutateAdditionalServices({
       cartItem,
-      additionalServices: { [type]: e.currentTarget.checked },
+      additionalServices: {
+        transcriptRequested: e.currentTarget.checked,
+        captionsRequested: e.currentTarget.checked,
+      },
     });
   };
 

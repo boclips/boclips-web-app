@@ -61,8 +61,9 @@ describe('AdditionalServices component', () => {
       </BoclipsClientProvider>,
     );
 
-    expect(await wrapper.findByText('Request English captions')).toBeVisible();
-    expect(await wrapper.findByText('Request transcripts')).toBeVisible();
+    expect(
+      await wrapper.findByText('Request English Caption and Transcript file'),
+    ).toBeVisible();
     expect(await wrapper.queryByText('Trim video')).toBeNull();
     expect(
       await wrapper.queryByText('Request other type of editing'),
@@ -101,8 +102,9 @@ describe('AdditionalServices component', () => {
       </BoclipsClientProvider>,
     );
 
-    expect(await wrapper.findByText('Request English captions')).toBeVisible();
-    expect(await wrapper.findByText('Request transcripts')).toBeVisible();
+    expect(
+      await wrapper.findByText('Request English Caption and Transcript file'),
+    ).toBeVisible();
     expect(await wrapper.findByText('Trim video')).toBeVisible();
     expect(
       await wrapper.findByText('Request other type of editing'),

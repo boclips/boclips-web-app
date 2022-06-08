@@ -81,7 +81,9 @@ describe('CartItem', () => {
     ).toBeInTheDocument();
     expect(await wrapper.findByText('Additional services')).toBeInTheDocument();
     expect(await wrapper.findByText('Trim video')).toBeInTheDocument();
-    expect(await wrapper.findByText('Request transcripts')).toBeInTheDocument();
+    expect(
+      await wrapper.findByText('Request English Caption and Transcript file'),
+    ).toBeInTheDocument();
     expect(
       await wrapper.findByText('Request other type of editing'),
     ).toBeInTheDocument();
@@ -226,7 +228,7 @@ describe('CartItem', () => {
     });
   });
 
-  it('sets transcript request to true when checkbox is checked and to false when is unchecked', async () => {
+  it('sets caption and transcript request to true when checkbox is checked and to false when is unchecked', async () => {
     const fakeClient = new FakeBoclipsClient();
 
     const cartItem = setupCartItemWithVideo(
@@ -245,61 +247,30 @@ describe('CartItem', () => {
       fakeClient,
     );
 
-    fireEvent.click(await wrapper.findByText('Request transcripts'));
-
-    let cart = await fakeClient.carts.getCart();
-
-    await waitFor(() => {
-      expect(cart.items[0].additionalServices.transcriptRequested).toEqual(
-        true,
-      );
-    });
-
-    fireEvent.click(await wrapper.findByText('Request transcripts'));
-
-    cart = await fakeClient.carts.getCart();
-
-    await waitFor(() => {
-      expect(cart.items[0].additionalServices.transcriptRequested).toEqual(
-        false,
-      );
-    });
-  });
-
-  it('sets captions request to true when checkbox is checked and to false when is unchecked', async () => {
-    const fakeClient = new FakeBoclipsClient();
-
-    const cartItem = setupCartItemWithVideo(
-      fakeClient,
-      CartItemFactory.sample({
-        additionalServices: {
-          captionsRequested: false,
-        },
-      }),
-      VideoFactory.sample({}),
+    fireEvent.click(
+      await wrapper.findByText('Request English Caption and Transcript file'),
     );
-
-    fakeClient.carts.insertCartItem(cartItem);
-
-    const wrapper = renderCartItem(
-      <CartItem cartItem={cartItem} />,
-      fakeClient,
-    );
-
-    fireEvent.click(await wrapper.findByText('Request English captions'));
 
     let cart = await fakeClient.carts.getCart();
 
     await waitFor(() => {
       expect(cart.items[0].additionalServices.captionsRequested).toEqual(true);
+      expect(cart.items[0].additionalServices.transcriptRequested).toEqual(
+        true,
+      );
     });
 
-    fireEvent.click(await wrapper.findByText('Request English captions'));
+    fireEvent.click(
+      await wrapper.findByText('Request English Caption and Transcript file'),
+    );
 
     cart = await fakeClient.carts.getCart();
 
     await waitFor(() => {
       expect(cart.items[0].additionalServices.captionsRequested).toEqual(false);
+      expect(cart.items[0].additionalServices.transcriptRequested).toEqual(
+        false,
+      );
     });
   });
 

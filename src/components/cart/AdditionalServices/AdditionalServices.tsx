@@ -26,15 +26,9 @@ const AdditionalServices = ({ videoItem, cartItem }: Props) => {
 
       <AdditionalServiceCheckbox
         cartItem={cartItem}
-        type="transcriptRequested"
-        label="Request transcripts"
+        label="Request English Caption and Transcript file"
       />
 
-      <AdditionalServiceCheckbox
-        cartItem={cartItem}
-        type="captionsRequested"
-        label="Request English captions"
-      />
       <FeatureGate feature="BO_WEB_APP_REQUEST_ADDITIONAL_EDITING">
         <EditRequest
           cartItem={cartItem}
