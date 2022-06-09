@@ -49,11 +49,10 @@ export const CartOrderSummary = ({ cart }: Props) => {
     }
   }, [isCartValid]);
 
-  const transcriptsRequested = cart.items?.find(
-    (item) => item?.additionalServices?.transcriptRequested,
-  );
-  const captionsRequested = cart.items?.find(
-    (item) => item?.additionalServices?.captionsRequested,
+  const captionsAndTranscriptsRequested = cart.items?.find(
+    (item) =>
+      item?.additionalServices?.captionsRequested &&
+      item?.additionalServices?.transcriptRequested,
   );
   const trimRequested = cart.items?.find(
     (item) => item?.additionalServices?.trim,
@@ -63,10 +62,7 @@ export const CartOrderSummary = ({ cart }: Props) => {
   );
 
   const additionalServicesRequested =
-    captionsRequested ||
-    editingRequested ||
-    transcriptsRequested ||
-    trimRequested;
+    captionsAndTranscriptsRequested || editingRequested || trimRequested;
 
   return (
     <>
@@ -77,9 +73,10 @@ export const CartOrderSummary = ({ cart }: Props) => {
               label={<Typography.Body>Video(s) total</Typography.Body>}
               value={getTotalPriceDisplayValue(videos)}
             />
-            {captionsRequested && <CartSummaryItem label="Captions" />}
+            {captionsAndTranscriptsRequested && (
+              <CartSummaryItem label="Captions and transcripts" />
+            )}
             {editingRequested && <CartSummaryItem label="Editing" />}
-            {transcriptsRequested && <CartSummaryItem label="Transcripts" />}
             {trimRequested && <CartSummaryItem label="Trimming" />}
           </div>
           <Typography.H1

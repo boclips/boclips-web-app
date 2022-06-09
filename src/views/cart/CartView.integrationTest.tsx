@@ -228,8 +228,7 @@ describe('CartView', () => {
       );
     });
 
-    expect(await wrapper.findByText('Captions')).toBeVisible();
-    expect(await wrapper.findByText('Transcripts')).toBeVisible();
+    expect(await wrapper.findByText('Captions and transcripts')).toBeVisible();
     expect(await wrapper.findByText('Trimming')).toBeVisible();
     expect(await wrapper.findByText('Editing')).toBeVisible();
     expect(await wrapper.findByText('Total')).toBeVisible();
@@ -304,10 +303,11 @@ describe('CartView', () => {
       const wrapper = renderCartView(fakeClient);
 
       expect(await wrapper.findByText('Shopping cart')).toBeInTheDocument();
-      expect(await wrapper.queryByText('Captions')).not.toBeInTheDocument();
+      expect(
+        await wrapper.queryByText('Captions and transcripts'),
+      ).not.toBeInTheDocument();
       expect(await wrapper.queryByText('Editing')).not.toBeInTheDocument();
       expect(await wrapper.queryByText('Trimming')).not.toBeInTheDocument();
-      expect(await wrapper.queryByText('Transcripts')).not.toBeInTheDocument();
 
       fireEvent.click(
         await wrapper.findByText('Request other type of editing'),
@@ -339,8 +339,9 @@ describe('CartView', () => {
       fireEvent.blur(await wrapper.findByLabelText('trim-to'));
 
       await waitFor(async () => {
-        expect(await wrapper.findByText('Transcripts')).toBeVisible();
-        expect(await wrapper.findByText('Captions')).toBeVisible();
+        expect(
+          await wrapper.findByText('Captions and transcripts'),
+        ).toBeVisible();
         expect(await wrapper.findByText('Editing')).toBeVisible();
         expect(await wrapper.findByText('Trimming')).toBeVisible();
       });
