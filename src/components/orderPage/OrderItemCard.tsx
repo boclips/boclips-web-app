@@ -54,8 +54,9 @@ export const OrderItemCard = ({ item }: Props) => {
         </div>
 
         <AdditionalServicesSummaryPreview
-          captionsRequested={item.captionsRequested}
-          transcriptRequested={item.transcriptRequested}
+          captionsAndTranscriptsRequested={
+            item.captionsRequested && item.transcriptRequested
+          }
           trim={item.trim}
           editRequest={item.editRequest}
         />

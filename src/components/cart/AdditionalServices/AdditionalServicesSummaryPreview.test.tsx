@@ -4,15 +4,13 @@ import { AdditionalServicesSummaryPreview } from 'src/components/cart/Additional
 
 describe('additional services summary preview', () => {
   it('should display all additional services', async () => {
-    const captionsRequested = true;
-    const transcriptRequested = true;
+    const captionsAndTranscriptsRequested = true;
     const trim = '00:12 - 00:32';
     const editRequest = 'this is edit request';
 
     const wrapper = render(
       <AdditionalServicesSummaryPreview
-        captionsRequested={captionsRequested}
-        transcriptRequested={transcriptRequested}
+        captionsAndTranscriptsRequested={captionsAndTranscriptsRequested}
         trim={trim}
         editRequest={editRequest}
         fontSize="small"
@@ -20,10 +18,7 @@ describe('additional services summary preview', () => {
     );
 
     expect(
-      await wrapper.findByText('English captions requested'),
-    ).toBeInTheDocument();
-    expect(
-      await wrapper.findByText('Transcripts requested'),
+      await wrapper.findByText('English captions and transcripts requested'),
     ).toBeInTheDocument();
     expect(await wrapper.findByText('Trim: 00:12 - 00:32')).toBeInTheDocument();
     expect(

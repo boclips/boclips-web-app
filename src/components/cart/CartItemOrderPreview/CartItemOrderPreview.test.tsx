@@ -86,8 +86,9 @@ describe('Cart Item Preview', () => {
     );
 
     expect(wrapper.getByText(/(.*)Trim: 00:00 - 02:02/s)).toBeInTheDocument();
-    expect(wrapper.getByText('Transcripts requested')).toBeInTheDocument();
-    expect(wrapper.getByText('English captions requested')).toBeInTheDocument();
+    expect(
+      wrapper.getByText('English captions and transcripts requested'),
+    ).toBeInTheDocument();
     expect(
       wrapper.getByText('Other type of editing: bla bla'),
     ).toBeInTheDocument();

@@ -25,8 +25,10 @@ export const CartItemOrderPreview = ({ videos }: Props) => {
 
     return (
       <AdditionalServicesSummaryPreview
-        captionsRequested={cartItem?.additionalServices?.captionsRequested}
-        transcriptRequested={cartItem?.additionalServices?.transcriptRequested}
+        captionsAndTranscriptsRequested={
+          cartItem?.additionalServices?.captionsRequested &&
+          cartItem?.additionalServices?.transcriptRequested
+        }
         trim={trimLabel}
         editRequest={cartItem?.additionalServices?.editRequest}
         fontSize="small"

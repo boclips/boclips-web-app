@@ -3,22 +3,20 @@ import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 
 interface Props {
-  captionsRequested?: boolean;
-  transcriptRequested?: boolean;
+  captionsAndTranscriptsRequested?: boolean;
   trim?: string;
   editRequest?: string;
   fontSize?: 'small';
 }
 
 export const AdditionalServicesSummaryPreview = ({
-  captionsRequested,
-  transcriptRequested,
+  captionsAndTranscriptsRequested,
   trim,
   editRequest,
   fontSize,
 }: Props) => {
   const noAdditionalServices =
-    !captionsRequested && !transcriptRequested && !editRequest && !trim;
+    !captionsAndTranscriptsRequested && !editRequest && !trim;
 
   const getHeaderCopy = () => {
     return noAdditionalServices
@@ -36,21 +34,13 @@ export const AdditionalServicesSummaryPreview = ({
       <Typography.Body size={fontSize} weight="medium">
         {getHeaderCopy()}
       </Typography.Body>
-      {captionsRequested && (
-        <span
-          className={s.additionalItem}
-          data-qa="order-summary-item-captions-requested"
-        >
-          English captions requested
-        </span>
-      )}
 
-      {transcriptRequested && (
+      {captionsAndTranscriptsRequested && (
         <span
           className={s.additionalItem}
-          data-qa="order-summary-item-transcripts-requested"
+          data-qa="order-summary-item-captions-transcripts-requested"
         >
-          Transcripts requested
+          English captions and transcripts requested
         </span>
       )}
 
