@@ -7,6 +7,7 @@ import { Cart as ApiCart } from 'boclips-api-client/dist/sub-clients/carts/model
 import { useGetVideos } from 'src/hooks/api/videoQuery';
 import { Typography } from '@boclips-ui/typography';
 import { AdditionalServicesPricingMessage } from 'src/components/cart/AdditionalServices/AdditionalServicesPricingMessage';
+import { FeatureGate } from 'src/components/common/FeatureGate';
 import { trackOrderConfirmationModalOpened } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 import s from './style.module.less';
@@ -68,27 +69,30 @@ export const CartOrderSummary = ({ cart }: Props) => {
     <>
       <div className="col-start-19 col-end-26">
         <div className="flex flex-col rounded p-5 shadow">
-          <div className={s.cartInfoWrapper}>
-            <CartSummaryItem
-              label={<Typography.Body>Video(s) total</Typography.Body>}
-              value={getTotalPriceDisplayValue(videos)}
-            />
-            {captionsAndTranscriptsRequested && (
-              <CartSummaryItem label="Captions and transcripts" />
-            )}
-            {editingRequested && <CartSummaryItem label="Editing" />}
-            {trimRequested && <CartSummaryItem label="Trimming" />}
-          </div>
-          <Typography.H1
-            size="xs"
-            weight="regular"
-            className="flex text-gray-900 justify-between mb-6"
-          >
-            <span>Total</span>
-            <span data-qa="total-price">
-              {`${getTotalPriceDisplayValue(videos)}`}
-            </span>
-          </Typography.H1>
+          <FeatureGate feature="BO_WEB_APP_PRICES">
+            <div className={s.cartInfoWrapper}>
+              <CartSummaryItem
+                label={<Typography.Body>Video(s) total</Typography.Body>}
+                value={getTotalPriceDisplayValue(videos)}
+              />
+              {captionsAndTranscriptsRequested && (
+                <CartSummaryItem label="Captions and transcripts" />
+              )}
+              {editingRequested && <CartSummaryItem label="Editing" />}
+              {trimRequested && <CartSummaryItem label="Trimming" />}
+            </div>
+            <Typography.H1
+              size="xs"
+              weight="regular"
+              className="flex text-gray-900 justify-between mb-6"
+            >
+              <span>Total</span>
+              <span data-qa="total-price">
+                {`${getTotalPriceDisplayValue(videos)}`}
+              </span>
+            </Typography.H1>
+          </FeatureGate>
+
           {additionalServicesRequested && <AdditionalServicesPricingMessage />}
           <Button
             onClick={() => {

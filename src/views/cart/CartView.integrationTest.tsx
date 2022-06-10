@@ -101,6 +101,7 @@ describe('CartView', () => {
     fakeClient.carts.insertCartItem({ videoId: 'instructional-video-id' });
     fakeClient.users.setCurrentUserFeatures({
       BO_WEB_APP_REQUEST_TRIMMING: true,
+      BO_WEB_APP_PRICES: true,
     });
 
     const wrapper = renderCartView(fakeClient);
@@ -286,6 +287,7 @@ describe('CartView', () => {
       fakeClient.users.setCurrentUserFeatures({
         BO_WEB_APP_REQUEST_TRIMMING: true,
         BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
+        BO_WEB_APP_PRICES: true,
       });
 
       fakeClient.videos.insertVideo(

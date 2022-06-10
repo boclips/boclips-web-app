@@ -11,6 +11,7 @@ import { Cart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
 import { Typography } from '@boclips-ui/typography';
 import { AdditionalServicesPricingMessage } from 'src/components/cart/AdditionalServices/AdditionalServicesPricingMessage';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import { FeatureGate } from 'src/components/common/FeatureGate';
 import s from './style.module.less';
 import { trackOrderConfirmed } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
@@ -80,10 +81,12 @@ export const OrderModal = ({ setModalOpen, videos, cart }: Props) => {
         <CartItemOrderPreview videos={videos} />
       </div>
       <div>
-        <Typography.Title1 as="div" className={s.modalTotalPrice}>
-          <div>Total</div>
-          <div>{getTotalPriceDisplayValue(videos)}</div>
-        </Typography.Title1>
+        <FeatureGate feature="BO_WEB_APP_PRICES">
+          <Typography.Title1 as="div" className={s.modalTotalPrice}>
+            <div>Total</div>
+            <div>{getTotalPriceDisplayValue(videos)}</div>
+          </Typography.Title1>
+        </FeatureGate>
         {additionalServicesRequested && <AdditionalServicesPricingMessage />}
       </div>
     </Bodal>
