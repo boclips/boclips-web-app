@@ -13,7 +13,7 @@ interface Props {
 const AdditionalServicesCheckbox = ({ label, cartItem, price }: Props) => {
   const id = `${cartItem.videoId}captionsAndTranscriptRequested`;
   const isChecked =
-    !!cartItem?.additionalServices?.captionsRequested &&
+    !!cartItem?.additionalServices?.captionsRequested ||
     !!cartItem?.additionalServices?.transcriptRequested;
 
   const [serviceRequested, setServiceRequested] = useState<boolean>(isChecked);

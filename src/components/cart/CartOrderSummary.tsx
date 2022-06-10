@@ -51,7 +51,7 @@ export const CartOrderSummary = ({ cart }: Props) => {
 
   const captionsAndTranscriptsRequested = cart.items?.find(
     (item) =>
-      item?.additionalServices?.captionsRequested &&
+      item?.additionalServices?.captionsRequested ||
       item?.additionalServices?.transcriptRequested,
   );
   const trimRequested = cart.items?.find(
