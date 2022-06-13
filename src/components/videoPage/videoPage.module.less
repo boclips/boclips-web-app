@@ -3,15 +3,15 @@
 }
 
 .playerSection {
-  @apply fullWidth row-start-2 lg:col-start-2 lg:col-end-18 lg:row-end-4;
+  @apply fullWidth row-start-2 lg:col-start-2 lg:col-end-18 lg:row-end-3;
 }
 
 .headerSection {
-  @apply fullWidth row-start-3 row-end-3 lg:col-start-18 lg:col-end-26 lg:row-start-2 lg:row-end-2;
-}
-
-.descriptionSection {
-  @apply fullWidth row-start-4 row-end-4 -mt-2 lg:-mt-6 lg:col-start-2 lg:col-end-18 lg:row-start-4 lg:row-end-4;
+  //max-height: ~"min(27vw + 100px, 540px)";
+  //overflow-y: scroll;
+  overflow-y: auto;
+  height: 100%;
+  @apply fullWidth row-start-3 row-end-3 lg:col-start-18 lg:col-end-26 lg:row-start-2 lg:row-end-3;
 }
 
 .recommendedVideosSectionTitle {

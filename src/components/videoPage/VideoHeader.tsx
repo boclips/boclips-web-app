@@ -8,6 +8,8 @@ import { FeatureGate } from 'src/components/common/FeatureGate';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import { Typography } from '@boclips-ui/typography';
 import { VideoInfo } from 'src/components/common/videoInfo/VideoInfo';
+import { VideoDescription } from 'src/components/videoPage/VideoDescription';
+import c from 'classnames';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
 
@@ -17,36 +19,33 @@ interface Props {
 
 export const VideoHeader = ({ video }: Props) => {
   return (
-    <>
-      <Typography.H1 size="md" className="text-gray-900 lg:mb-2">
-        {video?.title}
-      </Typography.H1>
-      <VideoInfo video={video} />
-      <Typography.H2 size="sm" className="text-gray-900">
-        {createPriceDisplayValue(
-          video?.price?.amount,
-          video?.price?.currency,
-          getBrowserLocale(),
-        )}
-      </Typography.H2>
-      <FeatureGate feature="BO_WEB_APP_PRICES">
-        <div className="mb-4">
-          <Typography.Body size="small" className="text-gray-700">
-            This is an agreed price for your organization
-          </Typography.Body>
-        </div>
-      </FeatureGate>
+    <div className="flex flex-col">
+      <div className={s.shrink}>
+        <Typography.H1 size="md" className="text-gray-900 lg:mb-2">
+          {video?.title}
+        </Typography.H1>
+        <VideoInfo video={video} />
+      </div>
 
-      <div className={s.buttons}>
+      <div className={c(s.descriptionSection, s.scrollablePanel)}>
+        <VideoDescription video={video} />
+      </div>
+
+      <div className={c(s.buttons, s.shrink)}>
         <div className={s.iconButtons}>
           <AddToPlaylistButton videoId={video.id} />
-
           <CopyVideoLinkButton
             video={video}
             appcueEvent={AppcuesEvent.COPY_LINK_FROM_VIDEO_PAGE}
           />
         </div>
-
+        <Typography.H2 size="sm" className="text-gray-900">
+          {createPriceDisplayValue(
+            video?.price?.amount,
+            video?.price?.currency,
+            getBrowserLocale(),
+          )}
+        </Typography.H2>
         <FeatureGate linkName="cart">
           <AddToCartButton
             video={video}
@@ -55,6 +54,6 @@ export const VideoHeader = ({ video }: Props) => {
           />
         </FeatureGate>
       </div>
-    </>
+    </div>
   );
 };

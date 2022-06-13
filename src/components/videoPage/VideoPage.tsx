@@ -1,6 +1,5 @@
 import React from 'react';
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
-import { VideoDescription } from 'src/components/videoPage/VideoDescription';
 import { Video } from 'boclips-api-client/dist/types';
 import { VideoHeader } from 'src/components/videoPage/VideoHeader';
 import { useHistory } from 'react-router-dom';
@@ -38,9 +37,6 @@ export const VideoPage = ({ video }: Props) => {
       </main>
       <div className={c(s.headerSection, videoMetadataTopMargin)}>
         <VideoHeader video={video} />
-      </div>
-      <div className={s.descriptionSection}>
-        <VideoDescription video={video} />
       </div>
       <FeatureGate feature="BO_WEB_APP_VIDEO_RECOMMENDATIONS">
         <VideoRecommendations video={video} />
