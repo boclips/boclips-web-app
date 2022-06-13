@@ -19,19 +19,37 @@ interface Props {
 
 export const VideoHeader = ({ video }: Props) => {
   return (
-    <div className="flex flex-col">
-      <div className={s.shrink}>
+    <>
+      <div
+        style={{
+          flexShrink: 0,
+        }}
+      >
         <Typography.H1 size="md" className="text-gray-900 lg:mb-2">
           {video?.title}
         </Typography.H1>
         <VideoInfo video={video} />
       </div>
 
-      <div className={c(s.descriptionSection, s.scrollablePanel)}>
+      <div
+        style={{
+          flexGrow: 1,
+          flexBasis: '0',
+          overflow: 'auto',
+          padding: '1rem 0',
+        }}
+      >
         <VideoDescription video={video} />
       </div>
 
-      <div className={c(s.buttons, s.shrink)}>
+      {/*  */}
+
+      <div
+        style={{
+          flexShrink: 0,
+        }}
+        className={c(s.buttons)}
+      >
         <div className={s.iconButtons}>
           <AddToPlaylistButton videoId={video.id} />
           <CopyVideoLinkButton
@@ -54,6 +72,6 @@ export const VideoHeader = ({ video }: Props) => {
           />
         </FeatureGate>
       </div>
-    </div>
+    </>
   );
 };

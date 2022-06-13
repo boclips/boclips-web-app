@@ -22,7 +22,7 @@ const VideoView = () => {
   return (
     <Layout
       dataQa="video-page"
-      rowsSetup="grid-rows-video-view"
+      rowsSetup="grid-rows-video-view auto-rows-min"
       responsiveLayout
     >
       {video?.title && <Helmet title={video.title} />}

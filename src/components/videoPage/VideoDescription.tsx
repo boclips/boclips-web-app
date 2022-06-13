@@ -12,7 +12,7 @@ interface Props {
 
 export const VideoDescription = ({ video }: Props) => {
   return (
-    <div className="lg:mt-4 flex flex-col">
+    <>
       <div className={s.badges}>
         {video?.subjects?.map((subject) => (
           <SubjectBadge key={subject.id} subject={subject} />
@@ -22,16 +22,39 @@ export const VideoDescription = ({ video }: Props) => {
           <EducationLevelBadge key={level.code} educationLevel={level} />
         ))}
       </div>
-      <div className="lg:mt-4">
-        <Typography.Body className="text-gray-800">
-          {video?.description}
-        </Typography.Body>
-      </div>
-      <div className="lg:mt-4">
-        <Typography.Body className="text-gray-800">
-          {video?.additionalDescription}
-        </Typography.Body>
-      </div>
-    </div>
+
+      <Typography.Body className=" lg:mt-4 text-gray-800">
+        {/* {video?.description} */}
+        The White House's sudden moves in the Mideast sparked alarm from
+        Congress on Wednesday as key Democrats warned President Donald Trump off
+        war with Iran and lawmakers in both parties demanded more information on
+        the administration's strategy. The White House's sudden moves in the
+        Mideast sparked alarm from Congress on Wednesday as key Democrats warned
+        President Donald Trump off war with Iran and lawmakers in both parties
+        demanded more information on the administration's strategy. The White
+        House's sudden moves in the Mideast sparked alarm from Congress on
+        Wednesday as key Democrats warned President Donald Trump off war with
+        Iran and lawmakers in both parties demanded more information on the
+        administration's strategy. The White House's sudden moves in the Mideast
+        sparked alarm from Congress on Wednesday as key Democrats warned
+        President Donald Trump off war with Iran and lawmakers in both parties
+        demanded more information on the administration's strategy.
+      </Typography.Body>
+
+      <Typography.Body className="lg:mt-4 text-gray-800">
+        {/* {video?.additionalDescription} */}
+        The White House's sudden moves in the Mideast sparked alarm from
+        Congress on Wednesday as key Democrats warned President Donald Trump off
+        war with Iran and lawmakers in both parties demanded more information on
+        the administration's strategy. The White House's sudden moves in the
+        Mideast sparked alarm from Congress on Wednesday as key Democrats warned
+        President Donald Trump off war with Iran and lawmakers in both parties
+        demanded more information on the administration's strategy. The White
+        House's sudden moves in the Mideast sparked alarm from Congress on
+        Wednesday as key Democrats warned President Donald Trump off war with
+        Iran and lawmakers in both parties demanded more information on the
+        administration's strategy.
+      </Typography.Body>
+    </>
   );
 };
