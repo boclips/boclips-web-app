@@ -10,10 +10,15 @@ import { Layout } from 'src/components/layout/Layout';
 import { ErrorBoundary } from 'src/components/common/errors/ErrorBoundary';
 import { BoclipsApiError } from 'boclips-api-client/dist/types';
 import { Fallback } from 'src/views/video/Fallback';
+import useFeatureFlags from 'src/hooks/useFeatureFlags';
+import { VideoPageWithRecommendations } from 'src/components/videoPage/VideoPageWithRecommendations';
 
 const VideoView = () => {
   const videoId = useGetIdFromLocation('videos');
   const { data: video, isLoading, error } = useFindOrGetVideo(videoId);
+
+  const flags = useFeatureFlags();
+  const isWithRecommendations = flags && flags.BO_WEB_APP_VIDEO_RECOMMENDATIONS;
 
   if (isLoading && !video) return <Loading />;
 
@@ -22,13 +27,17 @@ const VideoView = () => {
   return (
     <Layout
       dataQa="video-page"
-      rowsSetup="grid-rows-video-view"
+      rowsSetup="grid-rows-video-view auto-rows-min"
       responsiveLayout
     >
       {video?.title && <Helmet title={video.title} />}
       <Navbar />
       <ErrorBoundary fallback={<Fallback isVideoNotFound={isVideoNotFound} />}>
-        <VideoPage video={video} />
+        {isWithRecommendations ? (
+          <VideoPageWithRecommendations video={video} />
+        ) : (
+          <VideoPage video={video} />
+        )}
       </ErrorBoundary>
       <Footer />
     </Layout>
