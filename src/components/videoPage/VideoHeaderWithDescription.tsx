@@ -23,13 +23,6 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
         <Typography.H1 size="md" className="text-gray-900">
           {video?.title}
         </Typography.H1>
-        <VideoInfo video={video} />
-      </div>
-
-      <div className={s.scrollableDescription}>
-        <VideoDescription video={video} />
-      </div>
-      <div className={(s.sticky, 'flex flex-col items-end')}>
         <Typography.H2 size="sm" className="text-gray-900 my-1">
           {createPriceDisplayValue(
             video?.price?.amount,
@@ -37,22 +30,27 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
             getBrowserLocale(),
           )}
         </Typography.H2>
-        <div className={s.buttons}>
-          <div className={s.iconButtons}>
-            <AddToPlaylistButton videoId={video.id} />
-            <CopyVideoLinkButton
-              video={video}
-              appcueEvent={AppcuesEvent.COPY_LINK_FROM_VIDEO_PAGE}
-            />
-          </div>
-          <FeatureGate linkName="cart">
-            <AddToCartButton
-              video={video}
-              width="200px"
-              appcueEvent={AppcuesEvent.ADD_TO_CART_FROM_VIDEO_PAGE}
-            />
-          </FeatureGate>
+        <VideoInfo video={video} />
+      </div>
+
+      <div className={s.scrollableDescription}>
+        <VideoDescription video={video} />
+      </div>
+      <div className={(s.sticky, s.buttons)}>
+        <div className={s.iconButtons}>
+          <AddToPlaylistButton videoId={video.id} />
+          <CopyVideoLinkButton
+            video={video}
+            appcueEvent={AppcuesEvent.COPY_LINK_FROM_VIDEO_PAGE}
+          />
         </div>
+        <FeatureGate linkName="cart">
+          <AddToCartButton
+            video={video}
+            width="200px"
+            appcueEvent={AppcuesEvent.ADD_TO_CART_FROM_VIDEO_PAGE}
+          />
+        </FeatureGate>
       </div>
     </>
   );

@@ -1,3 +1,5 @@
+@import '~@boclips-ui/styles/src/breakpoints';
+
 .fullWidth {
   @apply col-start-2 col-end-26;
 }
@@ -23,7 +25,13 @@
 .recommendedVideosSection {
   display: grid;
   grid-template-rows: auto auto;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-gap: 1rem 1.5rem;
   @apply row-start-5 row-end-6 col-start-2 col-end-26;
+}
+
+@media screen and (min-width: @screen-lg) {
+  .recommendedVideosSection {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
