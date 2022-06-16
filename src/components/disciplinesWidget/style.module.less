@@ -182,7 +182,7 @@
 
 @media screen and (min-width: @screen-lg) {
   .disciplineWrapper {
-    margin-top: 1.5rem;
+    margin: 1.5rem auto;
     grid-template-rows: auto auto auto;
     grid-column-gap: 1.5rem;
     grid-row-gap: 1.5rem;
@@ -278,11 +278,19 @@
   }
 
   .disciplineWrapperThreeColumn {
-    @apply grid-cols-3;
+    width: calc((100% - 4.5rem) * (3 / 4) + 3rem);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    &:after {
+      @fourColumnGridWith: calc(((100% - 3rem) * (4 / 3)) + 4.5rem);
+      @fourColumnGridXTranslation: calc((100% - @fourColumnGridWith) / 2);
+      width: calc(@fourColumnGridWith * 1.2);
+      left: calc(@fourColumnGridXTranslation - (@fourColumnGridWith / 10));
+    }
   }
 
   .disciplineWrapperFourColumn {
-    @apply grid-cols-4;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .disciplineTitle {
