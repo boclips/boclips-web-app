@@ -1,4 +1,4 @@
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import React from 'react';
 import { render } from 'src/testSupport/render';
@@ -47,5 +47,68 @@ describe('SearchBar', () => {
     expect(history.location.search).toEqual(
       '?q=cats&page=1&video_type=INSTRUCTIONAL&duration=PT1M-PT5M',
     );
+  });
+
+  it('display search suggestions on search change if user has feature', async () => {
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    fakeBoclipsClient.users.setCurrentUserFeatures({
+      BO_WEB_APP_SEARCH_SUGGESTIONS: true,
+    });
+
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeBoclipsClient}>
+        <Router history={createBrowserHistory()}>
+          <Search showIconOnly={false} />
+        </Router>
+      </BoclipsClientProvider>,
+    );
+
+    fakeBoclipsClient.suggestions.populate({
+      channels: [],
+      subjects: [],
+      suggestionTerm: 'U.S. ',
+      phrases: ['U.S. Senate', 'U.S. Constitution'],
+    });
+
+    const searchInput = wrapper.getByPlaceholderText(
+      'Search for videos',
+    ) as HTMLInputElement;
+    fireEvent.change(searchInput, { target: { value: 'U.S.' } });
+    fireEvent.focus(searchInput);
+
+    expect(wrapper.queryByText('Constitution')).toBeNull();
+    expect(await wrapper.findByText('Constitution')).toBeInTheDocument();
+    expect(await wrapper.findByText('Senate')).toBeInTheDocument();
+  });
+
+  it(`does not display search recommendations if user does not have ferature flag`, async () => {
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    fakeBoclipsClient.users.setCurrentUserFeatures({
+      BO_WEB_APP_SEARCH_SUGGESTIONS: false,
+    });
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeBoclipsClient}>
+        <Router history={createBrowserHistory()}>
+          <Search showIconOnly={false} />
+        </Router>
+      </BoclipsClientProvider>,
+    );
+
+    fakeBoclipsClient.suggestions.populate({
+      channels: [],
+      subjects: [],
+      suggestionTerm: 'U.S. ',
+      phrases: ['U.S. Senate', 'U.S. Constitution'],
+    });
+
+    const searchInput = wrapper.getByPlaceholderText(
+      'Search for videos',
+    ) as HTMLInputElement;
+    fireEvent.change(searchInput, { target: { value: 'U.S.' } });
+    fireEvent.focus(searchInput);
+    await waitFor(() => {
+      expect(searchInput.value).toEqual('U.S.');
+      expect(wrapper.queryByText('Constitution')).toBeNull();
+    });
   });
 });

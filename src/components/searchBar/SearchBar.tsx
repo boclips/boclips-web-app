@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SearchBar from '@boclips-ui/search-bar';
 import { useHistory } from 'react-router-dom';
 import {
@@ -6,6 +6,8 @@ import {
   useLocationParams,
   useSearchQueryLocationParams,
 } from 'src/hooks/useLocationParams';
+import { useGetSuggestionsQuery } from 'src/hooks/api/suggestionsQuery';
+import useFeatureFlags from 'src/hooks/useFeatureFlags';
 import s from './style.module.less';
 
 interface Props {
@@ -17,6 +19,11 @@ export const Search = ({ showIconOnly, onSearch }: Props) => {
   const history = useHistory();
   const [searchLocation] = useSearchQueryLocationParams();
   const query = useLocationParams().get('q');
+  const [searchTerm, setSearchTerm] = useState(query);
+  const flags = useFeatureFlags();
+  const hasAccessToSuggestions = flags && flags?.BO_WEB_APP_SEARCH_SUGGESTIONS;
+
+  const { data: suggestions } = useGetSuggestionsQuery(searchTerm);
 
   const handleSearch = (searchQuery: string) => {
     if (onSearch) {
@@ -35,6 +42,10 @@ export const Search = ({ showIconOnly, onSearch }: Props) => {
     });
   };
 
+  const searchBarChanged = (newValue: string) => {
+    setSearchTerm(newValue);
+  };
+
   return (
     <div className={s.searchWrapper}>
       <SearchBar
@@ -43,6 +54,13 @@ export const Search = ({ showIconOnly, onSearch }: Props) => {
         onSearch={handleSearch}
         initialQuery={query}
         data-qa="search-input"
+        onChange={searchBarChanged}
+        suggestions={
+          hasAccessToSuggestions &&
+          searchTerm &&
+          searchTerm.length > 2 &&
+          suggestions?.phrases
+        }
       />
     </div>
   );
