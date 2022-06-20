@@ -50,6 +50,8 @@ context('UI Regression', () => {
 
     cy.get('img').click();
 
+    cy.wait(1000);
+
     cy.get('button').contains('English Language Arts').should('be.visible');
 
     cy.percySnapshot('K12 Home Page', {
