@@ -279,6 +279,22 @@ describe('Video View', () => {
       expect(await wrapper.queryByText('I am recommended')).toBeNull();
     });
 
+    it(`section is not present when there are no recommended videos to display`, async () => {
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          features: { BO_WEB_APP_VIDEO_RECOMMENDATIONS: true },
+        }),
+      );
+
+      fakeClient.videos.insertVideo(exampleVideo);
+      fakeClient.videos.setRecommendationsForVideo(exampleVideo.id, []);
+
+      const wrapper = renderVideoView(['/videos/video-id']);
+
+      expect(await wrapper.queryByText('Explore similar videos')).toBeNull();
+      expect(await wrapper.queryByText('I am recommended')).toBeNull();
+    });
+
     it(`section is present when feature is disabled`, async () => {
       fakeClient.users.insertCurrentUser(
         UserFactory.sample({

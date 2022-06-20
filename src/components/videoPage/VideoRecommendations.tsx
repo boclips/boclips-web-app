@@ -13,7 +13,7 @@ interface Props {
 const VideoRecommendations = ({ video }: Props) => {
   const { data: recommendedVideos } = useGetVideoRecommendations(video);
 
-  return (
+  return recommendedVideos ? (
     <>
       <Typography.H3
         size="xs"
@@ -24,18 +24,17 @@ const VideoRecommendations = ({ video }: Props) => {
         Explore similar videos
       </Typography.H3>
       <div className={s.recommendedVideosSection}>
-        {recommendedVideos &&
-          recommendedVideos?.map((recommendedVideo) => (
-            <VideoGridCard
-              video={recommendedVideo}
-              addToCartAppCuesEvent={
-                AppcuesEvent.ADD_TO_CART_FROM_RECOMMENDED_VIDEOS
-              }
-            />
-          ))}
+        {recommendedVideos?.map((recommendedVideo) => (
+          <VideoGridCard
+            video={recommendedVideo}
+            addToCartAppCuesEvent={
+              AppcuesEvent.ADD_TO_CART_FROM_RECOMMENDED_VIDEOS
+            }
+          />
+        ))}
       </div>
     </>
-  );
+  ) : null;
 };
 
 export default VideoRecommendations;
