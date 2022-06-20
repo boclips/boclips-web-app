@@ -58,7 +58,7 @@ export const Search = ({ showIconOnly, onSearch }: Props) => {
         suggestions={
           hasAccessToSuggestions &&
           searchTerm &&
-          searchTerm.length > 2 &&
+          searchTerm.length > 0 &&
           suggestions?.phrases
         }
       />

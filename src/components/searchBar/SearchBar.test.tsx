@@ -81,6 +81,38 @@ describe('SearchBar', () => {
     expect(await wrapper.findByText('Senate')).toBeInTheDocument();
   });
 
+  it('display search suggestions on search change for minimum of 1 character in query', async () => {
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    fakeBoclipsClient.users.setCurrentUserFeatures({
+      BO_WEB_APP_SEARCH_SUGGESTIONS: true,
+    });
+
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeBoclipsClient}>
+        <Router history={createBrowserHistory()}>
+          <Search showIconOnly={false} />
+        </Router>
+      </BoclipsClientProvider>,
+    );
+
+    fakeBoclipsClient.suggestions.populate({
+      channels: [],
+      subjects: [],
+      suggestionTerm: 'U',
+      phrases: ['U.S. Senate', 'U.S. Government'],
+    });
+
+    const searchInput = wrapper.getByPlaceholderText(
+      'Search for videos',
+    ) as HTMLInputElement;
+    fireEvent.change(searchInput, { target: { value: 'U' } });
+    fireEvent.focus(searchInput);
+
+    expect(wrapper.queryByText('Constitution')).toBeNull();
+    expect(await wrapper.findByText('.S. Government')).toBeInTheDocument();
+    expect(await wrapper.findByText('.S. Senate')).toBeInTheDocument();
+  });
+
   it(`does not display search recommendations if user does not have ferature flag`, async () => {
     const fakeBoclipsClient = new FakeBoclipsClient();
     fakeBoclipsClient.users.setCurrentUserFeatures({
