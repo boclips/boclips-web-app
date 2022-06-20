@@ -8,6 +8,8 @@ interface Props {
 }
 
 const Footer = ({ columnPosition }: Props) => {
+  const currentDate = new Date();
+
   return (
     <footer
       className={c(`${columnPosition}`, s.footer)}
@@ -18,7 +20,7 @@ const Footer = ({ columnPosition }: Props) => {
         as="div"
         className="flex flex-row items-center"
       >
-        Copyright © 2021 Boclips. All rights reserved.
+        Copyright © {currentDate.getFullYear()} Boclips. All rights reserved.
         <a
           rel="noopener noreferrer"
           className={s.link}
