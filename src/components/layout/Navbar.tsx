@@ -94,6 +94,14 @@ const NavbarResponsive = (): ReactElement => {
             <FeatureGate linkName="cart">
               <Link to="/cart">Cart</Link>
             </FeatureGate>
+            <Link
+              target="_blank"
+              to="https://www.boclips.com/boclips-platform-guide"
+              isExternalLink
+            >
+              Platform guide
+            </Link>
+
             <button type="button" onClick={logOut}>
               <Typography.Link>Log out</Typography.Link>
             </button>

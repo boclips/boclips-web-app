@@ -66,6 +66,7 @@ describe('Mobile - Navbar', () => {
     expect(screen.getByText('sunnyvale@swearnet.com')).toBeInTheDocument();
     expect(screen.getByText('Your orders')).toBeInTheDocument();
     expect(screen.getByText('Cart')).toBeInTheDocument();
+    expect(screen.getByText('Platform guide')).toBeInTheDocument();
     expect(screen.getByText('Log out')).toBeInTheDocument();
   });
 
