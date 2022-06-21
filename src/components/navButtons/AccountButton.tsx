@@ -96,12 +96,24 @@ export const AccountButton = () => {
             <FeatureGate linkName="userOrders">
               <div className="pt-4">
                 <Link onClick={ordersOpenedEvent} to="/orders">
-                  <Typography.Body size="small" weight="medium">
+                  <Typography.Body size="small" weight="medium" as="button">
                     Your orders
                   </Typography.Body>
                 </Link>
               </div>
             </FeatureGate>
+
+            <div className="pt-1">
+              <Link
+                target="_blank"
+                to="https://www.boclips.com/boclips-platform-guide"
+                isExternalLink
+              >
+                <Typography.Body size="small" weight="medium" as="button">
+                  Platform guide
+                </Typography.Body>
+              </Link>
+            </div>
 
             <div className="pt-1">
               <Typography.Link>

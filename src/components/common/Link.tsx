@@ -4,27 +4,27 @@ import { Typography } from '@boclips-ui/typography';
 
 type TypographyLinkProps = React.ComponentProps<typeof Typography.Link>;
 
-type IsMailProp = {
-  isMail?: boolean;
+type IsExternalLink = {
+  isExternalLink?: boolean;
 };
 
 type Props = React.ComponentProps<RouterLink> &
   Pick<TypographyLinkProps, 'type'> &
-  IsMailProp;
+  IsExternalLink;
 
 export const Link = ({
   children,
   type,
   className,
   to,
-  isMail,
+  isExternalLink,
   ...rest
 }: React.PropsWithChildren<Props>): React.ReactElement => {
   return (
     <RouterLink
       to={to}
       onClick={(e) => {
-        if (isMail) {
+        if (isExternalLink) {
           window.location.href = to;
           e.preventDefault();
         }

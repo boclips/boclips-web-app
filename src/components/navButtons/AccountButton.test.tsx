@@ -47,6 +47,7 @@ describe('account button', () => {
       expect(navbar.getByText('Eddie Bravo')).toBeInTheDocument();
       expect(navbar.getByText('eddie@10thplanetjj.com')).toBeInTheDocument();
       expect(navbar.getByText('Your orders')).toBeInTheDocument();
+      expect(navbar.getByText('Platform guide')).toBeInTheDocument();
       expect(navbar.getByText('Log out')).toBeInTheDocument();
     });
   });

@@ -44,7 +44,7 @@ export const OrderSummary = ({ order }: Props) => {
       </div>
       <Typography.Body className="w-64 text-gray-900">
         To edit or cancel this order, please contact{' '}
-        <Link isMail to="mailto:support@boclips.com">
+        <Link isExternalLink to="mailto:support@boclips.com">
           <Typography.Body as="a" weight="medium" className="text-blue-800">
             support@boclips.com
           </Typography.Body>
