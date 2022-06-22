@@ -13,7 +13,7 @@
 }
 
 .navButton {
-  @apply items-center justify-center relative;
+@apply items-center justify-center relative;
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -38,7 +38,6 @@
 
   button {
     display: flex;
-    flex-direction: column;
     width: 100%;
     height: 100%;
     align-items: center;
@@ -46,7 +45,7 @@
     #focus;
 
     span {
-      @apply text-xxs mt-1 font-medium;
+    @apply text-xxs mt-1 font-medium;
       color: @gray-900;
       line-height: 1.125rem;
     }
@@ -56,11 +55,14 @@
     }
 
     svg {
-      width: 18px;
-      height: 18px;
       stroke: @gray-900;
     }
   }
+}
+
+.navbarIcon {
+  width: 18px;
+  height: 18px;
 }
 
 .basketCounter {
@@ -107,5 +109,26 @@
     &:hover {
       text-decoration: underline;
     }
+  }
+}
+
+.menuItem {
+  flex-direction: row;
+
+  p{
+    padding-top: 4px;
+  }
+}
+
+.headerButton {
+  flex-direction: column;
+}
+
+.platformGuideIcon {
+  padding-left: 8px;
+
+  svg {
+    height: 14px;
+    width: 14px;
   }
 }

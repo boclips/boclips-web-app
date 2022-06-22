@@ -1,4 +1,5 @@
 import MyAccountSVG from 'src/resources/icons/my-account-icon.svg';
+import ExternalLinkIcon from 'src/resources/icons/external-link-icon.svg';
 import React, { useRef, useState } from 'react';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { Loading } from 'src/components/common/Loading';
@@ -73,8 +74,9 @@ export const AccountButton = () => {
         data-qa="account-menu"
         aria-expanded={displayModal}
         aria-haspopup
+        className={s.headerButton}
       >
-        <MyAccountSVG />
+        <MyAccountSVG className={s.navbarIcon} />
         <span>Account</span>
       </button>
 
@@ -109,8 +111,16 @@ export const AccountButton = () => {
                 to="https://www.boclips.com/boclips-platform-guide"
                 isExternalLink
               >
-                <Typography.Body size="small" weight="medium" as="button">
-                  Platform guide
+                <Typography.Body
+                  size="small"
+                  weight="medium"
+                  as="button"
+                  className={s.menuItem}
+                >
+                  <p>Platform guide</p>
+                  <span className={s.platformGuideIcon}>
+                    <ExternalLinkIcon />
+                  </span>
                 </Typography.Body>
               </Link>
             </div>

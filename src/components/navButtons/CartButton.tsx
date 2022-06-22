@@ -23,8 +23,13 @@ const CartButton = () => {
 
   return (
     <div className={c(s.navButton, { [s.active]: isOnCartPage })}>
-      <button type="button" onClick={cartOpenedEvent} data-qa="cart-button">
-        <CartIcon />
+      <button
+        type="button"
+        onClick={cartOpenedEvent}
+        data-qa="cart-button"
+        className={s.headerButton}
+      >
+        <CartIcon className={s.navbarIcon} />
         <span>
           Cart
           {cart?.items?.length > 0 && (

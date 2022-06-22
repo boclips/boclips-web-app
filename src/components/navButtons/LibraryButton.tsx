@@ -22,8 +22,13 @@ const LibraryButton = () => {
         [s.active]: isOnLibraryPage,
       })}
     >
-      <button type="button" onClick={onClick} data-qa="library-button">
-        <YourLibraryIcon />
+      <button
+        type="button"
+        onClick={onClick}
+        data-qa="library-button"
+        className={s.headerButton}
+      >
+        <YourLibraryIcon className={s.navbarIcon} />
         <span>Your Library</span>
       </button>
     </div>
