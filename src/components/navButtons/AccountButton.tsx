@@ -98,7 +98,7 @@ export const AccountButton = () => {
             <FeatureGate linkName="userOrders">
               <div className="pt-4">
                 <Link onClick={ordersOpenedEvent} to="/orders">
-                  <Typography.Body size="small" weight="medium" as="button">
+                  <Typography.Body size="small" as="button">
                     Your orders
                   </Typography.Body>
                 </Link>
@@ -113,7 +113,6 @@ export const AccountButton = () => {
               >
                 <Typography.Body
                   size="small"
-                  weight="medium"
                   as="button"
                   className={s.menuItem}
                 >
@@ -129,7 +128,6 @@ export const AccountButton = () => {
               <Typography.Link>
                 <Typography.Body
                   as="button"
-                  weight="medium"
                   size="small"
                   // Props aren't smart enough to know type does exist on button
                   // @ts-ignore
