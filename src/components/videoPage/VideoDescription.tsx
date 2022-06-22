@@ -23,7 +23,7 @@ export const VideoDescription = ({ video }: Props) => {
         ))}
       </div>
 
-      <Typography.Body className=" lg:mt-4 text-gray-800">
+      <Typography.Body size="small" className="lg:mt-4 text-gray-800">
         {video?.description}
       </Typography.Body>
 
