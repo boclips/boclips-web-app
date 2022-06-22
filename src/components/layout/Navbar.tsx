@@ -13,6 +13,7 @@ import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import LibraryButton from 'src/components/navButtons/LibraryButton';
 import SkipLink from 'src/components/skipLink/SkipLink';
 import { Typography } from '@boclips-ui/typography';
+import ExternalLinkIcon from 'src/resources/icons/external-link-icon.svg';
 import s from './navbar.module.less';
 import { Search } from '../searchBar/SearchBar';
 import { Link } from '../common/Link';
@@ -98,8 +99,12 @@ const NavbarResponsive = (): ReactElement => {
               target="_blank"
               to="https://www.boclips.com/boclips-platform-guide"
               isExternalLink
+              className={s.platformGuide}
             >
-              Platform guide
+              <p>Platform guide</p>
+              <span className="pt-1 pl-1">
+                <ExternalLinkIcon />
+              </span>
             </Link>
 
             <button type="button" onClick={logOut}>
