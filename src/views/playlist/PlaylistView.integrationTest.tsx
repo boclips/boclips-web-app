@@ -25,6 +25,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { CollectionFactory as collectionFactory } from 'src/testSupport/CollectionFactory';
+import { sleep } from 'src/testSupport/sleep';
 
 const createVideoWithThumbnail = (id: string, videoTitle: string) => {
   return VideoFactory.sample({
@@ -38,9 +39,6 @@ const createVideoWithThumbnail = (id: string, videoTitle: string) => {
     }),
   });
 };
-
-// eslint-disable-next-line no-promise-executor-return
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('Playlist view', () => {
   const client = new FakeBoclipsClient();

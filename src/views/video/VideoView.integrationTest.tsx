@@ -13,6 +13,7 @@ import { Helmet } from 'react-helmet';
 import { CartItemFactory } from 'boclips-api-client/dist/test-support/CartsFactory';
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import { sleep } from 'src/testSupport/sleep';
 
 describe('Video View', () => {
   let fakeClient;
@@ -275,8 +276,28 @@ describe('Video View', () => {
 
       const wrapper = renderVideoView(['/videos/video-id']);
 
-      expect(await wrapper.queryByText('Explore similar videos')).toBeNull();
-      expect(await wrapper.queryByText('I am recommended')).toBeNull();
+      // wait until similar videos are potentially rendered
+      await sleep(500);
+      expect(wrapper.queryByText('Explore similar videos')).toBeNull();
+      expect(wrapper.queryByText('I am recommended')).toBeNull();
+    });
+
+    it(`section is present when feature is enabled`, async () => {
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          features: { BO_WEB_APP_VIDEO_RECOMMENDATIONS: true },
+        }),
+      );
+
+      fakeClient.videos.insertVideo(exampleVideo);
+      fakeClient.videos.setRecommendationsForVideo(exampleVideo.id, [
+        VideoFactory.sample({ title: 'I am recommended' }),
+      ]);
+
+      const wrapper = renderVideoView(['/videos/video-id']);
+
+      expect(await wrapper.findByText('Explore similar videos')).toBeVisible();
+      expect(await wrapper.findByText('I am recommended')).toBeVisible();
     });
 
     it(`section is not present when there are no recommended videos to display`, async () => {
@@ -291,28 +312,9 @@ describe('Video View', () => {
 
       const wrapper = renderVideoView(['/videos/video-id']);
 
-      expect(await wrapper.queryByText('Explore similar videos')).toBeNull();
-      expect(await wrapper.queryByText('I am recommended')).toBeNull();
-    });
-
-    it(`section is present when feature is disabled`, async () => {
-      fakeClient.users.insertCurrentUser(
-        UserFactory.sample({
-          features: { BO_WEB_APP_VIDEO_RECOMMENDATIONS: true },
-        }),
-      );
-
-      fakeClient.videos.insertVideo(exampleVideo);
-      fakeClient.videos.setRecommendationsForVideo(exampleVideo.id, [
-        VideoFactory.sample({ title: 'I am recommended' }),
-      ]);
-
-      const wrapper = renderVideoView(['/videos/video-id']);
-
-      expect(
-        await wrapper.findByText('Explore similar videos'),
-      ).toBeInTheDocument();
-      expect(await wrapper.findByText('I am recommended')).toBeInTheDocument();
+      // wait until similar videos are potentially rendered
+      await sleep(500);
+      expect(wrapper.queryByText('Explore similar videos')).toBeNull();
     });
   });
 });

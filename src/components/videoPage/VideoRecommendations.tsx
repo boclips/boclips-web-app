@@ -13,7 +13,7 @@ interface Props {
 const VideoRecommendations = ({ video }: Props) => {
   const { data: recommendedVideos } = useGetVideoRecommendations(video);
 
-  return recommendedVideos ? (
+  return recommendedVideos && recommendedVideos.length ? (
     <>
       <Typography.H3
         size="xs"
