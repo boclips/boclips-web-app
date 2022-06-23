@@ -106,10 +106,10 @@ export const AccountButton = () => {
             </FeatureGate>
 
             <div className="pt-1">
-              <Link
+              <a
                 target="_blank"
-                to="https://www.boclips.com/boclips-platform-guide"
-                isExternalLink
+                href="https://www.boclips.com/boclips-platform-guide"
+                rel="noreferrer"
               >
                 <Typography.Body
                   size="small"
@@ -121,7 +121,7 @@ export const AccountButton = () => {
                     <ExternalLinkIcon />
                   </span>
                 </Typography.Body>
-              </Link>
+              </a>
             </div>
 
             <div className="pt-1">
