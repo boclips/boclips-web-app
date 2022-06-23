@@ -1,6 +1,6 @@
 import MixpanelService from './MixpanelService';
 
-const mixpanel = jest.createMockFromModule('mixpanel-browser') as Mixpanel;
+const mixpanelMock = jest.createMockFromModule('mixpanel-browser') as Mixpanel;
 
 describe('MixpanelService', () => {
   beforeEach(() => {
@@ -8,9 +8,14 @@ describe('MixpanelService', () => {
   });
 
   it('forwards track to mixpanel', () => {
-    const mixpanelService = new MixpanelService(mixpanel);
+    const mixpanelService = new MixpanelService(mixpanelMock);
     mixpanelService.track('sample action');
 
-    expect(mixpanel.track).toHaveBeenCalledWith('sample action');
+    expect(mixpanelMock.track).toHaveBeenCalledWith('sample action');
+  });
+
+  it('handles null mixpanel', () => {
+    const mixpanelService = new MixpanelService(null);
+    expect(() => mixpanelService.track('sample event')).not.toThrow();
   });
 });

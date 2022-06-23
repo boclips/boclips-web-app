@@ -14,4 +14,23 @@ describe('AppConstants', () => {
 
     expect(host).toBe('https://something.com:123');
   });
+
+  it('returns null when mixpanel token is not specified', () => {
+    const appConfig = new AppConstants({ Environment: {} } as Window);
+    const token = appConfig.MIXPANEL_TOKEN;
+
+    expect(token).toBeNull();
+  });
+
+  it('returns a specified mixpanel token', () => {
+    const mixpanelToken = 'mixpanel-123';
+    const appConfig = new AppConstants({
+      Environment: {
+        MIXPANEL_TOKEN: mixpanelToken,
+      },
+    } as Window);
+    const token = appConfig.MIXPANEL_TOKEN;
+
+    expect(token).toEqual(mixpanelToken);
+  });
 });
