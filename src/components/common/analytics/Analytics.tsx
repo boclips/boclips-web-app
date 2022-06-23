@@ -2,11 +2,19 @@ import { BoclipsClient } from 'boclips-api-client';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { Constants } from 'src/AppConstants';
 import { ViewType } from 'src/components/searchResults/ViewButtons';
+import { SearchQueryCompletionsSuggestedRequest } from 'boclips-api-client/dist/sub-clients/events/model/SearchQueryCompletionsSuggestedRequest';
 
 export const trackPageRendered = (location, apiClient) => {
   return apiClient.events.trackPageRendered({
     url: `${Constants.HOST}${location.pathname}${location.search}`,
   });
+};
+
+export const trackSearchCompletionsSuggested = (
+  event: SearchQueryCompletionsSuggestedRequest,
+  apiClient,
+) => {
+  return apiClient.events.trackSearchQueryCompletionsSuggested(event);
 };
 
 export const trackCopyVideoShareLink = (

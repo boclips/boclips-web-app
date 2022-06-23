@@ -5,6 +5,8 @@ import { render } from 'src/testSupport/render';
 import { Search } from 'src/components/searchBar/SearchBar';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
+import { lastEvent } from 'src/testSupport/lastEvent';
+import { SearchQueryCompletionsSuggestedRequest } from 'boclips-api-client/dist/sub-clients/events/model/SearchQueryCompletionsSuggestedRequest';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 
 describe('SearchBar', () => {
@@ -113,7 +115,7 @@ describe('SearchBar', () => {
     expect(await wrapper.findByText('.S. Senate')).toBeInTheDocument();
   });
 
-  it(`does not display search recommendations if user does not have ferature flag`, async () => {
+  it(`does not display search auto-suggest if user does not have feature flag`, async () => {
     const fakeBoclipsClient = new FakeBoclipsClient();
     fakeBoclipsClient.users.setCurrentUserFeatures({
       BO_WEB_APP_SEARCH_SUGGESTIONS: false,
@@ -138,9 +140,49 @@ describe('SearchBar', () => {
     ) as HTMLInputElement;
     fireEvent.change(searchInput, { target: { value: 'U.S.' } });
     fireEvent.focus(searchInput);
+
     await waitFor(() => {
       expect(searchInput.value).toEqual('U.S.');
       expect(wrapper.queryByText('Constitution')).toBeNull();
+    });
+  });
+
+  it('sends an event when auto-suggest displayed', async () => {
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    fakeBoclipsClient.users.setCurrentUserFeatures({
+      BO_WEB_APP_SEARCH_SUGGESTIONS: false,
+    });
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeBoclipsClient}>
+        <Router history={createBrowserHistory()}>
+          <Search showIconOnly={false} />
+        </Router>
+      </BoclipsClientProvider>,
+    );
+
+    fakeBoclipsClient.suggestions.populate({
+      channels: [],
+      subjects: [],
+      suggestionTerm: 'U.S. ',
+      phrases: ['U.S. Senate', 'U.S. Constitution'],
+    });
+
+    const searchInput = wrapper.getByPlaceholderText(
+      'Search for videos',
+    ) as HTMLInputElement;
+    fireEvent.change(searchInput, { target: { value: 'U.S.' } });
+    fireEvent.focus(searchInput);
+
+    await waitFor(() => {
+      const suggestEvent = lastEvent(
+        fakeBoclipsClient,
+      ) as SearchQueryCompletionsSuggestedRequest;
+
+      expect(suggestEvent?.impressions).toEqual([
+        'U.S. Senate',
+        'U.S. Constitution',
+      ]);
+      expect(suggestEvent?.searchQuery).toEqual('U.S.');
     });
   });
 });
