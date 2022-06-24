@@ -13,6 +13,11 @@ interface Props {
 
 const VideoRecommendations = ({ video }: Props) => {
   const { data: recommendedVideos } = useGetVideoRecommendations(video);
+  const trackAddToCart = () => {
+    AnalyticsFactory.appcues().sendEvent(
+      AppcuesEvent.ADD_TO_CART_FROM_RECOMMENDED_VIDEOS,
+    );
+  };
 
   return recommendedVideos && recommendedVideos.length ? (
     <>
@@ -28,9 +33,7 @@ const VideoRecommendations = ({ video }: Props) => {
         {recommendedVideos?.map((recommendedVideo) => (
           <VideoGridCard
             video={recommendedVideo}
-            addToCartAppCuesEvent={
-              AppcuesEvent.ADD_TO_CART_FROM_RECOMMENDED_VIDEOS
-            }
+            onAddToCart={trackAddToCart}
             onSegmentPlayed={(start: number, end: number) => {
               AnalyticsFactory.mixpanel().track('video_recommendation_played', {
                 start,

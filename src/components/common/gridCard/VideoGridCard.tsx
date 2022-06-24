@@ -1,7 +1,6 @@
 import CoverWithVideo, {
   OnSegmentPlayedEvent,
 } from 'src/components/playlists/coverWithVideo/CoverWithVideo';
-import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import GridCard from 'src/components/common/gridCard/GridCard';
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
@@ -10,17 +9,18 @@ import s from 'src/components/common/gridCard/style.module.less';
 import { VideoCardButtons } from 'src/components/videoCard/buttons/VideoCardButtons';
 import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
 import { getBrowserLocale } from 'src/services/getBrowserLocale';
+import { AddToCartCallback } from 'src/types/AddToCartCallback';
 
 interface Props {
   video: Video;
-  addToCartAppCuesEvent: AppcuesEvent;
+  onAddToCart: AddToCartCallback;
   onCleanupAddToPlaylist?: (playlistId: string, cleanUp: () => void) => void;
   onSegmentPlayed?: OnSegmentPlayedEvent;
 }
 
 const VideoGridCard = ({
   video,
-  addToCartAppCuesEvent,
+  onAddToCart,
   onCleanupAddToPlaylist,
   onSegmentPlayed,
 }: Props) => (
@@ -57,7 +57,7 @@ const VideoGridCard = ({
         <VideoCardButtons
           video={video}
           onCleanupAddToPlaylist={onCleanupAddToPlaylist}
-          addToCartAppCuesEvent={addToCartAppCuesEvent}
+          onAddToCart={onAddToCart}
           iconOnly
         />
       </div>

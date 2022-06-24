@@ -9,7 +9,6 @@ import Button from '@boclips-ui/button';
 import React from 'react';
 import c from 'classnames';
 import CartIcon from 'resources/icons/cart-icon.svg';
-import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import {
   trackVideoAddedToCart,
@@ -19,6 +18,7 @@ import { Video } from 'boclips-api-client/dist/types';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import Tooltip from '@boclips-ui/tooltip';
+import { AddToCartCallback } from 'src/types/AddToCartCallback';
 import s from './style.module.less';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 
@@ -26,14 +26,14 @@ interface AddToCartButtonProps {
   video: Video;
   width?: string;
   removeButtonWidth?: string;
-  appcueEvent?: AppcuesEvent;
+  onClick?: AddToCartCallback;
   iconOnly?: boolean;
 }
 
 export const AddToCartButton = ({
   video,
   width,
-  appcueEvent,
+  onClick,
   removeButtonWidth,
   iconOnly = false,
 }: AddToCartButtonProps) => {
@@ -65,8 +65,8 @@ export const AddToCartButton = ({
           `add-video-${it.id}-to-cart-notification`,
         );
 
-        if (appcueEvent) {
-          AnalyticsFactory.appcues().sendEvent(appcueEvent);
+        if (onClick) {
+          onClick();
         }
         videoAddedHotjarEvent();
       },

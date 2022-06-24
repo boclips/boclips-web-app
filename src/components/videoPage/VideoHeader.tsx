@@ -8,6 +8,7 @@ import { FeatureGate } from 'src/components/common/FeatureGate';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import { Typography } from '@boclips-ui/typography';
 import { VideoInfo } from 'src/components/common/videoInfo/VideoInfo';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
 
@@ -51,7 +52,11 @@ export const VideoHeader = ({ video }: Props) => {
           <AddToCartButton
             video={video}
             width="200px"
-            appcueEvent={AppcuesEvent.ADD_TO_CART_FROM_VIDEO_PAGE}
+            onClick={() => {
+              AnalyticsFactory.appcues().sendEvent(
+                AppcuesEvent.ADD_TO_CART_FROM_VIDEO_PAGE,
+              );
+            }}
           />
         </FeatureGate>
       </div>

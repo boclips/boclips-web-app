@@ -1,5 +1,6 @@
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
+import { AddToCartCallback } from 'src/types/AddToCartCallback';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import { FeatureGate } from 'src/components/common/FeatureGate';
@@ -11,14 +12,14 @@ import { CopyLegacyVideoLinkButton } from './CopyLegacyVideoLinkButton';
 
 interface VideoCardButtonsProps {
   video: Video;
-  addToCartAppCuesEvent?: AppcuesEvent;
+  onAddToCart?: AddToCartCallback;
   onCleanupAddToPlaylist?: (playlistId: string, cleanUp: () => void) => void;
   iconOnly?: boolean;
 }
 
 export const VideoCardButtons = ({
   video,
-  addToCartAppCuesEvent = AppcuesEvent.ADD_TO_CART_FROM_SEARCH_RESULTS,
+  onAddToCart,
   onCleanupAddToPlaylist,
   iconOnly = false,
 }: VideoCardButtonsProps) => {
@@ -45,7 +46,7 @@ export const VideoCardButtons = ({
           video={video}
           key="cart-button"
           width="148px"
-          appcueEvent={addToCartAppCuesEvent}
+          onClick={onAddToCart}
           iconOnly={iconOnly}
         />
       </FeatureGate>

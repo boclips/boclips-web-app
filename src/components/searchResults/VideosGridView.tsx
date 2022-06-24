@@ -7,6 +7,7 @@ import c from 'classnames';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import VideoGridCard from 'src/components/common/gridCard/VideoGridCard';
 import List from 'antd/lib/list';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import s from './styles.module.less';
 import paginationStyles from '../common/pagination/pagination.module.less';
 
@@ -63,7 +64,11 @@ export const VideosGridView = ({
         <li data-qa="video-card-wrapper">
           <VideoGridCard
             video={video}
-            addToCartAppCuesEvent={AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE}
+            onAddToCart={() => {
+              AnalyticsFactory.appcues().sendEvent(
+                AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE,
+              );
+            }}
           />
         </li>
       )}
