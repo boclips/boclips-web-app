@@ -9,13 +9,18 @@ describe('MixpanelService', () => {
 
   it('forwards track to mixpanel', () => {
     const mixpanelService = new MixpanelService(mixpanelMock);
-    mixpanelService.track('sample action');
+    mixpanelService.track('video_recommendation_url_copied', {});
 
-    expect(mixpanelMock.track).toHaveBeenCalledWith('sample action');
+    expect(mixpanelMock.track).toHaveBeenCalledWith(
+      'video_recommendation_url_copied',
+      {},
+    );
   });
 
   it('handles null mixpanel', () => {
     const mixpanelService = new MixpanelService(null);
-    expect(() => mixpanelService.track('sample event')).not.toThrow();
+    expect(() =>
+      mixpanelService.track('video_recommendation_played'),
+    ).not.toThrow();
   });
 });
