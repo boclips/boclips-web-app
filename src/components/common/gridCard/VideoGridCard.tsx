@@ -1,4 +1,6 @@
-import CoverWithVideo from 'src/components/playlists/coverWithVideo/CoverWithVideo';
+import CoverWithVideo, {
+  OnSegmentPlayedEvent,
+} from 'src/components/playlists/coverWithVideo/CoverWithVideo';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import GridCard from 'src/components/common/gridCard/GridCard';
 import React from 'react';
@@ -13,18 +15,20 @@ interface Props {
   video: Video;
   addToCartAppCuesEvent: AppcuesEvent;
   onCleanupAddToPlaylist?: (playlistId: string, cleanUp: () => void) => void;
+  onSegmentPlayed?: OnSegmentPlayedEvent;
 }
 
 const VideoGridCard = ({
   video,
   addToCartAppCuesEvent,
   onCleanupAddToPlaylist,
+  onSegmentPlayed,
 }: Props) => (
   <GridCard
     link={`/videos/${video.id}`}
     key={video.id}
     name={video.title}
-    header={<CoverWithVideo video={video} />}
+    header={<CoverWithVideo video={video} onSegmentPlayed={onSegmentPlayed} />}
     playerBadge={
       video.playback.duration && (
         <div className="text-white">

@@ -2,14 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import s from 'src/components/playlists/style.module.less';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
+import { Video as PlayerVideo } from 'boclips-player/dist/types/Video';
 import { BoclipsPlayer } from 'boclips-player/dist/BoclipsPlayer/BoclipsPlayer';
 import { handleEnterKeyEvent } from 'src/services/handleKeyEvent';
 
+export type OnSegmentPlayedEvent = (start: number, end: number) => void;
+
 interface Props {
   video: Video;
+  onSegmentPlayed?: OnSegmentPlayedEvent;
 }
 
-const CoverWithVideo = ({ video }: Props) => {
+const CoverWithVideo = ({ video, onSegmentPlayed }: Props) => {
   const [showPlayer, setShowPlayer] = useState<boolean>(false);
   const [ref, setRef] = useState<BoclipsPlayer>();
 
@@ -24,9 +28,19 @@ const CoverWithVideo = ({ video }: Props) => {
     }
   }, [ref]);
 
+  const handleSegmentPlayed = (_: PlayerVideo, start: number, end: number) => {
+    onSegmentPlayed(start, end);
+  };
+
   switch (showPlayer) {
     case true:
-      return <VideoPlayer setRef={setRef} video={video} />;
+      return (
+        <VideoPlayer
+          analytics={{ handleOnSegmentPlayback: handleSegmentPlayed }}
+          setRef={setRef}
+          video={video}
+        />
+      );
     default:
       return (
         <div

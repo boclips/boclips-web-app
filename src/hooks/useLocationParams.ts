@@ -70,7 +70,6 @@ export const convertToURLSearchParams = (
     // We need to loop through filters as you can't append an array for URLSearchParams
     values.forEach((value) => params.append(key, value)),
   );
-  console.log('got params ', params.get('topics'));
   return params;
 };
 

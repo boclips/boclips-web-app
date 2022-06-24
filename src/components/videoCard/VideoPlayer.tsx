@@ -4,12 +4,14 @@ import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { Player } from 'boclips-player-react';
 import { useBoclipsSecurity } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
+import { AnalyticsOptions } from 'boclips-player/dist/Events/AnalyticsOptions';
 import s from './VideoPlayer.module.less';
 
 const getPlayerOptions = (
   security: BoclipsSecurity,
   playerControls?: string,
   showDurationBadge?: boolean,
+  analytics?: Partial<AnalyticsOptions>,
 ): Partial<PlayerOptions> => {
   const tokenFactory = security.getTokenFactory(5);
 
@@ -55,6 +57,11 @@ const getPlayerOptions = (
         }
       },
     },
+    analytics: {
+      metadata: {},
+      handleOnSegmentPlayback: () => {},
+      ...analytics,
+    },
   };
 };
 
@@ -63,6 +70,7 @@ interface Props {
   controls?: 'cart';
   showDurationBadge?: boolean;
   setRef?: any;
+  analytics?: Partial<AnalyticsOptions>;
 }
 
 export const VideoPlayer = ({
@@ -70,11 +78,13 @@ export const VideoPlayer = ({
   controls,
   showDurationBadge = false,
   setRef = () => null,
+  analytics,
 }: Props) => {
   const options = getPlayerOptions(
     useBoclipsSecurity(),
     controls,
     showDurationBadge,
+    analytics,
   );
 
   return (

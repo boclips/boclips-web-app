@@ -5,6 +5,7 @@ import { useGetVideoRecommendations } from 'src/hooks/api/videoQuery';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import VideoGridCard from 'src/components/common/gridCard/VideoGridCard';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 
 interface Props {
   video: Video;
@@ -30,6 +31,13 @@ const VideoRecommendations = ({ video }: Props) => {
             addToCartAppCuesEvent={
               AppcuesEvent.ADD_TO_CART_FROM_RECOMMENDED_VIDEOS
             }
+            onSegmentPlayed={(start: number, end: number) => {
+              AnalyticsFactory.mixpanel().track('video_recommendation_played', {
+                start,
+                end,
+                videoId: recommendedVideo.id,
+              });
+            }}
           />
         ))}
       </div>
