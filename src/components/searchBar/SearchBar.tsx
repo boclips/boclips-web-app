@@ -11,6 +11,7 @@ import useFeatureFlags from 'src/hooks/useFeatureFlags';
 import { v4 as uuidv4 } from 'uuid';
 import { trackSearchCompletionsSuggested } from 'src/components/common/analytics/Analytics';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
+import { Constants } from 'src/AppConstants';
 import s from './style.module.less';
 
 interface Props {
@@ -31,23 +32,32 @@ export const Search = ({ showIconOnly, onSearch }: Props) => {
 
   const { data: suggestions } = useGetSuggestionsQuery(searchTerm);
 
+  const emitSuggestionCompletionsEvent = (searchUrl?: string) => {
+    if (!hasAccessToSuggestions) {
+      return;
+    }
+
+    trackSearchCompletionsSuggested(
+      {
+        completionId,
+        componentId,
+        searchQuery: searchTerm,
+        impressions: suggestions?.phrases,
+        searchUrl,
+      },
+      apiClient,
+    );
+    setCompletionId(uuidv4());
+  };
+
   useEffect(() => {
     if (suggestions?.phrases && suggestions?.phrases.length > 0) {
-      trackSearchCompletionsSuggested(
-        {
-          completionId,
-          componentId,
-          searchQuery: searchTerm,
-          impressions: suggestions?.phrases,
-        },
-        apiClient,
-      );
-      setCompletionId(uuidv4());
+      emitSuggestionCompletionsEvent();
     }
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [suggestions]);
 
-  const handleSearch = (searchQuery: string) => {
+  const handleSearch = (searchQuery: string, _, suggestionUsed: boolean) => {
     if (onSearch) {
       onSearch(searchQuery);
     }
@@ -57,6 +67,12 @@ export const Search = ({ showIconOnly, onSearch }: Props) => {
     const params = convertToURLSearchParams(searchLocation);
     params.set('page', '1');
     params.delete('topics');
+
+    if (suggestions?.phrases.length > 0 && suggestionUsed) {
+      emitSuggestionCompletionsEvent(
+        `${Constants.HOST}/videos?${params.toString()}`,
+      );
+    }
 
     return history.push({
       pathname: '/videos',
