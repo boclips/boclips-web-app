@@ -53,6 +53,7 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
               AnalyticsFactory.appcues().sendEvent(
                 AppcuesEvent.ADD_TO_CART_FROM_VIDEO_PAGE,
               );
+              AnalyticsFactory.mixpanel().track('video_details_cart_add');
             }}
           />
         </FeatureGate>
