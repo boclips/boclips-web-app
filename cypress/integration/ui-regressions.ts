@@ -135,9 +135,6 @@ context('UI Regression', () => {
     cy.visit(`${endpoint}/`);
     cy.bo((bo) => bo.create.playlistWithVideos());
     cy.get('[data-qa="library-button"]').click();
-    cy.percySnapshot('Library with playlist view', {
-      widths: snapshotViewWidths,
-    });
 
     cy.get('button').contains('Create new playlist').click();
     cy.percySnapshot('Create new playlist modal view', {
