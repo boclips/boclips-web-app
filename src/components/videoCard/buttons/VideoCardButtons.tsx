@@ -1,6 +1,5 @@
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import { AddToCartCallback } from 'src/types/AddToCartCallback';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import { FeatureGate } from 'src/components/common/FeatureGate';
@@ -12,7 +11,8 @@ import { CopyLegacyVideoLinkButton } from './CopyLegacyVideoLinkButton';
 
 interface VideoCardButtonsProps {
   video: Video;
-  onAddToCart?: AddToCartCallback;
+  onAddToCart?: () => void;
+  onAddToPlaylist?: () => void;
   onCleanupAddToPlaylist?: (playlistId: string, cleanUp: () => void) => void;
   iconOnly?: boolean;
 }
@@ -20,6 +20,7 @@ interface VideoCardButtonsProps {
 export const VideoCardButtons = ({
   video,
   onAddToCart,
+  onAddToPlaylist,
   onCleanupAddToPlaylist,
   iconOnly = false,
 }: VideoCardButtonsProps) => {
@@ -29,6 +30,7 @@ export const VideoCardButtons = ({
         <AddToPlaylistButton
           videoId={video.id}
           onCleanup={onCleanupAddToPlaylist}
+          onClick={onAddToPlaylist}
         />
 
         <FeatureGate feature="BO_WEB_APP_COPY_OLD_LINK_BUTTON">

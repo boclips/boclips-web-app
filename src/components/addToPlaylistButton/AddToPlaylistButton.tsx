@@ -26,9 +26,10 @@ import s from './style.module.less';
 interface Props {
   videoId: string;
   onCleanup?: (playlistId: string, buttonCleanUp: () => void) => void;
+  onClick?: () => void;
 }
 
-export const AddToPlaylistButton = ({ videoId, onCleanup }: Props) => {
+export const AddToPlaylistButton = ({ videoId, onCleanup, onClick }: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [showCreatePlaylistModal, setShowCreatePlaylistModal] =
     useState<boolean>(false);
@@ -171,6 +172,9 @@ export const AddToPlaylistButton = ({ videoId, onCleanup }: Props) => {
             )
           }
           onClick={() => {
+            if (onClick){
+              onClick();
+            }
             setIsOpen(!isOpen);
           }}
           type="outline"

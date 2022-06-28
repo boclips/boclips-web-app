@@ -18,7 +18,6 @@ import { Video } from 'boclips-api-client/dist/types';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import Tooltip from '@boclips-ui/tooltip';
-import { AddToCartCallback } from 'src/types/AddToCartCallback';
 import s from './style.module.less';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 
@@ -26,7 +25,7 @@ interface AddToCartButtonProps {
   video: Video;
   width?: string;
   removeButtonWidth?: string;
-  onClick?: AddToCartCallback;
+  onClick?: () => void;
   iconOnly?: boolean;
 }
 

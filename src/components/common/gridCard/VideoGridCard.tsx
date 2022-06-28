@@ -9,13 +9,13 @@ import s from 'src/components/common/gridCard/style.module.less';
 import { VideoCardButtons } from 'src/components/videoCard/buttons/VideoCardButtons';
 import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
 import { getBrowserLocale } from 'src/services/getBrowserLocale';
-import { AddToCartCallback } from 'src/types/AddToCartCallback';
 
 interface Props {
   video: Video;
-  onAddToCart: AddToCartCallback;
+  onAddToCart: () => void;
   onCleanupAddToPlaylist?: (playlistId: string, cleanUp: () => void) => void;
   onSegmentPlayed?: OnSegmentPlayedEvent;
+  onAddToPlaylist?: () => void;
 }
 
 const VideoGridCard = ({
@@ -23,6 +23,7 @@ const VideoGridCard = ({
   onAddToCart,
   onCleanupAddToPlaylist,
   onSegmentPlayed,
+  onAddToPlaylist,
 }: Props) => (
   <GridCard
     link={`/videos/${video.id}`}
@@ -58,6 +59,7 @@ const VideoGridCard = ({
           video={video}
           onCleanupAddToPlaylist={onCleanupAddToPlaylist}
           onAddToCart={onAddToCart}
+          onAddToPlaylist={onAddToPlaylist}
           iconOnly
         />
       </div>

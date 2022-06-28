@@ -36,6 +36,9 @@ const VideoRecommendations = ({ video }: Props) => {
           <VideoGridCard
             video={recommendedVideo}
             onAddToCart={trackAddToCart}
+            onAddToPlaylist={() => {
+              mixpanel.track('video_recommendation_playlist_add');
+            }}
             onSegmentPlayed={(start: number, end: number) => {
               mixpanel.track('video_recommendation_played', {
                 start,
