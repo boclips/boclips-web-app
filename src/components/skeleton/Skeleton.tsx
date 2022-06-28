@@ -13,7 +13,12 @@ const SkeletonTiles = ({ className, numberOfTiles = 8 }: Props) => {
   return (
     <>
       {skeletonsToRender.map((i) => (
-        <div key={i} className={c(className, s.skeleton)} />
+        <div
+          key={i}
+          className={c(className, s.skeleton)}
+          role="progressbar"
+          aria-label="Loading"
+        />
       ))}
     </>
   );
