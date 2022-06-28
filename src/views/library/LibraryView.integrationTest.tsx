@@ -165,7 +165,7 @@ describe('LibraryView', () => {
 
     expect(await wrapper.findByText('My collection about cats')).toBeVisible();
     expect(wrapper.getByLabelText('Thumbnail of Title 1')).toBeVisible();
-    expect(wrapper.getByTestId('default-thumnail-2')).toBeVisible();
+    expect(wrapper.getByTestId('default-thumbnail-2')).toBeVisible();
   });
 
   const createVideoWithThumbnail = (id: string) => {
