@@ -134,12 +134,12 @@ export const useRemoveFromPlaylistMutation = (
 
 const doGetOwnPlaylists = (client: BoclipsClient) =>
   client.collections
-    .getMyCollections({ origin: 'BO_WEB_APP', projection: 'details' })
+    .getMyCollections({ origin: 'BO_WEB_APP' })
     .then((playlists) => playlists.page);
 
 const doGetOwnAndSharedPlaylists = (client: BoclipsClient) =>
   client.collections
-    .getMySavedCollections({ origin: 'BO_WEB_APP', projection: 'details' })
+    .getMySavedCollectionsWithoutDetails({ origin: 'BO_WEB_APP' })
     .then((playlists) => playlists.page);
 
 export const usePlaylistMutation = () => {
