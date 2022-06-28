@@ -6,9 +6,10 @@ import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable'
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { CollectionsClient } from 'boclips-api-client/dist/sub-clients/collections/client/CollectionsClient';
+import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collections/model/ListViewCollection';
 
 interface UpdatePlaylistProps {
-  playlist: Collection;
+  playlist: Collection | ListViewCollection;
   videoId: string;
 }
 
@@ -45,7 +46,7 @@ export const usePlaylistQuery = (id: string) => {
 };
 
 export const doAddToPlaylist = (
-  playlist: Collection,
+  playlist: Collection | ListViewCollection,
   videoId: string,
   client: BoclipsClient,
 ) => {
@@ -53,7 +54,7 @@ export const doAddToPlaylist = (
 };
 
 export const doRemoveFromPlaylist = (
-  playlist: Collection,
+  playlist: Collection | ListViewCollection,
   videoId: string,
   client: BoclipsClient,
 ) => {
@@ -134,7 +135,7 @@ export const useRemoveFromPlaylistMutation = (
 
 const doGetOwnPlaylists = (client: BoclipsClient) =>
   client.collections
-    .getMyCollections({ origin: 'BO_WEB_APP' })
+    .getMyCollectionsWithoutDetails({ origin: 'BO_WEB_APP' })
     .then((playlists) => playlists.page);
 
 const doGetOwnAndSharedPlaylists = (client: BoclipsClient) =>
