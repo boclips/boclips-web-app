@@ -818,37 +818,7 @@ describe('SearchResultsFiltering', () => {
   });
 
   describe('search topic filters', () => {
-    it(`does not display if user does not have the feature`, async () => {
-      fakeClient.users.setCurrentUserFeatures({
-        VIDEO_TOPIC_AGGREGATION: true,
-      });
-      fakeClient.videos.insertVideo(
-        VideoFactory.sample({
-          id: '1',
-          title: 'hello 1',
-        }),
-      );
-      fakeClient.videos.setFacets(
-        FacetsFactory.sample({
-          topics: [
-            {
-              hits: 22,
-              score: 5.0,
-              id: 'boats',
-              name: 'boats',
-            },
-          ],
-        }),
-      );
-
-      const wrapper = renderSearchResultsView(['/videos?q=hello']);
-      await waitFor(() => {
-        expect(wrapper.getByText('hello 1')).toBeInTheDocument();
-        expect(wrapper.queryByText('boats')).toBeNull();
-      });
-    });
-
-    it('displays search topic filters, ordered by score if user has feature', async () => {
+    const setupFacetsAndVideos = (client: FakeBoclipsClient) => {
       const facets = FacetsFactory.sample({
         topics: [
           {
@@ -866,25 +836,40 @@ describe('SearchResultsFiltering', () => {
         ],
       });
 
-      fakeClient.users.insertCurrentUser(UserFactory.sample());
+      client.videos.insertVideo(
+        VideoFactory.sample({
+          id: '1',
+          title: 'hello cars stock',
+          topics: ['cars'],
+          types: [{ name: 'STOCK', id: 1 }],
+        }),
+      );
+      client.videos.insertVideo(
+        VideoFactory.sample({
+          id: '1',
+          title: 'hello boats stock',
+          topics: ['boats'],
+          types: [{ name: 'STOCK', id: 1 }],
+        }),
+      );
+      client.videos.insertVideo(
+        VideoFactory.sample({
+          id: '1',
+          title: 'hello cars news',
+          topics: ['cars'],
+          types: [{ name: 'NEWS', id: 2 }],
+        }),
+      );
+      client.videos.setFacets(facets);
+    };
+
+    it('displays search topic filters, ordered by score if user has feature', async () => {
       fakeClient.users.setCurrentUserFeatures({
         VIDEO_TOPIC_AGGREGATION: true,
       });
-      fakeClient.videos.insertVideo(
-        VideoFactory.sample({
-          id: '1',
-          title: 'hello 1',
-        }),
-      );
-      fakeClient.videos.setFacets(facets);
-
-      const wrapper = renderSearchResultsView(['/videos?q=hello']);
-
+      setupFacetsAndVideos(fakeClient);
+      const wrapper = renderSearchResultsView(['/videos?q=news']);
       await waitFor(() => {
-        expect(wrapper.getByText('cars')).toBeInTheDocument();
-
-        expect(wrapper.getByText('cars')).toBeInTheDocument();
-        expect(wrapper.getByText('boats')).toBeInTheDocument();
         expect(wrapper.getAllByTestId('search-topic')[0]).toHaveTextContent(
           'cars',
         );
@@ -895,55 +880,52 @@ describe('SearchResultsFiltering', () => {
     });
 
     it('can filter by search topic', async () => {
-      const facets = FacetsFactory.sample({
-        topics: [
-          {
-            hits: 22,
-            score: 5.0,
-            id: 'boats',
-            name: 'boats',
-          },
-          {
-            hits: 33,
-            score: 13.0,
-            id: 'cars',
-            name: 'cars',
-          },
-        ],
-      });
-
-      fakeClient.users.insertCurrentUser(UserFactory.sample());
       fakeClient.users.setCurrentUserFeatures({
         VIDEO_TOPIC_AGGREGATION: true,
       });
-
-      fakeClient.videos.insertVideo(
-        VideoFactory.sample({
-          id: '1',
-          title: 'hello 1',
-          topics: ['cars'],
-        }),
-      );
-      fakeClient.videos.insertVideo(
-        VideoFactory.sample({
-          id: '2',
-          title: 'hello 2',
-          topics: ['boats'],
-        }),
-      );
-      fakeClient.videos.setFacets(facets);
-
-      const wrapper = renderSearchResultsView(['/videos?q=hello']);
+      setupFacetsAndVideos(fakeClient);
+      const wrapper = renderSearchResultsView(['/videos?q=stock']);
       await waitFor(() => {
-        expect(wrapper.getByText('cars')).toBeInTheDocument();
-        expect(wrapper.getByText('boats')).toBeInTheDocument();
+        expect(wrapper.getByText('hello cars stock')).toBeInTheDocument();
+        expect(wrapper.getByText('hello boats stock')).toBeInTheDocument();
       });
 
       fireEvent.click(wrapper.getByText('cars'));
 
       await waitFor(() => {
-        expect(wrapper.getByText('hello 1')).toBeVisible();
-        expect(wrapper.queryByText('hello 2')).toBeNull();
+        expect(wrapper.getByText('hello cars stock')).toBeVisible();
+        expect(wrapper.queryByText('hello boats stock')).toBeNull();
+      });
+    });
+
+    it(`persists search topics on clearing all filters`, async () => {
+      fakeClient.users.setCurrentUserFeatures({
+        VIDEO_TOPIC_AGGREGATION: true,
+      });
+      setupFacetsAndVideos(fakeClient);
+
+      const wrapper = renderSearchResultsView([
+        '/videos?q=hello&video_type=NEWS',
+      ]);
+      await waitFor(() => {
+        expect(wrapper.getByText('hello cars news')).toBeInTheDocument();
+        expect(wrapper.queryByText('hello boats stock')).toBeNull();
+        expect(wrapper.queryByText('hello cars stock')).toBeNull();
+      });
+
+      fireEvent.click(wrapper.getByText('cars'));
+
+      await waitFor(() => {
+        expect(wrapper.getByText('hello cars news')).toBeInTheDocument();
+        expect(wrapper.queryByText('hello boats news')).toBeNull();
+        expect(wrapper.queryByText('hello boats stock')).toBeNull();
+      });
+
+      fireEvent.click(wrapper.getByText('Clear all'));
+
+      await waitFor(() => {
+        expect(wrapper.getByText('hello cars news')).toBeVisible();
+        expect(wrapper.getByText('hello cars stock')).toBeVisible();
       });
     });
   });
