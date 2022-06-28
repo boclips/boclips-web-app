@@ -129,7 +129,7 @@ const SearchResultsView = () => {
       release_date_from: [],
       release_date_to: [],
       education_level: [],
-      topics: [],
+      topics: filtersFromURL.topics,
     };
 
     setSearchLocation({
