@@ -41,6 +41,7 @@ run:
     done
     npm run test-visual
     npm run build
+    npm run test-visual:wait
     cp -R ./dist/ ../dist/html/
     cp application.conf Dockerfile ../dist
   dir: source

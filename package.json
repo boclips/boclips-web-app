@@ -10,6 +10,7 @@
     "test:coverage": "n auto; jest --maxWorkers=50% --coverage --collectCoverageFrom='src/**/*.ts*'",
     "test-visual": "percy exec -- ./node_modules/.bin/cypress run",
     "test-visual:open": "percy exec -- ./node_modules/.bin/cypress open",
+    "test-visual:wait": "percy build:wait -f --project boclips-web-app --commit HEAD",
     "dev": "NODE_ENV=development TAILWIND_MODE=watch webpack serve --config webpack/webpack.dev.js",
     "fake": "NODE_ENV=development TAILWIND_MODE=watch webpack serve --config webpack/webpack.fake.js",
     "compile": "tsc -p . --noEmit",
