@@ -16,6 +16,7 @@ interface Props {
   onCleanupAddToPlaylist?: (playlistId: string, cleanUp: () => void) => void;
   onSegmentPlayed?: OnSegmentPlayedEvent;
   onAddToPlaylist?: () => void;
+  onUrlCopied?: () => void;
 }
 
 const VideoGridCard = ({
@@ -24,6 +25,7 @@ const VideoGridCard = ({
   onCleanupAddToPlaylist,
   onSegmentPlayed,
   onAddToPlaylist,
+  onUrlCopied,
 }: Props) => (
   <GridCard
     link={`/videos/${video.id}`}
@@ -60,6 +62,7 @@ const VideoGridCard = ({
           onCleanupAddToPlaylist={onCleanupAddToPlaylist}
           onAddToCart={onAddToCart}
           onAddToPlaylist={onAddToPlaylist}
+          onUrlCopied={onUrlCopied}
           iconOnly
         />
       </div>

@@ -39,6 +39,9 @@ const VideoRecommendations = ({ video }: Props) => {
             onAddToPlaylist={() => {
               mixpanel.track('video_recommendation_playlist_add');
             }}
+            onUrlCopied={() => {
+              mixpanel.track('video_recommendation_url_copied');
+            }}
             onSegmentPlayed={(start: number, end: number) => {
               mixpanel.track('video_recommendation_played', {
                 start,

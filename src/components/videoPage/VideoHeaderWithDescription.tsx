@@ -18,6 +18,8 @@ interface Props {
 }
 
 export const VideoHeaderWithDescription = ({ video }: Props) => {
+  const mixpanel = AnalyticsFactory.mixpanel();
+
   return (
     <>
       <div className={s.sticky}>
@@ -39,10 +41,16 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
       </div>
       <div className={(s.sticky, s.buttons)}>
         <div className={s.iconButtons}>
-          <AddToPlaylistButton videoId={video.id} />
+          <AddToPlaylistButton
+            videoId={video.id}
+            onClick={() => {
+              mixpanel.track('video_details_playlist_add');
+            }}
+          />
           <CopyVideoLinkButton
             video={video}
             appcueEvent={AppcuesEvent.COPY_LINK_FROM_VIDEO_PAGE}
+            onClick={() => mixpanel.track('video_details_url_copied')}
           />
         </div>
         <FeatureGate linkName="cart">
@@ -53,7 +61,7 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
               AnalyticsFactory.appcues().sendEvent(
                 AppcuesEvent.ADD_TO_CART_FROM_VIDEO_PAGE,
               );
-              AnalyticsFactory.mixpanel().track('video_details_cart_add');
+              mixpanel.track('video_details_cart_add');
             }}
           />
         </FeatureGate>

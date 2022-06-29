@@ -172,7 +172,7 @@ export const AddToPlaylistButton = ({ videoId, onCleanup, onClick }: Props) => {
             )
           }
           onClick={() => {
-            if (onClick){
+            if (onClick) {
               onClick();
             }
             setIsOpen(!isOpen);

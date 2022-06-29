@@ -75,4 +75,43 @@ describe('video recommendations', () => {
       ),
     );
   });
+
+  it('sends a mixpanel event on url copied', async () => {
+    // TODO (Armin): extract this to fixture
+    const apiClient = new FakeBoclipsClient();
+    apiClient.videos.setRecommendationsForVideo('sample id', [
+      VideoFactory.sample({}),
+    ]);
+
+    Object.defineProperty(navigator, 'clipboard', {
+      value: {
+        writeText: jest.fn().mockImplementation(() => Promise.resolve()),
+      },
+    });
+
+    const mixpanelEventUrlCopied = jest.spyOn(
+      AnalyticsFactory.mixpanel(),
+      'track',
+    );
+
+    const wrapper = render(
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <BoclipsClientProvider client={apiClient}>
+          <VideoRecommendations
+            video={VideoFactory.sample({ id: 'sample id' })}
+          />
+        </BoclipsClientProvider>
+      </BoclipsSecurityProvider>,
+    );
+
+    const urlCopyButton = await wrapper.findByLabelText('Copy video link');
+
+    fireEvent.click(urlCopyButton);
+
+    await waitFor(() =>
+      expect(mixpanelEventUrlCopied).toHaveBeenCalledWith(
+        'video_recommendation_url_copied',
+      ),
+    );
+  });
 });

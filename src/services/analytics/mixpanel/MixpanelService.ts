@@ -1,4 +1,5 @@
 type MixpanelEvent =
+  | 'video_recommendation_clicked'
   | 'video_recommendation_played'
   | 'video_recommendation_url_copied'
   | 'video_recommendation_legacy_url_copied'

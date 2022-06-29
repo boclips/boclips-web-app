@@ -5,6 +5,7 @@ import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import c from 'classnames';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import s from './style.module.less';
 import { CopyVideoLinkButton } from './CopyVideoLinkButton';
 import { CopyLegacyVideoLinkButton } from './CopyLegacyVideoLinkButton';
@@ -13,6 +14,7 @@ interface VideoCardButtonsProps {
   video: Video;
   onAddToCart?: () => void;
   onAddToPlaylist?: () => void;
+  onUrlCopied?: () => void;
   onCleanupAddToPlaylist?: (playlistId: string, cleanUp: () => void) => void;
   iconOnly?: boolean;
 }
@@ -22,8 +24,16 @@ export const VideoCardButtons = ({
   onAddToCart,
   onAddToPlaylist,
   onCleanupAddToPlaylist,
+  onUrlCopied,
   iconOnly = false,
 }: VideoCardButtonsProps) => {
+  const trackCopyVideoLink = () => {
+    onUrlCopied();
+    AnalyticsFactory.appcues().sendEvent(
+      AppcuesEvent.COPY_LINK_FROM_SEARCH_RESULTS,
+    );
+  };
+
   return (
     <div className="flex flex-row justify-between" key={`copy-${video.id}`}>
       <div className={c(s.iconOnlyButtons)}>
@@ -37,10 +47,7 @@ export const VideoCardButtons = ({
           <CopyLegacyVideoLinkButton video={video} />
         </FeatureGate>
 
-        <CopyVideoLinkButton
-          video={video}
-          appcueEvent={AppcuesEvent.COPY_LINK_FROM_SEARCH_RESULTS}
-        />
+        <CopyVideoLinkButton video={video} onClick={trackCopyVideoLink} />
       </div>
 
       <FeatureGate linkName="cart">
