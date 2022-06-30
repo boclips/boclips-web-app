@@ -10,22 +10,29 @@ import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
 
 describe('video recommendations', () => {
-  it('sends a mixpanel event on add to cart', async () => {
-    const apiClient = new FakeBoclipsClient();
-    apiClient.videos.setRecommendationsForVideo('sample id', [
-      VideoFactory.sample({}),
+  let apiClient: FakeBoclipsClient;
+  const mainId = 'main id';
+  const recTitle = 'How to install a kitchen sink in Emacs?';
+  const mixpanelTrack = jest.spyOn(
+    AnalyticsFactory.mixpanel(),
+    'track',
+  );
+
+  beforeEach(() => {
+    apiClient = new FakeBoclipsClient();
+
+    apiClient.videos.setRecommendationsForVideo(mainId, [
+      VideoFactory.sample({title: recTitle}),
     ]);
+    mixpanelTrack.mockClear();
+  })
 
-    const mixpanelEventAddedToCart = jest.spyOn(
-      AnalyticsFactory.mixpanel(),
-      'track',
-    );
-
+  it('sends a mixpanel event on add to cart', async () => {
     const wrapper = render(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
         <BoclipsClientProvider client={apiClient}>
           <VideoRecommendations
-            video={VideoFactory.sample({ id: 'sample id' })}
+            video={VideoFactory.sample({ id: mainId })}
           />
         </BoclipsClientProvider>
       </BoclipsSecurityProvider>,
@@ -36,28 +43,18 @@ describe('video recommendations', () => {
     fireEvent.click(addToCartButton);
 
     await waitFor(() =>
-      expect(mixpanelEventAddedToCart).toHaveBeenCalledWith(
+      expect(mixpanelTrack).toHaveBeenCalledWith(
         'video_recommendation_cart_add',
       ),
     );
   });
 
   it('sends a mixpanel event on add to playlist', async () => {
-    const apiClient = new FakeBoclipsClient();
-    apiClient.videos.setRecommendationsForVideo('sample id', [
-      VideoFactory.sample({}),
-    ]);
-
-    const mixpanelEventAddedToPlaylist = jest.spyOn(
-      AnalyticsFactory.mixpanel(),
-      'track',
-    );
-
     const wrapper = render(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
         <BoclipsClientProvider client={apiClient}>
           <VideoRecommendations
-            video={VideoFactory.sample({ id: 'sample id' })}
+            video={VideoFactory.sample({ id: mainId })}
           />
         </BoclipsClientProvider>
       </BoclipsSecurityProvider>,
@@ -70,35 +67,24 @@ describe('video recommendations', () => {
     fireEvent.click(addToPlaylistButton);
 
     await waitFor(() =>
-      expect(mixpanelEventAddedToPlaylist).toHaveBeenCalledWith(
+      expect(mixpanelTrack).toHaveBeenCalledWith(
         'video_recommendation_playlist_add',
       ),
     );
   });
 
   it('sends a mixpanel event on url copied', async () => {
-    // TODO (Armin): extract this to fixture
-    const apiClient = new FakeBoclipsClient();
-    apiClient.videos.setRecommendationsForVideo('sample id', [
-      VideoFactory.sample({}),
-    ]);
-
     Object.defineProperty(navigator, 'clipboard', {
       value: {
         writeText: jest.fn().mockImplementation(() => Promise.resolve()),
       },
     });
 
-    const mixpanelEventUrlCopied = jest.spyOn(
-      AnalyticsFactory.mixpanel(),
-      'track',
-    );
-
     const wrapper = render(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
         <BoclipsClientProvider client={apiClient}>
           <VideoRecommendations
-            video={VideoFactory.sample({ id: 'sample id' })}
+            video={VideoFactory.sample({ id: mainId })}
           />
         </BoclipsClientProvider>
       </BoclipsSecurityProvider>,
@@ -109,29 +95,18 @@ describe('video recommendations', () => {
     fireEvent.click(urlCopyButton);
 
     await waitFor(() =>
-      expect(mixpanelEventUrlCopied).toHaveBeenCalledWith(
+      expect(mixpanelTrack).toHaveBeenCalledWith(
         'video_recommendation_url_copied',
       ),
     );
   });
 
   it('senda a mixpanel event on recommendation clicked', async () => {
-    const recTitle = 'How to install a kitchen sink in Emacs?';
-    const apiClient = new FakeBoclipsClient();
-    apiClient.videos.setRecommendationsForVideo('sample id', [
-      VideoFactory.sample({ title: recTitle }),
-    ]);
-
-    const mixpanelEventRecommendationClicked = jest.spyOn(
-      AnalyticsFactory.mixpanel(),
-      'track',
-    );
-
     const wrapper = render(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
         <BoclipsClientProvider client={apiClient}>
           <VideoRecommendations
-            video={VideoFactory.sample({ id: 'sample id' })}
+            video={VideoFactory.sample({ id: mainId })}
           />
         </BoclipsClientProvider>
       </BoclipsSecurityProvider>,
@@ -144,7 +119,7 @@ describe('video recommendations', () => {
     fireEvent.click(recommendationLink);
 
     await waitFor(() =>
-      expect(mixpanelEventRecommendationClicked).toHaveBeenCalledWith(
+      expect(mixpanelTrack).toHaveBeenCalledWith(
         'video_recommendation_clicked',
       ),
     );
