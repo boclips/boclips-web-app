@@ -122,7 +122,7 @@ describe('video recommendations', () => {
       VideoFactory.sample({ title: recTitle }),
     ]);
 
-    const mixpanelEventUrlCopied = jest.spyOn(
+    const mixpanelEventRecommendationClicked = jest.spyOn(
       AnalyticsFactory.mixpanel(),
       'track',
     );
@@ -144,7 +144,7 @@ describe('video recommendations', () => {
     fireEvent.click(recommendationLink);
 
     await waitFor(() =>
-      expect(mixpanelEventUrlCopied).toHaveBeenCalledWith(
+      expect(mixpanelEventRecommendationClicked).toHaveBeenCalledWith(
         'video_recommendation_clicked',
       ),
     );
