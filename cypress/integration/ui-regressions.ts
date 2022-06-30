@@ -21,21 +21,20 @@ context('UI Regression', () => {
       }),
     );
 
-    cy.get('img').click();
-
-    cy.get('button').contains('Business').should('be.visible');
+    cy.findByLabelText('Discipline Business').should('be.visible');
 
     cy.percySnapshot('Home Page', {
       widths: snapshotViewWidths,
     });
-    cy.get('button').contains('Business').click();
+
+    cy.findByLabelText('Discipline Business').click();
 
     cy.percySnapshot('Home Page with subjects', {
       widths: snapshotViewWidths,
     });
   });
 
-  xit('has a homepage for k12 disciplines', () => {
+  it('has a homepage for k12 disciplines', () => {
     cy.visit(`${endpoint}/`);
     cy.bo((bo) =>
       bo.interact((apiClient) => {
@@ -48,11 +47,7 @@ context('UI Regression', () => {
       }),
     );
 
-    cy.get('img').click();
-
-    cy.wait(1000);
-
-    cy.get('button').contains('English Language Arts').should('be.visible');
+    cy.findByLabelText('Discipline English Language Arts').should('be.visible');
 
     cy.percySnapshot('K12 Home Page', {
       widths: snapshotViewWidths,
@@ -123,11 +118,13 @@ context('UI Regression', () => {
     });
   });
 
-  xit('renders empty library', () => {
+  it('renders empty library', () => {
     cy.visit(`${endpoint}/`);
     cy.get('[data-qa="library-button"]').click();
     cy.findByRole('progressbar').should('not.exist');
-    cy.get('button').contains('Create new playlist').should('be.visible');
+    cy.findByRole('button', { name: 'Create new playlist' }).should(
+      'be.visible',
+    );
     cy.percySnapshot('Empty library view', { widths: snapshotViewWidths });
   });
 
