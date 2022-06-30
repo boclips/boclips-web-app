@@ -13,27 +13,22 @@ describe('video recommendations', () => {
   let apiClient: FakeBoclipsClient;
   const mainId = 'main id';
   const recTitle = 'How to install a kitchen sink in Emacs?';
-  const mixpanelTrack = jest.spyOn(
-    AnalyticsFactory.mixpanel(),
-    'track',
-  );
+  const mixpanelTrack = jest.spyOn(AnalyticsFactory.mixpanel(), 'track');
 
   beforeEach(() => {
     apiClient = new FakeBoclipsClient();
 
     apiClient.videos.setRecommendationsForVideo(mainId, [
-      VideoFactory.sample({title: recTitle}),
+      VideoFactory.sample({ title: recTitle }),
     ]);
     mixpanelTrack.mockClear();
-  })
+  });
 
   it('sends a mixpanel event on add to cart', async () => {
     const wrapper = render(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
         <BoclipsClientProvider client={apiClient}>
-          <VideoRecommendations
-            video={VideoFactory.sample({ id: mainId })}
-          />
+          <VideoRecommendations video={VideoFactory.sample({ id: mainId })} />
         </BoclipsClientProvider>
       </BoclipsSecurityProvider>,
     );
@@ -53,9 +48,7 @@ describe('video recommendations', () => {
     const wrapper = render(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
         <BoclipsClientProvider client={apiClient}>
-          <VideoRecommendations
-            video={VideoFactory.sample({ id: mainId })}
-          />
+          <VideoRecommendations video={VideoFactory.sample({ id: mainId })} />
         </BoclipsClientProvider>
       </BoclipsSecurityProvider>,
     );
@@ -83,9 +76,7 @@ describe('video recommendations', () => {
     const wrapper = render(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
         <BoclipsClientProvider client={apiClient}>
-          <VideoRecommendations
-            video={VideoFactory.sample({ id: mainId })}
-          />
+          <VideoRecommendations video={VideoFactory.sample({ id: mainId })} />
         </BoclipsClientProvider>
       </BoclipsSecurityProvider>,
     );
@@ -105,9 +96,7 @@ describe('video recommendations', () => {
     const wrapper = render(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
         <BoclipsClientProvider client={apiClient}>
-          <VideoRecommendations
-            video={VideoFactory.sample({ id: mainId })}
-          />
+          <VideoRecommendations video={VideoFactory.sample({ id: mainId })} />
         </BoclipsClientProvider>
       </BoclipsSecurityProvider>,
     );
