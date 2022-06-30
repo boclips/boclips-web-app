@@ -123,7 +123,7 @@ context('UI Regression', () => {
     });
   });
 
-  it('renders empty library', () => {
+  xit('renders empty library', () => {
     cy.visit(`${endpoint}/`);
     cy.get('[data-qa="library-button"]').click();
     cy.findByRole('progressbar').should('not.exist');
