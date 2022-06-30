@@ -114,4 +114,39 @@ describe('video recommendations', () => {
       ),
     );
   });
+
+  it('senda a mixpanel event on recommendation clicked', async () => {
+    const recTitle = 'How to install a kitchen sink in Emacs?';
+    const apiClient = new FakeBoclipsClient();
+    apiClient.videos.setRecommendationsForVideo('sample id', [
+      VideoFactory.sample({ title: recTitle }),
+    ]);
+
+    const mixpanelEventUrlCopied = jest.spyOn(
+      AnalyticsFactory.mixpanel(),
+      'track',
+    );
+
+    const wrapper = render(
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <BoclipsClientProvider client={apiClient}>
+          <VideoRecommendations
+            video={VideoFactory.sample({ id: 'sample id' })}
+          />
+        </BoclipsClientProvider>
+      </BoclipsSecurityProvider>,
+    );
+
+    const recommendationLink = await wrapper.findByLabelText(
+      `${recTitle} grid card`,
+    );
+
+    fireEvent.click(recommendationLink);
+
+    await waitFor(() =>
+      expect(mixpanelEventUrlCopied).toHaveBeenCalledWith(
+        'video_recommendation_clicked',
+      ),
+    );
+  });
 });

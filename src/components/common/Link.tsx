@@ -8,9 +8,14 @@ type IsExternalLink = {
   isExternalLink?: boolean;
 };
 
+type OnClick = {
+  onClick?: () => void;
+};
+
 type Props = React.ComponentProps<RouterLink> &
   Pick<TypographyLinkProps, 'type'> &
-  IsExternalLink;
+  IsExternalLink &
+  OnClick;
 
 export const Link = ({
   children,
@@ -18,12 +23,17 @@ export const Link = ({
   className,
   to,
   isExternalLink,
+  onClick,
   ...rest
 }: React.PropsWithChildren<Props>): React.ReactElement => {
   return (
     <RouterLink
       to={to}
       onClick={(e) => {
+        if (onClick) {
+          onClick();
+        }
+
         if (isExternalLink) {
           window.location.href = to;
           e.preventDefault();

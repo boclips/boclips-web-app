@@ -17,6 +17,7 @@ interface Props {
   onSegmentPlayed?: OnSegmentPlayedEvent;
   onAddToPlaylist?: () => void;
   onUrlCopied?: () => void;
+  onLinkClicked?: () => void;
 }
 
 const VideoGridCard = ({
@@ -26,9 +27,11 @@ const VideoGridCard = ({
   onSegmentPlayed,
   onAddToPlaylist,
   onUrlCopied,
+  onLinkClicked,
 }: Props) => (
   <GridCard
     link={`/videos/${video.id}`}
+    onLinkClicked={onLinkClicked}
     key={video.id}
     name={video.title}
     header={<CoverWithVideo video={video} onSegmentPlayed={onSegmentPlayed} />}

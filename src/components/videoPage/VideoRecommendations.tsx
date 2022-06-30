@@ -42,6 +42,9 @@ const VideoRecommendations = ({ video }: Props) => {
             onUrlCopied={() => {
               mixpanel.track('video_recommendation_url_copied');
             }}
+            onLinkClicked={() => {
+              mixpanel.track('video_recommendation_clicked');
+            }}
             onSegmentPlayed={(start: number, end: number) => {
               mixpanel.track('video_recommendation_played', {
                 start,
