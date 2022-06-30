@@ -35,7 +35,7 @@ context('UI Regression', () => {
     });
   });
 
-  it('has a homepage for k12 disciplines', () => {
+  xit('has a homepage for k12 disciplines', () => {
     cy.visit(`${endpoint}/`);
     cy.bo((bo) =>
       bo.interact((apiClient) => {
