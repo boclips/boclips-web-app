@@ -19,6 +19,12 @@ interface Props {
 
 export const VideoHeaderWithDescription = ({ video }: Props) => {
   const mixpanel = AnalyticsFactory.mixpanel();
+  const trackVideoCopy = () => {
+    AnalyticsFactory.appcues().sendEvent(
+      AppcuesEvent.COPY_LINK_FROM_VIDEO_PAGE,
+    );
+    mixpanel.track('video_details_url_copied');
+  };
 
   return (
     <>
@@ -47,11 +53,7 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
               mixpanel.track('video_details_playlist_add');
             }}
           />
-          <CopyVideoLinkButton
-            video={video}
-            appcueEvent={AppcuesEvent.COPY_LINK_FROM_VIDEO_PAGE}
-            onClick={() => mixpanel.track('video_details_url_copied')}
-          />
+          <CopyVideoLinkButton video={video} onClick={trackVideoCopy} />
         </div>
         <FeatureGate linkName="cart">
           <AddToCartButton
