@@ -11,6 +11,20 @@ import c from 'classnames';
 import s from './style.module.less';
 import { DisciplineHeader } from './DisciplineHeader';
 
+const getGridSizeClass = (
+  disciplines: DisciplineWithSubjectOffering[] | undefined,
+): string => {
+  if (!disciplines) {
+    return '';
+  }
+
+  if (disciplines.length === 6) {
+    return s.disciplineWrapperThreeColumn;
+  }
+
+  return s.disciplineWrapperFourColumn;
+};
+
 const DisciplineWidget = (): ReactElement => {
   const { data: disciplines, isLoading } = useGetDisciplinesQuery();
 
@@ -20,7 +34,6 @@ const DisciplineWidget = (): ReactElement => {
   const breakpoints = useMediaBreakPoint();
   const mobileView =
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
-  const [gridSizeClass, setGridSizeClass] = useState('');
 
   useEffect(() => {
     if (modalOpen && mobileView) {
@@ -29,16 +42,6 @@ const DisciplineWidget = (): ReactElement => {
       document.querySelector('body').style.overflow = null;
     }
   }, [modalOpen, mobileView]);
-
-  useEffect(() => {
-    if (disciplines) {
-      if (disciplines.length === 6) {
-        setGridSizeClass(s.disciplineWrapperThreeColumn);
-      } else {
-        setGridSizeClass(s.disciplineWrapperFourColumn);
-      }
-    }
-  }, [disciplines]);
 
   const onClick = (discipline: DisciplineWithSubjectOffering) => {
     if (mobileView) {
@@ -65,7 +68,11 @@ const DisciplineWidget = (): ReactElement => {
       className="col-start-2 col-end-26 row-start-2 row-end-2 lg:col-start-4 lg:col-end-24 md:pt-4"
     >
       <DisciplineHeader />
-      <div className={c(s.disciplineWrapper, { [gridSizeClass]: !isLoading })}>
+      <div
+        className={c(s.disciplineWrapper, {
+          [getGridSizeClass(disciplines)]: !isLoading,
+        })}
+      >
         {isLoading ? (
           <SkeletonTiles className={s.discipline} numberOfTiles={4} />
         ) : (
