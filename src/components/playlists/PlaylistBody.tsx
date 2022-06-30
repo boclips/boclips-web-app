@@ -6,6 +6,7 @@ import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import { Typography } from '@boclips-ui/typography';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import VideoGridCard from 'src/components/common/gridCard/VideoGridCard';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import s from './style.module.less';
 
 interface Props {
@@ -30,7 +31,11 @@ const PlaylistBody = ({ playlist }: Props) => {
   const renderVideoCardWithButtons = (video: Video) => (
     <VideoGridCard
       video={video}
-      addToCartAppCuesEvent={AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE}
+      onAddToCart={() => {
+        AnalyticsFactory.appcues().sendEvent(
+          AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE,
+        );
+      }}
       onCleanupAddToPlaylist={shouldRemoveVideoCardFromView}
     />
   );

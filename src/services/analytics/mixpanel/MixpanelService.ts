@@ -1,12 +1,15 @@
 type MixpanelEvent =
+  | 'video_recommendation_clicked'
   | 'video_recommendation_played'
   | 'video_recommendation_url_copied'
   | 'video_recommendation_legacy_url_copied'
   | 'video_recommendation_playlist_add'
+  | 'video_recommendation_cart_add'
   | 'video_details_played'
   | 'video_details_url_copied'
   | 'video_details_legacy_url_copied'
-  | 'video_details_playlist_add';
+  | 'video_details_playlist_add'
+  | 'video_details_cart_add';
 
 export default class MixpanelService {
   private readonly mixpanel: Mixpanel | null;

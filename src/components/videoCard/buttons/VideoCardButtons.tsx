@@ -5,39 +5,49 @@ import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import c from 'classnames';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import s from './style.module.less';
 import { CopyVideoLinkButton } from './CopyVideoLinkButton';
 import { CopyLegacyVideoLinkButton } from './CopyLegacyVideoLinkButton';
 
 interface VideoCardButtonsProps {
   video: Video;
-  addToCartAppCuesEvent?: AppcuesEvent;
+  onAddToCart?: () => void;
+  onAddToPlaylist?: () => void;
+  onUrlCopied?: () => void;
   onCleanupAddToPlaylist?: (playlistId: string, cleanUp: () => void) => void;
   iconOnly?: boolean;
 }
 
 export const VideoCardButtons = ({
   video,
-  addToCartAppCuesEvent = AppcuesEvent.ADD_TO_CART_FROM_SEARCH_RESULTS,
+  onAddToCart,
+  onAddToPlaylist,
   onCleanupAddToPlaylist,
+  onUrlCopied,
   iconOnly = false,
 }: VideoCardButtonsProps) => {
+  const trackCopyVideoLink = () => {
+    onUrlCopied();
+    AnalyticsFactory.appcues().sendEvent(
+      AppcuesEvent.COPY_LINK_FROM_SEARCH_RESULTS,
+    );
+  };
+
   return (
     <div className="flex flex-row justify-between" key={`copy-${video.id}`}>
       <div className={c(s.iconOnlyButtons)}>
         <AddToPlaylistButton
           videoId={video.id}
           onCleanup={onCleanupAddToPlaylist}
+          onClick={onAddToPlaylist}
         />
 
         <FeatureGate feature="BO_WEB_APP_COPY_OLD_LINK_BUTTON">
           <CopyLegacyVideoLinkButton video={video} />
         </FeatureGate>
 
-        <CopyVideoLinkButton
-          video={video}
-          appcueEvent={AppcuesEvent.COPY_LINK_FROM_SEARCH_RESULTS}
-        />
+        <CopyVideoLinkButton video={video} onClick={trackCopyVideoLink} />
       </div>
 
       <FeatureGate linkName="cart">
@@ -45,7 +55,7 @@ export const VideoCardButtons = ({
           video={video}
           key="cart-button"
           width="148px"
-          appcueEvent={addToCartAppCuesEvent}
+          onClick={onAddToCart}
           iconOnly={iconOnly}
         />
       </FeatureGate>

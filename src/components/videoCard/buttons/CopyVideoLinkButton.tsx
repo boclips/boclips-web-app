@@ -3,17 +3,15 @@ import React from 'react';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { buildVideoDetailsLink } from 'src/services/buildVideoDetailsLink';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import { trackCopyVideoShareLink } from 'src/components/common/analytics/Analytics';
 import { CopyLinkButton } from 'src/components/common/copyLinkButton/CopyLinkButton';
 
 interface Props {
   video: Video;
-  appcueEvent?: AppcuesEvent;
+  onClick?: () => void;
 }
 
-export const CopyVideoLinkButton = ({ video, appcueEvent }: Props) => {
+export const CopyVideoLinkButton = ({ video, onClick }: Props) => {
   const apiClient = useBoclipsClient();
   const { data: user, isFetched } = useGetUserQuery();
 
@@ -25,8 +23,8 @@ export const CopyVideoLinkButton = ({ video, appcueEvent }: Props) => {
   const handleCopied = () => {
     trackCopyVideoShareLink(video, apiClient);
 
-    if (appcueEvent) {
-      AnalyticsFactory.appcues().sendEvent(appcueEvent);
+    if (onClick) {
+      onClick();
     }
   };
 

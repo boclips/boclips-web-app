@@ -9,7 +9,6 @@ import Button from '@boclips-ui/button';
 import React from 'react';
 import c from 'classnames';
 import CartIcon from 'resources/icons/cart-icon.svg';
-import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import {
   trackVideoAddedToCart,
@@ -26,14 +25,14 @@ interface AddToCartButtonProps {
   video: Video;
   width?: string;
   removeButtonWidth?: string;
-  appcueEvent?: AppcuesEvent;
+  onClick?: () => void;
   iconOnly?: boolean;
 }
 
 export const AddToCartButton = ({
   video,
   width,
-  appcueEvent,
+  onClick,
   removeButtonWidth,
   iconOnly = false,
 }: AddToCartButtonProps) => {
@@ -65,8 +64,8 @@ export const AddToCartButton = ({
           `add-video-${it.id}-to-cart-notification`,
         );
 
-        if (appcueEvent) {
-          AnalyticsFactory.appcues().sendEvent(appcueEvent);
+        if (onClick) {
+          onClick();
         }
         videoAddedHotjarEvent();
       },

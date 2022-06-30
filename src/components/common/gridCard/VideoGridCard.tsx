@@ -1,7 +1,6 @@
 import CoverWithVideo, {
   OnSegmentPlayedEvent,
 } from 'src/components/playlists/coverWithVideo/CoverWithVideo';
-import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import GridCard from 'src/components/common/gridCard/GridCard';
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
@@ -13,19 +12,26 @@ import { getBrowserLocale } from 'src/services/getBrowserLocale';
 
 interface Props {
   video: Video;
-  addToCartAppCuesEvent: AppcuesEvent;
+  onAddToCart: () => void;
   onCleanupAddToPlaylist?: (playlistId: string, cleanUp: () => void) => void;
   onSegmentPlayed?: OnSegmentPlayedEvent;
+  onAddToPlaylist?: () => void;
+  onUrlCopied?: () => void;
+  onLinkClicked?: () => void;
 }
 
 const VideoGridCard = ({
   video,
-  addToCartAppCuesEvent,
+  onAddToCart,
   onCleanupAddToPlaylist,
   onSegmentPlayed,
+  onAddToPlaylist,
+  onUrlCopied,
+  onLinkClicked,
 }: Props) => (
   <GridCard
     link={`/videos/${video.id}`}
+    onLinkClicked={onLinkClicked}
     key={video.id}
     name={video.title}
     header={<CoverWithVideo video={video} onSegmentPlayed={onSegmentPlayed} />}
@@ -57,7 +63,9 @@ const VideoGridCard = ({
         <VideoCardButtons
           video={video}
           onCleanupAddToPlaylist={onCleanupAddToPlaylist}
-          addToCartAppCuesEvent={addToCartAppCuesEvent}
+          onAddToCart={onAddToCart}
+          onAddToPlaylist={onAddToPlaylist}
+          onUrlCopied={onUrlCopied}
           iconOnly
         />
       </div>

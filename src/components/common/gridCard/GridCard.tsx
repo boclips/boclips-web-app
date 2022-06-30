@@ -11,6 +11,7 @@ interface Props {
   footer?: React.ReactElement;
   overlay?: React.ReactElement;
   playerBadge?: React.ReactElement;
+  onLinkClicked?: () => void;
 }
 
 const GridCard = ({
@@ -21,6 +22,7 @@ const GridCard = ({
   overlay,
   playerBadge,
   subheader,
+  onLinkClicked,
 }: Props) => {
   return (
     <div className={s.gridCard} data-qa={`grid-card-for-${name}`}>
@@ -33,6 +35,7 @@ const GridCard = ({
             pathname: link,
             state: { name },
           }}
+          onClick={onLinkClicked}
           aria-label={`${name} grid card`}
         >
           <Typography.Title2>{name}</Typography.Title2>

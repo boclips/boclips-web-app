@@ -9,6 +9,7 @@ import { VideoInteractedWith } from 'boclips-api-client/dist/sub-clients/events/
 import { act, fireEvent, waitFor } from '@testing-library/react';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
 
@@ -254,6 +255,33 @@ describe('Video card', () => {
       expect(videoInteractedEvents[1].type).toEqual('VIDEO_INTERACTED_WITH');
       expect(videoInteractedEvents[1].subtype).toEqual(
         'VIDEO_REMOVED_FROM_CART',
+      );
+    });
+
+    it('sends a mixpanel addToCart event', async () => {
+      const apiClient = new FakeBoclipsClient();
+
+      const mixpanelEventAddedToCart = jest.spyOn(
+        AnalyticsFactory.mixpanel(),
+        'track',
+      );
+
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={apiClient}>
+            <VideoCardWrapper video={VideoFactory.sample({})} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      const addToCartButton = await wrapper.findByText('Add to cart');
+
+      fireEvent.click(addToCartButton);
+
+      await waitFor(() =>
+        expect(mixpanelEventAddedToCart).toHaveBeenCalledWith(
+          'video_details_cart_add',
+        ),
       );
     });
 

@@ -4,13 +4,14 @@ import { Typography } from '@boclips-ui/typography';
 
 type TypographyLinkProps = React.ComponentProps<typeof Typography.Link>;
 
-type IsExternalLink = {
+type LinkProps = {
   isExternalLink?: boolean;
+  onClick?: () => void;
 };
 
 type Props = React.ComponentProps<RouterLink> &
   Pick<TypographyLinkProps, 'type'> &
-  IsExternalLink;
+  LinkProps;
 
 export const Link = ({
   children,
@@ -18,12 +19,17 @@ export const Link = ({
   className,
   to,
   isExternalLink,
+  onClick,
   ...rest
 }: React.PropsWithChildren<Props>): React.ReactElement => {
   return (
     <RouterLink
       to={to}
       onClick={(e) => {
+        if (onClick) {
+          onClick();
+        }
+
         if (isExternalLink) {
           window.location.href = to;
           e.preventDefault();

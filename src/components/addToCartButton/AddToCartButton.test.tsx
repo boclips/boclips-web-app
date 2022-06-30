@@ -82,4 +82,21 @@ describe('Add to cart button', () => {
       ),
     );
   });
+
+  it('calls onClick callback when clicked', async () => {
+    const apiClient = new FakeBoclipsClient();
+    const onClick = jest.fn();
+
+    const wrapper = render(
+      <BoclipsClientProvider client={apiClient}>
+        <AddToCartButton video={video} onClick={onClick} />
+      </BoclipsClientProvider>,
+    );
+
+    const addToCartButton = await wrapper.findByText('Add to cart');
+
+    fireEvent.click(addToCartButton);
+
+    await waitFor(() => expect(onClick).toHaveBeenCalled());
+  });
 });

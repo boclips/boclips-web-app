@@ -6,10 +6,10 @@ import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import { Link } from 'react-router-dom';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { trackNavigateToVideoDetails } from 'src/components/common/analytics/Analytics';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { Typography } from '@boclips-ui/typography';
+import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import { VideoCardButtons } from './buttons/VideoCardButtons';
 import s from './VideoCardWrapper.module.less';
 
@@ -44,6 +44,9 @@ export const VideoCardWrapper = ({ video }: Props) => {
           <VideoCardButtons
             video={video}
             key={`video-cart-buttons-${video.id}`}
+            onAddToCart={() => {
+              AnalyticsFactory.mixpanel().track('video_details_cart_add');
+            }}
           />,
         ]}
       />
