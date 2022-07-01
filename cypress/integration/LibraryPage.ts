@@ -10,7 +10,7 @@ context('Libray page', () => {
     cy.findByRole('button', { name: 'Create new playlist' }).should(
       'be.visible',
     );
-    cy.findByRole('progressbar').should('not.exist');
+    cy.findAllByRole('progressbar').should('not.exist');
 
     cy.percySnapshot('Empty library view', { widths: snapshotViewWidths });
   });
@@ -20,7 +20,7 @@ context('Libray page', () => {
     cy.bo((bo) => bo.create.playlistWithVideos());
     cy.get('[data-qa="library-button"]').click();
 
-    cy.findByRole('progressbar').should('not.exist');
+    cy.findAllByRole('progressbar').should('not.exist');
     cy.findByRole('link', { name: /My Playlist/i }).should('exist');
 
     cy.percySnapshot('Library with playlist view', {
