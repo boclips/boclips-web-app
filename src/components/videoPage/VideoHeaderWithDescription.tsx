@@ -39,6 +39,13 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
             getBrowserLocale(),
           )}
         </Typography.H2>
+        <FeatureGate feature="BO_WEB_APP_PRICES">
+          <div className="mb-4">
+            <Typography.Body size="small" className="text-gray-700">
+              This is an agreed price for your organization
+            </Typography.Body>
+          </div>
+        </FeatureGate>
         <VideoInfo video={video} />
       </div>
 
