@@ -262,33 +262,7 @@ describe('Video View', () => {
   });
 
   describe('explore similar videos', () => {
-    it(`section is not present when feature is disabled`, async () => {
-      fakeClient.users.insertCurrentUser(
-        UserFactory.sample({
-          features: { BO_WEB_APP_VIDEO_RECOMMENDATIONS: false },
-        }),
-      );
-
-      fakeClient.videos.insertVideo(exampleVideo);
-      fakeClient.videos.setRecommendationsForVideo(exampleVideo.id, [
-        VideoFactory.sample({ title: 'I am recommended' }),
-      ]);
-
-      const wrapper = renderVideoView(['/videos/video-id']);
-
-      // wait until similar videos are potentially rendered
-      await sleep(500);
-      expect(wrapper.queryByText('Explore similar videos')).toBeNull();
-      expect(wrapper.queryByText('I am recommended')).toBeNull();
-    });
-
-    it(`section is present when feature is enabled`, async () => {
-      fakeClient.users.insertCurrentUser(
-        UserFactory.sample({
-          features: { BO_WEB_APP_VIDEO_RECOMMENDATIONS: true },
-        }),
-      );
-
+    it(`section is displayed when there are recommendations`, async () => {
       fakeClient.videos.insertVideo(exampleVideo);
       fakeClient.videos.setRecommendationsForVideo(exampleVideo.id, [
         VideoFactory.sample({ title: 'I am recommended' }),
@@ -301,12 +275,6 @@ describe('Video View', () => {
     });
 
     it(`section is not present when there are no recommended videos to display`, async () => {
-      fakeClient.users.insertCurrentUser(
-        UserFactory.sample({
-          features: { BO_WEB_APP_VIDEO_RECOMMENDATIONS: true },
-        }),
-      );
-
       fakeClient.videos.insertVideo(exampleVideo);
       fakeClient.videos.setRecommendationsForVideo(exampleVideo.id, []);
 
