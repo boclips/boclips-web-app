@@ -121,10 +121,12 @@ context('UI Regression', () => {
   it('renders empty library', () => {
     cy.visit(`${endpoint}/`);
     cy.get('[data-qa="library-button"]').click();
-    cy.findByRole('progressbar').should('not.exist');
+
     cy.findByRole('button', { name: 'Create new playlist' }).should(
       'be.visible',
     );
+    cy.findByRole('progressbar').should('not.exist');
+
     cy.percySnapshot('Empty library view', { widths: snapshotViewWidths });
   });
 
@@ -132,7 +134,10 @@ context('UI Regression', () => {
     cy.visit(`${endpoint}/`);
     cy.bo((bo) => bo.create.playlistWithVideos());
     cy.get('[data-qa="library-button"]').click();
+
     cy.findByRole('progressbar').should('not.exist');
+    cy.findByRole('link', { name: /My Playlist/i }).should('exist');
+
     cy.percySnapshot('Library with playlist view', {
       widths: snapshotViewWidths,
     });
