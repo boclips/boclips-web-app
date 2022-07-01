@@ -1,3 +1,5 @@
+import { Constants } from 'src/AppConstants';
+
 export default class Hotjar {
   private static readonly default: (
     api: string,
@@ -13,7 +15,10 @@ export default class Hotjar {
     if (hj) {
       this.hj = hj;
     } else {
-      console.warn('Hotjar is not defined. Setting up empty Hotjar func');
+      if (Constants.IS_HOTJAR_ENABLED) {
+        console.warn('Hotjar is not defined. Setting up empty Hotjar func');
+      }
+
       this.hj = Hotjar.default;
     }
   }

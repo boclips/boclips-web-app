@@ -9,7 +9,11 @@ describe('Hotjar', () => {
     hotjar = new Hotjar(mockHotjar);
   });
 
-  it('warns when hj function is not defined', () => {
+  it('warns when hj function is not defined if enabled', () => {
+    window.Environment = {
+      IS_HOTJAR_ENABLED: 'true',
+    };
+
     const warning = jest.spyOn(console, 'warn');
 
     hotjar = new Hotjar();
