@@ -863,10 +863,7 @@ describe('SearchResultsFiltering', () => {
       client.videos.setFacets(facets);
     };
 
-    it('displays search topic filters, ordered by score if user has feature', async () => {
-      fakeClient.users.setCurrentUserFeatures({
-        VIDEO_TOPIC_AGGREGATION: true,
-      });
+    it('displays search topic filters, ordered by score', async () => {
       setupFacetsAndVideos(fakeClient);
       const wrapper = renderSearchResultsView(['/videos?q=news']);
       await waitFor(() => {
@@ -880,9 +877,6 @@ describe('SearchResultsFiltering', () => {
     });
 
     it('can filter by search topic', async () => {
-      fakeClient.users.setCurrentUserFeatures({
-        VIDEO_TOPIC_AGGREGATION: true,
-      });
       setupFacetsAndVideos(fakeClient);
       const wrapper = renderSearchResultsView(['/videos?q=stock']);
       await waitFor(() => {
@@ -899,9 +893,6 @@ describe('SearchResultsFiltering', () => {
     });
 
     it(`persists search topics on clearing all filters`, async () => {
-      fakeClient.users.setCurrentUserFeatures({
-        VIDEO_TOPIC_AGGREGATION: true,
-      });
       setupFacetsAndVideos(fakeClient);
 
       const wrapper = renderSearchResultsView([
