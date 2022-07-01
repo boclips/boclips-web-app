@@ -8,7 +8,7 @@ import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPla
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import s from './style.module.less';
 import { CopyVideoLinkButton } from './CopyVideoLinkButton';
-import { CopyLegacyVideoLinkButton } from './CopyLegacyVideoLinkButton';
+import { CopyVideoIdButton } from './CopyVideoIdButton';
 
 interface VideoCardButtonsProps {
   video: Video;
@@ -44,7 +44,7 @@ export const VideoCardButtons = ({
         />
 
         <FeatureGate feature="BO_WEB_APP_COPY_OLD_LINK_BUTTON">
-          <CopyLegacyVideoLinkButton video={video} />
+          <CopyVideoIdButton video={video} />
         </FeatureGate>
 
         <CopyVideoLinkButton video={video} onClick={trackCopyVideoLink} />

@@ -2,7 +2,7 @@ import React from 'react';
 import { useOwnAndSharedPlaylistsQuery } from 'src/hooks/api/playlistsQuery';
 import SkeletonTiles from 'src/components/skeleton/Skeleton';
 import Thumbnails from 'src/components/playlists/thumbnails/Thumbnails';
-import { CopyLinkButton } from 'src/components/common/copyLinkButton/CopyLinkButton';
+import { CopyButton } from 'src/components/common/copyLinkButton/CopyButton';
 import { Constants } from 'src/AppConstants';
 import { Link } from 'react-router-dom';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
@@ -38,9 +38,9 @@ const Playlists = () => {
             }
             footer={
               <div className="w-fit	self-end p-1">
-                <CopyLinkButton
+                <CopyButton
                   ariaLabel="Copy playlist link"
-                  link={`${Constants.HOST}/playlists/${playlist.id}`}
+                  textToCopy={`${Constants.HOST}/playlists/${playlist.id}`}
                   dataQa={`share-playlist-button-${playlist.id}`}
                   onCopy={linkCopiedHotjarEvent}
                 />

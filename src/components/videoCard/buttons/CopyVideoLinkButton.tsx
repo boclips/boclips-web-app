@@ -4,7 +4,7 @@ import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientP
 import { buildVideoDetailsLink } from 'src/services/buildVideoDetailsLink';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { trackCopyVideoShareLink } from 'src/components/common/analytics/Analytics';
-import { CopyLinkButton } from 'src/components/common/copyLinkButton/CopyLinkButton';
+import { CopyButton } from 'src/components/common/copyLinkButton/CopyButton';
 
 interface Props {
   video: Video;
@@ -29,10 +29,10 @@ export const CopyVideoLinkButton = ({ video, onClick }: Props) => {
   };
 
   return (
-    <CopyLinkButton
+    <CopyButton
       ariaLabel="Copy video link"
       onCopy={handleCopied}
-      link={link}
+      textToCopy={link}
       disabled={!isFetched}
       dataQa={`copy-button-${video.id}`}
     />

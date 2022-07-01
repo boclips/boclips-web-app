@@ -6,43 +6,37 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { render } from 'src/testSupport/render';
 import { ToastContainer } from 'react-toastify';
-import { CopyLegacyVideoLinkButton } from './CopyLegacyVideoLinkButton';
+import { CopyVideoIdButton } from './CopyVideoIdButton';
 
-describe('CopyLegacyVideoLinkButton', () => {
+describe('CopyVideoIdButton', () => {
   Object.assign(navigator, {
     clipboard: {
       writeText: () => Promise.resolve(),
     },
   });
 
-  it('copies the the video link when clicked', async () => {
-    window.Environment = {
-      LEGACY_VIDEOS_URL: 'https://myoldvideo.com/videos',
-    };
-
+  it('copies the the video id when clicked', async () => {
     jest.spyOn(navigator.clipboard, 'writeText');
 
     const fakeClient = new FakeBoclipsClient();
 
-    const video = VideoFactory.sample({ id: 'this-is-a-test' });
+    const video = VideoFactory.sample({ id: 'video-id-123' });
 
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={fakeClient}>
           <ToastContainer />
-          <CopyLegacyVideoLinkButton video={video} />
+          <CopyVideoIdButton video={video} />
         </BoclipsClientProvider>
       </QueryClientProvider>,
     );
 
-    const button = await wrapper.findByLabelText('Copy legacy video link');
+    const button = await wrapper.findByLabelText('Copy video id');
 
     fireEvent.click(button);
 
     const notification = await wrapper.findByRole('alert');
-    expect(within(notification).getByText('Link copied!')).toBeVisible();
-    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
-      'https://myoldvideo.com/videos/this-is-a-test',
-    );
+    expect(within(notification).getByText('Copied!')).toBeVisible();
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith('video-id-123');
   });
 });

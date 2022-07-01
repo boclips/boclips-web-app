@@ -7,31 +7,26 @@ import s from './style.module.less';
 
 interface Props {
   onCopy?: () => void;
-  link: string;
+  textToCopy: string;
   disabled?: boolean;
   dataQa?: string;
   ariaLabel: string;
 }
 
-export const CopyLinkButton = ({
+export const CopyButton = ({
   onCopy,
-  link,
+  textToCopy,
   disabled,
   dataQa,
   ariaLabel,
 }: Props) => {
   const handleClick = () => {
-    navigator.clipboard.writeText(link).then(() => {
+    navigator.clipboard.writeText(textToCopy).then(() => {
       if (onCopy) {
         onCopy();
       }
 
-      displayNotification(
-        'success',
-        'Link copied!',
-        '',
-        'video-link-copied-notification',
-      );
+      displayNotification('success', 'Copied!', '', 'text-copied-notification');
     });
   };
 

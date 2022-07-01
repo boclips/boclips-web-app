@@ -74,6 +74,6 @@ describe('CopyLinkButton', () => {
     );
 
     const notification = await wrapper.findByRole('alert');
-    expect(within(notification).getByText('Link copied!')).toBeVisible();
+    expect(within(notification).getByText('Copied!')).toBeVisible();
   });
 });

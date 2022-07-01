@@ -85,7 +85,7 @@ describe('Video card', () => {
       expect(await wrapper.findByLabelText('Copy video link')).toBeVisible();
     });
 
-    it('does not show copy legacy video link for non boclips users', async () => {
+    it('does not show copy video id for non boclips users', async () => {
       const fakeClient = new FakeBoclipsClient();
       fakeClient.videos.insertVideo(
         VideoFactory.sample({ id: '1', title: '1' }),
@@ -106,12 +106,10 @@ describe('Video card', () => {
       );
 
       expect(await wrapper.findByLabelText('Copy video link')).toBeVisible();
-      expect(
-        wrapper.queryByLabelText('Copy legacy video link'),
-      ).not.toBeInTheDocument();
+      expect(wrapper.queryByLabelText('Copy video id')).not.toBeInTheDocument();
     });
 
-    it('does show copy legacy link button for boclips users', async () => {
+    it('does show copy video id button for boclips users', async () => {
       const fakeClient = new FakeBoclipsClient();
       fakeClient.videos.insertVideo(
         VideoFactory.sample({ id: '1', title: '1' }),
@@ -133,9 +131,7 @@ describe('Video card', () => {
       );
 
       expect(await wrapper.findByLabelText('Copy video link')).toBeVisible();
-      expect(
-        await wrapper.findByLabelText('Copy legacy video link'),
-      ).toBeVisible();
+      expect(await wrapper.findByLabelText('Copy video id')).toBeVisible();
     });
   });
 
