@@ -2,7 +2,7 @@ import { Constants } from '../fixtures/Constants';
 
 context('Playlist page', () => {
   it('renders empty playlist', () => {
-    cy.visit(`${Constants.HOME_PAGE_URL}/`);
+    cy.visit('/');
     cy.bo((bo) => bo.create.emptyPlaylist());
     cy.get('[data-qa="library-button"]').click();
 

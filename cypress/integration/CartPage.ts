@@ -2,7 +2,7 @@ import { Constants } from '../fixtures/Constants';
 
 context('Cart page', () => {
   it('renders the cart and order flow', () => {
-    cy.visit(`${Constants.HOME_PAGE_URL}/`);
+    cy.visit('/');
     cy.bo((bo) => bo.create.cartWithVideos());
 
     cy.get('[data-qa="cart-button"]').click();

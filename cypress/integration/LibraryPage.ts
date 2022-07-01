@@ -1,11 +1,10 @@
 import { Constants } from '../fixtures/Constants';
 
 context('Libray page', () => {
-  const endpoint = Constants.HOME_PAGE_URL;
   const snapshotViewWidths = Constants.SNAPSHOT_VIEW_WIDTHS;
 
   it('renders empty library', () => {
-    cy.visit(`${endpoint}/`);
+    cy.visit('/');
     cy.get('[data-qa="library-button"]').click();
 
     cy.findByRole('button', { name: 'Create new playlist' }).should(
@@ -17,7 +16,7 @@ context('Libray page', () => {
   });
 
   it('renders playlist with videos', () => {
-    cy.visit(`${endpoint}/`);
+    cy.visit('/');
     cy.bo((bo) => bo.create.playlistWithVideos());
     cy.get('[data-qa="library-button"]').click();
 

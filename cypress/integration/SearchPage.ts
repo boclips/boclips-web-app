@@ -1,11 +1,10 @@
 import { Constants } from '../fixtures/Constants';
 
 context('Search page', () => {
-  const endpoint = Constants.HOME_PAGE_URL;
   const snapshotViewWidths = Constants.SNAPSHOT_VIEW_WIDTHS;
 
   it('applies filters', () => {
-    cy.visit(`${endpoint}/`);
+    cy.visit('/');
     cy.bo((bo) => bo.create.fixtureSet.eelsBiologyGeography());
 
     cy.findByPlaceholderText('Search for videos');

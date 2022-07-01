@@ -5,11 +5,10 @@ import {
 } from '../../src/components/disciplinesWidget/disciplinesFixture';
 
 context('Homepage', () => {
-  const endpoint = Constants.HOME_PAGE_URL;
   const snapshotViewWidths = Constants.SNAPSHOT_VIEW_WIDTHS;
 
   it('has a homepage', () => {
-    cy.visit(`${endpoint}/`);
+    cy.visit('/');
     cy.bo((bo) =>
       bo.interact((apiClient) => {
         disciplines.forEach((discipline) => {
@@ -35,7 +34,7 @@ context('Homepage', () => {
   });
 
   it('has a homepage for k12 disciplines', () => {
-    cy.visit(`${endpoint}/`);
+    cy.visit('/');
     cy.bo((bo) =>
       bo.interact((apiClient) => {
         k12Disciplines.forEach((discipline) => {
@@ -55,7 +54,7 @@ context('Homepage', () => {
   });
 
   it('renders account panel', () => {
-    cy.visit(`${endpoint}/`);
+    cy.visit('/');
     cy.get('[data-qa="account-menu"]').click();
 
     cy.percySnapshot('Account panel', {
