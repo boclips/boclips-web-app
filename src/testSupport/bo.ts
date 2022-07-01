@@ -206,6 +206,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
               `and where do they do it? Lucy Cooke digs into the ancient mystery. [Directed by Anton Bogaty, narrated by Adrian ` +
               `Dannatt, music by Jarrett Farkas].`,
             subjects: [biology],
+            releasedOn: new Date(1970, 1, 1),
           });
 
           boCreateVideo({
@@ -215,6 +216,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
               `As Mark explores, he comes across a Snowflake Eel - and this eel has double jaws.. and one nasty bite! ` +
               `What other creatures do you think they will come across along the Australian coast? Watch now to find out!`,
             subjects: [geography],
+            releasedOn: new Date(2020, 3, 14),
           });
 
           boSetFacets(
