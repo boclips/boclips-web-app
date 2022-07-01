@@ -117,7 +117,7 @@ describe('Video card', () => {
 
       fakeClient.users.insertCurrentUser(
         UserFactory.sample({
-          features: { BO_WEB_APP_COPY_OLD_LINK_BUTTON: true },
+          features: { BO_WEB_APP_COPY_VIDEO_ID_BUTTON: true },
           organisation: { id: 'org-bo', name: 'Boclips' },
         }),
       );

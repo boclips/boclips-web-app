@@ -43,7 +43,7 @@ export const VideoCardButtons = ({
           onClick={onAddToPlaylist}
         />
 
-        <FeatureGate feature="BO_WEB_APP_COPY_OLD_LINK_BUTTON">
+        <FeatureGate feature="BO_WEB_APP_COPY_VIDEO_ID_BUTTON">
           <CopyVideoIdButton video={video} />
         </FeatureGate>
 
