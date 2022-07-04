@@ -97,7 +97,7 @@
     "@boclips-ui/video-card": "^5.2.23",
     "@boclips-ui/video-card-placeholder": "^2.0.14",
     "@hot-loader/react-dom": "^17.0.1",
-    "@sentry/integrations": "^6.1.0",
+    "@sentry/integrations": "^7.4.1",
     "@sentry/react": "^6.2.0",
     "@sentry/tracing": "^6.1.0",
     "@tailwindcss/forms": "^0.4.0",
