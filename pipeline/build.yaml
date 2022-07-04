@@ -11,6 +11,7 @@ image_resource:
 inputs:
 - name: source
 - name: version
+- name: percy-baseline
 
 outputs:
 - name: dist
@@ -28,6 +29,8 @@ run:
   - |-
     SENTRY_RELEASE="boclips-web-app-$(cat ../version/tag)"
     export SENTRY_RELEASE
+    PERCY_TARGET_COMMIT="$(cat ../percy-baseline/.git/ref)"
+    export PERCY_TARGET_COMMIT
     npm ci
     npm run fake &
     npm run test
