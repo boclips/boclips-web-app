@@ -15,7 +15,7 @@ async function main() {
   }
 
   const builds = await fetch(
-    `https://percy.io/api/v1/builds?project_id=${PERCY_PROJECT_ID}&page[limit]=20`,
+    `https://percy.io/api/v1/builds?project_id=${encodeURIComponent(PERCY_PROJECT_ID)}&page[limit]=20`,
     { headers: { Authorization: `Token ${PERCY_TOKEN}` } },
   )
     .then((res) => res.json())
