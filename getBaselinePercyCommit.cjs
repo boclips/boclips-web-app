@@ -1,7 +1,7 @@
-const fetch = (...args) =>
-  import('node-fetch').then(({ default: fetch }) => fetch(...args));
+'use strict';
+const fetch = require('node-fetch');
 
-async function main() {
+(async function main() {
   const { PERCY_PROJECT_ID, PERCY_TOKEN } = process.env;
 
   if (!PERCY_PROJECT_ID) {
@@ -18,7 +18,11 @@ async function main() {
     `https://percy.io/api/v1/builds?project_id=${encodeURIComponent(PERCY_PROJECT_ID)}&page[limit]=20`,
     { headers: { Authorization: `Token ${PERCY_TOKEN}` } },
   )
-    .then((res) => res.json())
+    .then((res) => {
+      if(res.ok) {
+        return res.json()
+      }
+    })
     .catch(() => {
       process.stderr.write(
         `Error fetching builds for project id: ${PERCY_PROJECT_ID}`,
@@ -32,6 +36,10 @@ async function main() {
         `Missing attributes from build for build: ${build.id}`,
       );
       process.exit(1);
+    }
+
+    if(!build.attributes['commit-html-url']) {
+      continue;
     }
 
     if (build.attributes['review-state'] === 'approved') {
@@ -61,6 +69,4 @@ async function main() {
       }
     }
   }
-}
-
-main();
+})();
