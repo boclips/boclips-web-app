@@ -30,7 +30,7 @@ run:
     SENTRY_RELEASE="boclips-web-app-$(cat ../version/tag)"
     export SENTRY_RELEASE
     npm ci
-    PERCY_TARGET_COMMIT=$(node getBaselinePercyCommit.cjs)
+    PERCY_TARGET_COMMIT=$(npx percy-baseline-commit)
     echo "$PERCY_TARGET_COMMIT"
     export PERCY_TARGET_COMMIT
     npm run fake &
