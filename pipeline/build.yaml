@@ -20,6 +20,7 @@ caches:
 
 params:
   PERCY_TOKEN:
+  PERCY_PROJECT_ID:
 
 run:
   path: sh
@@ -28,6 +29,9 @@ run:
   - |-
     SENTRY_RELEASE="boclips-web-app-$(cat ../version/tag)"
     export SENTRY_RELEASE
+    PERCY_TARGET_COMMIT=$(node getBaselinePercyCommit.cjs)
+    echo "$(PERCY_TARGET_COMMIT)"
+    export PERCY_TARGET_COMMIT
     npm ci
     npm run fake &
     npm run test
