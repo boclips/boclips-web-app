@@ -5,7 +5,7 @@ context('Cart page', () => {
     cy.visit('/');
     cy.bo((bo) => bo.create.cartWithVideos());
 
-    cy.get('[data-qa="cart-button"]').click();
+    cy.get('[data-qa="cart-button-missing-data-qa"]').click();
 
     cy.percySnapshot('Cart view', {
       widths: Constants.SNAPSHOT_VIEW_WIDTHS,
