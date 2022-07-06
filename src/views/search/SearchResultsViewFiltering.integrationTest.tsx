@@ -25,7 +25,7 @@ import dayjs from 'src/day-js';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 
 describe('SearchResultsFiltering', () => {
-  let fakeClient;
+  let fakeClient: FakeBoclipsClient;
 
   function renderSearchResultsView(initialEntries: string[]) {
     return render(
@@ -286,6 +286,85 @@ describe('SearchResultsFiltering', () => {
       expect(await wrapper.findAllByTestId('option-hits')).toHaveLength(2);
       expect(wrapper.getAllByTestId('option-hits')[0]).toHaveTextContent('22');
       expect(wrapper.getAllByTestId('option-hits')[1]).toHaveTextContent('12');
+    });
+  });
+
+  describe('Language filters', () => {
+    it('does not display the filter if user has no LANGUAGE_FILTER flag', async () => {
+      fakeClient.videos.setFacets(
+        FacetsFactory.sample({
+          languages: [{ id: 'eng', name: 'English', hits: 12 }],
+        }),
+      );
+
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '2',
+          title: 'my video',
+        }),
+      );
+
+      fakeClient.users.setCurrentUserFeatures({
+        LANGUAGE_FILTER: false,
+      });
+
+      const wrapper = renderSearchResultsView(['/videos?q=video']);
+      await waitFor(() => {
+        expect(wrapper.queryByText('my video')).toBeVisible();
+        expect(wrapper.queryByText('Language')).toBeNull();
+      });
+    });
+
+    it('displays the filter and facet counts, order by facet counts', async () => {
+      fakeClient.videos.setFacets(
+        FacetsFactory.sample({
+          languages: [
+            { id: 'spa', name: 'Spanish', hits: 5 },
+            { id: 'eng', name: 'English', hits: 12 },
+          ],
+        }),
+      );
+
+      fakeClient.users.setCurrentUserFeatures({
+        LANGUAGE_FILTER: true,
+      });
+
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '1',
+          title: 'my english video',
+          language: { code: 'eng', displayName: 'English' },
+        }),
+      );
+
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '2',
+          title: 'my spanish video',
+          language: { code: 'spa', displayName: 'Spanish' },
+        }),
+      );
+
+      const wrapper = renderSearchResultsView(['/videos?q=video']);
+
+      expect(await wrapper.findByText('Language')).toBeVisible();
+
+      const options = wrapper
+        .getAllByRole('checkbox')
+        .map((it) => it.closest('label'));
+      expect(within(options[0]).getByText('English')).toBeVisible();
+      expect(within(options[1]).getByText('Spanish')).toBeVisible();
+
+      expect(await wrapper.findAllByTestId('option-hits')).toHaveLength(2);
+      expect(wrapper.getAllByTestId('option-hits')[0]).toHaveTextContent('12');
+      expect(wrapper.getAllByTestId('option-hits')[1]).toHaveTextContent('5');
+
+      fireEvent.click(wrapper.getByTestId('eng-checkbox'));
+
+      await waitFor(() => {
+        expect(wrapper.queryByText('my english video')).toBeVisible();
+        expect(wrapper.queryByText('my spanish video')).toBeNull();
+      });
     });
   });
 

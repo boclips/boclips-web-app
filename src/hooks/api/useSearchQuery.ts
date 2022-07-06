@@ -45,6 +45,7 @@ const doSearch = (
     education_level: filters?.education_level,
     content_package: contentPackage,
     topics: filters?.topics,
+    language: filters?.language,
   });
 
 const generateSearchKey = ({

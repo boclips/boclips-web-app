@@ -11,6 +11,7 @@ export interface Filters {
   bestFor: FilterOption[];
   prices: FilterOption[];
   educationLevels: FilterOption[];
+  languages: FilterOption[];
 }
 
 export const useFilterOptions = (facets: VideoFacets): Filters => {

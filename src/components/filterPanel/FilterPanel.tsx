@@ -12,6 +12,8 @@ import { BestForFilter } from 'src/components/filterPanel/BestForFilter';
 import { Typography } from '@boclips-ui/typography';
 import { EducationLevelFilter } from 'src/components/filterPanel/EducationLevelFilter';
 import { TextButton } from 'src/components/common/textButton/TextButton';
+import { LanguageFilter } from 'src/components/filterPanel/LanguageFilter';
+import { FeatureGate } from 'src/components/common/FeatureGate';
 import { SelectedFilters } from './SelectedFilters';
 
 export interface DateFilters {
@@ -68,7 +70,9 @@ export const FilterPanel = ({
           />
         )}
       </div>
-      {areFiltersApplied && <SelectedFilters removeFilter={removeFilter} />}
+      {areFiltersApplied && (
+        <SelectedFilters removeFilter={removeFilter} facets={facets} />
+      )}
       {resultsFound && (
         <div role="group" aria-labelledby="filter_by">
           <SubjectFilter
@@ -79,6 +83,12 @@ export const FilterPanel = ({
             options={options.bestFor}
             handleChange={handleChange}
           />
+          <FeatureGate feature="LANGUAGE_FILTER">
+            <LanguageFilter
+              options={options.languages}
+              handleChange={handleChange}
+            />
+          </FeatureGate>
           <EducationLevelFilter
             options={options.educationLevels}
             handleChange={handleChange}

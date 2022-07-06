@@ -3,7 +3,10 @@ import {
   FacetsFactory,
 } from 'boclips-api-client/dist/test-support/FacetsFactory';
 import { SearchFilters } from 'src/hooks/useLocationParams';
-import { convertFacetsToFilterOptions } from 'src/services/convertFacetsToFilterOptions';
+import {
+  convertFacetsToFilterOptions,
+  getFilterLabel,
+} from 'src/services/convertFacetsToFilterOptions';
 
 describe('convertFacets', () => {
   it('can convert every facet type to a filter option with filter keys', () => {
@@ -18,6 +21,7 @@ describe('convertFacets', () => {
         FacetFactory.sample({ id: 'EL1', hits: 9, name: 'EL1 label' }),
         FacetFactory.sample({ id: 'EL2', hits: 52, name: 'EL2 label' }),
       ],
+      languages: [FacetFactory.sample({ id: 'eng', hits: 9, name: 'English' })],
     });
 
     const searchFilters: SearchFilters = {
@@ -31,6 +35,7 @@ describe('convertFacets', () => {
       release_date_to: [],
       education_level: [],
       topics: [],
+      language: [],
     };
 
     const filterOptions = convertFacetsToFilterOptions(facets, searchFilters);
@@ -58,6 +63,11 @@ describe('convertFacets', () => {
     expect(filterOptions.educationLevels[1].key).toEqual('education_level');
     expect(filterOptions.educationLevels[1].hits).toEqual(52);
     expect(filterOptions.educationLevels[1].name).toEqual('EL2 label');
+
+    expect(filterOptions.languages[0].id).toEqual('eng');
+    expect(filterOptions.languages[0].key).toEqual('language');
+    expect(filterOptions.languages[0].hits).toEqual(9);
+    expect(filterOptions.languages[0].name).toEqual('English');
   });
 
   it('returns empty lists when facets are null', () => {
@@ -122,5 +132,19 @@ describe('convertFacets', () => {
     expect(filterOptions.prices[2].name).toEqual('$300');
     expect(filterOptions.prices[3].name).toEqual('$400');
     expect(filterOptions.prices[4].name).toEqual('$500');
+  });
+
+  describe('Converting language codes', () => {
+    it('can convert language code to display name from facets', () => {
+      const label = getFilterLabel(
+        'language',
+        'eng',
+        [],
+        [],
+        [],
+        [FacetFactory.sample({ id: 'eng', name: 'English' })],
+      );
+      expect(label).toEqual('English');
+    });
   });
 });

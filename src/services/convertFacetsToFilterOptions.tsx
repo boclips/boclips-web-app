@@ -26,6 +26,7 @@ export const convertFacetsToFilterOptions = (
     durations: facets?.durations || [],
     prices: facets?.prices || [],
     educationLevels: facets?.educationLevels || [],
+    languages: facets?.languages || [],
   };
 
   return {
@@ -67,6 +68,11 @@ export const convertFacetsToFilterOptions = (
       appliedFilters?.education_level || [],
       'education_level',
     ),
+    languages: createFilterOptions(
+      safeFacets.languages,
+      appliedFilters?.language || [],
+      'language',
+    ),
   };
 };
 
@@ -94,6 +100,7 @@ export const getFilterLabel = (
   channels?: Channel[],
   subjects?: Subject[],
   educationLevels?: EducationLevel[],
+  languages?: Facet[],
 ): string => {
   switch (key) {
     case 'video_type':
@@ -114,6 +121,8 @@ export const getFilterLabel = (
       return `From: ${dayjs(id).format('MM-DD-YYYY')}`;
     case 'release_date_to':
       return `To: ${dayjs(id).format('MM-DD-YYYY')}`;
+    case 'language':
+      return languages?.find((l) => l.id === id)?.name;
     default:
       throw 'not supported filter key';
   }

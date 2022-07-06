@@ -36,6 +36,7 @@ export const useSearchQueryLocationParams = (): [
       release_date_from: locationParams.getAll('release_date_from'),
       release_date_to: locationParams.getAll('release_date_to'),
       topics: locationParams.getAll('topics'),
+      language: locationParams.getAll('language'),
     },
   };
 
