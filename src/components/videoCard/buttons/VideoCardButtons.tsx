@@ -28,7 +28,9 @@ export const VideoCardButtons = ({
   iconOnly = false,
 }: VideoCardButtonsProps) => {
   const trackCopyVideoLink = () => {
-    onUrlCopied();
+    if (onUrlCopied) {
+      onUrlCopied();
+    }
     AnalyticsFactory.appcues().sendEvent(
       AppcuesEvent.COPY_LINK_FROM_SEARCH_RESULTS,
     );
