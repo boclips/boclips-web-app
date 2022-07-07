@@ -207,6 +207,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
               `Dannatt, music by Jarrett Farkas].`,
             subjects: [biology],
             releasedOn: new Date(1970, 1, 1),
+            createdBy: 'TED-Ed',
           });
 
           boCreateVideo({
@@ -217,6 +218,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
               `What other creatures do you think they will come across along the Australian coast? Watch now to find out!`,
             subjects: [geography],
             releasedOn: new Date(2020, 3, 14),
+            createdBy: 'TED-Ed',
           });
 
           boSetFacets(
