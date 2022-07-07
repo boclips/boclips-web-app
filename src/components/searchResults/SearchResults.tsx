@@ -49,6 +49,7 @@ export const SearchResults = ({
               videos={results.page}
               currentPage={currentPage}
               handlePageChange={handlePageChange}
+              handleFilterChange={handleFilterChange}
               totalSearchResults={results.pageSpec?.totalElements}
             />
           );

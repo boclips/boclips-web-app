@@ -308,4 +308,26 @@ describe('Video card', () => {
       expect(videoInteractedEvent.subtype).toEqual('NAVIGATE_TO_VIDEO_DETAILS');
     });
   });
+
+  describe(`createdBy link`, () => {
+    it(`renders a clickable link in createdBy element`, () => {
+      const video = VideoFactory.sample({
+        createdBy: 'Amazing content partner',
+        channelId: '123',
+      });
+      const filterSpy = jest.fn();
+
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <VideoCardWrapper video={video} handleFilterChange={filterSpy} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      fireEvent.click(wrapper.getByText('Amazing content partner'));
+
+      expect(filterSpy).toHaveBeenCalledWith('channel', ['123']);
+    });
+  });
 });

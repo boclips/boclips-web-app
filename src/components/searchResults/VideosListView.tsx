@@ -13,6 +13,7 @@ interface Props {
   totalSearchResults: number;
   handlePageChange: (page: number) => void;
   currentPage: number;
+  handleFilterChange: (filter: string, values: string[]) => void;
 }
 
 export const VideosListView = ({
@@ -20,6 +21,7 @@ export const VideosListView = ({
   totalSearchResults,
   handlePageChange,
   currentPage,
+  handleFilterChange,
 }: Props) => {
   const currentBreakpoint = useMediaBreakPoint();
   const mobileView = currentBreakpoint.type === 'mobile';
@@ -60,7 +62,10 @@ export const VideosListView = ({
       dataSource={videos}
       renderItem={(video: Video) => (
         <li className="mb-4" data-qa="video-card-wrapper">
-          <VideoCardWrapper video={video} />
+          <VideoCardWrapper
+            video={video}
+            handleFilterChange={handleFilterChange}
+          />
         </li>
       )}
     />

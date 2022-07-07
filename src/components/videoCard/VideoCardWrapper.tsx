@@ -9,15 +9,17 @@ import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import { trackNavigateToVideoDetails } from 'src/components/common/analytics/Analytics';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { Typography } from '@boclips-ui/typography';
-import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
-import { VideoCardButtons } from './buttons/VideoCardButtons';
+import { FilterKey } from 'src/types/search/FilterKey';
 import s from './VideoCardWrapper.module.less';
+import { VideoCardButtons } from './buttons/VideoCardButtons';
+import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 
 interface Props {
   video: Video;
+  handleFilterChange?: (filter: FilterKey, values: string[]) => void;
 }
 
-const VideoCardTitle = ({ video }: Props) => {
+const VideoCardTitle = ({ video }: Partial<Props>) => {
   const boclipsClient = useBoclipsClient();
   const onClick = () => {
     AnalyticsFactory.appcues().sendEvent(AppcuesEvent.VIDEO_PAGE_OPENED);
@@ -30,7 +32,19 @@ const VideoCardTitle = ({ video }: Props) => {
   );
 };
 
-export const VideoCardWrapper = ({ video }: Props) => {
+export const VideoCardWrapper = ({ video, handleFilterChange }: Props) => {
+  const onNameClick = () =>
+    handleFilterChange && handleFilterChange('channel', [video.channelId]);
+
+  const createdByLink = () => {
+    return (
+      <button onClick={onNameClick} type="button">
+        <Typography.Body as="div" className={s.createdBy} size="small">
+          {video.createdBy}
+        </Typography.Body>
+      </button>
+    );
+  };
   return (
     <div className={s.videoCard}>
       <VideoCard
@@ -38,6 +52,7 @@ export const VideoCardWrapper = ({ video }: Props) => {
         video={convertVideoFromApi(video)}
         videoPlayer={<VideoPlayer video={video} showDurationBadge />}
         border="bottom"
+        createdBy={createdByLink()}
         topBadge={<PriceBadge price={video.price} className="text-xl" />}
         title={<VideoCardTitle video={video} />}
         actions={[

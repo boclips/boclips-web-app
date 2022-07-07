@@ -1000,6 +1000,58 @@ describe('SearchResultsFiltering', () => {
     });
   });
 
+  describe(`filtering by clicking content partner name in video card`, () => {
+    it(`can filter by content partner by clicking their name in video card`, async () => {
+      fakeClient.channels.insertFixture([
+        ChannelFactory.sample({ id: 'ted-id', name: 'Ted' }),
+        ChannelFactory.sample({ id: 'getty-id', name: 'Getty' }),
+      ]);
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '1',
+          title: 'video getty stock',
+          channelId: 'getty-id',
+          createdBy: 'Getty',
+          types: [{ name: 'STOCK', id: 1 }],
+        }),
+      );
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '1',
+          title: 'video ted stock',
+          channelId: 'ted-id',
+          createdBy: 'TED',
+          types: [{ name: 'STOCK', id: 1 }],
+        }),
+      );
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '1',
+          title: 'video getty news',
+          channelId: 'getty-id',
+          createdBy: 'Getty',
+          types: [{ name: 'NEWS', id: 2 }],
+        }),
+      );
+      const wrapper = renderSearchResultsView([
+        '/videos?q=video&video_type=STOCK',
+      ]);
+      await waitFor(() => {
+        expect(wrapper.getByText('video ted stock')).toBeInTheDocument();
+        expect(wrapper.getByText('video getty stock')).toBeInTheDocument();
+        expect(wrapper.queryByText('video getty news')).toBeNull();
+      });
+
+      fireEvent.click(wrapper.getByText('Getty'));
+
+      await waitFor(() => {
+        expect(wrapper.getByText('video getty stock')).toBeInTheDocument();
+        expect(wrapper.queryByText('video ted stock')).toBeNull();
+        expect(wrapper.queryByText('video getty news')).toBeNull();
+      });
+    });
+  });
+
   describe('no results', () => {
     it('shows a no results page without filters', async () => {
       const wrapper = renderSearchResultsView(['/videos?q=shark']);
