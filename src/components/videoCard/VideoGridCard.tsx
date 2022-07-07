@@ -9,6 +9,7 @@ import s from 'src/components/common/gridCard/style.module.less';
 import { VideoCardButtons } from 'src/components/videoCard/buttons/VideoCardButtons';
 import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
 import { getBrowserLocale } from 'src/services/getBrowserLocale';
+import { FilterKey } from 'src/types/search/FilterKey';
 
 interface Props {
   video: Video;
@@ -18,6 +19,7 @@ interface Props {
   onAddToPlaylist?: () => void;
   onUrlCopied?: () => void;
   onLinkClicked?: () => void;
+  handleFilterChange?: (filterKey: FilterKey, values: string[]) => void;
 }
 
 const VideoGridCard = ({
@@ -28,6 +30,7 @@ const VideoGridCard = ({
   onAddToPlaylist,
   onUrlCopied,
   onLinkClicked,
+  handleFilterChange,
 }: Props) => (
   <GridCard
     link={`/videos/${video.id}`}
@@ -53,9 +56,21 @@ const VideoGridCard = ({
             )}
           </Typography.Body>
         )}
-        <Typography.Body as="div" size="small">
-          {video.createdBy}
-        </Typography.Body>
+        <button
+          onClick={() =>
+            handleFilterChange &&
+            handleFilterChange('channel', [video.channelId])
+          }
+          type="button"
+        >
+          <Typography.Body
+            as="div"
+            size="small"
+            className="text-gray-900 hover:underline hover:decoration-solid"
+          >
+            {video.createdBy}
+          </Typography.Body>
+        </button>
       </div>
     }
     footer={

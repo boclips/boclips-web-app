@@ -5,8 +5,8 @@ import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import { Typography } from '@boclips-ui/typography';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
-import VideoGridCard from 'src/components/common/gridCard/VideoGridCard';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import VideoGridCard from 'src/components/videoCard/VideoGridCard';
 import s from './style.module.less';
 
 interface Props {

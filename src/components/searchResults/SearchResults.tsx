@@ -58,6 +58,7 @@ export const SearchResults = ({
             <VideosGridView
               videos={results.page}
               currentPage={currentPage}
+              handleFilterChange={handleFilterChange}
               handlePageChange={handlePageChange}
               totalSearchResults={results.pageSpec?.totalElements}
             />

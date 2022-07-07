@@ -5,9 +5,10 @@ import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import Pagination from '@boclips-ui/pagination';
 import c from 'classnames';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
-import VideoGridCard from 'src/components/common/gridCard/VideoGridCard';
 import List from 'antd/lib/list';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { FilterKey } from 'src/types/search/FilterKey';
+import VideoGridCard from 'src/components/videoCard/VideoGridCard';
 import s from './styles.module.less';
 import paginationStyles from '../common/pagination/pagination.module.less';
 
@@ -15,6 +16,7 @@ interface Props {
   videos: Video[];
   totalSearchResults: number;
   handlePageChange: (page: number) => void;
+  handleFilterChange?: (filterKey: FilterKey, values: string[]) => void;
   currentPage: number;
 }
 
@@ -23,6 +25,7 @@ export const VideosGridView = ({
   totalSearchResults,
   handlePageChange,
   currentPage,
+  handleFilterChange,
 }: Props) => {
   const currentBreakpoint = useMediaBreakPoint();
   const mobileView = currentBreakpoint.type === 'mobile';
@@ -64,6 +67,7 @@ export const VideosGridView = ({
         <li data-qa="video-card-wrapper">
           <VideoGridCard
             video={video}
+            handleFilterChange={handleFilterChange}
             onAddToCart={() => {
               AnalyticsFactory.appcues().sendEvent(
                 AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE,
