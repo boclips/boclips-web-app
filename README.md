@@ -3,9 +3,8 @@
 
 ## Cypress tests
 
-To be able to run the Cypress integration tests, you need the fake server running.
+To start the fake server and run the cypress integration tests, use this command:
 
 ```none
-npm run fake
 npm run test-visual:open
 ```
