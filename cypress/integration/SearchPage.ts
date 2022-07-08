@@ -1,3 +1,8 @@
+import {
+  FacetFactory,
+  FacetsFactory,
+} from 'boclips-api-client/dist/test-support/FacetsFactory';
+import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { Constants } from '../fixtures/Constants';
 
 context('Search page', () => {
@@ -26,5 +31,33 @@ context('Search page', () => {
     cy.percySnapshot('Search with filters', {
       widths: snapshotViewWidths,
     });
+  });
+
+  it(`displays special chars in search topics correctly`, () => {
+    cy.visit('/videos');
+    cy.bo((bo) => {
+      bo.create.video(
+        VideoFactory.sample({
+          title: 'cats',
+          topics: ['U2NocsO2ZGluZ2VyJ3MgQ2F0'],
+        }),
+      );
+      bo.set.facets(
+        FacetsFactory.sample({
+          topics: [
+            FacetFactory.sample({
+              id: 'U2NocsO2ZGluZ2VyJ3MgQ2F0',
+              name: "Schrödinger's cat",
+            }),
+          ],
+        }),
+      );
+    });
+
+    cy.findByPlaceholderText('Search for videos').type('cats');
+    cy.findByRole('button', { name: 'search' }).click();
+    cy.findByRole('button', { name: "Schrödinger's cat" }).click();
+
+    cy.findByRole('button', { name: "Schrödinger's cat" }).should('exist');
   });
 });

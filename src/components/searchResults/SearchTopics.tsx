@@ -25,13 +25,19 @@ export const SearchTopics = ({ topics, handleFilterChange }: Props) => {
   return (
     topics.length > 0 && (
       <div className="overflow-hidden h-20 mb-2">
-        {searchLocation.filters.topics.map((selectedTopic) => (
-          <Bubble
-            selected
-            handleClick={() => handleClick(selectedTopic)}
-            topic={{ name: atob(selectedTopic), id: selectedTopic, hits: 0 }}
-          />
-        ))}
+        {searchLocation.filters.topics.map((selectedTopicId) => {
+          const selectedTopic = topics.find(
+            (topic) => topic.id === selectedTopicId,
+          ) ?? { name: atob(selectedTopicId), id: selectedTopicId, hits: 0 };
+
+          return (
+            <Bubble
+              selected
+              handleClick={() => handleClick(selectedTopicId)}
+              topic={selectedTopic}
+            />
+          );
+        })}
         {topics
           .filter(
             (topic) => searchLocation.filters.topics.indexOf(topic.id) === -1,
