@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { SelectedFilterTag } from 'src/components/filterPanel/SelectedFilterTag';
 import { FilterKey } from 'src/types/search/FilterKey';
-import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
+import {
+  SearchQueryLocationParams,
+  useSearchQueryLocationParams,
+} from 'src/hooks/useLocationParams';
 import { getFilterLabel } from 'src/services/convertFacetsToFilterOptions';
 import { useGetChannelsQuery } from 'src/hooks/api/channelQuery';
 import { useGetSubjectsQuery } from 'src/hooks/api/subjectQuery';
@@ -55,20 +58,20 @@ export const SelectedFilters = ({ removeFilter, facets }: Props) => {
 
   useEffect(() => {
     if (searchQueryLocationParams && channels && subjects) {
-      const filtersInUrl: SelectedFilter[][] = Object.entries(
-        searchQueryLocationParams.filters,
-      )
-        .filter(([filterKey, _values]) => filterKey !== 'topics')
-        .map(([filterKey, appliedFilters]) => {
-          return appliedFilters.map((appliedFilterId) =>
-            buildSelectedFilter(appliedFilterId, filterKey as FilterKey),
-          );
-        });
+      const appliedFilters = {
+        ...searchQueryLocationParams?.filters,
+      };
+      const filters: SelectedFilter[] = [];
 
-      const flattenedFiltersInUrl: SelectedFilter[] = (
-        [] as SelectedFilter[]
-      ).concat(...filtersInUrl);
-      setFiltersToRender(flattenedFiltersInUrl);
+      for (const filter in appliedFilters) {
+        if (filter !== 'topics' && appliedFilters[filter].length > 0) {
+          appliedFilters[filter].forEach((id) => {
+            filters.push(buildSelectedFilter(id, filter as FilterKey));
+          });
+        }
+      }
+
+      setFiltersToRender(filters);
     }
     // eslint-disable-next-line
   }, [
