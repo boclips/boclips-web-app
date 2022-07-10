@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SelectedFilterTag } from 'src/components/filterPanel/SelectedFilterTag';
 import { FilterKey } from 'src/types/search/FilterKey';
-import {
-  SearchQueryLocationParams,
-  useSearchQueryLocationParams,
-} from 'src/hooks/useLocationParams';
+import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
 import { getFilterLabel } from 'src/services/convertFacetsToFilterOptions';
 import { useGetChannelsQuery } from 'src/hooks/api/channelQuery';
 import { useGetSubjectsQuery } from 'src/hooks/api/subjectQuery';
@@ -31,19 +28,20 @@ export const SelectedFilters = ({ removeFilter, facets }: Props) => {
   const { data: educationLevels } = useGetEducationLevelsQuery();
 
   const buildSelectedFilter = (
-    selectedFilterId: string,
+    id: string,
     filterKey: FilterKey,
   ): SelectedFilter => {
     return {
-      id: selectedFilterId,
-      name: getFilterLabel(
-        filterKey,
-        selectedFilterId,
-        channels.page,
-        subjects,
-        educationLevels,
-        facets?.languages,
-      ),
+      id,
+      name:
+        getFilterLabel(
+          filterKey,
+          id,
+          channels.page,
+          subjects,
+          educationLevels,
+          facets?.languages,
+        ) || id,
       key: filterKey,
     };
   };
