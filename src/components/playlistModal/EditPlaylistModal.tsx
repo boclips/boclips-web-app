@@ -4,7 +4,7 @@ import { Collection } from 'boclips-api-client/dist/sub-clients/collections/mode
 import {
   PlaylistFormProps,
   PlaylistModal,
-} from 'src/components/playlistModal/playlistModal';
+} from 'src/components/playlistModal/PlaylistModal';
 
 export interface Props {
   playlist: Collection;

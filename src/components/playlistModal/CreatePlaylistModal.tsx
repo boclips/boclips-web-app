@@ -3,7 +3,7 @@ import { usePlaylistMutation } from 'src/hooks/api/playlistsQuery';
 import {
   PlaylistFormProps,
   PlaylistModal,
-} from 'src/components/playlistModal/playlistModal';
+} from 'src/components/playlistModal/PlaylistModal';
 
 export interface Props {
   videoId?: string;
