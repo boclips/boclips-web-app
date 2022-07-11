@@ -296,7 +296,7 @@ describe('Add to playlist button', () => {
       fireEvent.click(
         await wrapper.findByRole('button', { name: 'Create new playlist' }),
       );
-      expect(wrapper.getByTestId('create-playlist-modal')).toBeVisible();
+      expect(wrapper.getByTestId('playlist-modal')).toBeVisible();
     });
 
     it('hides the pop-up when create playlist modal is open', async () => {
@@ -306,7 +306,7 @@ describe('Add to playlist button', () => {
       fireEvent.click(
         await wrapper.findByRole('button', { name: 'Create new playlist' }),
       );
-      expect(wrapper.getByTestId('create-playlist-modal')).toBeVisible();
+      expect(wrapper.getByTestId('playlist-modal')).toBeVisible();
       expect(wrapper.queryByText('Add to playlist')).not.toBeInTheDocument();
     });
 
@@ -342,9 +342,7 @@ describe('Add to playlist button', () => {
       createPlaylist(wrapper, 'jazz');
 
       await waitFor(() =>
-        expect(
-          wrapper.queryByTestId('create-playlist-modal'),
-        ).not.toBeInTheDocument(),
+        expect(wrapper.queryByTestId('playlist-modal')).not.toBeInTheDocument(),
       );
 
       expect(wrapper.queryByText('Add to playlist')).not.toBeInTheDocument();

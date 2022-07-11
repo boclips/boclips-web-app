@@ -2,7 +2,7 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { render } from 'src/testSupport/render';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import React from 'react';
-import { CreatePlaylistBodal } from 'src/components/createPlaylistModal/createPlaylistBodal';
+import { CreatePlaylistModal } from 'src/components/playlistModal/CreatePlaylistModal';
 import { fireEvent, waitFor } from '@testing-library/react';
 
 describe('Create new playlist modal', () => {
@@ -70,7 +70,7 @@ describe('Create new playlist modal', () => {
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create playlist' }));
 
-    expect(wrapper.queryByTestId('create-playlist-modal')).toBeInTheDocument();
+    expect(wrapper.queryByTestId('playlist-modal')).toBeInTheDocument();
     await waitFor(() => expect(handleOnSuccess).toBeCalledTimes(1));
   });
 
@@ -91,7 +91,7 @@ describe('Create new playlist modal', () => {
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create playlist' }));
 
-    expect(wrapper.queryByTestId('create-playlist-modal')).toBeInTheDocument();
+    expect(wrapper.queryByTestId('playlist-modal')).toBeInTheDocument();
     await waitFor(() => expect(handleOnError).toBeCalledTimes(1));
   });
 });
@@ -104,7 +104,7 @@ const renderWrapper = (
 ) => {
   return render(
     <BoclipsClientProvider client={fakeClient}>
-      <CreatePlaylistBodal
+      <CreatePlaylistModal
         onCancel={onCancel}
         onSuccess={onSuccess}
         onError={onError}

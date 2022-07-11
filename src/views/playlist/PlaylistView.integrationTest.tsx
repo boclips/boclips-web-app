@@ -321,9 +321,7 @@ describe('Playlist view', () => {
       const editPlaylistButton = await wrapper.findByText('Edit playlist');
       fireEvent.click(editPlaylistButton);
 
-      const editPlaylistPopup = await wrapper.findByTestId(
-        'edit-playlist-modal',
-      );
+      const editPlaylistPopup = await wrapper.findByTestId('playlist-modal');
       expect(editPlaylistPopup).toBeVisible();
       expect(
         await within(editPlaylistPopup).findByText('Edit playlist'),
@@ -387,7 +385,7 @@ describe('Playlist view', () => {
       expect(updatedPlaylist.title).toBe('Good bye');
       expect(updatedPlaylist.description).toBe('Not that nice description');
 
-      const editPlaylistModal = wrapper.queryByTestId('edit-playlist-modal');
+      const editPlaylistModal = wrapper.queryByTestId('playlist-modal');
       expect(editPlaylistModal).toBeNull();
     });
 
@@ -423,7 +421,7 @@ describe('Playlist view', () => {
       expect(updatedPlaylist.title).toBe('Hello there');
       expect(updatedPlaylist.description).toBe('Very nice description');
 
-      const editPlaylistModal = wrapper.queryByTestId('edit-playlist-modal');
+      const editPlaylistModal = wrapper.queryByTestId('playlist-modal');
       expect(editPlaylistModal).toBeNull();
     });
 
@@ -456,7 +454,7 @@ describe('Playlist view', () => {
         await wrapper.findByTestId('playlistDescription'),
       ).toHaveTextContent('Very nice description');
 
-      const editPlaylistModal = wrapper.queryByTestId('edit-playlist-modal');
+      const editPlaylistModal = wrapper.queryByTestId('playlist-modal');
       expect(editPlaylistModal).toBeVisible();
     });
 

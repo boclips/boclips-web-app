@@ -15,7 +15,7 @@ import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
 import BoCheckbox from 'src/components/common/input/BoCheckbox';
 import FocusTrap from 'focus-trap-react';
 import { handleEscapeKeyEvent } from 'src/services/handleKeyEvent';
-import { CreatePlaylistBodal } from 'src/components/createPlaylistModal/createPlaylistBodal';
+import { CreatePlaylistModal } from 'src/components/playlistModal/CreatePlaylistModal';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import PlusIcon from 'src/resources/icons/plus-sign.svg';
 import { Typography } from '@boclips-ui/typography';
@@ -151,7 +151,7 @@ export const AddToPlaylistButton = ({ videoId, onCleanup, onClick }: Props) => {
     >
       {showCreatePlaylistModal && (
         <div className={s.createPlaylistModalWrapper}>
-          <CreatePlaylistBodal
+          <CreatePlaylistModal
             videoId={videoId}
             onCancel={() => setShowCreatePlaylistModal(false)}
             onSuccess={handlePlaylistCreationSuccess}

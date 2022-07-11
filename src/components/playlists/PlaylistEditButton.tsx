@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from '@boclips-ui/button';
 import PencilIcon from 'src/resources/icons/pencil.svg';
 import c from 'classnames';
-import { EditPlaylistBodal } from 'src/components/editPlaylistModal/editPlaylistBodal';
+import { EditPlaylistModal } from 'src/components/playlistModal/EditPlaylistModal';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import s from './style.module.less';
@@ -37,7 +37,7 @@ export const PlaylistEditButton = ({ playlist }: Props) => {
       </div>
       {showEditPlaylistModal && (
         <div className={s.playlistModalWrapper}>
-          <EditPlaylistBodal
+          <EditPlaylistModal
             playlist={playlist}
             onCancel={() => setShowEditPlaylistModal(false)}
             onSuccess={() => setShowEditPlaylistModal(false)}

@@ -1,79 +1,63 @@
+import React, { useState } from 'react';
 import { BoInputText } from 'src/components/common/input/BoInputText';
 import { Bodal } from 'src/components/common/bodal/Bodal';
-import React, { useState } from 'react';
-import { useEditPlaylistMutation } from 'src/hooks/api/playlistsQuery';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 
-interface PlaylistForm {
+interface Props {
+  playlist?: Collection;
+  handleConfirm: (title: string, description?: string) => void;
+  onCancel: () => void;
+  isLoading: boolean;
+  title: string;
+  confirmButtonText: string;
+}
+
+export interface PlaylistFormProps {
   title: string;
   description?: string;
 }
 
-export interface Props {
-  playlist: Collection;
-  onCancel: () => void;
-  onSuccess: (playlistId?: string, playlistName?: string) => void;
-  onError: (playlistName: string) => void;
-}
-
-export const EditPlaylistBodal = ({
+export const PlaylistModal = ({
   playlist,
+  handleConfirm,
   onCancel,
-  onSuccess,
-  onError,
+  isLoading,
+  title,
+  confirmButtonText,
 }: Props) => {
-  const [playlistForm, setPlaylistForm] = useState<PlaylistForm>({
-    title: playlist.title,
-    description: playlist.description,
+  const [playlistForm, setPlaylistForm] = useState<PlaylistFormProps>({
+    title: playlist?.title || '',
+    description: playlist?.description || '',
   });
   const [titleError, setTitleError] = useState<boolean>(false);
   const inputTextRef = React.useRef();
 
-  const {
-    mutate: editPlaylist,
-    isSuccess,
-    isError,
-    isLoading,
-  } = useEditPlaylistMutation(playlist);
-
-  React.useEffect(() => {
-    if (isError) {
-      const titleBeforeUpdate = playlist.title;
-      onError(titleBeforeUpdate);
-    }
-    if (isSuccess) {
-      const titleAfterUpdate = playlistForm.title;
-      onSuccess(titleAfterUpdate);
-    }
-  }, [onSuccess, isSuccess, onError, isError, playlist]);
-
-  const handleTitleChange = (title: string) =>
-    setPlaylistForm({ ...playlistForm, title });
+  const handleTitleChange = (newTitle: string) =>
+    setPlaylistForm({ ...playlistForm, title: newTitle });
 
   const handleDescriptionChange = (description: string) =>
     setPlaylistForm({ ...playlistForm, description });
 
-  const handleConfirm = () => {
-    const title = playlistForm.title;
-    if (title == null || title === '') {
+  const validate = () => {
+    const userTitle = playlistForm.title;
+    if (userTitle == null || userTitle === '') {
       setTitleError(true);
-      return;
     }
+  };
 
-    editPlaylist({
-      title,
-      description: playlistForm.description,
-    });
+  const onConfirm = () => {
+    validate();
+    handleConfirm(playlistForm.title, playlistForm.description);
   };
 
   return (
     <Bodal
-      title="Edit playlist"
-      confirmButtonText="Save"
-      onConfirm={handleConfirm}
+      title={title}
+      confirmButtonText={confirmButtonText}
+      onConfirm={onConfirm}
       onCancel={onCancel}
       isLoading={isLoading}
-      dataQa="edit-playlist-modal"
+      dataQa="playlist-modal"
       initialFocusRef={inputTextRef}
     >
       <div className="pb-6">

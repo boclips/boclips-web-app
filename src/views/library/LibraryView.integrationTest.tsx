@@ -311,8 +311,6 @@ describe('LibraryView', () => {
       fillPlaylistName(wrapper, 'My new playlist');
       confirmPlaylistCreationModal(wrapper);
 
-      fireEvent.click(wrapper.getByRole('button', { name: 'Create playlist' }));
-
       await waitFor(() => {
         expect(wrapper.getByTestId('spinner')).toBeInTheDocument();
       });
