@@ -1,6 +1,7 @@
 import {
   fireEvent,
   render,
+  RenderResult,
   screen,
   waitFor,
   waitForElementToBeRemoved,
@@ -305,4 +306,184 @@ describe('Playlist view', () => {
       ).toBeNull();
     });
   });
+
+  describe('editing a playlist', () => {
+    it('edit playlist button is not visible for playlists shared with me by other user', async () => {
+      const history = createBrowserHistory();
+      history.push({ pathname: '/playlists/123' });
+
+      const wrapper = render(
+        <Router history={history}>
+          <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+        </Router>,
+      );
+
+      const editPlaylistButton = await wrapper.findByText('Edit playlist');
+      fireEvent.click(editPlaylistButton);
+
+      const editPlaylistPopup = await wrapper.findByTestId(
+        'edit-playlist-modal',
+      );
+      expect(editPlaylistPopup).toBeVisible();
+      expect(
+        await within(editPlaylistPopup).findByText('Edit playlist'),
+      ).toBeVisible();
+      expect(
+        await within(editPlaylistPopup).findByDisplayValue('Hello there'),
+      ).toBeVisible();
+      expect(
+        await within(editPlaylistPopup).findByDisplayValue(
+          'Very nice description',
+        ),
+      ).toBeVisible();
+    });
+
+    it('edit playlist popup is displayed with populated values when edit button is clicked', async () => {
+      const sharedPlaylist = { ...playlist, id: '321', mine: false };
+      client.collections.addToFake(sharedPlaylist);
+      const history = createBrowserHistory();
+      history.push({ pathname: '/playlists/321' });
+
+      const wrapper = render(
+        <Router history={history}>
+          <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+        </Router>,
+      );
+
+      await waitForPlaylistToBeLoaded(wrapper);
+      const editPlaylistButton = wrapper.queryByText('Edit playlist');
+      expect(editPlaylistButton).toBeNull();
+    });
+
+    it('can edit playlist', async () => {
+      const history = createBrowserHistory();
+      history.push({ pathname: '/playlists/123' });
+
+      const wrapper = render(
+        <Router history={history}>
+          <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+        </Router>,
+      );
+
+      fireEvent.click(await wrapper.findByText('Edit playlist'));
+
+      fireEvent.change(wrapper.getByDisplayValue('Hello there'), {
+        target: { value: 'Good bye' },
+      });
+      fireEvent.change(wrapper.getByDisplayValue('Very nice description'), {
+        target: { value: 'Not that nice description' },
+      });
+
+      fireEvent.click(wrapper.getByText('Save'));
+
+      expect(await wrapper.findByTestId('playlistTitle')).toHaveTextContent(
+        'Good bye',
+      );
+      expect(
+        await wrapper.findByTestId('playlistDescription'),
+      ).toHaveTextContent('Not that nice description');
+
+      const updatedPlaylist = await client.collections.get('123');
+      expect(updatedPlaylist.title).toBe('Good bye');
+      expect(updatedPlaylist.description).toBe('Not that nice description');
+
+      const editPlaylistModal = wrapper.queryByTestId('edit-playlist-modal');
+      expect(editPlaylistModal).toBeNull();
+    });
+
+    it('changes are not saved when playlist editing is cancelled', async () => {
+      const history = createBrowserHistory();
+      history.push({ pathname: '/playlists/123' });
+
+      const wrapper = render(
+        <Router history={history}>
+          <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+        </Router>,
+      );
+
+      fireEvent.click(await wrapper.findByText('Edit playlist'));
+
+      fireEvent.change(wrapper.getByDisplayValue('Hello there'), {
+        target: { value: 'Good bye' },
+      });
+      fireEvent.change(wrapper.getByDisplayValue('Very nice description'), {
+        target: { value: 'Not that nice description' },
+      });
+
+      fireEvent.click(wrapper.getByText('Cancel'));
+
+      expect(await wrapper.findByTestId('playlistTitle')).toHaveTextContent(
+        'Hello there',
+      );
+      expect(
+        await wrapper.findByTestId('playlistDescription'),
+      ).toHaveTextContent('Very nice description');
+
+      const updatedPlaylist = await client.collections.get('123');
+      expect(updatedPlaylist.title).toBe('Hello there');
+      expect(updatedPlaylist.description).toBe('Very nice description');
+
+      const editPlaylistModal = wrapper.queryByTestId('edit-playlist-modal');
+      expect(editPlaylistModal).toBeNull();
+    });
+
+    it('notification is displayed when playlist edit fails', async () => {
+      const history = createBrowserHistory();
+      history.push({ pathname: '/playlists/123' });
+
+      client.collections.update = jest.fn(() => Promise.reject());
+
+      const wrapper = render(
+        <Router history={history}>
+          <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+        </Router>,
+      );
+
+      fireEvent.click(await wrapper.findByText('Edit playlist'));
+
+      fireEvent.change(wrapper.getByDisplayValue('Hello there'), {
+        target: { value: 'Good bye' },
+      });
+
+      fireEvent.click(wrapper.getByText('Save'));
+
+      expect(await wrapper.findByTestId('edit-playlist-failed')).toBeVisible();
+
+      expect(await wrapper.findByTestId('playlistTitle')).toHaveTextContent(
+        'Hello there',
+      );
+      expect(
+        await wrapper.findByTestId('playlistDescription'),
+      ).toHaveTextContent('Very nice description');
+
+      const editPlaylistModal = wrapper.queryByTestId('edit-playlist-modal');
+      expect(editPlaylistModal).toBeVisible();
+    });
+
+    it('warning is displayed when required title not provided', async () => {
+      const history = createBrowserHistory();
+      history.push({ pathname: '/playlists/123' });
+
+      const wrapper = render(
+        <Router history={history}>
+          <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+        </Router>,
+      );
+
+      fireEvent.click(await wrapper.findByText('Edit playlist'));
+
+      fireEvent.change(wrapper.getByDisplayValue('Hello there'), {
+        target: { value: '' },
+      });
+
+      fireEvent.click(wrapper.getByText('Save'));
+
+      expect(
+        await wrapper.findByText('Playlist name is required'),
+      ).toBeVisible();
+    });
+  });
+
+  const waitForPlaylistToBeLoaded = async (wrapper: RenderResult) =>
+    wrapper.findByText('Hello there');
 });

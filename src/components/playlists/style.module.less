@@ -78,7 +78,16 @@
   border-bottom: 2px solid @gray-400;
 }
 
-.sharePlaylistButton {
+.playlistButtons {
+  display: flex;
+  flex-direction: row;
+
+  & .playlistButton:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+}
+
+.playlistButton {
   --bo-ui-button-outline-background-color-hover: transparent;
   --bo-ui-button-outline-svg-fill: transparent;
   --bo-ui-button-outline-svg-stroke: @blue-800;
@@ -91,12 +100,21 @@
 
     div {
       svg {
+        width: 21px !important;
+        height: 21px !important;
         path {
           stroke-width: 2px;
         }
       }
     }
   }
+}
+
+.playlistModalWrapper {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  z-index: 99;
 }
 
 .cover {

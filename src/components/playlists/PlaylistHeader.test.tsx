@@ -103,4 +103,18 @@ describe('Playlist Header', () => {
       ),
     );
   });
+
+  it('has an edit button', async () => {
+    const playlist = CollectionFactory.sample({
+      id: '123',
+      title: 'Playlist title',
+      description: 'Description',
+    });
+
+    const wrapper = render(<PlaylistHeader playlist={playlist} />);
+
+    const editButton = await wrapper.findByText('Edit playlist');
+
+    expect(editButton).toBeVisible();
+  });
 });

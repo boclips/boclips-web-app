@@ -29,7 +29,7 @@ export const PlaylistShareButton = ({ link }: Props) => {
   };
 
   return (
-    <div className={c(s.sharePlaylistButton, 'md:order-2 sm:order-last')}>
+    <div className={c(s.playlistButton, 'md:order-2 sm:order-last')}>
       <Button
         dataQa="share-playlist-button"
         onClick={handleClick}

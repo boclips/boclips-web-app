@@ -1,46 +1,51 @@
 import { BoInputText } from 'src/components/common/input/BoInputText';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import React, { useState } from 'react';
-import { usePlaylistMutation } from 'src/hooks/api/playlistsQuery';
+import { useEditPlaylistMutation } from 'src/hooks/api/playlistsQuery';
+import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 
 interface PlaylistForm {
-  title?: string;
+  title: string;
   description?: string;
 }
 
 export interface Props {
-  videoId?: string;
+  playlist: Collection;
   onCancel: () => void;
   onSuccess: (playlistId?: string, playlistName?: string) => void;
   onError: (playlistName: string) => void;
 }
 
-export const CreatePlaylistBodal = ({
-  videoId = null,
+export const EditPlaylistBodal = ({
+  playlist,
   onCancel,
   onSuccess,
   onError,
 }: Props) => {
-  const [playlistForm, setPlaylistForm] = useState<PlaylistForm>({});
+  const [playlistForm, setPlaylistForm] = useState<PlaylistForm>({
+    title: playlist.title,
+    description: playlist.description,
+  });
   const [titleError, setTitleError] = useState<boolean>(false);
   const inputTextRef = React.useRef();
 
   const {
-    mutate: createPlaylist,
+    mutate: editPlaylist,
     isSuccess,
-    data: playlistId,
     isError,
     isLoading,
-  } = usePlaylistMutation();
+  } = useEditPlaylistMutation(playlist);
 
   React.useEffect(() => {
     if (isError) {
-      onError(playlistForm.title);
+      const titleBeforeUpdate = playlist.title;
+      onError(titleBeforeUpdate);
     }
     if (isSuccess) {
-      onSuccess(playlistId, playlistForm.title);
+      const titleAfterUpdate = playlistForm.title;
+      onSuccess(titleAfterUpdate);
     }
-  }, [playlistId, onSuccess, isSuccess, isError]);
+  }, [onSuccess, isSuccess, onError, isError, playlist]);
 
   const handleTitleChange = (title: string) =>
     setPlaylistForm({ ...playlistForm, title });
@@ -55,27 +60,20 @@ export const CreatePlaylistBodal = ({
       return;
     }
 
-    let videos = [];
-    if (videoId) {
-      videos = [videoId];
-    }
-
-    createPlaylist({
+    editPlaylist({
       title,
       description: playlistForm.description,
-      origin: 'BO_WEB_APP',
-      videos,
     });
   };
 
   return (
     <Bodal
-      title="Create new playlist"
-      confirmButtonText="Create playlist"
+      title="Edit playlist"
+      confirmButtonText="Save"
       onConfirm={handleConfirm}
       onCancel={onCancel}
       isLoading={isLoading}
-      dataQa="create-playlist-modal"
+      dataQa="edit-playlist-modal"
       initialFocusRef={inputTextRef}
     >
       <div className="pb-6">
@@ -88,6 +86,7 @@ export const CreatePlaylistBodal = ({
           isError={titleError}
           errorMessage="Playlist name is required"
           inputType="text"
+          defaultValue={playlistForm.title}
           ref={inputTextRef}
           height="48px"
         />
@@ -98,6 +97,7 @@ export const CreatePlaylistBodal = ({
         placeholder="Add description"
         onChange={handleDescriptionChange}
         inputType="textarea"
+        defaultValue={playlistForm.description}
       />
     </Bodal>
   );

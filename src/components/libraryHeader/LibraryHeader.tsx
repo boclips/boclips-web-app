@@ -25,9 +25,9 @@ export const LibraryHeader = () => {
       `create-playlist-${playlistName}-failed`,
     );
   };
-  const handleSuccess = (data: string) => {
+  const handleSuccess = (playlistId: string) => {
     AnalyticsFactory.hotjar().event(HotjarEvents.PlaylistCreatedFromLibrary);
-    history.push(`/playlists/${data}`);
+    history.push(`/playlists/${playlistId}`);
   };
 
   const createButtonRef: React.RefObject<HTMLButtonElement> = React.useRef();

@@ -5,6 +5,7 @@ import c from 'classnames';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import PlaylistDescription from 'src/components/playlists/PlaylistDescription';
 import { Typography } from '@boclips-ui/typography';
+import { PlaylistEditButton } from 'src/components/playlists/PlaylistEditButton';
 import s from './style.module.less';
 
 interface Props {
@@ -30,7 +31,10 @@ const PlaylistHeader = ({ playlist }: Props) => {
       >
         {playlist.title}
       </Typography.H1>
-      <PlaylistShareButton link={toLibraryLink(playlist.id)} />
+      <div className={s.playlistButtons}>
+        <PlaylistShareButton link={toLibraryLink(playlist.id)} />
+        {playlist.mine && <PlaylistEditButton playlist={playlist} />}
+      </div>
       {playlist.description && (
         <PlaylistDescription description={playlist.description} />
       )}

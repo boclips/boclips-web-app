@@ -1,7 +1,10 @@
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { BoclipsClient } from 'boclips-api-client';
-import { CreateCollectionRequest } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';
+import {
+  CreateCollectionRequest,
+  UpdateCollectionRequest,
+} from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
@@ -152,6 +155,21 @@ export const usePlaylistMutation = () => {
     {
       onSettled: () => {
         queryClient.invalidateQueries('ownPlaylists');
+      },
+    },
+  );
+};
+
+export const useEditPlaylistMutation = (playlist: Collection) => {
+  const client = useBoclipsClient();
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    (request: UpdateCollectionRequest) =>
+      client.collections.update(playlist.id, request),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['playlist', playlist.id]);
       },
     },
   );
