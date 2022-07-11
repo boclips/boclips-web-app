@@ -241,4 +241,20 @@ describe('The mighty Bodal', () => {
 
     expect(handleOnCancel).toBeCalledTimes(0);
   });
+
+  it('onCancel invoked when escape key down (when escape pressed with no focus on/within bodal)', () => {
+    const handleOnCancel = jest.fn();
+    const wrapper = render(
+      <Bodal
+        title="Hello Bodal"
+        onCancel={handleOnCancel}
+        closeOnClickOutside
+      />,
+    );
+
+    const body = wrapper.baseElement;
+    fireEvent.keyDown(body, { key: 'Escape' });
+
+    expect(handleOnCancel).toBeCalledTimes(1);
+  });
 });

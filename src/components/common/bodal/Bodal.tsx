@@ -80,6 +80,16 @@ export const Bodal: React.FC<Props> = ({
 
   CloseOnClickOutside(ref, closeOnClickOutside ? onCancel : () => {});
 
+  const onKeyDown = (e: KeyboardEvent) => handleEscapeKeyEvent(e, onCancel);
+
+  useEffect(() => {
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+    };
+    // eslint-disable-next-line
+  }, []);
+
   useEffect(() => {
     initialFocusRef?.current.focus();
   }, [initialFocusRef]);
@@ -94,7 +104,6 @@ export const Bodal: React.FC<Props> = ({
         data-qa={dataQa}
         className={s.modalWrapper}
         aria-describedby="bodal-description"
-        onKeyDown={(event) => handleEscapeKeyEvent(event, onCancel)}
       >
         <div id="bodal-description" hidden>
           This is a dialog for {title}. Escape will cancel and close the window.
