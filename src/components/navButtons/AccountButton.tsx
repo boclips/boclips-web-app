@@ -20,7 +20,7 @@ export const AccountButton = () => {
   const { data, isLoading } = useGetUserQuery();
   const ref = useRef(null);
 
-  CloseOnClickOutside(ref, setDisplayModal);
+  CloseOnClickOutside(ref, () => setDisplayModal(false));
 
   const onClick = () => {
     setDisplayModal(!displayModal);

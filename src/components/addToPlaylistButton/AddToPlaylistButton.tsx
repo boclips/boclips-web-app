@@ -40,7 +40,7 @@ export const AddToPlaylistButton = ({ videoId, onCleanup, onClick }: Props) => {
 
   const ref = useRef(null);
 
-  CloseOnClickOutside(ref, setIsOpen);
+  CloseOnClickOutside(ref, () => setIsOpen(false));
 
   const { data: playlists } = useOwnPlaylistsQuery();
 

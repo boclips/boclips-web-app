@@ -199,4 +199,46 @@ describe('The mighty Bodal', () => {
     fireEvent.click(wrapper.getByText('Hello'));
     expect(handleCancel).toBeCalledTimes(1);
   });
+
+  it('onCancel invoked when mouse down outside of bodal when closeOnClickOutside prop is set', () => {
+    const handleOnCancel = jest.fn();
+    const wrapper = render(
+      <Bodal
+        title="Hello Bodal"
+        onCancel={handleOnCancel}
+        closeOnClickOutside
+      />,
+    );
+    const bodal = wrapper.getByRole('dialog');
+
+    fireEvent.mouseDown(bodal);
+
+    expect(handleOnCancel).toBeCalledTimes(1);
+  });
+
+  it('onCancel invoked when mouse down outside of bodal and closeOnClickOutside prop not set', () => {
+    const handleOnCancel = jest.fn();
+    const wrapper = render(<Bodal title="Bodal" onCancel={handleOnCancel} />);
+    const bodal = wrapper.getByRole('dialog');
+
+    fireEvent.mouseDown(bodal);
+
+    expect(handleOnCancel).toBeCalledTimes(1);
+  });
+
+  it('onCancel not invoked when mouse down outside of bodal but closeOnClickOutside prop set to false', () => {
+    const handleOnCancel = jest.fn();
+    const wrapper = render(
+      <Bodal
+        title="Bodal"
+        onCancel={handleOnCancel}
+        closeOnClickOutside={false}
+      />,
+    );
+    const bodal = wrapper.getByRole('dialog');
+
+    fireEvent.mouseDown(bodal);
+
+    expect(handleOnCancel).toBeCalledTimes(0);
+  });
 });

@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 
 export default function CloseOnClickOutside(
   ref: React.MutableRefObject<any>,
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  closeOnClickOutsideFn: () => void,
 ) {
   useEffect(() => {
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
-        setIsOpen(false);
+        if (closeOnClickOutsideFn) {
+          closeOnClickOutsideFn();
+        }
       }
     }
 
@@ -15,5 +17,5 @@ export default function CloseOnClickOutside(
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [ref, setIsOpen]);
+  }, [ref, closeOnClickOutsideFn]);
 }

@@ -1,4 +1,9 @@
-import React, { PropsWithChildren, ReactElement, useEffect } from 'react';
+import React, {
+  PropsWithChildren,
+  ReactElement,
+  useEffect,
+  useRef,
+} from 'react';
 import Button from '@boclips-ui/button';
 import CloseIconSVG from 'src/resources/icons/cross-icon.svg';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -7,6 +12,7 @@ import { TextButton } from 'src/components/common/textButton/TextButton';
 import { handleEscapeKeyEvent } from 'src/services/handleKeyEvent';
 import FocusTrap from 'focus-trap-react';
 import { Typography } from '@boclips-ui/typography';
+import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
 import s from './style.module.less';
 
 export interface Props {
@@ -18,6 +24,7 @@ export interface Props {
   cancelButtonText?: string;
   dataQa?: string;
   initialFocusRef?: React.RefObject<HTMLElement>;
+  closeOnClickOutside?: boolean;
 }
 
 export const Bodal: React.FC<Props> = ({
@@ -30,6 +37,7 @@ export const Bodal: React.FC<Props> = ({
   dataQa = 'modal',
   children,
   initialFocusRef,
+  closeOnClickOutside = true,
 }: PropsWithChildren<Props>) => {
   const breakpoints = useMediaBreakPoint();
   const mobileView = breakpoints.type === 'mobile';
@@ -68,6 +76,10 @@ export const Bodal: React.FC<Props> = ({
     </>
   );
 
+  const ref = useRef(null);
+
+  CloseOnClickOutside(ref, closeOnClickOutside ? onCancel : () => {});
+
   useEffect(() => {
     initialFocusRef?.current.focus();
   }, [initialFocusRef]);
@@ -87,7 +99,7 @@ export const Bodal: React.FC<Props> = ({
         <div id="bodal-description" hidden>
           This is a dialog for {title}. Escape will cancel and close the window.
         </div>
-        <div className={s.modal}>
+        <div className={s.modal} ref={ref}>
           <div className={s.modalContent}>
             <div className={s.modalHeader}>{header}</div>
             {children}
