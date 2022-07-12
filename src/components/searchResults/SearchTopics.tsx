@@ -13,9 +13,11 @@ export const SearchTopics = ({ topics, handleFilterChange }: Props) => {
   const [searchLocation] = useSearchQueryLocationParams();
 
   const sendEvent = (topic: string) =>
-    AnalyticsFactory.bucket().track('search_topic_selected', {
-      topic: atob(topic),
-    });
+    AnalyticsFactory.bucket().then((bucketService) =>
+      bucketService.track('search_topic_selected', {
+        topic: atob(topic),
+      }),
+    );
 
   const handleClick = (topic: string) => {
     if (searchLocation.filters.topics.indexOf(topic) > -1) {

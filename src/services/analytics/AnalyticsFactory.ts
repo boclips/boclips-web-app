@@ -4,7 +4,6 @@ import Hotjar from 'src/services/analytics/hotjar/Hotjar';
 import mixpanel from 'mixpanel-browser';
 import { Constants } from 'src/AppConstants';
 import BucketService from 'src/services/analytics/bucket/BucketService';
-import bucket from '@bucketco/tracking-sdk';
 import MixpanelService from './mixpanel/MixpanelService';
 
 export default class AnalyticsFactory {
@@ -44,16 +43,18 @@ export default class AnalyticsFactory {
     return this.mixpanelService;
   }
 
-  public static bucket(): BucketService {
-    if (!this.bucketService) {
-      const bucketToken = Constants.BUCKET_TOKEN;
-      if (bucketToken !== null) {
-        bucket.init(bucketToken, {});
-        this.bucketService = new BucketService(bucket);
-      } else {
-        this.bucketService = new BucketService(null);
+  public static bucket(): Promise<BucketService> {
+    return import('@bucketco/tracking-sdk').then(({ default: bucket }) => {
+      if (!this.bucketService) {
+        const bucketToken = Constants.BUCKET_TOKEN;
+        if (bucketToken !== null) {
+          bucket.init(bucketToken, {});
+          this.bucketService = new BucketService(bucket);
+        } else {
+          this.bucketService = new BucketService(null);
+        }
       }
-    }
-    return this.bucketService;
+      return this.bucketService;
+    });
   }
 }

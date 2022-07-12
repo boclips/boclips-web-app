@@ -30,7 +30,7 @@ module.exports = merge(common, {
   performance: {
     hints: 'error',
     maxAssetSize: 1015 * kilobyte, // we set this as the current largest - could maybe go lower
-    maxEntrypointSize: 1084 * kilobyte,
+    maxEntrypointSize: 1024 * kilobyte,
   },
   optimization: {
     splitChunks: {

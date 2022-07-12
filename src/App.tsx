@@ -92,7 +92,9 @@ const App = ({
           id: user.id,
         });
         AnalyticsFactory.hotjar().userAttributes(new UserAttributes(user));
-        AnalyticsFactory.bucket().setUserData(user);
+        AnalyticsFactory.bucket().then((bucketService) =>
+          bucketService.setUserData(user),
+        );
       })
       .then(() => {
         AnalyticsFactory.appcues().sendEvent(AppcuesEvent.LOGGED_IN);
