@@ -3,6 +3,7 @@ import { Facet } from 'boclips-api-client/dist/sub-clients/videos/model/VideoFac
 import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
 import { Bubble } from 'src/components/searchResults/Bubble';
 import { FilterKey } from 'src/types/search/FilterKey';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 
 interface Props {
   topics: Facet[];
@@ -10,6 +11,11 @@ interface Props {
 }
 export const SearchTopics = ({ topics, handleFilterChange }: Props) => {
   const [searchLocation] = useSearchQueryLocationParams();
+
+  const sendEvent = (topic: string) =>
+    AnalyticsFactory.bucket().track('search_topic_selected', {
+      topic: atob(topic),
+    });
 
   const handleClick = (topic: string) => {
     if (searchLocation.filters.topics.indexOf(topic) > -1) {
@@ -19,6 +25,7 @@ export const SearchTopics = ({ topics, handleFilterChange }: Props) => {
       );
     } else {
       handleFilterChange('topics', [...searchLocation.filters.topics, topic]);
+      sendEvent(topic);
     }
   };
 

@@ -37,6 +37,10 @@ export class AppConstants {
     return this.window.Environment.MIXPANEL_TOKEN ?? null;
   }
 
+  public get BUCKET_TOKEN(): string | null {
+    return this.window.Environment.BUCKET_TOKEN ?? null;
+  }
+
   public get PEARSON_ORGANISATION_ID(): string {
     return this.window.Environment.PEARSON_ORGANISATION_ID;
   }

@@ -98,6 +98,7 @@
     "@boclips-ui/video": "^3.0.12",
     "@boclips-ui/video-card": "^5.3.0",
     "@boclips-ui/video-card-placeholder": "^2.0.14",
+    "@bucketco/tracking-sdk": "^1.0.0",
     "@hot-loader/react-dom": "^17.0.1",
     "@sentry/integrations": "^6.1.0",
     "@sentry/react": "^6.2.0",
