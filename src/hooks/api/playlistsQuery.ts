@@ -5,11 +5,11 @@ import {
   CreateCollectionRequest,
   UpdateCollectionRequest,
 } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';
-import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { CollectionsClient } from 'boclips-api-client/dist/sub-clients/collections/client/CollectionsClient';
 import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collections/model/ListViewCollection';
+import { playlistKeys } from './playlistKeys';
 
 interface UpdatePlaylistProps {
   playlist: Collection | ListViewCollection;
@@ -23,28 +23,21 @@ interface PlaylistMutationCallbacks {
 
 export const useOwnAndSharedPlaylistsQuery = () => {
   const client = useBoclipsClient();
-  return useQuery('ownAndSharedPlaylists', () =>
+  return useQuery(playlistKeys.ownAndShared, () =>
     doGetOwnAndSharedPlaylists(client),
   );
 };
 
 export const useOwnPlaylistsQuery = () => {
   const client = useBoclipsClient();
-  return useQuery('ownPlaylists', () => doGetOwnPlaylists(client));
+  return useQuery(playlistKeys.own, () => doGetOwnPlaylists(client));
 };
 
 export const usePlaylistQuery = (id: string) => {
-  const queryClient = useQueryClient();
   const client = useBoclipsClient();
 
-  const cachedPlaylists =
-    queryClient.getQueryData<Pageable<Collection>>('playlists');
-  return useQuery(
-    ['playlist', id],
-    () => client.collections.get(id, 'details'),
-    {
-      initialData: () => cachedPlaylists?.page?.find((c) => c.id === id),
-    },
+  return useQuery(playlistKeys.detail(id), () =>
+    client.collections.get(id, 'details'),
   );
 };
 
@@ -130,7 +123,9 @@ export const useRemoveFromPlaylistMutation = (
         callbacks.onError(playlist.id);
       },
       onSettled: (_data, _error, variables) => {
-        queryClient.invalidateQueries(['playlist', variables.playlist.id]);
+        queryClient.invalidateQueries(
+          playlistKeys.detail(variables.playlist.id),
+        );
       },
     },
   );
@@ -154,7 +149,7 @@ export const usePlaylistMutation = () => {
     (request: CreateCollectionRequest) => client.collections.create(request),
     {
       onSettled: () => {
-        queryClient.invalidateQueries('ownPlaylists');
+        queryClient.invalidateQueries(playlistKeys.own);
       },
     },
   );
@@ -169,7 +164,7 @@ export const useEditPlaylistMutation = (playlist: Collection) => {
       client.collections.update(playlist.id, request),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['playlist', playlist.id]);
+        queryClient.invalidateQueries(playlistKeys.detail(playlist.id));
       },
     },
   );
