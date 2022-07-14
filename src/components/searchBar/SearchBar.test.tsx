@@ -7,7 +7,6 @@ import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { lastEvent } from 'src/testSupport/lastEvent';
 import { SearchQueryCompletionsSuggestedRequest } from 'boclips-api-client/dist/sub-clients/events/model/SearchQueryCompletionsSuggestedRequest';
-import { sleep } from 'src/testSupport/sleep';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 
 describe('SearchBar', () => {
@@ -56,9 +55,6 @@ describe('SearchBar', () => {
     let fakeBoclipsClient;
     beforeEach(() => {
       fakeBoclipsClient = new FakeBoclipsClient();
-      fakeBoclipsClient.users.setCurrentUserFeatures({
-        BO_WEB_APP_SEARCH_SUGGESTIONS: true,
-      });
 
       fakeBoclipsClient.suggestions.populate({
         channels: [],
@@ -104,32 +100,6 @@ describe('SearchBar', () => {
 
       expect(await wrapper.findByText('.S. Government')).toBeInTheDocument();
       expect(await wrapper.findByText('.S. Senate')).toBeInTheDocument();
-    });
-
-    it(`does not display search auto-suggest (nor send events) if user does not have feature flag`, async () => {
-      fakeBoclipsClient.users.setCurrentUserFeatures({
-        BO_WEB_APP_SEARCH_SUGGESTIONS: false,
-      });
-
-      const wrapper = render(
-        <BoclipsClientProvider client={fakeBoclipsClient}>
-          <Router history={createBrowserHistory()}>
-            <Search showIconOnly={false} />
-          </Router>
-        </BoclipsClientProvider>,
-      );
-
-      const searchInput = wrapper.getByPlaceholderText(
-        'Search for videos',
-      ) as HTMLInputElement;
-      fireEvent.change(searchInput, { target: { value: 'U' } });
-      fireEvent.focus(searchInput);
-
-      await sleep(500);
-
-      expect(searchInput.value).toEqual('U');
-      expect(wrapper.queryByText('.S. Constitution')).toBeNull();
-      expect(fakeBoclipsClient.events.getEvents()).toHaveLength(0);
     });
 
     it('sends an event when auto-suggest displayed', async () => {
