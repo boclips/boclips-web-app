@@ -8,7 +8,7 @@ import React from 'react';
 import Logo from 'src/components/logo/Logo';
 
 describe('logo', () => {
-  it('does renders the boclips logo if no logo url is provided', () => {
+  it('does renders the CourseSpark logo if no logo url is provided', () => {
     const navbar = render(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
@@ -17,7 +17,9 @@ describe('logo', () => {
       </BoclipsSecurityProvider>,
     );
 
-    expect(navbar.getByLabelText('Boclips logo - Home')).toBeInTheDocument();
+    expect(
+      navbar.getByLabelText('CourseSpark logo - Home'),
+    ).toBeInTheDocument();
   });
 
   it('does renders the organisation logo if logo url is provided', async () => {

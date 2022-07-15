@@ -1,5 +1,5 @@
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
-import BoclipsLogoSVG from 'src/resources/icons/boclips.svg';
+import CourseSparkLogoSVG from 'src/resources/icons/coursespark.svg';
 import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import s from './style.module.less';
@@ -9,14 +9,14 @@ const Logo = (): ReactElement => {
 
   const logoTitle = user?.organisation?.name
     ? `${user.organisation.name} logo - Home`
-    : 'Boclips logo - Home';
+    : 'CourseSpark logo - Home';
 
   return (
     <Link to="/" aria-label={logoTitle} className={s.logo}>
       {user?.organisation?.logoUrl ? (
         <img alt={logoTitle} src={user?.organisation?.logoUrl} />
       ) : (
-        <BoclipsLogoSVG />
+        <CourseSparkLogoSVG />
       )}
     </Link>
   );
