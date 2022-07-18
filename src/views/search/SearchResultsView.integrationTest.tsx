@@ -317,7 +317,7 @@ describe('SearchResults', () => {
       // selecting second alert element, as addNotification is the first one
       const removeNotification = wrapper.getAllByRole('alert')[1];
       expect(
-        within(removeNotification).getByText('Video removed from cart'),
+        await within(removeNotification).findByText('Video removed from cart'),
       ).toBeVisible();
     });
 
