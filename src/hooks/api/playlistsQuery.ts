@@ -165,6 +165,7 @@ export const useEditPlaylistMutation = (playlist: Collection) => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(playlistKeys.detail(playlist.id));
+        queryClient.invalidateQueries(playlistKeys.own);
       },
     },
   );

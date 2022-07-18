@@ -15,10 +15,20 @@ export const PlaylistEditButton = ({ playlist }: Props) => {
   const [showEditPlaylistModal, setShowEditPlaylistModal] =
     useState<boolean>(false);
 
+  const handleEditPlaylistSuccess = (playlistTitle: string) => {
+    displayNotification(
+      'success',
+      `Playlist "${playlistTitle}" edited`,
+      '',
+      `edit-playlist-success`,
+    );
+    setShowEditPlaylistModal(false);
+  };
+
   const handleEditPlaylistError = (playlistTitle: string) => {
     displayNotification(
       'error',
-      `Error: Failed to edit playlist ${playlistTitle}`,
+      `Error: Failed to edit playlist "${playlistTitle}"`,
       'Please try again',
       `edit-playlist-failed`,
     );
@@ -40,7 +50,7 @@ export const PlaylistEditButton = ({ playlist }: Props) => {
           <EditPlaylistModal
             playlist={playlist}
             onCancel={() => setShowEditPlaylistModal(false)}
-            onSuccess={() => setShowEditPlaylistModal(false)}
+            onSuccess={handleEditPlaylistSuccess}
             onError={handleEditPlaylistError}
           />
         </div>

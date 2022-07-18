@@ -374,6 +374,7 @@ describe('Playlist view', () => {
 
       fireEvent.click(wrapper.getByText('Save'));
 
+      expect(await wrapper.findByTestId('edit-playlist-success')).toBeVisible();
       expect(await wrapper.findByTestId('playlistTitle')).toHaveTextContent(
         'Good bye',
       );
@@ -387,6 +388,43 @@ describe('Playlist view', () => {
 
       const editPlaylistModal = wrapper.queryByTestId('playlist-modal');
       expect(editPlaylistModal).toBeNull();
+    });
+
+    it('edited playlist title is updated also in add to playlist modal', async () => {
+      const history = createBrowserHistory();
+      history.push({ pathname: '/playlists/123' });
+
+      const wrapper = render(
+        <Router history={history}>
+          <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+        </Router>,
+      );
+
+      fireEvent.click(await wrapper.findByText('Edit playlist'));
+
+      fireEvent.change(wrapper.getByDisplayValue('Hello there'), {
+        target: { value: 'Good bye' },
+      });
+
+      fireEvent.click(wrapper.getByText('Save'));
+
+      expect(await wrapper.findByTestId('edit-playlist-success')).toBeVisible();
+      expect(await wrapper.findByTestId('playlistTitle')).toHaveTextContent(
+        'Good bye',
+      );
+
+      const videoOne = wrapper.getByTestId('grid-card-for-Video One 111');
+      const addToPlaylistButton = within(videoOne).getByRole('button', {
+        name: 'Add or remove from playlist',
+      });
+      fireEvent.click(addToPlaylistButton);
+
+      const addToPlaylistModal = await wrapper.findByTestId(
+        'add-to-playlist-pop-up',
+      );
+      expect(
+        await within(addToPlaylistModal).findByText('Good bye'),
+      ).toBeVisible();
     });
 
     it('changes are not saved when playlist editing is cancelled', async () => {
