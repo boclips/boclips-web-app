@@ -6,6 +6,8 @@ import { ToastContainer } from 'react-toastify';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 
 describe('Playlist Header', () => {
   Object.assign(navigator, {
@@ -22,7 +24,11 @@ describe('Playlist Header', () => {
       description: 'Description',
     });
 
-    const wrapper = render(<PlaylistHeader playlist={playlist} />);
+    const wrapper = render(
+      <Router history={createBrowserHistory()}>
+        <PlaylistHeader playlist={playlist} />
+      </Router>,
+    );
 
     const titleElement = await wrapper.findByTestId('playlistTitle');
 
@@ -37,7 +43,11 @@ describe('Playlist Header', () => {
       description: 'Description',
     });
 
-    const wrapper = render(<PlaylistHeader playlist={playlist} />);
+    const wrapper = render(
+      <Router history={createBrowserHistory()}>
+        <PlaylistHeader playlist={playlist} />
+      </Router>,
+    );
 
     const shareButton = await wrapper.findByTestId('share-playlist-button');
 
@@ -53,10 +63,10 @@ describe('Playlist Header', () => {
     });
 
     const wrapper = render(
-      <>
+      <Router history={createBrowserHistory()}>
         <ToastContainer />
         <PlaylistHeader playlist={playlist} />
-      </>,
+      </Router>,
     );
 
     const shareButton = await wrapper.findByTestId('share-playlist-button');
@@ -87,10 +97,10 @@ describe('Playlist Header', () => {
     });
 
     const wrapper = render(
-      <>
+      <Router history={createBrowserHistory()}>
         <ToastContainer />
         <PlaylistHeader playlist={playlist} />
-      </>,
+      </Router>,
     );
 
     const shareButton = await wrapper.findByTestId('share-playlist-button');
@@ -111,7 +121,11 @@ describe('Playlist Header', () => {
       description: 'Description',
     });
 
-    const wrapper = render(<PlaylistHeader playlist={playlist} />);
+    const wrapper = render(
+      <Router history={createBrowserHistory()}>
+        <PlaylistHeader playlist={playlist} />
+      </Router>,
+    );
 
     const editButton = await wrapper.findByText('Edit playlist');
 

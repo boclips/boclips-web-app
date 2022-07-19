@@ -6,6 +6,7 @@ import { Collection } from 'boclips-api-client/dist/sub-clients/collections/mode
 import PlaylistDescription from 'src/components/playlists/PlaylistDescription';
 import { Typography } from '@boclips-ui/typography';
 import { PlaylistEditButton } from 'src/components/playlists/PlaylistEditButton';
+import PlaylistNavigation from 'src/components/playlists/PlaylistNavigation';
 import s from './style.module.less';
 
 interface Props {
@@ -24,9 +25,10 @@ const PlaylistHeader = ({ playlist }: Props) => {
         'grid-row-start-2 grid-row-end-2 col-start-2 col-end-26',
       )}
     >
+      <PlaylistNavigation playlist={playlist} />
       <Typography.H1
         size="md"
-        className="order-first text-gray-900"
+        className="text-gray-900"
         data-qa="playlistTitle"
       >
         {playlist.title}

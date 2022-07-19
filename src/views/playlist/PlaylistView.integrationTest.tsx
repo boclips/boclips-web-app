@@ -83,7 +83,7 @@ describe('Playlist view', () => {
       </MemoryRouter>,
     );
 
-    expect(await screen.findByText('Hello there')).toBeVisible();
+    expect(await screen.findByTestId('playlistTitle')).toBeVisible();
     expect(await screen.findByText('Very nice description')).toBeVisible();
   });
 
@@ -427,6 +427,34 @@ describe('Playlist view', () => {
       ).toBeVisible();
     });
 
+    it('edited playlist title is updated also in navigation breadcrumbs', async () => {
+      const history = createBrowserHistory();
+      history.push({ pathname: '/playlists/123' });
+
+      const wrapper = render(
+        <Router history={history}>
+          <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+        </Router>,
+      );
+
+      fireEvent.click(await wrapper.findByText('Edit playlist'));
+
+      fireEvent.change(wrapper.getByDisplayValue('Hello there'), {
+        target: { value: 'Good bye' },
+      });
+
+      fireEvent.click(wrapper.getByText('Save'));
+
+      expect(await wrapper.findByTestId('edit-playlist-success')).toBeVisible();
+      expect(await wrapper.findByTestId('playlistTitle')).toHaveTextContent(
+        'Good bye',
+      );
+
+      expect(
+        await wrapper.findByTestId('playlist-title-link'),
+      ).toHaveTextContent('Good bye');
+    });
+
     it('changes are not saved when playlist editing is cancelled', async () => {
       const history = createBrowserHistory();
       history.push({ pathname: '/playlists/123' });
@@ -520,6 +548,54 @@ describe('Playlist view', () => {
     });
   });
 
+  describe('playlist navigation', () => {
+    it('navigation link contains playlist title', async () => {
+      const history = createBrowserHistory();
+      history.push({ pathname: '/playlists/123' });
+
+      const wrapper = render(
+        <Router history={history}>
+          <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+        </Router>,
+      );
+
+      expect(
+        await wrapper.findByTestId('playlist-title-link'),
+      ).toHaveTextContent('Hello there');
+    });
+
+    it('navigates back to library when library link clicked', async () => {
+      const history = createBrowserHistory();
+      history.push({ pathname: '/playlists/123' });
+
+      const wrapper = render(
+        <Router history={history}>
+          <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+        </Router>,
+      );
+
+      fireEvent.click(await wrapper.findByTestId('to-library-link'));
+
+      expect(history.location.pathname).toEqual('/library');
+    });
+
+    it('navigates to playlist page when title link clicked', async () => {
+      const history = createBrowserHistory();
+      history.push({ pathname: '/playlists/123' });
+
+      const wrapper = render(
+        <Router history={history}>
+          <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+        </Router>,
+      );
+
+      const titleLink = await wrapper.findByTestId('playlist-title-link');
+      fireEvent.click(titleLink);
+
+      expect(history.location.pathname).toEqual('/playlists/123');
+    });
+  });
+
   const waitForPlaylistToBeLoaded = async (wrapper: RenderResult) =>
-    wrapper.findByText('Hello there');
+    wrapper.findByTestId('playlistTitle');
 });

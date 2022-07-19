@@ -257,7 +257,9 @@ describe('LibraryView', () => {
         wrapper.queryByLabelText('Create new playlist'),
       );
 
-      expect(await wrapper.findByText('My new playlist')).toBeVisible();
+      expect(await wrapper.findByTestId('playlistTitle')).toHaveTextContent(
+        'My new playlist',
+      );
       expect(await wrapper.findByText('Blabla new playlist')).toBeVisible();
     });
 
