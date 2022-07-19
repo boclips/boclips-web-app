@@ -5,7 +5,7 @@ image_resource:
   type: docker-image
   source:
     repository: cypress/browsers
-    tag: 'node12.14.1-chrome83-ff77'
+    tag: 'node16.14.0-chrome99-ff97'
 
 
 inputs:
