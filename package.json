@@ -38,6 +38,7 @@
     "@testing-library/user-event": "^12.7.3",
     "audit-ci": "^5.1.2",
     "autoprefixer": "^10.4.2",
+    "boclips-api-client": "^49.0.6",
     "boclips-percy-baseline": "0.2.0",
     "css-loader": "^5.0.0",
     "css-minimizer-webpack-plugin": "^3.4.1",
@@ -86,7 +87,7 @@
     "@boclips-ui/button": "^4.0.7",
     "@boclips-ui/date-select": "^2.0.2",
     "@boclips-ui/education-level-badge": "^1.0.2",
-    "@boclips-ui/link": "^1.0.26",
+    "@boclips-ui/link": "^1.0.27",
     "@boclips-ui/pagination": "^1.1.6",
     "@boclips-ui/release-date-filter": "^1.0.10",
     "@boclips-ui/search-bar": "^4.5.2",
@@ -95,8 +96,7 @@
     "@boclips-ui/tooltip": "2.2.1",
     "@boclips-ui/typography": "^2.3.5",
     "@boclips-ui/use-media-breakpoints": "^2.0.5",
-    "@boclips-ui/video": "^3.0.12",
-    "@boclips-ui/video-card": "^5.3.2",
+    "@boclips-ui/video-card": "^5.3.3",
     "@boclips-ui/video-card-placeholder": "^2.0.14",
     "@bucketco/tracking-sdk": "^1.0.0",
     "@hot-loader/react-dom": "^17.0.1",
@@ -149,7 +149,6 @@
     "urijs": "^1.19.11"
   },
   "overrides": {
-    "boclips-api-client": "^49.0.6",
     "axios": "^0.26.0",
     "@testing-library/react": "^11.1.0"
   },
