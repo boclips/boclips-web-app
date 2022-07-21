@@ -67,7 +67,7 @@
     "start-server-and-test": "^1.14.0",
     "style-loader": "^3.3.1",
     "tailwindcss": "^3.0.16",
-    "tailwindcss-debug-screens": "^1.1.0",
+    "tailwindcss-debug-screens": "^2.2.1",
     "terser-webpack-plugin": "^5.0.3",
     "webpack": "^5.67.0",
     "webpack-bundle-analyzer": "^4.5.0",
@@ -96,7 +96,7 @@
     "@boclips-ui/typography": "^2.3.5",
     "@boclips-ui/use-media-breakpoints": "^2.0.5",
     "@boclips-ui/video": "^3.0.12",
-    "@boclips-ui/video-card": "^5.3.0",
+    "@boclips-ui/video-card": "^5.3.2",
     "@boclips-ui/video-card-placeholder": "^2.0.14",
     "@bucketco/tracking-sdk": "^1.0.0",
     "@hot-loader/react-dom": "^17.0.1",
@@ -105,7 +105,6 @@
     "@sentry/tracing": "^6.1.0",
     "@tailwindcss/forms": "^0.4.0",
     "@testing-library/jest-dom": "^5.11.5",
-    "@testing-library/react": "^11.1.0",
     "@types/jest": "^27.4.1",
     "@types/mixpanel": "^2.14.4",
     "@types/react": "^16.9.55",
@@ -115,9 +114,7 @@
     "@typescript-eslint/eslint-plugin": "^5.12.0",
     "@typescript-eslint/parser": "^5.12.0",
     "antd": "4.15.2",
-    "axios": "^0.26.0",
     "babel-loader": "^8.1.0",
-    "boclips-api-client": "^49.0.5",
     "boclips-js-security": "^9.0.0",
     "boclips-player": "7.3.0",
     "boclips-player-react": "2.4.0",
@@ -150,6 +147,11 @@
     "ts-loader": "^8.0.7",
     "typescript": "^4.0.5",
     "urijs": "^1.19.11"
+  },
+  "overrides": {
+    "boclips-api-client": "^49.0.6",
+    "axios": "^0.26.0",
+    "@testing-library/react": "^11.1.0"
   },
   "percy": {
     "version": 2,
