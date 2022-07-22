@@ -32,6 +32,8 @@ const VideoCardTitle = ({ video }: Partial<Props>) => {
 };
 
 export const VideoCardWrapper = ({ video, handleFilterChange }: Props) => {
+  const videoWithoutAgeRange = { ...video, ageRange: null };
+
   const onNameClick = () =>
     handleFilterChange && handleFilterChange('channel', [video.channelId]);
 
@@ -48,7 +50,7 @@ export const VideoCardWrapper = ({ video, handleFilterChange }: Props) => {
     <div className={s.videoCard}>
       <VideoCard
         key={video.id}
-        video={video}
+        video={videoWithoutAgeRange}
         videoPlayer={<VideoPlayer video={video} showDurationBadge />}
         border="bottom"
         createdBy={createdByLink()}
