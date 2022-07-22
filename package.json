@@ -114,10 +114,11 @@
     "@typescript-eslint/eslint-plugin": "^5.12.0",
     "@typescript-eslint/parser": "^5.12.0",
     "antd": "4.15.2",
+    "axios": "^0.26.0",
     "babel-loader": "^8.1.0",
-    "boclips-js-security": "^9.0.0",
-    "boclips-player": "7.3.0",
-    "boclips-player-react": "2.4.0",
+    "boclips-js-security": "^9.0.2",
+    "boclips-player": "7.4.1",
+    "boclips-player-react": "2.9.2",
     "copy-webpack-plugin": "^6.2.1",
     "dateformat": "^4.4.1",
     "dayjs": "^1.9.7",
@@ -149,7 +150,6 @@
     "urijs": "^1.19.11"
   },
   "overrides": {
-    "axios": "^0.26.0",
     "@testing-library/react": "^11.1.0"
   },
   "percy": {
