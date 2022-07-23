@@ -19,6 +19,6 @@ export const TextButton = ({
   ariaLabel,
 }: Props) => (
   <div className={c(s.textButton, { [className]: className })}>
-    <Button ariaLabel={ariaLabel} onClick={onClick} text={text} icon={icon} />
+    <Button aria-label={ariaLabel} onClick={onClick} text={text} icon={icon} />
   </div>
 );
