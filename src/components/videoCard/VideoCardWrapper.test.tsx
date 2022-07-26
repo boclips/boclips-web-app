@@ -228,6 +228,7 @@ describe('Video card', () => {
       const addToCart = await wrapper.findByRole('button', {
         name: 'Add to cart',
       });
+
       act(() => {
         fireEvent.click(addToCart);
       });
@@ -239,9 +240,7 @@ describe('Video card', () => {
       expect(videoInteractedEvents[0].type).toEqual('VIDEO_INTERACTED_WITH');
       expect(videoInteractedEvents[0].subtype).toEqual('VIDEO_ADDED_TO_CART');
 
-      const removeFromCart = await wrapper.findByRole('button', {
-        name: 'Remove',
-      });
+      const removeFromCart = await wrapper.findByText('Remove');
 
       act(() => {
         fireEvent.click(removeFromCart);
