@@ -1,5 +1,5 @@
 import { BoclipsClient } from 'boclips-api-client';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { Projection } from 'boclips-api-client/dist/sub-clients/common/model/Projection';
 
@@ -9,5 +9,5 @@ export const doGetChannels = (client: BoclipsClient) => {
 
 export const useGetChannelsQuery = () => {
   const client = useBoclipsClient();
-  return useQuery('channels', async () => doGetChannels(client));
+  return useQuery(['channels'], async () => doGetChannels(client));
 };

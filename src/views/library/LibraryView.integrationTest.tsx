@@ -15,7 +15,7 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { BoclipsClient } from 'boclips-api-client';
 import userEvent from '@testing-library/user-event';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
-import { QueryClient } from 'react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { Link } from 'boclips-api-client/dist/types';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';

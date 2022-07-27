@@ -22,7 +22,7 @@ import { Link } from 'boclips-api-client/dist/types';
 import { createBrowserHistory } from 'history';
 import PlaylistView from 'src/views/playlist/PlaylistView';
 import { FollowPlaylist } from 'src/services/followPlaylist';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { CollectionFactory as collectionFactory } from 'src/testSupport/CollectionFactory';

@@ -10,7 +10,7 @@ import {
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { VideoInteractedWith } from 'boclips-api-client/dist/sub-clients/events/model/EventRequest';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { buildVideoDetailsLink } from 'src/services/buildVideoDetailsLink';
 import { ToastContainer } from 'react-toastify';
 import { CopyVideoLinkButton } from './CopyVideoLinkButton';

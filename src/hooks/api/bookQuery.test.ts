@@ -1,6 +1,6 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
-import { QueryClient } from 'react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { renderHook } from '@testing-library/react-hooks';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
 import { Book } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';

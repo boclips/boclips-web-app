@@ -12,7 +12,7 @@ import { FilterPanel } from 'src/components/filterPanel/FilterPanel';
 import { SearchResults } from 'src/components/searchResults/SearchResults';
 import Footer from 'src/components/layout/Footer';
 import { FilterKey } from 'src/types/search/FilterKey';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { NoSearchResults } from 'src/components/noResults/NoSearchResults';
 import { Loading } from 'src/components/common/Loading';

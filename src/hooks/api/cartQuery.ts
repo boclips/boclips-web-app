@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Cart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
 import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
 import { AdditionalServices } from 'boclips-api-client/dist/sub-clients/carts/model/AdditionalServices';
@@ -30,7 +30,7 @@ export const doUpdateCartItem = (
 
 export const useCartQuery = () => {
   const client = useBoclipsClient();
-  return useQuery('cart', () => doGetCart(client));
+  return useQuery(['cart'], () => doGetCart(client));
 };
 
 export const doUpdateCartNote = (note: string, client: BoclipsClient) =>
@@ -63,9 +63,9 @@ export const useCartItemAdditionalServicesMutation = () => {
       onMutate: async (
         additionalServicesUpdateRequest: AdditionalServicesUpdateRequest,
       ) => {
-        await queryClient.cancelQueries('cart');
+        await queryClient.cancelQueries(['cart']);
 
-        queryClient.setQueryData('cart', (old: Cart) => {
+        queryClient.setQueryData(['cart'], (old: Cart) => {
           return {
             ...old,
             items: old?.items
@@ -102,19 +102,19 @@ export const useCartMutation = (callbacks?: CartMutationCallbacks) => {
     },
     {
       onMutate: async (cartItemId) => {
-        await queryClient.cancelQueries('cart');
-        await queryClient.cancelQueries('cartItemVideos');
+        await queryClient.cancelQueries(['cart']);
+        await queryClient.cancelQueries(['cartItemVideos']);
 
         const cartItemToRemove = queryClient
-          .getQueryData<Cart>('cart')
+          .getQueryData<Cart>(['cart'])
           .items.find((it) => it.id === cartItemId);
 
-        queryClient.setQueryData('cart', (old: Cart) => ({
+        queryClient.setQueryData(['cart'], (old: Cart) => ({
           ...old,
           items: [...old.items.filter((item) => item.id !== cartItemId)],
         }));
 
-        queryClient.setQueryData('multipleVideos', (videos: Video[]) => [
+        queryClient.setQueryData(['multipleVideos'], (videos: Video[]) => [
           ...(videos || []).filter((item) => {
             return item.id !== cartItemToRemove.videoId;
           }),
@@ -131,7 +131,7 @@ export const useCartMutation = (callbacks?: CartMutationCallbacks) => {
         }
       },
       onSettled: () => {
-        queryClient.invalidateQueries('cart');
+        queryClient.invalidateQueries(['cart']);
       },
     },
   );

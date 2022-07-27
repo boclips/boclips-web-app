@@ -8,7 +8,7 @@ import { Helmet } from 'react-helmet';
 // eslint-disable-next-line import/extensions
 import { disciplines } from 'src/components/disciplinesWidget/disciplinesFixture';
 import { createBrowserHistory } from 'history';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { resizeToDesktop } from 'src/testSupport/resizeTo';
 
 describe('HomeView', () => {

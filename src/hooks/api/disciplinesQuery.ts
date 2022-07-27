@@ -1,6 +1,6 @@
 import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
 import { BoclipsClient } from 'boclips-api-client';
-import { useQuery, UseQueryResult } from 'react-query';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { Subject } from 'boclips-api-client/dist/types';
 
@@ -12,7 +12,7 @@ export const useGetDisciplinesQuery = (): UseQueryResult<
   DisciplineWithSubjectOffering[]
 > => {
   const client = useBoclipsClient();
-  return useQuery('discipline', async () =>
+  return useQuery(['discipline'], async () =>
     getDisciplinesWithSubjectOffering(client),
   );
 };

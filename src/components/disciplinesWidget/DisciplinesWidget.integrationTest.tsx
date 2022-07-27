@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import DisciplineWidget from 'src/components/disciplinesWidget/DisciplinesWidget';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import userEvent from '@testing-library/user-event';
 import { disciplines } from './disciplinesFixture';

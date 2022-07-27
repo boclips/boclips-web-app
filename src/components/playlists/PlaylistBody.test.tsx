@@ -8,7 +8,7 @@ import {
 } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import PlaylistBody from 'src/components/playlists/PlaylistBody';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import userEvent from '@testing-library/user-event';
 
 describe('Playlist Body', () => {

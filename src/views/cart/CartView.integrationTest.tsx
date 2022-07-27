@@ -15,7 +15,7 @@ import { BoclipsApiErrorFactory } from 'boclips-api-client/dist/test-support/Boc
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
-import { QueryClient } from 'react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet';
 import userEvent from '@testing-library/user-event';
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';

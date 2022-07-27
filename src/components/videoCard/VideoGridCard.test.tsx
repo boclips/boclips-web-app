@@ -8,7 +8,7 @@ import { BoclipsSecurityProvider } from 'src/components/common/providers/Boclips
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 describe(`VideoGridCard`, () => {
   it('should call onfilterchange when clicking channel name', () => {

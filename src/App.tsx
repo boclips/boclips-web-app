@@ -1,10 +1,10 @@
 import React, { Suspense, useEffect } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import { BoclipsClient } from 'boclips-api-client';
-import { ReactQueryDevtools } from 'react-query/devtools';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Loading } from 'src/components/common/Loading';
 import { hot } from 'react-hot-loader/root';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
 import { trackPageRendered } from 'src/components/common/analytics/Analytics';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';

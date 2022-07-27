@@ -7,7 +7,7 @@ import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { CartItemFactory } from 'boclips-api-client/dist/test-support/CartsFactory';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { CartValidationProvider } from 'src/components/common/providers/CartValidationProvider';
 import { Video } from 'boclips-api-client/dist/types';

@@ -1,4 +1,4 @@
-import { QueryClient, useQuery } from 'react-query';
+import { QueryClient, useQuery } from '@tanstack/react-query';
 import { VideoSearchResults } from 'boclips-api-client/dist/sub-clients/videos/model/VideoSearchResults';
 import { DEFAULT_DURATIONS } from 'src/types/DefaultDurations';
 import { BoclipsClient } from 'boclips-api-client';
