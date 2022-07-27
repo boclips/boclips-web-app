@@ -30,7 +30,6 @@ export default class BucketService {
     eventName: BucketEvent,
     properties?: { [index: string]: any },
   ): void {
-    console.log(this.bucket);
     if (!this.bucket) {
       return;
     }

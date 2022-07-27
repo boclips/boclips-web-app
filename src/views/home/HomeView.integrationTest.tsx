@@ -69,7 +69,6 @@ describe('HomeView', () => {
     );
 
     fireEvent.click(await wrapper.findByText(disciplines[0].name));
-    console.log('printing panel');
 
     const subject = await wrapper.findByText(disciplines[0].subjects[1].name);
 

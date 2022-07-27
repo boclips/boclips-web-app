@@ -56,7 +56,6 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
   const boSetFeatures = (features: {
     [key in UserFeatureKey]?: boolean;
   }) => {
-    console.log(features);
     apiClient.users.setCurrentUserFeatures(features);
   };
 
