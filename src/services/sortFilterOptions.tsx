@@ -3,7 +3,7 @@ import { getFacetSorter } from 'src/services/sortFacets';
 import { SortBy } from 'src/types/SortBy';
 import { FilterOption } from 'src/types/FilterOption';
 
-export const convertFilterOptions = (
+export const sortFilterOptions = (
   options: FilterOption[],
   sortBy: SortBy = 'SORT_BY_HITS_AND_NAME',
 ): FilterOption[] => options?.sort(getFacetSorter(sortBy));

@@ -1,6 +1,6 @@
 import { FilterOption } from 'src/types/FilterOption';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { searchFilterOptions } from 'src/services/convertFilterOptions';
+import { searchFilterOptions } from 'src/services/sortFilterOptions';
 import { FilterOptionFactory } from '../testSupport/FilterOptionFactory';
 
 describe('convertFilterOptions', () => {

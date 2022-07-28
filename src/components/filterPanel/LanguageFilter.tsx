@@ -1,6 +1,6 @@
 import React from 'react';
 import { CheckboxFilter } from 'src/components/filterPanel/filter/CheckboxFilter';
-import { convertFilterOptions } from 'src/services/convertFilterOptions';
+import { sortFilterOptions } from 'src/services/sortFilterOptions';
 import { FilterOption } from 'src/types/FilterOption';
 
 interface Props {
@@ -13,7 +13,7 @@ export const LanguageFilter = ({ options = [], handleChange }: Props) => {
 
   return hasOptions ? (
     <CheckboxFilter
-      options={convertFilterOptions(options)}
+      options={sortFilterOptions(options)}
       title="Language"
       handleChange={handleChange}
       filterName="language"

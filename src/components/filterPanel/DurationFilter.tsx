@@ -1,6 +1,6 @@
 import React from 'react';
 import { CheckboxFilter } from 'src/components/filterPanel/filter/CheckboxFilter';
-import { convertFilterOptions } from 'src/services/convertFilterOptions';
+import { sortFilterOptions } from 'src/services/sortFilterOptions';
 import { FilterOption } from 'src/types/FilterOption';
 
 interface Props {
@@ -13,7 +13,7 @@ export const DurationFilter = ({ options, handleChange }: Props) => {
 
   return isDurationFilterApplied ? (
     <CheckboxFilter
-      options={convertFilterOptions(options, 'SORT_BY_DURATION')}
+      options={sortFilterOptions(options, 'SORT_BY_DURATION')}
       title="Duration"
       filterName="duration"
       handleChange={handleChange}

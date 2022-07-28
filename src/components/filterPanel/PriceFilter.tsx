@@ -1,6 +1,6 @@
 import React from 'react';
 import { CheckboxFilter } from 'src/components/filterPanel/filter/CheckboxFilter';
-import { convertFilterOptions } from 'src/services/convertFilterOptions';
+import { sortFilterOptions } from 'src/services/sortFilterOptions';
 import { FilterOption } from 'src/types/FilterOption';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 
@@ -15,7 +15,7 @@ export const PriceFilter = ({ options, handleChange }: Props) => {
   return hasOptions ? (
     <FeatureGate feature="BO_WEB_APP_PRICES">
       <CheckboxFilter
-        options={convertFilterOptions(options, 'SORT_BY_HITS_AND_NAME')}
+        options={sortFilterOptions(options, 'SORT_BY_HITS_AND_NAME')}
         title="Price"
         filterName="prices"
         handleChange={handleChange}

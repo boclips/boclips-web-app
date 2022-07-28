@@ -1,6 +1,6 @@
 import React from 'react';
 import { CheckboxFilter } from 'src/components/filterPanel/filter/CheckboxFilter';
-import { convertFilterOptions } from 'src/services/convertFilterOptions';
+import { sortFilterOptions } from 'src/services/sortFilterOptions';
 import { FilterOption } from 'src/types/FilterOption';
 
 interface Props {
@@ -13,7 +13,7 @@ export const VideoTypeFilter = ({ options = [], handleChange }: Props) => {
 
   return hasOptions ? (
     <CheckboxFilter
-      options={convertFilterOptions(options, 'SORT_BY_NAME')}
+      options={sortFilterOptions(options, 'SORT_BY_NAME')}
       title="Video type"
       handleChange={handleChange}
       filterName="video_type"
