@@ -63,7 +63,7 @@ const NavbarResponsive = (): ReactElement => {
         <div className="row-start-2 row-end-2 col-start-2 col-end-26 pb-3 lg:pb-0 lg:pt-0 lg:row-start-1 lg:row-end-1 lg:col-start-8 lg:col-end-20">
           <Search showIconOnly />
         </div>
-
+        <Link to="/explore">Explore page</Link>
         {mobileView ? (
           <div className={s.buttons}>
             <button type="button" data-qa="side-menu" onClick={openSideMenu}>

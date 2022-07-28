@@ -15,9 +15,12 @@ import { VideoFacets } from 'boclips-api-client/dist/sub-clients/videos/model/Vi
 import { Subject } from 'boclips-api-client/dist/sub-clients/subjects/model/Subject';
 import { UserFeatureKey } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import { disciplines } from 'src/components/disciplinesWidget/disciplinesFixture';
+import { Book } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
+import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
 
 export interface Bo {
   interact(callback: (apiClient: FakeBoclipsClient) => void): void;
+
   create: {
     fixtureSet: {
       eelsBiologyGeography: () => void;
@@ -50,6 +53,12 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
         ],
         ...facets,
       }),
+    );
+  };
+
+  const boSetOpenstax = (books: Partial<Book>[]) => {
+    apiClient.openstax.setOpenstaxBooks(
+      books.map((book) => BookFactory.sample(book)),
     );
   };
 
@@ -237,6 +246,19 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
               ],
             }),
           );
+
+          boSetOpenstax([
+            BookFactory.sample({
+              id: 'book-1',
+              subject: 'Maths',
+              title: 'Maths book',
+            }),
+            BookFactory.sample({
+              id: 'book-2',
+              subject: 'Physics',
+              title: 'Physics book',
+            }),
+          ]);
         },
       },
     },
