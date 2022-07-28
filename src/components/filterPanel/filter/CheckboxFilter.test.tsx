@@ -125,4 +125,20 @@ describe('filterPanel', () => {
     expect(panel.queryByText('Option 5')).toBeVisible();
     expect(panel.getByText('Show less')).toBeVisible();
   });
+
+  it('calls handleChanged on click', () => {
+    const changeHandler = jest.fn();
+
+    const panel = renderWithLocation(
+      <CheckboxFilter
+        options={generateOptions(6)}
+        title="Video Types"
+        filterName="test"
+        handleChange={changeHandler}
+      />,
+    );
+
+    fireEvent.click(panel.getByRole('checkbox', { name: 'Option 2' }));
+    expect(changeHandler).toHaveBeenCalledWith('test', ['2-option']);
+  });
 });
