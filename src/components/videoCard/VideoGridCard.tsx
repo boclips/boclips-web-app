@@ -13,7 +13,7 @@ import { FilterKey } from 'src/types/search/FilterKey';
 
 interface Props {
   video: Video;
-  onAddToCart: () => void;
+  onAddToCart?: () => void;
   onCleanupAddToPlaylist?: (playlistId: string, cleanUp: () => void) => void;
   onSegmentPlayed?: OnSegmentPlayedEvent;
   onAddToPlaylist?: () => void;

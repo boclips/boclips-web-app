@@ -68,6 +68,10 @@ const PlaylistView = lazyWithRetry(
   () => import('src/views/playlist/PlaylistView'),
 );
 
+const OpenstaxBookView = lazyWithRetry(
+  () => import('src/views/openstax/book/OpenstaxBookView'),
+);
+
 interface Props {
   apiClient: BoclipsClient;
   boclipsSecurity: BoclipsSecurity;
@@ -204,6 +208,16 @@ const App = ({
                         <>
                           <Helmet title="Explore" />
                           <ExploreView />
+                        </>
+                      )}
+                    />
+                    <Route
+                      exact
+                      path="/openstax/:id"
+                      render={() => (
+                        <>
+                          <Helmet title="Openstax" />
+                          <OpenstaxBookView />
                         </>
                       )}
                     />
