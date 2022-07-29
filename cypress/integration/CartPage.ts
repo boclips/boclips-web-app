@@ -7,6 +7,8 @@ context('Cart page', () => {
 
     cy.get('[data-qa="cart-button"]').click();
 
+    cy.findByText('Shopping cart');
+    cy.findAllByRole('button', { name: 'Remove Remove' }); // SVG + text leads to this title
     cy.percySnapshot('Cart view', {
       widths: Constants.SNAPSHOT_VIEW_WIDTHS,
     });
