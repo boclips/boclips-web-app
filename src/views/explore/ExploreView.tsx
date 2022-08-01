@@ -28,25 +28,25 @@ const ExploreView = () => {
   }, [currentSubject]);
 
   return (
-    <Layout rowsSetup="grid-rows-explore-view" responsiveLayout>
+    <Layout rowsSetup="grid-rows-explore-view gap-y-0" responsiveLayout>
       <Navbar />
       <Typography.H1
         size="lg"
-        className="col-start-2 col-end-26 grid-row-start-2 grid-row-end-2"
+        className="col-start-2 col-end-26 grid-row-start-2 grid-row-end-2 mt-8"
       >
         Our best content aligned to OpenStax courses
       </Typography.H1>
 
       <Typography.H2
         size="md"
-        className="col-start-2 col-end-26 grid-row-start-3 grid-row-end-3 font-normal"
+        className="col-start-2 col-end-26 grid-row-start-3 grid-row-end-3 font-normal mt-4"
       >
         Review videos hand-picked by our curators and decide if they are right
         for your course
       </Typography.H2>
-      <div className="col-start-2 col-end-26 grid-row-start-4 grid-row-end-4 text-center">
-        <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-          <ul className="flex flex-wrap -mb-px">
+      <div className="col-start-1 col-end-27 grid-row-start-4 grid-row-end-4 text-center">
+        <div className="grid grid-cols-container lg:gap-x-6 text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+          <ul className="flex flex-wrap col-start-2 col-end-27">
             {subjects?.map((subject) => {
               return (
                 <li>

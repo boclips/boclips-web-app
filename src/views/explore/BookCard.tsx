@@ -12,7 +12,7 @@ export const BookCard = ({ book }: Props) => {
     <button
       onClick={() => onCardClick(book.id)}
       type="button"
-      className="bg-white h-32 w-1/2 flex justify-between border-1 border-blue-100 rounded py-auto gap-0 shadow-lg"
+      className="bg-white h-32 w-1/2 flex justify-between border-1 border-blue-100 rounded py-auto shadow-lg col-span-8 mt-8"
     >
       <div className="flex flex-col justify-center h-full ml-5">
         <Typography.H2 size="sm" className="font-medium">
