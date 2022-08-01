@@ -6,6 +6,7 @@ import Footer from 'src/components/layout/Footer';
 import { Layout } from 'src/components/layout/Layout';
 import c from 'classnames';
 import s from './style.module.less';
+import { BookList } from 'src/views/explore/BookList';
 
 const ExploreView = () => {
   const { data: books } = useGetBooksQuery();
@@ -68,10 +69,8 @@ const ExploreView = () => {
           </ul>
         </div>
       </div>
-      <main className="col-start-2 col-end-26 grid-row-start-5 grid-row-end-5">
-        {currentSubjectBooks?.map((book) => (
-          <span>{book.title}</span>
-        ))}
+      <main className="col-start-1 col-end-27 grid-row-start-5 grid-row-end-5">
+        <BookList books={currentSubjectBooks} />
       </main>
 
       <Footer columnPosition="col-start-2 col-end-26" />
