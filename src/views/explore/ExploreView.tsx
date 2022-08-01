@@ -4,6 +4,8 @@ import { useGetBooksQuery } from 'src/hooks/api/bookQuery';
 import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import { Layout } from 'src/components/layout/Layout';
+import c from 'classnames';
+import s from './style.module.less';
 
 const ExploreView = () => {
   const { data: books } = useGetBooksQuery();
@@ -12,8 +14,6 @@ const ExploreView = () => {
   const [currentSubjectBooks, setCurrentSubjectBooks] = useState([]);
   useEffect(() => {
     setSubjects(books?.map((book) => book.subject));
-
-    console.log(' subjects:', subjects);
   }, [books]);
 
   useEffect(() => {
@@ -51,7 +51,14 @@ const ExploreView = () => {
                 <li>
                   <Typography.Body
                     onClick={() => setCurrentSubject(subject)}
-                    className="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                    className={c(
+                      s.menuItem,
+                      `inline-block p-4 rounded-t border-b-6 border-transparent hover:text-blue-800 hover:border-blue-800 hover:font-medium ${
+                        currentSubject === subject
+                          ? 'text-blue-800 border-blue-800 font-medium'
+                          : ''
+                      }`,
+                    )}
                   >
                     {subject}
                   </Typography.Body>

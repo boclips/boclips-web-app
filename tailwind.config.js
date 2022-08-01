@@ -81,6 +81,7 @@ module.exports = {
       },
       borderWidth: {
         1: '1.5px',
+        6: '6px',
       },
       colors: {
         blue: {
