@@ -21,7 +21,7 @@ export const useSearchQueryLocationParams = (): [
   (search: SearchQueryLocationParams) => void,
 ] => {
   const locationParams = useLocationParams();
-  const searchQueryLocationParams = {
+  const searchQueryLocationParams: SearchQueryLocationParams = {
     query: locationParams.get('q') || '',
     page: Number(locationParams.get('page')) || 1,
     content_package: locationParams.get('content_package'),
@@ -37,6 +37,7 @@ export const useSearchQueryLocationParams = (): [
       release_date_to: locationParams.getAll('release_date_to'),
       topics: locationParams.getAll('topics'),
       language: locationParams.getAll('language'),
+      cefr_level: locationParams.getAll('cefr_level'),
     },
   };
 

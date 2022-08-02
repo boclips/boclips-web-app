@@ -2,7 +2,6 @@ import {
   FacetFactory,
   FacetsFactory,
 } from 'boclips-api-client/dist/test-support/FacetsFactory';
-import { SearchFilters } from 'src/hooks/useLocationParams';
 import {
   convertFacetsToFilterOptions,
   getFilterLabel,
@@ -24,21 +23,7 @@ describe('convertFacets', () => {
       languages: [FacetFactory.sample({ id: 'eng', hits: 9, name: 'English' })],
     });
 
-    const searchFilters: SearchFilters = {
-      video_type: [],
-      channel: [],
-      subject: [],
-      best_for: [],
-      duration: [],
-      prices: [],
-      release_date_from: [],
-      release_date_to: [],
-      education_level: [],
-      topics: [],
-      language: [],
-    };
-
-    const filterOptions = convertFacetsToFilterOptions(facets, searchFilters);
+    const filterOptions = convertFacetsToFilterOptions(facets, null);
 
     expect(filterOptions.channels[0].id).toEqual('4');
     expect(filterOptions.channels[0].key).toEqual('channel');

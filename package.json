@@ -39,7 +39,7 @@
     "@testing-library/user-event": "^12.7.3",
     "audit-ci": "^5.1.2",
     "autoprefixer": "^10.4.2",
-    "boclips-api-client": "^49.2.2",
+    "boclips-api-client": "^49.3.1",
     "boclips-percy-baseline": "0.2.0",
     "css-loader": "^5.0.0",
     "css-minimizer-webpack-plugin": "^3.4.1",

@@ -9,4 +9,5 @@ export type FilterKey =
   | 'release_date_from'
   | 'education_level'
   | 'language'
-  | 'topics';
+  | 'topics'
+  | 'cefr_level';

@@ -46,6 +46,7 @@ const doSearch = (
     content_package: contentPackage,
     topics: filters?.topics,
     language: filters?.language,
+    cefr_level: filters?.cefr_level,
   });
 
 const generateSearchKey = ({

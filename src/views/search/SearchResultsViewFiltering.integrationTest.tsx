@@ -1023,6 +1023,34 @@ describe('SearchResultsFiltering', () => {
     });
   });
 
+  describe('cefr level filter', () => {
+    it('can filter cefr level query param', async () => {
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '1',
+          title: 'hello cars stock',
+          cefrLevel: 'B2',
+        }),
+      );
+
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '2',
+          title: 'hello cars badger',
+          cefrLevel: 'B1',
+        }),
+      );
+
+      const wrapper = renderSearchResultsView(['/videos?q=cars&cefr_level=B1']);
+
+      await waitFor(() => {
+        expect(wrapper.getByText('hello cars badger')).toBeVisible();
+      });
+
+      expect(wrapper.queryByText('hello cars stock')).not.toBeInTheDocument();
+    });
+  });
+
   describe('no results', () => {
     it('shows a no results page without filters', async () => {
       const wrapper = renderSearchResultsView(['/videos?q=shark']);

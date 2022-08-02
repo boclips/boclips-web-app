@@ -119,7 +119,7 @@ const SearchResultsView = () => {
   };
 
   const removeAllFilters = useCallback(() => {
-    const emptyFilters = {
+    const emptyFilters: SearchFilters = {
       duration: [],
       video_type: [],
       best_for: [],
@@ -131,6 +131,7 @@ const SearchResultsView = () => {
       education_level: [],
       topics: filtersFromURL.topics,
       language: [],
+      cefr_level: [],
     };
 
     setSearchLocation({
@@ -139,7 +140,7 @@ const SearchResultsView = () => {
       filters: emptyFilters,
     });
     setFiltersToDebounce(emptyFilters);
-  }, [query, setSearchLocation]);
+  }, [query, setSearchLocation, filtersFromURL.topics]);
 
   const isNoSearchResults = data?.pageSpec?.totalElements === 0;
 
