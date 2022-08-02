@@ -32,10 +32,8 @@ describe('OpenstaxBookView', () => {
             {
               title: 'Adventures outside',
               number: 2,
-              videos: [
-                VideoFactory.sample({ title: 'Duck meets with kitten' }),
-              ],
-              videoIds: ['3'],
+              videos: [],
+              videoIds: [],
             },
           ],
         },
@@ -67,6 +65,11 @@ describe('OpenstaxBookView', () => {
     expect(sections[0]).toHaveTextContent('1.1 Life at the coop');
     expect(sections[1]).toBeVisible();
     expect(sections[1]).toHaveTextContent('1.2 Adventures outside');
+    expect(
+      wrapper.getByText(
+        "We don't have any videos for this section yet. We're working on it!",
+      ),
+    ).toBeVisible();
   });
 
   it('renders section video cards with only thumbnail', async () => {
