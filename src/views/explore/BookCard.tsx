@@ -20,7 +20,7 @@ export const BookCard = ({ book }: Props) => {
         </Typography.H2>
       </div>
       <span className="flex flex-col justify-center h-full">
-        <div className="bg-blue-100 rounded-full h-12 w-12 mr-2 px-5 py-4">
+        <div className="bg-blue-100 rounded-full h-16 w-16 mr-8 px-7 py-6">
           <ArrowIconSVG />
         </div>
       </span>

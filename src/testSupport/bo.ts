@@ -258,6 +258,26 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
               subject: 'Physics',
               title: 'Physics book',
             }),
+            BookFactory.sample({
+              id: 'book-3',
+              subject: 'Physics-2',
+              title: 'Physics-2 book',
+            }),
+            BookFactory.sample({
+              id: 'book-4',
+              subject: 'Amazing subject',
+              title: 'Amazing subject book',
+            }),
+            BookFactory.sample({
+              id: 'book-5',
+              subject: 'Long subject name',
+              title: 'Long subject book',
+            }),
+            BookFactory.sample({
+              id: 'book-6',
+              subject: 'Geography',
+              title: 'Geography book',
+            }),
           ]);
         },
       },

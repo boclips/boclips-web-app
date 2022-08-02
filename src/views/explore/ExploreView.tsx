@@ -5,8 +5,8 @@ import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import { Layout } from 'src/components/layout/Layout';
 import c from 'classnames';
-import s from './style.module.less';
 import { BookList } from 'src/views/explore/BookList';
+import s from './style.module.less';
 
 const ExploreView = () => {
   const { data: books } = useGetBooksQuery();
@@ -28,25 +28,25 @@ const ExploreView = () => {
   }, [currentSubject]);
 
   return (
-    <Layout rowsSetup="grid-rows-explore-view gap-y-0" responsiveLayout>
+    <Layout rowsSetup="grid-rows-explore-view gap-y-6" responsiveLayout>
       <Navbar />
       <Typography.H1
         size="lg"
-        className="col-start-2 col-end-26 grid-row-start-2 grid-row-end-2 mt-8"
+        className="col-start-2 col-end-26 grid-row-start-2 grid-row-end-2 mt-8 lg:text-left sm:text-center"
       >
         Our best content aligned to OpenStax courses
       </Typography.H1>
 
       <Typography.H2
         size="md"
-        className="col-start-2 col-end-26 grid-row-start-3 grid-row-end-3 font-normal mt-4"
+        className="col-start-2 col-end-26 grid-row-start-3 grid-row-end-3 font-normal mt-4 lg:text-left sm:text-center"
       >
         Review videos hand-picked by our curators and decide if they are right
         for your course
       </Typography.H2>
-      <div className="col-start-1 col-end-27 grid-row-start-4 grid-row-end-4 text-center">
-        <div className="grid grid-cols-container lg:gap-x-6 text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-          <ul className="flex flex-wrap col-start-2 col-end-27">
+      <div className="col-start-2 col-end-26 grid-row-start-4 grid-row-end-4 text-center">
+        <div className="grid grid-cols-container lg:gap-x-6 text-center text-gray-500 border-b border-gray-200">
+          <ul className="flex flex-wrap sm:justify-center lg:justify-start col-start-1 col-end-26">
             {subjects?.map((subject) => {
               return (
                 <li>
