@@ -20,23 +20,6 @@ describe(`Explore view`, () => {
       </MemoryRouter>,
     );
 
-  it(`displays all subjects that have books`, async () => {
-    const fakeClient = new FakeBoclipsClient();
-
-    fakeClient.openstax.setOpenstaxBooks([
-      BookFactory.sample({ id: 'book-1', subject: 'Maths' }),
-      BookFactory.sample({ id: 'book-2', subject: 'French' }),
-      BookFactory.sample({ id: 'book-3', subject: 'Physics' }),
-      BookFactory.sample({ id: 'book-4', subject: 'Physics' }),
-    ]);
-
-    const wrapper = renderExploreView(fakeClient);
-
-    expect(await wrapper.findByText('Maths')).toBeInTheDocument();
-    expect(wrapper.getByText('French')).toBeInTheDocument();
-    expect(wrapper.getByText('Physics')).toBeInTheDocument();
-  });
-
   it(`shows first subject's books by default and can select other subjects`, async () => {
     const fakeClient = new FakeBoclipsClient();
 

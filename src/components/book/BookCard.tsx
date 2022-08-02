@@ -1,5 +1,5 @@
 import { Book } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
-import ArrowIconSVG from 'resources/icons/arrow-no-size.svg';
+import ArrowIconSVG from 'src/resources/icons/arrow-no-size.svg';
 import React from 'react';
 import { Typography } from '@boclips-ui/typography';
 

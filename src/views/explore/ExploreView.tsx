@@ -4,9 +4,8 @@ import { useGetBooksQuery } from 'src/hooks/api/bookQuery';
 import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import { Layout } from 'src/components/layout/Layout';
-import c from 'classnames';
-import { BookList } from 'src/views/explore/BookList';
-import s from './style.module.less';
+import { BookList } from 'src/components/book/BookList';
+import { Menu } from 'src/components/menu/Menu';
 
 const ExploreView = () => {
   const { data: books } = useGetBooksQuery();
@@ -14,7 +13,11 @@ const ExploreView = () => {
   const [currentSubject, setCurrentSubject] = useState('');
   const [currentSubjectBooks, setCurrentSubjectBooks] = useState([]);
   useEffect(() => {
-    setSubjects(books?.map((book) => book.subject));
+    setSubjects(
+      books
+        ?.map((book) => book.subject)
+        .filter((subject, index, self) => self.indexOf(subject) === index),
+    );
   }, [books]);
 
   useEffect(() => {
@@ -45,29 +48,11 @@ const ExploreView = () => {
         for your course
       </Typography.H2>
       <div className="col-start-2 col-end-26 grid-row-start-4 grid-row-end-4 text-center">
-        <div className="grid grid-cols-container lg:gap-x-6 text-center text-gray-500 border-b border-gray-200">
-          <ul className="flex flex-wrap sm:justify-center lg:justify-start col-start-1 col-end-26">
-            {subjects?.map((subject) => {
-              return (
-                <li>
-                  <Typography.Body
-                    onClick={() => setCurrentSubject(subject)}
-                    className={c(
-                      s.menuItem,
-                      `inline-block p-4 rounded-t border-b-6 border-transparent hover:text-blue-800 hover:border-blue-800 hover:font-medium ${
-                        currentSubject === subject
-                          ? 'text-blue-800 border-blue-800 font-medium'
-                          : ''
-                      }`,
-                    )}
-                  >
-                    {subject}
-                  </Typography.Body>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+        <Menu
+          subjects={subjects}
+          currentSubject={currentSubject}
+          onClick={setCurrentSubject}
+        />
       </div>
       <main className="col-start-1 col-end-27 grid-row-start-5 grid-row-end-5">
         <BookList books={currentSubjectBooks} />
