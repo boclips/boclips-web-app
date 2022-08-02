@@ -100,7 +100,7 @@
     "@boclips-ui/video-card-placeholder": "^2.1.9",
     "@bucketco/tracking-sdk": "^1.0.0",
     "@hot-loader/react-dom": "^17.0.1",
-    "@sentry/integrations": "^6.1.0",
+    "@sentry/integrations": "^7.8.1",
     "@sentry/react": "^6.2.0",
     "@sentry/tracing": "^6.1.0",
     "@tailwindcss/forms": "^0.4.0",
