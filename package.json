@@ -121,7 +121,7 @@
     "boclips-player-react": "2.9.2",
     "copy-webpack-plugin": "^6.2.1",
     "dateformat": "^4.4.1",
-    "dayjs": "^1.9.7",
+    "dayjs": "^1.11.4",
     "focus-trap-react": "^8.9.2",
     "get-user-locale": "^1.4.0",
     "history": "^5.0.0",
