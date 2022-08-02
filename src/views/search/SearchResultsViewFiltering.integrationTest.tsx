@@ -290,31 +290,6 @@ describe('SearchResultsFiltering', () => {
   });
 
   describe('Language filters', () => {
-    it('does not display the filter if user has no LANGUAGE_FILTER flag', async () => {
-      fakeClient.videos.setFacets(
-        FacetsFactory.sample({
-          languages: [{ id: 'eng', name: 'English', hits: 12 }],
-        }),
-      );
-
-      fakeClient.videos.insertVideo(
-        VideoFactory.sample({
-          id: '2',
-          title: 'my video',
-        }),
-      );
-
-      fakeClient.users.setCurrentUserFeatures({
-        LANGUAGE_FILTER: false,
-      });
-
-      const wrapper = renderSearchResultsView(['/videos?q=video']);
-      await waitFor(() => {
-        expect(wrapper.queryByText('my video')).toBeVisible();
-        expect(wrapper.queryByText('Language')).toBeNull();
-      });
-    });
-
     it('displays the filter and facet counts, order by facet counts', async () => {
       fakeClient.videos.setFacets(
         FacetsFactory.sample({
@@ -324,10 +299,6 @@ describe('SearchResultsFiltering', () => {
           ],
         }),
       );
-
-      fakeClient.users.setCurrentUserFeatures({
-        LANGUAGE_FILTER: true,
-      });
 
       fakeClient.videos.insertVideo(
         VideoFactory.sample({

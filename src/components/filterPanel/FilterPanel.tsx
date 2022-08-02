@@ -13,7 +13,6 @@ import { Typography } from '@boclips-ui/typography';
 import { EducationLevelFilter } from 'src/components/filterPanel/EducationLevelFilter';
 import { TextButton } from 'src/components/common/textButton/TextButton';
 import { LanguageFilter } from 'src/components/filterPanel/LanguageFilter';
-import { FeatureGate } from 'src/components/common/FeatureGate';
 import { SelectedFilters } from './SelectedFilters';
 
 export interface DateFilters {
@@ -83,12 +82,10 @@ export const FilterPanel = ({
             options={options.bestFor}
             handleChange={handleChange}
           />
-          <FeatureGate feature="LANGUAGE_FILTER">
-            <LanguageFilter
-              options={options.languages}
-              handleChange={handleChange}
-            />
-          </FeatureGate>
+          <LanguageFilter
+            options={options.languages}
+            handleChange={handleChange}
+          />
           <EducationLevelFilter
             options={options.educationLevels}
             handleChange={handleChange}
