@@ -94,7 +94,7 @@ export const SelectedFilters = ({ removeFilter, facets }: Props) => {
     <div
       role="region"
       className="flex flex-wrap"
-      aria-labelledby="selected_filters_panel"
+      aria-label="Selected filters panel"
       data-qa="applied-filter-tags"
     >
       {filtersToRender.map((filter) => (

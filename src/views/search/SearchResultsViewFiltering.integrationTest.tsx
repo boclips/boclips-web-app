@@ -971,6 +971,193 @@ describe('SearchResultsFiltering', () => {
     });
   });
 
+  describe('CEFR level filters', () => {
+    it('displays CEFR level filters with facet counts', async () => {
+      const facets = FacetsFactory.sample({
+        cefrLevels: [
+          {
+            hits: 22,
+            id: 'A1',
+            name: 'A1',
+          },
+          {
+            hits: 33,
+            id: 'B2',
+            name: 'B2',
+          },
+        ],
+      });
+
+      const videos = [
+        VideoFactory.sample({
+          id: '1',
+          title: 'hello 1',
+        }),
+        VideoFactory.sample({
+          title: '2',
+          description: 'hello 2',
+        }),
+      ];
+
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({ features: { BO_WEB_APP_DEV: true } }),
+      );
+      videos.forEach((v) => {
+        fakeClient.videos.insertVideo(v);
+      });
+      fakeClient.videos.setFacets(facets);
+
+      const wrapper = renderSearchResultsView(['/videos?q=hello']);
+
+      await waitFor(() => {
+        const cefrLevelButton = wrapper.getByRole('button', {
+          name: 'CEFR Language Level filter panel',
+        });
+        expect(cefrLevelButton).toBeInTheDocument();
+        expect(
+          within(cefrLevelButton).getByText('CEFR Language Level'),
+        ).toBeInTheDocument();
+
+        expect(
+          wrapper.getByRole('checkbox', { name: 'A1 Beginner' }),
+        ).toBeInTheDocument();
+
+        expect(
+          wrapper.getByRole('checkbox', { name: 'B2 Upper Intermediate' }),
+        ).toBeInTheDocument();
+      });
+    });
+
+    it('can filter cefr level query param and selects checkbox', async () => {
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '1',
+          title: 'hello cars stock',
+          cefrLevel: 'B2',
+        }),
+      );
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '2',
+          title: 'hello cars badger',
+          cefrLevel: 'B1',
+        }),
+      );
+      fakeClient.videos.setFacets(
+        FacetsFactory.sample({
+          cefrLevels: [{ name: 'B1', id: 'B1', hits: 10 }],
+        }),
+      );
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({ features: { BO_WEB_APP_DEV: true } }),
+      );
+
+      const wrapper = renderSearchResultsView(['/videos?q=cars&cefr_level=B1']);
+
+      await waitFor(() => {
+        expect(wrapper.getByText('hello cars badger')).toBeVisible();
+      });
+
+      expect(wrapper.queryByText('hello cars stock')).not.toBeInTheDocument();
+      expect(
+        wrapper.getByRole('checkbox', { name: 'B1 Intermediate' }),
+      ).toHaveProperty('checked', true);
+
+      const selectedFilterPanel = wrapper.getByRole('region', {
+        name: 'Selected filters panel',
+      });
+      expect(within(selectedFilterPanel).findByText('B1 Intermediate'));
+    });
+
+    it('can filter cefr level query param and selects checkbox', async () => {
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '1',
+          title: 'hello cars stock',
+          cefrLevel: 'B2',
+        }),
+      );
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '2',
+          title: 'hello cars badger',
+          cefrLevel: 'B1',
+        }),
+      );
+      fakeClient.videos.setFacets(
+        FacetsFactory.sample({
+          cefrLevels: [{ name: 'B1', id: 'B1', hits: 10 }],
+        }),
+      );
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({ features: { BO_WEB_APP_DEV: true } }),
+      );
+
+      const wrapper = renderSearchResultsView(['/videos?q=cars']);
+
+      await waitFor(() => {
+        expect(wrapper.getByText('hello cars badger')).toBeVisible();
+        expect(wrapper.getByText('hello cars stock')).toBeVisible();
+      });
+
+      const b1Checkbox = wrapper.getByRole('checkbox', {
+        name: 'B1 Intermediate',
+      });
+      expect(b1Checkbox).toHaveProperty('checked', false);
+      fireEvent.click(b1Checkbox);
+
+      await waitFor(() => {
+        expect(wrapper.getByText('hello cars badger')).toBeVisible();
+        expect(wrapper.queryByText('hello cars stock')).not.toBeInTheDocument();
+      });
+
+      expect(
+        wrapper.getByRole('checkbox', {
+          name: 'B1 Intermediate',
+        }),
+      ).toHaveProperty('checked', true);
+    });
+
+    it('does not display the filter if user does not have the BO_WEB_APP_DEV feature flag', async () => {
+      const facets = FacetsFactory.sample({
+        cefrLevels: [
+          {
+            hits: 22,
+            id: 'A1',
+            name: 'A1',
+          },
+          {
+            hits: 33,
+            id: 'B2',
+            name: 'B2',
+          },
+        ],
+      });
+
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({ features: { BO_WEB_APP_DEV: false } }),
+      );
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '1',
+          title: 'hello cars stock',
+          cefrLevel: 'B2',
+        }),
+      );
+      fakeClient.videos.setFacets(facets);
+
+      const wrapper = renderSearchResultsView(['/videos?q=cars']);
+      await waitFor(() => {
+        expect(wrapper.getByText('hello cars stock')).toBeVisible();
+        expect(
+          wrapper.queryByRole('button', {
+            name: 'CEFR Language Level filter panel',
+          }),
+        ).not.toBeInTheDocument();
+      });
+    });
+  });
+
   describe(`filtering by clicking content partner name in video card`, () => {
     it(`can filter by content partner by clicking their name in video card`, async () => {
       fakeClient.channels.insertFixture([
@@ -1020,34 +1207,6 @@ describe('SearchResultsFiltering', () => {
         expect(wrapper.queryByText('video ted stock')).toBeNull();
         expect(wrapper.queryByText('video getty news')).toBeNull();
       });
-    });
-  });
-
-  describe('cefr level filter', () => {
-    it('can filter cefr level query param', async () => {
-      fakeClient.videos.insertVideo(
-        VideoFactory.sample({
-          id: '1',
-          title: 'hello cars stock',
-          cefrLevel: 'B2',
-        }),
-      );
-
-      fakeClient.videos.insertVideo(
-        VideoFactory.sample({
-          id: '2',
-          title: 'hello cars badger',
-          cefrLevel: 'B1',
-        }),
-      );
-
-      const wrapper = renderSearchResultsView(['/videos?q=cars&cefr_level=B1']);
-
-      await waitFor(() => {
-        expect(wrapper.getByText('hello cars badger')).toBeVisible();
-      });
-
-      expect(wrapper.queryByText('hello cars stock')).not.toBeInTheDocument();
     });
   });
 

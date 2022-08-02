@@ -12,6 +12,7 @@ export interface Filters {
   prices: FilterOption[];
   educationLevels: FilterOption[];
   languages: FilterOption[];
+  cefrLevels: FilterOption[];
 }
 
 export const useFilterOptions = (facets: VideoFacets): Filters => {

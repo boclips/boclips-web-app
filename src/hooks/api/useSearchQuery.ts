@@ -42,6 +42,7 @@ const doSearch = (
     include_channel_facets: true,
     include_education_level_facets: true,
     include_topic_facets: true,
+    include_cefr_level_facets: true,
     education_level: filters?.education_level,
     content_package: contentPackage,
     topics: filters?.topics,

@@ -21,6 +21,7 @@ describe('convertFacets', () => {
         FacetFactory.sample({ id: 'EL2', hits: 52, name: 'EL2 label' }),
       ],
       languages: [FacetFactory.sample({ id: 'eng', hits: 9, name: 'English' })],
+      cefrLevels: [FacetFactory.sample({ id: 'A1', hits: 42, name: 'A1' })],
     });
 
     const filterOptions = convertFacetsToFilterOptions(facets, null);
@@ -53,6 +54,11 @@ describe('convertFacets', () => {
     expect(filterOptions.languages[0].key).toEqual('language');
     expect(filterOptions.languages[0].hits).toEqual(9);
     expect(filterOptions.languages[0].name).toEqual('English');
+
+    expect(filterOptions.cefrLevels[0].id).toEqual('A1');
+    expect(filterOptions.cefrLevels[0].key).toEqual('cefr_level');
+    expect(filterOptions.cefrLevels[0].hits).toEqual(42);
+    expect(filterOptions.cefrLevels[0].name).toEqual('A1 Beginner');
   });
 
   it('returns empty lists when facets are null', () => {
@@ -64,6 +70,7 @@ describe('convertFacets', () => {
     expect(filterOptions.channels).toHaveLength(0);
     expect(filterOptions.durations).toHaveLength(0);
     expect(filterOptions.prices).toHaveLength(0);
+    expect(filterOptions.cefrLevels).toHaveLength(0);
   });
 
   it('converts video type facet name to display name', () => {
@@ -117,6 +124,45 @@ describe('convertFacets', () => {
     expect(filterOptions.prices[2].name).toEqual('$300');
     expect(filterOptions.prices[3].name).toEqual('$400');
     expect(filterOptions.prices[4].name).toEqual('$500');
+  });
+
+  it('converts cefr level facets to correct display name', () => {
+    const facets = FacetsFactory.sample({
+      cefrLevels: [
+        FacetFactory.sample({ name: 'A1' }),
+        FacetFactory.sample({ name: 'A2' }),
+        FacetFactory.sample({ name: 'B1' }),
+        FacetFactory.sample({ name: 'B2' }),
+        FacetFactory.sample({ name: 'C1' }),
+        FacetFactory.sample({ name: 'C2' }),
+      ],
+    });
+
+    const filterOptions = convertFacetsToFilterOptions(facets, null);
+    expect(filterOptions.cefrLevels[0].name).toEqual('A1 Beginner');
+    expect(filterOptions.cefrLevels[1].name).toEqual('A2 Elementary');
+    expect(filterOptions.cefrLevels[2].name).toEqual('B1 Intermediate');
+    expect(filterOptions.cefrLevels[3].name).toEqual('B2 Upper Intermediate');
+    expect(filterOptions.cefrLevels[4].name).toEqual('C1 Advanced');
+    expect(filterOptions.cefrLevels[5].name).toEqual('C2 Proficiency');
+  });
+
+  it('handles valid lowercase cefr level codes', () => {
+    const facets = FacetsFactory.sample({
+      cefrLevels: [FacetFactory.sample({ name: 'a1' })],
+    });
+
+    const filterOptions = convertFacetsToFilterOptions(facets, null);
+    expect(filterOptions.cefrLevels[0].name).toEqual('A1 Beginner');
+  });
+
+  it('converts invalid cefr level code to itself', () => {
+    const facets = FacetsFactory.sample({
+      cefrLevels: [FacetFactory.sample({ name: 'a11' })],
+    });
+
+    const filterOptions = convertFacetsToFilterOptions(facets, null);
+    expect(filterOptions.cefrLevels[0].name).toEqual('a11');
   });
 
   describe('Converting language codes', () => {

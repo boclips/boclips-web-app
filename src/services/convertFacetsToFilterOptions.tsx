@@ -27,6 +27,7 @@ export const convertFacetsToFilterOptions = (
     prices: facets?.prices || [],
     educationLevels: facets?.educationLevels || [],
     languages: facets?.languages || [],
+    cefrLevels: facets?.cefrLevels || [],
   };
 
   return {
@@ -72,6 +73,12 @@ export const convertFacetsToFilterOptions = (
       safeFacets.languages,
       appliedFilters?.language || [],
       'language',
+    ),
+    cefrLevels: createFilterOptions(
+      safeFacets.cefrLevels,
+      [],
+      'cefr_level',
+      getCefrLevelLabel,
     ),
   };
 };
@@ -123,6 +130,8 @@ export const getFilterLabel = (
       return `To: ${dayjs(id).format('MM-DD-YYYY')}`;
     case 'language':
       return languages?.find((l) => l.id === id)?.name;
+    case 'cefr_level':
+      return getCefrLevelLabel(id);
     default:
       throw 'not supported filter key';
   }
@@ -161,6 +170,25 @@ const getDurationLabel = (name: string): string => {
       return '10 - 20 min';
     case DEFAULT_DURATIONS[4]:
       return '20 min +';
+    default:
+      return name;
+  }
+};
+
+const getCefrLevelLabel = (name: string): string => {
+  switch (name.toUpperCase()) {
+    case 'A1':
+      return 'A1 Beginner';
+    case 'A2':
+      return 'A2 Elementary';
+    case 'B1':
+      return 'B1 Intermediate';
+    case 'B2':
+      return 'B2 Upper Intermediate';
+    case 'C1':
+      return 'C1 Advanced';
+    case 'C2':
+      return 'C2 Proficiency';
     default:
       return name;
   }
