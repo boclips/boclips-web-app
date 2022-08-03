@@ -73,7 +73,9 @@ const NavbarResponsive = (): ReactElement => {
           </div>
         ) : (
           <div className={s.buttonsDesktop}>
-            <ExploreButton />
+            <FeatureGate feature="BO_WEB_APP_DEV">
+              <ExploreButton />
+            </FeatureGate>
             <LibraryButton />
             <AccountButton />
             <FeatureGate linkName="cart">
