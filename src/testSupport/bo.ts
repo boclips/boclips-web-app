@@ -260,8 +260,28 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
             }),
             BookFactory.sample({
               id: 'book-3',
-              subject: 'Physics-2',
-              title: 'Physics-2 book',
+              subject: 'Physics',
+              title: 'Physics book 2',
+            }),
+            BookFactory.sample({
+              id: 'book-3',
+              subject: 'Physics',
+              title: 'Physics book 3',
+            }),
+            BookFactory.sample({
+              id: 'book-3',
+              subject: 'Physics',
+              title: 'Physics book 4',
+            }),
+            BookFactory.sample({
+              id: 'book-3',
+              subject: 'Physics',
+              title: 'Physics book 5',
+            }),
+            BookFactory.sample({
+              id: 'book-3',
+              subject: 'Physics',
+              title: 'Physics book 6',
             }),
             BookFactory.sample({
               id: 'book-4',
@@ -277,6 +297,16 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
               id: 'book-6',
               subject: 'Geography',
               title: 'Geography book',
+            }),
+            BookFactory.sample({
+              id: 'book-6',
+              subject: 'History',
+              title: 'History book',
+            }),
+            BookFactory.sample({
+              id: 'book-6',
+              subject: 'Architecture',
+              title: 'Architecture book',
             }),
           ]);
         },

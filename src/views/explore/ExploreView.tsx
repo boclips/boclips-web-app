@@ -6,6 +6,8 @@ import Footer from 'src/components/layout/Footer';
 import { Layout } from 'src/components/layout/Layout';
 import { BookList } from 'src/components/book/BookList';
 import { Menu } from 'src/components/menu/Menu';
+import c from 'classnames';
+import s from './style.module.less';
 
 const ExploreView = () => {
   const { data: books } = useGetBooksQuery();
@@ -35,26 +37,32 @@ const ExploreView = () => {
       <Navbar />
       <Typography.H1
         size="lg"
-        className="col-start-2 col-end-26 grid-row-start-2 grid-row-end-2 mt-8 lg:text-left sm:text-center"
+        className="col-start-2 col-end-26 grid-row-start-2 grid-row-end-2 mt-4 text-center"
       >
         Our best content aligned to OpenStax courses
       </Typography.H1>
 
       <Typography.H2
-        size="md"
-        className="col-start-2 col-end-26 grid-row-start-3 grid-row-end-3 font-normal mt-4 lg:text-left sm:text-center"
+        size="xs"
+        className="col-start-2 col-end-26 grid-row-start-3 grid-row-end-3 font-normal text-center"
       >
         Review videos hand-picked by our curators and decide if they are right
         for your course
       </Typography.H2>
-      <div className="col-start-2 col-end-26 grid-row-start-4 grid-row-end-4 text-center">
+
+      <div className="col-start-2 col-end-26 grid-row-start-4 grid-row-end-4">
         <Menu
           subjects={subjects}
           currentSubject={currentSubject}
           onClick={setCurrentSubject}
         />
       </div>
-      <main className="col-start-1 col-end-27 grid-row-start-5 grid-row-end-5">
+      <main
+        className={c(
+          s.bookList,
+          'col-start-2 col-end-26 grid-row-start-5 grid-row-end-5 relative -mt-6',
+        )}
+      >
         <BookList books={currentSubjectBooks} />
       </main>
 

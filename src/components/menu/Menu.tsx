@@ -1,7 +1,6 @@
 import React from 'react';
-import { Typography } from '@boclips-ui/typography';
 import c from 'classnames';
-import s from './style.module.less';
+import s from './menu.module.less';
 
 interface Props {
   subjects: string[];
@@ -11,26 +10,26 @@ interface Props {
 
 export const Menu = ({ subjects, currentSubject, onClick }: Props) => {
   return (
-    <div className="grid grid-cols-container lg:gap-x-6 text-center text-gray-500 border-b border-gray-200">
-      <ul className="flex flex-wrap sm:justify-center lg:justify-start col-start-1 col-end-26">
+    <div className="flex overflow-x-auto text-gray-600 border-b-2 border-gray-400 md:justify-center ">
+      <ul className="flex md:flex-wrap md:justify-center">
         {subjects?.map((subject) => {
           return (
-            <li>
-              <Typography.Body
-                aria-label={`subject ${subject}`}
-                onClick={() => onClick(subject)}
-                className={c(
-                  s.menuItem,
-                  `inline-block p-4 rounded-t border-b-6 border-transparent hover:text-blue-800 hover:border-blue-800 hover:font-medium ${
-                    currentSubject === subject
-                      ? 'text-blue-800 border-blue-800 font-medium'
-                      : ''
-                  }`,
-                )}
-              >
-                {subject}
-              </Typography.Body>
-            </li>
+            <button
+              type="button"
+              aria-label={`subject ${subject}`}
+              onClick={() => onClick(subject)}
+              name={subject}
+              className={c(
+                s.subject,
+                `inline-block p-4 border-b-6 border-transparent text-base shrink-0 hover:text-blue-800 hover:border-blue-800 hover:font-medium ${
+                  currentSubject === subject
+                    ? 'text-blue-800 border-blue-800 font-medium'
+                    : ''
+                }`,
+              )}
+            >
+              <li>{subject}</li>
+            </button>
           );
         })}
       </ul>

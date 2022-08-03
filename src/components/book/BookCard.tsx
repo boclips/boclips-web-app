@@ -2,6 +2,7 @@ import { Book } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
 import ArrowIconSVG from 'src/resources/icons/arrow-no-size.svg';
 import React from 'react';
 import { Typography } from '@boclips-ui/typography';
+import s from './style.module.less';
 
 interface Props {
   book: Book;
@@ -12,7 +13,7 @@ export const BookCard = ({ book }: Props) => {
     <button
       onClick={() => onCardClick(book.id)}
       type="button"
-      className="bg-white h-32 w-1/2 flex justify-between border-1 border-blue-100 rounded py-auto shadow-lg col-span-8 mt-8"
+      className="bg-white h-32 flex justify-between border-1 border-blue-100 rounded py-auto shadow-lg"
     >
       <div className="flex flex-col justify-center h-full ml-5">
         <Typography.H2 size="sm" className="font-medium">
@@ -21,7 +22,7 @@ export const BookCard = ({ book }: Props) => {
       </div>
       <span className="flex flex-col justify-center h-full">
         <div className="bg-blue-100 rounded-full h-16 w-16 mr-8 px-7 py-6">
-          <ArrowIconSVG />
+          <ArrowIconSVG className={s.arrowIcon} />
         </div>
       </span>
     </button>
