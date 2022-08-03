@@ -1,6 +1,6 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { QueryClient } from 'react-query';
 import { BoclipsClient } from 'boclips-api-client';
@@ -20,20 +20,39 @@ describe(`Explore view`, () => {
       </MemoryRouter>,
     );
 
-  it(`displays all subjects that have books`, async () => {
+  it(`shows first subject's books by default and can select other subjects`, async () => {
     const fakeClient = new FakeBoclipsClient();
 
     fakeClient.openstax.setOpenstaxBooks([
-      BookFactory.sample({ id: 'book-1', subject: 'Maths' }),
-      BookFactory.sample({ id: 'book-2', subject: 'French' }),
-      BookFactory.sample({ id: 'book-3', subject: 'Physics' }),
-      BookFactory.sample({ id: 'book-4', subject: 'Physics' }),
+      BookFactory.sample({
+        id: 'book-1',
+        title: 'Maths book',
+        subject: 'Maths',
+      }),
+      BookFactory.sample({
+        id: 'book-2',
+        title: 'French book',
+        subject: 'French',
+      }),
+      BookFactory.sample({
+        id: 'book-3',
+        title: 'Physics-1',
+        subject: 'Physics',
+      }),
+      BookFactory.sample({
+        id: 'book-4',
+        title: 'Physics-2',
+        subject: 'Physics',
+      }),
     ]);
 
     const wrapper = renderExploreView(fakeClient);
 
-    expect(await wrapper.findByText('Maths')).toBeInTheDocument();
-    expect(wrapper.getByText('French')).toBeInTheDocument();
-    expect(wrapper.getByText('Physics')).toBeInTheDocument();
+    expect(await wrapper.findByText('Maths book')).toBeVisible();
+    expect(await wrapper.queryByText('French book')).toBeNull();
+
+    fireEvent.click(wrapper.getByText('French'));
+
+    expect(await wrapper.findByText('French book')).toBeVisible();
   });
 });

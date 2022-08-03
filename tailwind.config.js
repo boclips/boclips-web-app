@@ -28,6 +28,7 @@ module.exports = {
         'default-view-with-title': 'auto 50px minmax(0, auto) auto',
         'playlist-view':
           'auto minmax(50px, auto) auto auto minmax(0, auto) auto',
+        'explore-view': 'auto auto auto auto auto auto',
         'order-view': 'auto 21px minmax(0, auto) minmax(0, auto) auto',
         'video-view': 'auto minmax(0, auto) repeat(5,auto)',
       },
@@ -80,6 +81,7 @@ module.exports = {
       },
       borderWidth: {
         1: '1.5px',
+        6: '6px',
       },
       colors: {
         blue: {

@@ -14,6 +14,7 @@ import LibraryButton from 'src/components/navButtons/LibraryButton';
 import SkipLink from 'src/components/skipLink/SkipLink';
 import { Typography } from '@boclips-ui/typography';
 import ExternalLinkIcon from 'src/resources/icons/external-link-icon.svg';
+import ExploreButton from 'src/components/navButtons/ExploreButton';
 import s from './navbar.module.less';
 import { Search } from '../searchBar/SearchBar';
 import { Link } from '../common/Link';
@@ -72,6 +73,9 @@ const NavbarResponsive = (): ReactElement => {
           </div>
         ) : (
           <div className={s.buttonsDesktop}>
+            <FeatureGate feature="BO_WEB_APP_DEV">
+              <ExploreButton />
+            </FeatureGate>
             <LibraryButton />
             <AccountButton />
             <FeatureGate linkName="cart">
@@ -90,6 +94,9 @@ const NavbarResponsive = (): ReactElement => {
             <span>{user.email}</span>
           </div>
           <div className={s.buttons}>
+            <FeatureGate feature="BO_WEB_APP_DEV">
+              <Link to="/explore">Explore</Link>
+            </FeatureGate>
             <Link to="/library">Your library</Link>
             <Link to="/orders">Your orders</Link>
             <FeatureGate linkName="cart">
