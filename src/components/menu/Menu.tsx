@@ -15,6 +15,7 @@ export const Menu = ({ subjects, currentSubject, onClick }: Props) => {
         {subjects?.map((subject) => {
           return (
             <button
+              key={subject}
               type="button"
               aria-label={`subject ${subject}`}
               onClick={() => onClick(subject)}

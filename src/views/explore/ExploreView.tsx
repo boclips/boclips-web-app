@@ -1,5 +1,5 @@
 import { Typography } from '@boclips-ui/typography';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useGetBooksQuery } from 'src/hooks/api/bookQuery';
 import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
@@ -11,26 +11,24 @@ import s from './style.module.less';
 
 const ExploreView = () => {
   const { data: books } = useGetBooksQuery();
-  const [subjects, setSubjects] = useState([]);
   const [currentSubject, setCurrentSubject] = useState('');
-  const [currentSubjectBooks, setCurrentSubjectBooks] = useState([]);
-  useEffect(() => {
-    setSubjects(
+
+  const subjects = useMemo(
+    () =>
       books
         ?.map((book) => book.subject)
         .filter((subject, index, self) => self.indexOf(subject) === index),
-    );
-  }, [books]);
+    [books],
+  );
 
   useEffect(() => {
     setCurrentSubject(subjects && subjects[0]);
   }, [subjects]);
 
-  useEffect(() => {
-    setCurrentSubjectBooks(
-      books?.filter((book) => subjects && book.subject === currentSubject),
-    );
-  }, [currentSubject]);
+  const currentSubjectBooks = useMemo(
+    () => books?.filter((book) => subjects && book.subject === currentSubject),
+    [books, subjects, currentSubject],
+  );
 
   return (
     <Layout rowsSetup="grid-rows-explore-view gap-y-6" responsiveLayout>
