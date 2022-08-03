@@ -5,6 +5,7 @@ import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import Navbar from 'src/components/layout/Navbar';
 import React from 'react';
+import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 
 describe('explore button', () => {
   let fakeClient: FakeBoclipsClient;
@@ -13,6 +14,9 @@ describe('explore button', () => {
     window.resizeTo(1680, 1024);
 
     fakeClient = new FakeBoclipsClient();
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({ features: { BO_WEB_APP_DEV: true } }),
+    );
   });
 
   const renderExploreButton = () =>

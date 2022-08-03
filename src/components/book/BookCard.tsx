@@ -2,13 +2,19 @@ import { Book } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
 import ArrowIconSVG from 'src/resources/icons/arrow-no-size.svg';
 import React from 'react';
 import { Typography } from '@boclips-ui/typography';
+import { useHistory } from 'react-router-dom';
 import s from './style.module.less';
 
 interface Props {
   book: Book;
 }
 export const BookCard = ({ book }: Props) => {
-  const onCardClick = (id) => console.log(id);
+  const history = useHistory();
+
+  const onCardClick = (bookId) =>
+    history.push({
+      pathname: `/openstax/${bookId}`,
+    });
   return (
     <button
       key={book.id}
