@@ -31,25 +31,30 @@ export const OpenstaxBookNavigationPanel = ({ book }: Props) => {
 
   return (
     <div className="col-start-2 col-end-8">
-      <Typography.H1 size="md">{book.title}</Typography.H1>
-      {book.chapters.map((chapter) => (
-        <>
-          <Typography.H2 size="sm" className="text-gray-700">
-            {formatChapterTitle(chapter)}
-          </Typography.H2>
+      <Typography.H1 size="md" className="text-gray-900">
+        {book.title}
+      </Typography.H1>
 
-          <div className="text-gray-700">{videoCountLabel(chapter)}</div>
+      <div className="mt-8">
+        {book.chapters.map((chapter) => (
+          <>
+            <Typography.H2 size="sm" className="text-gray-700 pt-4">
+              {formatChapterTitle(chapter)}
+            </Typography.H2>
 
-          {chapter.sections.map((section) => (
-            <Typography.H3
-              size="xs"
-              className="text-gray-800 !font-normal mb-4"
-            >
-              {formatSectionTitle(chapter, section)}
-            </Typography.H3>
-          ))}
-        </>
-      ))}
+            <div className="text-gray-700 mb-2">{videoCountLabel(chapter)}</div>
+
+            {chapter.sections.map((section) => (
+              <Typography.H3
+                size="xs"
+                className="text-gray-800 !font-normal py-2"
+              >
+                {formatSectionTitle(chapter, section)}
+              </Typography.H3>
+            ))}
+          </>
+        ))}
+      </div>
     </div>
   );
 };
