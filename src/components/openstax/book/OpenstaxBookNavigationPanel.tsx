@@ -30,7 +30,7 @@ export const OpenstaxBookNavigationPanel = ({ book }: Props) => {
   };
 
   return (
-    <>
+    <div className="col-start-2 col-end-8">
       <Typography.H1 size="md">{book.title}</Typography.H1>
       {book.chapters.map((chapter) => (
         <>
@@ -50,6 +50,6 @@ export const OpenstaxBookNavigationPanel = ({ book }: Props) => {
           ))}
         </>
       ))}
-    </>
+    </div>
   );
 };

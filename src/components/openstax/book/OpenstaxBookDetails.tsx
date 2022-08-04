@@ -14,7 +14,7 @@ export const OpenstaxBookDetails = ({ book }: Props) => {
   const formatChapterTitle = (chapter: Chapter) =>
     `Chapter ${chapter.number}: ${chapter.title}`;
   return (
-    <>
+    <main tabIndex={-1} className="col-start-8 col-end-26">
       <Typography.H1 size="md">{book.title}</Typography.H1>
       {book.chapters.map((chapter) => (
         <>
@@ -29,6 +29,6 @@ export const OpenstaxBookDetails = ({ book }: Props) => {
           ))}
         </>
       ))}
-    </>
+    </main>
   );
 };

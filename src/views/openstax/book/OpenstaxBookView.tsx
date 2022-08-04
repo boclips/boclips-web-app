@@ -15,14 +15,12 @@ const OpenstaxBookView = () => {
   return (
     <Layout rowsSetup="grid-rows-default-view">
       <Navbar />
-      <main className="grid col-start-2 col-end-26 gap-4">
-        {book && (
-          <>
-            <OpenstaxBookNavigationPanel book={book} />
-            <OpenstaxBookDetails book={book} />
-          </>
-        )}
-      </main>
+      {book && (
+        <>
+          <OpenstaxBookNavigationPanel book={book} />
+          <OpenstaxBookDetails book={book} />
+        </>
+      )}
       <Footer />
     </Layout>
   );
