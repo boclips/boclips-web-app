@@ -1,9 +1,14 @@
 
-.subject::before {
-  display: block;
-  content: attr(name);
-  font-weight: bold;
-  height: 0;
-  overflow: hidden;
-  visibility: hidden;
+.subject {
+  border-bottom-style: solid;
+  border-bottom-width: 6px;
+
+  &:before {
+    display: block;
+    content: attr(name);
+    font-weight: bold;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+  }
 }

@@ -22,7 +22,7 @@ export const Menu = ({ subjects, currentSubject, onClick }: Props) => {
               name={subject}
               className={c(
                 s.subject,
-                `inline-block p-4 border-b-6 border-transparent text-base shrink-0 hover:text-blue-800 hover:border-blue-800 hover:font-medium ${
+                `inline-block p-4 border-transparent text-base shrink-0 hover:text-blue-800 hover:border-blue-800 hover:font-medium ${
                   currentSubject === subject
                     ? 'text-blue-800 border-blue-800 font-medium'
                     : ''

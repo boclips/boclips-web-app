@@ -42,13 +42,16 @@ const ExploreView = () => {
 
       <Typography.H2
         size="xs"
-        className="col-start-2 col-end-26 grid-row-start-3 grid-row-end-3 font-normal text-center"
+        className={c(
+          s.h2Title,
+          'col-start-2 col-end-26 grid-row-start-3 grid-row-end-3 text-center -mt-4',
+        )}
       >
         Review videos hand-picked by our curators and decide if they are right
         for your course
       </Typography.H2>
 
-      <div className="col-start-2 col-end-26 grid-row-start-4 grid-row-end-4">
+      <div className="col-start-2 col-end-26 grid-row-start-4 grid-row-end-4 -mt-2">
         <Menu
           subjects={subjects}
           currentSubject={currentSubject}
