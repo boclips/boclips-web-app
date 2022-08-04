@@ -17,7 +17,6 @@ export const BookCard = ({ book }: Props) => {
     });
   return (
     <button
-      key={book.id}
       onClick={() => onCardClick(book.id)}
       type="button"
       className="bg-white h-32 flex justify-between border-1 border-blue-100 rounded py-auto shadow-lg"
