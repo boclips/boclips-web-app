@@ -24,6 +24,7 @@ export interface Bo {
   create: {
     fixtureSet: {
       eelsBiologyGeography: () => void;
+      openstaxBooks: () => void;
     };
     video: (video: Partial<Video>) => void;
     subject: (subject: Subject) => void;
@@ -245,7 +246,9 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
               ],
             }),
           );
-
+        },
+        openstaxBooks: () => {
+          boSetFeatures({ BO_WEB_APP_DEV: true });
           boSetOpenstax([
             BookFactory.sample({
               id: 'book-1',
@@ -263,47 +266,47 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
               title: 'Physics book 2',
             }),
             BookFactory.sample({
-              id: 'book-3',
+              id: 'book-4',
               subject: 'Physics',
               title: 'Physics book 3',
             }),
             BookFactory.sample({
-              id: 'book-3',
+              id: 'book-5',
               subject: 'Physics',
               title: 'Physics book 4',
             }),
             BookFactory.sample({
-              id: 'book-3',
+              id: 'book-6',
               subject: 'Physics',
               title: 'Physics book 5',
             }),
             BookFactory.sample({
-              id: 'book-3',
+              id: 'book-7',
               subject: 'Physics',
               title: 'Physics book 6',
             }),
             BookFactory.sample({
-              id: 'book-4',
+              id: 'book-8',
               subject: 'Amazing subject',
               title: 'Amazing subject book',
             }),
             BookFactory.sample({
-              id: 'book-5',
+              id: 'book-9',
               subject: 'Long subject name',
               title: 'Long subject book',
             }),
             BookFactory.sample({
-              id: 'book-6',
+              id: 'book-10',
               subject: 'Geography',
               title: 'Geography book',
             }),
             BookFactory.sample({
-              id: 'book-6',
+              id: 'book-11',
               subject: 'History',
               title: 'History book',
             }),
             BookFactory.sample({
-              id: 'book-6',
+              id: 'book-12',
               subject: 'Architecture',
               title: 'Architecture book',
             }),
