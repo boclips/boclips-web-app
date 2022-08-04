@@ -48,23 +48,34 @@ describe('OpenstaxBookView', () => {
       </MemoryRouter>,
     );
 
-    const title = await wrapper.findByRole('heading', {
+    const titles = await wrapper.findAllByRole('heading', {
       level: 1,
       name: 'Everything to know about ducks',
     });
-    const chapter = wrapper.getByRole('heading', { level: 2 });
+    const chapters = wrapper.getAllByRole('heading', { level: 2 });
     const sections = wrapper.getAllByRole('heading', { level: 3 });
 
-    expect(title).toBeVisible();
+    expect(titles).toHaveLength(2);
+    expect(titles[0]).toBeVisible();
+    expect(titles[1]).toBeVisible();
 
-    expect(chapter).toBeVisible();
-    expect(chapter).toHaveTextContent('Chapter 1: Introduction');
+    expect(chapters).toHaveLength(2);
+    expect(chapters[0]).toBeVisible();
+    expect(chapters[1]).toBeVisible();
+    expect(chapters[0]).toHaveTextContent('Chapter 1: Introduction');
+    expect(chapters[1]).toHaveTextContent('Chapter 1: Introduction');
 
-    expect(sections).toHaveLength(2);
+    expect(sections).toHaveLength(4);
     expect(sections[0]).toBeVisible();
     expect(sections[0]).toHaveTextContent('1.1 Life at the coop');
     expect(sections[1]).toBeVisible();
     expect(sections[1]).toHaveTextContent('1.2 Adventures outside');
+
+    expect(sections[2]).toBeVisible();
+    expect(sections[2]).toHaveTextContent('1.1 Life at the coop');
+    expect(sections[3]).toBeVisible();
+    expect(sections[3]).toHaveTextContent('1.2 Adventures outside');
+
     expect(
       wrapper.getByText(
         "We don't have any videos for this section yet. We're working on it!",
