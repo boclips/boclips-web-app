@@ -42,10 +42,8 @@ const ExploreView = () => {
 
       <Typography.H2
         size="xs"
-        className={c(
-          s.h2Title,
-          'col-start-2 col-end-26 grid-row-start-3 grid-row-end-3 text-center -mt-4',
-        )}
+        weight="regular"
+        className="col-start-2 col-end-26 grid-row-start-3 grid-row-end-3 text-center -mt-4"
       >
         Review videos hand-picked by our curators and decide if they are right
         for your course
