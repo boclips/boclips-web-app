@@ -1,7 +1,28 @@
+@import '~@boclips-ui/styles/src/colors';
 
+#barOnBottom {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  background-color: @blue-800;
+  height: 6px;
+  border-radius: 4px 4px 0px 0px;
+}
 .subject {
-  border-bottom-style: solid;
-  border-bottom-width: 6px;
+
+  &:hover {
+    &::after {
+      #barOnBottom;
+    }
+  }
+
+  &.active {
+    &::after {
+      #barOnBottom;
+    }
+  }
 
   &:before {
     display: block;

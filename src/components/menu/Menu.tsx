@@ -22,11 +22,11 @@ export const Menu = ({ subjects, currentSubject, onClick }: Props) => {
               name={subject}
               className={c(
                 s.subject,
-                `inline-block p-4 border-transparent text-base shrink-0 hover:text-blue-800 hover:border-blue-800 hover:font-medium ${
-                  currentSubject === subject
-                    ? 'text-blue-800 border-blue-800 font-medium'
-                    : ''
-                }`,
+                `inline-block relative p-4 text-base shrink-0 hover:text-blue-800 hover:font-medium`,
+                {
+                  [`${s.active} text-blue-800 font-medium`]:
+                    currentSubject === subject,
+                },
               )}
             >
               <li>{subject}</li>
