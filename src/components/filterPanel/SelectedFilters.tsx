@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SelectedFilterTag } from 'src/components/filterPanel/SelectedFilterTag';
+import FilterBadge from '@boclips-ui/filter-badge';
 import { FilterKey } from 'src/types/search/FilterKey';
 import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
 import { getFilterLabel } from 'src/services/convertFacetsToFilterOptions';
@@ -98,10 +98,12 @@ export const SelectedFilters = ({ removeFilter, facets }: Props) => {
       data-qa="applied-filter-tags"
     >
       {filtersToRender.map((filter) => (
-        <SelectedFilterTag
+        <FilterBadge
           key={`${filter.name}-${filter.id}`}
-          filter={filter}
-          removeFilter={removeFilter}
+          label={filter.name}
+          sourceFilter={filter.key}
+          value={filter.id}
+          onClose={removeFilter}
         />
       ))}
     </div>

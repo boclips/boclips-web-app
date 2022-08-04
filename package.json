@@ -87,6 +87,7 @@
     "@boclips-ui/button": "^4.0.7",
     "@boclips-ui/date-select": "^2.0.2",
     "@boclips-ui/education-level-badge": "^1.0.2",
+    "@boclips-ui/filter-badge": "^3.0.1",
     "@boclips-ui/link": "^1.0.27",
     "@boclips-ui/pagination": "^1.1.11",
     "@boclips-ui/release-date-filter": "^1.0.10",

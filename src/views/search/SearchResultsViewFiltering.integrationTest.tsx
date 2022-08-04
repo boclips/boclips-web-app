@@ -680,7 +680,7 @@ describe('SearchResultsFiltering', () => {
       const selectedFiltersSection = wrapper.getByTestId('applied-filter-tags');
       const appliedFilter = within(selectedFiltersSection).getByText('$100');
 
-      fireEvent.click(within(appliedFilter).getByTestId('remove-filter'));
+      fireEvent.click(within(appliedFilter).getByTestId('remove-filter-10000'));
 
       await waitFor(() => {
         expect(wrapper.queryByText('Selected filters')).toBeNull();
