@@ -3,7 +3,8 @@ import ArrowIconSVG from 'src/resources/icons/arrow-no-size.svg';
 import React from 'react';
 import { Typography } from '@boclips-ui/typography';
 import { useHistory } from 'react-router-dom';
-import s from './style.module.less';
+import c from 'classnames';
+import s from './bookCard.module.less';
 
 interface Props {
   book: Book;
@@ -20,7 +21,10 @@ export const BookCard = ({ book }: Props) => {
       onClick={() => onCardClick(book.id)}
       type="button"
       aria-label={`book ${book.title}`}
-      className="bg-white h-32 flex justify-between border-1 border-blue-100 rounded py-auto shadow-lg"
+      className={c(
+        s.card,
+        'bg-white h-32 flex justify-between border-1 border-blue-100 rounded py-auto shadow-lg',
+      )}
     >
       <div className="flex flex-col justify-center h-full ml-5">
         <Typography.H2 size="sm" className="font-medium">
