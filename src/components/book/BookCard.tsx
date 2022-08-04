@@ -19,6 +19,7 @@ export const BookCard = ({ book }: Props) => {
     <button
       onClick={() => onCardClick(book.id)}
       type="button"
+      aria-label={`book ${book.title}`}
       className="bg-white h-32 flex justify-between border-1 border-blue-100 rounded py-auto shadow-lg"
     >
       <div className="flex flex-col justify-center h-full ml-5">
