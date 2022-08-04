@@ -14,10 +14,7 @@ const ExploreView = () => {
   const [currentSubject, setCurrentSubject] = useState('');
 
   const subjects = useMemo(
-    () =>
-      books
-        ?.map((book) => book.subject)
-        .filter((subject, index, self) => self.indexOf(subject) === index),
+    () => Array.from(new Set(books?.map((book) => book.subject))),
     [books],
   );
 
