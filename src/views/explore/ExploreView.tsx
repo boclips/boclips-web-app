@@ -5,7 +5,7 @@ import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import { Layout } from 'src/components/layout/Layout';
 import { BookList } from 'src/components/book/BookList';
-import { Menu } from 'src/components/menu/Menu';
+import { Menu } from 'src/components/openstax/menu/Menu';
 import c from 'classnames';
 import s from './style.module.less';
 
