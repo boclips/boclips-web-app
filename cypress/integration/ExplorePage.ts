@@ -10,8 +10,7 @@ context('Explore page', () => {
 
     cy.findByRole('button', { name: 'book Maths book' }).should('be.visible');
     cy.findByRole('button', { name: 'subject Physics' }).click();
-    cy.findByRole('button', { name: 'subject Physics' }).blur();
-    cy.findByRole('button', {name: 'book Physics book'}).should('be.visible');
+    cy.findByRole('button', { name: 'book Physics book' }).should('be.visible');
 
     cy.percySnapshot('Explore page', {
       widths: Constants.SNAPSHOT_VIEW_WIDTHS,

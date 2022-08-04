@@ -11,8 +11,8 @@
   border-radius: 4px 4px 0px 0px;
 }
 .subject {
-
-  &:hover {
+  &:hover, &:focus, &:focus-visible {
+    outline: none;
     &::after {
       #barOnBottom;
     }
