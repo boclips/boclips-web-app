@@ -36,7 +36,7 @@
     "@testing-library/cypress": "^8.0.2",
     "@testing-library/react": "^11.1.0",
     "@testing-library/react-hooks": "^7.0.2",
-    "@testing-library/user-event": "^12.7.3",
+    "@testing-library/user-event": "^14.4.2",
     "audit-ci": "^5.1.2",
     "autoprefixer": "^10.4.2",
     "boclips-api-client": "^49.3.1",
