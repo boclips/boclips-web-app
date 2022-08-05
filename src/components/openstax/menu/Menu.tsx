@@ -10,7 +10,12 @@ interface Props {
 
 export const Menu = ({ subjects, currentSubject, onClick }: Props) => {
   return (
-    <div className="flex overflow-x-auto text-gray-600 border-b-2 border-gray-400 md:justify-center ">
+    <div
+      className={c(
+        s.subjectList,
+        'flex overflow-x-auto text-gray-600 border-b-2 border-gray-400 md:justify-center ',
+      )}
+    >
       <ul className="flex md:flex-wrap md:justify-center">
         {subjects?.map((subject) => {
           return (
