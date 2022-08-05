@@ -5,6 +5,8 @@ import {
   Chapter,
   Section,
 } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
+import s from 'src/components/openstax/book/style.module.less';
+import c from 'classnames';
 
 interface Props {
   book: Book;
@@ -30,32 +32,30 @@ export const OpenstaxBookNavigationPanel = ({ book }: Props) => {
   };
 
   return (
-    <div className="col-start-2 col-end-8">
-      <Typography.H1 size="md" className="text-gray-900">
+    <div className={c('col-start-2 col-end-8', s.navigationPanel)}>
+      <Typography.H1 size="sm" className={c('text-gray-900', s.bookTitle)}>
         {book.title}
       </Typography.H1>
 
-      <div className="mt-8">
-        {book.chapters.map((chapter) => (
-          <>
-            <Typography.H2 size="sm" className="text-gray-700 pt-4">
-              {formatChapterTitle(chapter)}
-            </Typography.H2>
+      {book.chapters.map((chapter) => (
+        <>
+          <Typography.H2 size="sm" className="text-gray-700 pt-6">
+            {formatChapterTitle(chapter)}
+          </Typography.H2>
 
-            <div className="text-gray-700 mb-2">{videoCountLabel(chapter)}</div>
+          <div className="text-gray-700 mb-2">{videoCountLabel(chapter)}</div>
 
-            {chapter.sections.map((section) => (
-              <Typography.H3
-                size="xs"
-                className="text-gray-800 py-2"
-                weight="regular"
-              >
-                {formatSectionTitle(chapter, section)}
-              </Typography.H3>
-            ))}
-          </>
-        ))}
-      </div>
+          {chapter.sections.map((section) => (
+            <Typography.H3
+              size="xs"
+              className="text-gray-800 py-2"
+              weight="regular"
+            >
+              {formatSectionTitle(chapter, section)}
+            </Typography.H3>
+          ))}
+        </>
+      ))}
     </div>
   );
 };
