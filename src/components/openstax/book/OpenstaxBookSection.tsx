@@ -19,7 +19,7 @@ export const OpenstaxBookSection = ({ section, chapterNumber }: Props) => {
 
   return (
     <div className={s.section}>
-      <Typography.H3 size="xs" className="text-gray-800 !font-normal mb-4">
+      <Typography.H3 size="xs" className="text-gray-800 mb-4" weight="regular">
         {`${chapterNumber}.${section.number} ${section.title} `}
         <span className="text-gray-700">{numberOfVideosLabel}</span>
       </Typography.H3>

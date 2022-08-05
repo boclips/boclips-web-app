@@ -47,7 +47,8 @@ export const OpenstaxBookNavigationPanel = ({ book }: Props) => {
             {chapter.sections.map((section) => (
               <Typography.H3
                 size="xs"
-                className="text-gray-800 !font-normal py-2"
+                className="text-gray-800 py-2"
+                weight="regular"
               >
                 {formatSectionTitle(chapter, section)}
               </Typography.H3>
