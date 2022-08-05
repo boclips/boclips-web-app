@@ -22,7 +22,7 @@ export const Menu = ({ subjects, currentSubject, onClick }: Props) => {
               name={subject}
               className={c(
                 s.subject,
-                `inline-block relative p-4 text-base shrink-0 hover:text-blue-800 hover:font-medium`,
+                `inline-block relative p-4 text-base shrink-0 hover:text-blue-800 hover:font-medium focus:text-blue-800 focus:font-medium`,
                 {
                   [`${s.active} text-blue-800 font-medium`]:
                     currentSubject === subject,
