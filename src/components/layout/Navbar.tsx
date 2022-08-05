@@ -95,7 +95,7 @@ const NavbarResponsive = (): ReactElement => {
           </div>
           <div className={s.buttons}>
             <FeatureGate feature="BO_WEB_APP_DEV">
-              <Link to="/explore">Explore</Link>
+              <Link to="/explore/openstax">Explore</Link>
             </FeatureGate>
             <Link to="/library">Your library</Link>
             <Link to="/orders">Your orders</Link>

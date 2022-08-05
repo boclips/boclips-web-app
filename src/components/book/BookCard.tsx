@@ -14,7 +14,7 @@ export const BookCard = ({ book }: Props) => {
 
   const onCardClick = (bookId) =>
     history.push({
-      pathname: `/openstax/${bookId}`,
+      pathname: `/explore/openstax/${bookId}`,
     });
   return (
     <button

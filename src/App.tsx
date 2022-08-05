@@ -206,7 +206,7 @@ const App = ({
                     />
                     <Route
                       exact
-                      path="/explore"
+                      path="/explore/openstax"
                       render={() => (
                         <>
                           <Helmet title="Explore" />
@@ -216,7 +216,7 @@ const App = ({
                     />
                     <Route
                       exact
-                      path="/openstax/:id"
+                      path="/explore/openstax/:id"
                       render={() => (
                         <>
                           <Helmet title="Openstax" />

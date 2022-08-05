@@ -8,18 +8,18 @@ const ExploreButton = () => {
   const history = useHistory();
 
   const location = useLocation();
-  const isOnLibraryPage = location.pathname.includes('explore');
+  const isOnExplorePage = location.pathname.includes('explore/openstax');
 
   const onClick = () => {
     history.push({
-      pathname: '/explore',
+      pathname: '/explore/openstax',
     });
   };
 
   return (
     <div
       className={c(s.navButton, {
-        [s.active]: isOnLibraryPage,
+        [s.active]: isOnExplorePage,
       })}
     >
       <button
