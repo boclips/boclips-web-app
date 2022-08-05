@@ -43,7 +43,7 @@ describe('OpenstaxBookView', () => {
     client.openstax.setOpenstaxBooks([book]);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/openstax/ducklings']}>
+      <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -116,7 +116,7 @@ describe('OpenstaxBookView', () => {
     client.openstax.setOpenstaxBooks([book]);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/openstax/ducklings']}>
+      <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );

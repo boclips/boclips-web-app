@@ -11,7 +11,7 @@ import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 describe(`Explore view`, () => {
   const renderExploreView = (client: BoclipsClient) =>
     render(
-      <MemoryRouter initialEntries={['/explore']}>
+      <MemoryRouter initialEntries={['/explore/openstax']}>
         <App
           apiClient={client}
           boclipsSecurity={stubBoclipsSecurity}
