@@ -40,7 +40,7 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
   return (
     <div className={c('col-start-2 col-end-8', isNotDesktop ? s.overlay : '')}>
       <div className={c('flex', s.tocHeader)}>
-        <Typography.H1 size="sm" className="text-gray-900">
+        <Typography.H1 size="sm" className="text-gray-900 grow">
           {book.title}
         </Typography.H1>
         {isNotDesktop && (

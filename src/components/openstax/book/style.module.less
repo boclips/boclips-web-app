@@ -33,11 +33,13 @@
   left: 0;
   z-index: 51;
   background: @white;
-  padding: 1rem;
+  padding: 4rem 6rem;
+  overflow-y: scroll;
 }
 
 .tocHeader {
   --bo-ui-button-outline-background-color-hover: none;
+  @apply flex items-center justify-center;
 
   @media screen and (min-width: @screen-lg) {
     @apply -mt-6 pt-6 border-r border-gray-400 border-b pb-4;

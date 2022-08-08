@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render, RenderResult } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
@@ -10,6 +10,7 @@ import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
 
 describe('OpenstaxBookView', () => {
   it('renders basic book details', async () => {
+    window.resizeTo(1500, 1024);
     const client = new FakeBoclipsClient();
 
     const book: Book = BookFactory.sample({
@@ -131,5 +132,65 @@ describe('OpenstaxBookView', () => {
     expect(playableThumbnail).toBeVisible();
 
     expect(wrapper.getByText('Farmer Joe')).toBeVisible();
+  });
+
+  describe('mobile/tablet view', () => {
+    beforeEach(() => {
+      window.resizeTo(750, 1024);
+    });
+
+    it('will show the navigation view when clicking course content button', async () => {
+      const book: Book = BookFactory.sample({
+        id: 'ducklings',
+        title: 'All about ducks',
+      });
+
+      const wrapper = renderBookView(book);
+
+      const courseContentButton = await wrapper.findByRole('button', {
+        name: 'Course content',
+      });
+
+      expect(getTableOfContent(book, wrapper)).toBeNull();
+
+      fireEvent.click(courseContentButton);
+
+      expect(getTableOfContent(book, wrapper)).toBeVisible();
+    });
+
+    it('will close the navigation view, if close is clicked', async () => {
+      const book: Book = BookFactory.sample({
+        id: 'ducklings',
+        title: 'All about ducks',
+      });
+
+      const wrapper = renderBookView(book);
+
+      const courseContentButton = await wrapper.findByRole('button', {
+        name: 'Course content',
+      });
+
+      fireEvent.click(courseContentButton);
+
+      const closeTableOfContent = wrapper.getByRole('button', {
+        name: 'Close',
+      });
+
+      fireEvent.click(closeTableOfContent);
+      expect(getTableOfContent(book, wrapper)).toBeNull();
+    });
+
+    const renderBookView = (book: Book): RenderResult => {
+      const client = new FakeBoclipsClient();
+      client.openstax.setOpenstaxBooks([book]);
+      return render(
+        <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
+          <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+        </MemoryRouter>,
+      );
+    };
+
+    const getTableOfContent = (book: Book, wrapper: RenderResult) =>
+      wrapper.queryByLabelText(`Table of contents of ${book.title}`);
   });
 });
