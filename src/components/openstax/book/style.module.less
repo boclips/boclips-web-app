@@ -20,17 +20,21 @@
 }
 
 .navChapTitle {
-  font-size: 16px;
+  font-size: 1rem;
   color: @gray-700;
 }
 
 .navigationPanel {
-  padding-right: 1rem;
+  margin-right: 1rem;
   border-right: 1px solid @gray-400;
 
   .bookTitle {
-    padding-bottom: 24px;
-    grid-column-end: -1;
-    border-bottom: 1px solid @gray-400;
+    &::after {
+      margin-top: 1.5rem;
+      grid-column-end: -1;
+      display: block;
+      content: '';
+      border-bottom: 1px solid @gray-400;
+    }
   }
 }

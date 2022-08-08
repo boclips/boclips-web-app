@@ -36,7 +36,6 @@ export const OpenstaxBookNavigationPanel = ({ book }: Props) => {
       <Typography.H1 size="sm" className={c('text-gray-900', s.bookTitle)}>
         {book.title}
       </Typography.H1>
-
       {book.chapters.map((chapter) => (
         <>
           <Typography.H2 size="sm" className="text-gray-700 pt-6">
