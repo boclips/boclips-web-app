@@ -24,16 +24,9 @@
   color: @gray-700;
 }
 
-.navigationPanel {
-  padding-right: 1.5rem;
-
-  .bookTitle {
-    &::after {
-      margin-top: 1.5rem;
-      margin-right: -1.5rem;
-      display: block;
-      content: '';
-      border-bottom: 1px solid @gray-400;
-    }
+.bookTitle {
+  @apply -mt-6 pt-6 border-r border-gray-400 text-gray-900;
+  &::after {
+    @apply mt-6 border-b border-gray-400 block content-[''];
   }
 }
