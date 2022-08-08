@@ -32,29 +32,32 @@ export const OpenstaxBookNavigationPanel = ({ book }: Props) => {
   };
 
   return (
-    <div className={c('col-start-2 col-end-8', s.navigationPanel)}>
-      <Typography.H1 size="sm" className={c('text-gray-900', s.bookTitle)}>
-        {book.title}
-      </Typography.H1>
-      {book.chapters.map((chapter) => (
-        <>
-          <Typography.H2 size="sm" className="text-gray-700 pt-6">
-            {formatChapterTitle(chapter)}
-          </Typography.H2>
+    <div className="col-start-2 col-end-8 flex">
+      <div className={s.navigationPanel}>
+        <Typography.H1 size="sm" className={c('text-gray-900', s.bookTitle)}>
+          {book.title}
+        </Typography.H1>
+        {book.chapters.map((chapter) => (
+          <>
+            <Typography.H2 size="sm" className="text-gray-700 pt-6">
+              {formatChapterTitle(chapter)}
+            </Typography.H2>
 
-          <div className="text-gray-700 mb-2">{videoCountLabel(chapter)}</div>
+            <div className="text-gray-700 mb-2">{videoCountLabel(chapter)}</div>
 
-          {chapter.sections.map((section) => (
-            <Typography.H3
-              size="xs"
-              className="text-gray-800 py-2"
-              weight="regular"
-            >
-              {formatSectionTitle(chapter, section)}
-            </Typography.H3>
-          ))}
-        </>
-      ))}
+            {chapter.sections.map((section) => (
+              <Typography.H3
+                size="xs"
+                className="text-gray-800 py-2"
+                weight="regular"
+              >
+                {formatSectionTitle(chapter, section)}
+              </Typography.H3>
+            ))}
+          </>
+        ))}
+      </div>
+      <div className="-mt-6 border-r border-gray-400" />
     </div>
   );
 };
