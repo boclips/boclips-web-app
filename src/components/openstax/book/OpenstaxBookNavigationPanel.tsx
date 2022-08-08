@@ -39,16 +39,17 @@ export const OpenstaxBookNavigationPanel = ({ book }: Props) => {
         </Typography.H1>
         {book.chapters.map((chapter) => (
           <>
-            <Typography.H2 size="sm" className="text-gray-700 pt-6">
+            <Typography.H2 className="text-gray-700 pt-6 !text-base mb-0.5">
               {formatChapterTitle(chapter)}
             </Typography.H2>
 
-            <div className="text-gray-700 mb-2">{videoCountLabel(chapter)}</div>
+            <div className="text-gray-700 text-sm	mb-2">
+              {videoCountLabel(chapter)}
+            </div>
 
             {chapter.sections.map((section) => (
               <Typography.H3
-                size="xs"
-                className="text-gray-800 py-2"
+                className="text-gray-700 !text-sm py-2"
                 weight="regular"
               >
                 {formatSectionTitle(chapter, section)}
