@@ -10,12 +10,15 @@ interface Props {
   book: Book;
 }
 
-export const OpenstaxBookDetails = ({ book }: Props) => {
+export const OpenstaxBookContent = ({ book }: Props) => {
   const formatChapterTitle = (chapter: Chapter) =>
     `Chapter ${chapter.number}: ${chapter.title}`;
   return (
-    <main tabIndex={-1} className="col-start-8 col-end-26">
-      <Typography.H1 size="md">{book.title}</Typography.H1>
+    <main
+      aria-label={`Content for ${book.title}`}
+      tabIndex={-1}
+      className="col-start-8 col-end-26"
+    >
       {book.chapters.map((chapter) => (
         <>
           <Typography.H2 size="sm" className="text-gray-700">

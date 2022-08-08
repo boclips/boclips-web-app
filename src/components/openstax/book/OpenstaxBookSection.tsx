@@ -11,10 +11,10 @@ interface Props {
   chapterNumber: number;
 }
 export const OpenstaxBookSection = ({ section, chapterNumber }: Props) => {
-  const hasMappedVideos = section.videos.length > 0;
+  const hasMappedVideos = section.videos?.length > 0;
 
-  const numberOfVideosLabel = `(${section.videos.length} ${
-    section.videos.length === 1 ? 'video' : 'videos'
+  const numberOfVideosLabel = `(${section.videos?.length} ${
+    section.videos?.length === 1 ? 'video' : 'videos'
   })`;
 
   return (

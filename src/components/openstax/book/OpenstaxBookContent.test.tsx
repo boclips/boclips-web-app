@@ -2,10 +2,10 @@ import { Book } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
 import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
 import React from 'react';
 import { renderWithClients } from 'src/testSupport/render';
-import { OpenstaxBookDetails } from 'src/components/openstax/book/OpenstaxBookDetails';
+import { OpenstaxBookContent } from 'src/components/openstax/book/OpenstaxBookContent';
 
-describe('OpenstaxBookDetails', () => {
-  it('shows basic book details', () => {
+describe('OpenstaxBookContent', () => {
+  it('shows basic book content', () => {
     const book: Book = BookFactory.sample({
       id: 'ducklings',
       title: 'Everything to know about ducks',
@@ -34,16 +34,10 @@ describe('OpenstaxBookDetails', () => {
       ],
     });
 
-    const wrapper = renderWithClients(<OpenstaxBookDetails book={book} />);
+    const wrapper = renderWithClients(<OpenstaxBookContent book={book} />);
 
-    const title = wrapper.getByRole('heading', {
-      level: 1,
-      name: 'Everything to know about ducks',
-    });
     const chapter = wrapper.getByRole('heading', { level: 2 });
     const sections = wrapper.getAllByRole('heading', { level: 3 });
-
-    expect(title).toBeVisible();
 
     expect(chapter).toBeVisible();
     expect(chapter).toHaveTextContent('Chapter 1: Introduction');

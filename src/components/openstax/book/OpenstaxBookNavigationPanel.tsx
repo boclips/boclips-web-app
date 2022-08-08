@@ -32,8 +32,11 @@ export const OpenstaxBookNavigationPanel = ({ book }: Props) => {
   };
 
   return (
-    <div className="col-start-2 col-end-8 flex">
-      <div className={s.navigationPanel}>
+    <nav
+      aria-label={`Table of contents of ${book.title}`}
+      className={c('col-start-2 col-end-8 flex', s.navigationPanel)}
+    >
+      <div>
         <Typography.H1 size="sm" className={c('text-gray-900', s.bookTitle)}>
           {book.title}
         </Typography.H1>
@@ -58,7 +61,6 @@ export const OpenstaxBookNavigationPanel = ({ book }: Props) => {
           </>
         ))}
       </div>
-      <div className="-mt-6 border-r border-gray-400" />
-    </div>
+    </nav>
   );
 };

@@ -5,20 +5,22 @@ import Footer from 'src/components/layout/Footer';
 import { useParams } from 'react-router';
 import { PathWithId } from 'src/components/common/PathWithId';
 import { useGetBook } from 'src/hooks/api/openstaxQuery';
-import { OpenstaxBookDetails } from 'src/components/openstax/book/OpenstaxBookDetails';
+import { OpenstaxBookContent } from 'src/components/openstax/book/OpenstaxBookContent';
 import { OpenstaxBookNavigationPanel } from 'src/components/openstax/book/OpenstaxBookNavigationPanel';
+import { OpenstaxBookHeader } from 'src/components/openstax/book/OpenstaxBookHeader';
 
 const OpenstaxBookView = () => {
   const { id: bookId } = useParams<PathWithId>();
   const { data: book } = useGetBook(bookId);
 
   return (
-    <Layout rowsSetup="grid-rows-default-view">
+    <Layout rowsSetup="grid-rows-default-view-with-title">
       <Navbar />
       {book && (
         <>
           <OpenstaxBookNavigationPanel book={book} />
-          <OpenstaxBookDetails book={book} />
+          <OpenstaxBookHeader bookTitle={book.title} />
+          <OpenstaxBookContent book={book} />
         </>
       )}
       <Footer />
