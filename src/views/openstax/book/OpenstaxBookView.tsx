@@ -18,8 +18,11 @@ const OpenstaxBookView = () => {
       <Navbar />
       {book && (
         <>
-          <OpenstaxBookNavigationPanel book={book} />
-          <OpenstaxBookHeader bookTitle={book.title} openCourseContent={() => {}} />
+          <OpenstaxBookNavigationPanel book={book} onClose={() => {}} />
+          <OpenstaxBookHeader
+            bookTitle={book.title}
+            openCourseContent={() => {}}
+          />
           <OpenstaxBookContent book={book} />
         </>
       )}

@@ -8,6 +8,7 @@ import {
 } from 'boclips-api-client/dist/test-support/BookFactory';
 import { Book } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
+import { fireEvent } from '@testing-library/react';
 
 describe('OpenstaxBookNavigationPanel', () => {
   it('renders book title with chapters and sections', () => {
@@ -26,7 +27,9 @@ describe('OpenstaxBookNavigationPanel', () => {
         }),
       ],
     });
-    const wrapper = render(<OpenstaxBookNavigationPanel book={book} />);
+    const wrapper = render(
+      <OpenstaxBookNavigationPanel book={book} onClose={jest.fn} />,
+    );
 
     const bookTitle = wrapper.getByRole('heading', { level: 1 });
     expect(bookTitle).toBeVisible();
@@ -38,5 +41,33 @@ describe('OpenstaxBookNavigationPanel', () => {
 
     const videoLabel = wrapper.getByText('3 videos');
     expect(videoLabel).toBeVisible();
+  });
+
+  it('does not render close button in desktop view', () => {
+    window.resizeTo(1500, 1024);
+    const wrapper = render(
+      <OpenstaxBookNavigationPanel
+        book={BookFactory.sample()}
+        onClose={jest.fn}
+      />,
+    );
+
+    expect(wrapper.queryByRole('button', { name: 'Close' })).toBeNull();
+  });
+
+  it('renders close button in non-desktop view, which calls callback', () => {
+    window.resizeTo(700, 1024);
+    const spy = jest.fn();
+    const wrapper = render(
+      <OpenstaxBookNavigationPanel book={BookFactory.sample()} onClose={spy} />,
+    );
+
+    const closeButton = wrapper.getByRole('button', { name: 'Close' });
+
+    expect(closeButton).toBeVisible();
+
+    fireEvent.click(closeButton);
+
+    expect(spy).toHaveBeenCalled();
   });
 });

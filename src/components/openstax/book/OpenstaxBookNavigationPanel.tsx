@@ -6,12 +6,19 @@ import {
   Section,
 } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
 import s from 'src/components/openstax/book/style.module.less';
+import Button from '@boclips-ui/button';
+import CloseButtonIcon from 'src/resources/icons/cross-icon.svg';
+import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import c from 'classnames';
 
 interface Props {
   book: Book;
+  onClose: () => void;
 }
 
-export const OpenstaxBookNavigationPanel = ({ book }: Props) => {
+export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
+  const breakpoint = useMediaBreakPoint();
+  const isNotDesktop = breakpoint.type !== 'desktop';
   const formatChapterTitle = (chapter: Chapter) =>
     `Chapter ${chapter.number}: ${chapter.title}`;
 
@@ -31,12 +38,22 @@ export const OpenstaxBookNavigationPanel = ({ book }: Props) => {
   };
 
   return (
-    <div className="col-start-2 col-end-8">
-      <Typography.H1 size="sm" className={s.bookTitle}>
-        {book.title}
-      </Typography.H1>
+    <div className={c('col-start-2 col-end-8', isNotDesktop ? s.overlay : '')}>
+      <div className={c('flex', s.tocHeader)}>
+        <Typography.H1 size="sm" className="text-gray-900">
+          {book.title}
+        </Typography.H1>
+        {isNotDesktop && (
+          <Button
+            onClick={onClose}
+            text="Close"
+            type="label"
+            icon={<CloseButtonIcon />}
+          />
+        )}
+      </div>
       <nav
-        className="border-r border-gray-400 pr-6"
+        className={s.tocContent}
         aria-label={`Table of contents of ${book.title}`}
       >
         <div className={s.navigationPanel}>

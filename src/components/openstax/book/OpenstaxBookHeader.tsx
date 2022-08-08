@@ -6,12 +6,10 @@ import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import c from 'classnames';
 import s from './style.module.less';
 
-
 interface Props {
   bookTitle: string;
   openCourseContent: () => void;
 }
-
 
 export const OpenstaxBookHeader = ({ bookTitle, openCourseContent }: Props) => {
   const breakpoint = useMediaBreakPoint();

@@ -1,4 +1,5 @@
 @import '@boclips-ui/styles/src/colors';
+@import '~@boclips-ui/styles/src/breakpoints';
 
 .emptyCard {
   min-height: 245px;
@@ -24,12 +25,31 @@
   color: @gray-700;
 }
 
-.bookTitle {
-  @apply -mt-6 pt-6 border-r border-gray-400 text-gray-900;
-  &::after {
-    @apply mt-6 border-b border-gray-400 block content-[''];
+.overlay {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 51;
+  background: @white;
+  padding: 1rem;
+}
+
+.tocHeader {
+  --bo-ui-button-outline-background-color-hover: none;
+
+  @media screen and (min-width: @screen-lg) {
+    @apply -mt-6 pt-6 border-r border-gray-400 border-b pb-4;
   }
 }
+
+.tocContent {
+  @media screen and (min-width: @screen-lg) {
+    @apply border-r border-gray-400 pr-6;
+  }
+}
+
 .bookHeader {
   --bo-ui-button-outline-svg-fill: none;
   --bo-ui-button-svg-height: 24px;
