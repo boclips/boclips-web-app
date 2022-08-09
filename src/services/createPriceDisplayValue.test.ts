@@ -52,4 +52,14 @@ describe('get price display value', () => {
       );
     });
   });
+  describe(`error state`, () => {
+    it(`falls back to US formatting when locale is unknown`, () => {
+      expect(createPriceDisplayValue(300.5, 'USD', 'zh-TW')).toEqual('$300.50');
+    });
+    it(`throws an error if currency is unknown`, () => {
+      expect(() => {
+        createPriceDisplayValue(300.5, '!G%', 'de-DE');
+      }).toThrow('Currency !G% not found');
+    });
+  });
 });

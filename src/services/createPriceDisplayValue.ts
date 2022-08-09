@@ -9,11 +9,17 @@ export const createPriceDisplayValue = (
     return null;
   }
   const isDecimal = amount % 1 !== 0;
-
-  return currencyFormat(
-    amount,
-    language || 'en-US',
-    currency,
-    isDecimal ? 2 : 0,
-  );
+  try {
+    return currencyFormat(
+      amount,
+      language || 'en-US',
+      currency,
+      isDecimal ? 2 : 0,
+    );
+  } catch (error) {
+    if (error.indexOf('Currency') > 0) {
+      throw error;
+    }
+    return currencyFormat(amount, 'en-US', currency, isDecimal ? 2 : 0);
+  }
 };
