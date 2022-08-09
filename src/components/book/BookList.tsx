@@ -1,9 +1,9 @@
-import { Book } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
 import React from 'react';
+import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { BookCard } from './BookCard';
 
 interface Props {
-  books: Book[];
+  books: OpenstaxBook[];
 }
 export const BookList = ({ books }: Props) => {
   return (

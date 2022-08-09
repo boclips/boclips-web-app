@@ -1,13 +1,13 @@
-import { Book } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
 import ArrowIconSVG from 'src/resources/icons/arrow-no-size.svg';
 import React from 'react';
 import { Typography } from '@boclips-ui/typography';
 import { useHistory } from 'react-router-dom';
 import c from 'classnames';
+import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import s from './bookCard.module.less';
 
 interface Props {
-  book: Book;
+  book: OpenstaxBook;
 }
 export const BookCard = ({ book }: Props) => {
   const history = useHistory();

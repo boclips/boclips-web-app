@@ -1,12 +1,12 @@
 import { Typography } from '@boclips-ui/typography';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useGetBooksQuery } from 'src/hooks/api/bookQuery';
 import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import { Layout } from 'src/components/layout/Layout';
 import { BookList } from 'src/components/book/BookList';
 import { Menu } from 'src/components/openstax/menu/Menu';
 import c from 'classnames';
+import { useGetBooksQuery } from 'src/hooks/api/openstaxQuery';
 import s from './style.module.less';
 
 const ExploreView = () => {
