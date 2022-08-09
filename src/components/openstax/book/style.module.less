@@ -54,13 +54,16 @@
   }
 
   @media screen and (min-width: @screen-lg) {
-    @apply -mt-6 pt-6 border-r border-gray-400 border-b border-solid pb-4;
+    @apply -mt-6 pt-6 border-r border-gray-400 border-b pb-4;
+    border-right-style: solid;
+    border-bottom-style: solid;
   }
 }
 
 .tocContent {
   @media screen and (min-width: @screen-lg) {
-    @apply border-r border-gray-400 border-solid pr-6;
+    @apply border-r border-gray-400 pr-6;
+    border-right-style: solid;
   }
 }
 
