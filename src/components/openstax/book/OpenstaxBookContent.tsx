@@ -1,22 +1,17 @@
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
-import {
-  Book,
-  Chapter,
-} from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
 import { OpenstaxBookSection } from 'src/components/openstax/book/OpenstaxBookSection';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import { OpenstaxBook } from 'src/types/OpenstaxBook';
 
 interface Props {
-  book: Book;
+  book: OpenstaxBook;
 }
 
 export const OpenstaxBookContent = ({ book }: Props) => {
   const breakpoint = useMediaBreakPoint();
   const isNotDesktop = breakpoint.type !== 'desktop';
 
-  const formatChapterTitle = (chapter: Chapter) =>
-    `Chapter ${chapter.number}: ${chapter.title}`;
   return (
     <main
       aria-label={`Content for ${book.title}`}
@@ -28,13 +23,10 @@ export const OpenstaxBookContent = ({ book }: Props) => {
       {book.chapters.map((chapter) => (
         <>
           <Typography.H2 size="sm" className="text-gray-700">
-            {formatChapterTitle(chapter)}
+            {chapter.displayLabel}
           </Typography.H2>
           {chapter.sections.map((section) => (
-            <OpenstaxBookSection
-              section={section}
-              chapterNumber={chapter.number}
-            />
+            <OpenstaxBookSection section={section} />
           ))}
         </>
       ))}

@@ -2,17 +2,17 @@ import { render } from 'src/testSupport/render';
 import React from 'react';
 import { OpenstaxBookNavigationPanel } from 'src/components/openstax/book/OpenstaxBookNavigationPanel';
 import {
-  BookFactory,
   ChapterFactory,
   SectionFactory,
 } from 'boclips-api-client/dist/test-support/BookFactory';
-import { Book } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { fireEvent } from '@testing-library/react';
+import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
+import { OpenstaxBook } from 'src/types/OpenstaxBook';
 
 describe('OpenstaxBookNavigationPanel', () => {
   it('renders book title with chapters and sections', () => {
-    const book: Book = BookFactory.sample({
+    const book: OpenstaxBook = OpenstaxBookFactory.sample({
       title: 'should show book title',
       chapters: [
         ChapterFactory.sample({
@@ -47,7 +47,7 @@ describe('OpenstaxBookNavigationPanel', () => {
     window.resizeTo(1500, 1024);
     const wrapper = render(
       <OpenstaxBookNavigationPanel
-        book={BookFactory.sample()}
+        book={OpenstaxBookFactory.sample()}
         onClose={jest.fn}
       />,
     );
@@ -61,7 +61,10 @@ describe('OpenstaxBookNavigationPanel', () => {
     window.resizeTo(1000, 1024);
     const spy = jest.fn();
     const wrapper = render(
-      <OpenstaxBookNavigationPanel book={BookFactory.sample()} onClose={spy} />,
+      <OpenstaxBookNavigationPanel
+        book={OpenstaxBookFactory.sample()}
+        onClose={spy}
+      />,
     );
 
     const closeButton = wrapper.getByRole('button', {
@@ -79,7 +82,10 @@ describe('OpenstaxBookNavigationPanel', () => {
     window.resizeTo(320, 1024);
     const spy = jest.fn();
     const wrapper = render(
-      <OpenstaxBookNavigationPanel book={BookFactory.sample()} onClose={spy} />,
+      <OpenstaxBookNavigationPanel
+        book={OpenstaxBookFactory.sample()}
+        onClose={spy}
+      />,
     );
 
     const closeButton = wrapper.getByLabelText('Close the Table of contents');

@@ -1,12 +1,12 @@
-import { Book } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
-import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
 import React from 'react';
 import { renderWithClients } from 'src/testSupport/render';
 import { OpenstaxBookContent } from 'src/components/openstax/book/OpenstaxBookContent';
+import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
+import { OpenstaxBook } from 'src/types/OpenstaxBook';
 
 describe('OpenstaxBookContent', () => {
   it('shows basic book content', () => {
-    const book: Book = BookFactory.sample({
+    const book: OpenstaxBook = OpenstaxBookFactory.sample({
       id: 'ducklings',
       title: 'Everything to know about ducks',
       subject: 'Essentials',

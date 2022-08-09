@@ -1,10 +1,10 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { Section } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
-import { SectionFactory } from 'boclips-api-client/dist/test-support/BookFactory';
 import { OpenstaxBookSection } from 'src/components/openstax/book/OpenstaxBookSection';
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/types';
 import { renderWithClients } from 'src/testSupport/render';
+import { OpenstaxSectionFactory } from 'src/testSupport/OpenstaxSectionFactory';
+import { OpenstaxSection } from 'src/types/OpenstaxBook';
 
 describe('OpenstaxBookSection', () => {
   it.each([
@@ -19,7 +19,7 @@ describe('OpenstaxBookSection', () => {
         videos.push(VideoFactory.sample({ id: `video-id-${i}` }));
       }
 
-      const section: Section = SectionFactory.sample({
+      const section: OpenstaxSection = OpenstaxSectionFactory.sample(2, {
         title: 'Life at the coop',
         number: 1,
         videos,
@@ -27,7 +27,7 @@ describe('OpenstaxBookSection', () => {
       });
 
       const wrapper = renderWithClients(
-        <OpenstaxBookSection section={section} chapterNumber={2} />,
+        <OpenstaxBookSection section={section} />,
       );
 
       const sectionTitle = wrapper.getByRole('heading', { level: 3 });
@@ -40,7 +40,7 @@ describe('OpenstaxBookSection', () => {
 
   it('renders video cards when they are mapped to the section', () => {
     const videoTitle = 'Ducklings playing with hay';
-    const section: Section = SectionFactory.sample({
+    const section: OpenstaxSection = OpenstaxSectionFactory.sample(2, {
       videos: [
         VideoFactory.sample({
           title: videoTitle,
@@ -50,7 +50,7 @@ describe('OpenstaxBookSection', () => {
     });
 
     const wrapper = renderWithClients(
-      <OpenstaxBookSection section={section} chapterNumber={2} />,
+      <OpenstaxBookSection section={section} />,
     );
 
     const playableThumbnail = wrapper.getByRole('button', {
@@ -62,12 +62,12 @@ describe('OpenstaxBookSection', () => {
   });
 
   it('renders messaging when no videos are mapped to the section', () => {
-    const section: Section = SectionFactory.sample({
+    const section: OpenstaxSection = OpenstaxSectionFactory.sample(2, {
       videos: [],
     });
 
     const wrapper = renderWithClients(
-      <OpenstaxBookSection section={section} chapterNumber={2} />,
+      <OpenstaxBookSection section={section} />,
     );
 
     expect(

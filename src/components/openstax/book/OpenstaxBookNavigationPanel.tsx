@@ -1,18 +1,14 @@
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
-import {
-  Book,
-  Chapter,
-  Section,
-} from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
 import s from 'src/components/openstax/book/style.module.less';
 import Button from '@boclips-ui/button';
 import CloseButtonIcon from 'src/resources/icons/cross-icon.svg';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import c from 'classnames';
+import { OpenstaxBook, OpenstaxChapter } from 'src/types/OpenstaxBook';
 
 interface Props {
-  book: Book;
+  book: OpenstaxBook;
   onClose: () => void;
 }
 
@@ -20,21 +16,10 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
   const breakpoint = useMediaBreakPoint();
   const isNotDesktop = breakpoint.type !== 'desktop';
   const isMobile = breakpoint.type === 'mobile';
-  const formatChapterTitle = (chapter: Chapter) =>
-    `Chapter ${chapter.number}: ${chapter.title}`;
 
-  const formatSectionTitle = (chapter: Chapter, section: Section) =>
-    `${chapter.number}.${section.number} ${section.title}`;
-
-  const videoCountLabel = (chapter: Chapter) => {
-    const chapterVideoCount = chapter.videos?.length;
-    const sectionVideoCount = chapter.sections
-      .map((section) => section.videos?.length)
-      .reduce((lengthOne, lengthTwo) => lengthOne + lengthTwo, 0);
-
-    const videoCount = chapterVideoCount + sectionVideoCount;
+  const videoCountLabel = (chapter: OpenstaxChapter) => {
+    const videoCount = chapter.videoCount;
     const label = videoCount === 1 ? `video` : `videos`;
-
     return `${videoCount} ${label}`;
   };
 
@@ -64,7 +49,7 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
           {book.chapters.map((chapter) => (
             <>
               <Typography.H2 className="text-gray-700 pt-6 !text-base mb-0.5">
-                {formatChapterTitle(chapter)}
+                {chapter.displayLabel}
               </Typography.H2>
 
               <div className="text-gray-700 text-sm	mb-2">
@@ -76,7 +61,7 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
                   className="text-gray-700 !text-sm py-2"
                   weight="regular"
                 >
-                  {formatSectionTitle(chapter, section)}
+                  {section.displayLabel}
                 </Typography.H3>
               ))}
             </>
