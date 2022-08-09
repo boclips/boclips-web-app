@@ -32,17 +32,21 @@ describe('OpenstaxBook converter', () => {
         ChapterFactory.sample({
           sections: [
             SectionFactory.sample({
-              videos: [VideoFactory.sample({}), VideoFactory.sample({})],
+              videos: [],
+              videoIds: ['1', '2'],
             }),
             SectionFactory.sample({
-              videos: [VideoFactory.sample({}), VideoFactory.sample({})],
+              videos: [],
+              videoIds: ['3', '4'],
             }),
           ],
-          videos: [VideoFactory.sample({})],
+          videos: [],
+          videoIds: ['7'],
         }),
         ChapterFactory.sample({
           sections: [],
-          videos: [VideoFactory.sample({})],
+          videos: [],
+          videoIds: ['8'],
         }),
       ],
     });
@@ -63,12 +67,14 @@ describe('OpenstaxBook converter', () => {
                 VideoFactory.sample({ id: '3' }),
                 VideoFactory.sample({ id: '4' }),
               ],
+              videoIds: ['3', '4'],
             }),
             SectionFactory.sample({
               videos: [
                 VideoFactory.sample({ id: '5' }),
                 VideoFactory.sample({ id: '6' }),
               ],
+              videoIds: ['5', '6'],
             }),
           ],
           videos: [
@@ -98,9 +104,11 @@ describe('OpenstaxBook converter', () => {
         sections: [
           SectionFactory.sample({
             videos: undefined,
+            videoIds: [],
           }),
         ],
         videos: undefined,
+        videoIds: [],
       });
 
       const openstaxBook = convertApiBookToOpenstaxBook(
@@ -115,6 +123,7 @@ describe('OpenstaxBook converter', () => {
         sections: [
           SectionFactory.sample({
             videos: [VideoFactory.sample({})],
+            videoIds: ['1'],
           }),
         ],
         videos: undefined,
@@ -135,6 +144,7 @@ describe('OpenstaxBook converter', () => {
           }),
         ],
         videos: [VideoFactory.sample({})],
+        videoIds: ['1'],
       });
 
       const openstaxBook = convertApiBookToOpenstaxBook(
@@ -149,12 +159,15 @@ describe('OpenstaxBook converter', () => {
         sections: [
           SectionFactory.sample({
             videos: undefined,
+            videoIds: [],
           }),
           SectionFactory.sample({
             videos: [VideoFactory.sample({})],
+            videoIds: ['1'],
           }),
         ],
         videos: [VideoFactory.sample({})],
+        videoIds: ['1'],
       });
 
       const openstaxBook = convertApiBookToOpenstaxBook(

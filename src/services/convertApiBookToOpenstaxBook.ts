@@ -44,10 +44,10 @@ export const convertApiBookSectionToOpenstaxSection = (
 };
 
 const convertChapter = (apiChapter: Chapter): OpenstaxChapter => {
-  const videoCountInChapter = apiChapter.videos?.length || 0;
+  const videoCountInChapter = apiChapter.videoIds?.length || 0;
   let videoCountInSections = 0;
   apiChapter.sections.forEach((section) => {
-    videoCountInSections += section.videos?.length || 0;
+    videoCountInSections += section.videoIds?.length || 0;
   });
 
   return {

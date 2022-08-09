@@ -5,7 +5,6 @@ import {
   ChapterFactory,
   SectionFactory,
 } from 'boclips-api-client/dist/test-support/BookFactory';
-import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { fireEvent } from '@testing-library/react';
 import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
@@ -18,10 +17,10 @@ describe('OpenstaxBookNavigationPanel', () => {
         ChapterFactory.sample({
           number: 1,
           title: 'should show chapter 1',
-          videos: [VideoFactory.sample({})],
+          videoIds: ['1'],
           sections: [
             SectionFactory.sample({
-              videos: [VideoFactory.sample({}), VideoFactory.sample({})],
+              videoIds: ['1', '2'],
             }),
           ],
         }),

@@ -3,7 +3,6 @@ import {
   SectionFactory,
 } from 'boclips-api-client/dist/test-support/BookFactory';
 import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
-import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { BookCard } from 'src/components/book/BookCard';
 import { render } from '@testing-library/react';
 import React from 'react';
@@ -16,13 +15,13 @@ describe('BookCard', () => {
         ChapterFactory.sample({
           sections: [
             SectionFactory.sample({
-              videos: [VideoFactory.sample({})],
+              videoIds: ['1'],
             }),
           ],
-          videos: [VideoFactory.sample({})],
+          videoIds: ['2'],
         }),
         ChapterFactory.sample({
-          videos: [VideoFactory.sample({})],
+          videoIds: ['3'],
         }),
       ],
     });
