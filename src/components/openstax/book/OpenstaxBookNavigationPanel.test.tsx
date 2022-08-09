@@ -52,7 +52,9 @@ describe('OpenstaxBookNavigationPanel', () => {
       />,
     );
 
-    expect(wrapper.queryByRole('button', { name: 'Close' })).toBeNull();
+    expect(
+      wrapper.queryByRole('button', { name: 'Close the Table of contents' }),
+    ).toBeNull();
   });
 
   it('renders close button with label in tablet view, which calls callback', () => {
@@ -62,7 +64,9 @@ describe('OpenstaxBookNavigationPanel', () => {
       <OpenstaxBookNavigationPanel book={BookFactory.sample()} onClose={spy} />,
     );
 
-    const closeButton = wrapper.getByRole('button', { name: 'Close' });
+    const closeButton = wrapper.getByRole('button', {
+      name: 'Close the Table of contents',
+    });
 
     expect(closeButton).toBeVisible();
 

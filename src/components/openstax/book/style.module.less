@@ -33,8 +33,12 @@
   left: 0;
   z-index: 51;
   background: @white;
-  padding: 4rem 6rem;
   overflow-y: scroll;
+  padding: 2rem 1rem;
+
+  @media screen and (min-width: @screen-md) {
+    padding: 4rem 6rem;
+  }
 }
 
 .tocHeader {

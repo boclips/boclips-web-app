@@ -173,7 +173,7 @@ describe('OpenstaxBookView', () => {
       fireEvent.click(courseContentButton);
 
       const closeTableOfContent = wrapper.getByRole('button', {
-        name: 'Close',
+        name: 'Close the Table of contents',
       });
 
       fireEvent.click(closeTableOfContent);
