@@ -5,6 +5,7 @@ import {
 } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
 
 export interface OpenstaxBook extends Book {
+  videoCount: number;
   chapters: OpenstaxChapter[];
 }
 

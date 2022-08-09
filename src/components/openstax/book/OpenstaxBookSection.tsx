@@ -4,16 +4,14 @@ import s from 'src/components/openstax/book/style.module.less';
 import SadFace from 'src/resources/icons/sad_face.svg';
 import { OpenstaxSection } from 'src/types/OpenstaxBook';
 import { ResponsiveVideoGridCardContainer } from 'src/components/videoCard/ResponsiveVideoGridCardContainer';
+import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
 
 interface Props {
   section: OpenstaxSection;
 }
 export const OpenstaxBookSection = ({ section }: Props) => {
   const hasMappedVideos = section.videos?.length > 0;
-
-  const numberOfVideosLabel = `(${section.videoCount} ${
-    section.videoCount === 1 ? 'video' : 'videos'
-  })`;
+  const numberOfVideosLabel = `(${getVideoCountLabel(section.videoCount)})`;
 
   return (
     <div className={s.section}>

@@ -10,11 +10,22 @@ import {
 } from 'src/types/OpenstaxBook';
 
 export const convertApiBookToOpenstaxBook = (apiBook: Book): OpenstaxBook => {
-  return {
+  const openstaxBook = {
     id: apiBook.id,
+    videoCount: 0,
     subject: apiBook.subject,
     title: apiBook.title,
     chapters: apiBook.chapters.map(convertChapter),
+  };
+
+  let videoCount = 0;
+  openstaxBook.chapters.forEach((chapter) => {
+    videoCount += chapter.videoCount;
+  });
+
+  return {
+    ...openstaxBook,
+    videoCount,
   };
 };
 

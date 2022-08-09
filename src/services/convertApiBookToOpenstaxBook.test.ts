@@ -26,6 +26,31 @@ describe('OpenstaxBook converter', () => {
     expect(openstaxBook.title).toEqual('Algebra and Trigonometry');
   });
 
+  it('calculates book video count', () => {
+    const apiBook: Book = BookFactory.sample({
+      chapters: [
+        ChapterFactory.sample({
+          sections: [
+            SectionFactory.sample({
+              videos: [VideoFactory.sample({}), VideoFactory.sample({})],
+            }),
+            SectionFactory.sample({
+              videos: [VideoFactory.sample({}), VideoFactory.sample({})],
+            }),
+          ],
+          videos: [VideoFactory.sample({})],
+        }),
+        ChapterFactory.sample({
+          sections: [],
+          videos: [VideoFactory.sample({})],
+        }),
+      ],
+    });
+
+    const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
+    expect(openstaxBook.videoCount).toEqual(6);
+  });
+
   it('converts chapter details', () => {
     const apiBook: Book = BookFactory.sample({
       chapters: [

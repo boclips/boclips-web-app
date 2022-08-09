@@ -5,7 +5,8 @@ import Button from '@boclips-ui/button';
 import CloseButtonIcon from 'src/resources/icons/cross-icon.svg';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import c from 'classnames';
-import { OpenstaxBook, OpenstaxChapter } from 'src/types/OpenstaxBook';
+import { OpenstaxBook } from 'src/types/OpenstaxBook';
+import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
 
 interface Props {
   book: OpenstaxBook;
@@ -16,12 +17,6 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
   const breakpoint = useMediaBreakPoint();
   const isNotDesktop = breakpoint.type !== 'desktop';
   const isMobile = breakpoint.type === 'mobile';
-
-  const videoCountLabel = (chapter: OpenstaxChapter) => {
-    const videoCount = chapter.videoCount;
-    const label = videoCount === 1 ? `video` : `videos`;
-    return `${videoCount} ${label}`;
-  };
 
   return (
     <div className={c('col-start-2 col-end-8', isNotDesktop ? s.overlay : '')}>
@@ -53,7 +48,7 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
               </Typography.H2>
 
               <div className="text-gray-700 text-sm	mb-2">
-                {videoCountLabel(chapter)}
+                {getVideoCountLabel(chapter.videoCount)}
               </div>
 
               {chapter.sections.map((section) => (

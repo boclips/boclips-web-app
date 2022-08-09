@@ -20,4 +20,6 @@ export const useGetBooksQuery = (): UseQueryResult<OpenstaxBook[]> => {
 const doGetBooks = (client: BoclipsClient) =>
   client.openstax
     .getAllMappedOpenstaxBooks()
-    .then((booksWrapper) => booksWrapper.books);
+    .then((booksWrapper) =>
+      booksWrapper.books.map(convertApiBookToOpenstaxBook),
+    );
