@@ -39,7 +39,15 @@
 
 .tocHeader {
   --bo-ui-button-outline-background-color-hover: none;
-  @apply flex items-center justify-center;
+  --bo-ui-button-svg-height: 1.5rem;
+  --bo-ui-button-svg-width: 1.5rem;
+  --bo-ui-button-padding: 0.75rem 0rem;
+  @apply flex items-center justify-between;
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 
   @media screen and (min-width: @screen-lg) {
     @apply -mt-6 pt-6 border-r border-gray-400 border-b pb-4;
@@ -54,8 +62,8 @@
 
 .bookHeader {
   --bo-ui-button-outline-svg-fill: none;
-  --bo-ui-button-svg-height: 24px;
-  --bo-ui-button-svg-width: 24px;
+  --bo-ui-button-svg-height: 1.5rem;
+  --bo-ui-button-svg-width: 1.5rem;
   --bo-ui-button-outline-background-color-hover: none;
   --bo-ui-button-padding: 0.75rem 0.5rem;
 }
