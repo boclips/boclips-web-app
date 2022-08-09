@@ -13,14 +13,19 @@ interface Props {
 
 export const OpenstaxBookHeader = ({ bookTitle, openCourseContent }: Props) => {
   const breakpoint = useMediaBreakPoint();
-  const showCourseContentButton = breakpoint.type !== 'desktop';
+  const isNotDesktop = breakpoint.type !== 'desktop';
 
   return (
-    <div className={c('col-start-8 col-end-26', s.bookHeader)}>
+    <div
+      className={c(
+        isNotDesktop ? 'col-start-2 col-end-26' : 'col-start-8 col-end-26',
+        s.bookHeader,
+      )}
+    >
       <PageHeader
         title={bookTitle}
         button={
-          showCourseContentButton && (
+          isNotDesktop && (
             <Button
               icon={<OpenBookIcon />}
               text="Course content"

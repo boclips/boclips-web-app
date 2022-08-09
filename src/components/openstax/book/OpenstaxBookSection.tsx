@@ -1,10 +1,9 @@
 import { Typography } from '@boclips-ui/typography';
-import VideoGridCard from 'src/components/videoCard/VideoGridCard';
 import React from 'react';
 import s from 'src/components/openstax/book/style.module.less';
 import SadFace from 'src/resources/icons/sad_face.svg';
-import { Video } from 'boclips-api-client/dist/types';
 import { OpenstaxSection } from 'src/types/OpenstaxBook';
+import { ResponsiveVideoGridCardContainer } from 'src/components/videoCard/ResponsiveVideoGridCardContainer';
 
 interface Props {
   section: OpenstaxSection;
@@ -22,20 +21,14 @@ export const OpenstaxBookSection = ({ section }: Props) => {
         {section.displayLabel}{' '}
         <span className="text-gray-700">{numberOfVideosLabel}</span>
       </Typography.H3>
-      {hasMappedVideos
-        ? renderMappedVideos(section.videos)
-        : renderEmptyMappingMessaging()}
+      {hasMappedVideos ? (
+        <ResponsiveVideoGridCardContainer videos={section.videos} />
+      ) : (
+        renderEmptyMappingMessaging()
+      )}
     </div>
   );
 };
-
-const renderMappedVideos = (videos: Video[]) => (
-  <div className="grid grid-cols-4 gap-6">
-    {videos.map((video) => (
-      <VideoGridCard video={video} />
-    ))}
-  </div>
-);
 
 const renderEmptyMappingMessaging = () => (
   <div className={s.emptyMessagingGrid}>

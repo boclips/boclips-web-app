@@ -21,7 +21,7 @@ const OpenstaxBookView = () => {
   const hideTableOfContent = () => setTocIsVisible(false);
 
   return (
-    <Layout rowsSetup="grid-rows-default-view-with-title">
+    <Layout rowsSetup="grid-rows-default-view-with-title" responsiveLayout>
       <Navbar />
       {book && (
         <>
