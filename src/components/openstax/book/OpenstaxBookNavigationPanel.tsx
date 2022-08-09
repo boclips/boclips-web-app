@@ -19,6 +19,7 @@ interface Props {
 export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
   const breakpoint = useMediaBreakPoint();
   const isNotDesktop = breakpoint.type !== 'desktop';
+  const isMobile = breakpoint.type === 'mobile';
   const formatChapterTitle = (chapter: Chapter) =>
     `Chapter ${chapter.number}: ${chapter.title}`;
 
@@ -48,7 +49,9 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
             onClick={onClose}
             text="Close"
             type="label"
+            iconOnly={isMobile}
             icon={<CloseButtonIcon />}
+            aria-label="Close the Table of contents"
           />
         )}
       </div>

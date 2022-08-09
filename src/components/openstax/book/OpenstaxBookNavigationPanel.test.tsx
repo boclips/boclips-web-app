@@ -55,8 +55,8 @@ describe('OpenstaxBookNavigationPanel', () => {
     expect(wrapper.queryByRole('button', { name: 'Close' })).toBeNull();
   });
 
-  it('renders close button in non-desktop view, which calls callback', () => {
-    window.resizeTo(700, 1024);
+  it('renders close button with label in tablet view, which calls callback', () => {
+    window.resizeTo(1000, 1024);
     const spy = jest.fn();
     const wrapper = render(
       <OpenstaxBookNavigationPanel book={BookFactory.sample()} onClose={spy} />,
@@ -66,6 +66,22 @@ describe('OpenstaxBookNavigationPanel', () => {
 
     expect(closeButton).toBeVisible();
 
+    fireEvent.click(closeButton);
+
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('renders close button without label in tablet view, which calls callback', () => {
+    window.resizeTo(320, 1024);
+    const spy = jest.fn();
+    const wrapper = render(
+      <OpenstaxBookNavigationPanel book={BookFactory.sample()} onClose={spy} />,
+    );
+
+    const closeButton = wrapper.getByLabelText('Close the Table of contents');
+
+    expect(closeButton).toBeVisible();
+    expect(wrapper.queryByText('Close')).toBeNull();
     fireEvent.click(closeButton);
 
     expect(spy).toHaveBeenCalled();
