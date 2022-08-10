@@ -18,6 +18,12 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
   const isNotDesktop = breakpoint.type !== 'desktop';
   const isMobile = breakpoint.type === 'mobile';
 
+  const renderSectionLevelLabel = (label: string) => (
+    <Typography.H3 className="text-gray-700 !text-sm py-2" weight="regular">
+      {label}
+    </Typography.H3>
+  );
+
   return (
     <div className={c('col-start-2 col-end-8', isNotDesktop ? s.overlay : '')}>
       <div className={c('flex', s.tocHeader)}>
@@ -50,15 +56,11 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
               <div className="text-gray-700 text-sm	mb-2">
                 {getVideoCountLabel(chapter.videoCount)}
               </div>
-
-              {chapter.sections.map((section) => (
-                <Typography.H3
-                  className="text-gray-700 !text-sm py-2"
-                  weight="regular"
-                >
-                  {section.displayLabel}
-                </Typography.H3>
-              ))}
+              {chapter.videoIds?.length > 0 &&
+                renderSectionLevelLabel('Chapter overview')}
+              {chapter.sections.map((section) =>
+                renderSectionLevelLabel(section.displayLabel),
+              )}
             </>
           ))}
         </div>

@@ -1,8 +1,7 @@
-import { Typography } from '@boclips-ui/typography';
 import React from 'react';
-import { OpenstaxBookSection } from 'src/components/openstax/book/OpenstaxBookSection';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
+import { OpenstaxBookChapter } from 'src/components/openstax/book/OpenstaxBookChapter';
 
 interface Props {
   book: OpenstaxBook;
@@ -21,14 +20,7 @@ export const OpenstaxBookContent = ({ book }: Props) => {
       }
     >
       {book.chapters.map((chapter) => (
-        <>
-          <Typography.H2 size="sm" className="text-gray-700">
-            {chapter.displayLabel}
-          </Typography.H2>
-          {chapter.sections.map((section) => (
-            <OpenstaxBookSection section={section} />
-          ))}
-        </>
+        <OpenstaxBookChapter chapter={chapter} />
       ))}
     </main>
   );

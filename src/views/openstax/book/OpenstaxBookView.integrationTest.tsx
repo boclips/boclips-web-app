@@ -1,4 +1,9 @@
-import { fireEvent, render, RenderResult } from '@testing-library/react';
+import {
+  fireEvent,
+  render,
+  RenderResult,
+  within,
+} from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
@@ -21,7 +26,7 @@ describe('OpenstaxBookView', () => {
         {
           title: 'Introduction',
           number: 1,
-          videos: [VideoFactory.sample({ title: 'This video will be hidden' })],
+          videos: [VideoFactory.sample({ title: 'Chapter video' })],
           videoIds: ['1'],
           sections: [
             {
@@ -53,29 +58,33 @@ describe('OpenstaxBookView', () => {
       level: 1,
       name: 'Everything to know about ducks',
     });
-    const chapters = wrapper.getAllByRole('heading', { level: 2 });
-    const sections = wrapper.getAllByRole('heading', { level: 3 });
 
     expect(titles).toHaveLength(2);
     expect(titles[0]).toBeVisible();
     expect(titles[1]).toBeVisible();
 
-    expect(chapters).toHaveLength(2);
-    expect(chapters[0]).toBeVisible();
-    expect(chapters[1]).toBeVisible();
-    expect(chapters[0]).toHaveTextContent('Chapter 1: Introduction');
-    expect(chapters[1]).toHaveTextContent('Chapter 1: Introduction');
+    const bookDetails = wrapper.getByLabelText(
+      'Content for Everything to know about ducks',
+    );
 
-    expect(sections).toHaveLength(4);
-    expect(sections[0]).toBeVisible();
-    expect(sections[0]).toHaveTextContent('1.1 Life at the coop');
-    expect(sections[1]).toBeVisible();
-    expect(sections[1]).toHaveTextContent('1.2 Adventures outside');
+    expect(bookDetails).toBeVisible();
+    validateVisibleHeadings(bookDetails, 2, ['Chapter 1: Introduction']);
+    validateVisibleHeadings(bookDetails, 3, [
+      'Chapter overview',
+      '1.1 Life at the coop',
+      '1.2 Adventures outside',
+    ]);
 
-    expect(sections[2]).toBeVisible();
-    expect(sections[2]).toHaveTextContent('1.1 Life at the coop');
-    expect(sections[3]).toBeVisible();
-    expect(sections[3]).toHaveTextContent('1.2 Adventures outside');
+    const bookToc = wrapper.getByLabelText(
+      'Table of contents of Everything to know about ducks',
+    );
+    expect(bookToc).toBeVisible();
+    validateVisibleHeadings(bookToc, 2, ['Chapter 1: Introduction']);
+    validateVisibleHeadings(bookToc, 3, [
+      'Chapter overview',
+      '1.1 Life at the coop',
+      '1.2 Adventures outside',
+    ]);
 
     expect(
       wrapper.getByText(
@@ -83,6 +92,21 @@ describe('OpenstaxBookView', () => {
       ),
     ).toBeVisible();
   });
+
+  const validateVisibleHeadings = (
+    element: HTMLElement,
+    level: number,
+    titles: string[],
+  ) => {
+    const headings = within(element).getAllByRole('heading', { level });
+
+    expect(headings).toHaveLength(titles.length);
+
+    for (let i = 0; i < headings.length; i++) {
+      expect(headings[i]).toBeVisible();
+      expect(headings[i]).toHaveTextContent(titles[i]);
+    }
+  };
 
   it('renders section video cards with only thumbnail', async () => {
     const client = new FakeBoclipsClient();

@@ -8,6 +8,7 @@ import {
 import { fireEvent } from '@testing-library/react';
 import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
+import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 
 describe('OpenstaxBookNavigationPanel', () => {
   it('renders book title with chapters and sections', () => {
@@ -40,6 +41,40 @@ describe('OpenstaxBookNavigationPanel', () => {
 
     const videoLabel = wrapper.getByText('3 videos');
     expect(videoLabel).toBeVisible();
+  });
+
+  it('renders Chapter Overview when chapter has videos mapped as the first section', () => {
+    const book: OpenstaxBook = OpenstaxBookFactory.sample({
+      chapters: [
+        ChapterFactory.sample({
+          videos: [VideoFactory.sample({})],
+          videoIds: ['1'],
+        }),
+      ],
+    });
+    const wrapper = render(
+      <OpenstaxBookNavigationPanel book={book} onClose={jest.fn} />,
+    );
+
+    const sections = wrapper.getAllByRole('heading', { level: 3 });
+    expect(sections[0]).toBeVisible();
+    expect(sections[0]).toHaveTextContent('Chapter overview');
+  });
+
+  it('will not show Chapter overview if there are no videos mapped to only the chapter', () => {
+    const book: OpenstaxBook = OpenstaxBookFactory.sample({
+      chapters: [
+        ChapterFactory.sample({
+          videos: undefined,
+          videoIds: [],
+        }),
+      ],
+    });
+    const wrapper = render(
+      <OpenstaxBookNavigationPanel book={book} onClose={jest.fn} />,
+    );
+
+    expect(wrapper.queryByText('Chapter overview')).toBeNull();
   });
 
   it('does not render close button in desktop view', () => {

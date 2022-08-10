@@ -7,19 +7,19 @@ import { ResponsiveVideoGridCardContainer } from 'src/components/videoCard/Respo
 import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
 
 interface Props {
-  section: OpenstaxSection;
+  section: Pick<OpenstaxSection, 'videos' | 'displayLabel'>;
 }
-export const OpenstaxBookSection = ({ section }: Props) => {
-  const hasMappedVideos = section.videos?.length > 0;
-  const numberOfVideosLabel = `(${getVideoCountLabel(section.videoCount)})`;
+export const OpenstaxChapterSection = ({ section }: Props) => {
+  const videoCount = section.videos?.length;
+  const numberOfVideosLabel = `(${getVideoCountLabel(videoCount)})`;
 
   return (
     <div className={s.section}>
-      <Typography.H3 size="xs" className="text-gray-800 mb-4" weight="regular">
+      <Typography.H3 size="xs" className="text-gray-800 my-4" weight="regular">
         {section.displayLabel}{' '}
         <span className="text-gray-700">{numberOfVideosLabel}</span>
       </Typography.H3>
-      {hasMappedVideos ? (
+      {videoCount > 0 ? (
         <ResponsiveVideoGridCardContainer videos={section.videos} />
       ) : (
         renderEmptyMappingMessaging()

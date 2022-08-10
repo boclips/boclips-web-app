@@ -1,12 +1,12 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { OpenstaxBookSection } from 'src/components/openstax/book/OpenstaxBookSection';
+import { OpenstaxChapterSection } from 'src/components/openstax/book/OpenstaxChapterSection';
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/types';
 import { renderWithClients } from 'src/testSupport/render';
 import { OpenstaxSectionFactory } from 'src/testSupport/OpenstaxSectionFactory';
 import { OpenstaxSection } from 'src/types/OpenstaxBook';
 
-describe('OpenstaxBookSection', () => {
+describe('OpenstaxChapterSection', () => {
   it.each([
     [0, '(0 videos)'],
     [1, '(1 video)'],
@@ -27,7 +27,7 @@ describe('OpenstaxBookSection', () => {
       });
 
       const wrapper = renderWithClients(
-        <OpenstaxBookSection section={section} />,
+        <OpenstaxChapterSection section={section} />,
       );
 
       const sectionTitle = wrapper.getByRole('heading', { level: 3 });
@@ -50,7 +50,7 @@ describe('OpenstaxBookSection', () => {
     });
 
     const wrapper = renderWithClients(
-      <OpenstaxBookSection section={section} />,
+      <OpenstaxChapterSection section={section} />,
     );
 
     const playableThumbnail = wrapper.getByRole('button', {
@@ -67,7 +67,7 @@ describe('OpenstaxBookSection', () => {
     });
 
     const wrapper = renderWithClients(
-      <OpenstaxBookSection section={section} />,
+      <OpenstaxChapterSection section={section} />,
     );
 
     expect(
