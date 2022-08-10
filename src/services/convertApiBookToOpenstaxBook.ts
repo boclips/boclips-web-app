@@ -15,7 +15,9 @@ export const convertApiBookToOpenstaxBook = (apiBook: Book): OpenstaxBook => {
     videoCount: 0,
     subject: apiBook.subject,
     title: apiBook.title,
-    chapters: apiBook.chapters.map(convertChapter),
+    chapters: apiBook.chapters
+      .map(convertChapter)
+      .sort((a, b) => a.number - b.number),
   };
 
   let videoCount = 0;
@@ -53,9 +55,11 @@ const convertChapter = (apiChapter: Chapter): OpenstaxChapter => {
   return {
     displayLabel: `Chapter ${apiChapter.number}: ${apiChapter.title}`,
     number: apiChapter.number,
-    sections: apiChapter.sections.map((section) =>
-      convertApiBookSectionToOpenstaxSection(apiChapter.number, section),
-    ),
+    sections: apiChapter.sections
+      .map((section) =>
+        convertApiBookSectionToOpenstaxSection(apiChapter.number, section),
+      )
+      .sort((a, b) => a.number - b.number),
     title: apiChapter.title,
     videoCount: videoCountInChapter + videoCountInSections,
     videoIds: apiChapter.videoIds,

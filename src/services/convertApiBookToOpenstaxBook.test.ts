@@ -209,4 +209,41 @@ describe('OpenstaxBook converter', () => {
     expect(section.videoIds).toEqual(apiBook.chapters[0].sections[0].videoIds);
     expect(section.videoCount).toEqual(2);
   });
+
+  it('orders chapters based on their number', () => {
+    const apiBook = BookFactory.sample({
+      chapters: [
+        ChapterFactory.sample({ number: 3 }),
+        ChapterFactory.sample({ number: 5 }),
+        ChapterFactory.sample({ number: 1 }),
+      ],
+    });
+
+    const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
+
+    expect(openstaxBook.chapters.length).toEqual(3);
+    expect(openstaxBook.chapters[0].number).toEqual(1);
+    expect(openstaxBook.chapters[1].number).toEqual(3);
+    expect(openstaxBook.chapters[2].number).toEqual(5);
+  });
+
+  it('orders sections based on their number', () => {
+    const apiBook = BookFactory.sample({
+      chapters: [
+        ChapterFactory.sample({
+          sections: [
+            SectionFactory.sample({ number: 12 }),
+            SectionFactory.sample({ number: 1 }),
+            SectionFactory.sample({ number: 3 }),
+          ],
+        }),
+      ],
+    });
+
+    const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
+
+    expect(openstaxBook.chapters[0].sections[0].number).toEqual(1);
+    expect(openstaxBook.chapters[0].sections[1].number).toEqual(3);
+    expect(openstaxBook.chapters[0].sections[2].number).toEqual(12);
+  });
 });
