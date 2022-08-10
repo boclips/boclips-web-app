@@ -6,8 +6,8 @@
   "scripts": {
     "audit": "check-audit",
     "resolve-audit": "resolve-audit",
-    "test": "n auto; jest --maxWorkers=50%",
-    "test:coverage": "n auto; jest --maxWorkers=50% --coverage --collectCoverageFrom='src/**/*.ts*'",
+    "test": "jest --maxWorkers=50%",
+    "test:coverage": "jest --maxWorkers=50% --coverage --collectCoverageFrom='src/**/*.ts*'",
     "test-visual": "percy exec -- ./node_modules/.bin/cypress run",
     "test-visual:open": "start-server-and-test fake http://localhost:9000/ 'percy exec -- ./node_modules/.bin/cypress open'",
     "test-visual:wait": "percy build:wait -f --project f10a8acf/boclips-web-app --commit HEAD",
