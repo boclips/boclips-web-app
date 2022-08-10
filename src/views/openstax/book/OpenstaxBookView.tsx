@@ -14,18 +14,18 @@ const OpenstaxBookView = () => {
   const { id: bookId } = useParams<PathWithId>();
   const { data: book } = useGetBook(bookId);
   const isDesktop = useMediaBreakPoint().type === 'desktop';
-  const [tocIsOpened, setTocIsOpened] = useState(false);
-  const tocIsVisible = tocIsOpened || isDesktop;
+  const [tableOfContentsIsOpen, setTableOfContentsIsOpen] = useState(false);
+  const tableOfContentsIsVisible = tableOfContentsIsOpen || isDesktop;
 
-  const showTableOfContent = () => setTocIsOpened(true);
-  const hideTableOfContent = () => setTocIsOpened(false);
+  const showTableOfContent = () => setTableOfContentsIsOpen(true);
+  const hideTableOfContent = () => setTableOfContentsIsOpen(false);
 
   return (
     <Layout rowsSetup="grid-rows-default-view-with-title" responsiveLayout>
       <Navbar />
       {book && (
         <>
-          {tocIsVisible && (
+          {tableOfContentsIsVisible && (
             <OpenstaxBookNavigationPanel
               book={book}
               onClose={hideTableOfContent}
