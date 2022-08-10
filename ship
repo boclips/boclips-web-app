@@ -4,8 +4,6 @@ set -e
 
 git pull -r
 
-npm i
-
 npm run lint:errors
 npm run compile
 npm run test
