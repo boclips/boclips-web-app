@@ -137,6 +137,10 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
     });
   };
 
+  const bigListOfVideos = Array.from(Array(100)).map((_, i) =>
+    VideoFactory.sample({ id: `${i}`, title: `video ${i}` }),
+  );
+
   return {
     inspect: () => apiClient,
     interact: (callback: (apiClient: FakeBoclipsClient) => void) => {
@@ -254,6 +258,30 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
               id: 'book-1',
               subject: 'Maths',
               title: 'Maths book',
+              chapters: [
+                {
+                  title: 'chapter-one',
+                  videos: [],
+                  videoIds: [],
+                  number: 1,
+                  sections: [
+                    {
+                      title: 'section we dinna want to view',
+                      videoIds: [],
+                      number: 1,
+                      videos: bigListOfVideos,
+                    },
+                    {
+                      title: 'section we want to view',
+                      videoIds: [],
+                      number: 2,
+                      videos: [
+                        VideoFactory.sample({ title: 'our target video' }),
+                      ],
+                    },
+                  ],
+                },
+              ],
             }),
             BookFactory.sample({
               id: 'book-2',

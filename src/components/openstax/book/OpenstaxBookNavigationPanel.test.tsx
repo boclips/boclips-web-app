@@ -5,7 +5,7 @@ import {
   ChapterFactory,
   SectionFactory,
 } from 'boclips-api-client/dist/test-support/BookFactory';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, within } from '@testing-library/react';
 import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
@@ -21,6 +21,8 @@ describe('OpenstaxBookNavigationPanel', () => {
           videoIds: ['1'],
           sections: [
             SectionFactory.sample({
+              number: 99,
+              title: 'section 99',
               videoIds: ['1', '2'],
             }),
           ],
@@ -38,6 +40,23 @@ describe('OpenstaxBookNavigationPanel', () => {
     const chapterOne = wrapper.getByRole('heading', { level: 2 });
     expect(chapterOne).toBeVisible();
     expect(chapterOne).toHaveTextContent('Chapter 1: should show chapter 1');
+
+    const chapterOneLink = within(chapterOne).getByRole('link');
+    expect(chapterOneLink).toBeVisible();
+    expect(chapterOneLink).toHaveAttribute(
+      'href',
+      '/explore/openstax/book_id#chapter-1',
+    );
+
+    const sectionNinetyNine = wrapper.getByRole('heading', {
+      level: 3,
+      name: '1.99 section 99',
+    });
+    const sectionNinetyNineLink = within(sectionNinetyNine).getByRole('link');
+    expect(sectionNinetyNineLink).toHaveAttribute(
+      'href',
+      '/explore/openstax/book_id#section-1-99',
+    );
 
     const videoLabel = wrapper.getByText('3 videos');
     expect(videoLabel).toBeVisible();

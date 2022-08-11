@@ -16,8 +16,6 @@ import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
 describe('OpenstaxBookView', () => {
   it('renders basic book details', async () => {
     window.resizeTo(1500, 1024);
-    const client = new FakeBoclipsClient();
-
     const book: Book = BookFactory.sample({
       id: 'ducklings',
       title: 'Everything to know about ducks',
@@ -45,8 +43,7 @@ describe('OpenstaxBookView', () => {
         },
       ],
     });
-
-    client.openstax.setOpenstaxBooks([book]);
+    const client = setUpClientWithBook(book);
 
     const wrapper = render(
       <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
@@ -93,24 +90,8 @@ describe('OpenstaxBookView', () => {
     ).toBeVisible();
   });
 
-  const validateVisibleHeadings = (
-    element: HTMLElement,
-    level: number,
-    titles: string[],
-  ) => {
-    const headings = within(element).getAllByRole('heading', { level });
-
-    expect(headings).toHaveLength(titles.length);
-
-    for (let i = 0; i < headings.length; i++) {
-      expect(headings[i]).toBeVisible();
-      expect(headings[i]).toHaveTextContent(titles[i]);
-    }
-  };
-
   it('renders section video cards with only thumbnail', async () => {
-    const client = new FakeBoclipsClient();
-    const videoTitle = 'Baby ducks playing';
+    window.resizeTo(1500, 1024);
     const book: Book = BookFactory.sample({
       id: 'ducklings',
       title: 'Everything to know about ducks',
@@ -127,7 +108,7 @@ describe('OpenstaxBookView', () => {
               number: 1,
               videos: [
                 VideoFactory.sample({
-                  title: videoTitle,
+                  title: 'Baby ducks playing',
                   createdBy: 'Farmer Joe',
                 }),
               ],
@@ -137,8 +118,7 @@ describe('OpenstaxBookView', () => {
         },
       ],
     });
-
-    client.openstax.setOpenstaxBooks([book]);
+    const client = setUpClientWithBook(book);
 
     const wrapper = render(
       <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
@@ -147,11 +127,11 @@ describe('OpenstaxBookView', () => {
     );
 
     expect(
-      await wrapper.findByLabelText(`${videoTitle} grid card`),
+      await wrapper.findByLabelText(`Baby ducks playing grid card`),
     ).toBeVisible();
 
     const playableThumbnail = wrapper.getByRole('button', {
-      name: `play ${videoTitle}`,
+      name: `play Baby ducks playing`,
     });
     expect(playableThumbnail).toBeVisible();
 
@@ -203,18 +183,39 @@ describe('OpenstaxBookView', () => {
       fireEvent.click(closeTableOfContent);
       expect(getTableOfContent(book, wrapper)).toBeNull();
     });
-
-    const renderBookView = (book: Book): RenderResult => {
-      const client = new FakeBoclipsClient();
-      client.openstax.setOpenstaxBooks([book]);
-      return render(
-        <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
-          <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
-        </MemoryRouter>,
-      );
-    };
-
-    const getTableOfContent = (book: Book, wrapper: RenderResult) =>
-      wrapper.queryByLabelText(`Table of contents of ${book.title}`);
   });
 });
+
+const renderBookView = (book: Book): RenderResult => {
+  const client = new FakeBoclipsClient();
+  client.openstax.setOpenstaxBooks([book]);
+  return render(
+    <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
+      <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+    </MemoryRouter>,
+  );
+};
+
+const getTableOfContent = (book: Book, wrapper: RenderResult) =>
+  wrapper.queryByLabelText(`Table of contents of ${book.title}`);
+
+const validateVisibleHeadings = (
+  element: HTMLElement,
+  level: number,
+  titles: string[],
+) => {
+  const headings = within(element).getAllByRole('heading', { level });
+
+  expect(headings).toHaveLength(titles.length);
+
+  for (let i = 0; i < headings.length; i++) {
+    expect(headings[i]).toBeVisible();
+    expect(headings[i]).toHaveTextContent(titles[i]);
+  }
+};
+
+const setUpClientWithBook = (book: Book) => {
+  const client = new FakeBoclipsClient();
+  client.openstax.setOpenstaxBooks([book]);
+  return client;
+};
