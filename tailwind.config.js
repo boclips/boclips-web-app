@@ -25,7 +25,8 @@ module.exports = {
         'home-responsive': 'auto minmax(100%, auto) auto',
         'navbar-responsive': 'auto auto',
         'default-view': 'auto minmax(0, auto) auto',
-        'default-view-with-title': 'auto 50px minmax(0, auto) auto',
+        'default-view-with-title':
+          'auto minmax(50px, auto) minmax(0, auto) auto',
         'playlist-view':
           'auto minmax(50px, auto) auto auto minmax(0, auto) auto',
         'explore-view': 'auto auto auto auto auto auto',

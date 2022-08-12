@@ -10,8 +10,12 @@ interface Props {
 
 const PageHeader = ({ title, button, cartItems }: Props) => {
   return (
-    <section className="col-start-2 col-end-26 grid-row-start-2 grid-row-end-2 flex flex-row justify-between">
-      <Typography.H1 size="md" title={title} className={`${s.title}`}>
+    <section className={s.header}>
+      <Typography.H1
+        size="md"
+        title={title}
+        className="text-gray-900 mb-2 lg:mb-0"
+      >
         {title} {cartItems}
       </Typography.H1>
       {button}
