@@ -30,6 +30,9 @@
     "url": "https://github.com/boclips/publishers/issues"
   },
   "homepage": "https://github.com/boclips/publishers#readme",
+  "engines": {
+    "node": "16.16.0"
+  },
   "devDependencies": {
     "@percy/cli": "^1.7.0",
     "@percy/cypress": "^3.1.1",
