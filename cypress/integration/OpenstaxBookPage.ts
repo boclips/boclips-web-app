@@ -19,7 +19,7 @@ context(`openstax book page`, () => {
 
     cy.findByRole('heading', { name: '1.2 section we want to view' }).click();
 
-    cy.findByRole('link', { name: 'Our target video grid card' }).should(
+    cy.findByRole('link', { name: 'our target video grid card' }).should(
       'be.visible',
     );
   });
