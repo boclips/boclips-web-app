@@ -1,0 +1,18 @@
+@import '@boclips-ui/styles/src/colors';
+@import '~@boclips-ui/styles/src/breakpoints';
+
+.overlay {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 51;
+  background: @white;
+  overflow-y: scroll;
+  padding: 2rem 1rem;
+
+  @media screen and (min-width: @screen-md) {
+    padding: 4rem 6rem;
+  }
+}

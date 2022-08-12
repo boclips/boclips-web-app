@@ -3,7 +3,6 @@ import PageHeader from 'src/components/pageTitle/PageHeader';
 import Button from '@boclips-ui/button';
 import OpenBookIcon from 'src/resources/icons/open-book.svg';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
-import c from 'classnames';
 import s from './style.module.less';
 
 interface Props {
@@ -16,12 +15,7 @@ export const OpenstaxBookHeader = ({ bookTitle, openCourseContent }: Props) => {
   const isNotDesktop = breakpoint.type !== 'desktop';
 
   return (
-    <div
-      className={c(
-        isNotDesktop ? 'col-start-2 col-end-26' : 'col-start-8 col-end-26',
-        s.bookHeader,
-      )}
-    >
+    <div className={s.bookHeader}>
       <PageHeader
         title={bookTitle}
         button={

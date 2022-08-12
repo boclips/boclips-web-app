@@ -34,7 +34,7 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
   );
 
   return (
-    <div className={c('col-start-2 col-end-8', isNotDesktop ? s.overlay : '')}>
+    <>
       <div className={c('flex', s.tocHeader)}>
         {isNotDesktop && <span />}
         <Typography.H1 size="sm" className="text-gray-900">
@@ -88,6 +88,6 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
           ))}
         </div>
       </nav>
-    </div>
+    </>
   );
 };

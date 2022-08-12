@@ -9,6 +9,8 @@ import { OpenstaxBookContent } from 'src/components/openstax/book/OpenstaxBookCo
 import { OpenstaxBookNavigationPanel } from 'src/components/openstax/book/OpenstaxBookNavigationPanel';
 import { OpenstaxBookHeader } from 'src/components/openstax/book/OpenstaxBookHeader';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import s from 'src/views/openstax/book/style.module.less';
+import c from 'classnames';
 
 const OpenstaxBookView = () => {
   const { id: bookId } = useParams<PathWithId>();
@@ -20,22 +22,32 @@ const OpenstaxBookView = () => {
   const showTableOfContent = () => setTableOfContentsIsOpen(true);
   const hideTableOfContent = () => setTableOfContentsIsOpen(false);
 
+  const columnStart = isDesktop ? 'col-start-8' : 'col-start-2';
+
   return (
-    <Layout rowsSetup="grid-rows-default-view-with-title" responsiveLayout>
+    <Layout rowsSetup="grid-rows-default-view" responsiveLayout>
       <Navbar />
       {book && (
         <>
           {tableOfContentsIsVisible && (
-            <OpenstaxBookNavigationPanel
-              book={book}
-              onClose={hideTableOfContent}
-            />
+            <div
+              className={c('col-start-2 col-end-8', {
+                [s.overlay]: !isDesktop,
+              })}
+            >
+              <OpenstaxBookNavigationPanel
+                book={book}
+                onClose={hideTableOfContent}
+              />
+            </div>
           )}
-          <OpenstaxBookHeader
-            bookTitle={book.title}
-            openCourseContent={showTableOfContent}
-          />
-          <OpenstaxBookContent book={book} />
+          <div className={c(columnStart, 'col-end-26')}>
+            <OpenstaxBookHeader
+              bookTitle={book.title}
+              openCourseContent={showTableOfContent}
+            />
+            <OpenstaxBookContent book={book} />
+          </div>
         </>
       )}
       <Footer />

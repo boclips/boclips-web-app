@@ -13,7 +13,7 @@ export const OpenstaxBookChapter = ({ chapter }: Props) => {
 
   return (
     <section id={`chapter-${chapter.number}`} className={s.anchor}>
-      <Typography.H2 size="sm" className="text-gray-700 mb-4">
+      <Typography.H2 size="sm" className="text-gray-700 my-4">
         {chapter.displayLabel}
       </Typography.H2>
       {shouldShowChapterOverview && (
