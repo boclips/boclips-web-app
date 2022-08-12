@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/boclips/publishers#readme",
   "engines": {
-    "node": "16.16.0"
+    "node": ">16.13.0"
   },
   "devDependencies": {
     "@percy/cli": "^1.7.0",
