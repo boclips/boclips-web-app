@@ -59,15 +59,7 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
           {book.chapters.map((chapter) => (
             <>
               <Typography.H2 className="text-gray-700 pt-6 !text-base mb-0.5">
-                <HashLink
-                  onClick={onClose}
-                  to={{
-                    pathname: `/explore/openstax/${book.id}`,
-                    hash: `#chapter-${chapter.number}`,
-                  }}
-                >
-                  {chapter.displayLabel}
-                </HashLink>
+                {chapter.displayLabel}
               </Typography.H2>
 
               <div className="text-gray-700 text-sm	mb-2">

@@ -41,13 +41,6 @@ describe('OpenstaxBookNavigationPanel', () => {
     expect(chapterOne).toBeVisible();
     expect(chapterOne).toHaveTextContent('Chapter 1: should show chapter 1');
 
-    const chapterOneLink = within(chapterOne).getByRole('link');
-    expect(chapterOneLink).toBeVisible();
-    expect(chapterOneLink).toHaveAttribute(
-      'href',
-      '/explore/openstax/book_id#chapter-1',
-    );
-
     const sectionNinetyNine = wrapper.getByRole('heading', {
       level: 3,
       name: '1.99 section 99',
