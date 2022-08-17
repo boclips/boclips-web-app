@@ -5,7 +5,7 @@ import {
   ChapterFactory,
   SectionFactory,
 } from 'boclips-api-client/dist/test-support/BookFactory';
-import { fireEvent, within } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
@@ -41,11 +41,9 @@ describe('OpenstaxBookNavigationPanel', () => {
     expect(chapterOne).toBeVisible();
     expect(chapterOne).toHaveTextContent('Chapter 1: should show chapter 1');
 
-    const sectionNinetyNine = wrapper.getByRole('heading', {
-      level: 3,
+    const sectionNinetyNineLink = wrapper.getByRole('link', {
       name: '1.99 section 99',
     });
-    const sectionNinetyNineLink = within(sectionNinetyNine).getByRole('link');
     expect(sectionNinetyNineLink).toHaveAttribute(
       'href',
       '/explore/openstax/book_id#section-1-99',

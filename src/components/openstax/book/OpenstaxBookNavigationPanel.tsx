@@ -1,5 +1,5 @@
 import { Typography } from '@boclips-ui/typography';
-import React from 'react';
+import React, { useState } from 'react';
 import s from 'src/components/openstax/book/style.module.less';
 import Button from '@boclips-ui/button';
 import CloseButtonIcon from 'src/resources/icons/cross-icon.svg';
@@ -18,19 +18,32 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
   const breakpoint = useMediaBreakPoint();
   const isNotDesktop = breakpoint.type !== 'desktop';
   const isMobile = breakpoint.type === 'mobile';
+  const [selectedSection, setSelectedSection] = useState<string>('');
+
+  const handleSectionClick = (sectionLabel: string) => {
+    setSelectedSection(sectionLabel);
+    onClose();
+  };
+
+  const isSelected = (sectionId: string) => selectedSection === sectionId;
 
   const renderSectionLevelLabel = (label: string, sectionId: string) => (
-    <Typography.H3 className="text-gray-700 !text-sm py-2" weight="regular">
-      <HashLink
-        onClick={onClose}
-        to={{
-          pathname: `/explore/openstax/${book.id}`,
-          hash: sectionId,
-        }}
+    <HashLink
+      className={s.sectionAnchor}
+      onClick={() => handleSectionClick(sectionId)}
+      to={{
+        pathname: `/explore/openstax/${book.id}`,
+        hash: sectionId,
+      }}
+    >
+      <Typography.H3
+        className={c(s.courseTitle, {
+          [s.selectedSection]: isSelected(sectionId),
+        })}
       >
-        {label}
-      </HashLink>
-    </Typography.H3>
+        <span>{label}</span>
+      </Typography.H3>
+    </HashLink>
   );
 
   return (
@@ -58,7 +71,7 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
         <div className={s.navigationPanel}>
           {book.chapters.map((chapter) => (
             <>
-              <Typography.H2 className="text-gray-700 pt-6 !text-base mb-0.5">
+              <Typography.H2 className="text-gray-700 pt-6 !text-base mb-0.5 pr-6">
                 {chapter.displayLabel}
               </Typography.H2>
 
