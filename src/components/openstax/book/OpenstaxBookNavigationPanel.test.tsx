@@ -140,4 +140,61 @@ describe('OpenstaxBookNavigationPanel', () => {
 
     expect(spy).toHaveBeenCalled();
   });
+
+  it('chapters can be expanded and collapsed, first chapter expanded by default', () => {
+    const book: OpenstaxBook = OpenstaxBookFactory.sample({
+      chapters: [
+        ChapterFactory.sample({
+          number: 1,
+          title: 'default expanded',
+          videoIds: ['1'],
+          sections: [
+            SectionFactory.sample({
+              number: 1,
+              title: 'initially visible',
+              videoIds: ['1', '2'],
+            }),
+          ],
+        }),
+        ChapterFactory.sample({
+          number: 2,
+          title: 'default collapsed',
+          videoIds: ['1'],
+          sections: [
+            SectionFactory.sample({
+              number: 1,
+              title: 'initially hidden',
+              videoIds: ['1', '2'],
+            }),
+          ],
+        }),
+      ],
+    });
+    const wrapper = render(
+      <OpenstaxBookNavigationPanel book={book} onClose={jest.fn} />,
+    );
+
+    expect(
+      wrapper.getByRole('heading', { name: '1.1 initially visible' }),
+    ).toBeVisible();
+    expect(
+      wrapper.queryByRole('heading', { name: '2.1 initially hidden' }),
+    ).toBeNull();
+
+    const chapter1Button = wrapper.getByRole('button', {
+      name: 'Chapter 1: default expanded',
+    });
+    chapter1Button.click();
+    expect(
+      wrapper.queryByRole('heading', { name: '1.1 initially visible' }),
+    ).toBeNull();
+
+    const chapter2Button = wrapper.getByRole('button', {
+      name: 'Chapter 2: default collapsed',
+    });
+    chapter2Button.click();
+    expect(
+      wrapper.getByRole('heading', { name: '2.1 initially hidden' }),
+    ).toBeVisible();
+  });
 });

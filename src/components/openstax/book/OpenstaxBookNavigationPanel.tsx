@@ -8,6 +8,8 @@ import c from 'classnames';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
 import { HashLink } from 'react-router-hash-link';
+import * as Accordion from '@radix-ui/react-accordion';
+import ChevronDownIcon from 'src/resources/icons/chevron-down.svg';
 
 interface Props {
   book: OpenstaxBook;
@@ -68,30 +70,50 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
         className={s.tocContent}
         aria-label={`Table of contents of ${book.title}`}
       >
-        <div className={s.navigationPanel}>
+        <Accordion.Root
+          className={s.navigationPanel}
+          type="multiple"
+          defaultValue={['chapter-1']}
+        >
           {book.chapters.map((chapter) => (
-            <>
-              <Typography.H2 className="text-gray-700 pt-6 !text-base mb-0.5 pr-6">
-                {chapter.displayLabel}
-              </Typography.H2>
-
-              <div className="text-gray-700 text-sm	mb-2">
-                {getVideoCountLabel(chapter.videoCount)}
-              </div>
-              {chapter.videoIds?.length > 0 &&
-                renderSectionLevelLabel(
-                  'Chapter overview',
-                  `#chapter-${chapter.number}`,
+            <Accordion.Item value={`chapter-${chapter.number}`}>
+              <Accordion.Header
+                className="text-gray-700 pt-6 !text-base mb-0.5 pr-6"
+                asChild
+              >
+                <h2>
+                  <div className="flex items-start">
+                    <div className="w-11/12 font-medium">
+                      {chapter.displayLabel}
+                    </div>
+                    <Accordion.Trigger
+                      className="pt-1.5 ml-4 right-0"
+                      aria-label={chapter.displayLabel}
+                    >
+                      <ChevronDownIcon aria-hidden className={s.chevronIcon} />
+                    </Accordion.Trigger>
+                  </div>
+                  <div className="text-gray-700 text-sm	mb-2">
+                    {getVideoCountLabel(chapter.videoCount)}
+                  </div>
+                </h2>
+              </Accordion.Header>
+              <Accordion.Content>
+                {chapter.videoIds?.length > 0 &&
+                  renderSectionLevelLabel(
+                    'Chapter overview',
+                    `#chapter-${chapter.number}`,
+                  )}
+                {chapter.sections.map((section) =>
+                  renderSectionLevelLabel(
+                    section.displayLabel,
+                    `#section-${chapter.number}-${section.number}`,
+                  ),
                 )}
-              {chapter.sections.map((section) =>
-                renderSectionLevelLabel(
-                  section.displayLabel,
-                  `#section-${chapter.number}-${section.number}`,
-                ),
-              )}
-            </>
+              </Accordion.Content>
+            </Accordion.Item>
           ))}
-        </div>
+        </Accordion.Root>
       </nav>
     </>
   );

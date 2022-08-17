@@ -92,3 +92,10 @@
   background-color: @blue-100;
   border-right: @blue-800 6px solid;
 }
+
+.chevronIcon {
+  transition: transform 0ms;
+  [data-state=open] & {
+    transform: rotate(180deg);
+  }
+}
