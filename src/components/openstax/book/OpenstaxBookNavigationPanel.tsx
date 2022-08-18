@@ -79,6 +79,7 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
               <Accordion.Header
                 className="text-gray-700 pt-6 !text-base mb-0.5 pr-6"
                 asChild
+                aria-label={chapter.displayLabel}
               >
                 <h2>
                   <div className="flex items-start justify-between">
