@@ -19,7 +19,6 @@ interface Props {
 export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
   const breakpoint = useMediaBreakPoint();
   const isNotDesktop = breakpoint.type !== 'desktop';
-  const isMobile = breakpoint.type === 'mobile';
   const [selectedSection, setSelectedSection] = useState<string>('');
 
   const handleSectionClick = (sectionLabel: string) => {
@@ -60,7 +59,7 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
             onClick={onClose}
             text="Close"
             type="label"
-            iconOnly={isMobile}
+            iconOnly
             icon={<CloseButtonIcon />}
             aria-label="Close the Table of contents"
           />
@@ -82,10 +81,8 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
                 asChild
               >
                 <h2>
-                  <div className="flex items-start">
-                    <div className="w-11/12 font-medium">
-                      {chapter.displayLabel}
-                    </div>
+                  <div className="flex items-start justify-between">
+                    <div className="font-medium">{chapter.displayLabel}</div>
                     <Accordion.Trigger
                       className="pt-1.5 ml-4 right-0"
                       aria-label={chapter.displayLabel}
