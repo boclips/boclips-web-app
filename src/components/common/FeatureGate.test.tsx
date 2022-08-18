@@ -113,4 +113,44 @@ describe(`FeatureGate`, () => {
       expect(screen.queryByText('I am hidden')).toBeInTheDocument();
     });
   });
+
+  it(`renders the fallback if provided and feature not present`, async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({ features: { BO_WEB_APP_PRICES: false } }),
+    );
+    const client = new QueryClient();
+
+    render(
+      <BoclipsClientProvider client={fakeClient}>
+        <QueryClientProvider client={client}>
+          <FeatureGate feature="BO_WEB_APP_PRICES" fallback={<div>Hi</div>}>
+            <div>Should not see this</div>
+          </FeatureGate>
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
+    );
+
+    expect(await screen.findByText('Hi')).toBeVisible();
+    expect(await screen.queryByText('Should not see this')).toBeNull();
+  });
+
+  it(`renders the fallback if provided and link not present`, async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.links.cart = null;
+
+    const client = new QueryClient();
+    render(
+      <BoclipsClientProvider client={fakeClient}>
+        <QueryClientProvider client={client}>
+          <FeatureGate linkName="cart" fallback={<div>Hi</div>}>
+            <div>Should not see this</div>
+          </FeatureGate>
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
+    );
+
+    expect(await screen.findByText('Hi')).toBeVisible();
+    expect(await screen.queryByText('Should not see this')).toBeNull();
+  });
 });
