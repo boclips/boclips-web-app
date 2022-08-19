@@ -3,26 +3,14 @@ import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { QueryClient } from 'react-query';
-import { BoclipsClient } from 'boclips-api-client';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 
 describe(`Explore view`, () => {
-  const renderExploreView = (client: BoclipsClient) =>
-    render(
-      <MemoryRouter initialEntries={['/explore/openstax']}>
-        <App
-          apiClient={client}
-          boclipsSecurity={stubBoclipsSecurity}
-          reactQueryClient={new QueryClient()}
-        />
-      </MemoryRouter>,
-    );
-
   it(`shows first subject's books by default and can select other subjects`, async () => {
     const fakeClient = new FakeBoclipsClient();
-
+    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
     fakeClient.openstax.setOpenstaxBooks([
       BookFactory.sample({
         id: 'book-1',
@@ -46,7 +34,15 @@ describe(`Explore view`, () => {
       }),
     ]);
 
-    const wrapper = renderExploreView(fakeClient);
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/explore/openstax']}>
+        <App
+          apiClient={fakeClient}
+          boclipsSecurity={stubBoclipsSecurity}
+          reactQueryClient={new QueryClient()}
+        />
+      </MemoryRouter>,
+    );
 
     expect(await wrapper.findByText('Maths book')).toBeVisible();
     expect(await wrapper.queryByText('French book')).toBeNull();

@@ -188,6 +188,7 @@ describe('OpenstaxBookView', () => {
 
 const renderBookView = (book: Book): RenderResult => {
   const client = new FakeBoclipsClient();
+  client.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
   client.openstax.setOpenstaxBooks([book]);
   return render(
     <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
@@ -217,5 +218,6 @@ const validateVisibleHeadings = (
 const setUpClientWithBook = (book: Book) => {
   const client = new FakeBoclipsClient();
   client.openstax.setOpenstaxBooks([book]);
+  client.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
   return client;
 };

@@ -17,6 +17,7 @@ import { ROLES } from 'src/types/Roles';
 import { lazyWithRetry } from 'src/services/lazyWithRetry';
 import { FollowPlaylist } from 'src/services/followPlaylist';
 import UserAttributes from 'src/services/analytics/hotjar/UserAttributes';
+import { FeatureGate } from 'src/components/common/FeatureGate';
 import { BoclipsClientProvider } from './components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSecurityProvider';
 import Appcues from './services/analytics/appcues/Appcues';
@@ -204,26 +205,31 @@ const App = ({
                         </>
                       )}
                     />
-                    <Route
-                      exact
-                      path="/explore/openstax"
-                      render={() => (
-                        <>
-                          <Helmet title="Explore" />
-                          <ExploreView />
-                        </>
-                      )}
-                    />
-                    <Route
-                      exact
-                      path="/explore/openstax/:id"
-                      render={() => (
-                        <>
-                          <Helmet title="Openstax" />
-                          <OpenstaxBookView />
-                        </>
-                      )}
-                    />
+                    <FeatureGate
+                      feature="BO_WEB_APP_OPENSTAX"
+                      fallback={<NotFound />}
+                    >
+                      <Route
+                        exact
+                        path="/explore/openstax"
+                        render={() => (
+                          <>
+                            <Helmet title="Explore" />
+                            <ExploreView />
+                          </>
+                        )}
+                      />
+                      <Route
+                        exact
+                        path="/explore/openstax/:id"
+                        render={() => (
+                          <>
+                            <Helmet title="Openstax" />
+                            <OpenstaxBookView />
+                          </>
+                        )}
+                      />
+                    </FeatureGate>
                     <Route>
                       <Helmet title="Page not found" />
                       <NotFound />

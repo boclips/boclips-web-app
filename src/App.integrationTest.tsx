@@ -37,4 +37,35 @@ describe('App', () => {
     ).toBeVisible();
     expect(wrapper.queryByText('Page not found!')).not.toBeInTheDocument();
   });
+
+  it('renders the openstax page if user has correct role', async () => {
+    const apiClient = new FakeBoclipsClient();
+
+    apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/explore/openstax']}>
+        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+      </MemoryRouter>,
+    );
+
+    expect(wrapper.queryByText('Page not found!')).not.toBeInTheDocument();
+    expect(
+      await wrapper.findByText('Our best content aligned to OpenStax courses'),
+    ).toBeVisible();
+  });
+
+  it(`renders the not found page if user doesn't have openstax role`, async () => {
+    const apiClient = new FakeBoclipsClient();
+
+    apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: false });
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/explore/openstax']}>
+        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByText('Page not found!')).toBeVisible();
+  });
 });
