@@ -34,6 +34,42 @@ describe('Desktop & Mobile - Navbar', () => {
 
     expect(await wrapper.findByTestId('skip_to_content')).toBeInTheDocument();
   });
+
+  it(`renders the explore button if user has openstax feature`, async () => {
+    window.resizeTo(1200, 1024);
+    const fakeApiClient = new FakeBoclipsClient();
+
+    fakeApiClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+
+    const wrapper = render(
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <BoclipsClientProvider client={fakeApiClient}>
+          <NavbarResponsive />
+        </BoclipsClientProvider>
+      </BoclipsSecurityProvider>,
+    );
+
+    expect(
+      await wrapper.findByRole('button', { name: 'Explore' }),
+    ).toBeVisible();
+  });
+
+  it(`doesn't render the explore button if doesn't user have openstax feature`, async () => {
+    window.resizeTo(1200, 1024);
+    const fakeApiClient = new FakeBoclipsClient();
+
+    fakeApiClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: false });
+
+    const wrapper = render(
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <BoclipsClientProvider client={fakeApiClient}>
+          <NavbarResponsive />
+        </BoclipsClientProvider>
+      </BoclipsSecurityProvider>,
+    );
+
+    expect(await wrapper.queryByRole('button', { name: 'Explore' })).toBeNull();
+  });
 });
 
 describe('Mobile - Navbar', () => {

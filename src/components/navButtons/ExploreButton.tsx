@@ -22,12 +22,7 @@ const ExploreButton = () => {
         [s.active]: isOnExplorePage,
       })}
     >
-      <button
-        type="button"
-        onClick={onClick}
-        data-qa="explore-button"
-        className={s.headerButton}
-      >
+      <button type="button" onClick={onClick} className={s.headerButton}>
         <ExploreIcon className={s.navbarIcon} />
         <span>Explore</span>
       </button>

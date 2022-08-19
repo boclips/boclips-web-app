@@ -1,36 +1,39 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { render } from 'src/testSupport/render';
-import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import Navbar from 'src/components/layout/Navbar';
 import React from 'react';
-import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router-dom';
+import { fireEvent } from '@testing-library/react';
+import App from 'src/App';
 
 describe('explore button', () => {
-  let fakeClient: FakeBoclipsClient;
-
   beforeEach(() => {
     window.resizeTo(1680, 1024);
-
-    fakeClient = new FakeBoclipsClient();
-    fakeClient.users.insertCurrentUser(
-      UserFactory.sample({ features: { BO_WEB_APP_DEV: true } }),
-    );
   });
 
-  const renderExploreButton = () =>
-    render(
-      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <BoclipsClientProvider client={fakeClient}>
-          <Navbar />
-        </BoclipsClientProvider>
-      </BoclipsSecurityProvider>,
+  it('pushes openstax explore page to history', async () => {
+    const history = createMemoryHistory({ initialEntries: ['/'] });
+
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    fakeBoclipsClient.users.setCurrentUserFeatures({
+      BO_WEB_APP_OPENSTAX: true,
+    });
+
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeBoclipsClient}>
+        <Router history={history}>
+          <App
+            boclipsSecurity={stubBoclipsSecurity}
+            apiClient={fakeBoclipsClient}
+          />
+        </Router>
+      </BoclipsClientProvider>,
     );
 
-  it('shows the explore button', async () => {
-    const navbar = renderExploreButton();
+    fireEvent.click(await wrapper.findByRole('button', { name: 'Explore' }));
 
-    expect(await navbar.findByText('Explore')).toBeInTheDocument();
+    expect(history.location.pathname).toEqual('/explore/openstax');
   });
 });
