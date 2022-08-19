@@ -252,7 +252,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
           );
         },
         openstaxBooks: () => {
-          boSetFeatures({ BO_WEB_APP_DEV: true });
+          boSetFeatures({ BO_WEB_APP_OPENSTAX: true });
           boSetOpenstax([
             BookFactory.sample({
               id: 'book-1',
