@@ -67,7 +67,12 @@ const NavbarResponsive = (): ReactElement => {
 
         {mobileView ? (
           <div className={s.buttons}>
-            <button type="button" data-qa="side-menu" onClick={openSideMenu}>
+            <button
+              aria-label="mobile menu"
+              type="button"
+              data-qa="side-menu"
+              onClick={openSideMenu}
+            >
               {showSideMenu ? <CrossIconSVG /> : <MenuIconSVG />}
             </button>
           </div>

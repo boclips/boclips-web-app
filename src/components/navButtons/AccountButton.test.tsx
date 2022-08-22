@@ -7,9 +7,11 @@ import { Constants } from 'src/AppConstants';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import userEvent from '@testing-library/user-event';
+import { axe, toHaveNoViolations } from 'jest-axe';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
 
+expect.extend(toHaveNoViolations);
 describe('account button', () => {
   let fakeClient: FakeBoclipsClient;
 
@@ -105,6 +107,14 @@ describe('account button', () => {
     userEvent.type(navbar.getByText('Log out'), '{esc}');
 
     expect(navbar.queryByText('Log out')).not.toBeInTheDocument();
+  });
+
+  it('a11y - component level', async () => {
+    const wrapper = renderAccountButton();
+
+    const results = await axe(wrapper.container.innerHTML);
+
+    expect(results).toHaveNoViolations();
   });
 
   it('closes the dialog when the dialog loses focus', async () => {

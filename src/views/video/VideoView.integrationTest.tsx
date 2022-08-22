@@ -1,4 +1,10 @@
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
 import React from 'react';
@@ -14,6 +20,10 @@ import { CartItemFactory } from 'boclips-api-client/dist/test-support/CartsFacto
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { sleep } from 'src/testSupport/sleep';
+
+import { axe, toHaveNoViolations } from 'jest-axe';
+
+expect.extend(toHaveNoViolations);
 
 describe('Video View', () => {
   let fakeClient;
@@ -67,12 +77,25 @@ describe('Video View', () => {
     );
   });
 
+  it('a11y tests', async () => {
+    fakeClient.videos.insertVideo(exampleVideo);
+
+    const wrapper = renderVideoView(['/videos/video-id']);
+
+    expect(
+      await wrapper.findByText('the coolest video you ever did see'),
+    ).toBeVisible();
+
+    const results = await axe(wrapper.container.innerHTML);
+
+    expect(results).toHaveNoViolations();
+  });
+
   it('on video page video details are rendered', async () => {
     fakeClient.videos.insertVideo(exampleVideo);
 
     const wrapper = renderVideoView(['/videos/video-id']);
 
-    expect(await wrapper.findByText('video-id')).toBeVisible();
     expect(
       await wrapper.findByText('the coolest video you ever did see'),
     ).toBeVisible();
