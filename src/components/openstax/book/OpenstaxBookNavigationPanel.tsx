@@ -50,7 +50,6 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
   return (
     <>
       <div className={c('flex', s.tocHeader)}>
-        {isNotDesktop && <span />}
         <Typography.H1 size="sm" className="text-gray-900">
           {book.title}
         </Typography.H1>
@@ -62,6 +61,7 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
             iconOnly
             icon={<CloseButtonIcon />}
             aria-label="Close the Table of contents"
+            className={s.closeButton}
           />
         )}
       </div>
@@ -77,24 +77,28 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
           {book.chapters.map((chapter) => (
             <Accordion.Item value={`chapter-${chapter.number}`}>
               <Accordion.Header
-                className="text-gray-700 pt-6 !text-base mb-0.5 pr-6"
+                className="pt-4"
                 asChild
                 aria-label={chapter.displayLabel}
               >
-                <h2>
-                  <div className="flex items-start justify-between">
-                    <div className="font-medium">{chapter.displayLabel}</div>
-                    <Accordion.Trigger
-                      className="pt-1.5 ml-4 right-0"
-                      aria-label={chapter.displayLabel}
-                    >
-                      <ChevronDownIcon aria-hidden className={s.chevronIcon} />
-                    </Accordion.Trigger>
-                  </div>
-                  <div className="text-gray-700 text-sm	mb-2">
+                <Accordion.Trigger
+                  aria-label={chapter.displayLabel}
+                  className="w-full flex flex-col"
+                >
+                  <Typography.H2
+                    size="xs"
+                    className="!text-base w-full font-medium flex justify-between items-center text-left text-gray-700"
+                  >
+                    {chapter.displayLabel}
+                    <ChevronDownIcon
+                      aria-hidden
+                      className={c(s.chevronIcon, 'w-6')}
+                    />
+                  </Typography.H2>
+                  <div className="text-gray-700 text-sm">
                     {getVideoCountLabel(chapter.videoCount)}
                   </div>
-                </h2>
+                </Accordion.Trigger>
               </Accordion.Header>
               <Accordion.Content>
                 {chapter.videoIds?.length > 0 &&
