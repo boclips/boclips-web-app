@@ -89,10 +89,13 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
                     size="xs"
                     className="!text-base w-full font-medium flex justify-between items-center text-left text-gray-700"
                   >
-                    {chapter.displayLabel}
+                    <span className="w-4/5">{chapter.displayLabel}</span>
                     <ChevronDownIcon
                       aria-hidden
-                      className={c(s.chevronIcon, 'w-6')}
+                      className={c(
+                        s.chevronIcon,
+                        'md:w-6 lg:w-auto lg:relative lg:right-8',
+                      )}
                     />
                   </Typography.H2>
                   <div className="text-gray-700 text-sm">
