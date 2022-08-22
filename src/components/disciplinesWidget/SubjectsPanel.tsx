@@ -29,9 +29,6 @@ const SubjectsPanel = React.forwardRef(
           {subjects
             ?.sort((s1, s2) => s1.name.localeCompare(s2.name))
             .map((subject) => {
-              const link = new URLSearchParams();
-              link.append('q', subject.name);
-              link.append('subject', subject.id);
               return (
                 <SubjectLink subject={subject}>
                   <Typography.Body weight="medium">

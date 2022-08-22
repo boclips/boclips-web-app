@@ -55,8 +55,7 @@ describe('HomeView', () => {
     });
 
     const expectedPathname = '/videos';
-    const subjectNameLink = disciplines[0].subjects[1].name.replace(/ /g, '+');
-    const expectedSearch = `?q=${subjectNameLink}&subject=${disciplines[0].subjects[1].id}`;
+    const expectedSearch = `?subject=${disciplines[0].subjects[1].id}`;
 
     const history = createBrowserHistory();
 

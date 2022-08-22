@@ -13,7 +13,6 @@ export const SubjectLink = ({
   children,
 }: React.PropsWithChildren<Props>) => {
   const link = new URLSearchParams();
-  link.append('q', subject.name);
   link.append('subject', subject.id);
   return (
     <Link
