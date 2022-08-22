@@ -32,10 +32,13 @@
   --bo-ui-button-svg-width: 1.5rem;
   --bo-ui-button-padding: 0.75rem 0rem;
   @apply flex items-center justify-between;
-  position: relative;
-  padding-bottom: 0.5rem;
+  padding: 2rem 0 0.5rem 0;
+  position: sticky;
+  top: 0;
+  background: @white;
+  z-index: 1;
 
-  h1{
+  h1 {
     width: 100%;
     text-align: center;
   }
@@ -51,14 +54,15 @@
   }
 
   @media screen and (min-width: @screen-lg) {
-    @apply -mt-6 pt-6 border-r border-gray-400 border-b pb-4;
+    @apply pt-6 border-r border-gray-400 border-b pb-4;
     border-right-style: solid;
     border-bottom-style: solid;
+    top: 74px;
   }
 }
 
 .tocContent {
-  [data-state="open"][role="region"]{
+  [data-state='open'][role='region'] {
     padding-bottom: 1rem;
   }
 
@@ -110,6 +114,7 @@
 
 .chevronIcon {
   transition: transform 0ms;
+
   [data-state='open'] & {
     transform: rotate(180deg);
   }
