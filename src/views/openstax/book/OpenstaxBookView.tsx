@@ -25,14 +25,15 @@ const OpenstaxBookView = () => {
   const columnStart = isDesktop ? 'col-start-8' : 'col-start-2';
 
   return (
-    <Layout rowsSetup="grid-rows-default-view" responsiveLayout>
+    <Layout rowsSetup="grid-rows-openstax-detailed-view" responsiveLayout>
       <Navbar />
       {book && (
         <>
           {tableOfContentsIsVisible && (
             <div
-              className={c('col-start-2 col-end-8', {
+              className={c('col-start-2 col-end-8 row-start-2 row-end-2', {
                 [s.overlay]: !isDesktop,
+                [s.sticky]: isDesktop,
               })}
             >
               <OpenstaxBookNavigationPanel
@@ -41,7 +42,7 @@ const OpenstaxBookView = () => {
               />
             </div>
           )}
-          <div className={c(columnStart, 'col-end-26')}>
+          <div className={c(columnStart, 'col-end-26 row-start-2 row-end-3')}>
             <OpenstaxBookHeader
               bookTitle={book.title}
               openCourseContent={showTableOfContent}
