@@ -13,6 +13,11 @@ import { Book } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
 import { createBrowserHistory } from 'history';
+import {
+  resizeToDesktop,
+  resizeToMobile,
+  resizeToTablet,
+} from 'src/testSupport/resizeTo';
 
 describe('OpenstaxBookView', () => {
   it('renders basic book details', async () => {
@@ -139,13 +144,15 @@ describe('OpenstaxBookView', () => {
     expect(wrapper.getByText('Farmer Joe')).toBeVisible();
   });
 
-  describe('back button to explore page', () => {
-    [
-      { title: 'desktop', resize: () => resizeToDesktop() },
-      { title: 'tablet', resize: () => resizeToTablet() },
-    ].forEach((testParams) => {
-      it(`it renders back button on ${testParams.title}`, async () => {
-        testParams.resize();
+  describe.each([
+    ['desktop', resizeToDesktop],
+    ['tablet', resizeToTablet],
+    ['mobile', resizeToMobile],
+  ])(
+    'back button to explore page on %s',
+    (_deviceType: string, resize: () => void) => {
+      it('renders back button', async () => {
+        resize();
         const book: Book = BookFactory.sample({
           id: 'ducklings',
           title: 'Everything to know about ducks',
@@ -173,8 +180,8 @@ describe('OpenstaxBookView', () => {
         ).toBeVisible();
       });
 
-      it(`back button on ${testParams.title} navigates back to explore page`, async () => {
-        testParams.resize();
+      it(`navigates back to explore page when clicked`, async () => {
+        resize();
         const book: Book = BookFactory.sample({
           id: 'ducklings',
           title: 'Everything to know about ducks',
@@ -204,78 +211,78 @@ describe('OpenstaxBookView', () => {
 
         expect(browserHistory.location.pathname).toEqual('/explore/openstax');
       });
-    });
+    },
+  );
+});
+
+describe('mobile/tablet view', () => {
+  beforeEach(() => {
+    resizeToTablet();
   });
 
-  describe('mobile/tablet view', () => {
-    beforeEach(() => {
-      resizeToTablet();
+  it('will show the navigation view when clicking course content button', async () => {
+    const book: Book = BookFactory.sample({
+      id: 'ducklings',
+      title: 'All about ducks',
     });
 
-    it('will show the navigation view when clicking course content button', async () => {
-      const book: Book = BookFactory.sample({
-        id: 'ducklings',
-        title: 'All about ducks',
-      });
+    const wrapper = renderBookView(book);
 
-      const wrapper = renderBookView(book);
-
-      const courseContentButton = await wrapper.findByRole('button', {
-        name: 'Course content',
-      });
-
-      expect(getTableOfContent(book, wrapper)).toBeNull();
-
-      fireEvent.click(courseContentButton);
-
-      expect(getTableOfContent(book, wrapper)).toBeVisible();
+    const courseContentButton = await wrapper.findByRole('button', {
+      name: 'Course content',
     });
 
-    it('will close the navigation view, if close is clicked', async () => {
-      const book: Book = BookFactory.sample({
-        id: 'ducklings',
-        title: 'All about ducks',
-      });
+    expect(getTableOfContent(book, wrapper)).toBeNull();
 
-      const wrapper = renderBookView(book);
+    fireEvent.click(courseContentButton);
 
-      const courseContentButton = await wrapper.findByRole('button', {
-        name: 'Course content',
-      });
+    expect(getTableOfContent(book, wrapper)).toBeVisible();
+  });
 
-      fireEvent.click(courseContentButton);
-
-      const closeTableOfContent = wrapper.getByRole('button', {
-        name: 'Close the Table of contents',
-      });
-
-      fireEvent.click(closeTableOfContent);
-      expect(getTableOfContent(book, wrapper)).toBeNull();
+  it('will close the navigation view, if close is clicked', async () => {
+    const book: Book = BookFactory.sample({
+      id: 'ducklings',
+      title: 'All about ducks',
     });
 
-    it('back button is not visible in course content panel', async () => {
-      const book: Book = BookFactory.sample({
-        id: 'ducklings',
-        title: 'All about ducks',
-      });
+    const wrapper = renderBookView(book);
 
-      const wrapper = renderBookView(book);
-
-      const courseContentButton = await wrapper.findByRole('button', {
-        name: 'Course content',
-      });
-      fireEvent.click(courseContentButton);
-
-      const tableOfContentPanel = await wrapper.getByTestId(
-        'table of contents panel',
-      );
-
-      expect(
-        await within(tableOfContentPanel).queryByRole('button', {
-          name: 'Back',
-        }),
-      ).toBeNull();
+    const courseContentButton = await wrapper.findByRole('button', {
+      name: 'Course content',
     });
+
+    fireEvent.click(courseContentButton);
+
+    const closeTableOfContent = wrapper.getByRole('button', {
+      name: 'Close the Table of contents',
+    });
+
+    fireEvent.click(closeTableOfContent);
+    expect(getTableOfContent(book, wrapper)).toBeNull();
+  });
+
+  it('back button is not visible in course content panel', async () => {
+    const book: Book = BookFactory.sample({
+      id: 'ducklings',
+      title: 'All about ducks',
+    });
+
+    const wrapper = renderBookView(book);
+
+    const courseContentButton = await wrapper.findByRole('button', {
+      name: 'Course content',
+    });
+    fireEvent.click(courseContentButton);
+
+    const tableOfContentPanel = await wrapper.getByTestId(
+      'table of contents panel',
+    );
+
+    expect(
+      await within(tableOfContentPanel).queryByRole('button', {
+        name: 'Back',
+      }),
+    ).toBeNull();
   });
 });
 
@@ -313,12 +320,4 @@ const setUpClientWithBook = (book: Book) => {
   client.openstax.setOpenstaxBooks([book]);
   client.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
   return client;
-};
-
-const resizeToDesktop = () => {
-  window.resizeTo(1500, 1024);
-};
-
-const resizeToTablet = () => {
-  window.resizeTo(750, 1024);
 };
