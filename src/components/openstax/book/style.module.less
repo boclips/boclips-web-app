@@ -108,7 +108,7 @@
 }
 
 .sectionAnchor {
-  &:focus > h3 > span {
+  &:focus-visible > h3 > span {
     outline: @focus-outline;
     outline-offset: @focus-outline-offset;
     border-radius: 0.25rem;
@@ -116,6 +116,7 @@
 }
 
 .selectedSection {
+  @apply text-blue-700 font-medium;
   background-color: @blue-100;
   border-right: @blue-800 6px solid;
 }
