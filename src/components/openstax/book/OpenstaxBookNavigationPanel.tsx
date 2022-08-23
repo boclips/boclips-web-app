@@ -10,6 +10,9 @@ import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
 import { HashLink } from 'react-router-hash-link';
 import * as Accordion from '@radix-ui/react-accordion';
 import ChevronDownIcon from 'src/resources/icons/chevron-down.svg';
+import { TextButton } from 'src/components/common/textButton/TextButton';
+import { useHistory } from 'react-router-dom';
+import BackArrow from 'src/resources/icons/back-arrow.svg';
 
 interface Props {
   book: OpenstaxBook;
@@ -20,10 +23,15 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
   const breakpoint = useMediaBreakPoint();
   const isNotDesktop = breakpoint.type !== 'desktop';
   const [selectedSection, setSelectedSection] = useState<string>('');
+  const history = useHistory();
 
   const handleSectionClick = (sectionLabel: string) => {
     setSelectedSection(sectionLabel);
     onClose();
+  };
+
+  const goToExplorePage = () => {
+    history.push('/explore/openstax');
   };
 
   const isSelected = (sectionId: string) => selectedSection === sectionId;
@@ -49,21 +57,30 @@ export const OpenstaxBookNavigationPanel = ({ book, onClose }: Props) => {
 
   return (
     <>
-      <div className={c('flex', s.tocHeader)}>
-        <Typography.H1 size="sm" className="text-gray-900">
-          {book.title}
-        </Typography.H1>
-        {isNotDesktop && (
-          <Button
-            onClick={onClose}
-            text="Close"
-            type="label"
-            iconOnly
-            icon={<CloseButtonIcon />}
-            aria-label="Close the Table of contents"
-            className={s.closeButton}
+      <div data-qa="table of contents panel" className={s.tocHeaderWrapper}>
+        {!isNotDesktop && (
+          <TextButton
+            onClick={goToExplorePage}
+            text="Back"
+            icon={<BackArrow />}
           />
         )}
+        <div className={c('flex', s.tocHeader)}>
+          <Typography.H1 size="sm" className="text-gray-900">
+            {book.title}
+          </Typography.H1>
+          {isNotDesktop && (
+            <Button
+              onClick={onClose}
+              text="Close"
+              type="label"
+              iconOnly
+              icon={<CloseButtonIcon />}
+              aria-label="Close the Table of contents"
+              className={s.closeButton}
+            />
+          )}
+        </div>
       </div>
       <nav
         className={s.tocContent}

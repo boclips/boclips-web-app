@@ -26,6 +26,16 @@
   color: @gray-700;
 }
 
+.tocHeaderWrapper {
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  padding-top: 0.5rem;
+  position: sticky;
+  background: @white;
+  z-index: 1;
+}
+
 .tocHeader {
   --bo-ui-button-outline-background-color-hover: none;
   --bo-ui-button-svg-height: 1.5rem;
@@ -33,10 +43,7 @@
   --bo-ui-button-padding: 0.75rem 0rem;
   @apply flex items-center justify-between;
   padding: 2rem 0 0.5rem 0;
-  position: sticky;
-  top: 0;
   background: @white;
-  z-index: 1;
 
   h1 {
     width: 100%;
@@ -54,7 +61,7 @@
   }
 
   @media screen and (min-width: @screen-lg) {
-    @apply pt-6 border-r border-gray-400 border-b pb-4;
+    @apply pt-4 border-r border-gray-400 border-b pb-6;
     border-right-style: solid;
     border-bottom-style: solid;
     position: sticky;

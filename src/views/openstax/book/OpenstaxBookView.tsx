@@ -11,6 +11,9 @@ import { OpenstaxBookHeader } from 'src/components/openstax/book/OpenstaxBookHea
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import s from 'src/views/openstax/book/style.module.less';
 import c from 'classnames';
+import { TextButton } from 'src/components/common/textButton/TextButton';
+import { useHistory } from 'react-router-dom';
+import BackArrow from 'src/resources/icons/back-arrow.svg';
 
 const OpenstaxBookView = () => {
   const { id: bookId } = useParams<PathWithId>();
@@ -18,11 +21,16 @@ const OpenstaxBookView = () => {
   const isDesktop = useMediaBreakPoint().type === 'desktop';
   const [tableOfContentsIsOpen, setTableOfContentsIsOpen] = useState(false);
   const tableOfContentsIsVisible = tableOfContentsIsOpen || isDesktop;
+  const history = useHistory();
 
   const showTableOfContent = () => setTableOfContentsIsOpen(true);
   const hideTableOfContent = () => setTableOfContentsIsOpen(false);
 
   const columnStart = isDesktop ? 'col-start-8' : 'col-start-2';
+
+  const goToExplorePage = () => {
+    history.push('/explore/openstax');
+  };
 
   return (
     <Layout rowsSetup="grid-rows-openstax-detailed-view" responsiveLayout>
@@ -43,6 +51,13 @@ const OpenstaxBookView = () => {
             </div>
           )}
           <div className={c(columnStart, 'col-end-26 row-start-2 row-end-3')}>
+            {!isDesktop && (
+              <TextButton
+                onClick={goToExplorePage}
+                text="Back"
+                icon={<BackArrow />}
+              />
+            )}
             <OpenstaxBookHeader
               bookTitle={book.title}
               openCourseContent={showTableOfContent}

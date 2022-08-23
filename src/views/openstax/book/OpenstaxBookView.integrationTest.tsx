@@ -4,7 +4,7 @@ import {
   RenderResult,
   within,
 } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Router } from 'react-router-dom';
 import App from 'src/App';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
@@ -12,10 +12,11 @@ import React from 'react';
 import { Book } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
+import { createBrowserHistory } from 'history';
 
 describe('OpenstaxBookView', () => {
   it('renders basic book details', async () => {
-    window.resizeTo(1500, 1024);
+    resizeToDesktop();
     const book: Book = BookFactory.sample({
       id: 'ducklings',
       title: 'Everything to know about ducks',
@@ -91,7 +92,7 @@ describe('OpenstaxBookView', () => {
   });
 
   it('renders section video cards with only thumbnail', async () => {
-    window.resizeTo(1500, 1024);
+    resizeToDesktop();
     const book: Book = BookFactory.sample({
       id: 'ducklings',
       title: 'Everything to know about ducks',
@@ -138,9 +139,77 @@ describe('OpenstaxBookView', () => {
     expect(wrapper.getByText('Farmer Joe')).toBeVisible();
   });
 
+  describe('back button to explore page', () => {
+    [
+      { title: 'desktop', resize: () => resizeToDesktop() },
+      { title: 'tablet', resize: () => resizeToTablet() },
+    ].forEach((testParams) => {
+      it(`it renders back button on ${testParams.title}`, async () => {
+        testParams.resize();
+        const book: Book = BookFactory.sample({
+          id: 'ducklings',
+          title: 'Everything to know about ducks',
+          subject: 'Essentials',
+          chapters: [
+            {
+              title: 'Introduction',
+              number: 1,
+              videos: [VideoFactory.sample({ title: 'Chapter video' })],
+              videoIds: ['1'],
+              sections: [],
+            },
+          ],
+        });
+        const client = setUpClientWithBook(book);
+
+        const wrapper = render(
+          <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
+            <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+          </MemoryRouter>,
+        );
+
+        expect(
+          await wrapper.findByRole('button', { name: 'Back' }),
+        ).toBeVisible();
+      });
+
+      it(`back button on ${testParams.title} navigates back to explore page`, async () => {
+        testParams.resize();
+        const book: Book = BookFactory.sample({
+          id: 'ducklings',
+          title: 'Everything to know about ducks',
+          subject: 'Essentials',
+          chapters: [
+            {
+              title: 'Introduction',
+              number: 1,
+              videos: [VideoFactory.sample({ title: 'Chapter video' })],
+              videoIds: ['1'],
+              sections: [],
+            },
+          ],
+        });
+        const client = setUpClientWithBook(book);
+
+        const browserHistory = createBrowserHistory();
+        browserHistory.push({ pathname: '/explore/openstax/ducklings' });
+        const wrapper = render(
+          <Router history={browserHistory}>
+            <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+          </Router>,
+        );
+
+        const backButton = await wrapper.findByRole('button', { name: 'Back' });
+        fireEvent.click(backButton);
+
+        expect(browserHistory.location.pathname).toEqual('/explore/openstax');
+      });
+    });
+  });
+
   describe('mobile/tablet view', () => {
     beforeEach(() => {
-      window.resizeTo(750, 1024);
+      resizeToTablet();
     });
 
     it('will show the navigation view when clicking course content button', async () => {
@@ -183,6 +252,30 @@ describe('OpenstaxBookView', () => {
       fireEvent.click(closeTableOfContent);
       expect(getTableOfContent(book, wrapper)).toBeNull();
     });
+
+    it('back button is not visible in course content panel', async () => {
+      const book: Book = BookFactory.sample({
+        id: 'ducklings',
+        title: 'All about ducks',
+      });
+
+      const wrapper = renderBookView(book);
+
+      const courseContentButton = await wrapper.findByRole('button', {
+        name: 'Course content',
+      });
+      fireEvent.click(courseContentButton);
+
+      const tableOfContentPanel = await wrapper.getByTestId(
+        'table of contents panel',
+      );
+
+      expect(
+        await within(tableOfContentPanel).queryByRole('button', {
+          name: 'Back',
+        }),
+      ).toBeNull();
+    });
   });
 });
 
@@ -220,4 +313,12 @@ const setUpClientWithBook = (book: Book) => {
   client.openstax.setOpenstaxBooks([book]);
   client.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
   return client;
+};
+
+const resizeToDesktop = () => {
+  window.resizeTo(1500, 1024);
+};
+
+const resizeToTablet = () => {
+  window.resizeTo(750, 1024);
 };
