@@ -67,7 +67,7 @@ const NavbarResponsive = (): ReactElement => {
 
         {mobileView ? (
           <div className={s.buttons}>
-            <button type="button" data-qa="side-menu" onClick={openSideMenu}>
+            <button type="button" onClick={openSideMenu} aria-label="Menu">
               {showSideMenu ? <CrossIconSVG /> : <MenuIconSVG />}
             </button>
           </div>
@@ -94,7 +94,7 @@ const NavbarResponsive = (): ReactElement => {
             <span>{user.email}</span>
           </div>
           <div className={s.buttons}>
-            <FeatureGate feature="BO_WEB_APP_DEV">
+            <FeatureGate feature="BO_WEB_APP_OPENSTAX">
               <Link to="/explore/openstax">Explore</Link>
             </FeatureGate>
             <Link to="/library">Your library</Link>
