@@ -1,0 +1,79 @@
+@import '~@boclips-ui/styles/src/colors';
+@import '~@boclips-ui/styles/src/breakpoints';
+@import '~@boclips-ui/styles/src/focus';
+
+.bookList {
+  display: grid;
+  grid-gap: 1.5rem;
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: calc(100% + 3rem);
+    background: @blue-100;
+    top: -1.5rem;
+  }
+}
+
+.arrowIcon {
+  height: 17px;
+  width: 10px;
+}
+
+.bookCard {
+  display: flex;
+  flex-direction: row;
+  border-radius: 0.5rem;
+  height: 116px;
+  border: 2px solid @blue-100;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  justify-content: space-between;
+  align-items: center;
+  background: @white;
+
+  &:hover {
+    border: 2px solid @gray-700;
+  }
+
+  #focus;
+
+  .bookTitle {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-left: 6.875rem;
+  }
+
+  .arrow {
+    background: @blue-100;
+    border-radius: 100%;
+    height: 64px;
+    width: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1.5rem;
+
+    svg {
+      color: @blue-700;
+    }
+  }
+}
+
+@media screen and (min-width: @screen-sm) {
+  .bookList {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (min-width: @screen-lg) {
+  .bookList {
+    grid-template-columns: 1fr 1fr;
+  }
+}

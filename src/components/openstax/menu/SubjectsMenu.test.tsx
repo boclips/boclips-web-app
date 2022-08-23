@@ -2,7 +2,7 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { render } from 'src/testSupport/render';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import React from 'react';
-import { Menu } from './Menu';
+import { SubjectsMenu } from './SubjectsMenu';
 
 describe('Openstax book menu', () => {
   it(`displays all subjects`, async () => {
@@ -12,7 +12,11 @@ describe('Openstax book menu', () => {
 
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
-        <Menu subjects={subjects} currentSubject="" onClick={() => {}} />
+        <SubjectsMenu
+          subjects={subjects}
+          currentSubject=""
+          onClick={() => {}}
+        />
       </BoclipsClientProvider>,
     );
 

@@ -69,7 +69,7 @@ const PlaylistView = lazyWithRetry(
 );
 
 const ExploreView = lazyWithRetry(
-  () => import('src/views/explore/ExploreView'),
+  () => import('src/views/openstax/explore/ExploreView'),
 );
 
 const OpenstaxBookView = lazyWithRetry(
