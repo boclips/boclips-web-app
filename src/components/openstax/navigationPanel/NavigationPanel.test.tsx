@@ -1,6 +1,6 @@
 import { render } from 'src/testSupport/render';
 import React from 'react';
-import { OpenstaxBookNavigationPanel } from 'src/components/openstax/book/OpenstaxBookNavigationPanel';
+import { NavigationPanel } from 'src/components/openstax/navigationPanel/NavigationPanel';
 import {
   ChapterFactory,
   SectionFactory,
@@ -9,9 +9,12 @@ import { fireEvent } from '@testing-library/react';
 import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
+import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 
 describe('OpenstaxBookNavigationPanel', () => {
-  it('renders book title with chapters and sections', () => {
+  it('renders book title with chapters and sections', async () => {
+    window.resizeTo(1500, 1024);
+
     const book: OpenstaxBook = OpenstaxBookFactory.sample({
       title: 'should show book title',
       chapters: [
@@ -29,11 +32,14 @@ describe('OpenstaxBookNavigationPanel', () => {
         }),
       ],
     });
+
     const wrapper = render(
-      <OpenstaxBookNavigationPanel book={book} onClose={jest.fn} />,
+      <OpenstaxMobileMenuProvider>
+        <NavigationPanel book={book} />
+      </OpenstaxMobileMenuProvider>,
     );
 
-    const bookTitle = wrapper.getByRole('heading', { level: 1 });
+    const bookTitle = await wrapper.findByRole('heading', { level: 1 });
     expect(bookTitle).toBeVisible();
     expect(bookTitle).toHaveTextContent('should show book title');
 
@@ -54,6 +60,8 @@ describe('OpenstaxBookNavigationPanel', () => {
   });
 
   it('renders Chapter Overview when chapter has videos mapped as the first section', () => {
+    window.resizeTo(1500, 1024);
+
     const book: OpenstaxBook = OpenstaxBookFactory.sample({
       chapters: [
         ChapterFactory.sample({
@@ -63,15 +71,18 @@ describe('OpenstaxBookNavigationPanel', () => {
       ],
     });
     const wrapper = render(
-      <OpenstaxBookNavigationPanel book={book} onClose={jest.fn} />,
+      <OpenstaxMobileMenuProvider>
+        <NavigationPanel book={book} />
+      </OpenstaxMobileMenuProvider>,
     );
-
     const sections = wrapper.getAllByRole('heading', { level: 3 });
     expect(sections[0]).toBeVisible();
     expect(sections[0]).toHaveTextContent('Chapter overview');
   });
 
   it('will not show Chapter overview if there are no videos mapped to only the chapter', () => {
+    window.resizeTo(1500, 1024);
+
     const book: OpenstaxBook = OpenstaxBookFactory.sample({
       chapters: [
         ChapterFactory.sample({
@@ -81,19 +92,20 @@ describe('OpenstaxBookNavigationPanel', () => {
       ],
     });
     const wrapper = render(
-      <OpenstaxBookNavigationPanel book={book} onClose={jest.fn} />,
+      <OpenstaxMobileMenuProvider>
+        <NavigationPanel book={book} />
+      </OpenstaxMobileMenuProvider>,
     );
-
     expect(wrapper.queryByText('Chapter overview')).toBeNull();
   });
 
   it('does not render close button in desktop view', () => {
     window.resizeTo(1500, 1024);
+
     const wrapper = render(
-      <OpenstaxBookNavigationPanel
-        book={OpenstaxBookFactory.sample()}
-        onClose={jest.fn}
-      />,
+      <OpenstaxMobileMenuProvider>
+        <NavigationPanel book={OpenstaxBookFactory.sample()} />
+      </OpenstaxMobileMenuProvider>,
     );
 
     expect(
@@ -103,12 +115,11 @@ describe('OpenstaxBookNavigationPanel', () => {
 
   it('renders close button with label in tablet view, which calls callback', () => {
     window.resizeTo(1000, 1024);
-    const spy = jest.fn();
+
     const wrapper = render(
-      <OpenstaxBookNavigationPanel
-        book={OpenstaxBookFactory.sample()}
-        onClose={spy}
-      />,
+      <OpenstaxMobileMenuProvider triggerOpen>
+        <NavigationPanel book={OpenstaxBookFactory.sample()} />
+      </OpenstaxMobileMenuProvider>,
     );
 
     const closeButton = wrapper.getByRole('button', {
@@ -119,17 +130,16 @@ describe('OpenstaxBookNavigationPanel', () => {
 
     fireEvent.click(closeButton);
 
-    expect(spy).toHaveBeenCalled();
+    expect(wrapper.queryByText('button')).toBeNull();
   });
 
   it('renders close button without label in tablet view, which calls callback', () => {
     window.resizeTo(320, 1024);
-    const spy = jest.fn();
+
     const wrapper = render(
-      <OpenstaxBookNavigationPanel
-        book={OpenstaxBookFactory.sample()}
-        onClose={spy}
-      />,
+      <OpenstaxMobileMenuProvider triggerOpen>
+        <NavigationPanel book={OpenstaxBookFactory.sample()} />
+      </OpenstaxMobileMenuProvider>,
     );
 
     const closeButton = wrapper.getByLabelText('Close the Table of contents');
@@ -137,11 +147,12 @@ describe('OpenstaxBookNavigationPanel', () => {
     expect(closeButton).toBeVisible();
     expect(wrapper.queryByText('Close')).toBeNull();
     fireEvent.click(closeButton);
-
-    expect(spy).toHaveBeenCalled();
+    expect(wrapper.queryByText('button')).toBeNull();
   });
 
   it('chapters can be expanded and collapsed, first chapter expanded by default', () => {
+    window.resizeTo(1500, 1024);
+
     const book: OpenstaxBook = OpenstaxBookFactory.sample({
       chapters: [
         ChapterFactory.sample({
@@ -171,7 +182,9 @@ describe('OpenstaxBookNavigationPanel', () => {
       ],
     });
     const wrapper = render(
-      <OpenstaxBookNavigationPanel book={book} onClose={jest.fn} />,
+      <OpenstaxMobileMenuProvider>
+        <NavigationPanel book={book} />
+      </OpenstaxMobileMenuProvider>,
     );
 
     expect(

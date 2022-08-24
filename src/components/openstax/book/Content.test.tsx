@@ -1,12 +1,15 @@
 import React from 'react';
 import { renderWithClients } from 'src/testSupport/render';
-import { OpenstaxBookContent } from 'src/components/openstax/book/OpenstaxBookContent';
+import { Content } from 'src/components/openstax/book/Content';
 import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
+import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 
 describe('OpenstaxBookContent', () => {
   it('shows basic book content', () => {
+    window.resizeTo(1500, 1024);
+
     const book: OpenstaxBook = OpenstaxBookFactory.sample({
       id: 'ducklings',
       title: 'Everything to know about ducks',
@@ -35,7 +38,11 @@ describe('OpenstaxBookContent', () => {
       ],
     });
 
-    const wrapper = renderWithClients(<OpenstaxBookContent book={book} />);
+    const wrapper = renderWithClients(
+      <OpenstaxMobileMenuProvider>
+        <Content book={book} />
+      </OpenstaxMobileMenuProvider>,
+    );
 
     const chapter = wrapper.getByRole('heading', { level: 2 });
     const sections = wrapper.getAllByRole('heading', { level: 3 });

@@ -9,7 +9,7 @@ import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
 interface Props {
   section: Pick<OpenstaxSection, 'videos' | 'displayLabel'>;
 }
-export const OpenstaxChapterSection = ({ section }: Props) => {
+export const ChapterSection = ({ section }: Props) => {
   const videoCount = section.videos?.length;
   const numberOfVideosLabel = `(${getVideoCountLabel(videoCount)})`;
 

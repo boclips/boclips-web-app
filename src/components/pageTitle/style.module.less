@@ -3,11 +3,16 @@
 
 .header {
   @apply col-start-2 col-end-26 row-start-2 row-end-2;
-  
+
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
   justify-content: space-between;
+
+  --bo-ui-button-outline-svg-fill: transparent;
+  --bo-ui-button-outline-background-color-hover: none;
+
+
   @media (min-width: @screen-md) {
     flex-direction: row;
     align-items: center;

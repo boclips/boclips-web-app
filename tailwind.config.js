@@ -23,14 +23,14 @@ module.exports = {
       gridTemplateRows: {
         home: 'auto minmax(0, 458px) auto',
         'home-responsive': 'auto minmax(100%, auto) auto',
-        'navbar-responsive': 'auto auto',
+        'navbar-responsive': 'repeat(2, auto)',
         'default-view': 'auto minmax(0, auto) auto',
         'default-view-with-title':
           'auto minmax(50px, auto) minmax(0, auto) auto',
         'playlist-view':
           'auto minmax(50px, auto) auto auto minmax(0, auto) auto',
-        'explore-view': 'auto auto auto auto auto auto',
-        'openstax-detailed-view': 'auto repeat(2, auto)',
+        'explore-view': 'repeat(6, auto)',
+        'openstax-detailed-view': 'repeat(3, auto)',
         'order-view': 'auto 21px minmax(0, auto) minmax(0, auto) auto',
         'video-view': 'auto minmax(0, auto) repeat(5,auto)',
       },

@@ -1,7 +1,8 @@
 import React from 'react';
 import { renderWithClients } from 'src/testSupport/render';
-import { OpenstaxBookHeader } from 'src/components/openstax/book/OpenstaxBookHeader';
-import { fireEvent, RenderResult } from '@testing-library/react';
+import { Header } from 'src/components/openstax/book/Header';
+import { RenderResult } from '@testing-library/react';
+import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 
 describe('OpenstaxBookHeader', () => {
   it('shows book title', () => {
@@ -30,16 +31,6 @@ describe('OpenstaxBookHeader', () => {
       const wrapper = renderDefaultOpenstaxBookHeader();
       expect(courseContentButton(wrapper)).toBeVisible();
     });
-
-    it('calls callback when course content button is clicked', () => {
-      const spy = jest.fn();
-      const wrapper = renderWithClients(
-        <OpenstaxBookHeader bookTitle="spies" openCourseContent={spy} />,
-      );
-
-      fireEvent.click(courseContentButton(wrapper));
-      expect(spy).toHaveBeenCalled();
-    });
   });
 
   const courseContentButton = (wrapper: RenderResult) =>
@@ -49,6 +40,8 @@ describe('OpenstaxBookHeader', () => {
 
   const renderDefaultOpenstaxBookHeader = (): RenderResult =>
     renderWithClients(
-      <OpenstaxBookHeader bookTitle="spies" openCourseContent={jest.fn} />,
+      <OpenstaxMobileMenuProvider>
+        <Header bookTitle="spies" />
+      </OpenstaxMobileMenuProvider>,
     );
 });

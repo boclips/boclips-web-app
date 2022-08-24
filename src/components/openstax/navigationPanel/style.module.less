@@ -1,0 +1,171 @@
+@import '~@boclips-ui/styles/src/colors';
+@import '~@boclips-ui/styles/src/breakpoints';
+@import '~@boclips-ui/styles/src/focus';
+
+.tocPanel {
+  grid-row-start: 2;
+  grid-row-end: 3;
+  background: @white;
+  z-index: 99;
+}
+
+.tocHeaderWrapper {
+  display: flex;
+  flex-direction: column;
+  background: @white;
+  z-index: 1;
+}
+
+.tocHeader {
+  --bo-ui-button-outline-background-color-hover: none;
+  --bo-ui-button-svg-height: 1.5rem;
+  --bo-ui-button-svg-width: 1.5rem;
+  --bo-ui-button-padding: 0.75rem 0rem;
+  display: flex;
+  justify-items: center;
+  justify-content: space-between;
+  padding: 2rem 0 0.5rem 0;
+  background: @white;
+  position: relative;
+
+  h1 {
+    width: 100%;
+    text-align: center;
+  }
+
+  .closeButton {
+    position: absolute;
+    right: 0;
+  }
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+.tocContent {
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: @blue-500;
+    border-radius: 100vh;
+  }
+
+  [data-state='open'][role='region'] {
+    padding-bottom: 1rem;
+  }
+}
+
+@media screen and (min-width: @screen-sm) {
+  .tocPanel {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    grid-column-start: 2;
+    grid-column-end: 26;
+  }
+
+  .tocContent {
+    padding: 0 1rem 5rem 1rem;
+    height: 100vh;
+    overflow-y: scroll;
+  }
+
+  .tocHeaderWrapper {
+    position: relative;
+    top: 0;
+    padding: 0 1rem;
+  }
+}
+
+@media screen and (min-width: @screen-md) {
+  .tocContent {
+    padding: 0 6.25rem 7rem 6.25rem;
+  }
+
+  .tocHeaderWrapper {
+    padding: 0 6.25rem 1.5rem 6.25rem;
+  }
+}
+
+@media screen and (min-width: @screen-lg) {
+  .tocContent {
+    @apply border-r border-gray-400;
+    padding: 0;
+    border-right-style: solid;
+    height: calc(100vh - 74px - 24px - 119px);
+  }
+
+  .sticky {
+    position: sticky;
+    top: 100px;
+  }
+
+  .tocHeaderWrapper {
+    padding: 0;
+    position: sticky;
+    top: 100px;
+  }
+
+  .tocPanel {
+    height: 100%;
+    width: 100%;
+    grid-column-start: 2;
+    grid-column-end: 8;
+    z-index: 1;
+    position: relative;
+  }
+
+  .tocHeader {
+    @apply border-r border-gray-400 border-b;
+    padding-top: 1rem;
+    padding-bottom: 1.5rem;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    position: sticky;
+    top: 100px;
+  }
+}
+
+.bookHeader {
+  --bo-ui-button-outline-svg-fill: none;
+  --bo-ui-button-svg-height: 1.5rem;
+  --bo-ui-button-svg-width: 1.5rem;
+  --bo-ui-button-outline-background-color-hover: none;
+  --bo-ui-button-padding: 0.75rem 0.5rem;
+}
+
+.courseTitle {
+  color: @gray-800;
+  font-weight: 400;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem;
+  padding: 0.5rem 1.5rem 0.5rem 0;
+
+  &:hover {
+    background-color: @blue-100;
+  }
+}
+
+.sectionAnchor {
+  &:focus > h3 > span {
+    outline: @focus-outline;
+    outline-offset: @focus-outline-offset;
+    border-radius: 0.25rem;
+  }
+}
+
+.selectedSection {
+  background-color: @blue-100;
+  border-right: @blue-800 6px solid;
+}

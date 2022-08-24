@@ -1,6 +1,6 @@
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
-import { OpenstaxChapterSection } from 'src/components/openstax/book/OpenstaxChapterSection';
+import { ChapterSection } from 'src/components/openstax/book/ChapterSection';
 import { OpenstaxChapter } from 'src/types/OpenstaxBook';
 import s from './style.module.less';
 
@@ -8,7 +8,7 @@ interface Props {
   chapter: OpenstaxChapter;
 }
 
-export const OpenstaxBookChapter = ({ chapter }: Props) => {
+export const Chapter = ({ chapter }: Props) => {
   const shouldShowChapterOverview = chapter.videoIds.length > 0;
 
   return (
@@ -17,7 +17,7 @@ export const OpenstaxBookChapter = ({ chapter }: Props) => {
         {chapter.displayLabel}
       </Typography.H2>
       {shouldShowChapterOverview && (
-        <OpenstaxChapterSection
+        <ChapterSection
           section={{ displayLabel: 'Chapter overview', videos: chapter.videos }}
         />
       )}
@@ -26,7 +26,7 @@ export const OpenstaxBookChapter = ({ chapter }: Props) => {
           id={`section-${chapter.number}-${section.number}`}
           className={s.anchor}
         >
-          <OpenstaxChapterSection section={section} />
+          <ChapterSection section={section} />
         </section>
       ))}
     </section>

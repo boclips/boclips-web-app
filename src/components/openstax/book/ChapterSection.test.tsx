@@ -1,5 +1,5 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { OpenstaxChapterSection } from 'src/components/openstax/book/OpenstaxChapterSection';
+import { ChapterSection } from 'src/components/openstax/book/ChapterSection';
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/types';
 import { renderWithClients } from 'src/testSupport/render';
@@ -26,9 +26,7 @@ describe('OpenstaxChapterSection', () => {
         videoIds: videos.map((video) => video.id),
       });
 
-      const wrapper = renderWithClients(
-        <OpenstaxChapterSection section={section} />,
-      );
+      const wrapper = renderWithClients(<ChapterSection section={section} />);
 
       const sectionTitle = wrapper.getByRole('heading', { level: 3 });
 
@@ -49,9 +47,7 @@ describe('OpenstaxChapterSection', () => {
       ],
     });
 
-    const wrapper = renderWithClients(
-      <OpenstaxChapterSection section={section} />,
-    );
+    const wrapper = renderWithClients(<ChapterSection section={section} />);
 
     const playableThumbnail = wrapper.getByRole('button', {
       name: `play ${videoTitle}`,
@@ -66,9 +62,7 @@ describe('OpenstaxChapterSection', () => {
       videos: [],
     });
 
-    const wrapper = renderWithClients(
-      <OpenstaxChapterSection section={section} />,
-    );
+    const wrapper = renderWithClients(<ChapterSection section={section} />);
 
     expect(
       wrapper.getByText(

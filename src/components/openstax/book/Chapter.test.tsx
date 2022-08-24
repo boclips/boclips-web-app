@@ -2,7 +2,7 @@ import { OpenstaxChapter } from 'src/types/OpenstaxBook';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { renderWithClients } from 'src/testSupport/render';
 import React from 'react';
-import { OpenstaxBookChapter } from 'src/components/openstax/book/OpenstaxBookChapter';
+import { Chapter } from 'src/components/openstax/book/Chapter';
 import { OpenstaxChapterFactory } from 'src/testSupport/OpenstaxChapterFactory';
 
 describe('OpenstaxBookChapter', () => {
@@ -12,9 +12,7 @@ describe('OpenstaxBookChapter', () => {
       videoIds: ['1'],
     });
 
-    const wrapper = renderWithClients(
-      <OpenstaxBookChapter chapter={chapter} />,
-    );
+    const wrapper = renderWithClients(<Chapter chapter={chapter} />);
 
     const sections = wrapper.getAllByRole('heading', { level: 3 });
     expect(sections[0]).toBeVisible();
@@ -27,9 +25,7 @@ describe('OpenstaxBookChapter', () => {
       videoIds: [],
     });
 
-    const wrapper = renderWithClients(
-      <OpenstaxBookChapter chapter={chapter} />,
-    );
+    const wrapper = renderWithClients(<Chapter chapter={chapter} />);
 
     expect(wrapper.queryByText('Chapter overview')).toBeNull();
   });
