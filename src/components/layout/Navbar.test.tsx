@@ -3,7 +3,7 @@ import React from 'react';
 import { render } from 'src/testSupport/render';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import NavbarResponsive from 'src/components/layout/Navbar';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import {
   resizeToDesktop,
@@ -13,22 +13,103 @@ import {
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
 
-describe('Desktop & Mobile - Navbar', () => {
-  it('does renders the search bar by default', async () => {
-    render(
+describe('Skip to main content button', () => {
+  it.each([
+    ['desktop', resizeToDesktop],
+    ['mobile', resizeToMobile],
+    ['tablet', resizeToTablet],
+  ])(
+    'is in document on %s',
+    async (_screenType: string, resize: () => void) => {
+      resize();
+
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <NavbarResponsive />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      expect(await wrapper.findByTestId('skip_to_content')).toBeInTheDocument();
+    },
+  );
+});
+
+describe('Menu Hamburger button', () => {
+  const client = new FakeBoclipsClient();
+  let wrapper;
+
+  beforeEach(() => {
+    client.users.insertCurrentUser(
+      UserFactory.sample({
+        firstName: 'Ricky',
+        lastName: 'Julian',
+        email: 'sunnyvale@swearnet.com',
+      }),
+    );
+
+    wrapper = render(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+        <BoclipsClientProvider client={client}>
           <NavbarResponsive />
         </BoclipsClientProvider>
       </BoclipsSecurityProvider>,
     );
-
-    expect(
-      await screen.getByPlaceholderText('Search for videos'),
-    ).toBeVisible();
   });
 
-  it('renders skip to main content button', async () => {
+  it.each([
+    ['mobile', resizeToMobile],
+    ['tablet', resizeToTablet],
+  ])(
+    'opens menu on click on %s',
+    async (_screenType: string, resize: () => void) => {
+      resize();
+
+      fireEvent.click(await wrapper.findByLabelText('Menu'));
+
+      expect(wrapper.getByText('Ricky Julian')).toBeInTheDocument();
+      expect(wrapper.getByText('sunnyvale@swearnet.com')).toBeInTheDocument();
+      expect(wrapper.getByText('Your orders')).toBeInTheDocument();
+      expect(wrapper.getByText('Cart')).toBeInTheDocument();
+      expect(wrapper.getByText('Platform guide')).toBeInTheDocument();
+      expect(wrapper.getByText('Log out')).toBeInTheDocument();
+    },
+  );
+
+  it.each([
+    ['mobile', resizeToMobile],
+    ['tablet', resizeToTablet],
+  ])(
+    'closes menu on click on %s',
+    async (_screenType: string, resize: () => void) => {
+      resize();
+
+      fireEvent.click(await wrapper.findByLabelText('Menu'));
+
+      expect(wrapper.getByText('Ricky Julian')).toBeInTheDocument();
+
+      fireEvent.click(await wrapper.findByLabelText('Menu'));
+
+      expect(wrapper.queryByText('Ricky Julian')).not.toBeInTheDocument();
+    },
+  );
+
+  it('is not visible on desktop', () => {
+    resizeToDesktop();
+
+    expect(wrapper.queryByLabelText('Menu')).toBeNull();
+  });
+});
+
+describe('Search bar', () => {
+  it.each([
+    ['desktop', resizeToDesktop],
+    ['mobile', resizeToMobile],
+    ['tablet', resizeToTablet],
+  ])('is visible on %s', async (_screenType: string, resize: () => void) => {
+    resize();
+
     const wrapper = render(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
@@ -37,120 +118,44 @@ describe('Desktop & Mobile - Navbar', () => {
       </BoclipsSecurityProvider>,
     );
 
-    expect(await wrapper.findByTestId('skip_to_content')).toBeInTheDocument();
+    expect(
+      await wrapper.getByPlaceholderText('Search for videos'),
+    ).toBeVisible();
   });
 });
 
-describe('Mobile - Navbar', () => {
-  beforeEach(() => {
-    window.resizeTo(768, 1024);
-  });
-
-  it('opens menu on hamburger click', async () => {
-    const client = new FakeBoclipsClient();
-
-    client.users.insertCurrentUser(
-      UserFactory.sample({
-        firstName: 'Ricky',
-        lastName: 'Julian',
-        email: 'sunnyvale@swearnet.com',
-      }),
-    );
-
-    render(
-      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <BoclipsClientProvider client={client}>
-          <NavbarResponsive />
-        </BoclipsClientProvider>
-      </BoclipsSecurityProvider>,
-    );
-
-    fireEvent.click(await screen.findByLabelText('Menu'));
-
-    expect(screen.getByText('Ricky Julian')).toBeInTheDocument();
-    expect(screen.getByText('sunnyvale@swearnet.com')).toBeInTheDocument();
-    expect(screen.getByText('Your orders')).toBeInTheDocument();
-    expect(screen.getByText('Cart')).toBeInTheDocument();
-    expect(screen.getByText('Platform guide')).toBeInTheDocument();
-    expect(screen.getByText('Log out')).toBeInTheDocument();
-  });
-
-  it('closes the menu on hamburger click', async () => {
-    const client = new FakeBoclipsClient();
-
-    client.users.insertCurrentUser(
-      UserFactory.sample({
-        firstName: 'Ricky',
-        lastName: 'Julian',
-        email: 'sunnyvale@swearnet.com',
-      }),
-    );
-
-    render(
-      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <BoclipsClientProvider client={client}>
-          <NavbarResponsive />
-        </BoclipsClientProvider>
-      </BoclipsSecurityProvider>,
-    );
-
-    fireEvent.click(await screen.findByLabelText('Menu'));
-
-    expect(screen.getByText('Ricky Julian')).toBeInTheDocument();
-
-    fireEvent.click(await screen.findByLabelText('Menu'));
-
-    expect(screen.queryByText('Ricky Julian')).not.toBeInTheDocument();
-  });
-
-  describe('playlist feature', () => {
-    const client = new FakeBoclipsClient();
-
-    beforeEach(() => {
-      client.users.insertCurrentUser(UserFactory.sample());
-    });
-
-    it('does render your library', async () => {
-      render(
-        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-          <BoclipsClientProvider client={client}>
-            <NavbarResponsive />
-          </BoclipsClientProvider>
-        </BoclipsSecurityProvider>,
-      );
-
-      fireEvent.click(await screen.findByLabelText('Menu'));
-      expect(screen.getByText('Your library')).toBeVisible();
-    });
-  });
-});
-
-describe('Desktop - Navbar', () => {
+describe('Your library in Navbar', () => {
   const client = new FakeBoclipsClient();
+  let wrapper;
 
   beforeEach(() => {
-    window.resizeTo(1680, 1024);
+    client.users.insertCurrentUser(UserFactory.sample());
+
+    wrapper = render(
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <BoclipsClientProvider client={client}>
+          <NavbarResponsive />
+        </BoclipsClientProvider>
+      </BoclipsSecurityProvider>,
+    );
   });
 
-  describe('playlist feature', () => {
-    beforeEach(() => {
-      client.users.insertCurrentUser(UserFactory.sample());
-    });
+  it('is visible on desktop', async () => {
+    resizeToDesktop();
 
-    it('does render your library and icon', async () => {
-      render(
-        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-          <BoclipsClientProvider client={client}>
-            <NavbarResponsive />
-          </BoclipsClientProvider>
-        </BoclipsSecurityProvider>,
-      );
+    expect(
+      await wrapper.findByRole('button', { name: 'Your Library' }),
+    ).toBeVisible();
+  });
 
-      await waitFor(() => {
-        expect(screen.getByTestId('library-button')).toBeVisible();
-        expect(screen.getByText('Your Library')).toBeVisible();
-      });
-    });
+  it.each([
+    ['mobile', resizeToMobile],
+    ['tablet', resizeToTablet],
+  ])('is visible on %s', async (_screenType: string, resize: () => void) => {
+    resize();
+
+    fireEvent.click(await wrapper.findByLabelText('Menu'));
+    expect(wrapper.getByText('Your library')).toBeVisible();
   });
 });
 
@@ -226,9 +231,9 @@ describe('Explore Openstax in Navbar', () => {
       async (_screenType: string, resize: () => void) => {
         resize();
 
-        fireEvent.click(await screen.findByLabelText('Menu'));
+        fireEvent.click(await wrapper.findByLabelText('Menu'));
 
-        expect(screen.queryByText('Explore')).toBeNull();
+        expect(wrapper.queryByText('Explore')).toBeNull();
       },
     );
   });
