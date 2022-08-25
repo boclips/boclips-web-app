@@ -999,9 +999,6 @@ describe('SearchResultsFiltering', () => {
         }),
       ];
 
-      fakeClient.users.insertCurrentUser(
-        UserFactory.sample({ features: { BO_WEB_APP_DEV: true } }),
-      );
       videos.forEach((v) => {
         fakeClient.videos.insertVideo(v);
       });
@@ -1048,9 +1045,6 @@ describe('SearchResultsFiltering', () => {
           cefrLevels: [{ name: 'B1', id: 'B1', hits: 10 }],
         }),
       );
-      fakeClient.users.insertCurrentUser(
-        UserFactory.sample({ features: { BO_WEB_APP_DEV: true } }),
-      );
 
       const wrapper = renderSearchResultsView(['/videos?q=cars&cefr_level=B1']);
 
@@ -1089,9 +1083,6 @@ describe('SearchResultsFiltering', () => {
           cefrLevels: [{ name: 'B1', id: 'B1', hits: 10 }],
         }),
       );
-      fakeClient.users.insertCurrentUser(
-        UserFactory.sample({ features: { BO_WEB_APP_DEV: true } }),
-      );
 
       const wrapper = renderSearchResultsView(['/videos?q=cars']);
 
@@ -1116,45 +1107,6 @@ describe('SearchResultsFiltering', () => {
           name: 'B1 Intermediate',
         }),
       ).toHaveProperty('checked', true);
-    });
-
-    it('does not display the filter if user does not have the BO_WEB_APP_DEV feature flag', async () => {
-      const facets = FacetsFactory.sample({
-        cefrLevels: [
-          {
-            hits: 22,
-            id: 'A1',
-            name: 'A1',
-          },
-          {
-            hits: 33,
-            id: 'B2',
-            name: 'B2',
-          },
-        ],
-      });
-
-      fakeClient.users.insertCurrentUser(
-        UserFactory.sample({ features: { BO_WEB_APP_DEV: false } }),
-      );
-      fakeClient.videos.insertVideo(
-        VideoFactory.sample({
-          id: '1',
-          title: 'hello cars stock',
-          cefrLevel: 'B2',
-        }),
-      );
-      fakeClient.videos.setFacets(facets);
-
-      const wrapper = renderSearchResultsView(['/videos?q=cars']);
-      await waitFor(() => {
-        expect(wrapper.getByText('hello cars stock')).toBeVisible();
-        expect(
-          wrapper.queryByRole('button', {
-            name: 'CEFR Language Level filter panel',
-          }),
-        ).not.toBeInTheDocument();
-      });
     });
   });
 

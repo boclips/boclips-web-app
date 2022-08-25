@@ -15,7 +15,6 @@ import { TextButton } from 'src/components/common/textButton/TextButton';
 import { LanguageFilter } from 'src/components/filterPanel/LanguageFilter';
 import { CefrLevelFilter } from 'src/components/filterPanel/CefrLevelFilter';
 import { SelectedFilters } from './SelectedFilters';
-import { FeatureGate } from '../common/FeatureGate';
 
 export interface DateFilters {
   to: string[];
@@ -100,12 +99,10 @@ export const FilterPanel = ({
             options={options.channels}
             handleChange={handleChange}
           />
-          <FeatureGate feature="BO_WEB_APP_DEV">
-            <CefrLevelFilter
-              options={options.cefrLevels}
-              handleChange={handleChange}
-            />
-          </FeatureGate>
+          <CefrLevelFilter
+            options={options.cefrLevels}
+            handleChange={handleChange}
+          />
           <DurationFilter
             options={options.durations}
             handleChange={handleChange}
