@@ -387,7 +387,7 @@ describe('SearchResults', () => {
       const helmet = Helmet.peek();
 
       await waitFor(() => {
-        expect(helmet.title).toEqual('Boclips');
+        expect(helmet.title).toEqual('CourseSpark');
       });
     });
   });

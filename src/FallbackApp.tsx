@@ -7,7 +7,7 @@ const FallbackView = React.lazy(() => import('./views/fallback/FallbackView'));
 export const FallbackApp = () => {
   return (
     <React.Suspense fallback={<Loading />}>
-      <Helmet title="Boclips" />
+      <Helmet title="CourseSpark" />
       <FallbackView />
     </React.Suspense>
   );

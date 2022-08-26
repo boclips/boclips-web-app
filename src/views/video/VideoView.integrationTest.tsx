@@ -256,7 +256,7 @@ describe('Video View', () => {
 
       expect(await wrapper.findByText('Page not found!')).toBeVisible();
       const helmet = Helmet.peek();
-      expect(helmet.title).toEqual('Boclips');
+      expect(helmet.title).toEqual('CourseSpark');
       console.error = originalConsoleError;
     });
   });

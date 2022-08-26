@@ -128,7 +128,7 @@ const App = ({
                   fallback={<AccessDeniedView />}
                   roles={[ROLES.BOCLIPS_WEB_APP, ROLES.BOCLIPS_WEB_APP_DEMO]}
                 >
-                  <Helmet title="Boclips" />
+                  <Helmet title="CourseSpark" />
                   <Switch>
                     <Route exact path="/">
                       <HomeView />

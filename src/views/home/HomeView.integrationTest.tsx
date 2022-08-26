@@ -30,7 +30,7 @@ describe('HomeView', () => {
     ).toBeInTheDocument();
   });
 
-  it('displays Boclips as window title', async () => {
+  it('displays Coursespark as window title', async () => {
     render(
       <MemoryRouter>
         <App
@@ -42,7 +42,7 @@ describe('HomeView', () => {
 
     const helmet = Helmet.peek();
 
-    expect(helmet.title).toEqual('Boclips');
+    expect(helmet.title).toEqual('CourseSpark');
   });
 
   it('redirects to search (video) page with selected subject filter and query', async () => {
