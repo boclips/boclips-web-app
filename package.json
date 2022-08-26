@@ -122,7 +122,7 @@
     "axios": "^0.26.0",
     "babel-loader": "^8.1.0",
     "boclips-js-security": "11.0.0",
-    "boclips-player": "7.4.1",
+    "boclips-player": "7.5.0",
     "boclips-player-react": "2.9.2",
     "copy-webpack-plugin": "^6.2.1",
     "dateformat": "^4.4.1",
