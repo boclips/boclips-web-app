@@ -9,6 +9,7 @@ import s from './style.module.less';
 interface Props {
   book: OpenstaxBook;
 }
+
 export const BookCard = ({ book }: Props) => {
   const history = useHistory();
 
@@ -24,6 +25,16 @@ export const BookCard = ({ book }: Props) => {
       aria-label={`book ${book.title}`}
       className={s.bookCard}
     >
+      <div className={s.img}>
+        {book.logoUrl.length > 0 ? (
+          <img src={book.logoUrl} alt={`${book.title} cover`} />
+        ) : (
+          <img
+            src="https://placeholder.pics/svg/77x100"
+            alt={`${book.title} generic cover`}
+          />
+        )}
+      </div>
       <div className={s.bookTitle}>
         <Typography.H2 size="sm" className="font-medium">
           {book.title}

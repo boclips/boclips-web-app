@@ -17,6 +17,7 @@ describe('OpenstaxBook converter', () => {
       subject: 'Maths',
       title: 'Algebra and Trigonometry',
       chapters: [],
+      logoUrl: 'svg.com',
     };
 
     const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
@@ -24,6 +25,7 @@ describe('OpenstaxBook converter', () => {
     expect(openstaxBook.id).toEqual('bookid');
     expect(openstaxBook.subject).toEqual('Maths');
     expect(openstaxBook.title).toEqual('Algebra and Trigonometry');
+    expect(openstaxBook.logoUrl).toEqual('svg.com');
   });
 
   it('calculates book video count', () => {

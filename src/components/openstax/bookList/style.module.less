@@ -36,6 +36,7 @@
   justify-content: space-between;
   align-items: center;
   background: @white;
+  padding: 0.5rem 1rem 0.5rem 1rem;
 
   &:hover {
     border: 2px solid @gray-700;
@@ -43,11 +44,22 @@
 
   #focus;
 
+  .img {
+    align-self: center;
+    align-items: center;
+
+    img {
+      width: 77px;
+      height: 100%;
+    }
+  }
+
   .bookTitle {
     display: flex;
     flex-direction: column;
     text-align: left;
-    margin-left: 6.875rem;
+    margin-left: 1rem;
+    width: 100%;
   }
 
   .arrow {
@@ -58,7 +70,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 1.5rem;
+    flex-shrink: 0;
 
     svg {
       color: @blue-700;
