@@ -8,6 +8,7 @@ import { HashLink } from 'react-router-hash-link';
 
 import c from 'classnames';
 import { useOpenstaxMobileMenu } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
+import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import s from './style.module.less';
 
 interface Props {
@@ -15,14 +16,19 @@ interface Props {
 }
 
 const NavigationPanelBody = ({ book }: Props) => {
+  const currentBreakpoint = useMediaBreakPoint();
   const [selectedSection, setSelectedSection] = useState<string>('');
   const isSelected = (sectionId: string) => selectedSection === sectionId;
   const { setIsOpen } = useOpenstaxMobileMenu();
 
   const scrollWithNavbarOffset = (el) => {
     const yCoordinate = el.getBoundingClientRect().top + window.scrollY;
-    const navbarOffset = -74;
-    window.scrollTo({ top: yCoordinate + navbarOffset, behavior: 'smooth' });
+    const navbarOffset = currentBreakpoint.type === 'desktop' ? -74 : -121;
+    const padding = -16;
+    window.scrollTo({
+      top: yCoordinate + navbarOffset + padding,
+      behavior: 'smooth',
+    });
   };
 
   const renderSectionLevelLabel = (label: string, sectionId: string) => (
