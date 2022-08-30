@@ -12,15 +12,14 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import userEvent from '@testing-library/user-event';
 
 describe('Playlist Body', () => {
-  it('has add to playlist button when playlist has one video', async () => {
-    const fakeClient = new FakeBoclipsClient();
-    const videos = [VideoFactory.sample({ id: 'video-1', title: 'Video One' })];
-    const playlist = CollectionFactory.sample({
+  const getWrapper = (
+    fakeClient = new FakeBoclipsClient(),
+    playlist = CollectionFactory.sample({
       id: '123',
-      videos,
-    });
-
-    const wrapper = render(
+      videos: [],
+    }),
+  ) => {
+    return render(
       <BoclipsClientProvider client={fakeClient}>
         <QueryClientProvider client={new QueryClient()}>
           <MemoryRouter>
@@ -28,6 +27,18 @@ describe('Playlist Body', () => {
           </MemoryRouter>
         </QueryClientProvider>
       </BoclipsClientProvider>,
+    );
+  };
+
+  it('has add to playlist button when playlist has one video', async () => {
+    const videos = [VideoFactory.sample({ id: 'video-1', title: 'Video One' })];
+
+    const wrapper = getWrapper(
+      undefined,
+      CollectionFactory.sample({
+        id: '123',
+        videos,
+      }),
     );
 
     const addToPlaylistButton = await wrapper.findByRole('button', {
@@ -38,19 +49,7 @@ describe('Playlist Body', () => {
   });
 
   it('has information message when no video on a playlist', async () => {
-    const fakeClient = new FakeBoclipsClient();
-    const playlist = CollectionFactory.sample({
-      id: '123',
-      videos: [],
-    });
-
-    const wrapper = render(
-      <BoclipsClientProvider client={fakeClient}>
-        <MemoryRouter>
-          <PlaylistBody playlist={playlist} />
-        </MemoryRouter>
-      </BoclipsClientProvider>,
-    );
+    const wrapper = getWrapper();
 
     expect(
       await wrapper.queryByText('In this playlist:'),
@@ -73,7 +72,6 @@ describe('Playlist Body', () => {
   });
 
   it('playlist card has price info', async () => {
-    const fakeClient = new FakeBoclipsClient();
     const videoWithPrice = VideoFactory.sample({
       title: 'video with price',
       price: {
@@ -87,15 +85,7 @@ describe('Playlist Body', () => {
       videos: [videoWithPrice],
     });
 
-    const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={fakeClient}>
-          <MemoryRouter>
-            <PlaylistBody playlist={playlist} />
-          </MemoryRouter>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
-    );
+    const wrapper = getWrapper(undefined, playlist);
 
     expect(wrapper.getByText(videoWithPrice.title)).toBeInTheDocument();
     expect(wrapper.getByText('$150')).toBeInTheDocument();
@@ -114,15 +104,7 @@ describe('Playlist Body', () => {
     });
     fakeClient.collections.addToFake(playlist);
 
-    const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={fakeClient}>
-          <MemoryRouter>
-            <PlaylistBody playlist={playlist} />
-          </MemoryRouter>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
-    );
+    const wrapper = getWrapper(fakeClient, playlist);
 
     fireEvent.click(
       await wrapper.findByLabelText('Add or remove from playlist'),
@@ -157,15 +139,7 @@ describe('Playlist Body', () => {
     });
     fakeClient.collections.addToFake(playlist);
 
-    const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={fakeClient}>
-          <MemoryRouter>
-            <PlaylistBody playlist={playlist} />
-          </MemoryRouter>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
-    );
+    const wrapper = getWrapper(fakeClient, playlist);
 
     const buttons = await wrapper.findAllByLabelText(
       'Add or remove from playlist',

@@ -28,40 +28,16 @@ const PlaylistBody = ({ playlist }: Props) => {
     }
   };
 
-  const renderVideoCardWithButtons = (video: Video) => (
-    <VideoGridCard
-      video={video}
-      onAddToCart={() => {
-        AnalyticsFactory.appcues().sendEvent(
-          AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE,
-        );
-      }}
-      onCleanupAddToPlaylist={shouldRemoveVideoCardFromView}
-    />
-  );
-
-  const header = isEmptyPlaylist ? undefined : (
-    <Typography.H2
-      size="sm"
-      className="grid-row-start-4 grid-row-end-4 col-start-2 col-end-26 mb-0 text-gray-900"
-    >
-      In this playlist:
-    </Typography.H2>
-  );
-
-  const content = isEmptyPlaylist ? (
-    <Typography.H3 size="xs" weight="regular" data-qa="emptyPlaylistText">
-      Save interesting videos to this playlist. Simply click the
-      <PlaylistAddIcon className={s.addSvg} role="img" />
-      button on any video to get started.
-    </Typography.H3>
-  ) : (
-    playlist.videos.map(renderVideoCardWithButtons)
-  );
-
   return (
     <>
-      {header}
+      {!isEmptyPlaylist && (
+        <Typography.H2
+          size="sm"
+          className="grid-row-start-4 grid-row-end-4 col-start-2 col-end-26 mb-0 text-gray-900"
+        >
+          In this playlist:
+        </Typography.H2>
+      )}
       <main
         tabIndex={-1}
         ref={mainRef}
@@ -77,10 +53,32 @@ const PlaylistBody = ({ playlist }: Props) => {
               )
         }
       >
-        {content}
+        {isEmptyPlaylist ? (
+          <EmptyCopy />
+        ) : (
+          playlist.videos.map((video: Video) => (
+            <VideoGridCard
+              video={video}
+              onAddToCart={() => {
+                AnalyticsFactory.appcues().sendEvent(
+                  AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE,
+                );
+              }}
+              onCleanupAddToPlaylist={shouldRemoveVideoCardFromView}
+            />
+          ))
+        )}
       </main>
     </>
   );
 };
+
+const EmptyCopy = () => (
+  <Typography.H3 size="xs" weight="regular" data-qa="emptyPlaylistText">
+    Save interesting videos to this playlist. Simply click the
+    <PlaylistAddIcon className={s.addSvg} role="img" />
+    button on any video to get started.
+  </Typography.H3>
+);
 
 export default PlaylistBody;
