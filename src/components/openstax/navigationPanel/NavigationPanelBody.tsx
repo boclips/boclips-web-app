@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Accordion from '@radix-ui/react-accordion';
 import { Typography } from '@boclips-ui/typography';
 import ChevronDownIcon from 'src/resources/icons/chevron-down.svg';
@@ -9,6 +9,7 @@ import { HashLink } from 'react-router-hash-link';
 import c from 'classnames';
 import { useOpenstaxMobileMenu } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import { useLocation } from 'react-router-dom';
 import s from './style.module.less';
 
 interface Props {
@@ -17,9 +18,20 @@ interface Props {
 
 const NavigationPanelBody = ({ book }: Props) => {
   const currentBreakpoint = useMediaBreakPoint();
+  const hash = useLocation().hash;
   const [selectedSection, setSelectedSection] = useState<string>('');
   const isSelected = (sectionId: string) => selectedSection === sectionId;
+
   const { setIsOpen } = useOpenstaxMobileMenu();
+
+  useEffect(() => {
+    const sectionId = hash.replace('#', '');
+    const element = document.getElementById(sectionId);
+    if (element !== null && !isSelected(sectionId)) {
+      handleSectionClick(hash);
+      scrollWithNavbarOffset(element);
+    }
+  }, [hash]);
 
   const scrollWithNavbarOffset = (el) => {
     const yCoordinate = el.getBoundingClientRect().top + window.scrollY;
