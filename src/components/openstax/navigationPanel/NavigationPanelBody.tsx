@@ -7,6 +7,7 @@ import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { HashLink } from 'react-router-hash-link';
 
 import c from 'classnames';
+import { useOpenstaxMobileMenu } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 import s from './style.module.less';
 
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
 const NavigationPanelBody = ({ book }: Props) => {
   const [selectedSection, setSelectedSection] = useState<string>('');
   const isSelected = (sectionId: string) => selectedSection === sectionId;
+  const { setIsOpen } = useOpenstaxMobileMenu();
 
   const scrollWithNavbarOffset = (el) => {
     const yCoordinate = el.getBoundingClientRect().top + window.scrollY;
@@ -45,6 +47,7 @@ const NavigationPanelBody = ({ book }: Props) => {
 
   const handleSectionClick = (sectionLabel: string) => {
     setSelectedSection(sectionLabel);
+    setIsOpen(false);
   };
 
   return (
