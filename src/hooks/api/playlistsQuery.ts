@@ -139,7 +139,7 @@ const doGetOwnPlaylists = (client: BoclipsClient) =>
 const doGetOwnAndSharedPlaylists = (client: BoclipsClient) =>
   client.collections
     .getMySavedCollectionsWithoutDetails({ origin: 'BO_WEB_APP' })
-    .then((playlists) => playlists.page);
+    .then((playlists) => playlists);
 
 export const usePlaylistMutation = () => {
   const client = useBoclipsClient();
