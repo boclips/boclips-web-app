@@ -41,7 +41,7 @@ const GridCard = ({
           <Typography.Title2>{name}</Typography.Title2>
         </Link>
       </div>
-      <div>{subheader}</div>
+      {subheader}
       {footer}
     </div>
   );

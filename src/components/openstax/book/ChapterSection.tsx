@@ -14,7 +14,7 @@ export const ChapterSection = ({ section }: Props) => {
   const numberOfVideosLabel = `(${getVideoCountLabel(videoCount)})`;
 
   return (
-    <div className={s.section}>
+    <section className={s.section}>
       <Typography.H3 size="xs" className="text-gray-800 my-4" weight="regular">
         {section.displayLabel}{' '}
         <span className="text-gray-700">{numberOfVideosLabel}</span>
@@ -24,7 +24,7 @@ export const ChapterSection = ({ section }: Props) => {
       ) : (
         renderEmptyMappingMessaging()
       )}
-    </div>
+    </section>
   );
 };
 

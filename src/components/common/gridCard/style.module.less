@@ -6,7 +6,9 @@
   min-height: 330px;
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
   display: grid;
-  grid-template-rows: minmax(min-content, max-content) minmax(min-content, max-content) auto auto;
+  grid-template-rows:
+    minmax(min-content, max-content) minmax(min-content, max-content)
+    auto auto;
 
   &:hover {
     .playerBadge {
@@ -17,11 +19,11 @@
 
 .playerBadge {
   position: absolute;
-  top: .25rem;
-  right: .25rem;
-  border-radius: .25rem;
+  top: 0.25rem;
+  right: 0.25rem;
+  border-radius: 0.25rem;
   background-color: @blue-800;
-  padding: 0 .25rem;
+  padding: 0 0.25rem;
 }
 
 .header {
@@ -48,6 +50,7 @@
   flex-direction: row;
   color: @gray-700;
   margin-left: 0.25rem;
+  align-items: center;
 
   .createdBy {
     display: -webkit-box;
@@ -56,14 +59,17 @@
     overflow: hidden;
   }
 
-  & > div:after {
-    content: "\00B7";
-    padding: 0.25rem;
-    color: @blue-800;
-  }
+  button {
+    position: relative;
+    padding: 0 0.75rem;
 
-  & > div:last-child:after {
-    content: "";
+    &::after {
+      content: '•';
+      padding: 0.25rem;
+      color: @blue-800;
+      position: absolute;
+      left: -0.25rem;
+      top: -0.375rem;
+    }
   }
 }
-

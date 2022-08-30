@@ -87,6 +87,7 @@
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
     "@boclips-ui/age-range": "^1.0.16",
+    "@boclips-ui/badge": "^2.2.19",
     "@boclips-ui/button": "^4.0.7",
     "@boclips-ui/education-level-badge": "^1.0.2",
     "@boclips-ui/filter-badge": "^3.0.1",

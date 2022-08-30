@@ -10,6 +10,7 @@ import { VideoCardButtons } from 'src/components/videoCard/buttons/VideoCardButt
 import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
 import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import { FilterKey } from 'src/types/search/FilterKey';
+import Badge from '@boclips-ui/badge';
 
 interface Props {
   video: Video;
@@ -47,6 +48,8 @@ const VideoGridCard = ({
     }
     subheader={
       <div className={s.videoSubheader}>
+        {video.badges[0] && <Badge value={video.badges[0]} />}
+
         {video.price && (
           <Typography.Body as="div" size="small">
             {createPriceDisplayValue(

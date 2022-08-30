@@ -37,4 +37,27 @@ describe(`VideoGridCard`, () => {
 
     expect(filterSpy).toHaveBeenCalledWith('channel', ['channel-1-id']);
   });
+
+  it('should display only first badge', () => {
+    const video = VideoFactory.sample({
+      createdBy: 'Channel-1',
+      channelId: 'channel-1-id',
+      badges: ['this is badge', 'this is also a badge'],
+    });
+
+    const wrapper = render(
+      <Router history={createMemoryHistory()}>
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <QueryClientProvider client={new QueryClient()}>
+            <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+              <VideoGridCard video={video} onAddToCart={jest.fn()} />
+            </BoclipsSecurityProvider>
+          </QueryClientProvider>
+        </BoclipsClientProvider>
+      </Router>,
+    );
+
+    expect(wrapper.getByText('this is badge')).toBeInTheDocument();
+    expect(wrapper.queryByText('this is also a badge')).not.toBeInTheDocument();
+  });
 });
