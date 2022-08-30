@@ -17,10 +17,17 @@ const NavigationPanelBody = ({ book }: Props) => {
   const [selectedSection, setSelectedSection] = useState<string>('');
   const isSelected = (sectionId: string) => selectedSection === sectionId;
 
+  const scrollWithNavbarOffset = (el) => {
+    const yCoordinate = el.getBoundingClientRect().top + window.scrollY;
+    const navbarOffset = -74;
+    window.scrollTo({ top: yCoordinate + navbarOffset, behavior: 'smooth' });
+  };
+
   const renderSectionLevelLabel = (label: string, sectionId: string) => (
     <HashLink
       className={s.sectionAnchor}
       onClick={() => handleSectionClick(sectionId)}
+      scroll={scrollWithNavbarOffset}
       to={{
         pathname: `/explore/openstax/${book.id}`,
         hash: sectionId,
