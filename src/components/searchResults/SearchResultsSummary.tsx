@@ -10,7 +10,7 @@ export const SearchResultsSummary = ({ count, query }: Props) => {
   return (
     <Typography.Body className="text-gray-800 ml-1 pt-1" aria-live="polite">
       Showing <span data-qa="search-hits">{count}</span> videos
-      {query && ` for "${query}"`}
+      {query?.length > 0 && ` for "${query}"`}
     </Typography.Body>
   );
 };
