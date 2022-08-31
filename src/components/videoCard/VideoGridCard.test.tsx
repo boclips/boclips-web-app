@@ -60,7 +60,7 @@ describe(`VideoGridCard`, () => {
       </Router>,
     );
 
-    expect(wrapper.getByText('this is badge')).toBeInTheDocument();
+    expect(wrapper.getByText('this is a badge')).toBeInTheDocument();
     expect(wrapper.queryByText('this is also a badge')).not.toBeInTheDocument();
   });
 });
