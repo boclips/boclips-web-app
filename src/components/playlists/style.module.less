@@ -2,6 +2,11 @@
 @import '~@boclips-ui/styles/src/breakpoints';
 
 .playlistsWrapper {
+  grid-column-start: 2;
+  grid-column-end: 26;
+}
+
+.skeletonWrapper {
   display: grid;
   grid-column-start: 2;
   grid-column-end: 26;
@@ -178,17 +183,39 @@
   }
 }
 
+.gridView {
+  :global(.ant-list-items) {
+    display: grid;
+    grid-column-start: 2;
+    grid-column-end: 26;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-gap: 1.5rem;
+  }
+
+  .pagination {
+    margin-top: 60px;
+  }
+}
+
+
+
 @media screen and (min-width: @screen-sm) {
   .cardWrapper {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 
-  .playlistsWrapper {
+  .skeletonWrapper {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 
   .playlistHeaderContainer {
     flex-direction: column;
+  }
+
+  .gridView {
+    :global(.ant-list-items) {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
   }
 }
 
@@ -197,12 +224,18 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .playlistsWrapper {
+  .skeletonWrapper {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .playlistHeaderContainer {
     flex-direction: row;
+  }
+
+  .gridView {
+    :global(.ant-list-items) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 }
 
@@ -211,11 +244,17 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .playlistsWrapper {
+  .skeletonWrapper {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .description {
     padding-right: 244px;
+  }
+
+  .gridView {
+    :global(.ant-list-items) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
   }
 }
