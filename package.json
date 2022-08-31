@@ -165,7 +165,7 @@
         1680
       ],
       "minHeight": 1024,
-      "percyCSS": ".plyr__video-wrapper { display: none !important }"
+      "percyCSS": ".plyr__video-wrapper, main button img { display: none !important }"
     }
   }
 }
