@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useOwnAndSharedPlaylistsQuery } from 'src/hooks/api/playlistsQuery';
 import SkeletonTiles from 'src/components/skeleton/Skeleton';
 import Thumbnails from 'src/components/playlists/thumbnails/Thumbnails';
@@ -9,13 +9,16 @@ import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import List from 'antd/lib/list';
 import Pagination from '@boclips-ui/pagination';
+import c from 'classnames';
 import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collections/model/ListViewCollection';
-import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import { getMediaBreakpoint } from '@boclips-ui/use-media-breakpoints';
 import s from './style.module.less';
 import GridCard from '../common/gridCard/GridCard';
+import paginationStyles from '../common/pagination/pagination.module.less';
 
 const Playlists = () => {
-  const currentBreakpoint = useMediaBreakPoint();
+  const PAGE_SIZE = 20;
+  const currentBreakpoint = getMediaBreakpoint();
   const mobileView = currentBreakpoint.type === 'mobile';
 
   const linkCopiedHotjarEvent = () =>
@@ -23,44 +26,47 @@ const Playlists = () => {
 
   const { data: playlists, isLoading } = useOwnAndSharedPlaylistsQuery();
 
+  const [page, setPage] = useState<number>(1);
+
   const handlePageChange = (newPage: number) => {
     window.scrollTo({ top: 0 });
-    paginationPage(newPage - 1);
+    setPage(newPage);
   };
 
   const itemRender = React.useCallback(
-    (page, type) => {
+    (pageNb, type) => {
       return (
         <Pagination
           buttonType={type}
-          page={page}
+          page={pageNb}
           mobileView={mobileView}
-          currentPage={playlists.pageSpec.number + 1}
-          totalItems={Math.ceil(playlists.pageSpec.totalPages)}
+          currentPage={page}
+          totalItems={Math.ceil(playlists.pageSpec.totalElements / PAGE_SIZE)}
         />
       );
     },
-    [mobileView, playlists.pageSpec.number, playlists.pageSpec.totalPages],
+    [mobileView, page, playlists?.pageSpec.totalPages],
   );
 
   return (
     <main tabIndex={-1} className={s.playlistsWrapper}>
       {isLoading ? (
-        <SkeletonTiles className={s.skeletonCard} />
+        <div className={s.skeletonWrapper}>
+          <SkeletonTiles className={s.skeletonCard} numberOfTiles={12} />
+        </div>
       ) : (
         <List
-          data-qa="library-pagination"
           className={s.gridView}
           pagination={{
             total: playlists.pageSpec.totalElements,
-            // className: c(paginationStyles.pagination, {
-            //   [paginationStyles.paginationEmpty]: !videos.length,
-            // }),
+            className: c(paginationStyles.pagination, s.pagination, {
+              [paginationStyles.paginationEmpty]: !playlists.page.length,
+            }),
             hideOnSinglePage: true,
-            pageSize: 10,
+            pageSize: PAGE_SIZE,
             showSizeChanger: false,
-            onChange: null,
-            current: playlists.pageSpec.number + 1,
+            onChange: handlePageChange,
+            current: page,
             showLessItems: mobileView,
             prefixCls: 'bo-pagination',
             itemRender,

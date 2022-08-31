@@ -28,44 +28,48 @@ describe('LibraryView', () => {
     window.resizeTo(1680, 1024);
   });
 
-  it('displays pagination when more than 10 playlists', async () => {
+  it('displays pagination when more than 20 playlists', async () => {
     const client = new FakeBoclipsClient();
     insertUser(client);
-    Array.from(Array(15).keys()).forEach((i) => {
-      const playlist = CollectionFactory.sample({
-        id: `${i}`,
-        title: `Playlist ${i}`,
-      });
-      client.collections.addToFake(playlist);
-    });
+    loadPlaylists(client, 25);
 
     const wrapper = renderLibraryView(client);
     expect(await wrapper.findByText('Playlist 1')).toBeVisible();
-    expect(await wrapper.getByTestId('library-pagination')).toBeInTheDocument();
+    expect(
+      await wrapper.findByRole('button', { name: 'Next page' }),
+    ).toBeVisible();
   });
 
-  xit('renders playlists created by the user', async () => {
+  it(`doesn't display pagination when less than 20 playlists`, async () => {
     const client = new FakeBoclipsClient();
     insertUser(client);
+    loadPlaylists(client, 15);
 
-    const playlists = [
-      CollectionFactory.sample({ id: '1', title: 'Playlist 1' }),
-      CollectionFactory.sample({ id: '2', title: 'Playlist 2' }),
-      CollectionFactory.sample({ id: '3', title: 'Playlist 2' }),
-      CollectionFactory.sample({ id: '4', title: 'Playlist 2' }),
-      CollectionFactory.sample({ id: '5', title: 'Playlist 2' }),
-      CollectionFactory.sample({ id: '6', title: 'Playlist 2' }),
-      CollectionFactory.sample({ id: '7', title: 'Playlist 2' }),
-      CollectionFactory.sample({ id: '8', title: 'Playlist 2' }),
-      CollectionFactory.sample({ id: '9', title: 'Playlist 2' }),
-      CollectionFactory.sample({ id: '10', title: 'Playlist 2' }),
-    ];
+    const wrapper = renderLibraryView(client);
+    expect(await wrapper.findByText('Playlist 1')).toBeVisible();
+    expect(
+      await wrapper.queryByRole('button', { name: 'Next page' }),
+    ).toBeNull();
+  });
 
-    playlists.forEach((it) => client.collections.addToFake(it));
+  it('renders playlists created by the user', async () => {
+    const client = new FakeBoclipsClient();
+    insertUser(client);
+    loadPlaylists(client, 10);
 
     const wrapper = renderLibraryView(client);
 
     expect(await wrapper.findByText('Playlist 1')).toBeVisible();
     expect(await wrapper.findByText('Playlist 2')).toBeVisible();
   });
+
+  function loadPlaylists(client: FakeBoclipsClient, quantity: number) {
+    Array.from(Array(quantity).keys()).forEach((i) => {
+      const playlist = CollectionFactory.sample({
+        id: `${i}`,
+        title: `Playlist ${i}`,
+      });
+      client.collections.addToFake(playlist);
+    });
+  }
 });
