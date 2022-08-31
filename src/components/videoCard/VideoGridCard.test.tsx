@@ -42,7 +42,10 @@ describe(`VideoGridCard`, () => {
     const video = VideoFactory.sample({
       createdBy: 'Channel-1',
       channelId: 'channel-1-id',
-      badges: ['this is badge', 'this is also a badge'],
+      bestFor: [
+        { label: 'this is a badge' },
+        { label: 'this is also a badge' },
+      ],
     });
 
     const wrapper = render(

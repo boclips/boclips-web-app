@@ -48,7 +48,7 @@ const VideoGridCard = ({
     }
     subheader={
       <div className={s.videoSubheader}>
-        {video.badges[0] && <Badge value={video.badges[0]} />}
+        {video.bestFor[0] && <Badge value={video.bestFor[0].label} />}
 
         {video.price && (
           <Typography.Body as="div" size="small">
