@@ -52,24 +52,26 @@
   margin-left: 0.25rem;
   align-items: center;
 
-  .createdBy {
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
   button {
     position: relative;
     padding: 0 0.75rem;
+    height: 24px;
 
-    &::after {
-      content: '•';
-      padding: 0.25rem;
-      color: @blue-800;
-      position: absolute;
-      left: -0.25rem;
-      top: -0.375rem;
+    .createdBy {
+    @apply text-gray-900 hover:underline hover:decoration-solid;
+      max-width: 100px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &::after {
+        content: '•';
+        padding: 0.25rem;
+        color: @blue-800;
+        position: absolute;
+        left: -0.25rem;
+        top: -0.188rem;
+      }
     }
   }
 }

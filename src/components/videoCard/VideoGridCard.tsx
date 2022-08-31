@@ -59,6 +59,7 @@ const VideoGridCard = ({
             )}
           </Typography.Body>
         )}
+
         <button
           onClick={() =>
             handleFilterChange &&
@@ -66,11 +67,7 @@ const VideoGridCard = ({
           }
           type="button"
         >
-          <Typography.Body
-            as="div"
-            size="small"
-            className="text-gray-900 hover:underline hover:decoration-solid"
-          >
+          <Typography.Body as="div" size="small" className={s.createdBy}>
             {video.createdBy}
           </Typography.Body>
         </button>
