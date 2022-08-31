@@ -55,55 +55,58 @@ const Playlists = () => {
           <SkeletonTiles className={s.skeletonCard} numberOfTiles={12} />
         </div>
       ) : (
-        <List
-          className={s.gridView}
-          pagination={{
-            total: playlists.pageSpec.totalElements,
-            className: c(paginationStyles.pagination, s.pagination, {
-              [paginationStyles.paginationEmpty]: !playlists.page.length,
-            }),
-            hideOnSinglePage: true,
-            pageSize: PAGE_SIZE,
-            showSizeChanger: false,
-            onChange: handlePageChange,
-            current: page,
-            showLessItems: mobileView,
-            prefixCls: 'bo-pagination',
-            itemRender,
-          }}
-          dataSource={playlists.page}
-          renderItem={(playlist: ListViewCollection) => (
-            <li data-qa="playlist-card">
-              <GridCard
-                key={playlist.id}
-                link={`/playlists/${playlist.id}`}
-                name={playlist.title}
-                overlay={
-                  playlist.mine === false && (
-                    <div className={s.sharedWithYouOverlay}>
-                      Shared with you
+        playlists.page.length > 0 && (
+          <List
+            data-qa="playlist-grid-container"
+            className={s.gridView}
+            pagination={{
+              total: playlists.pageSpec.totalElements,
+              className: c(paginationStyles.pagination, s.pagination, {
+                [paginationStyles.paginationEmpty]: !playlists.page.length,
+              }),
+              hideOnSinglePage: true,
+              pageSize: PAGE_SIZE,
+              showSizeChanger: false,
+              onChange: handlePageChange,
+              current: page,
+              showLessItems: mobileView,
+              prefixCls: 'bo-pagination',
+              itemRender,
+            }}
+            dataSource={playlists.page}
+            renderItem={(playlist: ListViewCollection) => (
+              <li data-qa="playlist-card">
+                <GridCard
+                  key={playlist.id}
+                  link={`/playlists/${playlist.id}`}
+                  name={playlist.title}
+                  overlay={
+                    playlist.mine === false && (
+                      <div className={s.sharedWithYouOverlay}>
+                        Shared with you
+                      </div>
+                    )
+                  }
+                  header={
+                    <Link tabIndex={-1} to={`/playlists/${playlist.id}`}>
+                      <Thumbnails videos={playlist.videos} />
+                    </Link>
+                  }
+                  footer={
+                    <div className="w-fit	self-end p-1">
+                      <CopyButton
+                        ariaLabel="Copy playlist link"
+                        textToCopy={`${Constants.HOST}/playlists/${playlist.id}`}
+                        dataQa={`share-playlist-button-${playlist.id}`}
+                        onCopy={linkCopiedHotjarEvent}
+                      />
                     </div>
-                  )
-                }
-                header={
-                  <Link tabIndex={-1} to={`/playlists/${playlist.id}`}>
-                    <Thumbnails videos={playlist.videos} />
-                  </Link>
-                }
-                footer={
-                  <div className="w-fit	self-end p-1">
-                    <CopyButton
-                      ariaLabel="Copy playlist link"
-                      textToCopy={`${Constants.HOST}/playlists/${playlist.id}`}
-                      dataQa={`share-playlist-button-${playlist.id}`}
-                      onCopy={linkCopiedHotjarEvent}
-                    />
-                  </div>
-                }
-              />
-            </li>
-          )}
-        />
+                  }
+                />
+              </li>
+            )}
+          />
+        )
       )}
     </main>
   );
