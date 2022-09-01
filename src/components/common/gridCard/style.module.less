@@ -54,8 +54,7 @@
 
   button {
     position: relative;
-    padding: 0 0.75rem;
-    height: 24px;
+
 
     .createdBy {
     @apply text-gray-900 hover:underline hover:decoration-solid;
@@ -63,15 +62,29 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+  }
 
-      &::after {
+  span{
+    --bo-ui-badge-margin: 0;
+    --bo-ui-badge-padding: 2px 4px 2px 4px;
+    position: relative;
+    padding: 0 0.25rem;
+    height: 24px;
+    display: flex;
+    align-items: center;
+
+    &:nth-child(n+2){
+      &:before{
+        height:24px;
         content: '•';
-        padding: 0.25rem;
         color: @blue-800;
-        position: absolute;
-        left: -0.25rem;
-        top: -0.188rem;
+        padding-right: 4px;
+        line-height: 1.5rem;
+        font-size: 1rem;
+        z-index: 1;
       }
     }
   }
 }
+

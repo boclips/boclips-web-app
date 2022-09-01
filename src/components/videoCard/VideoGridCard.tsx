@@ -51,7 +51,7 @@ const VideoGridCard = ({
         {video.bestFor[0] && <Badge value={video.bestFor[0].label} />}
 
         {video.price && (
-          <Typography.Body as="div" size="small">
+          <Typography.Body as="span" size="small">
             {createPriceDisplayValue(
               video.price?.amount,
               video.price?.currency,
@@ -60,17 +60,19 @@ const VideoGridCard = ({
           </Typography.Body>
         )}
 
-        <button
-          onClick={() =>
-            handleFilterChange &&
-            handleFilterChange('channel', [video.channelId])
-          }
-          type="button"
-        >
-          <Typography.Body as="div" size="small" className={s.createdBy}>
-            {video.createdBy}
-          </Typography.Body>
-        </button>
+        <span>
+          <button
+            onClick={() =>
+              handleFilterChange &&
+              handleFilterChange('channel', [video.channelId])
+            }
+            type="button"
+          >
+            <Typography.Body as="div" size="small" className={s.createdBy}>
+              {video.createdBy}
+            </Typography.Body>
+          </button>
+        </span>
       </div>
     }
     footer={
