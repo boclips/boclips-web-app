@@ -30,8 +30,6 @@ describe('OpenstaxBookView', () => {
         {
           title: 'Introduction',
           number: 1,
-          videos: [VideoFactory.sample({ title: 'Chapter video' })],
-          videoIds: ['1'],
           sections: [
             {
               title: 'Life at the coop',
@@ -73,7 +71,6 @@ describe('OpenstaxBookView', () => {
     expect(bookDetails).toBeVisible();
     validateVisibleHeadings(bookDetails, 2, ['Chapter 1: Introduction']);
     validateVisibleHeadings(bookDetails, 3, [
-      'Chapter overview',
       '1.1 Life at the coop',
       '1.2 Adventures outside',
     ]);
@@ -84,7 +81,6 @@ describe('OpenstaxBookView', () => {
     expect(bookToc).toBeVisible();
     validateVisibleHeadings(bookToc, 2, ['Chapter 1: Introduction']);
     validateVisibleHeadings(bookToc, 3, [
-      'Chapter overview',
       '1.1 Life at the coop',
       '1.2 Adventures outside',
     ]);
@@ -106,8 +102,6 @@ describe('OpenstaxBookView', () => {
         {
           title: 'Introduction',
           number: 1,
-          videos: [],
-          videoIds: [],
           sections: [
             {
               title: 'Life at the coop',
@@ -161,8 +155,6 @@ describe('OpenstaxBookView', () => {
             {
               title: 'Introduction',
               number: 1,
-              videos: [VideoFactory.sample({ title: 'Chapter video' })],
-              videoIds: ['1'],
               sections: [],
             },
           ],
@@ -190,8 +182,6 @@ describe('OpenstaxBookView', () => {
             {
               title: 'Introduction',
               number: 1,
-              videos: [VideoFactory.sample({ title: 'Chapter video' })],
-              videoIds: ['1'],
               sections: [],
             },
           ],

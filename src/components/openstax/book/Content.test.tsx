@@ -3,7 +3,6 @@ import { renderWithClients } from 'src/testSupport/render';
 import { Content } from 'src/components/openstax/book/Content';
 import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
-import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 
 describe('OpenstaxBookContent', () => {
@@ -18,8 +17,6 @@ describe('OpenstaxBookContent', () => {
         {
           title: 'Introduction',
           number: 1,
-          videos: [VideoFactory.sample({})],
-          videoIds: ['1'],
           sections: [
             {
               title: 'Life at the coop',
@@ -50,12 +47,10 @@ describe('OpenstaxBookContent', () => {
     expect(chapter).toBeVisible();
     expect(chapter).toHaveTextContent('Chapter 1: Introduction');
 
-    expect(sections).toHaveLength(3);
+    expect(sections).toHaveLength(2);
     expect(sections[0]).toBeVisible();
-    expect(sections[0]).toHaveTextContent('Chapter overview');
+    expect(sections[0]).toHaveTextContent('1.1 Life at the coop (0 videos)');
     expect(sections[1]).toBeVisible();
-    expect(sections[1]).toHaveTextContent('1.1 Life at the coop (0 videos)');
-    expect(sections[2]).toBeVisible();
-    expect(sections[2]).toHaveTextContent('1.2 Adventures outside (0 videos)');
+    expect(sections[1]).toHaveTextContent('1.2 Adventures outside (0 videos)');
   });
 });

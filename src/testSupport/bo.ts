@@ -261,8 +261,6 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
               chapters: [
                 {
                   title: 'chapter-one',
-                  videos: [],
-                  videoIds: [],
                   number: 1,
                   sections: [
                     {

@@ -49,7 +49,6 @@ export const convertApiBookSectionToOpenstaxSection = (
 export const convertApiChapterToOpenstaxChapter = (
   apiChapter: Chapter,
 ): OpenstaxChapter => {
-  const videoCountInChapter = apiChapter.videoIds?.length || 0;
   let videoCountInSections = 0;
   apiChapter.sections.forEach((section) => {
     videoCountInSections += section.videoIds?.length || 0;
@@ -64,8 +63,6 @@ export const convertApiChapterToOpenstaxChapter = (
       )
       .sort((a, b) => a.number - b.number),
     title: apiChapter.title,
-    videoCount: videoCountInChapter + videoCountInSections,
-    videoIds: apiChapter.videoIds,
-    videos: apiChapter.videos,
+    videoCount: videoCountInSections,
   };
 };

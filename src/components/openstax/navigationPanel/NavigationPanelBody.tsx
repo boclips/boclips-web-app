@@ -104,11 +104,6 @@ const NavigationPanelBody = ({ book }: Props) => {
               </Accordion.Trigger>
             </Accordion.Header>
             <Accordion.Content>
-              {chapter.videoIds?.length > 0 &&
-                renderSectionLevelLabel(
-                  'Chapter overview',
-                  `#chapter-${chapter.number}`,
-                )}
               {chapter.sections.map((section) =>
                 renderSectionLevelLabel(
                   section.displayLabel,

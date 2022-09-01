@@ -8,7 +8,6 @@ import {
 import { fireEvent } from '@testing-library/react';
 import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
-import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 
 describe('OpenstaxBookNavigationPanel', () => {
@@ -21,7 +20,6 @@ describe('OpenstaxBookNavigationPanel', () => {
         ChapterFactory.sample({
           number: 1,
           title: 'should show chapter 1',
-          videoIds: ['1'],
           sections: [
             SectionFactory.sample({
               number: 99,
@@ -55,48 +53,8 @@ describe('OpenstaxBookNavigationPanel', () => {
       '/explore/openstax/book_id#section-1-99',
     );
 
-    const videoLabel = wrapper.getByText('3 videos');
+    const videoLabel = wrapper.getByText('2 videos');
     expect(videoLabel).toBeVisible();
-  });
-
-  it('renders Chapter Overview when chapter has videos mapped as the first section', () => {
-    window.resizeTo(1500, 1024);
-
-    const book: OpenstaxBook = OpenstaxBookFactory.sample({
-      chapters: [
-        ChapterFactory.sample({
-          videos: [VideoFactory.sample({})],
-          videoIds: ['1'],
-        }),
-      ],
-    });
-    const wrapper = render(
-      <OpenstaxMobileMenuProvider>
-        <NavigationPanel book={book} />
-      </OpenstaxMobileMenuProvider>,
-    );
-    const sections = wrapper.getAllByRole('heading', { level: 3 });
-    expect(sections[0]).toBeVisible();
-    expect(sections[0]).toHaveTextContent('Chapter overview');
-  });
-
-  it('will not show Chapter overview if there are no videos mapped to only the chapter', () => {
-    window.resizeTo(1500, 1024);
-
-    const book: OpenstaxBook = OpenstaxBookFactory.sample({
-      chapters: [
-        ChapterFactory.sample({
-          videos: undefined,
-          videoIds: [],
-        }),
-      ],
-    });
-    const wrapper = render(
-      <OpenstaxMobileMenuProvider>
-        <NavigationPanel book={book} />
-      </OpenstaxMobileMenuProvider>,
-    );
-    expect(wrapper.queryByText('Chapter overview')).toBeNull();
   });
 
   it('does not render close button in desktop view', () => {
@@ -158,7 +116,6 @@ describe('OpenstaxBookNavigationPanel', () => {
         ChapterFactory.sample({
           number: 1,
           title: 'default expanded',
-          videoIds: ['1'],
           sections: [
             SectionFactory.sample({
               number: 1,
@@ -170,7 +127,6 @@ describe('OpenstaxBookNavigationPanel', () => {
         ChapterFactory.sample({
           number: 2,
           title: 'default collapsed',
-          videoIds: ['1'],
           sections: [
             SectionFactory.sample({
               number: 1,

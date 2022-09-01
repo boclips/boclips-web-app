@@ -42,19 +42,15 @@ describe('OpenstaxBook converter', () => {
               videoIds: ['3', '4'],
             }),
           ],
-          videos: [],
-          videoIds: ['7'],
         }),
         ChapterFactory.sample({
           sections: [],
-          videos: [],
-          videoIds: ['8'],
         }),
       ],
     });
 
     const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
-    expect(openstaxBook.videoCount).toEqual(6);
+    expect(openstaxBook.videoCount).toEqual(4);
   });
 
   it('converts chapter details', () => {
@@ -79,11 +75,6 @@ describe('OpenstaxBook converter', () => {
               videoIds: ['5', '6'],
             }),
           ],
-          videos: [
-            VideoFactory.sample({ id: '1' }),
-            VideoFactory.sample({ id: '2' }),
-          ],
-          videoIds: ['1', '2'],
         },
       ],
     });
@@ -94,9 +85,7 @@ describe('OpenstaxBook converter', () => {
     expect(chapter.title).toEqual('chapterA');
     expect(chapter.number).toEqual(1);
     expect(chapter.displayLabel).toEqual('Chapter 1: chapterA');
-    expect(chapter.videos).toEqual(apiBook.chapters[0].videos);
-    expect(chapter.videoIds).toEqual(apiBook.chapters[0].videoIds);
-    expect(chapter.videoCount).toEqual(6);
+    expect(chapter.videoCount).toEqual(4);
     expect(chapter.sections.length).toEqual(2);
   });
 
@@ -109,8 +98,6 @@ describe('OpenstaxBook converter', () => {
             videoIds: [],
           }),
         ],
-        videos: undefined,
-        videoIds: [],
       });
 
       const openstaxBook = convertApiBookToOpenstaxBook(
@@ -120,7 +107,7 @@ describe('OpenstaxBook converter', () => {
       expect(openstaxBook.chapters[0].videoCount).toEqual(0);
     });
 
-    it('returns sum of section videos correctly, when chapter videos are missing', () => {
+    it('returns sum of section videos correctly', () => {
       const chapter: Chapter = ChapterFactory.sample({
         sections: [
           SectionFactory.sample({
@@ -128,25 +115,6 @@ describe('OpenstaxBook converter', () => {
             videoIds: ['1'],
           }),
         ],
-        videos: undefined,
-      });
-
-      const openstaxBook = convertApiBookToOpenstaxBook(
-        BookFactory.sample({ chapters: [chapter] }),
-      );
-
-      expect(openstaxBook.chapters[0].videoCount).toEqual(1);
-    });
-
-    it('returns number of chapter videos when section videos are missing', () => {
-      const chapter: Chapter = ChapterFactory.sample({
-        sections: [
-          SectionFactory.sample({
-            videos: undefined,
-          }),
-        ],
-        videos: [VideoFactory.sample({})],
-        videoIds: ['1'],
       });
 
       const openstaxBook = convertApiBookToOpenstaxBook(
@@ -168,15 +136,13 @@ describe('OpenstaxBook converter', () => {
             videoIds: ['1'],
           }),
         ],
-        videos: [VideoFactory.sample({})],
-        videoIds: ['1'],
       });
 
       const openstaxBook = convertApiBookToOpenstaxBook(
         BookFactory.sample({ chapters: [chapter] }),
       );
 
-      expect(openstaxBook.chapters[0].videoCount).toEqual(2);
+      expect(openstaxBook.chapters[0].videoCount).toEqual(1);
     });
   });
 
