@@ -10,8 +10,8 @@ context('Playlist page', () => {
 
     cy.get('[data-qa="playlistTitle"]').should('be.visible');
 
-    cy.percySnapshot('Empty playlist view', {
-      widths: Constants.SNAPSHOT_VIEW_WIDTHS,
-    });
+    // cy.percySnapshot('Empty playlist view', {
+    //   widths: Constants.SNAPSHOT_VIEW_WIDTHS,
+    // });
   });
 });

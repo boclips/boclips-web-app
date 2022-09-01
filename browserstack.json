@@ -1,0 +1,40 @@
+{
+    "auth": {
+        "username": "edcook_3b6Rup",
+        "access_key": "V32E3U3PKLXqfUuqvgXE"
+    },
+    "browsers": [{
+        "browser": "chrome",
+        "os": "Windows 10",
+        "versions": ["latest", "latest - 1"]
+    },
+        {
+            "browser": "firefox",
+            "os": "OS X Mojave",
+            "versions": ["latest", "latest - 1"]
+        },
+        {
+            "browser": "edge",
+            "os": "OS X Catalina",
+            "versions": ["latest"]
+        }
+    ],
+    "run_settings": {
+        "cypress_config_file": "./cypress.json",
+        "cypress_version": "9",
+        "project_name": "Cypress sample build",
+        "build_name": "Build no. 1",
+        "parallels": "1",
+        "npm_dependencies": {
+            "typescript": "^4.0.5",
+            "@testing-library/cypress": "^8.0.2"
+        }
+    },
+    "connection_settings": {
+        "local": true,
+        "local_identifier": null,
+        "local_mode": null,
+        "local_config_file": null
+    },
+    "disable_usage_reporting": false
+}

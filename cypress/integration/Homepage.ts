@@ -22,15 +22,15 @@ context('Homepage', () => {
 
     cy.findByLabelText('Discipline Business').should('be.visible');
 
-    cy.percySnapshot('Home Page', {
-      widths: snapshotViewWidths,
-    });
+    // cy.percySnapshot('Home Page', {
+    //   widths: snapshotViewWidths,
+    // });
 
     cy.findByLabelText('Discipline Business').click();
 
-    cy.percySnapshot('Home Page with subjects', {
-      widths: snapshotViewWidths,
-    });
+    // cy.percySnapshot('Home Page with subjects', {
+    //   widths: snapshotViewWidths,
+    // });
   });
 
   it('has a homepage for k12 disciplines', () => {
@@ -48,17 +48,17 @@ context('Homepage', () => {
 
     cy.findByLabelText('Discipline English Language Arts').should('be.visible');
 
-    cy.percySnapshot('K12 Home Page', {
-      widths: snapshotViewWidths,
-    });
+    // cy.percySnapshot('K12 Home Page', {
+    //   widths: snapshotViewWidths,
+    // });
   });
 
   it('renders account panel', () => {
     cy.visit('/');
     cy.get('[data-qa="account-menu"]').click();
 
-    cy.percySnapshot('Account panel', {
-      widths: snapshotViewWidths,
-    });
+    // cy.percySnapshot('Account panel', {
+    //   widths: snapshotViewWidths,
+    // });
   });
 });

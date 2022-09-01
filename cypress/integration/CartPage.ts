@@ -9,15 +9,15 @@ context('Cart page', () => {
 
     cy.findByText('Shopping cart');
     cy.findAllByRole('button', { name: 'Remove Remove' }); // SVG + text leads to this title
-    cy.percySnapshot('Cart view', {
-      widths: Constants.SNAPSHOT_VIEW_WIDTHS,
-    });
+    // cy.percySnapshot('Cart view', {
+    //   widths: Constants.SNAPSHOT_VIEW_WIDTHS,
+    // });
 
     cy.contains('Place order').click();
 
-    cy.percySnapshot('Order confirmation modal', {
-      widths: Constants.SNAPSHOT_VIEW_WIDTHS,
-    });
+    // cy.percySnapshot('Order confirmation modal', {
+    //   widths: Constants.SNAPSHOT_VIEW_WIDTHS,
+    // });
 
     cy.get('button').contains('Confirm order').click();
     cy.wait(100);
@@ -28,8 +28,8 @@ context('Cart page', () => {
       'exist',
     );
 
-    cy.percySnapshot('Order view', {
-      widths: Constants.SNAPSHOT_VIEW_WIDTHS,
-    });
+    // cy.percySnapshot('Order view', {
+    //   widths: Constants.SNAPSHOT_VIEW_WIDTHS,
+    // });
   });
 });

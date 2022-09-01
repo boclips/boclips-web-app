@@ -1,7 +1,3 @@
-import { findByRole } from '@testing-library/react';
-import { Simulate } from 'react-dom/test-utils';
-import click = Simulate.click;
-
 context(`openstax book page`, () => {
   it(`scrolls to relevent section on click in table of contents navbar`, () => {
     cy.visit('/');

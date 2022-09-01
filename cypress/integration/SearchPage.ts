@@ -19,18 +19,18 @@ context('Search page', () => {
       expect(videoCard.length).to.equal(2);
     });
 
-    cy.percySnapshot('Search before filtering', {
-      widths: snapshotViewWidths,
-    });
+    // cy.percySnapshot('Search before filtering', {
+    //   widths: snapshotViewWidths,
+    // });
 
     cy.get('label').contains('Biology').click();
     cy.get('[data-qa="video-card-wrapper"]').should((videoCard) => {
       expect(videoCard.length).to.equal(1);
     });
 
-    cy.percySnapshot('Search with filters', {
-      widths: snapshotViewWidths,
-    });
+    // cy.percySnapshot('Search with filters', {
+    //   widths: snapshotViewWidths,
+    // });
   });
 
   it(`displays special chars in search topics correctly`, () => {
