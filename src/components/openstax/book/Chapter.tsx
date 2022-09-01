@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const Chapter = ({ chapter }: Props) => {
-  const shouldShowChapterOverview = chapter.videoIds.length > 0;
+  const shouldShowChapterOverview = chapter.videoIds?.length > 0;
 
   return (
     <section id={`chapter-${chapter.number}`} className={s.anchor}>
