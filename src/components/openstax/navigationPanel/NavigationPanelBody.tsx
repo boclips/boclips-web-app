@@ -83,7 +83,7 @@ const NavigationPanelBody = ({ book }: Props) => {
             >
               <Accordion.Trigger
                 aria-label={chapter.displayLabel}
-                className="w-full flex flex-col"
+                className={c('w-full', s.accordionTrigger)}
               >
                 <Typography.H2
                   size="xs"
