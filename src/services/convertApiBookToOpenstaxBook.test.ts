@@ -178,6 +178,39 @@ describe('OpenstaxBook converter', () => {
     expect(section.videoCount).toEqual(2);
   });
 
+  it('converts Chapter Overview & Discussion Prompt with proper display labels', () => {
+    const apiBook: Book = BookFactory.sample({
+      chapters: [
+        ChapterFactory.sample({
+          number: 1,
+          sections: [
+            {
+              title: 'Chapter Overview',
+              videoIds: [],
+              videos: [VideoFactory.sample({ id: '1' })],
+            },
+            {
+              title: 'Discussion Prompt',
+              videoIds: [],
+              videos: [VideoFactory.sample({ id: '2' })],
+            },
+          ],
+        }),
+      ],
+    });
+
+    const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
+    expect(openstaxBook.chapters[0].sections).toHaveLength(0);
+    expect(openstaxBook.chapters[0].chapterOverview.displayLabel).toEqual(
+      'Chapter Overview',
+    );
+    expect(openstaxBook.chapters[0].chapterOverview.videos[0].id).toEqual('1');
+    expect(openstaxBook.chapters[0].discussionPrompt.displayLabel).toEqual(
+      'Discussion Prompt',
+    );
+    expect(openstaxBook.chapters[0].discussionPrompt.videos[0].id).toEqual('2');
+  });
+
   it('orders chapters based on their number', () => {
     const apiBook = BookFactory.sample({
       chapters: [

@@ -11,7 +11,7 @@ import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 
 describe('OpenstaxBookNavigationPanel', () => {
-  it('renders book title with chapters and sections', async () => {
+  it('renders book title with chapters, chapter intros and sections', async () => {
     window.resizeTo(1500, 1024);
 
     const book: OpenstaxBook = OpenstaxBookFactory.sample({
@@ -21,6 +21,16 @@ describe('OpenstaxBookNavigationPanel', () => {
           number: 1,
           title: 'should show chapter 1',
           sections: [
+            SectionFactory.sample({
+              number: undefined,
+              title: 'Chapter Overview',
+              videoIds: ['1'],
+            }),
+            SectionFactory.sample({
+              number: undefined,
+              title: 'Discussion Prompt',
+              videoIds: ['2'],
+            }),
             SectionFactory.sample({
               number: 99,
               title: 'section 99',
@@ -45,6 +55,22 @@ describe('OpenstaxBookNavigationPanel', () => {
     expect(chapterOne).toBeVisible();
     expect(chapterOne).toHaveTextContent('Chapter 1: should show chapter 1');
 
+    const chapterOverviewLink = wrapper.getByRole('link', {
+      name: 'Chapter Overview',
+    });
+    expect(chapterOverviewLink).toHaveAttribute(
+      'href',
+      '/explore/openstax/book_id#chapter-overview-1',
+    );
+
+    const discussionPromptLink = wrapper.getByRole('link', {
+      name: 'Discussion Prompt',
+    });
+    expect(discussionPromptLink).toHaveAttribute(
+      'href',
+      '/explore/openstax/book_id#discussion-prompt-1',
+    );
+
     const sectionNinetyNineLink = wrapper.getByRole('link', {
       name: '1.99 section 99',
     });
@@ -53,7 +79,7 @@ describe('OpenstaxBookNavigationPanel', () => {
       '/explore/openstax/book_id#section-1-99',
     );
 
-    const videoLabel = wrapper.getByText('2 videos');
+    const videoLabel = wrapper.getByText('4 videos');
     expect(videoLabel).toBeVisible();
   });
 

@@ -6,8 +6,12 @@ import {
 import {
   OpenstaxBook,
   OpenstaxChapter,
+  OpenstaxChapterIntro,
   OpenstaxSection,
 } from 'src/types/OpenstaxBook';
+
+const CHAPTER_OVERVIEW = 'Chapter Overview';
+const DISCUSSION_PROMPT = 'Discussion Prompt';
 
 export const convertApiBookToOpenstaxBook = (apiBook: Book): OpenstaxBook => {
   const openstaxBook = {
@@ -49,20 +53,47 @@ export const convertApiBookSectionToOpenstaxSection = (
 export const convertApiChapterToOpenstaxChapter = (
   apiChapter: Chapter,
 ): OpenstaxChapter => {
-  let videoCountInSections = 0;
+  let videoCount = 0;
   apiChapter.sections.forEach((section) => {
-    videoCountInSections += section.videoIds?.length || 0;
+    videoCount += section.videoIds?.length || 0;
   });
 
   return {
     displayLabel: `Chapter ${apiChapter.number}: ${apiChapter.title}`,
     number: apiChapter.number,
-    sections: apiChapter.sections
+    chapterOverview: getChapterOverview(apiChapter),
+    discussionPrompt: getDiscussionPrompt(apiChapter),
+    sections: getNumberedSections(apiChapter)
       .map((section) =>
         convertApiBookSectionToOpenstaxSection(apiChapter.number, section),
       )
       .sort((a, b) => a.number - b.number),
     title: apiChapter.title,
-    videoCount: videoCountInSections,
+    videoCount,
   };
 };
+
+function getNumberedSections(apiChapter: Chapter) {
+  const chapterIntros = [CHAPTER_OVERVIEW, DISCUSSION_PROMPT];
+  return apiChapter.sections.filter(
+    (section) => !chapterIntros.includes(section.title),
+  );
+}
+
+const getChapterOverview = (apiChapter: Chapter) =>
+  getChapterIntro(apiChapter, CHAPTER_OVERVIEW);
+
+const getDiscussionPrompt = (apiChapter: Chapter) =>
+  getChapterIntro(apiChapter, DISCUSSION_PROMPT);
+
+function getChapterIntro(apiChapter: Chapter, title: string) {
+  let chapterIntro: OpenstaxChapterIntro;
+  const section = apiChapter.sections.find((it) => it.title === title);
+  if (section !== undefined) {
+    chapterIntro = {
+      displayLabel: title,
+      videos: section.videos,
+    };
+  }
+  return chapterIntro;
+}

@@ -43,6 +43,16 @@ describe('OpenstaxBookView', () => {
               videos: [],
               videoIds: [],
             },
+            {
+              title: 'Chapter Overview',
+              videos: [VideoFactory.sample({ title: 'Baby ducks playing' })],
+              videoIds: ['2'],
+            },
+            {
+              title: 'Discussion Prompt',
+              videos: [VideoFactory.sample({ title: 'Baby ducks playing' })],
+              videoIds: ['2'],
+            },
           ],
         },
       ],
@@ -71,8 +81,10 @@ describe('OpenstaxBookView', () => {
     expect(bookDetails).toBeVisible();
     validateVisibleHeadings(bookDetails, 2, ['Chapter 1: Introduction']);
     validateVisibleHeadings(bookDetails, 3, [
-      '1.1 Life at the coop',
-      '1.2 Adventures outside',
+      'Chapter Overview (1 video)',
+      'Discussion Prompt (1 video)',
+      '1.1 Life at the coop (1 video)',
+      '1.2 Adventures outside (0 videos)',
     ]);
 
     const bookToc = wrapper.getByLabelText(
@@ -81,6 +93,8 @@ describe('OpenstaxBookView', () => {
     expect(bookToc).toBeVisible();
     validateVisibleHeadings(bookToc, 2, ['Chapter 1: Introduction']);
     validateVisibleHeadings(bookToc, 3, [
+      'Chapter Overview',
+      'Discussion Prompt',
       '1.1 Life at the coop',
       '1.2 Adventures outside',
     ]);
@@ -301,7 +315,7 @@ const validateVisibleHeadings = (
 
   for (let i = 0; i < headings.length; i++) {
     expect(headings[i]).toBeVisible();
-    expect(headings[i]).toHaveTextContent(titles[i]);
+    expect(headings[i].textContent).toBe(titles[i]);
   }
 };
 

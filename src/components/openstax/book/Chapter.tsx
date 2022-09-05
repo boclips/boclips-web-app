@@ -14,6 +14,19 @@ export const Chapter = ({ chapter }: Props) => {
       <Typography.H2 size="sm" className="text-gray-700">
         {chapter.displayLabel}
       </Typography.H2>
+      {chapter.chapterOverview && (
+        <section id={`chapter-overview-${chapter.number}`} className={s.anchor}>
+          <ChapterSection section={chapter.chapterOverview} />
+        </section>
+      )}
+      {chapter.discussionPrompt && (
+        <section
+          id={`discussion-prompt-${chapter.number}`}
+          className={s.anchor}
+        >
+          <ChapterSection section={chapter.discussionPrompt} />
+        </section>
+      )}
       {chapter.sections.map((section) => (
         <section
           id={`section-${chapter.number}-${section.number}`}

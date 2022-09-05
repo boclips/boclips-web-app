@@ -104,6 +104,16 @@ const NavigationPanelBody = ({ book }: Props) => {
               </Accordion.Trigger>
             </Accordion.Header>
             <Accordion.Content>
+              {chapter.chapterOverview &&
+                renderSectionLevelLabel(
+                  chapter.chapterOverview.displayLabel,
+                  `#chapter-overview-${chapter.number}`,
+                )}
+              {chapter.discussionPrompt &&
+                renderSectionLevelLabel(
+                  chapter.discussionPrompt.displayLabel,
+                  `#discussion-prompt-${chapter.number}`,
+                )}
               {chapter.sections.map((section) =>
                 renderSectionLevelLabel(
                   section.displayLabel,
