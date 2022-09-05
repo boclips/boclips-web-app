@@ -1,6 +1,6 @@
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
-import { ChapterSection } from 'src/components/openstax/book/ChapterSection';
+import { ChapterElement } from 'src/components/openstax/book/ChapterElement';
 import { OpenstaxChapter } from 'src/types/OpenstaxBook';
 import s from './style.module.less';
 
@@ -15,25 +15,25 @@ export const Chapter = ({ chapter }: Props) => {
         {chapter.displayLabel}
       </Typography.H2>
       {chapter.chapterOverview && (
-        <section id={`chapter-overview-${chapter.number}`} className={s.anchor}>
-          <ChapterSection section={chapter.chapterOverview} />
-        </section>
+        <ChapterElement
+          id={`chapter-overview-${chapter.number}`}
+          displayLabel={chapter.chapterOverview.displayLabel}
+          videos={chapter.chapterOverview.videos}
+        />
       )}
       {chapter.discussionPrompt && (
-        <section
+        <ChapterElement
           id={`discussion-prompt-${chapter.number}`}
-          className={s.anchor}
-        >
-          <ChapterSection section={chapter.discussionPrompt} />
-        </section>
+          displayLabel={chapter.discussionPrompt.displayLabel}
+          videos={chapter.discussionPrompt.videos}
+        />
       )}
       {chapter.sections.map((section) => (
-        <section
+        <ChapterElement
           id={`section-${chapter.number}-${section.number}`}
-          className={s.anchor}
-        >
-          <ChapterSection section={section} />
-        </section>
+          displayLabel={section.displayLabel}
+          videos={section.videos}
+        />
       ))}
     </section>
   );

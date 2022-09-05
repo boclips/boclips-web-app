@@ -1,26 +1,29 @@
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
+import c from 'classnames';
 import s from 'src/components/openstax/book/style.module.less';
 import SadFace from 'src/resources/icons/sad_face.svg';
-import { OpenstaxSection } from 'src/types/OpenstaxBook';
 import { ResponsiveVideoGridCardContainer } from 'src/components/videoCard/ResponsiveVideoGridCardContainer';
 import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
+import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 
 interface Props {
-  section: Pick<OpenstaxSection, 'videos' | 'displayLabel'>;
+  id: string;
+  displayLabel: string;
+  videos?: Video[];
 }
-export const ChapterSection = ({ section }: Props) => {
-  const videoCount = section.videos?.length;
+export const ChapterElement = ({ id, displayLabel, videos }: Props) => {
+  const videoCount = videos?.length;
   const numberOfVideosLabel = `(${getVideoCountLabel(videoCount)})`;
 
   return (
-    <section className={s.section}>
+    <section className={c(s.section, s.anchor)} id={id}>
       <Typography.H3 size="xs" className="text-gray-800 my-4" weight="regular">
-        {section.displayLabel}{' '}
+        {displayLabel}{' '}
         <span className="text-gray-700">{numberOfVideosLabel}</span>
       </Typography.H3>
       {videoCount > 0 ? (
-        <ResponsiveVideoGridCardContainer videos={section.videos} />
+        <ResponsiveVideoGridCardContainer videos={videos} />
       ) : (
         renderEmptyMappingMessaging()
       )}

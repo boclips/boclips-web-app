@@ -1,12 +1,10 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { ChapterSection } from 'src/components/openstax/book/ChapterSection';
+import { ChapterElement } from 'src/components/openstax/book/ChapterElement';
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/types';
 import { renderWithClients } from 'src/testSupport/render';
-import { OpenstaxSectionFactory } from 'src/testSupport/OpenstaxSectionFactory';
-import { OpenstaxSection } from 'src/types/OpenstaxBook';
 
-describe('OpenstaxChapterSection', () => {
+describe('OpenstaxChapterElement', () => {
   it.each([
     [0, '(0 videos)'],
     [1, '(1 video)'],
@@ -19,14 +17,13 @@ describe('OpenstaxChapterSection', () => {
         videos.push(VideoFactory.sample({ id: `video-id-${i}` }));
       }
 
-      const section: OpenstaxSection = OpenstaxSectionFactory.sample(2, {
-        title: 'Life at the coop',
-        number: 1,
-        videos,
-        videoIds: videos.map((video) => video.id),
-      });
-
-      const wrapper = renderWithClients(<ChapterSection section={section} />);
+      const wrapper = renderWithClients(
+        <ChapterElement
+          displayLabel="2.1 Life at the coop "
+          videos={videos}
+          id="section-2.1"
+        />,
+      );
 
       const sectionTitle = wrapper.getByRole('heading', { level: 3 });
 
@@ -38,16 +35,19 @@ describe('OpenstaxChapterSection', () => {
 
   it('renders video cards when they are mapped to the section', () => {
     const videoTitle = 'Ducklings playing with hay';
-    const section: OpenstaxSection = OpenstaxSectionFactory.sample(2, {
-      videos: [
-        VideoFactory.sample({
-          title: videoTitle,
-          createdBy: 'Aunt Mary',
-        }),
-      ],
-    });
 
-    const wrapper = renderWithClients(<ChapterSection section={section} />);
+    const wrapper = renderWithClients(
+      <ChapterElement
+        displayLabel="2.1 Life at the coop "
+        videos={[
+          VideoFactory.sample({
+            title: videoTitle,
+            createdBy: 'Aunt Mary',
+          }),
+        ]}
+        id="section-2.1"
+      />,
+    );
 
     const playableThumbnail = wrapper.getByRole('button', {
       name: `play ${videoTitle}`,
@@ -58,11 +58,13 @@ describe('OpenstaxChapterSection', () => {
   });
 
   it('renders messaging when no videos are mapped to the section', () => {
-    const section: OpenstaxSection = OpenstaxSectionFactory.sample(2, {
-      videos: [],
-    });
-
-    const wrapper = renderWithClients(<ChapterSection section={section} />);
+    const wrapper = renderWithClients(
+      <ChapterElement
+        displayLabel="2.1 Life at the coop "
+        videos={[]}
+        id="section-2.1"
+      />,
+    );
 
     expect(
       wrapper.getByText(
