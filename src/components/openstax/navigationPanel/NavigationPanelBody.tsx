@@ -107,7 +107,7 @@ const NavigationPanelBody = ({ book }: Props) => {
               {chapter.chapterOverview &&
                 renderSectionLevelLabel(
                   chapter.chapterOverview.displayLabel,
-                  `#chapter-overview-${chapter.number}`,
+                  `#chapter-${chapter.number}`,
                 )}
               {chapter.discussionPrompt &&
                 renderSectionLevelLabel(

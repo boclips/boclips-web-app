@@ -60,7 +60,7 @@ describe('OpenstaxBookNavigationPanel', () => {
     });
     expect(chapterOverviewLink).toHaveAttribute(
       'href',
-      '/explore/openstax/book_id#chapter-overview-1',
+      '/explore/openstax/book_id#chapter-1',
     );
 
     const discussionPromptLink = wrapper.getByRole('link', {
