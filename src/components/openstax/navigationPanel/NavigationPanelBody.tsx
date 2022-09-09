@@ -86,9 +86,6 @@ const NavigationPanelBody = ({ book }: Props) => {
     if (!expandedChapters.includes(chapterToExpand)) {
       setExpandedChapters([chapterToExpand, ...expandedChapters]);
     }
-
-    const accordionItemId = `${chapterToExpand}-nav`;
-    document.getElementById(accordionItemId).scrollIntoView();
   };
 
   return (
