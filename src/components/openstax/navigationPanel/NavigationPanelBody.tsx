@@ -53,6 +53,7 @@ const NavigationPanelBody = ({ book }: Props) => {
       className={s.sectionAnchor}
       onClick={() => {
         handleSectionClick(navigationLink);
+        setIsOpen(false);
       }}
       scroll={scrollWithNavbarOffset}
       to={{
@@ -71,8 +72,6 @@ const NavigationPanelBody = ({ book }: Props) => {
   );
 
   const handleSectionClick = (navigationLabel: string) => {
-    setIsOpen(false);
-
     const chapterNumber = Number(navigationLabel.split('-')[1]);
     if (chapterNumber !== selectedChapterNumber(location)) {
       window.scrollTo({ top: 0 });

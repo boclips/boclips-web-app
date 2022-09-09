@@ -45,7 +45,10 @@ const NavigationPanelHeader = ({ book }: Props) => {
             icon={<CloseButtonIcon />}
             aria-label="Close the Table of contents"
             className={s.closeButton}
-            onClick={() => setIsOpen(false)}
+            onClick={() => {
+              setIsOpen(false);
+              window.scrollTo({ top: 0 });
+            }}
           />
         )}
       </div>
