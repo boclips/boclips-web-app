@@ -16,21 +16,22 @@ export const Chapter = ({ chapter }: Props) => {
       </Typography.H2>
       {chapter.chapterOverview && (
         <ChapterElement
-          id={`chapter-overview-${chapter.number}`}
+          id={`chapter-${chapter.number}-overview`}
           displayLabel={chapter.chapterOverview.displayLabel}
           videos={chapter.chapterOverview.videos}
         />
       )}
       {chapter.discussionPrompt && (
         <ChapterElement
-          id={`discussion-prompt-${chapter.number}`}
+          id={`chapter-${chapter.number}-discussion-prompt`}
           displayLabel={chapter.discussionPrompt.displayLabel}
           videos={chapter.discussionPrompt.videos}
         />
       )}
       {chapter.sections.map((section) => (
         <ChapterElement
-          id={`section-${chapter.number}-${section.number}`}
+          key={`chapter-${chapter.number}-section-${section.number}`}
+          id={`chapter-${chapter.number}-section-${section.number}`}
           displayLabel={section.displayLabel}
           videos={section.videos}
         />

@@ -20,7 +20,7 @@ export const SubjectsMenu = ({ subjects, currentSubject, onClick }: Props) => {
       <ul className="flex md:flex-wrap md:justify-center">
         {subjects?.map((subject) => {
           return (
-            <li>
+            <li key={subject}>
               <button
                 key={subject}
                 type="button"

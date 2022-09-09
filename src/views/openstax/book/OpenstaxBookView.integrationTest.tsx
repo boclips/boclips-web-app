@@ -18,45 +18,18 @@ import {
   resizeToMobile,
   resizeToTablet,
 } from 'src/testSupport/resizeTo';
+import {
+  createBook,
+  getTableOfContent,
+  setUpClientWithBook,
+  validateVisibleHeadings,
+} from 'src/views/openstax/book/OpenstaxBookViewTestSupport';
 
 describe('OpenstaxBookView', () => {
-  it('renders basic book details', async () => {
+  it('by default renders book details with first chapter selected', async () => {
     resizeToDesktop();
-    const book: Book = BookFactory.sample({
-      id: 'ducklings',
-      title: 'Everything to know about ducks',
-      subject: 'Essentials',
-      chapters: [
-        {
-          title: 'Introduction',
-          number: 1,
-          sections: [
-            {
-              title: 'Life at the coop',
-              number: 1,
-              videos: [VideoFactory.sample({ title: 'Baby ducks playing' })],
-              videoIds: ['2'],
-            },
-            {
-              title: 'Adventures outside',
-              number: 2,
-              videos: [],
-              videoIds: [],
-            },
-            {
-              title: 'Chapter Overview',
-              videos: [VideoFactory.sample({ title: 'Baby ducks playing' })],
-              videoIds: ['2'],
-            },
-            {
-              title: 'Discussion Prompt',
-              videos: [VideoFactory.sample({ title: 'Baby ducks playing' })],
-              videoIds: ['2'],
-            },
-          ],
-        },
-      ],
-    });
+    const book = createBook();
+
     const client = setUpClientWithBook(book);
 
     const wrapper = render(
@@ -91,7 +64,10 @@ describe('OpenstaxBookView', () => {
       'Table of contents of Everything to know about ducks',
     );
     expect(bookToc).toBeVisible();
-    validateVisibleHeadings(bookToc, 2, ['Chapter 1: Introduction']);
+    validateVisibleHeadings(bookToc, 2, [
+      'Chapter 1: Introduction',
+      'Chapter 2: Epilogue',
+    ]);
     validateVisibleHeadings(bookToc, 3, [
       'Chapter Overview',
       'Discussion Prompt',
@@ -104,6 +80,92 @@ describe('OpenstaxBookView', () => {
         "We don't have any videos for this section yet. We're working on it!",
       ),
     ).toBeVisible();
+  });
+
+  it('renders second chapter when selected', async () => {
+    resizeToDesktop();
+    const book = createBook();
+
+    const client = setUpClientWithBook(book);
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
+        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+      </MemoryRouter>,
+    );
+
+    const chapter2NavigationButton = wrapper.getByRole('button', {
+      name: 'Chapter 2: Epilogue',
+    });
+    fireEvent.click(chapter2NavigationButton);
+
+    const sectionLink = wrapper.getByRole('link', {
+      name: '2.1 This is the end',
+    });
+
+    expect(sectionLink).toBeVisible();
+
+    fireEvent.click(sectionLink);
+
+    const bookDetails = wrapper.getByLabelText(
+      'Content for Everything to know about ducks',
+    );
+
+    expect(bookDetails).toBeVisible();
+    validateVisibleHeadings(bookDetails, 2, ['Chapter 2: Epilogue']);
+    validateVisibleHeadings(bookDetails, 3, ['2.1 This is the end (1 video)']);
+  });
+
+  it('hashes match for sections in navigation panel and content panel', async () => {
+    resizeToDesktop();
+    const book = createBook();
+
+    const client = setUpClientWithBook(book);
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
+        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+      </MemoryRouter>,
+    );
+
+    const titles = await wrapper.findAllByRole('heading', {
+      level: 1,
+      name: 'Everything to know about ducks',
+    });
+    expect(titles).toHaveLength(2);
+
+    const chapter1OverviewNavigationLabel = getNavigationLabel(
+      wrapper,
+      'Chapter Overview',
+    );
+
+    expect(
+      await wrapper.container.querySelector(
+        `#${chapter1OverviewNavigationLabel}`,
+      ),
+    ).not.toBeNull();
+
+    const chapter1DiscussionPromptNavigationLabel = getNavigationLabel(
+      wrapper,
+      'Discussion Prompt',
+    );
+
+    expect(
+      await wrapper.container.querySelector(
+        `#${chapter1DiscussionPromptNavigationLabel}`,
+      ),
+    ).not.toBeNull();
+
+    const chapter1Section1NavigationLabel = getNavigationLabel(
+      wrapper,
+      '1.1 Life at the coop',
+    );
+
+    expect(
+      await wrapper.container.querySelector(
+        `#${chapter1Section1NavigationLabel}`,
+      ),
+    ).not.toBeNull();
   });
 
   it('renders section video cards with only thumbnail', async () => {
@@ -301,27 +363,9 @@ const renderBookView = (book: Book): RenderResult => {
   );
 };
 
-const getTableOfContent = (book: Book, wrapper: RenderResult) =>
-  wrapper.queryByLabelText(`Table of contents of ${book.title}`);
-
-const validateVisibleHeadings = (
-  element: HTMLElement,
-  level: number,
-  titles: string[],
-) => {
-  const headings = within(element).getAllByRole('heading', { level });
-
-  expect(headings).toHaveLength(titles.length);
-
-  for (let i = 0; i < headings.length; i++) {
-    expect(headings[i]).toBeVisible();
-    expect(headings[i].textContent).toBe(titles[i]);
-  }
-};
-
-const setUpClientWithBook = (book: Book) => {
-  const client = new FakeBoclipsClient();
-  client.openstax.setOpenstaxBooks([book]);
-  client.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
-  return client;
+const getNavigationLabel = (wrapper: RenderResult, sectionTitle: string) => {
+  return wrapper
+    .getByRole('link', { name: sectionTitle })
+    .getAttribute('href')
+    .split('#')[1];
 };

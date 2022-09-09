@@ -14,6 +14,8 @@ jest.setTimeout(jestTimeout);
 window.resizeTo = resizeTo;
 
 window.scrollTo = jest.fn();
+window.HTMLElement.prototype.scrollIntoView = jest.fn();
+
 // @ts-ignore
 window.matchMedia = window.matchMedia ||
     function () {

@@ -10,6 +10,7 @@ import c from 'classnames';
 import { useOpenstaxMobileMenu } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import { useLocation } from 'react-router-dom';
+import { selectedChapterNumber } from 'src/components/openstax/helpers/helpers';
 import s from './style.module.less';
 
 interface Props {
@@ -18,20 +19,23 @@ interface Props {
 
 const NavigationPanelBody = ({ book }: Props) => {
   const currentBreakpoint = useMediaBreakPoint();
-  const hash = useLocation().hash;
+  const location = useLocation();
   const [selectedSection, setSelectedSection] = useState<string>('');
   const isSelected = (sectionId: string) => selectedSection === sectionId;
+
+  const [expandedChapters, setExpandedChapters] = useState(['chapter-1']);
 
   const { setIsOpen } = useOpenstaxMobileMenu();
 
   useEffect(() => {
-    const sectionId = hash.replace('#', '');
-    const element = document.getElementById(sectionId);
-    if (element !== null && !isSelected(sectionId)) {
-      handleSectionClick(hash);
+    const navigationLabel = location.hash.replace('#', '');
+    const element = document.getElementById(navigationLabel);
+    if (element !== null && !isSelected(navigationLabel)) {
+      handleSectionClick(location.hash);
       scrollWithNavbarOffset(element);
     }
-  }, [hash]);
+    navigateTableOfContent();
+  }, [location.hash]);
 
   const scrollWithNavbarOffset = (el) => {
     const yCoordinate = el.getBoundingClientRect().top + window.scrollY;
@@ -43,19 +47,22 @@ const NavigationPanelBody = ({ book }: Props) => {
     });
   };
 
-  const renderSectionLevelLabel = (label: string, sectionId: string) => (
+  const renderSectionLevelLabel = (label: string, navigationLink: string) => (
     <HashLink
+      key={navigationLink}
       className={s.sectionAnchor}
-      onClick={() => handleSectionClick(sectionId)}
+      onClick={() => {
+        handleSectionClick(navigationLink);
+      }}
       scroll={scrollWithNavbarOffset}
       to={{
         pathname: `/explore/openstax/${book.id}`,
-        hash: sectionId,
+        hash: navigationLink,
       }}
     >
       <Typography.H3
         className={c(s.courseTitle, {
-          [s.selectedSection]: isSelected(sectionId),
+          [s.selectedSection]: isSelected(navigationLink),
         })}
       >
         <span>{label}</span>
@@ -63,9 +70,26 @@ const NavigationPanelBody = ({ book }: Props) => {
     </HashLink>
   );
 
-  const handleSectionClick = (sectionLabel: string) => {
-    setSelectedSection(sectionLabel);
+  const handleSectionClick = (navigationLabel: string) => {
     setIsOpen(false);
+
+    const chapterNumber = Number(navigationLabel.split('-')[1]);
+    if (chapterNumber !== selectedChapterNumber(location)) {
+      window.scrollTo({ top: 0 });
+    }
+
+    setSelectedSection(navigationLabel);
+  };
+
+  const navigateTableOfContent = () => {
+    const chapterToExpand = `chapter-${selectedChapterNumber(location)}`;
+
+    if (!expandedChapters.includes(chapterToExpand)) {
+      setExpandedChapters([chapterToExpand, ...expandedChapters]);
+    }
+
+    const accordionItemId = `${chapterToExpand}-nav`;
+    document.getElementById(accordionItemId).scrollIntoView();
   };
 
   return (
@@ -73,9 +97,17 @@ const NavigationPanelBody = ({ book }: Props) => {
       className={s.tocContent}
       aria-label={`Table of contents of ${book.title}`}
     >
-      <Accordion.Root type="multiple" defaultValue={['chapter-1']}>
+      <Accordion.Root
+        type="multiple"
+        value={expandedChapters}
+        onValueChange={setExpandedChapters}
+      >
         {book.chapters.map((chapter) => (
-          <Accordion.Item value={`chapter-${chapter.number}`}>
+          <Accordion.Item
+            id={`chapter-${chapter.number}-nav`}
+            value={`chapter-${chapter.number}`}
+            key={`chapter-${chapter.number}`}
+          >
             <Accordion.Header
               className="pt-4"
               asChild
@@ -112,12 +144,12 @@ const NavigationPanelBody = ({ book }: Props) => {
               {chapter.discussionPrompt &&
                 renderSectionLevelLabel(
                   chapter.discussionPrompt.displayLabel,
-                  `#discussion-prompt-${chapter.number}`,
+                  `#chapter-${chapter.number}-discussion-prompt`,
                 )}
               {chapter.sections.map((section) =>
                 renderSectionLevelLabel(
                   section.displayLabel,
-                  `#section-${chapter.number}-${section.number}`,
+                  `#chapter-${chapter.number}-section-${section.number}`,
                 ),
               )}
             </Accordion.Content>
