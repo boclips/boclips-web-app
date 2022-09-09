@@ -3,7 +3,7 @@ import * as Accordion from '@radix-ui/react-accordion';
 import { Typography } from '@boclips-ui/typography';
 import ChevronDownIcon from 'src/resources/icons/chevron-down.svg';
 import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
-import { OpenstaxBook } from 'src/types/OpenstaxBook';
+import { OpenstaxBook, OpenstaxChapter } from 'src/types/OpenstaxBook';
 import { HashLink } from 'react-router-hash-link';
 
 import c from 'classnames';
@@ -21,7 +21,12 @@ const NavigationPanelBody = ({ book }: Props) => {
   const currentBreakpoint = useMediaBreakPoint();
   const location = useLocation();
   const [selectedSection, setSelectedSection] = useState<string>('');
-  const isSelected = (sectionId: string) => selectedSection === sectionId;
+
+  const isSelectedSection = (sectionId: string) =>
+    selectedSection === sectionId;
+
+  const isSelectedChapter = (chapter: OpenstaxChapter) =>
+    chapter.number === selectedChapterNumber(location);
 
   const [expandedChapters, setExpandedChapters] = useState(['chapter-1']);
 
@@ -30,11 +35,11 @@ const NavigationPanelBody = ({ book }: Props) => {
   useEffect(() => {
     const navigationLabel = location.hash.replace('#', '');
     const element = document.getElementById(navigationLabel);
-    if (element !== null && !isSelected(navigationLabel)) {
+    if (element !== null && !isSelectedSection(navigationLabel)) {
       handleSectionClick(location.hash);
       scrollWithNavbarOffset(element);
     }
-    navigateTableOfContent();
+    updateTableOfContent();
   }, [location.hash]);
 
   const scrollWithNavbarOffset = (el) => {
@@ -63,7 +68,7 @@ const NavigationPanelBody = ({ book }: Props) => {
     >
       <Typography.H3
         className={c(s.courseTitle, {
-          [s.selectedSection]: isSelected(navigationLink),
+          [s.selectedSection]: isSelectedSection(navigationLink),
         })}
       >
         <span>{label}</span>
@@ -80,7 +85,7 @@ const NavigationPanelBody = ({ book }: Props) => {
     setSelectedSection(navigationLabel);
   };
 
-  const navigateTableOfContent = () => {
+  const updateTableOfContent = () => {
     const chapterToExpand = `chapter-${selectedChapterNumber(location)}`;
 
     if (!expandedChapters.includes(chapterToExpand)) {
@@ -103,6 +108,7 @@ const NavigationPanelBody = ({ book }: Props) => {
             id={`chapter-${chapter.number}-nav`}
             value={`chapter-${chapter.number}`}
             key={`chapter-${chapter.number}`}
+            className={c({ [s.selectedChapter]: isSelectedChapter(chapter) })}
           >
             <Accordion.Header
               className="pt-4"
