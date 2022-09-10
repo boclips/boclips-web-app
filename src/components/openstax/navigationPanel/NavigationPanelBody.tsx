@@ -86,17 +86,40 @@ const NavigationPanelBody = ({ book }: Props) => {
   };
 
   const updateTableOfContent = () => {
-    const chapterToExpand = `chapter-${selectedChapterNumber(location)}`;
+    const chapterNumber = selectedChapterNumber(location);
+    const chapterToExpand = `chapter-${chapterNumber}`;
 
     if (!expandedChapters.includes(chapterToExpand)) {
-      setExpandedChapters([chapterToExpand, ...expandedChapters]);
+      setExpandedChapters([chapterToExpand]);
     }
+
+    handleScrollInTableOfContent(chapterNumber);
+  };
+
+  const handleScrollInTableOfContent = (chapterNumber: number) => {
+    const nav = document.getElementById('chapter-nav');
+
+    const height = [];
+
+    for (let i = 1; i < chapterNumber; i++) {
+      const scroll = document.getElementById(
+        `chapter-${i + 1}-nav`,
+      )?.offsetHeight;
+
+      height.push(scroll);
+    }
+
+    nav.scrollTo(
+      0,
+      height.reduce((acc, i) => acc + i, 0),
+    );
   };
 
   return (
     <nav
       className={s.tocContent}
       aria-label={`Table of contents of ${book.title}`}
+      id="chapter-nav"
     >
       <Accordion.Root
         type="multiple"
@@ -105,7 +128,6 @@ const NavigationPanelBody = ({ book }: Props) => {
       >
         {book.chapters.map((chapter) => (
           <Accordion.Item
-            id={`chapter-${chapter.number}-nav`}
             value={`chapter-${chapter.number}`}
             key={`chapter-${chapter.number}`}
             className={c({ [s.selectedChapter]: isSelectedChapter(chapter) })}
@@ -114,6 +136,7 @@ const NavigationPanelBody = ({ book }: Props) => {
               className="pt-4"
               asChild
               aria-label={chapter.displayLabel}
+              id={`chapter-${chapter.number}-nav`}
             >
               <Accordion.Trigger
                 aria-label={chapter.displayLabel}
