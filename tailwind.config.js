@@ -3,6 +3,12 @@ const forms = require('@tailwindcss/forms');
 
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
+  safelist: [
+    {
+      pattern: /grid-cols-./,
+    },
+  ],
+
   theme: {
     container: {
       center: true,

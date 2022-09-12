@@ -4,14 +4,16 @@ import s from './style.module.less';
 
 interface Props {
   className?: string;
-  numberOfTiles?: number;
+  rows?: number;
+  cols?: number;
 }
 
-const SkeletonTiles = ({ className, numberOfTiles = 8 }: Props) => {
-  const skeletonsToRender = Array.from(Array(numberOfTiles).keys());
+const SkeletonTiles = ({ className, rows = 2, cols = 4 }: Props) => {
+  const skeletonsToRender = Array.from(Array(rows * cols).keys());
+  const getGridColsClass = () => `grid-cols-${cols}`;
 
   return (
-    <>
+    <div className={c(s.skeleton, s.body, getGridColsClass())}>
       {skeletonsToRender.map((i) => (
         <div
           key={i}
@@ -20,7 +22,7 @@ const SkeletonTiles = ({ className, numberOfTiles = 8 }: Props) => {
           aria-label="Loading"
         />
       ))}
-    </>
+    </div>
   );
 };
 

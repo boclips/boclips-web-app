@@ -35,6 +35,8 @@ const DisciplineWidget = (): ReactElement => {
   const mobileView =
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
 
+  const isOneColumn = breakpoints.type === 'mobile';
+
   useEffect(() => {
     if (modalOpen && mobileView) {
       document.querySelector('body').style.overflow = 'hidden';
@@ -71,10 +73,15 @@ const DisciplineWidget = (): ReactElement => {
       <div
         className={c(s.disciplineWrapper, {
           [getGridSizeClass(disciplines)]: !isLoading,
+          grid: !isLoading,
         })}
       >
         {isLoading ? (
-          <SkeletonTiles className={s.discipline} numberOfTiles={4} />
+          <SkeletonTiles
+            className={s.discipline}
+            cols={isOneColumn ? 1 : 2}
+            rows={isOneColumn ? 4 : 2}
+          />
         ) : (
           disciplines
             ?.sort((a, b) => a.name.localeCompare(b.name))

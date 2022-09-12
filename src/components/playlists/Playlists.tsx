@@ -51,9 +51,7 @@ const Playlists = () => {
   return (
     <main tabIndex={-1} className={s.playlistsWrapper}>
       {isLoading ? (
-        <div className={s.skeletonWrapper}>
-          <SkeletonTiles className={s.skeletonCard} numberOfTiles={12} />
-        </div>
+        <SkeletonTiles className={s.skeletonCard} rows={3} cols={4} />
       ) : (
         playlists.page.length > 0 && (
           <List

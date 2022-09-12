@@ -27,13 +27,7 @@ const SkeletonPage = () => {
           'grid-row-start-4 grid-row-end-4 col-start-2 col-end-26',
         )}
       />
-      <div
-        className={c(
-          s.skeleton,
-          s.body,
-          'grid-row-start-5 grid-row-end-5 col-start-2 col-end-26',
-        )}
-      >
+      <div className="grid-row-start-5 grid-row-end-5 col-start-2 col-end-26">
         <SkeletonTiles />
       </div>
     </>
