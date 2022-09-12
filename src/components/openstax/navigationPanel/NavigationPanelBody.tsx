@@ -10,7 +10,10 @@ import c from 'classnames';
 import { useOpenstaxMobileMenu } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import { useLocation } from 'react-router-dom';
-import { selectedChapterNumber } from 'src/components/openstax/helpers/helpers';
+import {
+  selectedChapterNumber,
+  scrollToSelectedSection,
+} from 'src/components/openstax/helpers/helpers';
 import s from './style.module.less';
 
 interface Props {
@@ -37,8 +40,6 @@ const NavigationPanelBody = ({ book }: Props) => {
     const newSectionLink = location.hash.replace('#', '');
 
     updateTableOfContent(newSectionLink);
-    resetScrollWhenChapterChange(newSectionLink);
-    scrollToSelectedSection(newSectionLink);
 
     if (linksOnlyToChapter(newSectionLink)) {
       setCurrentSectionLink(firstChapterElementLink(newSectionLink));
@@ -46,18 +47,6 @@ const NavigationPanelBody = ({ book }: Props) => {
       setCurrentSectionLink(newSectionLink);
     }
   }, [location.hash]);
-
-  const scrollToSelectedSection = (newSectionLink: string) => {
-    const element = document.getElementById(newSectionLink);
-    if (!element) return;
-    const yCoordinate = element.getBoundingClientRect().top + window.scrollY;
-    const navbarOffset = currentBreakpoint.type === 'desktop' ? -74 : -121;
-    const padding = -16;
-    window.scrollTo({
-      top: yCoordinate + navbarOffset + padding,
-      behavior: 'smooth',
-    });
-  };
 
   const renderSectionLevelLabel = (label: string, sectionLink: string) => (
     <HashLink
@@ -67,7 +56,7 @@ const NavigationPanelBody = ({ book }: Props) => {
         setIsOpen(false);
       }}
       scroll={() => {
-        scrollToSelectedSection(sectionLink);
+        scrollToSelectedSection(sectionLink, currentBreakpoint);
       }}
       to={{
         pathname: `/explore/openstax/${book.id}`,
@@ -83,14 +72,6 @@ const NavigationPanelBody = ({ book }: Props) => {
       </Typography.H3>
     </HashLink>
   );
-
-  const resetScrollWhenChapterChange = (newSectionLink: string) => {
-    const currentChapter = selectedChapterNumber(currentSectionLink);
-    const newChapter = selectedChapterNumber(newSectionLink);
-    if (currentChapter !== newChapter) {
-      window.scrollTo({ top: 0 });
-    }
-  };
 
   const updateTableOfContent = (newSelection: string) => {
     const chapterNumber = selectedChapterNumber(newSelection);
