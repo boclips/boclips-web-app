@@ -166,7 +166,10 @@ const NavigationPanelBody = ({ book }: Props) => {
           <Accordion.Item
             value={`chapter-${chapter.number}`}
             key={`chapter-${chapter.number}`}
-            className={c({ [s.selectedChapter]: isSelectedChapter(chapter) })}
+            className={c(
+              { [s.selectedChapter]: isSelectedChapter(chapter) },
+              'pl-2 mt-2',
+            )}
           >
             <Accordion.Header
               className="pt-4"
