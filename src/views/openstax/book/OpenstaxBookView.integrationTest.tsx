@@ -26,6 +26,28 @@ import {
 } from 'src/views/openstax/book/OpenstaxBookViewTestSupport';
 
 describe('OpenstaxBookView', () => {
+  it('renders loading skeletons before data is loaded', async () => {
+    const book = createBook();
+
+    const client = setUpClientWithBook(book);
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
+        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+      </MemoryRouter>,
+    );
+
+    const loadingSkeleton = await wrapper.findByLabelText(
+      'Loading details for book',
+    );
+
+    expect(loadingSkeleton).not.toBeNull();
+    expect(
+      await wrapper.findByText('Everything to know about ducks'),
+    ).toBeVisible();
+    expect(loadingSkeleton).not.toBeInTheDocument();
+  });
+
   it('by default renders book details with first chapter selected', async () => {
     resizeToDesktop();
     const book = createBook();

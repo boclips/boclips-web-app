@@ -8,6 +8,7 @@ import { useGetBook } from 'src/hooks/api/openstaxQuery';
 import { Content } from 'src/components/openstax/book/Content';
 import { NavigationPanel } from 'src/components/openstax/navigationPanel/NavigationPanel';
 import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
+import OpenstaxBookSkeletonPage from 'src/components/skeleton/openstax/OpenstaxBookSkeletonPage';
 
 const OpenstaxBookView = () => {
   const { id: bookId } = useParams<PathWithId>();
@@ -19,6 +20,7 @@ const OpenstaxBookView = () => {
       responsiveLayout
     >
       <Navbar />
+      {isLoading && <OpenstaxBookSkeletonPage />}
       {!isLoading && (
         <OpenstaxMobileMenuProvider>
           <NavigationPanel book={book} />
