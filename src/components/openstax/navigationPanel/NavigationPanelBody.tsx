@@ -20,30 +20,37 @@ interface Props {
 const NavigationPanelBody = ({ book }: Props) => {
   const currentBreakpoint = useMediaBreakPoint();
   const location = useLocation();
-  const [selectedSection, setSelectedSection] = useState<string>('');
+  const [currentSectionLink, setCurrentSectionLink] =
+    useState<string>('chapter-1');
 
-  const isSelectedSection = (sectionId: string) =>
-    selectedSection === sectionId;
+  const isSelectedSection = (sectionLink: string) =>
+    currentSectionLink === sectionLink;
 
   const isSelectedChapter = (chapter: OpenstaxChapter) =>
-    chapter.number === selectedChapterNumber(location);
+    chapter.number === selectedChapterNumber(currentSectionLink);
 
   const [expandedChapters, setExpandedChapters] = useState(['chapter-1']);
 
   const { setIsOpen } = useOpenstaxMobileMenu();
 
   useEffect(() => {
-    const navigationLabel = location.hash.replace('#', '');
-    const element = document.getElementById(navigationLabel);
-    if (element !== null && !isSelectedSection(navigationLabel)) {
-      handleSectionClick(location.hash);
-      scrollWithNavbarOffset(element);
+    const newSectionLink = location.hash.replace('#', '');
+
+    updateTableOfContent(newSectionLink);
+    resetScrollWhenChapterChange(newSectionLink);
+    scrollToSelectedSection(newSectionLink);
+
+    if (linksOnlyToChapter(newSectionLink)) {
+      setCurrentSectionLink(firstChapterElementLink(newSectionLink));
+    } else {
+      setCurrentSectionLink(newSectionLink);
     }
-    updateTableOfContent();
   }, [location.hash]);
 
-  const scrollWithNavbarOffset = (el) => {
-    const yCoordinate = el.getBoundingClientRect().top + window.scrollY;
+  const scrollToSelectedSection = (newSectionLink: string) => {
+    const element = document.getElementById(newSectionLink);
+    if (!element) return;
+    const yCoordinate = element.getBoundingClientRect().top + window.scrollY;
     const navbarOffset = currentBreakpoint.type === 'desktop' ? -74 : -121;
     const padding = -16;
     window.scrollTo({
@@ -52,23 +59,24 @@ const NavigationPanelBody = ({ book }: Props) => {
     });
   };
 
-  const renderSectionLevelLabel = (label: string, navigationLink: string) => (
+  const renderSectionLevelLabel = (label: string, sectionLink: string) => (
     <HashLink
-      key={navigationLink}
+      key={sectionLink}
       className={s.sectionAnchor}
       onClick={() => {
-        handleSectionClick(navigationLink);
         setIsOpen(false);
       }}
-      scroll={scrollWithNavbarOffset}
+      scroll={() => {
+        scrollToSelectedSection(sectionLink);
+      }}
       to={{
         pathname: `/explore/openstax/${book.id}`,
-        hash: navigationLink,
+        hash: sectionLink,
       }}
     >
       <Typography.H3
         className={c(s.courseTitle, {
-          [s.selectedSection]: isSelectedSection(navigationLink),
+          [s.selectedSection]: isSelectedSection(sectionLink),
         })}
       >
         <span>{label}</span>
@@ -76,23 +84,19 @@ const NavigationPanelBody = ({ book }: Props) => {
     </HashLink>
   );
 
-  const handleSectionClick = (navigationLabel: string) => {
-    const chapterNumber = Number(navigationLabel.split('-')[1]);
-    if (chapterNumber !== selectedChapterNumber(location)) {
+  const resetScrollWhenChapterChange = (newSectionLink: string) => {
+    const currentChapter = selectedChapterNumber(currentSectionLink);
+    const newChapter = selectedChapterNumber(newSectionLink);
+    if (currentChapter !== newChapter) {
       window.scrollTo({ top: 0 });
     }
-
-    setSelectedSection(navigationLabel);
   };
 
-  const updateTableOfContent = () => {
-    const chapterNumber = selectedChapterNumber(location);
+  const updateTableOfContent = (newSelection: string) => {
+    const chapterNumber = selectedChapterNumber(newSelection);
     const chapterToExpand = `chapter-${chapterNumber}`;
 
-    if (!expandedChapters.includes(chapterToExpand)) {
-      setExpandedChapters([chapterToExpand]);
-    }
-
+    setExpandedChapters([chapterToExpand]);
     handleScrollInTableOfContent(chapterNumber);
   };
 
@@ -114,6 +118,38 @@ const NavigationPanelBody = ({ book }: Props) => {
       height.reduce((acc, i) => acc + i, 0),
     );
   };
+
+  const linksOnlyToChapter = (newSectionLink) =>
+    newSectionLink.split('-').length <= 2;
+
+  const firstChapterElementLink = (newSectionLink: string) => {
+    const selectedChapter = book.chapters.find(
+      (chapter) => chapter.number === selectedChapterNumber(newSectionLink),
+    );
+    if (selectedChapter.chapterOverview) {
+      return chapterOverviewLink(selectedChapter.number);
+    }
+
+    if (selectedChapter.discussionPrompt) {
+      return discussionPromptLink(selectedChapter.number);
+    }
+
+    const firstEnumeratedSection = selectedChapter.sections[0];
+    if (firstEnumeratedSection) {
+      return sectionLink(selectedChapter.number, firstEnumeratedSection.number);
+    }
+
+    return newSectionLink;
+  };
+
+  const chapterOverviewLink = (chapterNumber: number) =>
+    `chapter-${chapterNumber}`;
+
+  const discussionPromptLink = (chapterNumber: number) =>
+    `chapter-${chapterNumber}-discussion-prompt`;
+
+  const sectionLink = (chapterNumber: number, sectionNumber: number) =>
+    `chapter-${chapterNumber}-section-${sectionNumber}`;
 
   return (
     <nav
@@ -164,17 +200,17 @@ const NavigationPanelBody = ({ book }: Props) => {
               {chapter.chapterOverview &&
                 renderSectionLevelLabel(
                   chapter.chapterOverview.displayLabel,
-                  `#chapter-${chapter.number}`,
+                  chapterOverviewLink(chapter.number),
                 )}
               {chapter.discussionPrompt &&
                 renderSectionLevelLabel(
                   chapter.discussionPrompt.displayLabel,
-                  `#chapter-${chapter.number}-discussion-prompt`,
+                  discussionPromptLink(chapter.number),
                 )}
               {chapter.sections.map((section) =>
                 renderSectionLevelLabel(
                   section.displayLabel,
-                  `#chapter-${chapter.number}-section-${section.number}`,
+                  sectionLink(chapter.number, section.number),
                 ),
               )}
             </Accordion.Content>

@@ -16,7 +16,7 @@ export const Content = ({ book }: Props) => {
 
   const getSelectedChapter = () =>
     book.chapters.find(
-      (chapter) => chapter.number === selectedChapterNumber(location),
+      (chapter) => chapter.number === selectedChapterNumber(location.hash),
     );
 
   return (

@@ -176,13 +176,7 @@ describe('Openstax book view pagination buttons', () => {
       'Chapter 1: Introduction',
       'Chapter 2: Epilogue',
     ]);
-    validateVisibleHeadings(bookToc, 3, [
-      'Chapter Overview',
-      'Discussion Prompt',
-      '1.1 Life at the coop',
-      '1.2 Adventures outside',
-      '2.1 This is the end',
-    ]);
+    validateVisibleHeadings(bookToc, 3, ['2.1 This is the end']);
   });
 });
 

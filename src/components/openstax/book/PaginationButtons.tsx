@@ -15,7 +15,7 @@ const PaginationButtons = ({ book }: Props) => {
 
   const selectedChapterIndex = () =>
     book.chapters.findIndex(
-      (chapter) => chapter.number === selectedChapterNumber(location),
+      (chapter) => chapter.number === selectedChapterNumber(location.hash),
     );
 
   const getFirstChapter = () => book.chapters[0];
@@ -23,10 +23,10 @@ const PaginationButtons = ({ book }: Props) => {
   const getLastChapter = () => book.chapters[book.chapters.length - 1];
 
   const showNextChapterButton = () =>
-    selectedChapterNumber(location) < getLastChapter().number;
+    selectedChapterNumber(location.hash) < getLastChapter().number;
 
   const showPrevChapterButton = () =>
-    selectedChapterNumber(location) > getFirstChapter().number;
+    selectedChapterNumber(location.hash) > getFirstChapter().number;
 
   return (
     <div className="flex">
