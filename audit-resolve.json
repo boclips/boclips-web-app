@@ -9,6 +9,11 @@
       "decision": "ignore",
       "madeAt": 1658938093825,
       "expiresAt": 1661530085767
+    },
+    "1081698|html-webpack-plugin>html-minifier-terser>terser": {
+      "decision": "ignore",
+      "madeAt": 1662994390959,
+      "expiresAt": 1665586345160
     }
   },
   "rules": {},
