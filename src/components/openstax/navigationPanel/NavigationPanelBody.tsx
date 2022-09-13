@@ -169,10 +169,7 @@ const NavigationPanelBody = ({ book }: Props) => {
                   <span className="w-4/5">{chapter.displayLabel}</span>
                   <ChevronDownIcon
                     aria-hidden
-                    className={c(
-                      s.chevronIcon,
-                      'md:w-6 lg:w-auto lg:relative lg:right-8',
-                    )}
+                    className="md:w-6 lg:w-auto lg:relative lg:right-8"
                   />
                 </Typography.H2>
                 <div className="text-gray-700 text-sm">
