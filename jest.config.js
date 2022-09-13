@@ -16,7 +16,7 @@ module.exports = {
     '\\.(css|less)$': '<rootDir>/__mocks__/styleMock.js',
   },
   testEnvironment: 'jsdom',
-  testMatch: ['**/*.(integrationTest|test).(ts|tsx)'],
+  testMatch: ['**/*.(integrationTest|a11yTest|test).(ts|tsx)'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/dist/'],
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',

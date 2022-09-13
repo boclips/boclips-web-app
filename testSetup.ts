@@ -11,6 +11,9 @@ configure({
 
 jest.setTimeout(jestTimeout);
 
+const { toHaveNoViolations } = require('jest-axe')
+expect.extend(toHaveNoViolations)
+
 window.resizeTo = resizeTo;
 
 window.scrollTo = jest.fn();
