@@ -26,7 +26,7 @@ const ExploreView = () => {
   );
 
   return (
-    <Layout rowsSetup="grid-rows-explore-view gap-y-6" responsiveLayout>
+    <Layout rowsSetup="grid-rows-explore-view" responsiveLayout>
       <Navbar />
       <ExploreHeader />
       <SubjectsMenu
