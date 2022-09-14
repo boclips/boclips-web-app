@@ -20,15 +20,35 @@ const OpenstaxBookSkeletonPage = () => {
         return 3;
     }
   };
+
   return (
-    <div
-      className="grid-row-start-2 grid-row-end-2 col-start-2 col-end-26"
-      aria-label="Loading details for book"
-    >
-      <div className={c(s.skeleton, o.title)} />
-      <div className={c(s.skeleton, o.chapter)} />
-      <div className={c(s.skeleton, o.section)} />
-      <SkeletonTiles rows={2} cols={getColumnsToShow()} />
+    <div data-qa="Loading details for book">
+      {screen.type === 'desktop' && (
+        <div className={o.tocPanel}>
+          <div className={c(s.skeleton, o.backButton)} />
+          <div className={c(s.skeleton, o.navPanelTitle)} />
+          <div className={c(s.skeleton, o.navPanelChapter)} />
+          <div className={c(s.skeleton, o.navPanelVideoCount)} />
+          <div className={c(s.skeleton, o.navPanelSection)} />
+          <div className={c(s.skeleton, o.navPanelSection)} />
+          <div className={c(s.skeleton, o.navPanelSection)} />
+          <div className={c(s.skeleton, o.navPanelSection)} />
+          <div className={c(s.skeleton, o.navPanelSection)} />
+          <div className={c(s.skeleton, o.navPanelChapter)} />
+          <div className={c(s.skeleton, o.navPanelVideoCount)} />
+          <div className={c(s.skeleton, o.navPanelChapter)} />
+          <div className={c(s.skeleton, o.navPanelVideoCount)} />
+        </div>
+      )}
+      <main className={o.main}>
+        {screen.type !== 'desktop' && (
+          <div className={c(s.skeleton, o.backButton)} />
+        )}
+        <div className={c(s.skeleton, o.title)} />
+        <div className={c(s.skeleton, o.chapter)} />
+        <div className={c(s.skeleton, o.section)} />
+        <SkeletonTiles cols={getColumnsToShow()} />
+      </main>
     </div>
   );
 };

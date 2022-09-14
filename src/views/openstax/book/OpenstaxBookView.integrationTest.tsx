@@ -37,7 +37,7 @@ describe('OpenstaxBookView', () => {
       </MemoryRouter>,
     );
 
-    const loadingSkeleton = await wrapper.findByLabelText(
+    const loadingSkeleton = await wrapper.findByTestId(
       'Loading details for book',
     );
 

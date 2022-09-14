@@ -20,8 +20,9 @@ const OpenstaxBookView = () => {
       responsiveLayout
     >
       <Navbar />
-      {isLoading && <OpenstaxBookSkeletonPage />}
-      {!isLoading && (
+      {isLoading ? (
+        <OpenstaxBookSkeletonPage />
+      ) : (
         <OpenstaxMobileMenuProvider>
           <NavigationPanel book={book} />
           <Content book={book} />

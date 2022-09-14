@@ -1,17 +1,101 @@
+@import '~@boclips-ui/styles/src/colors';
+@import '~@boclips-ui/styles/src/breakpoints';
+@import '~@boclips-ui/styles/src/focus';
+
+.tocPanel {
+  grid-row-start: 2;
+  grid-row-end: 3;
+  z-index: 99;
+  border-right: 1px solid @gray-400;
+}
+
+.backButton {
+  width: 72px;
+  height: 30px;
+  @apply mb-4;
+}
+
+.navPanelTitle {
+  width: 80%;
+  height: 30px;
+  @apply mb-10;
+}
+
+.navPanelChapter {
+  width: 80%;
+  height: 30px;
+}
+
+.navPanelSection {
+  width: 60%;
+  height: 20px;
+  @apply mb-4;
+}
+
+.navPanelVideoCount {
+  width: 60px;
+  height: 20px;
+  @apply mt-1 mb-4;
+}
+
 .title {
-  width: 320px;
+  width: 40%;
   height: 30px;
 }
 
 .chapter {
-  width: 230px;
+  width: 30%;
   height: 30px;
   @apply my-4;
 }
 
 .section {
-  width: 380px;
+  width: 50%;
   height: 30px;
   @apply mb-8;
+}
+
+.main {
+  grid-row-start: 2;
+  grid-row-end: 3;
+
+  --bo-ui-button-outline-svg-fill: transparent;
+  --bo-ui-button-outline-background-color-hover: none;
+}
+
+@media screen and (min-width: @screen-sm) {
+  .main {
+    grid-column-start: 2;
+    grid-column-end: 26;
+  }
+
+  .tocPanel {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    grid-column-start: 2;
+    grid-column-end: 26;
+  }
+}
+
+@media screen and (min-width: @screen-lg) {
+  .main {
+    grid-column-start: 8;
+    grid-column-end: 26;
+  }
+
+  .tocPanel {
+    height: 100%;
+    width: 100%;
+    grid-column-start: 2;
+    grid-column-end: 8;
+    z-index: 1;
+    position: relative;
+  }
+
+  .sticky {
+    position: sticky;
+    top: 100px;
+  }
 }
 
