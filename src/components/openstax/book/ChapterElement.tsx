@@ -3,9 +3,9 @@ import React from 'react';
 import c from 'classnames';
 import s from 'src/components/openstax/book/style.module.less';
 import SadFace from 'src/resources/icons/sad_face.svg';
-import { ResponsiveVideoGridCardContainer } from 'src/components/videoCard/ResponsiveVideoGridCardContainer';
 import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
+import { VideoGridCardContainer } from './VideoGridCardContainer';
 
 interface Props {
   id: string;
@@ -23,7 +23,7 @@ export const ChapterElement = ({ id, displayLabel, videos }: Props) => {
         <span className="text-gray-700">{numberOfVideosLabel}</span>
       </Typography.H3>
       {videoCount > 0 ? (
-        <ResponsiveVideoGridCardContainer videos={videos} />
+        <VideoGridCardContainer videos={videos} />
       ) : (
         renderEmptyMappingMessaging()
       )}

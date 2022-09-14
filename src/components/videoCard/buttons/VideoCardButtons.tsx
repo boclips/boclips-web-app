@@ -6,8 +6,6 @@ import { FeatureGate } from 'src/components/common/FeatureGate';
 import c from 'classnames';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { useLocation } from 'react-router-dom';
-import { EmbedButton } from 'src/components/embedButton/EmbedButton';
 import s from './style.module.less';
 import { CopyVideoLinkButton } from './CopyVideoLinkButton';
 import { CopyVideoIdButton } from './CopyVideoIdButton';
@@ -19,6 +17,7 @@ interface VideoCardButtonsProps {
   onUrlCopied?: () => void;
   onCleanupAddToPlaylist?: (playlistId: string, cleanUp: () => void) => void;
   iconOnly?: boolean;
+  primaryButton?: React.ReactElement;
 }
 
 export const VideoCardButtons = ({
@@ -28,9 +27,8 @@ export const VideoCardButtons = ({
   onCleanupAddToPlaylist,
   onUrlCopied,
   iconOnly = false,
+  primaryButton,
 }: VideoCardButtonsProps) => {
-  const currentLocation = useLocation();
-
   const trackCopyVideoLink = () => {
     if (onUrlCopied) {
       onUrlCopied();
@@ -39,23 +37,7 @@ export const VideoCardButtons = ({
       AppcuesEvent.COPY_LINK_FROM_SEARCH_RESULTS,
     );
   };
-  const showEmbedButton =
-    video.links.createEmbedCode &&
-    currentLocation.pathname.includes('openstax');
 
-  const button = showEmbedButton ? (
-    <EmbedButton video={video} />
-  ) : (
-    <FeatureGate linkName="cart">
-      <AddToCartButton
-        video={video}
-        key="cart-button"
-        width="148px"
-        onClick={onAddToCart}
-        iconOnly={iconOnly}
-      />
-    </FeatureGate>
-  );
   return (
     <div className="flex flex-row justify-between" key={`copy-${video.id}`}>
       <div className={c(s.iconOnlyButtons)}>
@@ -72,7 +54,17 @@ export const VideoCardButtons = ({
         <CopyVideoLinkButton video={video} onClick={trackCopyVideoLink} />
       </div>
 
-      {button}
+      {primaryButton || (
+        <FeatureGate linkName="cart">
+          <AddToCartButton
+            video={video}
+            key="cart-button"
+            width="148px"
+            onClick={onAddToCart}
+            iconOnly={iconOnly}
+          />
+        </FeatureGate>
+      )}
     </div>
   );
 };
