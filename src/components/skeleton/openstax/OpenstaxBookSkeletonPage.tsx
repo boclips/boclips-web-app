@@ -22,7 +22,7 @@ const OpenstaxBookSkeletonPage = () => {
   };
 
   return (
-    <div data-qa="Loading details for book">
+    <>
       {screen.type === 'desktop' && (
         <div className={o.tocPanel}>
           <div className={c(s.skeleton, o.backButton)} />
@@ -40,7 +40,7 @@ const OpenstaxBookSkeletonPage = () => {
           <div className={c(s.skeleton, o.navPanelVideoCount)} />
         </div>
       )}
-      <main className={o.main}>
+      <main className={o.main} data-qa="Loading details for book">
         {screen.type !== 'desktop' && (
           <div className={c(s.skeleton, o.backButton)} />
         )}
@@ -49,7 +49,7 @@ const OpenstaxBookSkeletonPage = () => {
         <div className={c(s.skeleton, o.section)} />
         <SkeletonTiles cols={getColumnsToShow()} />
       </main>
-    </div>
+    </>
   );
 };
 
