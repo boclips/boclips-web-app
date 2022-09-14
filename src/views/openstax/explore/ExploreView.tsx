@@ -35,7 +35,7 @@ const ExploreView = () => {
         onClick={setCurrentSubject}
         isLoading={isLoading}
       />
-      <BookList books={currentSubjectBooks} />
+      <BookList books={currentSubjectBooks} isLoading={isLoading} />
       <Footer />
     </Layout>
   );
