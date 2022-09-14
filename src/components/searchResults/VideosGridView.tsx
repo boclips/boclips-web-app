@@ -11,6 +11,7 @@ import { FilterKey } from 'src/types/search/FilterKey';
 import VideoGridCard from 'src/components/videoCard/VideoGridCard';
 import s from './styles.module.less';
 import paginationStyles from '../common/pagination/pagination.module.less';
+import { VideoCardButtons } from '../videoCard/buttons/VideoCardButtons';
 
 interface Props {
   videos: Video[];
@@ -64,15 +65,21 @@ export const VideosGridView = ({
       }}
       dataSource={videos}
       renderItem={(video: Video) => (
-        <li data-qa="video-card-wrapper">
+        <li data-qa="video-card-wrapper" key={video.id}>
           <VideoGridCard
             video={video}
             handleFilterChange={handleFilterChange}
-            onAddToCart={() => {
-              AnalyticsFactory.appcues().sendEvent(
-                AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE,
-              );
-            }}
+            buttonsRow={
+              <VideoCardButtons
+                video={video}
+                iconOnly
+                onAddToCart={() => {
+                  AnalyticsFactory.appcues().sendEvent(
+                    AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE,
+                  );
+                }}
+              />
+            }
           />
         </li>
       )}

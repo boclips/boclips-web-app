@@ -6,6 +6,7 @@ import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import VideoGridCard from 'src/components/videoCard/VideoGridCard';
+import { VideoCardButtons } from '../videoCard/buttons/VideoCardButtons';
 
 interface Props {
   video: Video;
@@ -34,14 +35,8 @@ const VideoRecommendations = ({ video }: Props) => {
       <div className={s.recommendedVideosSection}>
         {recommendedVideos?.map((recommendedVideo) => (
           <VideoGridCard
+            key={recommendedVideo.id}
             video={recommendedVideo}
-            onAddToCart={trackAddToCart}
-            onAddToPlaylist={() => {
-              mixpanel.track('video_recommendation_playlist_add');
-            }}
-            onUrlCopied={() => {
-              mixpanel.track('video_recommendation_url_copied');
-            }}
             onLinkClicked={() => {
               mixpanel.track('video_recommendation_clicked');
             }}
@@ -52,6 +47,19 @@ const VideoRecommendations = ({ video }: Props) => {
                 videoId: recommendedVideo.id,
               });
             }}
+            buttonsRow={
+              <VideoCardButtons
+                video={recommendedVideo}
+                onAddToCart={trackAddToCart}
+                onAddToPlaylist={() => {
+                  mixpanel.track('video_recommendation_playlist_add');
+                }}
+                onUrlCopied={() => {
+                  mixpanel.track('video_recommendation_url_copied');
+                }}
+                iconOnly
+              />
+            }
           />
         ))}
       </div>

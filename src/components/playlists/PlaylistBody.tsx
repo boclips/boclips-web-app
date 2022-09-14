@@ -8,6 +8,7 @@ import { Collection } from 'boclips-api-client/dist/sub-clients/collections/mode
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import VideoGridCard from 'src/components/videoCard/VideoGridCard';
 import s from './style.module.less';
+import { VideoCardButtons } from '../videoCard/buttons/VideoCardButtons';
 
 interface Props {
   playlist: Collection;
@@ -58,13 +59,20 @@ const PlaylistBody = ({ playlist }: Props) => {
         ) : (
           playlist.videos.map((video: Video) => (
             <VideoGridCard
+              key={video.id}
               video={video}
-              onAddToCart={() => {
-                AnalyticsFactory.appcues().sendEvent(
-                  AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE,
-                );
-              }}
-              onCleanupAddToPlaylist={shouldRemoveVideoCardFromView}
+              buttonsRow={
+                <VideoCardButtons
+                  video={video}
+                  iconOnly
+                  onAddToCart={() => {
+                    AnalyticsFactory.appcues().sendEvent(
+                      AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE,
+                    );
+                  }}
+                  onCleanupAddToPlaylist={shouldRemoveVideoCardFromView}
+                />
+              }
             />
           ))
         )}

@@ -10,6 +10,7 @@ import { MemoryRouter, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
+import { VideoCardButtons } from './buttons/VideoCardButtons';
 
 describe(`VideoGridCard`, () => {
   it('should call onfilterchange when clicking channel name', () => {
@@ -25,7 +26,7 @@ describe(`VideoGridCard`, () => {
             <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
               <VideoGridCard
                 video={video}
-                onAddToCart={jest.fn()}
+                buttonsRow={<div />}
                 handleFilterChange={filterSpy}
               />
             </BoclipsSecurityProvider>
@@ -54,7 +55,7 @@ describe(`VideoGridCard`, () => {
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
           <QueryClientProvider client={new QueryClient()}>
             <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-              <VideoGridCard video={video} onAddToCart={jest.fn()} />
+              <VideoGridCard video={video} buttonsRow={<div />} />
             </BoclipsSecurityProvider>
           </QueryClientProvider>
         </BoclipsClientProvider>
@@ -80,7 +81,12 @@ describe(`VideoGridCard`, () => {
           <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
             <BoclipsClientProvider client={new FakeBoclipsClient()}>
               <QueryClientProvider client={new QueryClient()}>
-                <VideoGridCard video={video} onAddToCart={() => jest.fn()} />
+                <VideoGridCard
+                  video={video}
+                  buttonsRow={
+                    <VideoCardButtons video={video} onAddToCart={jest.fn()} />
+                  }
+                />
               </QueryClientProvider>
             </BoclipsClientProvider>
           </BoclipsSecurityProvider>
@@ -103,7 +109,12 @@ describe(`VideoGridCard`, () => {
           <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
             <BoclipsClientProvider client={new FakeBoclipsClient()}>
               <QueryClientProvider client={new QueryClient()}>
-                <VideoGridCard video={video} onAddToCart={() => jest.fn()} />
+                <VideoGridCard
+                  video={video}
+                  buttonsRow={
+                    <VideoCardButtons video={video} onAddToCart={jest.fn()} />
+                  }
+                />
               </QueryClientProvider>
             </BoclipsClientProvider>
           </BoclipsSecurityProvider>
@@ -125,7 +136,12 @@ describe(`VideoGridCard`, () => {
           <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
             <BoclipsClientProvider client={new FakeBoclipsClient()}>
               <QueryClientProvider client={new QueryClient()}>
-                <VideoGridCard video={video} onAddToCart={() => jest.fn()} />
+                <VideoGridCard
+                  video={video}
+                  buttonsRow={
+                    <VideoCardButtons video={video} onAddToCart={jest.fn()} />
+                  }
+                />
               </QueryClientProvider>
             </BoclipsClientProvider>
           </BoclipsSecurityProvider>

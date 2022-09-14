@@ -6,7 +6,6 @@ import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { Typography } from '@boclips-ui/typography';
 import s from 'src/components/common/gridCard/style.module.less';
-import { VideoCardButtons } from 'src/components/videoCard/buttons/VideoCardButtons';
 import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
 import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import { FilterKey } from 'src/types/search/FilterKey';
@@ -14,24 +13,18 @@ import Badge from '@boclips-ui/badge';
 
 interface Props {
   video: Video;
-  onAddToCart?: () => void;
-  onCleanupAddToPlaylist?: (playlistId: string, cleanUp: () => void) => void;
   onSegmentPlayed?: OnSegmentPlayedEvent;
-  onAddToPlaylist?: () => void;
-  onUrlCopied?: () => void;
   onLinkClicked?: () => void;
   handleFilterChange?: (filterKey: FilterKey, values: string[]) => void;
+  buttonsRow: React.ReactElement;
 }
 
 const VideoGridCard = ({
   video,
-  onAddToCart,
-  onCleanupAddToPlaylist,
   onSegmentPlayed,
-  onAddToPlaylist,
-  onUrlCopied,
   onLinkClicked,
   handleFilterChange,
+  buttonsRow,
 }: Props) => (
   <GridCard
     link={`/videos/${video.id}`}
@@ -75,18 +68,7 @@ const VideoGridCard = ({
         </span>
       </div>
     }
-    footer={
-      <div className="p-1 self-end">
-        <VideoCardButtons
-          video={video}
-          onCleanupAddToPlaylist={onCleanupAddToPlaylist}
-          onAddToCart={onAddToCart}
-          onAddToPlaylist={onAddToPlaylist}
-          onUrlCopied={onUrlCopied}
-          iconOnly
-        />
-      </div>
-    }
+    footer={<div className="p-1 self-end">{buttonsRow}</div>}
   />
 );
 
