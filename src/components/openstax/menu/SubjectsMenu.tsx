@@ -1,14 +1,22 @@
 import React from 'react';
 import c from 'classnames';
+import SubjectMenuItem from 'src/components/openstax/menu/SubjetMenuItem';
+import SubjectMenuItemSkeleton from 'src/components/openstax/menu/SubjectMenuItemSkeleton';
 import s from './style.module.less';
 
-interface Props {
+export interface SubjectMenuProps {
   subjects: string[];
   currentSubject: string;
   onClick: (subject: string) => void;
+  isLoading: boolean;
 }
 
-export const SubjectsMenu = ({ subjects, currentSubject, onClick }: Props) => {
+export const SubjectsMenu = ({
+  subjects,
+  currentSubject,
+  onClick,
+  isLoading,
+}: SubjectMenuProps) => {
   return (
     <nav
       className={c(
@@ -18,29 +26,15 @@ export const SubjectsMenu = ({ subjects, currentSubject, onClick }: Props) => {
       )}
     >
       <ul className="flex md:flex-wrap md:justify-center">
-        {subjects?.map((subject) => {
-          return (
-            <li key={subject}>
-              <button
-                key={subject}
-                type="button"
-                aria-label={`subject ${subject}`}
-                onClick={() => onClick(subject)}
-                name={subject}
-                className={c(
-                  s.subject,
-                  `inline-block relative p-4 text-base shrink-0 hover:text-blue-800 hover:font-medium focus:text-blue-800 focus:font-medium`,
-                  {
-                    [`${s.active} text-blue-800 font-medium`]:
-                      currentSubject === subject,
-                  },
-                )}
-              >
-                {subject}
-              </button>
-            </li>
-          );
-        })}
+        {isLoading ? (
+          <SubjectMenuItemSkeleton />
+        ) : (
+          <SubjectMenuItem
+            subjects={subjects}
+            currentSubject={currentSubject}
+            onClick={onClick}
+          />
+        )}
       </ul>
     </nav>
   );

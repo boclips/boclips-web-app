@@ -8,7 +8,7 @@ import { useGetBooksQuery } from 'src/hooks/api/openstaxQuery';
 import ExploreHeader from 'src/components/openstax/exploreHeader/ExploreHeader';
 
 const ExploreView = () => {
-  const { data: books } = useGetBooksQuery();
+  const { data: books, isLoading } = useGetBooksQuery();
   const [currentSubject, setCurrentSubject] = useState('');
 
   const subjects = useMemo(
@@ -33,6 +33,7 @@ const ExploreView = () => {
         subjects={subjects}
         currentSubject={currentSubject}
         onClick={setCurrentSubject}
+        isLoading={isLoading}
       />
       <BookList books={currentSubjectBooks} />
       <Footer />

@@ -16,6 +16,7 @@ describe('Openstax book menu', () => {
           subjects={subjects}
           currentSubject=""
           onClick={() => {}}
+          isLoading={false}
         />
       </BoclipsClientProvider>,
     );
@@ -23,5 +24,30 @@ describe('Openstax book menu', () => {
     expect(await wrapper.findByText('Maths')).toBeInTheDocument();
     expect(wrapper.getByText('French')).toBeInTheDocument();
     expect(wrapper.getByText('Physics')).toBeInTheDocument();
+  });
+
+  it(`displays subject menu skeleton`, async () => {
+    const fakeClient = new FakeBoclipsClient();
+
+    const subjects = ['Maths', 'French', 'Physics'];
+
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeClient}>
+        <SubjectsMenu
+          subjects={subjects}
+          currentSubject=""
+          onClick={() => {}}
+          isLoading
+        />
+      </BoclipsClientProvider>,
+    );
+
+    expect(
+      await wrapper.findByTestId('subjects-skeleton-1'),
+    ).toBeInTheDocument();
+
+    expect(
+      await wrapper.findByTestId('subjects-skeleton-6'),
+    ).toBeInTheDocument();
   });
 });
