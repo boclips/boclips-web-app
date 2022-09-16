@@ -99,7 +99,7 @@
     "@boclips-ui/search-bar": "^4.5.9",
     "@boclips-ui/styles": "^4.0.2",
     "@boclips-ui/subject-badge": "^2.1.19",
-    "@boclips-ui/tooltip": "2.2.1",
+    "@boclips-ui/tooltip": "2.2.6",
     "@boclips-ui/typography": "^2.3.5",
     "@boclips-ui/use-media-breakpoints": "^2.0.5",
     "@boclips-ui/video-card": "^5.3.3",
