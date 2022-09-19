@@ -10,7 +10,7 @@ interface Props {
   isLoading: boolean;
 }
 
-const getBookCards = (books: OpenstaxBook[]) => {
+const BookCards = ({ books }: { books: OpenstaxBook[] }) => {
   return (
     <>
       {books?.map((it) => (
@@ -28,7 +28,7 @@ export const BookList = ({ books, isLoading }: Props) => {
         'col-start-2 col-end-26 grid-row-start-5 grid-row-end-5',
       )}
     >
-      {isLoading ? <BookCardSkeleton /> : getBookCards(books)}
+      {isLoading ? <BookCardSkeleton /> : <BookCards books={books} />}
     </main>
   );
 };
