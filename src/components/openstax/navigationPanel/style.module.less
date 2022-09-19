@@ -46,9 +46,17 @@
 
 .tocContent {
   overflow-y: scroll;
+  padding-right: 7px;
 
   &::-webkit-scrollbar {
     width: 7px;
+  }
+
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background: @blue-500;
+      border-radius: 100vh;
+    }
   }
 
   &::-webkit-scrollbar-track {
@@ -57,7 +65,7 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: @blue-500;
+    background: transparent;
     border-radius: 100vh;
   }
 
@@ -65,7 +73,7 @@
     padding-bottom: 1rem;
   }
 
-  [data-state='open'] svg{
+  [data-state='open'] svg {
     rotate: 180deg;
   }
 }
@@ -110,7 +118,7 @@
 
 @media screen and (min-width: @screen-lg) {
   .tocContent {
-    @apply border-r border-gray-400;
+  @apply border-r border-gray-400;
     padding: 0;
     border-right-style: solid;
     height: calc(100vh - 74px - 24px - 119px);
@@ -137,7 +145,7 @@
   }
 
   .tocHeader {
-    @apply border-r border-gray-400 border-b;
+  @apply border-r border-gray-400 border-b;
     padding-top: 1rem;
     padding-bottom: 1.5rem;
     border-right-style: solid;
@@ -180,7 +188,7 @@
 }
 
 .selectedSection {
-  @apply text-blue-700 font-medium;
+@apply text-blue-700 font-medium;
   border-right: @blue-800 6px solid;
 }
 
