@@ -10,7 +10,7 @@ interface Props {
   isLoading: boolean;
 }
 
-const BookCards = ({ books }: { books: OpenstaxBook[] }) => {
+const BookCards = ({ books }: Omit<Props, 'isLoading'>) => {
   return (
     <>
       {books?.map((it) => (
