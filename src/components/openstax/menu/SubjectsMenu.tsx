@@ -22,7 +22,7 @@ export const SubjectsMenu = ({
       className={c(
         s.subjectList,
         'col-start-2 col-end-26 grid-row-start-4 grid-row-end-4 mt-2',
-        'flex text-gray-600 border-b-2 border-gray-400 md:justify-center',
+        'flex text-gray-600 border-b-2 border-gray-400 md:justify-start',
       )}
     >
       <ul className="flex md:flex-wrap md:justify-center">
