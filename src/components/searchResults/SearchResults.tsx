@@ -10,6 +10,7 @@ import ViewButtons, {
 import { VideosGridView } from 'src/components/searchResults/VideosGridView';
 import { SearchTopics } from 'src/components/searchResults/SearchTopics';
 import { FilterKey } from 'src/types/search/FilterKey';
+import c from 'classnames';
 
 interface Props {
   results?: VideoSearchResults;
@@ -29,6 +30,7 @@ export const SearchResults = ({
   handleFilterChange,
 }: Props) => {
   const [view, setView] = useState<ViewType>();
+  const hasSearchTopics = results?.facets.topics.length > 0;
 
   const renderVideoCardList = () => {
     const placeholderView = results.page.map((video) => (
@@ -72,20 +74,28 @@ export const SearchResults = ({
   };
 
   return (
-    <main tabIndex={-1} className="col-start-8 col-end-26">
+    <>
       {query && <Helmet title={`Search results for ${query}`} />}
       <SearchTopics
         topics={results?.facets.topics}
         handleFilterChange={handleFilterChange}
       />
-      <div className="flex flex-row justify-between my-2.5">
-        <SearchResultsSummary
-          count={results?.pageSpec?.totalElements}
-          query={query}
-        />
-        <ViewButtons onChange={setView} />
-      </div>
-      {renderVideoCardList()}
-    </main>
+      <main
+        tabIndex={-1}
+        className={c('col-start-8 col-end-26 row-end-4', {
+          'row-start-3': hasSearchTopics,
+          'row-start-2': !hasSearchTopics,
+        })}
+      >
+        <div className="flex flex-row justify-between mb-2.5">
+          <SearchResultsSummary
+            count={results?.pageSpec?.totalElements}
+            query={query}
+          />
+          <ViewButtons onChange={setView} />
+        </div>
+        {renderVideoCardList()}
+      </main>
+    </>
   );
 };

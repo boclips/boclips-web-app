@@ -8,8 +8,19 @@ import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 interface Props {
   topics: Facet[];
   handleFilterChange: (key: FilterKey, value: string[]) => void;
+  maxVisibleTopics?: number;
 }
-export const SearchTopics = ({ topics, handleFilterChange }: Props) => {
+
+interface TopicWithSelection {
+  topic: Facet;
+  selected: boolean;
+}
+
+export const SearchTopics = ({
+  topics,
+  handleFilterChange,
+  maxVisibleTopics = 12,
+}: Props) => {
   const [searchLocation] = useSearchQueryLocationParams();
 
   const sendEvent = (topic: string) =>
@@ -31,34 +42,46 @@ export const SearchTopics = ({ topics, handleFilterChange }: Props) => {
     }
   };
 
+  const topicsToDisplay = (): TopicWithSelection[] => {
+    const selectedTopics = searchLocation.filters.topics.map(
+      (selectedTopicId) => {
+        return {
+          selected: true,
+          topic: topics.find((topic) => topic.id === selectedTopicId) ?? {
+            name: atob(selectedTopicId),
+            id: selectedTopicId,
+            hits: 0,
+          },
+        };
+      },
+    );
+
+    const notSelectedTopics = topics
+      .filter((topic) => !isTopicSelected(topic.id))
+      .sort((topicA, topicB) => topicB.score - topicA.score)
+      .map((topic) => {
+        return { selected: false, topic };
+      });
+
+    return [...selectedTopics, ...notSelectedTopics].slice(0, maxVisibleTopics);
+  };
+
+  const isTopicSelected = (topicId: string) =>
+    searchLocation.filters.topics.indexOf(topicId) > -1;
+
   return (
     topics.length > 0 && (
-      <div className="overflow-hidden h-20 mb-2">
-        {searchLocation.filters.topics.map((selectedTopicId) => {
-          const selectedTopic = topics.find(
-            (topic) => topic.id === selectedTopicId,
-          ) ?? { name: atob(selectedTopicId), id: selectedTopicId, hits: 0 };
-
+      <div className="col-start-8 col-end-26 row-start-2 row-end-3">
+        {topicsToDisplay().map((it) => {
           return (
             <Bubble
-              selected
-              handleClick={() => handleClick(selectedTopicId)}
-              topic={selectedTopic}
+              key={it.topic.id}
+              topic={it.topic}
+              handleClick={() => handleClick(it.topic.id)}
+              selected={it.selected}
             />
           );
         })}
-        {topics
-          .filter(
-            (topic) => searchLocation.filters.topics.indexOf(topic.id) === -1,
-          )
-          .sort((topicA, topicB) => topicB.score - topicA.score)
-          .map((topic) => (
-            <Bubble
-              topic={topic}
-              handleClick={() => handleClick(topic.id)}
-              selected={searchLocation.filters.topics.indexOf(topic.id) > -1}
-            />
-          ))}
       </div>
     )
   );

@@ -1,4 +1,5 @@
 @import '~@boclips-ui/styles/src/colors';
+@import '~@boclips-ui/styles/src/focus';
 
 .viewButton {
   --bo-ui-button-outline-svg-fill: transparent;
@@ -24,4 +25,23 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-gap: 1rem 1.5rem;
   }
+}
+
+.bubble {
+  border-radius: 9999px;
+  display: inline-flex;
+  border: 2px solid @gray-400;
+  padding: 0.25rem 0.75rem;
+  margin: 0.25rem 0.25rem 0;
+
+  #focus;
+  &:focus {
+    border-radius: 9999px;
+  }
+}
+
+.bubbleSelected {
+  background-color: @gray-600;
+  border-color: @gray-600;
+  color: white;
 }

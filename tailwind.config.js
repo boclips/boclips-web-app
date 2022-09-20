@@ -31,6 +31,7 @@ module.exports = {
         'home-responsive': 'auto minmax(100%, auto) auto',
         'navbar-responsive': 'repeat(2, auto)',
         'default-view': 'auto minmax(0, auto) auto',
+        'search-view': 'auto repeat(3, auto) auto',
         'default-view-with-title':
           'auto minmax(50px, auto) minmax(0, auto) auto',
         'playlist-view':
