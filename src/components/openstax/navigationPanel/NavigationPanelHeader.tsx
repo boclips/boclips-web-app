@@ -25,7 +25,11 @@ const NavigationPanelHeader = ({ book }: Props) => {
   };
 
   return (
-    <div data-qa="table of contents panel" className={s.tocHeaderWrapper}>
+    <section
+      data-qa="table of contents panel"
+      className={s.tocHeaderWrapper}
+      aria-labelledby="navigation-header"
+    >
       {!isNotDesktop && (
         <TextButton
           onClick={goToExplorePage}
@@ -34,7 +38,12 @@ const NavigationPanelHeader = ({ book }: Props) => {
         />
       )}
       <div className={s.tocHeader}>
-        <Typography.H1 size="sm" className="text-gray-900">
+        <Typography.H1
+          size="sm"
+          className="text-gray-900"
+          id="navigation-header"
+          aria-label={`${book.title} navigation`}
+        >
           {book.title}
         </Typography.H1>
         {isNotDesktop && (
@@ -52,7 +61,7 @@ const NavigationPanelHeader = ({ book }: Props) => {
           />
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

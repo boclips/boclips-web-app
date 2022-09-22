@@ -62,7 +62,7 @@ describe('OpenstaxBookView', () => {
 
     const titles = await wrapper.findAllByRole('heading', {
       level: 1,
-      name: 'Everything to know about ducks',
+      name: /Everything to know about ducks/,
     });
 
     expect(titles).toHaveLength(2);
@@ -152,7 +152,7 @@ describe('OpenstaxBookView', () => {
 
     const titles = await wrapper.findAllByRole('heading', {
       level: 1,
-      name: 'Everything to know about ducks',
+      name: /Everything to know about ducks/,
     });
     expect(titles).toHaveLength(2);
 
