@@ -26,19 +26,23 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
     mixpanel.track('video_details_url_copied');
   };
 
+  const priceDisplay = createPriceDisplayValue(
+    video?.price?.amount,
+    video?.price?.currency,
+    getBrowserLocale(),
+  );
+  console.log(priceDisplay);
   return (
     <>
       <div className={s.sticky}>
-        <Typography.H1 size="md" className="text-gray-900">
+        <Typography.H1 size="md" className="text-gray-900" id="video-title">
           {video?.title}
         </Typography.H1>
-        <Typography.H2 size="sm" className="text-gray-900 my-1">
-          {createPriceDisplayValue(
-            video?.price?.amount,
-            video?.price?.currency,
-            getBrowserLocale(),
-          )}
-        </Typography.H2>
+        {priceDisplay && (
+          <Typography.H2 size="sm" className="text-gray-900 my-1">
+            {priceDisplay}
+          </Typography.H2>
+        )}
         <FeatureGate feature="BO_WEB_APP_PRICES">
           <div className="mb-4">
             <Typography.Body size="small" className="text-gray-700">

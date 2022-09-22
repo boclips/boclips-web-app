@@ -36,11 +36,12 @@ export const VideoPage = ({ video }: Props) => {
         <VideoPlayer video={video} />
       </main>
 
-      <div
+      <section
         className={c(s.headerSection, videoMetadataTopMargin, 'flex flex-col')}
+        aria-labelledby="video-title"
       >
         <VideoHeaderWithDescription video={video} />
-      </div>
+      </section>
       <VideoRecommendations video={video} />
     </>
   );

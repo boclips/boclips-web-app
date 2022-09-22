@@ -23,16 +23,20 @@ const VideoRecommendations = ({ video }: Props) => {
   };
 
   return recommendedVideos && recommendedVideos.length ? (
-    <>
-      <Typography.H3
+    <section
+      aria-labelledby="explore-similar-videos"
+      className={s.recommendedVideosSection}
+    >
+      <Typography.H1
         size="xs"
         weight="medium"
         data-qa="video-recommendations"
         className={s.recommendedVideosSectionTitle}
+        id="explore-similar-videos"
       >
         Explore similar videos
-      </Typography.H3>
-      <div className={s.recommendedVideosSection}>
+      </Typography.H1>
+      <div className={s.recommendedVideosGrid}>
         {recommendedVideos?.map((recommendedVideo) => (
           <VideoGridCard
             key={recommendedVideo.id}
@@ -63,7 +67,7 @@ const VideoRecommendations = ({ video }: Props) => {
           />
         ))}
       </div>
-    </>
+    </section>
   ) : null;
 };
 
