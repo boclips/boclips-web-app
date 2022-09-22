@@ -86,7 +86,11 @@ const Playlists = () => {
                     )
                   }
                   header={
-                    <Link tabIndex={-1} to={`/playlists/${playlist.id}`}>
+                    <Link
+                      tabIndex={-1}
+                      to={`/playlists/${playlist.id}`}
+                      aria-hidden
+                    >
                       <Thumbnails videos={playlist.videos} />
                     </Link>
                   }
