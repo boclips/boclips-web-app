@@ -1,4 +1,4 @@
-<svg role="img" aria-labelledby="search-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor"
+<svg role="img" aria-labelledby="search-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true" stroke="currentColor"
      xmlns="http://www.w3.org/2000/svg">
     <title id="search-icon">Search</title>
     <path
