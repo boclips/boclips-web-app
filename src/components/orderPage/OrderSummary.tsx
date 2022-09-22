@@ -16,11 +16,16 @@ interface Props {
 
 export const OrderSummary = ({ order }: Props) => {
   return (
-    <div className="grid-row-start-3 grid-row-end-3 col-start-2 col-end-26">
+    <section
+      className="grid-row-start-3 grid-row-end-3 col-start-2 col-end-26"
+      aria-labelledby="order-number"
+    >
       <div className="flex justify-between mb-3">
         <Typography.H1
           size="md"
           className="text-gray-800 mb-4"
+          id="order-number"
+          aria-label="Order number"
         >{`Order ${order?.id}`}</Typography.H1>
       </div>
       <div className={s.orderSummary}>
@@ -50,6 +55,6 @@ export const OrderSummary = ({ order }: Props) => {
           </Typography.Body>
         </Link>
       </Typography.Body>
-    </div>
+    </section>
   );
 };
