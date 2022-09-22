@@ -29,18 +29,15 @@ const ExploreView = () => {
     <Layout rowsSetup="grid-rows-explore-view" responsiveLayout>
       <Navbar />
       <ExploreHeader />
-      <main
-        tabIndex={-1}
-        className="col-start-2 col-end-26 grid-row-start-4 grid-row-end-5"
-      >
-        <SubjectsMenu
-          subjects={subjects}
-          currentSubject={currentSubject}
-          onClick={setCurrentSubject}
-          isLoading={isLoading}
-        />
-        <BookList books={currentSubjectBooks} isLoading={isLoading} />
-      </main>
+
+      <SubjectsMenu
+        subjects={subjects}
+        currentSubject={currentSubject}
+        onClick={setCurrentSubject}
+        isLoading={isLoading}
+      />
+      <BookList books={currentSubjectBooks} isLoading={isLoading} />
+
       <Footer />
     </Layout>
   );

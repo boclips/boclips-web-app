@@ -22,13 +22,13 @@ const BookCards = ({ books }: Omit<Props, 'isLoading'>) => {
 
 export const BookList = ({ books, isLoading }: Props) => {
   return (
-    <main
+    <section
       className={c(
         s.bookList,
         'col-start-2 col-end-26 grid-row-start-5 grid-row-end-5',
       )}
     >
       {isLoading ? <BookCardSkeleton /> : <BookCards books={books} />}
-    </main>
+    </section>
   );
 };
