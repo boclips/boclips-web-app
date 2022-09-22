@@ -32,12 +32,18 @@ const PlaylistBody = ({ playlist }: Props) => {
   return (
     <>
       {!isEmptyPlaylist && (
-        <Typography.H2
-          size="sm"
-          className="grid-row-start-4 grid-row-end-4 col-start-2 col-end-26 mb-0 text-gray-900"
+        <section
+          className="grid-row-start-4 grid-row-end-4 col-start-2 col-end-26"
+          aria-labelledby="in-this-playlist"
         >
-          In this playlist:
-        </Typography.H2>
+          <Typography.H2
+            size="sm"
+            className="mb-0 text-gray-900"
+            id="in-this-playlist"
+          >
+            In this playlist:
+          </Typography.H2>
+        </section>
       )}
       <main
         tabIndex={-1}

@@ -19,14 +19,16 @@ const PlaylistHeader = ({ playlist }: Props) => {
   };
 
   return (
-    <div
+    <section
       className={c(
         s.playlistHeaderContainer,
         'grid-row-start-2 grid-row-end-2 col-start-2 col-end-26',
       )}
+      aria-labelledby="page-header"
     >
       <PlaylistNavigation playlist={playlist} />
       <Typography.H1
+        id="page-header"
         size="md"
         className="text-gray-900"
         data-qa="playlistTitle"
@@ -40,7 +42,7 @@ const PlaylistHeader = ({ playlist }: Props) => {
       {playlist.description && (
         <PlaylistDescription description={playlist.description} />
       )}
-    </div>
+    </section>
   );
 };
 
