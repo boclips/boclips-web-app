@@ -9,27 +9,31 @@ import { Content } from 'src/components/openstax/book/Content';
 import { NavigationPanel } from 'src/components/openstax/navigationPanel/NavigationPanel';
 import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 import OpenstaxBookSkeletonPage from 'src/components/skeleton/openstax/OpenstaxBookSkeletonPage';
+import { Helmet } from 'react-helmet';
 
 const OpenstaxBookView = () => {
   const { id: bookId } = useParams<PathWithId>();
   const { data: book, isLoading } = useGetBook(bookId);
 
   return (
-    <Layout
-      rowsSetup="grid-rows-openstax-detailed-view items-start"
-      responsiveLayout
-    >
-      <Navbar />
-      {isLoading ? (
-        <OpenstaxBookSkeletonPage />
-      ) : (
-        <OpenstaxMobileMenuProvider>
-          <NavigationPanel book={book} />
-          <Content book={book} />
-        </OpenstaxMobileMenuProvider>
-      )}
-      <Footer />
-    </Layout>
+    <>
+      {book?.title && <Helmet title={book.title} />}
+      <Layout
+        rowsSetup="grid-rows-openstax-detailed-view items-start"
+        responsiveLayout
+      >
+        <Navbar />
+        {isLoading ? (
+          <OpenstaxBookSkeletonPage />
+        ) : (
+          <OpenstaxMobileMenuProvider>
+            <NavigationPanel book={book} />
+            <Content book={book} />
+          </OpenstaxMobileMenuProvider>
+        )}
+        <Footer />
+      </Layout>
+    </>
   );
 };
 

@@ -24,6 +24,7 @@ import {
   setUpClientWithBook,
   validateVisibleHeadings,
 } from 'src/views/openstax/book/OpenstaxBookViewTestSupport';
+import { Helmet } from 'react-helmet';
 
 describe('OpenstaxBookView', () => {
   it('renders loading skeletons before data is loaded', async () => {
@@ -234,6 +235,21 @@ describe('OpenstaxBookView', () => {
     expect(playableThumbnail).toBeVisible();
 
     expect(wrapper.getByText('Farmer Joe')).toBeVisible();
+  });
+
+  it('renders book title as page title', async () => {
+    const book = createBook();
+
+    const client = setUpClientWithBook(book);
+
+    render(
+      <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
+        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+      </MemoryRouter>,
+    );
+
+    const helmet = Helmet.peek();
+    expect(helmet.title).toEqual('Everything to know about ducks');
   });
 
   describe.each([
