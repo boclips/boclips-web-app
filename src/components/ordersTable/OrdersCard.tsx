@@ -23,7 +23,7 @@ export const OrdersCard = ({ order }: Props) => {
   };
 
   return (
-    <div className={s.orderCard}>
+    <li className={s.orderCard}>
       <OrderThumbnail items={order.items} />
       <OrderDateField fieldName="Order date" date={order.createdAt} />
       <OrderNumberField id={order.id} isLink />
@@ -36,6 +36,6 @@ export const OrdersCard = ({ order }: Props) => {
         text="View order"
         onClick={goToOrder}
       />
-    </div>
+    </li>
   );
 };
