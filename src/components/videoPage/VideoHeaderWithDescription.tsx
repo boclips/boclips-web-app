@@ -31,7 +31,7 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
     video?.price?.currency,
     getBrowserLocale(),
   );
-  console.log(priceDisplay);
+
   return (
     <>
       <div className={s.sticky}>
