@@ -15,9 +15,7 @@ describe('Search topics', () => {
       </MemoryRouter>,
     );
 
-    expect(
-      wrapper.getByRole('button', { name: 'hello search topic' }),
-    ).toBeVisible();
+    expect(wrapper.getByRole('button', { name: 'hello' })).toBeVisible();
   });
 
   it('limits visible topics to given number', () => {
@@ -39,14 +37,10 @@ describe('Search topics', () => {
     );
 
     expect(wrapper.getAllByRole('button')).toHaveLength(3);
+    expect(wrapper.getByRole('button', { name: 'selected-1' })).toBeVisible();
+    expect(wrapper.getByRole('button', { name: 'selected-2' })).toBeVisible();
     expect(
-      wrapper.getByRole('button', { name: 'selected-1 search topic' }),
-    ).toBeVisible();
-    expect(
-      wrapper.getByRole('button', { name: 'selected-2 search topic' }),
-    ).toBeVisible();
-    expect(
-      wrapper.getByRole('button', { name: 'not-selected-1 search topic' }),
+      wrapper.getByRole('button', { name: 'not-selected-1' }),
     ).toBeVisible();
   });
 
@@ -66,10 +60,10 @@ describe('Search topics', () => {
 
     expect(wrapper.getAllByRole('button')).toHaveLength(2);
     expect(
-      wrapper.getByRole('button', { name: 'not-selected-1 search topic' }),
+      wrapper.getByRole('button', { name: 'not-selected-1' }),
     ).toBeVisible();
     expect(
-      wrapper.getByRole('button', { name: 'not-selected-2 search topic' }),
+      wrapper.getByRole('button', { name: 'not-selected-2' }),
     ).toBeVisible();
   });
 });

@@ -32,9 +32,7 @@ describe('explore button', () => {
       </BoclipsClientProvider>,
     );
 
-    fireEvent.click(
-      await wrapper.findByRole('button', { name: 'Explore openstax books' }),
-    );
+    fireEvent.click(await wrapper.findByRole('button', { name: 'Explore' }));
 
     expect(history.location.pathname).toEqual('/explore/openstax');
   });

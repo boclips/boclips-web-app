@@ -42,7 +42,7 @@ describe('Mobile & Desktop - DisciplineWidget', () => {
       'Technology',
     ];
     orderedButtonLabels.forEach((label, index) =>
-      expect(buttons[index].textContent).toBe(`${label}discipline`),
+      expect(buttons[index].textContent).toBe(label),
     );
 
     expect(await screen.findByText(disciplines[0].name)).toBeInTheDocument();
@@ -174,7 +174,7 @@ describe('Desktop - DisciplineWidget', () => {
     disciplines[0]?.subjects
       ?.sort((a, b) => a.name.localeCompare(b.name))
       .map((it, index) =>
-        expect(renderedSubjects[index].textContent).toBe(`${it.name}subject`),
+        expect(renderedSubjects[index].textContent).toBe(it.name),
       );
   });
 

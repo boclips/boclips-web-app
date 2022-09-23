@@ -34,14 +34,15 @@ const SubjectsPanel = React.forwardRef(
                   <Typography.Body weight="medium">
                     {subject.name}
                   </Typography.Body>
-                  <span className="sr-only">subject</span>
                 </SubjectLink>
               );
             })}
         </div>
-        {subjectsWeAlsoOffer && subjectsWeAlsoOffer.length > 0 && (
-          <ExtraSubjects subjectsWeAlsoOffer={subjectsWeAlsoOffer} />
-        )}
+        <div>
+          {subjectsWeAlsoOffer && subjectsWeAlsoOffer.length > 0 && (
+            <ExtraSubjects subjectsWeAlsoOffer={subjectsWeAlsoOffer} />
+          )}
+        </div>
       </div>
     );
   },
