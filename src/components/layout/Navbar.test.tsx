@@ -144,7 +144,9 @@ describe('Your library in Navbar', () => {
     resizeToDesktop();
 
     expect(
-      await wrapper.findByRole('button', { name: 'Your Library' }),
+      await wrapper.findByRole('button', {
+        name: 'Your Library find your playlists here',
+      }),
     ).toBeVisible();
   });
 
@@ -180,7 +182,7 @@ describe('Explore Openstax in Navbar', () => {
       resizeToDesktop();
 
       expect(
-        await wrapper.findByRole('button', { name: 'Explore' }),
+        await wrapper.findByRole('button', { name: 'Explore openstax books' }),
       ).toBeVisible();
     });
 
@@ -219,7 +221,7 @@ describe('Explore Openstax in Navbar', () => {
       resizeToDesktop();
 
       expect(
-        await wrapper.queryByRole('button', { name: 'Explore' }),
+        await wrapper.queryByRole('button', { name: 'Explore openstax books' }),
       ).toBeNull();
     });
 
@@ -233,7 +235,7 @@ describe('Explore Openstax in Navbar', () => {
 
         fireEvent.click(await wrapper.findByLabelText('Menu'));
 
-        expect(wrapper.queryByText('Explore')).toBeNull();
+        expect(wrapper.queryByText('Explore openstax books')).toBeNull();
       },
     );
   });

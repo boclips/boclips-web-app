@@ -39,7 +39,7 @@ const SkipLink = () => {
         onClick={() =>
           document.querySelector('main').focus({ preventScroll: false })
         }
-        text="Skip to content"
+        text="Skip to main content"
         width="154px"
         height="48px"
       />

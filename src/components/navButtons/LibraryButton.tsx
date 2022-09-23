@@ -30,6 +30,7 @@ const LibraryButton = () => {
       >
         <YourLibraryIcon className={s.navbarIcon} />
         <span>Your Library</span>
+        <span className="sr-only">find your playlists here</span>
       </button>
     </div>
   );

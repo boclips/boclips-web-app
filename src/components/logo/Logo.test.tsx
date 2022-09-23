@@ -18,7 +18,7 @@ describe('logo', () => {
     );
 
     expect(
-      navbar.getByLabelText('CourseSpark logo - Home'),
+      navbar.getByLabelText('CourseSpark logo - Go to homepage'),
     ).toBeInTheDocument();
   });
 
@@ -44,7 +44,7 @@ describe('logo', () => {
     );
 
     expect(
-      await navbar.findByLabelText('Pearson logo - Home'),
+      await navbar.findByLabelText('Pearson logo - Go to homepage'),
     ).toBeInTheDocument();
   });
 });

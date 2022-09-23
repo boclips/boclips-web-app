@@ -25,6 +25,7 @@ const ExploreButton = () => {
       <button type="button" onClick={onClick} className={s.headerButton}>
         <ExploreIcon className={s.navbarIcon} />
         <span>Explore</span>
+        <span className="sr-only">openstax books</span>
       </button>
     </div>
   );
