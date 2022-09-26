@@ -20,6 +20,7 @@ export const Bubble = ({ handleClick, selected, topic }: Props) => {
       className={c(s.bubble, { [s.bubbleSelected]: selected })}
     >
       <Typography.Body>{topic.name}</Typography.Body>
+      <span className="sr-only">search topic</span>
     </button>
   );
 };

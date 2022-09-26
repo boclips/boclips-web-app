@@ -21,14 +21,17 @@ export const CollapsableFilter = ({
     }
   };
 
+  const ariaId = title.split(' ').join('-').toLowerCase();
+
   return (
     <div className="bg-blue-100 mt-6 py-4 rounded">
       <FilterHeader
+        ariaId={ariaId}
         text={title}
         filterIsOpen={open}
         toggleFilter={toggleFilter}
       />
-      {open && <div id={`${title.replace(' ', '')}-filter`}>{children}</div>}
+      {open && <div id={ariaId}>{children}</div>}
     </div>
   );
 };
