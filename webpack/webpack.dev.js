@@ -12,14 +12,16 @@ module.exports = merge(common, {
   entry: ['react-hot-loader/patch', srcPath],
   output: {
     filename: '[name].js',
-    // chunkFilename: '[name].chunk.js',
+    publicPath: '/',
+    path: path.resolve(__dirname, '../dist'),
   },
   devServer: {
     static: srcPath,
-    historyApiFallback: true,
     port: 9000,
+    host: 'localhost',
     hot: true,
-    open: true,
+    https: false,
+    historyApiFallback: true,
   },
   plugins: [
     new MiniCssExtractPlugin({ filename: '[name].css', ignoreOrder: true }),
