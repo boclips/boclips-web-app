@@ -56,8 +56,10 @@ context('Search page', () => {
 
     cy.findByPlaceholderText('Search for videos').type('cats');
     cy.findByRole('button', { name: 'search' }).click();
-    cy.findByRole('button', { name: "Schrödinger's cat" }).click();
+    cy.findByRole('button', { name: "Schrödinger's cat search topic" }).click();
 
-    cy.findByRole('button', { name: "Schrödinger's cat" }).should('exist');
+    cy.findByRole('button', { name: "Schrödinger's cat search topic" }).should(
+      'exist',
+    );
   });
 });

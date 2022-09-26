@@ -8,7 +8,7 @@ context(`openstax book page`, () => {
     cy.bo((bo) => bo.create.fixtureSet.openstaxBooks());
     // As the explore is behind a feature flag we have to click on another page to force a load
     cy.findByRole('button', { name: 'Cart' }).click();
-    cy.findByRole('button', { name: 'Explore' }).click();
+    cy.findByRole('button', { name: 'Explore openstax books' }).click();
 
     cy.findByRole('button', { name: 'book Maths book' }).click();
 
