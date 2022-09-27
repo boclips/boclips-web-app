@@ -30,7 +30,7 @@ const CartButton = () => {
         className={s.headerButton}
       >
         <CartIcon className={s.navbarIcon} />
-        <span>
+        <span role="status">
           Cart
           {cart?.items?.length > 0 && (
             <div data-qa="cart-counter" className={s.basketCounter}>
