@@ -52,19 +52,18 @@ export const VideoCardWrapper = ({ video, handleFilterChange }: Props) => {
         key={video.id}
         video={videoWithoutAgeRange}
         videoPlayer={<VideoPlayer video={video} showDurationBadge />}
-        border="bottom"
         createdBy={createdByLink()}
         topBadge={<PriceBadge price={video.price} className="text-xl" />}
         title={<VideoCardTitle video={video} />}
-        actions={[
+        actions={
           <VideoCardButtons
             video={video}
             key={`video-cart-buttons-${video.id}`}
             onAddToCart={() => {
               AnalyticsFactory.mixpanel().track('video_details_cart_add');
             }}
-          />,
-        ]}
+          />
+        }
       />
     </div>
   );
