@@ -97,7 +97,7 @@ export const AccountButton = () => {
           <div role="menu" aria-label="Account menu">
             <FeatureGate linkName="userOrders">
               <div className="pt-4">
-                <Link onClick={ordersOpenedEvent} to="/orders">
+                <Link onClick={ordersOpenedEvent} to="/orders" tabIndex={-1}>
                   <Typography.Body size="small" as="button">
                     Your orders
                   </Typography.Body>
@@ -110,6 +110,7 @@ export const AccountButton = () => {
                 target="_blank"
                 href="https://www.boclips.com/boclips-platform-guide"
                 rel="noreferrer"
+                tabIndex={-1}
               >
                 <Typography.Body
                   size="small"
