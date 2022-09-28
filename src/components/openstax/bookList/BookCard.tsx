@@ -30,7 +30,7 @@ export const BookCard = ({ book }: Props) => {
           <img src={book.logoUrl} alt={`${book.title} cover`} />
         ) : (
           <img
-            src="https://placeholder.pics/svg/77x100"
+            src="https://assets.boclips.com/boclips-public-static-files/boclips/openstax/OSX-ALLY-Blue-RGB-150dpi.png"
             alt={`${book.title} generic cover`}
           />
         )}
