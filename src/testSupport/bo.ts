@@ -59,7 +59,11 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
 
   const boSetOpenstax = (books: Partial<Book>[]) => {
     apiClient.openstax.setOpenstaxBooks(
-      books.map((book) => BookFactory.sample(book)),
+      books.map((book) => ({
+        ...BookFactory.sample(book),
+        logoUrl:
+          'https://assets.boclips.com/boclips-public-static-files/boclips/openstax/high_school_statistics_web_card.svg',
+      })),
     );
   };
 
@@ -138,7 +142,12 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
   };
 
   const bigListOfVideos = Array.from(Array(100)).map((_, i) =>
-    VideoFactory.sample({ id: `${i}`, title: `video ${i}` }),
+    VideoFactory.sample({
+      id: `${i}`,
+      title: `video ${i}`,
+      bestFor: [{ id: '1', label: 'Hook' }],
+      createdBy: 'Ted',
+    }),
   );
 
   return {
@@ -274,7 +283,11 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
                       videoIds: [],
                       number: 2,
                       videos: [
-                        VideoFactory.sample({ title: 'our target video' }),
+                        VideoFactory.sample({
+                          title: 'our target video',
+                          bestFor: [{ id: '1', label: 'Hook' }],
+                          createdBy: 'Ted',
+                        }),
                       ],
                     },
                   ],
