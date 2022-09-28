@@ -24,6 +24,24 @@ describe('Openstax book list', () => {
     expect(wrapper.getByText('Physics')).toBeInTheDocument();
   });
 
+  it(`books without chapters are hidden`, async () => {
+    const fakeClient = new FakeBoclipsClient();
+
+    const books = [
+      OpenstaxBookFactory.sample({ title: 'Maths' }),
+      OpenstaxBookFactory.sample({ title: 'Physics', chapters: [] }),
+    ];
+
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeClient}>
+        <BookList books={books} isLoading={false} />
+      </BoclipsClientProvider>,
+    );
+
+    expect(await wrapper.findByText('Maths')).toBeInTheDocument();
+    expect(wrapper.queryByText('Physics')).toBeNull();
+  });
+
   it(`displays books skeleton`, async () => {
     const fakeClient = new FakeBoclipsClient();
 
