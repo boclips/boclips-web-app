@@ -1,15 +1,19 @@
-@import "~@boclips-ui/styles/src/breakpoints";
+@import '~@boclips-ui/styles/src/breakpoints';
 
 .logo {
-    padding-top: 0.25rem;
-    padding-bottom: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.5rem;
+
+  img[alt] {
+    font-size: 0.75rem;
+  }
+
   svg {
-    height:43px;
-    width:auto;
+    height: 43px;
+    width: auto;
     shape-rendering: geometricPrecision;
   }
 }
-
 
 @media screen and (min-width: @screen-lg) {
   .logo {
@@ -20,4 +24,3 @@
     }
   }
 }
-
