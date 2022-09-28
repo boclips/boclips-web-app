@@ -141,7 +141,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
     });
   };
 
-  const bigListOfVideos = Array.from(Array(100)).map((_, i) =>
+  const bigListOfVideos = Array.from(Array(15)).map((_, i) =>
     VideoFactory.sample({
       id: `${i}`,
       title: `video ${i}`,

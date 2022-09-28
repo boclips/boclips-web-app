@@ -4,7 +4,7 @@
 #barOnBottom {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: -0.5rem;
   right: 0;
   width: 100%;
   background-color: @blue-800;
@@ -14,7 +14,8 @@
 
 .subject {
   display: inline-block;
-  padding: 1rem;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  margin: 0.5rem 0.5rem 0.5rem 0.5rem;
   position: relative;
   #focus;
 
@@ -35,7 +36,14 @@
 }
 
 .subjectList {
-  border-bottom-style: solid;
+  display: flex;
+  color: @gray-600;
+  border-bottom: 2px solid @gray-400;
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .subjectSkeleton {
@@ -46,12 +54,10 @@
 
   border-radius: 4px;
   animation: skeleton ease-in 1s infinite;
-  background: linear-gradient(
-    90deg,
-    @gray-100 25%,
-    @gray-400 37%,
-    @gray-100 63%
-  );
+  background: linear-gradient(90deg,
+  @gray-100 25%,
+  @gray-400 37%,
+  @gray-100 63%);
   background-size: 200% 200%;
   border: 1px solid @gray-400 !important;
 }

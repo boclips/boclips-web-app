@@ -1,5 +1,4 @@
 import React from 'react';
-import c from 'classnames';
 import SubjectMenuItem from 'src/components/openstax/menu/SubjetMenuItem';
 import SubjectMenuItemSkeleton from 'src/components/openstax/menu/SubjectMenuItemSkeleton';
 import s from './style.module.less';
@@ -22,13 +21,8 @@ export const SubjectsMenu = ({
       tabIndex={-1}
       className="col-start-2 col-end-26 grid-row-start-4 grid-row-end-4 mt-2"
     >
-      <nav
-        className={c(
-          s.subjectList,
-          'flex text-gray-600 border-b-2 border-gray-400 md:justify-start',
-        )}
-      >
-        <ul className="flex md:flex-wrap md:justify-center">
+      <nav className={s.subjectList}>
+        <ul className="flex shrink-0">
           {isLoading ? (
             <SubjectMenuItemSkeleton />
           ) : (
