@@ -7,13 +7,15 @@ import { useOpenstaxMobileMenu } from 'src/components/common/providers/OpenstaxM
 import { TextButton } from 'src/components/common/textButton/TextButton';
 import BackArrow from 'src/resources/icons/back-arrow.svg';
 import { useHistory } from 'react-router-dom';
+import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 
 interface Props {
   bookTitle: string;
+  chapterTitle: string;
 }
 
-export const Header = ({ bookTitle }: Props) => {
+export const Header = ({ bookTitle, chapterTitle }: Props) => {
   const breakpoint = useMediaBreakPoint();
   const isNotDesktop = breakpoint.type !== 'desktop';
   const { setIsOpen } = useOpenstaxMobileMenu();
@@ -47,6 +49,9 @@ export const Header = ({ bookTitle }: Props) => {
           )
         }
       />
+      <Typography.H2 size="sm" className="text-gray-700">
+        {chapterTitle}
+      </Typography.H2>
     </div>
   );
 };

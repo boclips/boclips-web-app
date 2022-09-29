@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
-import { OpenstaxBook } from 'src/types/OpenstaxBook';
-import { Chapter } from 'src/components/openstax/book/Chapter';
+import React, { useEffect, useState } from 'react';
+import { OpenstaxBook, OpenstaxChapter } from 'src/types/OpenstaxBook';
 import { Header } from 'src/components/openstax/book/Header';
 import { useLocation } from 'react-router-dom';
 import {
-  selectedChapterNumber,
-  scrollToSelectedSection,
-} from 'src/components/openstax/helpers/helpers';
-import PaginationButtons from 'src/components/openstax/book/PaginationButtons';
-import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+  getSelectedChapter,
+  getSelectedChapterElement,
+} from 'src/components/openstax/helpers/openstaxNavigationHelpers';
+import PaginationPanel from 'src/components/openstax/book/PaginationPanel';
+import {
+  ChapterElement,
+  ChapterElementInfo,
+} from 'src/components/openstax/book/ChapterElement';
 import s from './style.module.less';
 
 interface Props {
@@ -17,17 +19,24 @@ interface Props {
 
 export const Content = ({ book }: Props) => {
   const location = useLocation();
-  const currentBreakpoint = useMediaBreakPoint();
+  const [selectedChapter, setSelectedChapter] = useState<OpenstaxChapter>(
+    getSelectedChapter(book, 'chapter-1'),
+  );
+
+  const [selectedChapterElement, setSelectedChapterElement] =
+    useState<ChapterElementInfo>({
+      displayLabel: '',
+      id: '',
+      videos: [],
+    });
 
   useEffect(() => {
     const newSectionLink = location.hash.replace('#', '');
-    scrollToSelectedSection(newSectionLink, currentBreakpoint);
-  }, [location.hash]);
+    setSelectedChapter(getSelectedChapter(book, newSectionLink));
+    setSelectedChapterElement(getSelectedChapterElement(book, newSectionLink));
 
-  const getSelectedChapter = () =>
-    book.chapters.find(
-      (chapter) => chapter.number === selectedChapterNumber(location.hash),
-    );
+    window.scrollTo({ top: 0 });
+  }, [location.hash]);
 
   return (
     <main
@@ -35,11 +44,13 @@ export const Content = ({ book }: Props) => {
       tabIndex={-1}
       className={s.main}
     >
-      <Header bookTitle={book.title} />
+      <Header
+        bookTitle={book.title}
+        chapterTitle={selectedChapter.displayLabel}
+      />
 
-      <Chapter chapter={getSelectedChapter()} />
-
-      <PaginationButtons book={book} />
+      <ChapterElement info={selectedChapterElement} />
+      <PaginationPanel book={book} />
     </main>
   );
 };

@@ -5,14 +5,15 @@ import { RenderResult } from '@testing-library/react';
 import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 
 describe('OpenstaxBookHeader', () => {
-  it('shows book title', () => {
+  it('shows book and chapter title', () => {
     const wrapper = renderDefaultOpenstaxBookHeader();
 
     expect(
-      wrapper.getByRole('heading', {
-        level: 1,
-        name: 'spies',
-      }),
+      wrapper.getByRole('heading', { level: 1, name: 'spies' }),
+    ).toBeVisible();
+
+    expect(
+      wrapper.getByRole('heading', { level: 2, name: 'Chapter 1: Title' }),
     ).toBeVisible();
   });
 
@@ -41,7 +42,7 @@ describe('OpenstaxBookHeader', () => {
   const renderDefaultOpenstaxBookHeader = (): RenderResult =>
     renderWithClients(
       <OpenstaxMobileMenuProvider>
-        <Header bookTitle="spies" />
+        <Header bookTitle="spies" chapterTitle="Chapter 1: Title" />
       </OpenstaxMobileMenuProvider>,
     );
 });

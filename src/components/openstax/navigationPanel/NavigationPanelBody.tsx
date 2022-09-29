@@ -8,12 +8,14 @@ import { HashLink } from 'react-router-hash-link';
 
 import c from 'classnames';
 import { useOpenstaxMobileMenu } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
-import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import { useLocation } from 'react-router-dom';
 import {
+  chapterOverviewInfo,
+  discussionPromptInfo,
+  firstChapterElementInfo,
+  sectionInfo,
   selectedChapterNumber,
-  scrollToSelectedSection,
-} from 'src/components/openstax/helpers/helpers';
+} from 'src/components/openstax/helpers/openstaxNavigationHelpers';
 import s from './style.module.less';
 
 interface Props {
@@ -21,7 +23,6 @@ interface Props {
 }
 
 const NavigationPanelBody = ({ book }: Props) => {
-  const currentBreakpoint = useMediaBreakPoint();
   const location = useLocation();
   const [currentSectionLink, setCurrentSectionLink] =
     useState<string>('chapter-1');
@@ -42,7 +43,7 @@ const NavigationPanelBody = ({ book }: Props) => {
     updateTableOfContent(newSectionLink);
 
     if (linksOnlyToChapter(newSectionLink)) {
-      setCurrentSectionLink(firstChapterElementLink(newSectionLink));
+      setCurrentSectionLink(firstChapterElementInfo(book, newSectionLink).id);
     } else {
       setCurrentSectionLink(newSectionLink);
     }
@@ -56,7 +57,7 @@ const NavigationPanelBody = ({ book }: Props) => {
         setIsOpen(false);
       }}
       scroll={() => {
-        scrollToSelectedSection(sectionLink, currentBreakpoint);
+        window.scrollTo({ top: 0 });
       }}
       to={{
         pathname: `/explore/openstax/${book.id}`,
@@ -102,35 +103,6 @@ const NavigationPanelBody = ({ book }: Props) => {
 
   const linksOnlyToChapter = (newSectionLink) =>
     newSectionLink.split('-').length <= 2;
-
-  const firstChapterElementLink = (newSectionLink: string) => {
-    const selectedChapter = book.chapters.find(
-      (chapter) => chapter.number === selectedChapterNumber(newSectionLink),
-    );
-    if (selectedChapter.chapterOverview) {
-      return chapterOverviewLink(selectedChapter.number);
-    }
-
-    if (selectedChapter.discussionPrompt) {
-      return discussionPromptLink(selectedChapter.number);
-    }
-
-    const firstEnumeratedSection = selectedChapter.sections[0];
-    if (firstEnumeratedSection) {
-      return sectionLink(selectedChapter.number, firstEnumeratedSection.number);
-    }
-
-    return newSectionLink;
-  };
-
-  const chapterOverviewLink = (chapterNumber: number) =>
-    `chapter-${chapterNumber}`;
-
-  const discussionPromptLink = (chapterNumber: number) =>
-    `chapter-${chapterNumber}-discussion-prompt`;
-
-  const sectionLink = (chapterNumber: number, sectionNumber: number) =>
-    `chapter-${chapterNumber}-section-${sectionNumber}`;
 
   return (
     <nav
@@ -181,17 +153,17 @@ const NavigationPanelBody = ({ book }: Props) => {
               {chapter.chapterOverview &&
                 renderSectionLevelLabel(
                   chapter.chapterOverview.displayLabel,
-                  chapterOverviewLink(chapter.number),
+                  chapterOverviewInfo(chapter).id,
                 )}
               {chapter.discussionPrompt &&
                 renderSectionLevelLabel(
                   chapter.discussionPrompt.displayLabel,
-                  discussionPromptLink(chapter.number),
+                  discussionPromptInfo(chapter).id,
                 )}
               {chapter.sections.map((section) =>
                 renderSectionLevelLabel(
                   section.displayLabel,
-                  sectionLink(chapter.number, section.number),
+                  sectionInfo(chapter, section).id,
                 ),
               )}
             </Accordion.Content>

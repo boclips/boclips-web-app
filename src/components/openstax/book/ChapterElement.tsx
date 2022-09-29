@@ -7,23 +7,28 @@ import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { VideoGridCardContainer } from './VideoGridCardContainer';
 
-interface Props {
+export interface ChapterElementInfo {
   id: string;
   displayLabel: string;
-  videos?: Video[];
+  videos: Video[];
 }
-export const ChapterElement = ({ id, displayLabel, videos }: Props) => {
-  const videoCount = videos?.length;
+
+interface Props {
+  info: ChapterElementInfo;
+}
+
+export const ChapterElement = ({ info }: Props) => {
+  const videoCount = info.videos?.length;
   const numberOfVideosLabel = `(${getVideoCountLabel(videoCount)})`;
 
   return (
-    <section className={c(s.section, s.anchor)} id={id}>
+    <section className={c(s.section)} id={info.id}>
       <Typography.H3 size="xs" className="text-gray-800 my-4" weight="regular">
-        {displayLabel}{' '}
+        {info.displayLabel}{' '}
         <span className="text-gray-700">{numberOfVideosLabel}</span>
       </Typography.H3>
       {videoCount > 0 ? (
-        <VideoGridCardContainer videos={videos} />
+        <VideoGridCardContainer videos={info.videos} />
       ) : (
         renderEmptyMappingMessaging()
       )}

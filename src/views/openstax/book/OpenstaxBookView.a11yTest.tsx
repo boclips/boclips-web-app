@@ -5,7 +5,7 @@ import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
 import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
-import { setUpClientWithBook } from 'src/views/openstax/book/OpenstaxBookViewTestSupport';
+import { setUpClientWithBook } from 'src/views/openstax/book/OpenstaxBookTestSupport';
 import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
 import { Book } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';

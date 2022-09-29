@@ -19,9 +19,11 @@ describe('OpenstaxChapterElement', () => {
 
       const wrapper = renderWithClients(
         <ChapterElement
-          displayLabel="2.1 Life at the coop "
-          videos={videos}
-          id="section-2.1"
+          info={{
+            displayLabel: '2.1 Life at the coop ',
+            videos,
+            id: 'section-2.1',
+          }}
         />,
       );
 
@@ -38,14 +40,16 @@ describe('OpenstaxChapterElement', () => {
 
     const wrapper = renderWithClients(
       <ChapterElement
-        displayLabel="2.1 Life at the coop "
-        videos={[
-          VideoFactory.sample({
-            title: videoTitle,
-            createdBy: 'Aunt Mary',
-          }),
-        ]}
-        id="section-2.1"
+        info={{
+          displayLabel: '2.1 Life at the coop ',
+          videos: [
+            VideoFactory.sample({
+              title: videoTitle,
+              createdBy: 'Aunt Mary',
+            }),
+          ],
+          id: 'section-2.1',
+        }}
       />,
     );
 
@@ -60,9 +64,11 @@ describe('OpenstaxChapterElement', () => {
   it('renders messaging when no videos are mapped to the section', () => {
     const wrapper = renderWithClients(
       <ChapterElement
-        displayLabel="2.1 Life at the coop "
-        videos={[]}
-        id="section-2.1"
+        info={{
+          displayLabel: '2.1 Life at the coop ',
+          videos: [],
+          id: 'section-2.1',
+        }}
       />,
     );
 

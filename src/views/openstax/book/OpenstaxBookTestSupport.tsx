@@ -1,8 +1,9 @@
-import { RenderResult, within } from '@testing-library/react';
+import { fireEvent, RenderResult, within } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { Book } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
+import { v4 as uuidv4 } from 'uuid';
 
 export const getTableOfContent = (book: Book, wrapper: RenderResult) =>
   wrapper.queryByLabelText(`Table of contents of ${book.title}`);
@@ -31,7 +32,7 @@ export const setUpClientWithBook = (book: Book) => {
 
 export const createBook = () => {
   return BookFactory.sample({
-    id: 'ducklings',
+    id: uuidv4(),
     title: 'Everything to know about ducks',
     subject: 'Essentials',
     chapters: [
@@ -42,7 +43,12 @@ export const createBook = () => {
           {
             title: 'Life at the coop',
             number: 1,
-            videos: [VideoFactory.sample({ title: 'Baby ducks playing' })],
+            videos: [
+              VideoFactory.sample({
+                title: 'Baby ducks playing',
+                createdBy: 'Farmer Joe',
+              }),
+            ],
             videoIds: ['2'],
           },
           {
@@ -77,4 +83,23 @@ export const createBook = () => {
       },
     ],
   });
+};
+
+export const chapterTitle = (bookDetails: HTMLElement) => {
+  return within(bookDetails).getByRole('heading', {
+    level: 2,
+  });
+};
+
+export const sectionTitle = (bookDetails: HTMLElement) => {
+  return within(bookDetails).getByRole('heading', {
+    level: 3,
+  });
+};
+
+export const navigateTo = (wrapper: RenderResult, link: string) => {
+  const button = wrapper.getByRole('link', {
+    name: link,
+  });
+  fireEvent.click(button);
 };

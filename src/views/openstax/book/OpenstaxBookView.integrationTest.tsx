@@ -2,6 +2,7 @@ import {
   fireEvent,
   render,
   RenderResult,
+  waitFor,
   within,
 } from '@testing-library/react';
 import { MemoryRouter, Router } from 'react-router-dom';
@@ -23,8 +24,8 @@ import {
   getTableOfContent,
   setUpClientWithBook,
   validateVisibleHeadings,
-} from 'src/views/openstax/book/OpenstaxBookViewTestSupport';
-import { Helmet } from 'react-helmet';
+} from 'src/views/openstax/book/OpenstaxBookTestSupport';
+import { v4 as uuidv4 } from 'uuid';
 
 describe('OpenstaxBookView', () => {
   it('renders loading skeletons before data is loaded', async () => {
@@ -33,7 +34,7 @@ describe('OpenstaxBookView', () => {
     const client = setUpClientWithBook(book);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
+      <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -49,14 +50,14 @@ describe('OpenstaxBookView', () => {
     expect(loadingSkeleton).not.toBeInTheDocument();
   });
 
-  it('by default renders book details with first chapter selected', async () => {
+  it('by default renders book details with first chapter and first section selected', async () => {
     resizeToDesktop();
     const book = createBook();
 
     const client = setUpClientWithBook(book);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
+      <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -76,12 +77,7 @@ describe('OpenstaxBookView', () => {
 
     expect(bookDetails).toBeVisible();
     validateVisibleHeadings(bookDetails, 2, ['Chapter 1: Introduction']);
-    validateVisibleHeadings(bookDetails, 3, [
-      'Chapter Overview (1 video)',
-      'Discussion Prompt (1 video)',
-      '1.1 Life at the coop (1 video)',
-      '1.2 Adventures outside (0 videos)',
-    ]);
+    validateVisibleHeadings(bookDetails, 3, ['Chapter Overview (1 video)']);
 
     const bookToc = wrapper.getByLabelText(
       'Table of contents of Everything to know about ducks',
@@ -96,6 +92,46 @@ describe('OpenstaxBookView', () => {
       'Discussion Prompt',
       '1.1 Life at the coop',
       '1.2 Adventures outside',
+    ]);
+  });
+
+  it('renders second section when selected', async () => {
+    resizeToDesktop();
+    const book = createBook();
+
+    const client = setUpClientWithBook(book);
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
+        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+      </MemoryRouter>,
+    );
+
+    const sectionLink = await wrapper.findByRole('link', {
+      name: '1.2 Adventures outside',
+    });
+
+    expect(sectionLink).toBeVisible();
+
+    fireEvent.click(sectionLink);
+
+    const titles = await wrapper.findAllByRole('heading', {
+      level: 1,
+      name: /Everything to know about ducks/,
+    });
+
+    expect(titles).toHaveLength(2);
+    expect(titles[0]).toBeVisible();
+    expect(titles[1]).toBeVisible();
+
+    const bookDetails = wrapper.getByLabelText(
+      'Content for Everything to know about ducks',
+    );
+
+    expect(bookDetails).toBeVisible();
+    validateVisibleHeadings(bookDetails, 2, ['Chapter 1: Introduction']);
+    validateVisibleHeadings(bookDetails, 3, [
+      '1.2 Adventures outside (0 videos)',
     ]);
 
     expect(
@@ -112,14 +148,15 @@ describe('OpenstaxBookView', () => {
     const client = setUpClientWithBook(book);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
+      <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
 
-    const chapter2NavigationButton = wrapper.getByRole('button', {
+    const chapter2NavigationButton = await wrapper.findByRole('button', {
       name: 'Chapter 2: Epilogue',
     });
+
     fireEvent.click(chapter2NavigationButton);
 
     const sectionLink = wrapper.getByRole('link', {
@@ -139,62 +176,10 @@ describe('OpenstaxBookView', () => {
     validateVisibleHeadings(bookDetails, 3, ['2.1 This is the end (1 video)']);
   });
 
-  it('hashes match for sections in navigation panel and content panel', async () => {
-    resizeToDesktop();
-    const book = createBook();
-
-    const client = setUpClientWithBook(book);
-
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
-        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
-      </MemoryRouter>,
-    );
-
-    const titles = await wrapper.findAllByRole('heading', {
-      level: 1,
-      name: /Everything to know about ducks/,
-    });
-    expect(titles).toHaveLength(2);
-
-    const chapter1OverviewNavigationLabel = getNavigationLabel(
-      wrapper,
-      'Chapter Overview',
-    );
-
-    expect(
-      await wrapper.container.querySelector(
-        `#${chapter1OverviewNavigationLabel}`,
-      ),
-    ).not.toBeNull();
-
-    const chapter1DiscussionPromptNavigationLabel = getNavigationLabel(
-      wrapper,
-      'Discussion Prompt',
-    );
-
-    expect(
-      await wrapper.container.querySelector(
-        `#${chapter1DiscussionPromptNavigationLabel}`,
-      ),
-    ).not.toBeNull();
-
-    const chapter1Section1NavigationLabel = getNavigationLabel(
-      wrapper,
-      '1.1 Life at the coop',
-    );
-
-    expect(
-      await wrapper.container.querySelector(
-        `#${chapter1Section1NavigationLabel}`,
-      ),
-    ).not.toBeNull();
-  });
-
   it('renders section video cards with only thumbnail', async () => {
     resizeToDesktop();
     const book: Book = BookFactory.sample({
-      id: 'ducklings',
+      id: uuidv4(),
       title: 'Everything to know about ducks',
       subject: 'Essentials',
       chapters: [
@@ -220,7 +205,7 @@ describe('OpenstaxBookView', () => {
     const client = setUpClientWithBook(book);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
+      <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -237,19 +222,120 @@ describe('OpenstaxBookView', () => {
     expect(wrapper.getByText('Farmer Joe')).toBeVisible();
   });
 
+  it('hashes match for chapter overview in navigation panel and content panel', async () => {
+    resizeToDesktop();
+    const book = createBook();
+
+    const client = setUpClientWithBook(book);
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
+        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+      </MemoryRouter>,
+    );
+
+    const titles = await wrapper.findAllByRole('heading', {
+      level: 1,
+      name: /Everything to know about ducks/,
+    });
+    expect(titles).toHaveLength(2);
+
+    const chapter1OverviewNavigationLabel = getNavigationLabel(
+      wrapper,
+      'Chapter Overview',
+    );
+
+    expect(
+      await wrapper.container.querySelector(
+        `#${chapter1OverviewNavigationLabel}`,
+      ),
+    ).not.toBeNull();
+  });
+
+  it('hashes match for discussion prompt in navigation panel and content panel', async () => {
+    resizeToDesktop();
+    const book = createBook();
+
+    const client = setUpClientWithBook(book);
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
+        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+      </MemoryRouter>,
+    );
+
+    const titles = await wrapper.findAllByRole('heading', {
+      level: 1,
+      name: /Everything to know about ducks/,
+    });
+    expect(titles).toHaveLength(2);
+
+    const discussionPromptLink = wrapper.getByRole('link', {
+      name: 'Discussion Prompt',
+    });
+    fireEvent.click(discussionPromptLink);
+
+    const chapter1DiscussionPromptNavigationLabel = getNavigationLabel(
+      wrapper,
+      'Discussion Prompt',
+    );
+
+    expect(
+      await wrapper.container.querySelector(
+        `#${chapter1DiscussionPromptNavigationLabel}`,
+      ),
+    ).not.toBeNull();
+  });
+
+  it('hashes match for section in navigation panel and content panel', async () => {
+    resizeToDesktop();
+    const book = createBook();
+
+    const client = setUpClientWithBook(book);
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
+        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+      </MemoryRouter>,
+    );
+
+    const titles = await wrapper.findAllByRole('heading', {
+      level: 1,
+      name: /Everything to know about ducks/,
+    });
+    expect(titles).toHaveLength(2);
+
+    const sectionLink = wrapper.getByRole('link', {
+      name: '1.1 Life at the coop',
+    });
+    fireEvent.click(sectionLink);
+
+    const chapter1Section1NavigationLabel = getNavigationLabel(
+      wrapper,
+      '1.1 Life at the coop',
+    );
+
+    expect(
+      await wrapper.container.querySelector(
+        `#${chapter1Section1NavigationLabel}`,
+      ),
+    ).not.toBeNull();
+  });
+
   it('renders book title as page title', async () => {
     const book = createBook();
 
     const client = setUpClientWithBook(book);
 
     render(
-      <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
+      <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
 
-    const helmet = Helmet.peek();
-    expect(helmet.title).toEqual('Everything to know about ducks');
+    await waitFor(() =>
+      expect(document.title).toEqual('Everything to know about ducks'),
+    );
   });
 
   describe.each([
@@ -262,7 +348,7 @@ describe('OpenstaxBookView', () => {
       it('renders back button', async () => {
         resize();
         const book: Book = BookFactory.sample({
-          id: 'ducklings',
+          id: uuidv4(),
           title: 'Everything to know about ducks',
           subject: 'Essentials',
           chapters: [
@@ -276,7 +362,7 @@ describe('OpenstaxBookView', () => {
         const client = setUpClientWithBook(book);
 
         const wrapper = render(
-          <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
+          <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
             <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
           </MemoryRouter>,
         );
@@ -289,7 +375,7 @@ describe('OpenstaxBookView', () => {
       it(`navigates back to explore page when clicked`, async () => {
         resize();
         const book: Book = BookFactory.sample({
-          id: 'ducklings',
+          id: uuidv4(),
           title: 'Everything to know about ducks',
           subject: 'Essentials',
           chapters: [
@@ -303,7 +389,7 @@ describe('OpenstaxBookView', () => {
         const client = setUpClientWithBook(book);
 
         const browserHistory = createBrowserHistory();
-        browserHistory.push({ pathname: '/explore/openstax/ducklings' });
+        browserHistory.push({ pathname: `/explore/openstax/${book.id}` });
         const wrapper = render(
           <Router history={browserHistory}>
             <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
@@ -326,7 +412,7 @@ describe('mobile/tablet view', () => {
 
   it('will show the navigation view when clicking course content button', async () => {
     const book: Book = BookFactory.sample({
-      id: 'ducklings',
+      id: uuidv4(),
       title: 'All about ducks',
     });
 
@@ -345,7 +431,7 @@ describe('mobile/tablet view', () => {
 
   it('will close the navigation view, if close is clicked', async () => {
     const book: Book = BookFactory.sample({
-      id: 'ducklings',
+      id: uuidv4(),
       title: 'All about ducks',
     });
 
@@ -367,7 +453,7 @@ describe('mobile/tablet view', () => {
 
   it('back button is not visible in course content panel', async () => {
     const book: Book = BookFactory.sample({
-      id: 'ducklings',
+      id: uuidv4(),
       title: 'All about ducks',
     });
 
@@ -395,7 +481,7 @@ const renderBookView = (book: Book): RenderResult => {
   client.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
   client.openstax.setOpenstaxBooks([book]);
   return render(
-    <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
+    <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
       <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
     </MemoryRouter>,
   );

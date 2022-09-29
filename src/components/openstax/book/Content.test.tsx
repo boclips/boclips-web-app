@@ -4,7 +4,10 @@ import { Content } from 'src/components/openstax/book/Content';
 import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
-import { fireEvent } from '@testing-library/react';
+import {
+  chapterTitle,
+  navigateTo,
+} from 'src/views/openstax/book/OpenstaxBookTestSupport';
 
 describe('OpenstaxBookContent', () => {
   let book: OpenstaxBook;
@@ -49,7 +52,7 @@ describe('OpenstaxBookContent', () => {
     });
   });
 
-  it('by default renders only the first chapter', () => {
+  it('by default renders only the first section of first chapter', () => {
     window.resizeTo(1500, 1024);
 
     const wrapper = renderWithClients(
@@ -65,14 +68,12 @@ describe('OpenstaxBookContent', () => {
     expect(chapters[0]).toBeVisible();
     expect(chapters[0]).toHaveTextContent('Chapter 1: Introduction');
 
-    expect(sections).toHaveLength(2);
+    expect(sections).toHaveLength(1);
     expect(sections[0]).toBeVisible();
     expect(sections[0]).toHaveTextContent('1.1 Life at the coop (0 videos)');
-    expect(sections[1]).toBeVisible();
-    expect(sections[1]).toHaveTextContent('1.2 Adventures outside (0 videos)');
   });
 
-  it(`doesn't show previous chapter button on the first page`, () => {
+  it(`doesn't show previous chapter or previous section button on the first page`, () => {
     window.resizeTo(1500, 1024);
 
     const wrapper = renderWithClients(
@@ -82,11 +83,15 @@ describe('OpenstaxBookContent', () => {
     );
 
     expect(
-      wrapper.queryByRole('link', { name: 'Previous Chapter' }),
+      wrapper.queryByRole('link', { name: 'Previous chapter' }),
+    ).toBeNull();
+
+    expect(
+      wrapper.queryByRole('link', { name: 'Previous section' }),
     ).toBeNull();
   });
 
-  it('show previous chapter button when not on the first chapter', () => {
+  it('show previous section button when not on the first section', () => {
     window.resizeTo(1500, 1024);
 
     const wrapper = renderWithClients(
@@ -95,18 +100,14 @@ describe('OpenstaxBookContent', () => {
       </OpenstaxMobileMenuProvider>,
     );
 
-    const nextChapterButton = wrapper.getByRole('link', {
-      name: 'Next Chapter',
-    });
-
-    fireEvent.click(nextChapterButton);
+    navigateTo(wrapper, 'Next section');
 
     expect(
-      wrapper.getByRole('link', { name: 'Previous Chapter' }),
+      wrapper.getByRole('link', { name: 'Previous section' }),
     ).toBeVisible();
   });
 
-  it('show next chapter button when not on the last chapter', () => {
+  it('show next section button when not on the last section', () => {
     window.resizeTo(1500, 1024);
 
     const wrapper = renderWithClients(
@@ -115,10 +116,10 @@ describe('OpenstaxBookContent', () => {
       </OpenstaxMobileMenuProvider>,
     );
 
-    expect(wrapper.getByRole('link', { name: 'Next Chapter' })).toBeVisible();
+    expect(wrapper.getByRole('link', { name: 'Next section' })).toBeVisible();
   });
 
-  it(`doesn't show next chapter button when on the last chapter`, () => {
+  it(`doesn't show next chapter or next section button when on the last page`, () => {
     window.resizeTo(1500, 1024);
 
     const wrapper = renderWithClients(
@@ -127,11 +128,33 @@ describe('OpenstaxBookContent', () => {
       </OpenstaxMobileMenuProvider>,
     );
 
-    const nextChapterButton = wrapper.getByRole('link', {
-      name: 'Next Chapter',
-    });
-    fireEvent.click(nextChapterButton);
+    navigateTo(wrapper, 'Next section');
+    navigateTo(wrapper, 'Next chapter');
 
-    expect(wrapper.queryByRole('link', { name: 'Next Chapter' })).toBeNull();
+    expect(wrapper.queryByRole('link', { name: 'Next chapter' })).toBeNull();
+    expect(wrapper.queryByRole('link', { name: 'Next section' })).toBeNull();
+  });
+
+  it(`show chapter navigation button instead of section ones when chapter change is possible`, () => {
+    window.resizeTo(1500, 1024);
+
+    const wrapper = renderWithClients(
+      <OpenstaxMobileMenuProvider>
+        <Content book={book} />
+      </OpenstaxMobileMenuProvider>,
+    );
+
+    navigateTo(wrapper, 'Next section');
+    navigateTo(wrapper, 'Next chapter');
+
+    const epilouge = chapterTitle(wrapper.container);
+    expect(epilouge).toBeVisible();
+    expect(epilouge.textContent).toBe('Chapter 2: Epilogue');
+
+    navigateTo(wrapper, 'Previous chapter');
+
+    const introduction = chapterTitle(wrapper.container);
+    expect(introduction).toBeVisible();
+    expect(introduction.textContent).toBe('Chapter 1: Introduction');
   });
 });
