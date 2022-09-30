@@ -8,6 +8,19 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { OpenstaxVideoCardButtons } from './OpenstaxVideoCardButtons';
 
 describe('VideoCardButtons', () => {
+  describe('add to cart button', () => {
+    it('displays icon only for add to cart button', () => {
+      const wrapper = render(
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <QueryClientProvider client={new QueryClient()}>
+            <OpenstaxVideoCardButtons video={VideoFactory.sample({})} />
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      expect(wrapper.queryByText('Add to cart')).toBeNull();
+    });
+  });
   describe('download transcript button', () => {
     it('renders download transcript button when user has transcript link', () => {
       const video = VideoFactory.sample({

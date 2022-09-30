@@ -23,6 +23,7 @@ export const OpenstaxVideoCardButtons = ({
       additionalSecondaryButtons={secondaryButton}
       primaryButton={primaryButton}
       video={video}
+      iconOnly
     />
   );
 };
