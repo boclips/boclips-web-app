@@ -8,6 +8,30 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { OpenstaxVideoCardButtons } from './OpenstaxVideoCardButtons';
 
 describe('VideoCardButtons', () => {
+  describe('download transcript button', () => {
+    it('renders download transcript button when user has transcript link', () => {
+      const video = VideoFactory.sample({
+        links: {
+          self: new Link({ href: '', templated: false }),
+          logInteraction: new Link({ href: '', templated: false }),
+          transcript: new Link({ href: 'embed', templated: false }),
+        },
+      });
+
+      const wrapper = render(
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <QueryClientProvider client={new QueryClient()}>
+            <OpenstaxVideoCardButtons video={video} />
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      expect(
+        wrapper.getByRole('button', { name: 'download-transcript' }),
+      ).toBeVisible();
+    });
+  });
+
   describe(`create embed code button`, () => {
     it(`renders embed code button when user has link and is on openstax page`, () => {
       const video = VideoFactory.sample({

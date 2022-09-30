@@ -18,6 +18,7 @@ interface VideoCardButtonsProps {
   onCleanupAddToPlaylist?: (playlistId: string, cleanUp: () => void) => void;
   iconOnly?: boolean;
   primaryButton?: React.ReactElement;
+  additionalSecondaryButtons?: React.ReactElement;
 }
 
 export const VideoCardButtons = ({
@@ -28,6 +29,7 @@ export const VideoCardButtons = ({
   onUrlCopied,
   iconOnly = false,
   primaryButton,
+  additionalSecondaryButtons,
 }: VideoCardButtonsProps) => {
   const trackCopyVideoLink = () => {
     if (onUrlCopied) {
@@ -46,12 +48,11 @@ export const VideoCardButtons = ({
           onCleanup={onCleanupAddToPlaylist}
           onClick={onAddToPlaylist}
         />
-
         <FeatureGate feature="BO_WEB_APP_COPY_VIDEO_ID_BUTTON">
           <CopyVideoIdButton video={video} />
         </FeatureGate>
-
         <CopyVideoLinkButton video={video} onClick={trackCopyVideoLink} />
+        {additionalSecondaryButtons}
       </div>
 
       {primaryButton || (
