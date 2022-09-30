@@ -3,7 +3,7 @@ import * as Accordion from '@radix-ui/react-accordion';
 import { Typography } from '@boclips-ui/typography';
 import ChevronDownIcon from 'src/resources/icons/chevron-down.svg';
 import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
-import { OpenstaxBook, OpenstaxChapter } from 'src/types/OpenstaxBook';
+import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { HashLink } from 'react-router-hash-link';
 
 import c from 'classnames';
@@ -29,9 +29,6 @@ const NavigationPanelBody = ({ book }: Props) => {
 
   const isSelectedSection = (sectionLink: string) =>
     currentSectionLink === sectionLink;
-
-  const isSelectedChapter = (chapter: OpenstaxChapter) =>
-    chapter.number === selectedChapterNumber(currentSectionLink);
 
   const [expandedChapters, setExpandedChapters] = useState(['chapter-1']);
 
@@ -119,10 +116,7 @@ const NavigationPanelBody = ({ book }: Props) => {
           <Accordion.Item
             value={`chapter-${chapter.number}`}
             key={`chapter-${chapter.number}`}
-            className={c(
-              { [s.selectedChapter]: isSelectedChapter(chapter) },
-              'pl-2 mt-2',
-            )}
+            className="pl-2 mt-2"
           >
             <Accordion.Header
               className="pt-4"
