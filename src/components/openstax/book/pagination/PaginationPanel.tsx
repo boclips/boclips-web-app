@@ -11,7 +11,7 @@ import {
   NextSectionButton,
   PreviousChapterButton,
   PreviousSectionButton,
-} from 'src/components/openstax/book/PaginationButton';
+} from 'src/components/openstax/book/pagination/PaginationButton';
 
 interface Props {
   book: OpenstaxBook;

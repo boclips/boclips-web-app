@@ -103,7 +103,9 @@ describe('OpenstaxBookContent', () => {
     navigateTo(wrapper, 'Next section');
 
     expect(
-      wrapper.getByRole('link', { name: 'Previous section' }),
+      wrapper.getByRole('link', {
+        name: 'Previous section 1.1 Life at the coop',
+      }),
     ).toBeVisible();
   });
 
@@ -116,7 +118,11 @@ describe('OpenstaxBookContent', () => {
       </OpenstaxMobileMenuProvider>,
     );
 
-    expect(wrapper.getByRole('link', { name: 'Next section' })).toBeVisible();
+    expect(
+      wrapper.getByRole('link', {
+        name: 'Next section 1.2 Adventures outside',
+      }),
+    ).toBeVisible();
   });
 
   it(`doesn't show next chapter or next section button when on the last page`, () => {
@@ -145,11 +151,23 @@ describe('OpenstaxBookContent', () => {
     );
 
     navigateTo(wrapper, 'Next section');
+    expect(
+      wrapper.getByRole('link', {
+        name: 'Next chapter Chapter 2: Epilogue',
+      }),
+    ).toBeVisible();
+
     navigateTo(wrapper, 'Next chapter');
 
     const epilouge = chapterTitle(wrapper.container);
     expect(epilouge).toBeVisible();
     expect(epilouge.textContent).toBe('Chapter 2: Epilogue');
+
+    expect(
+      wrapper.getByRole('link', {
+        name: 'Previous chapter Chapter 1: Introduction',
+      }),
+    ).toBeVisible();
 
     navigateTo(wrapper, 'Previous chapter');
 

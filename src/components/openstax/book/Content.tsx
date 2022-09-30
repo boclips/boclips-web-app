@@ -6,7 +6,7 @@ import {
   getSelectedChapter,
   getSelectedChapterElement,
 } from 'src/components/openstax/helpers/openstaxNavigationHelpers';
-import PaginationPanel from 'src/components/openstax/book/PaginationPanel';
+import PaginationPanel from 'src/components/openstax/book/pagination/PaginationPanel';
 import {
   ChapterElement,
   ChapterElementInfo,

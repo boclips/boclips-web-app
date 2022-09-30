@@ -99,7 +99,7 @@ export const sectionTitle = (bookDetails: HTMLElement) => {
 
 export const navigateTo = (wrapper: RenderResult, link: string) => {
   const button = wrapper.getByRole('link', {
-    name: link,
+    name: new RegExp(link),
   });
   fireEvent.click(button);
 };
