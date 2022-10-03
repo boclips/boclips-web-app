@@ -1,8 +1,8 @@
 import React from 'react';
 import {
   getAllSectionsInChapter,
+  getSelectedChapter,
   getSelectedChapterElement,
-  selectedChapterNumber,
 } from 'src/components/openstax/helpers/openstaxNavigationHelpers';
 import { useLocation } from 'react-router-dom';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
@@ -20,8 +20,8 @@ interface Props {
 const PaginationPanel = ({ book }: Props) => {
   const location = useLocation();
   const currentSection = getSelectedChapterElement(book, location.hash);
-  const allSectionsInChapter = getAllSectionsInChapter(book, location.hash);
-  const currentChapterNumber = selectedChapterNumber(location.hash);
+  const currentChapter = getSelectedChapter(book, location.hash);
+  const allSectionsInChapter = getAllSectionsInChapter(currentChapter);
 
   function first<T>(array: T[]): T {
     return array[0];
@@ -33,11 +33,11 @@ const PaginationPanel = ({ book }: Props) => {
 
   const showNextChapterButton = () =>
     !showNextSectionButton() &&
-    currentChapterNumber < last(book.chapters).number;
+    currentChapter?.number < last(book.chapters).number;
 
   const showPrevChapterButton = () =>
     !showPrevSectionButton() &&
-    currentChapterNumber > first(book.chapters).number;
+    currentChapter?.number > first(book.chapters).number;
 
   const showNextSectionButton = () =>
     allSectionsInChapter.length &&

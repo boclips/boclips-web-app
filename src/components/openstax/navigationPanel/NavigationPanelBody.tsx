@@ -13,8 +13,8 @@ import {
   chapterOverviewInfo,
   discussionPromptInfo,
   firstChapterElementInfo,
+  getSelectedChapter,
   sectionInfo,
-  selectedChapterNumber,
 } from 'src/components/openstax/helpers/openstaxNavigationHelpers';
 import s from './style.module.less';
 
@@ -40,7 +40,10 @@ const NavigationPanelBody = ({ book }: Props) => {
     updateTableOfContent(newSectionLink);
 
     if (linksOnlyToChapter(newSectionLink)) {
-      setCurrentSectionLink(firstChapterElementInfo(book, newSectionLink).id);
+      const firstChapterElement = firstChapterElementInfo(book, newSectionLink);
+      if (firstChapterElement !== undefined) {
+        setCurrentSectionLink(firstChapterElement.id);
+      }
     } else {
       setCurrentSectionLink(newSectionLink);
     }
@@ -72,7 +75,7 @@ const NavigationPanelBody = ({ book }: Props) => {
   );
 
   const updateTableOfContent = (newSelection: string) => {
-    const chapterNumber = selectedChapterNumber(newSelection);
+    const chapterNumber = getSelectedChapter(book, newSelection)?.number;
     const chapterToExpand = `chapter-${chapterNumber}`;
 
     setExpandedChapters([chapterToExpand]);

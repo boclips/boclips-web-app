@@ -2,7 +2,6 @@ import {
   fireEvent,
   render,
   RenderResult,
-  waitFor,
   within,
 } from '@testing-library/react';
 import { MemoryRouter, Router } from 'react-router-dom';
@@ -12,7 +11,10 @@ import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import React from 'react';
 import { Book } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
+import {
+  BookFactory,
+  SectionFactory,
+} from 'boclips-api-client/dist/test-support/BookFactory';
 import { createBrowserHistory } from 'history';
 import {
   resizeToDesktop,
@@ -332,10 +334,22 @@ describe('OpenstaxBookView', () => {
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
+  });
 
-    await waitFor(() =>
-      expect(document.title).toEqual('Everything to know about ducks'),
+  it('renders first available chapter when the hash is outdated or not matching a section', async () => {
+    const book = createBook();
+
+    const client = setUpClientWithBook(book);
+
+    const wrapper = render(
+      <MemoryRouter
+        initialEntries={[`/explore/openstax/${book.id}#chapter-blabla`]}
+      >
+        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+      </MemoryRouter>,
     );
+
+    expect(await wrapper.findByText('1.1 Life at the coop')).toBeVisible();
   });
 
   describe.each([
@@ -345,20 +359,21 @@ describe('OpenstaxBookView', () => {
   ])(
     'back button to explore page on %s',
     (_deviceType: string, resize: () => void) => {
+      const book: Book = BookFactory.sample({
+        id: uuidv4(),
+        title: 'Everything to know about ducks',
+        subject: 'Essentials',
+        chapters: [
+          {
+            title: 'Introduction',
+            number: 1,
+            sections: [SectionFactory.sample()],
+          },
+        ],
+      });
+
       it('renders back button', async () => {
         resize();
-        const book: Book = BookFactory.sample({
-          id: uuidv4(),
-          title: 'Everything to know about ducks',
-          subject: 'Essentials',
-          chapters: [
-            {
-              title: 'Introduction',
-              number: 1,
-              sections: [],
-            },
-          ],
-        });
         const client = setUpClientWithBook(book);
 
         const wrapper = render(
@@ -374,18 +389,6 @@ describe('OpenstaxBookView', () => {
 
       it(`navigates back to explore page when clicked`, async () => {
         resize();
-        const book: Book = BookFactory.sample({
-          id: uuidv4(),
-          title: 'Everything to know about ducks',
-          subject: 'Essentials',
-          chapters: [
-            {
-              title: 'Introduction',
-              number: 1,
-              sections: [],
-            },
-          ],
-        });
         const client = setUpClientWithBook(book);
 
         const browserHistory = createBrowserHistory();

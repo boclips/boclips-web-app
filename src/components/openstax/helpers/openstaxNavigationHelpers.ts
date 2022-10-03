@@ -7,43 +7,54 @@ import { ChapterElementInfo } from 'src/components/openstax/book/ChapterElement'
 
 const INITIAL_CHAPTER_NUMBER = 1;
 
-export const selectedChapterNumber = (locationHash: string): number =>
-  locationHash.length > 0
-    ? Number(locationHash.split('-')[1])
+const selectedChapterNumber = (locationHash: string): number => {
+  const matchedChapterNumber = locationHash.match('chapter-(\\d+)-*.*');
+  return matchedChapterNumber
+    ? Number(matchedChapterNumber[1])
     : INITIAL_CHAPTER_NUMBER;
+};
 
 export const getSelectedChapter = (
   book: OpenstaxBook,
   sectionLink: string,
-): OpenstaxChapter =>
-  book.chapters.find(
-    (chapter) => chapter.number === selectedChapterNumber(sectionLink),
+): OpenstaxChapter => {
+  const chapterNumber = selectedChapterNumber(sectionLink);
+  const foundChapter = book?.chapters.find(
+    (chapter) => chapter.number === chapterNumber,
   );
 
+  return foundChapter || book.chapters[0];
+};
 export const getSelectedChapterElement = (
   book: OpenstaxBook,
   sectionLink: string,
 ): ChapterElementInfo => {
   const chapter = getSelectedChapter(book, sectionLink);
+  if (chapter === undefined) return undefined;
 
-  if (sectionLink.match('chapter-.*-overview')) {
-    return chapterOverviewInfo(chapter);
+  const defaultFirstElement = defaultChapterElementInfo(chapter);
+  let matchingElement;
+
+  if (sectionLink.match('chapter-\\d+$')) {
+    matchingElement = chapterOverviewInfo(chapter);
   }
-  if (sectionLink.match('chapter-.*-discussion-prompt')) {
-    return discussionPromptInfo(chapter);
+  if (sectionLink.match('chapter-\\d+-discussion-prompt$')) {
+    matchingElement = discussionPromptInfo(chapter);
   }
-  if (sectionLink.match('chapter-.*-section-.*')) {
+  if (sectionLink.match('chapter-\\d+-section-\\d+$')) {
     const sectionNumber = Number(sectionLink.split('-')[3]);
     const section = chapter.sections.find((it) => it.number === sectionNumber);
-    return sectionInfo(chapter, section);
+    matchingElement = sectionInfo(chapter, section);
   }
 
-  return defaultChapterElementInfo(chapter);
+  return matchingElement !== undefined ? matchingElement : defaultFirstElement;
 };
 
 export const chapterOverviewInfo = (
   chapter: OpenstaxChapter,
 ): ChapterElementInfo => {
+  if (chapter.chapterOverview === undefined) return undefined;
+
   return {
     id: `chapter-${chapter.number}`,
     displayLabel: chapter.chapterOverview.displayLabel,
@@ -54,6 +65,8 @@ export const chapterOverviewInfo = (
 export const discussionPromptInfo = (
   chapter: OpenstaxChapter,
 ): ChapterElementInfo => {
+  if (chapter.discussionPrompt === undefined) return undefined;
+
   return {
     id: `chapter-${chapter.number}-discussion-prompt`,
     displayLabel: chapter.discussionPrompt.displayLabel,
@@ -62,25 +75,21 @@ export const discussionPromptInfo = (
 };
 
 const defaultChapterElementInfo = (
-  chapter: OpenstaxChapter,
+  chapter: OpenstaxChapter | null,
 ): ChapterElementInfo => {
-  if (chapter.chapterOverview) {
+  if (chapter?.chapterOverview) {
     return chapterOverviewInfo(chapter);
   }
 
-  if (chapter.discussionPrompt) {
+  if (chapter?.discussionPrompt) {
     return discussionPromptInfo(chapter);
   }
 
-  if (chapter.sections && chapter.sections.length !== 0) {
+  if (chapter?.sections && chapter.sections.length !== 0) {
     return sectionInfo(chapter, chapter.sections[0]);
   }
 
-  return {
-    displayLabel: '',
-    id: '',
-    videos: [],
-  };
+  return undefined;
 };
 
 export const firstChapterElementInfo = (
@@ -95,6 +104,8 @@ export const sectionInfo = (
   chapter: OpenstaxChapter,
   section: OpenstaxSection,
 ): ChapterElementInfo => {
+  if (section === undefined) return undefined;
+
   return {
     id: `chapter-${chapter.number}-section-${section.number}`,
     displayLabel: section.displayLabel,
@@ -118,7 +129,7 @@ const getChapterElementInfo = (
   offset: number,
 ) => {
   const selectedElement = getSelectedChapterElement(book, sectionLink);
-  const allElements = getAllSectionsInChapter(book, sectionLink);
+  const allElements = getAllElementsInCurrentChapter(book, sectionLink);
 
   const index = allElements.findIndex((it) => it.id === selectedElement.id);
 
@@ -130,15 +141,25 @@ const ensureIndex = (value: number, array: unknown[]) =>
   Math.min(Math.max(value, 0), array.length - 1);
 
 export const getAllSectionsInChapter = (
+  chapter: OpenstaxChapter,
+): ChapterElementInfo[] => {
+  if (!chapter) return [];
+
+  return [
+    chapterOverviewInfo(chapter),
+    discussionPromptInfo(chapter),
+    ...chapter.sections.map((it) => sectionInfo(chapter, it)),
+  ].filter((it) => it);
+};
+
+export const getAllElementsInCurrentChapter = (
   book: OpenstaxBook,
   sectionLink: string,
 ): ChapterElementInfo[] => {
   const chapter = getSelectedChapter(book, sectionLink);
-  return [
-    chapter.chapterOverview ? chapterOverviewInfo(chapter) : undefined,
-    chapter.discussionPrompt ? discussionPromptInfo(chapter) : undefined,
-    ...chapter.sections.map((it) => sectionInfo(chapter, it)),
-  ].filter((it) => it);
+  if (chapter === undefined) return [];
+
+  return getAllSectionsInChapter(chapter);
 };
 
 export const getNextChapterId = (
