@@ -39,7 +39,7 @@ export const ChapterElement = ({ info }: Props) => {
 const renderEmptyMappingMessaging = () => (
   <div className={s.emptyMessagingGrid}>
     <div className={s.emptyCard}>
-      <div className="bg-blue-400 flex items-center justify-center">
+      <div className="bg-blue-500 flex items-center justify-center rounded-t">
         <SadFace />
       </div>
       <div />
