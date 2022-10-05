@@ -5,7 +5,6 @@ import ChevronDownIcon from 'src/resources/icons/chevron-down.svg';
 import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { HashLink } from 'react-router-hash-link';
-
 import c from 'classnames';
 import { useOpenstaxMobileMenu } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 import { useLocation } from 'react-router-dom';
@@ -119,7 +118,7 @@ const NavigationPanelBody = ({ book }: Props) => {
           <Accordion.Item
             value={`chapter-${chapter.number}`}
             key={`chapter-${chapter.number}`}
-            className="pl-2 mt-2"
+            className={s.tocItemWrapper}
           >
             <Accordion.Header
               className="pt-4"
@@ -129,17 +128,13 @@ const NavigationPanelBody = ({ book }: Props) => {
             >
               <Accordion.Trigger
                 aria-label={chapter.displayLabel}
-                className={c('w-full', s.accordionTrigger)}
+                className={s.accordionTrigger}
               >
-                <Typography.H2
-                  size="xs"
-                  className="!text-base w-full font-medium flex justify-between items-center text-left text-gray-700"
-                >
-                  <span className="w-4/5">{chapter.displayLabel}</span>
-                  <ChevronDownIcon
-                    aria-hidden
-                    className="md:w-6 lg:w-auto lg:relative lg:right-8"
-                  />
+                <Typography.H2 size="xs" className={s.tocItem}>
+                  <span className={s.label}>{chapter.displayLabel}</span>
+                  <span className={s.icon}>
+                    <ChevronDownIcon aria-hidden />
+                  </span>
                 </Typography.H2>
                 <div className="text-gray-700 text-sm">
                   {getVideoCountLabel(chapter.videoCount)}
