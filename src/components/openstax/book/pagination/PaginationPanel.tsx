@@ -12,6 +12,7 @@ import {
   PreviousChapterButton,
   PreviousSectionButton,
 } from 'src/components/openstax/book/pagination/PaginationButton';
+import s from './style.module.less';
 
 interface Props {
   book: OpenstaxBook;
@@ -48,7 +49,7 @@ const PaginationPanel = ({ book }: Props) => {
     currentSection.id !== first(allSectionsInChapter).id;
 
   return (
-    <div className="flex">
+    <div className={s.paginationPanel}>
       {showPrevSectionButton() && (
         <PreviousSectionButton book={book} hash={location.hash} />
       )}

@@ -32,29 +32,29 @@ const PaginationButton = ({
 }: Props) => {
   if (direction === 'next') {
     return (
-      <div className="ml-auto">
-        <PaginationLink bookId={bookId} hash={hash}>
-          <Labels
-            className="flex flex-col mr-8 text-end"
-            primaryLabel={primaryLabel}
-            secondaryLabel={secondaryLabel}
-          />
-          <NextArrow className="self-end mb-1" />
-        </PaginationLink>
-      </div>
-    );
-  }
-  return (
-    <div className="flex-0">
       <PaginationLink bookId={bookId} hash={hash}>
-        <PreviousArrow className="self-end mb-1" />
         <Labels
-          className="flex flex-col ml-8"
+          className="flex flex-col mr-8 text-end"
           primaryLabel={primaryLabel}
           secondaryLabel={secondaryLabel}
         />
+        <div className="w-6 h-6">
+          <NextArrow className="self-end mb-1" />
+        </div>
       </PaginationLink>
-    </div>
+    );
+  }
+  return (
+    <PaginationLink bookId={bookId} hash={hash}>
+      <div className="w-6 h-6">
+        <PreviousArrow className="self-end mb-1" />
+      </div>
+      <Labels
+        className="flex flex-col ml-8"
+        primaryLabel={primaryLabel}
+        secondaryLabel={secondaryLabel}
+      />
+    </PaginationLink>
   );
 };
 
@@ -63,6 +63,7 @@ interface LabelsProps {
   secondaryLabel: string;
   className?: string;
 }
+
 const Labels = ({ primaryLabel, secondaryLabel, className }: LabelsProps) => (
   <div className={className}>
     <Typography.Body className="text-gray-700 !text-sm">

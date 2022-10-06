@@ -37,7 +37,7 @@ module.exports = {
         'playlist-view':
           'auto minmax(50px, auto) auto auto minmax(0, auto) auto',
         'explore-view': 'repeat(6, auto)',
-        'openstax-detailed-view': 'repeat(3, auto)',
+        'openstax-detailed-view': 'repeat(4, auto)',
         'order-view': 'auto 21px minmax(0, auto) minmax(0, auto) auto',
         'video-view': 'auto minmax(0, auto) repeat(5,auto)',
       },

@@ -68,7 +68,7 @@ const NavigationPanelBody = ({ book }: Props) => {
           [s.selectedSection]: isSelectedSection(sectionLink),
         })}
       >
-        <span>{label}</span>
+        {label}
       </Typography.H3>
     </HashLink>
   );

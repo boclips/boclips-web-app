@@ -1,8 +1,12 @@
 @import '~@boclips-ui/styles/src/colors';
 @import '~@boclips-ui/styles/src/focus';
+@import '~@boclips-ui/styles/src/breakpoints';
 
 .sectionLink {
   #focus;
+  max-width: 300px;
+  display: flex;
+  align-items: center;
 
   &:hover {
     .sectionTitle {
@@ -13,4 +17,25 @@
 
 .sectionTitle {
   text-decoration: none !important;
+}
+
+.paginationPanel {
+  display: flex;
+  justify-content: space-between;
+  grid-row-start: 3;
+  grid-row-end: 3;
+  grid-column-start: 8;
+  grid-column-end: 26;
+}
+
+@media screen and (min-width: @screen-sm) {
+  .sectionLink {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: @screen-lg) {
+  .sectionLink {
+    max-width: 380px;
+  }
 }

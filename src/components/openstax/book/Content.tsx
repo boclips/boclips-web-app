@@ -6,7 +6,6 @@ import {
   getSelectedChapter,
   getSelectedChapterElement,
 } from 'src/components/openstax/helpers/openstaxNavigationHelpers';
-import PaginationPanel from 'src/components/openstax/book/pagination/PaginationPanel';
 import {
   ChapterElement,
   ChapterElementInfo,
@@ -48,9 +47,7 @@ export const Content = ({ book }: Props) => {
         bookTitle={book.title}
         chapterTitle={selectedChapter.displayLabel}
       />
-
       <ChapterElement info={selectedChapterElement} />
-      <PaginationPanel book={book} />
     </main>
   );
 };

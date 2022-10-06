@@ -10,6 +10,7 @@ import { NavigationPanel } from 'src/components/openstax/navigationPanel/Navigat
 import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 import OpenstaxBookSkeletonPage from 'src/components/skeleton/openstax/OpenstaxBookSkeletonPage';
 import { Helmet } from 'react-helmet';
+import PaginationPanel from 'src/components/openstax/book/pagination/PaginationPanel';
 
 const OpenstaxBookView = () => {
   const { id: bookId } = useParams<PathWithId>();
@@ -29,6 +30,7 @@ const OpenstaxBookView = () => {
           <OpenstaxMobileMenuProvider>
             <NavigationPanel book={book} />
             <Content book={book} />
+            <PaginationPanel book={book} />
           </OpenstaxMobileMenuProvider>
         )}
         <Footer />

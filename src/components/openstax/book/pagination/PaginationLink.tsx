@@ -1,6 +1,5 @@
 import React from 'react';
 import { HashLink } from 'react-router-hash-link';
-import c from 'classnames';
 import s from './style.module.less';
 
 interface PageLinkProps {
@@ -15,7 +14,7 @@ export const PaginationLink = ({ bookId, hash, children }: PageLinkProps) => (
       pathname: `/explore/openstax/${bookId}`,
       hash,
     }}
-    className={c('flex', s.sectionLink)}
+    className={s.sectionLink}
   >
     {children}
   </HashLink>
