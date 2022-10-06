@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
@@ -61,6 +61,23 @@ describe('LibraryView', () => {
 
     expect(await wrapper.findByText('Playlist 1')).toBeVisible();
     expect(await wrapper.findByText('Playlist 2')).toBeVisible();
+  });
+
+  it('loads playlists when paginating', async () => {
+    const client = new FakeBoclipsClient();
+    insertUser(client);
+    loadPlaylists(client, 41);
+
+    const wrapper = renderLibraryView(client);
+    expect(await wrapper.findByText('Playlist 0')).toBeVisible();
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'Next page' }));
+    expect(await wrapper.findByText('Playlist 20')).toBeVisible();
+    expect(wrapper.queryByText('Playlist 0')).toBeNull();
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'Next page' }));
+    expect(await wrapper.findByText('Playlist 40')).toBeVisible();
+    expect(wrapper.queryByText('Playlist 20')).toBeNull();
   });
 
   function loadPlaylists(client: FakeBoclipsClient, quantity: number) {

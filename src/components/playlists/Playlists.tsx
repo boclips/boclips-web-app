@@ -16,17 +16,17 @@ import s from './style.module.less';
 import GridCard from '../common/gridCard/GridCard';
 import paginationStyles from '../common/pagination/pagination.module.less';
 
+export const PLAYLISTS_PAGE_SIZE = 20;
+
 const Playlists = () => {
-  const PAGE_SIZE = 20;
   const currentBreakpoint = getMediaBreakpoint();
   const mobileView = currentBreakpoint.type === 'mobile';
 
   const linkCopiedHotjarEvent = () =>
     AnalyticsFactory.hotjar().event(HotjarEvents.PlaylistLinkCopied);
-
-  const { data: playlists, isLoading } = useOwnAndSharedPlaylistsQuery();
-
   const [page, setPage] = useState<number>(1);
+
+  const { data: playlists, isLoading } = useOwnAndSharedPlaylistsQuery(page);
 
   const handlePageChange = (newPage: number) => {
     window.scrollTo({ top: 0 });
@@ -41,7 +41,9 @@ const Playlists = () => {
           page={pageNb}
           mobileView={mobileView}
           currentPage={page}
-          totalItems={Math.ceil(playlists.pageSpec.totalElements / PAGE_SIZE)}
+          totalItems={Math.ceil(
+            playlists.pageSpec.totalElements / PLAYLISTS_PAGE_SIZE,
+          )}
         />
       );
     },
@@ -63,7 +65,7 @@ const Playlists = () => {
                 [paginationStyles.paginationEmpty]: !playlists.page.length,
               }),
               hideOnSinglePage: true,
-              pageSize: PAGE_SIZE,
+              pageSize: PLAYLISTS_PAGE_SIZE,
               showSizeChanger: false,
               onChange: handlePageChange,
               current: page,
