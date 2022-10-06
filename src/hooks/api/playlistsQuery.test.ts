@@ -5,7 +5,7 @@ import { QueryClient } from 'react-query';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 
 describe('playlistsQuery', () => {
-  it('will use list projection when loading users playlists', async () => {
+  it('will use list projection and convert page size when loading users playlists', async () => {
     const apiClient = new FakeBoclipsClient();
     const collectionsSpy = jest.spyOn(
       apiClient.collections,
@@ -14,13 +14,17 @@ describe('playlistsQuery', () => {
     // @ts-ignore
     apiClient.collections.getMySavedCollectionsWithoutDetails = collectionsSpy;
     const { result, waitFor } = renderHook(
-      () => useOwnAndSharedPlaylistsQuery(),
+      () => useOwnAndSharedPlaylistsQuery(1),
       {
         wrapper: wrapperWithClients(apiClient, new QueryClient()),
       },
     );
 
     await waitFor(() => result.current.isSuccess);
-    expect(collectionsSpy).toBeCalledWith({ origin: 'BO_WEB_APP' });
+    expect(collectionsSpy).toBeCalledWith({
+      page: 0,
+      size: 20,
+      origin: 'BO_WEB_APP',
+    });
   });
 });

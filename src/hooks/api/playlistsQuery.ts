@@ -9,6 +9,7 @@ import { Collection } from 'boclips-api-client/dist/sub-clients/collections/mode
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { CollectionsClient } from 'boclips-api-client/dist/sub-clients/collections/client/CollectionsClient';
 import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collections/model/ListViewCollection';
+import { PLAYLISTS_PAGE_SIZE } from 'src/components/playlists/Playlists';
 import { playlistKeys } from './playlistKeys';
 
 interface UpdatePlaylistProps {
@@ -21,10 +22,11 @@ interface PlaylistMutationCallbacks {
   onError: (playlistId: string) => void;
 }
 
-export const useOwnAndSharedPlaylistsQuery = () => {
+export const useOwnAndSharedPlaylistsQuery = (page: number) => {
   const client = useBoclipsClient();
-  return useQuery(playlistKeys.ownAndShared, () =>
-    doGetOwnAndSharedPlaylists(client),
+  const backendPageNumber = page - 1;
+  return useQuery(playlistKeys.ownAndShared(backendPageNumber), () =>
+    doGetOwnAndSharedPlaylists(client, backendPageNumber),
   );
 };
 
@@ -136,9 +138,13 @@ const doGetOwnPlaylists = (client: BoclipsClient) =>
     .getMyCollectionsWithoutDetails({ origin: 'BO_WEB_APP' })
     .then((playlists) => playlists.page);
 
-const doGetOwnAndSharedPlaylists = (client: BoclipsClient) =>
+const doGetOwnAndSharedPlaylists = (client: BoclipsClient, page: number) =>
   client.collections
-    .getMySavedCollectionsWithoutDetails({ origin: 'BO_WEB_APP' })
+    .getMySavedCollectionsWithoutDetails({
+      page,
+      size: PLAYLISTS_PAGE_SIZE,
+      origin: 'BO_WEB_APP',
+    })
     .then((playlists) => playlists);
 
 export const usePlaylistMutation = () => {
