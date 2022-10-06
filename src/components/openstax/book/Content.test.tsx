@@ -8,6 +8,7 @@ import {
   chapterTitle,
   navigateTo,
 } from 'src/views/openstax/book/OpenstaxBookTestSupport';
+import PaginationPanel from 'src/components/openstax/book/pagination/PaginationPanel';
 
 describe('OpenstaxBookContent', () => {
   let book: OpenstaxBook;
@@ -58,6 +59,7 @@ describe('OpenstaxBookContent', () => {
     const wrapper = renderWithClients(
       <OpenstaxMobileMenuProvider>
         <Content book={book} />
+        <PaginationPanel book={book} />
       </OpenstaxMobileMenuProvider>,
     );
 
@@ -79,6 +81,7 @@ describe('OpenstaxBookContent', () => {
     const wrapper = renderWithClients(
       <OpenstaxMobileMenuProvider>
         <Content book={book} />
+        <PaginationPanel book={book} />
       </OpenstaxMobileMenuProvider>,
     );
 
@@ -97,6 +100,7 @@ describe('OpenstaxBookContent', () => {
     const wrapper = renderWithClients(
       <OpenstaxMobileMenuProvider>
         <Content book={book} />
+        <PaginationPanel book={book} />
       </OpenstaxMobileMenuProvider>,
     );
 
@@ -115,6 +119,7 @@ describe('OpenstaxBookContent', () => {
     const wrapper = renderWithClients(
       <OpenstaxMobileMenuProvider>
         <Content book={book} />
+        <PaginationPanel book={book} />
       </OpenstaxMobileMenuProvider>,
     );
 
@@ -131,6 +136,7 @@ describe('OpenstaxBookContent', () => {
     const wrapper = renderWithClients(
       <OpenstaxMobileMenuProvider>
         <Content book={book} />
+        <PaginationPanel book={book} />
       </OpenstaxMobileMenuProvider>,
     );
 
@@ -147,6 +153,7 @@ describe('OpenstaxBookContent', () => {
     const wrapper = renderWithClients(
       <OpenstaxMobileMenuProvider>
         <Content book={book} />
+        <PaginationPanel book={book} />
       </OpenstaxMobileMenuProvider>,
     );
 
