@@ -2,40 +2,103 @@
 @import '~@boclips-ui/styles/src/focus';
 @import '~@boclips-ui/styles/src/breakpoints';
 
-.sectionLink {
-  #focus;
-  max-width: 300px;
-  display: flex;
-  align-items: center;
-
-  &:hover {
-    .sectionTitle {
-      text-decoration: underline !important;
-    }
-  }
-}
-
-.sectionTitle {
-  text-decoration: none !important;
-}
-
 .paginationPanel {
   display: flex;
   justify-content: space-between;
   grid-row-start: 3;
   grid-row-end: 3;
-  grid-column-start: 8;
-  grid-column-end: 26;
+
+  .sectionLink {
+    #focus;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    &:only-child {
+      max-width: unset;
+      padding: 0;
+    }
+
+    &:hover {
+      .label {
+        span {
+          &:last-child {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+    .label {
+      display: flex;
+      flex-direction: column;
+      font-weight: 500;
+      width: 100%;
+
+      span {
+        &:last-child {
+          color: @blue-800;
+        }
+      }
+
+      &.next {
+        padding-left: 1rem;
+
+        * {
+          text-align: left;
+        }
+      }
+
+      &.prev {
+        padding-right: 1rem;
+
+        * {
+          text-align: right;
+        }
+      }
+    }
+
+    .icon {
+      position: relative;
+      top: 26px;
+    }
+  }
 }
 
 @media screen and (min-width: @screen-sm) {
-  .sectionLink {
-    width: 100%;
+  .paginationPanel {
+    grid-column-start: 2;
+    grid-column-end: 26;
+    flex-wrap: wrap;
+
+    .sectionLink {
+      width: 100%;
+      padding: 1rem 0;
+      .label {
+        padding: 0 !important;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: @screen-md) {
+  .paginationPanel {
+    grid-column-start: 2;
+    grid-column-end: 26;
+
+    .sectionLink {
+      max-width: 340px;
+    }
   }
 }
 
 @media screen and (min-width: @screen-lg) {
-  .sectionLink {
-    max-width: 380px;
+  .paginationPanel {
+    grid-column-start: 8;
+    grid-column-end: 26;
+
+    .sectionLink {
+      max-width: 380px;
+    }
   }
 }

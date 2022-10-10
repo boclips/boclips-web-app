@@ -30,27 +30,30 @@ const PaginationButton = ({
   primaryLabel,
   direction,
 }: Props) => {
-  if (direction === 'next') {
+  const next = direction === 'next';
+
+  if (next) {
     return (
       <PaginationLink bookId={bookId} hash={hash}>
-        <Labels
-          className="flex flex-col mr-8 text-end"
+        <Label
+          className={c(s.label, { [s.next]: next })}
           primaryLabel={primaryLabel}
           secondaryLabel={secondaryLabel}
         />
-        <div className="w-6 h-6">
-          <NextArrow className="self-end mb-1" />
+        <div className={s.icon}>
+          <NextArrow />
         </div>
       </PaginationLink>
     );
   }
+
   return (
     <PaginationLink bookId={bookId} hash={hash}>
-      <div className="w-6 h-6">
-        <PreviousArrow className="self-end mb-1" />
+      <div className={s.icon}>
+        <PreviousArrow />
       </div>
-      <Labels
-        className="flex flex-col ml-8"
+      <Label
+        className={c(s.label, { [s.prev]: !next })}
         primaryLabel={primaryLabel}
         secondaryLabel={secondaryLabel}
       />
@@ -64,17 +67,12 @@ interface LabelsProps {
   className?: string;
 }
 
-const Labels = ({ primaryLabel, secondaryLabel, className }: LabelsProps) => (
+const Label = ({ primaryLabel, secondaryLabel, className }: LabelsProps) => (
   <div className={className}>
-    <Typography.Body className="text-gray-700 !text-sm">
+    <Typography.Body size="small" className="text-gray-700">
       {secondaryLabel}
     </Typography.Body>
-    <Typography.Link
-      type="inline-blue"
-      className={c('font-medium inline-flex items-center', s.sectionTitle)}
-    >
-      {primaryLabel}
-    </Typography.Link>
+    <Typography.Link className={s.sectionTitle}>{primaryLabel}</Typography.Link>
   </div>
 );
 
