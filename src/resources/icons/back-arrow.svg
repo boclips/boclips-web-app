@@ -1,4 +1,1 @@
-<svg role="img" width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true"  xmlns="http://www.w3.org/2000/svg">
-    <title>Arrow back</title>
-    <path d="M8.5 15L1.5 8L8.5 1" stroke="#00217D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+<svg width="10" height="16" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="m8.5 15-7-7 7-7" stroke="#00217D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
