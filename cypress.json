@@ -3,5 +3,7 @@
   "e2e": {
     "baseUrl": "http://localhost:9000"
   },
-  "retries": "10"
+  "retries": {
+    "runMode": 10
+  }
 }
