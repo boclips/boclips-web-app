@@ -4,6 +4,7 @@ import { Typography } from '@boclips-ui/typography';
 import { useHistory } from 'react-router-dom';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
+import { BookLogo } from 'src/components/openstax/bookLogo/BookLogo';
 import s from './style.module.less';
 
 interface Props {
@@ -25,16 +26,7 @@ export const BookCard = ({ book }: Props) => {
       aria-label={`book ${book.title}`}
       className={s.bookCard}
     >
-      <div className={s.img}>
-        {book.logoUrl.length > 0 ? (
-          <img src={book.logoUrl} alt={`${book.title} cover`} />
-        ) : (
-          <img
-            src="https://assets.boclips.com/boclips-public-static-files/boclips/openstax/OSX-ALLY-Blue-RGB-150dpi.png"
-            alt={`${book.title} generic cover`}
-          />
-        )}
-      </div>
+      <BookLogo book={book} />
       <div className={s.bookTitle}>
         <Typography.H2 size="sm" className="font-medium">
           {book.title}

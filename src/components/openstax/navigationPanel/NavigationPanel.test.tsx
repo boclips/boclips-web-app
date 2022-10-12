@@ -11,11 +11,12 @@ import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 
 describe('OpenstaxBookNavigationPanel', () => {
-  it('renders book title with chapters, chapter intros and sections', async () => {
+  it('renders book title with logo, chapters, chapter intros and sections', async () => {
     window.resizeTo(1500, 1024);
 
     const book: OpenstaxBook = OpenstaxBookFactory.sample({
       title: 'should show book title',
+      logoUrl: 'test',
       chapters: [
         ChapterFactory.sample({
           number: 1,
@@ -50,6 +51,8 @@ describe('OpenstaxBookNavigationPanel', () => {
     const bookTitle = await wrapper.findByRole('heading', { level: 1 });
     expect(bookTitle).toBeVisible();
     expect(bookTitle).toHaveTextContent('should show book title');
+
+    expect(wrapper.getByAltText('should show book title cover')).toBeVisible();
 
     const chapterOne = wrapper.getByRole('heading', { level: 2 });
     expect(chapterOne).toBeVisible();
@@ -95,6 +98,23 @@ describe('OpenstaxBookNavigationPanel', () => {
     expect(
       wrapper.queryByRole('button', { name: 'Close the Table of contents' }),
     ).toBeNull();
+  });
+
+  it('does not render book logo in non-desktop view', () => {
+    window.resizeTo(300, 1024);
+
+    const wrapper = render(
+      <OpenstaxMobileMenuProvider>
+        <NavigationPanel
+          book={OpenstaxBookFactory.sample({
+            title: 'book',
+            logoUrl: 'logo',
+          })}
+        />
+      </OpenstaxMobileMenuProvider>,
+    );
+
+    expect(wrapper.queryByAltText('book cover')).toBeNull();
   });
 
   it('renders close button with label in tablet view, which calls callback', () => {
