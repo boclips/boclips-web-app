@@ -8,6 +8,7 @@ import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import { useHistory } from 'react-router-dom';
 import { useOpenstaxMobileMenu } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
+import { BookLogo } from 'src/components/openstax/bookLogo/BookLogo';
 import s from './style.module.less';
 
 interface Props {
@@ -38,6 +39,7 @@ const NavigationPanelHeader = ({ book }: Props) => {
         />
       )}
       <div className={s.tocHeader}>
+        {!isNotDesktop && <BookLogo book={book} className="mr-4" />}
         <Typography.H1
           size="sm"
           className="text-gray-900"

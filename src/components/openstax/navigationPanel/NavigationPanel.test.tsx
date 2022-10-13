@@ -9,13 +9,19 @@ import { fireEvent } from '@testing-library/react';
 import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
+import {
+  resizeToDesktop,
+  resizeToMobile,
+  resizeToTablet,
+} from 'src/testSupport/resizeTo';
 
 describe('OpenstaxBookNavigationPanel', () => {
-  it('renders book title with chapters, chapter intros and sections', async () => {
-    window.resizeTo(1500, 1024);
+  it('renders book title with logo, chapters, chapter intros and sections', async () => {
+    resizeToDesktop();
 
     const book: OpenstaxBook = OpenstaxBookFactory.sample({
       title: 'should show book title',
+      logoUrl: 'test',
       chapters: [
         ChapterFactory.sample({
           number: 1,
@@ -51,6 +57,8 @@ describe('OpenstaxBookNavigationPanel', () => {
     expect(bookTitle).toBeVisible();
     expect(bookTitle).toHaveTextContent('should show book title');
 
+    expect(wrapper.getByAltText('should show book title cover')).toBeVisible();
+
     const chapterOne = wrapper.getByRole('heading', { level: 2 });
     expect(chapterOne).toBeVisible();
     expect(chapterOne).toHaveTextContent('Chapter 1: should show chapter 1');
@@ -84,7 +92,7 @@ describe('OpenstaxBookNavigationPanel', () => {
   });
 
   it('does not render close button in desktop view', () => {
-    window.resizeTo(1500, 1024);
+    resizeToDesktop();
 
     const wrapper = render(
       <OpenstaxMobileMenuProvider>
@@ -97,8 +105,30 @@ describe('OpenstaxBookNavigationPanel', () => {
     ).toBeNull();
   });
 
+  it.each([
+    ['mobile', resizeToMobile],
+    ['tablet', resizeToTablet],
+  ])(
+    'does not render book logo on %s',
+    async (_screenType: string, resize: () => void) => {
+      resize();
+      const wrapper = render(
+        <OpenstaxMobileMenuProvider>
+          <NavigationPanel
+            book={OpenstaxBookFactory.sample({
+              title: 'book',
+              logoUrl: 'logo',
+            })}
+          />
+        </OpenstaxMobileMenuProvider>,
+      );
+
+      expect(wrapper.queryByAltText('book cover')).toBeNull();
+    },
+  );
+
   it('renders close button with label in tablet view, which calls callback', () => {
-    window.resizeTo(1000, 1024);
+    resizeToTablet();
 
     const wrapper = render(
       <OpenstaxMobileMenuProvider triggerOpen>
@@ -118,7 +148,7 @@ describe('OpenstaxBookNavigationPanel', () => {
   });
 
   it('renders close button without label in tablet view, which calls callback', () => {
-    window.resizeTo(320, 1024);
+    resizeToTablet();
 
     const wrapper = render(
       <OpenstaxMobileMenuProvider triggerOpen>
@@ -135,7 +165,7 @@ describe('OpenstaxBookNavigationPanel', () => {
   });
 
   it('chapters can be expanded and collapsed, first chapter expanded by default', () => {
-    window.resizeTo(1500, 1024);
+    resizeToDesktop();
 
     const book: OpenstaxBook = OpenstaxBookFactory.sample({
       chapters: [
