@@ -17,7 +17,6 @@ module.exports = {
     alias: {
       src: srcPath,
       resources: resourcePath,
-      'react-dom': '@hot-loader/react-dom',
 
       // Needed when library is linked via `npm link` to app
       react: path.resolve('./node_modules/react'),

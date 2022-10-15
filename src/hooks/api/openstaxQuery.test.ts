@@ -3,7 +3,7 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { useGetBook, useGetBooksQuery } from 'src/hooks/api/openstaxQuery';
 import { renderHook } from '@testing-library/react-hooks';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
-import { QueryClient } from 'react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { waitFor } from '@testing-library/react';
 
 describe('OpenstaxQuery', () => {

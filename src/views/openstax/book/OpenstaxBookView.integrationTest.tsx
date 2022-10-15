@@ -392,7 +392,7 @@ describe('OpenstaxBookView', () => {
         const client = setUpClientWithBook(book);
 
         const browserHistory = createBrowserHistory();
-        browserHistory.push({ pathname: `/explore/openstax/${book.id}` });
+        browsernavigate({ pathname: `/explore/openstax/${book.id}` });
         const wrapper = render(
           <Router history={browserHistory}>
             <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />

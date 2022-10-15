@@ -1,11 +1,11 @@
 import EmptyCartCharacter from 'src/resources/icons/empty-cart-character.svg';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import Button from '@boclips-ui/button';
 import { Hero } from 'src/components/hero/Hero';
 
 export const EmptyCart = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   return (
     <Hero
       title="Your shopping cart is empty"
@@ -15,7 +15,7 @@ export const EmptyCart = () => {
       actions={
         <Button
           onClick={() => {
-            history.push({
+            navigate({
               pathname: '/',
             });
           }}

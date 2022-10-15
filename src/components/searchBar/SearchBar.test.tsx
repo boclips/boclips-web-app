@@ -22,7 +22,7 @@ describe('SearchBar', () => {
 
   it('new search preserves URL query parameters except query, page, and topics', async () => {
     const history = createBrowserHistory();
-    history.push({
+    navigate({
       pathname:
         '/videos?q=dogs&page=5&video_type=INSTRUCTIONAL&duration=PT1M-PT5M&topics=blah',
     });

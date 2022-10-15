@@ -26,7 +26,7 @@ const getGridSizeClass = (
 };
 
 const DisciplineWidget = (): ReactElement => {
-  const { data: disciplines, isLoading } = useGetDisciplinesQuery();
+  const { data: disciplines, isInitialLoading } = useGetDisciplinesQuery();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedDiscipline, setSelectedDiscipline] =
@@ -72,11 +72,11 @@ const DisciplineWidget = (): ReactElement => {
       <DisciplineHeader />
       <div
         className={c(s.disciplineWrapper, {
-          [getGridSizeClass(disciplines)]: !isLoading,
-          grid: !isLoading,
+          [getGridSizeClass(disciplines)]: !isInitialLoading,
+          grid: !isInitialLoading,
         })}
       >
-        {isLoading ? (
+        {isInitialLoading ? (
           <SkeletonTiles
             className={s.discipline}
             cols={isOneColumn ? 1 : 2}

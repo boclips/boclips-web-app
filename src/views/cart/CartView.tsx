@@ -9,8 +9,10 @@ import { Layout } from 'src/components/layout/Layout';
 import PageHeader from 'src/components/pageTitle/PageHeader';
 
 const CartView = () => {
-  const { data: cart, isLoading: isCartLoading } = useCartQuery();
+  const { data: cart, isInitialLoading: isCartLoading } = useCartQuery();
   const hasItemsInCart = cart?.items?.length > 0;
+
+  console.log(cart);
 
   const cartInfo = hasItemsInCart && (
     <span className="text-2xl font-normal">
@@ -19,7 +21,7 @@ const CartView = () => {
     </span>
   );
 
-  if (isCartLoading) return <Loading />;
+  if (isCartLoading) return <div>123</div>;
 
   return (
     <Layout rowsSetup="grid-rows-default-view-with-title">

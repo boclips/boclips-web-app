@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { OrdersPage } from 'boclips-api-client/dist/sub-clients/orders/model/OrdersPage';
 import { PlaceOrderRequest } from 'boclips-api-client/dist/sub-clients/orders/model/PlaceOrderRequest';
 import { BoclipsClient } from 'boclips-api-client';
@@ -46,7 +46,7 @@ export const useFindOrGetOrder = (orderId: string) => {
   return useQuery(['order', orderId], () => getOrder(orderId, boclipsClient), {
     initialData: () =>
       queryClient
-        .getQueryData<OrdersPage>('orders')
+        .getQueryData<OrdersPage>(['orders'])
         ?.orders.find((d) => d.id === orderId),
   });
 };

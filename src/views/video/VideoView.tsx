@@ -13,9 +13,9 @@ import { VideoPage } from 'src/components/videoPage/VideoPage';
 
 const VideoView = () => {
   const videoId = useGetIdFromLocation('videos');
-  const { data: video, isLoading, error } = useFindOrGetVideo(videoId);
+  const { data: video, isInitialLoading, error } = useFindOrGetVideo(videoId);
 
-  if (isLoading && !video) return <Loading />;
+  if (isInitialLoading && !video) return <Loading />;
 
   const isVideoNotFound = (error as BoclipsApiError)?.status === 404;
 

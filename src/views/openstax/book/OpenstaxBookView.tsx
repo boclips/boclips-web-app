@@ -14,7 +14,7 @@ import PaginationPanel from 'src/components/openstax/book/pagination/PaginationP
 
 const OpenstaxBookView = () => {
   const { id: bookId } = useParams<PathWithId>();
-  const { data: book, isLoading } = useGetBook(bookId);
+  const { data: book, isInitialLoading } = useGetBook(bookId);
 
   return (
     <>
@@ -24,7 +24,7 @@ const OpenstaxBookView = () => {
         responsiveLayout
       >
         <Navbar />
-        {isLoading ? (
+        {isInitialLoading ? (
           <OpenstaxBookSkeletonPage />
         ) : (
           <OpenstaxMobileMenuProvider>

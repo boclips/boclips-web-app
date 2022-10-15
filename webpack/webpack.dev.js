@@ -9,7 +9,7 @@ const srcPath = path.resolve(__dirname, '../src');
 module.exports = merge(common, {
   mode: 'development',
   devtool: 'eval-source-map',
-  entry: ['react-hot-loader/patch', srcPath],
+  entry: srcPath,
   output: {
     filename: '[name].js',
     publicPath: '/',

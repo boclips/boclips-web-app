@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCartQuery } from 'src/hooks/api/cartQuery';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import c from 'classnames';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
@@ -9,14 +9,14 @@ import CartIcon from '../../resources/icons/cart-icon.svg';
 
 const CartButton = () => {
   const { data: cart } = useCartQuery();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const location = useLocation();
   const isOnCartPage = location.pathname.includes('cart');
 
   const cartOpenedEvent = () => {
     AnalyticsFactory.appcues().sendEvent(AppcuesEvent.CART_OPENED);
-    history.push({
+    navigate({
       pathname: '/cart',
     });
   };

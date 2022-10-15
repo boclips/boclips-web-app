@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   doAddToCart,
   doDeleteFromCart,
@@ -52,7 +52,7 @@ export const AddToCartButton = ({
     },
     {
       onSuccess: (it) => {
-        queryClient.setQueryData('cart', (old: Cart) => ({
+        queryClient.setQueryData(['cart'], (old: Cart) => ({
           ...old,
           items: [...old.items, it],
         }));
@@ -81,7 +81,7 @@ export const AddToCartButton = ({
     },
     {
       onSuccess: (it) => {
-        queryClient.setQueryData('cart', (old: Cart) => ({
+        queryClient.setQueryData(['cart'], (old: Cart) => ({
           ...old,
           items: [...old.items.filter((item) => item.id !== it)],
         }));

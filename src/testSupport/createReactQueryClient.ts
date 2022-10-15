@@ -1,4 +1,4 @@
-import { MutationCache, QueryCache, QueryClient } from 'react-query';
+import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
 
 export const createReactQueryClient = () => {
   const mutationCache = new MutationCache();

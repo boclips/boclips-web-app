@@ -6,7 +6,7 @@ import {
   CartsFactory,
 } from 'boclips-api-client/dist/test-support/CartsFactory';
 import { render } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { OrderModal } from 'src/components/orderModal/OrderModal';
 

@@ -2,7 +2,8 @@ import './main.less';
 
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import ReactDom from 'react-dom';
+import { createRoot } from 'react-dom/client';
+import { Integration } from '@sentry/types';
 import BoclipsSecurity from 'boclips-js-security';
 import { ApiBoclipsClient } from 'boclips-api-client';
 import axios from 'axios';
@@ -33,9 +34,12 @@ const initializeSentry = () => {
   Sentry.init({
     release: sentryRelease,
     dsn: 'https://50de7aa7ec43491d9c7140376d0bf128@o236297.ingest.sentry.io/5633299',
-    integrations: [new Integrations.BrowserTracing(), new ExtraErrorData()],
+    integrations: [
+      new Integrations.BrowserTracing() as Integration,
+      new ExtraErrorData(),
+    ],
     tracesSampleRate: 1.0,
-    blacklistUrls: [
+    denyUrls: [
       // Chrome extensions
       /extensions\//i,
       /^chrome:\/\//i,
@@ -56,24 +60,26 @@ if (Constants.IS_SENTRY_ENABLED) {
 }
 
 const onLogin = async () => {
+  const container = document.getElementById('root');
+  const root = createRoot(container);
+
   try {
     const apiClient = await ApiBoclipsClient.create(
       axios,
       Constants.API_PREFIX,
     );
 
-    ReactDom.render(
+    root.render(
       <Router>
         <App
           apiClient={apiClient}
           boclipsSecurity={BoclipsSecurity.getInstance()}
         />
       </Router>,
-      document.getElementById('root'),
     );
   } catch (e) {
     // If we can't fetch links via the api client (e.g a service is down) show a simple fallback page
-    ReactDom.render(<FallbackApp />, document.getElementById('root'));
+    root.render(<FallbackApp />);
   }
 };
 

@@ -9,7 +9,7 @@ type LinkProps = {
   onClick?: () => void;
 };
 
-type Props = React.ComponentProps<RouterLink> &
+type Props = React.ComponentProps<typeof RouterLink> &
   Pick<TypographyLinkProps, 'type'> &
   LinkProps;
 
@@ -31,7 +31,7 @@ export const Link = ({
         }
 
         if (isExternalLink) {
-          window.location.href = to;
+          window.location.href = to.toString();
           e.preventDefault();
         }
       }}

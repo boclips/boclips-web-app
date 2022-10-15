@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FilterKey } from '../types/search/FilterKey';
 
 export const useLocationParams = () => {
@@ -41,17 +41,17 @@ export const useSearchQueryLocationParams = (): [
     },
   };
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const setSearchQueryLocationParams = useCallback(
     (search: SearchQueryLocationParams) => {
       const params = convertToURLSearchParams(search);
 
-      history.push({
+      navigate({
         search: `?${params.toString()}`,
       });
     },
-    [history],
+    [navigate],
   );
 
   return [searchQueryLocationParams, setSearchQueryLocationParams];

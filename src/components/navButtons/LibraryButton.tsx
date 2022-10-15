@@ -1,17 +1,17 @@
 import React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import c from 'classnames';
 import s from './style.module.less';
 import YourLibraryIcon from '../../resources/icons/your-library.svg';
 
 const LibraryButton = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const location = useLocation();
   const isOnLibraryPage = location.pathname.includes('library');
 
   const onClick = () => {
-    history.push({
+    navigate({
       pathname: '/library',
     });
   };

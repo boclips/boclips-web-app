@@ -24,7 +24,7 @@ describe('OrderConfirmationView', () => {
   });
 
   it('displays confirmation page', async () => {
-    window.history.pushState(
+    window.navigateState(
       {
         state: {
           orderLocation: '123',
@@ -51,7 +51,7 @@ describe('OrderConfirmationView', () => {
 
   describe('window titles', () => {
     it('displays window title', async () => {
-      window.history.pushState(
+      window.navigateState(
         {
           state: {
             orderLocation: '123',

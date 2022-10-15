@@ -14,6 +14,7 @@ module.exports = {
     '~(.*)$': '<rootDir>/src/$1',
     '\\.module\\.less$': 'identity-obj-proxy',
     '\\.(css|less)$': '<rootDir>/__mocks__/styleMock.js',
+    '^uuid$': require.resolve('uuid'),
   },
   testEnvironment: 'jsdom',
   testMatch: ['**/*.(integrationTest|a11yTest|test).(ts|tsx)'],

@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { BoclipsClient } from 'boclips-api-client';
@@ -25,14 +25,14 @@ export const doGetVideo = (id: string, apiClient: BoclipsClient) =>
 
 export const useGetVideos = (videoIds: string[]) => {
   const apiClient = useBoclipsClient();
-  return useQuery('multipleVideos', () => doGetVideos(videoIds, apiClient), {
+  return useQuery(['multipleVideos'], () => doGetVideos(videoIds, apiClient), {
     enabled: !!videoIds,
   });
 };
 
 export const useGetVideoRecommendations = (video: Video) => {
   const apiClient = useBoclipsClient();
-  return useQuery(`getVideoRecommendations-${video.id}`, () =>
+  return useQuery([`getVideoRecommendations-${video.id}`], () =>
     doGetVideoRecommendations(video, apiClient),
   );
 };
@@ -40,8 +40,9 @@ export const useGetVideoRecommendations = (video: Video) => {
 export const useFindOrGetVideo = (videoId?: string) => {
   const queryClient = useQueryClient();
   const apiClient = useBoclipsClient();
-  const cachedVideos =
-    queryClient.getQueriesData<Pageable<Video>>(SEARCH_BASE_KEY);
+  const cachedVideos = queryClient.getQueriesData<Pageable<Video>>([
+    SEARCH_BASE_KEY,
+  ]);
 
   return useQuery(['video', videoId], () => doGetVideo(videoId, apiClient), {
     initialData: () => findVideoInSearchCache(cachedVideos, videoId),
