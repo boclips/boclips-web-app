@@ -28,15 +28,6 @@ describe('editing a playlist', () => {
     createVideoWithThumbnail('555', 'Video Five'),
   ];
 
-  const playlist = CollectionFactory.sample({
-    id: '123',
-    title: 'Hello there',
-    description: 'Very nice description',
-    videos,
-    owner: 'myuserid',
-    mine: true,
-  });
-
   beforeEach(() => {
     client = new FakeBoclipsClient();
     videos.forEach((it) => client.videos.insertVideo(it));
@@ -46,11 +37,19 @@ describe('editing a playlist', () => {
         id: 'myuserid',
       }),
     );
-    client.collections.addToFake(playlist);
   });
 
   it('edit playlist button is not visible for playlists shared with me by other user', async () => {
-    client.collections.addToFake(playlist);
+    const newPlaylist = CollectionFactory.sample({
+      id: '123',
+      title: 'Hello there',
+      description: 'Very nice description',
+      videos,
+      owner: 'myuserid',
+      mine: true,
+    });
+
+    client.collections.addToFake(newPlaylist);
 
     const history = createBrowserHistory();
     history.push('/playlists/123');
@@ -80,8 +79,17 @@ describe('editing a playlist', () => {
   });
 
   it('edit playlist popup is displayed with populated values when edit button is clicked', async () => {
-    client.collections.addToFake(playlist);
-    const sharedPlaylist = { ...playlist, id: '321', mine: false };
+    const newPlaylist = CollectionFactory.sample({
+      id: '123',
+      title: 'Hello there',
+      description: 'Very nice description',
+      videos,
+      owner: 'myuserid',
+      mine: true,
+    });
+
+    client.collections.addToFake(newPlaylist);
+    const sharedPlaylist = { ...newPlaylist, id: '321', mine: false };
     client.collections.addToFake(sharedPlaylist);
     const history = createBrowserHistory();
     history.push('/playlists/321');
@@ -98,7 +106,16 @@ describe('editing a playlist', () => {
   });
 
   it('can edit playlist', async () => {
-    client.collections.addToFake(playlist);
+    const newPlaylist = CollectionFactory.sample({
+      id: '123',
+      title: 'Hello there',
+      description: 'Very nice description',
+      videos,
+      owner: 'myuserid',
+      mine: true,
+    });
+
+    client.collections.addToFake(newPlaylist);
 
     const wrapper = render(
       <MemoryRouter initialEntries={['/playlists/123']}>
@@ -139,6 +156,17 @@ describe('editing a playlist', () => {
   });
 
   it('edited playlist title is updated also in add to playlist modal', async () => {
+    const newPlaylist = CollectionFactory.sample({
+      id: '123',
+      title: 'Hello there',
+      description: 'Very nice description',
+      videos,
+      owner: 'myuserid',
+      mine: true,
+    });
+
+    client.collections.addToFake(newPlaylist);
+
     const wrapper = render(
       <MemoryRouter initialEntries={['/playlists/123']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
@@ -180,8 +208,19 @@ describe('editing a playlist', () => {
   });
 
   it('edited playlist title is updated also in navigation breadcrumbs', async () => {
+    const newPlaylist = CollectionFactory.sample({
+      id: '32221',
+      title: 'Hello there',
+      description: 'Very nice description',
+      videos,
+      owner: 'myuserid',
+      mine: true,
+    });
+
+    client.collections.addToFake(newPlaylist);
+
     const wrapper = render(
-      <MemoryRouter initialEntries={['/playlists/123']}>
+      <MemoryRouter initialEntries={['/playlists/32221']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -212,19 +251,24 @@ describe('editing a playlist', () => {
   }, 1000);
 
   it('changes are not saved when playlist editing is cancelled', async () => {
-    client.collections.clear();
-    client.collections.addToFake(playlist);
+    const newPlaylist = CollectionFactory.sample({
+      id: '333333',
+      title: 'Hello there',
+      description: 'Very nice description',
+      videos,
+      owner: 'myuserid',
+      mine: true,
+    });
+
+    client.collections.addToFake(newPlaylist);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/playlists/123']}>
+      <MemoryRouter initialEntries={['/playlists/333333']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
 
     fireEvent.click(await wrapper.findByText('Edit playlist'));
-
-    console.log('look here');
-    wrapper.debug(wrapper.baseElement, 99999);
 
     fireEvent.change(wrapper.getByDisplayValue('Hello there'), {
       target: { value: 'Good bye' },
@@ -242,7 +286,7 @@ describe('editing a playlist', () => {
       'Very nice description',
     );
 
-    const updatedPlaylist = await client.collections.get('123');
+    const updatedPlaylist = await client.collections.get('333333');
     expect(updatedPlaylist.title).toBe('Hello there');
     expect(updatedPlaylist.description).toBe('Very nice description');
 
@@ -251,11 +295,20 @@ describe('editing a playlist', () => {
   });
 
   it('notification is displayed when playlist edit fails', async () => {
-    client.collections.addToFake(playlist);
+    const newPlaylist = CollectionFactory.sample({
+      id: 'remmm',
+      title: 'Hello there',
+      description: 'Very nice description',
+      videos,
+      owner: 'myuserid',
+      mine: true,
+    });
+
+    client.collections.addToFake(newPlaylist);
     client.collections.update = jest.fn(() => Promise.reject());
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/playlists/123']}>
+      <MemoryRouter initialEntries={['/playlists/remmm']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -282,10 +335,19 @@ describe('editing a playlist', () => {
   });
 
   it('warning is displayed when required title not provided', async () => {
-    client.collections.addToFake(playlist);
+    const newPlaylist = CollectionFactory.sample({
+      id: 'remmm01',
+      title: 'Hello there',
+      description: 'Very nice description',
+      videos,
+      owner: 'myuserid',
+      mine: true,
+    });
+
+    client.collections.addToFake(newPlaylist);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/playlists/123']}>
+      <MemoryRouter initialEntries={['/playlists/remmm01']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
