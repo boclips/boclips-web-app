@@ -137,7 +137,7 @@ describe('LibraryView', () => {
     const wrapper = renderLibraryView(client);
 
     expect(await wrapper.findByText('My collection about cats')).toBeVisible();
-    expect(wrapper.getByLabelText('Thumbnail of Title 1')).toBeVisible();
+    expect(await wrapper.findByLabelText('Thumbnail of Title 1')).toBeVisible();
     expect(wrapper.getByLabelText('Thumbnail of Title 2')).toBeVisible();
     expect(wrapper.getByLabelText('Thumbnail of Title 3')).toBeVisible();
     expect(wrapper.queryByLabelText('Thumbnail of Title 4')).toBeNull();
@@ -164,7 +164,7 @@ describe('LibraryView', () => {
     const wrapper = renderLibraryView(client);
 
     expect(await wrapper.findByText('My collection about cats')).toBeVisible();
-    expect(wrapper.getByLabelText('Thumbnail of Title 1')).toBeVisible();
+    expect(await wrapper.findByLabelText('Thumbnail of Title 1')).toBeVisible();
     expect(wrapper.getByTestId('default-thumbnail-2')).toBeVisible();
   });
 
