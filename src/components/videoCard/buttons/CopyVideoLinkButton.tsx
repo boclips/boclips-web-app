@@ -29,12 +29,14 @@ export const CopyVideoLinkButton = ({ video, onClick }: Props) => {
   };
 
   return (
-    <CopyButton
-      ariaLabel="Copy video link"
-      onCopy={handleCopied}
-      textToCopy={link}
-      disabled={!isFetched}
-      dataQa={`copy-button-${video.id}`}
-    />
+    <>
+      <CopyButton
+        ariaLabel="Copy video link"
+        onCopy={handleCopied}
+        textToCopy={link}
+        disabled={!isFetched}
+        dataQa={`copy-button-${isFetched}`}
+      />
+    </>
   );
 };
