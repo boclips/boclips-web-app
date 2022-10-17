@@ -41,7 +41,7 @@ describe('order table', () => {
     expect(wrapper.queryByText('not-the-id')).not.toBeInTheDocument();
   });
 
-  it('renders a order with items with item prices', async () => {
+  it('renders an order with items with item and their information', async () => {
     const fakeClient = new FakeBoclipsClient();
 
     const video = VideoFactory.sample({
@@ -101,10 +101,12 @@ describe('order table', () => {
     );
 
     expect(await wrapper.findByText('video-1-title')).toBeVisible();
+
     expect(
       (await wrapper.findByTestId('order-item-thumbnail')).style
         .backgroundImage,
     ).toEqual('url(https://url.com)');
+
     expect(await wrapper.findByText('$600')).toBeVisible();
     expect(
       await wrapper.findByText(/[ID:(\n.*?)*)\n\s*\n]video-id-1/),

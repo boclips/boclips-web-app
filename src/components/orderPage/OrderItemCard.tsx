@@ -25,13 +25,17 @@ export const OrderItemCard = ({ item }: Props) => {
       className={s.orderItemWrapper}
       style={{ minHeight: '156px' }}
     >
-      <div
-        data-qa="order-item-thumbnail"
-        className={s.thumbnail}
-        style={{
-          backgroundImage: `url(${thumbnailUrl})`,
-        }}
-      />
+      <div className={s.thumbnail}>
+        {!isLoading && (
+          <div
+            data-qa="order-item-thumbnail"
+            style={{
+              backgroundImage: `url(${thumbnailUrl})`,
+            }}
+          />
+        )}
+      </div>
+
       <div className="flex flex-col w-full relative pl-8">
         <Typography.Title1 className="absolute right-0 text-gray-800">
           {createPriceDisplayValue(
@@ -44,6 +48,7 @@ export const OrderItemCard = ({ item }: Props) => {
         <div className="flex flex-col mb-4">
           <Link
             to={`/videos/${item.video.id}`}
+            state={{ userNavigated: true }}
             className="text-gray-900 hover:text-gray-900"
           >
             <Typography.Title1>{item.video.title}</Typography.Title1>

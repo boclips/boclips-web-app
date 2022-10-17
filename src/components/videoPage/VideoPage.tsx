@@ -15,7 +15,7 @@ interface Props {
 
 export const VideoPage = ({ video }: Props) => {
   const navigate = useNavigate();
-  const userNavigatedToPageViaApp = useLocation().state.userNavigation;
+  const userNavigatedToPageViaApp = useLocation().state?.userNavigated;
 
   const goToPreviousPage = () => {
     navigate(-1);
