@@ -20,6 +20,7 @@ const getPlayerOptions = (
     'play',
     'progress',
     'current-time',
+    'duration',
     'mute',
     'volume',
     'captions',
