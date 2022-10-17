@@ -45,7 +45,7 @@ export const OrderModal = ({ setModalOpen, videos, cart }: Props) => {
 
   React.useEffect(() => {
     if (error) {
-      navigate({ pathname: '/error' }, { state: error });
+      navigate('/error', { state: error });
     }
   }, [navigate, error, orderLocation]);
 
