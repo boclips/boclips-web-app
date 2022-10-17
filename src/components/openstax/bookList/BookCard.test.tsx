@@ -6,6 +6,8 @@ import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
 import { BookCard } from 'src/components/openstax/bookList/BookCard';
 import { render } from '@testing-library/react';
 import React from 'react';
+import { createBrowserHistory } from 'history';
+import { Router } from 'react-router-dom';
 
 describe('BookCard', () => {
   it('shows book title and number of videos', () => {
@@ -23,7 +25,13 @@ describe('BookCard', () => {
       ],
     });
 
-    const wrapper = render(<BookCard book={book} />);
+    const history = createBrowserHistory();
+
+    const wrapper = render(
+      <Router location={history.location} navigator={history}>
+        <BookCard book={book} />
+      </Router>,
+    );
     const card = wrapper.getByRole('button', { name: 'book Olive trees' });
     expect(card).toHaveTextContent('Olive trees');
     expect(card).toHaveTextContent('2 videos');
@@ -36,7 +44,13 @@ describe('BookCard', () => {
       logoUrl: 'svg.com',
     });
 
-    const wrapper = render(<BookCard book={book} />);
+    const history = createBrowserHistory();
+
+    const wrapper = render(
+      <Router location={history.location} navigator={history}>
+        <BookCard book={book} />
+      </Router>,
+    );
     expect(wrapper.getByAltText('Olive trees cover')).toBeInTheDocument();
   });
 
@@ -46,7 +60,13 @@ describe('BookCard', () => {
       logoUrl: '',
     });
 
-    const wrapper = render(<BookCard book={book} />);
+    const history = createBrowserHistory();
+
+    const wrapper = render(
+      <Router location={history.location} navigator={history}>
+        <BookCard book={book} />
+      </Router>,
+    );
     expect(
       wrapper.getByAltText('Olive trees generic cover'),
     ).toBeInTheDocument();
