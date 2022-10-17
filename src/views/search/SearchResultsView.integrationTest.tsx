@@ -3,7 +3,6 @@ import {
   render,
   waitFor,
   waitForElementToBeRemoved,
-  within,
 } from '@testing-library/react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { MemoryRouter } from 'react-router-dom';
