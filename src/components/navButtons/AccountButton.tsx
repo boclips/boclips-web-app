@@ -17,7 +17,7 @@ import { Link } from '../common/Link';
 export const AccountButton = () => {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [displayModal, setDisplayModal] = useState(false);
-  const { data, isInitialLoading } = useGetUserQuery();
+  const { data, isLoading } = useGetUserQuery();
   const ref = useRef(null);
 
   CloseOnClickOutside(ref, () => setDisplayModal(false));
@@ -80,14 +80,19 @@ export const AccountButton = () => {
         <span>Account</span>
       </button>
 
-      {isInitialLoading && displayModal && (
+      {isLoading && displayModal && (
         <div ref={ref} className={s.tooltip}>
           <Loading />
         </div>
       )}
 
-      {displayModal && (
-        <div ref={ref} className={s.tooltip} onBlur={handleDialogBlur}>
+      {displayModal && !isLoading && (
+        <div
+          data-qa="account-modal"
+          ref={ref}
+          className={s.tooltip}
+          onBlur={handleDialogBlur}
+        >
           <div className="font-medium">
             {data.firstName} {data.lastName}
           </div>

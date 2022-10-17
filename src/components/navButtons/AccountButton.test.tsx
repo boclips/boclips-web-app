@@ -39,9 +39,9 @@ describe('account button', () => {
 
     const navbar = renderAccountButton();
 
-    expect(await navbar.findByText('Account')).toBeInTheDocument();
-
     fireEvent.click(navbar.getByText('Account'));
+
+    await waitFor(() => navbar.getByTestId('account-modal'));
 
     await waitFor(() => {
       expect(navbar.getByText('Eddie Bravo')).toBeInTheDocument();
@@ -68,6 +68,8 @@ describe('account button', () => {
     expect(await navbar.findByText('Account')).toBeInTheDocument();
 
     fireEvent.click(navbar.getByText('Account'));
+
+    await waitFor(() => navbar.getByTestId('account-modal'));
 
     await waitFor(() => {
       expect(navbar.getByText('yo yo')).toBeInTheDocument();
@@ -102,6 +104,9 @@ describe('account button', () => {
     expect(await navbar.findByText('Account')).toBeInTheDocument();
 
     fireEvent.click(navbar.getByText('Account'));
+
+    await waitFor(() => navbar.getByTestId('account-modal'));
+
     userEvent.type(navbar.getByText('Log out'), '{esc}');
 
     expect(navbar.queryByText('Log out')).not.toBeInTheDocument();
@@ -114,6 +119,9 @@ describe('account button', () => {
     expect(await navbar.findByText('Account')).toBeInTheDocument();
 
     fireEvent.click(navbar.getByText('Account'));
+
+    await waitFor(() => navbar.getByTestId('account-modal'));
+
     fireEvent.blur(navbar.getByText('Log out'));
 
     expect(navbar.queryByText('Log out')).not.toBeInTheDocument();
@@ -126,6 +134,9 @@ describe('account button', () => {
     expect(await navbar.findByText('Account')).toBeVisible();
 
     fireEvent.click(navbar.getByText('Account'));
+
+    await waitFor(() => navbar.getByTestId('account-modal'));
+
     fireEvent.focus(navbar.getByText('Log out'));
 
     expect(navbar.getByText('Log out')).toBeVisible();
