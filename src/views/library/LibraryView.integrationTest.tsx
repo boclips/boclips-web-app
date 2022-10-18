@@ -4,7 +4,6 @@ import {
   render,
   RenderResult,
   waitFor,
-  waitForElementToBeRemoved,
 } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
@@ -249,18 +248,24 @@ describe('LibraryView', () => {
       const wrapper = renderLibraryView(client);
 
       await openPlaylistCreationModal(wrapper);
-      fillPlaylistName(wrapper, 'My new playlist');
-      fillPlaylistDescription(wrapper, 'Blabla new playlist');
+
+      fireEvent.change(wrapper.getByPlaceholderText('Add name'), {
+        target: { value: 'new playlist name' },
+      });
+
+      fireEvent.change(wrapper.getByPlaceholderText('Add description'), {
+        target: { value: 'Blabla new playlist' },
+      });
+
       confirmPlaylistCreationModal(wrapper);
 
-      await waitForElementToBeRemoved(
-        wrapper.queryByLabelText('Create new playlist'),
+      await waitFor(() =>
+        expect(wrapper.getByTestId('playlistTitle')).toHaveTextContent(
+          'new playlist name',
+        ),
       );
 
-      expect(await wrapper.findByTestId('playlistTitle')).toHaveTextContent(
-        'My new playlist',
-      );
-      expect(await wrapper.findByText('Blabla new playlist')).toBeVisible();
+      expect(await wrapper.getByText('Blabla new playlist')).toBeVisible();
     });
 
     it('sends playlist created Hotjar event', async () => {
