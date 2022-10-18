@@ -6,8 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { Router } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('Playlist Header', () => {
   Object.assign(navigator, {
@@ -25,9 +24,9 @@ describe('Playlist Header', () => {
     });
 
     const wrapper = render(
-      <Router history={createBrowserHistory()}>
+      <MemoryRouter>
         <PlaylistHeader playlist={playlist} />
-      </Router>,
+      </MemoryRouter>,
     );
 
     const titleElement = await wrapper.findByTestId('playlistTitle');
@@ -44,9 +43,9 @@ describe('Playlist Header', () => {
     });
 
     const wrapper = render(
-      <Router history={createBrowserHistory()}>
+      <MemoryRouter>
         <PlaylistHeader playlist={playlist} />
-      </Router>,
+      </MemoryRouter>,
     );
 
     const shareButton = await wrapper.findByTestId('share-playlist-button');
@@ -63,10 +62,10 @@ describe('Playlist Header', () => {
     });
 
     const wrapper = render(
-      <Router history={createBrowserHistory()}>
+      <MemoryRouter>
         <ToastContainer />
         <PlaylistHeader playlist={playlist} />
-      </Router>,
+      </MemoryRouter>,
     );
 
     const shareButton = await wrapper.findByTestId('share-playlist-button');
@@ -77,14 +76,18 @@ describe('Playlist Header', () => {
       `${Constants.HOST}/playlists/123`,
     );
 
-    const notification = await wrapper.findByTestId(
-      'playlist-link-copied-notification',
-    );
-    expect(notification).toBeVisible();
-    expect(notification.children.item(0).textContent).toEqual('Link copied!');
-    expect(notification.children.item(1).textContent).toEqual(
-      'You can now share this playlist using the copied link',
-    );
+    await waitFor(() =>
+      wrapper.getByTestId('playlist-link-copied-notification'),
+    ).then((it) => {
+      expect(it).toBeVisible();
+    });
+
+    expect(wrapper.getByText('Link copied!')).toBeInTheDocument();
+    expect(
+      wrapper.getByText(
+        'You can now share this playlist using the copied link',
+      ),
+    ).toBeInTheDocument();
   });
 
   it('sends Hotjar link copied event', async () => {
@@ -97,10 +100,10 @@ describe('Playlist Header', () => {
     });
 
     const wrapper = render(
-      <Router history={createBrowserHistory()}>
+      <MemoryRouter>
         <ToastContainer />
         <PlaylistHeader playlist={playlist} />
-      </Router>,
+      </MemoryRouter>,
     );
 
     const shareButton = await wrapper.findByTestId('share-playlist-button');
@@ -122,9 +125,9 @@ describe('Playlist Header', () => {
     });
 
     const wrapper = render(
-      <Router history={createBrowserHistory()}>
+      <MemoryRouter>
         <PlaylistHeader playlist={playlist} />
-      </Router>,
+      </MemoryRouter>,
     );
 
     const editButton = await wrapper.findByText('Edit playlist');
