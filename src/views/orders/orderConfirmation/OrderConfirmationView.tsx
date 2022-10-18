@@ -17,7 +17,7 @@ const OrderConfirmationView = () => {
     if (!state || !state.orderLocation) {
       navigate('/');
     }
-  }, [state, history]);
+  }, [state]);
 
   const orderId = state?.orderLocation.substring(
     state.orderLocation.lastIndexOf('/') + 1,
