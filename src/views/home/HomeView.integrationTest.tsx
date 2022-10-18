@@ -60,11 +60,11 @@ describe('HomeView', () => {
     const history = createBrowserHistory();
 
     const wrapper = render(
-      <QueryClientProvider client={client}>
-        <Router history={history}>
+      <Router location={history.location} navigator={history}>
+        <QueryClientProvider client={client}>
           <App apiClient={fakeClient} boclipsSecurity={stubBoclipsSecurity} />
-        </Router>
-      </QueryClientProvider>,
+        </QueryClientProvider>
+      </Router>,
     );
 
     fireEvent.click(await wrapper.findByText(disciplines[0].name));
