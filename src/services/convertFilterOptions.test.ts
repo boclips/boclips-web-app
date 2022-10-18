@@ -1,6 +1,6 @@
 import { FilterOption } from 'src/types/FilterOption';
-import { renderToStaticMarkup } from 'react-dom/server';
 import { searchFilterOptions } from 'src/services/sortFilterOptions';
+import { render } from '@testing-library/react';
 import { FilterOptionFactory } from '../testSupport/FilterOptionFactory';
 
 describe('convertFilterOptions', () => {
@@ -14,11 +14,13 @@ describe('convertFilterOptions', () => {
     const options = searchFilterOptions(filterOptions, 'el');
 
     expect(options).toHaveLength(2);
+    const optionOne = render(options[0].label);
+    const optionTwo = render(options[1].label);
 
-    expect(renderToStaticMarkup(options[0].label)).toEqual(
+    expect(optionOne.baseElement).toContainHTML(
       '<span class="font-medium">el</span>ephant',
     );
-    expect(renderToStaticMarkup(options[1].label)).toEqual(
+    expect(optionTwo.baseElement).toContainHTML(
       '<span class="font-medium">el</span>ves',
     );
   });
@@ -33,11 +35,13 @@ describe('convertFilterOptions', () => {
     const options = searchFilterOptions(filterOptions, 'el');
 
     expect(options).toHaveLength(2);
+    const optionOne = render(options[0].label);
+    const optionTwo = render(options[1].label);
 
-    expect(renderToStaticMarkup(options[0].label)).toEqual(
+    expect(optionOne.baseElement).toContainHTML(
       '<span class="font-medium">El</span>ephant',
     );
-    expect(renderToStaticMarkup(options[1].label)).toEqual(
+    expect(optionTwo.baseElement).toContainHTML(
       '<span class="font-medium">El</span>ves',
     );
   });
