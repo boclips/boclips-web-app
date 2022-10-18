@@ -6,7 +6,6 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { Constants } from 'src/AppConstants';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
-import userEvent from '@testing-library/user-event';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
 
@@ -107,9 +106,14 @@ describe('account button', () => {
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 
-    userEvent.type(navbar.getByText('Log out'), '{esc}');
+    fireEvent.keyDown(navbar.getByTestId('account-modal'), {
+      key: 'Escape',
+      code: 'Escape',
+      keyCode: 27,
+      charCode: 27,
+    });
 
-    expect(navbar.queryByText('Log out')).not.toBeInTheDocument();
+    expect(navbar.queryByTestId('account-modal')).not.toBeInTheDocument();
   });
 
   it('closes the dialog when the dialog loses focus', async () => {

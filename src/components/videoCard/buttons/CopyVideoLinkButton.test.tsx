@@ -13,8 +13,8 @@ import { VideoInteractedWith } from 'boclips-api-client/dist/sub-clients/events/
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { buildVideoDetailsLink } from 'src/services/buildVideoDetailsLink';
 import { ToastContainer } from 'react-toastify';
-import { CopyVideoLinkButton } from './CopyVideoLinkButton';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import { CopyVideoLinkButton } from './CopyVideoLinkButton';
 
 describe('CopyLinkButton', () => {
   Object.assign(navigator, {
