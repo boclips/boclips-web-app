@@ -81,14 +81,14 @@ describe('video recommendations', () => {
       </BoclipsSecurityProvider>,
     );
 
-    const urlCopyButton = await wrapper.findByLabelText('Copy video link');
+    await waitFor(() => wrapper.getByTestId('copy-button-true'));
 
-    fireEvent.click(urlCopyButton);
+    fireEvent.click(wrapper.getByTestId('copy-button-true'));
 
-    await waitFor(() =>
-      expect(mixpanelTrack).toHaveBeenCalledWith(
-        'video_recommendation_url_copied',
-      ),
+    await waitFor(() => expect(mixpanelTrack).toHaveBeenCalled());
+
+    expect(mixpanelTrack).toHaveBeenCalledWith(
+      'video_recommendation_url_copied',
     );
   });
 
