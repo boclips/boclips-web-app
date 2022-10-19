@@ -39,7 +39,11 @@ export const OrderModal = ({ setModalOpen, videos, cart }: Props) => {
 
   React.useEffect(() => {
     if (isSuccess) {
-      navigate({ pathname: '/order-confirmed' }, { state: orderLocation });
+      navigate('/order-confirmed', {
+        state: {
+          orderLocation,
+        },
+      });
     }
   }, [navigate, isSuccess, orderLocation]);
 

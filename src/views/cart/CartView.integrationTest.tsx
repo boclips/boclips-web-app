@@ -116,32 +116,26 @@ describe('CartView', () => {
       </MemoryRouter>,
     );
 
-    wrapper.debug();
+    await waitFor(() => wrapper.getByText('Place order')).then((it) => {
+      fireEvent.click(it);
+    });
 
-    // await waitFor(() => wrapper.getByText('Place order'));
-    //
-    // act(() => {
-    //   fireEvent.click(wrapper.getByText('Place order'));
-    // });
-    //
-    // wrapper.debug(wrapper.baseElement, 99999);
-    //
-    // const modal = await wrapper.findByTestId('order-modal');
-    // expect(await within(modal).findByText('news video')).toBeVisible();
-    // // expect(await within(modal).findByText('Confirm order')).toBeVisible();
-    // expect(await within(modal).findByText('$600')).toBeVisible();
-    // expect(await within(modal).findByText('$400')).toBeVisible();
-    // expect(await within(modal).findByText('$1,000')).toBeVisible();
-    // expect(await within(modal).findByText('Go back to cart')).toBeVisible();
-    // expect(
-    //   await within(modal).findByTestId('additional-services-summary'),
-    // ).toBeVisible();
-    //
-    // expect(lastEvent(fakeClient)).toEqual({
-    //   type: 'PLATFORM_INTERACTED_WITH',
-    //   subtype: 'ORDER_CONFIRMATION_MODAL_OPENED',
-    //   anonymous: false,
-    // });
+    await waitFor(() => wrapper.getByTestId('order-modal')).then((it) => {
+      expect(within(it).getByText('news video')).toBeVisible();
+      expect(within(it).getByText('Confirm order')).toBeVisible();
+      expect(within(it).getByText('$600')).toBeVisible();
+      expect(within(it).getByText('$400')).toBeVisible();
+      expect(within(it).getByText('Go back to cart')).toBeVisible();
+      expect(
+        within(it).getByTestId('additional-services-summary'),
+      ).toBeVisible();
+    });
+
+    expect(lastEvent(fakeClient)).toEqual({
+      type: 'PLATFORM_INTERACTED_WITH',
+      subtype: 'ORDER_CONFIRMATION_MODAL_OPENED',
+      anonymous: false,
+    });
   });
 
   it('does not display additional services message in order modal if none selected', async () => {
@@ -182,15 +176,7 @@ describe('CartView', () => {
     const wrapper = await renderCartView(fakeClient);
     await placeAndConfirmOrder(wrapper);
 
-    expect(await wrapper.findByText('Loading')).toBeVisible();
-
-    expect(await fakeClient.orders.getAll()).toHaveLength(1);
-
-    expect(await wrapper.findByText('Your order is confirmed')).toBeVisible();
-
-    const viewOrdersLink = await wrapper.findByTestId('view-orders');
-    expect(viewOrdersLink).toHaveAttribute('href', '/orders');
-    expect(within(viewOrdersLink).getByText('View all orders')).toBeVisible();
+    await waitFor(() => wrapper.getByText('Your order is confirmed'));
 
     expect(lastEvent(fakeClient, 'PLATFORM_INTERACTED_WITH')).toEqual({
       type: 'PLATFORM_INTERACTED_WITH',
@@ -581,7 +567,7 @@ describe('CartView', () => {
 
       fireEvent.focus(await wrapper.findByLabelText('trim-from'));
 
-      userEvent.type(wrapper.getByLabelText('trim-from'), 'k1a2:30s');
+      await userEvent.type(wrapper.getByLabelText('trim-from'), 'k1a2:30s');
 
       expect(
         (wrapper.getByLabelText('trim-from') as HTMLInputElement).value,
