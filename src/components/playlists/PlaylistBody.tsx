@@ -23,9 +23,7 @@ const PlaylistBody = ({ playlist }: Props) => {
   ) => {
     if (playlistId === playlist.id) {
       cleanUp();
-      setTimeout(() => {
-        document.querySelector('main').focus();
-      }, 100);
+      document.querySelector('main').focus();
     }
   };
 
