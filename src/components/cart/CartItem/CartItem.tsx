@@ -67,7 +67,10 @@ const CartItem = ({ cartItem }: Props) => {
         </div>
         <div className="flex flex-col w-full ml-3">
           <div className="flex flex-row justify-between">
-            <Link to={`/videos/${videoItem.id}`}>
+            <Link
+              to={`/videos/${videoItem.id}`}
+              state={{ userNavigated: true }}
+            >
               <Typography.Title1> {videoItem.title}</Typography.Title1>
             </Link>
             <PriceBadge className="text-gray-900" price={videoItem.price} />

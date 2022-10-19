@@ -27,7 +27,7 @@ export const useGlobalQueryError = () => {
 };
 
 const useProvideError = () => {
-  const [isError, setIsError] = useState<any[]>();
+  const [isError, setIsError] = useState<boolean>();
   const client = useQueryClient();
   const currentLocation = useLocation().pathname;
 
@@ -42,12 +42,12 @@ const useProvideError = () => {
     const queryCache = client.getQueryCache();
     const unsubscribeHandle = queryCache.subscribe((it) => {
       if (it.query.state.status === 'error') {
-        setIsError((prevState) => [...prevState, it]);
+        setIsError(true);
       }
     });
 
     return () => unsubscribeHandle();
   }, [client]);
 
-  return isError?.length > 1 || false;
+  return isError;
 };

@@ -1,4 +1,4 @@
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
 import React from 'react';
@@ -178,32 +178,25 @@ describe('Video View', () => {
 
       const wrapper = renderVideoView(['/cart']);
 
-      const title = await wrapper.findByText(
-        'the coolest video you ever did see',
-      );
-
-      act(() => {
-        fireEvent.click(title);
+      await waitFor(() =>
+        wrapper.getByText('the coolest video you ever did see'),
+      ).then((it) => {
+        fireEvent.click(it);
       });
 
-      await waitFor(async () => {
-        expect(await wrapper.findByText('Back')).toBeVisible();
-        expect(wrapper.queryByText('Shopping cart')).not.toBeInTheDocument();
+      await waitFor(() => wrapper.getByText('Back')).then((it) => {
+        expect(it).toBeVisible();
       });
 
-      const backButton = await wrapper.findByText('Back');
+      fireEvent.click(wrapper.getByText('Back'));
 
-      act(() => {
-        fireEvent.click(backButton);
-      });
-
-      await waitFor(async () =>
+      await waitFor(() =>
         expect(wrapper.getByText('Shopping cart')).toBeVisible(),
       );
     });
   });
 
-  it('shows page not found if there isnt a video with a matching id', async () => {
+  it('shows page not found if there is not a video with a matching id', async () => {
     const originalConsoleError = console.error;
     console.error = () => {};
 
@@ -243,8 +236,6 @@ describe('Video View', () => {
     });
 
     it('displays default window title when no video available', async () => {
-      const originalConsoleError = console.error;
-      console.error = () => {};
       const wrapper = render(
         <MemoryRouter initialEntries={['/videos/video-2']}>
           <App
@@ -254,10 +245,12 @@ describe('Video View', () => {
         </MemoryRouter>,
       );
 
-      expect(await wrapper.findByText('Page not found!')).toBeVisible();
+      await waitFor(() => wrapper.getByText('Page not found!')).then((it) => {
+        expect(it).toBeInTheDocument();
+      });
+
       const helmet = Helmet.peek();
       expect(helmet.title).toEqual('CourseSpark');
-      console.error = originalConsoleError;
     });
   });
 

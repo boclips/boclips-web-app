@@ -12,8 +12,6 @@ const CartView = () => {
   const { data: cart, isInitialLoading: isCartLoading } = useCartQuery();
   const hasItemsInCart = cart?.items?.length > 0;
 
-  console.log(cart);
-
   const cartInfo = hasItemsInCart && (
     <span className="text-2xl font-normal">
       ({cart.items.length} item
@@ -21,7 +19,7 @@ const CartView = () => {
     </span>
   );
 
-  if (isCartLoading) return <div>123</div>;
+  if (isCartLoading) return <Loading />;
 
   return (
     <Layout rowsSetup="grid-rows-default-view-with-title">
