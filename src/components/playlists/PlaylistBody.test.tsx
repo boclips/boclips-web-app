@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
@@ -106,22 +106,21 @@ describe('Playlist Body', () => {
 
     const wrapper = getWrapper(fakeClient, playlist);
 
-    fireEvent.click(
-      await wrapper.findByLabelText('Add or remove from playlist'),
+    await waitFor(() =>
+      wrapper.getByLabelText('Add or remove from playlist'),
+    ).then((it) => {
+      fireEvent.click(it);
+    });
+
+    await userEvent.click(
+      wrapper.getByRole('checkbox', {
+        name: 'Courage the Cowardly Dog',
+      }),
     );
 
     await waitFor(() => {
-      userEvent.tab();
-      expect(
-        wrapper.getByRole('checkbox', { name: 'Courage the Cowardly Dog' }),
-      ).toHaveFocus();
+      expect(document.activeElement).toBe(wrapper.getByRole('main'));
     });
-
-    fireEvent.click(
-      wrapper.getByRole('checkbox', { name: 'Courage the Cowardly Dog' }),
-    );
-
-    await waitFor(() => expect(wrapper.getByRole('main')).toHaveFocus());
   });
 
   it('focuses on main after removing a video from a playlist that has more', async () => {
@@ -141,20 +140,16 @@ describe('Playlist Body', () => {
 
     const wrapper = getWrapper(fakeClient, playlist);
 
-    const buttons = await wrapper.findAllByLabelText(
-      'Add or remove from playlist',
-    );
-    fireEvent.click(buttons[1]);
-
-    await waitFor(() => {
-      userEvent.tab();
-      expect(
-        wrapper.getByRole('checkbox', { name: 'Courage the Cowardly Dog' }),
-      ).toHaveFocus();
+    await waitFor(() =>
+      wrapper.getAllByLabelText('Add or remove from playlist'),
+    ).then((it) => {
+      fireEvent.click(it[1]);
     });
 
-    fireEvent.click(
-      wrapper.getByRole('checkbox', { name: 'Courage the Cowardly Dog' }),
+    await userEvent.click(
+      wrapper.getByRole('checkbox', {
+        name: 'Courage the Cowardly Dog',
+      }),
     );
 
     await waitFor(() => expect(wrapper.getByRole('main')).toHaveFocus());
