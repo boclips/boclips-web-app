@@ -11,6 +11,8 @@ describe(`Explore view`, () => {
   it(`shows first subject's books by default and can select other subjects`, async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+
+    fakeClient.openstax.setOpenstaxSubjects(['Maths', 'French', 'Physics']);
     fakeClient.openstax.setOpenstaxBooks([
       BookFactory.sample({
         id: 'book-1',
@@ -50,5 +52,45 @@ describe(`Explore view`, () => {
     fireEvent.click(wrapper.getByText('French'));
 
     expect(await wrapper.findByText('French book')).toBeVisible();
+  });
+
+  it(`only show subjects that are supported`, async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+    fakeClient.openstax.setOpenstaxBooks([
+      BookFactory.sample({
+        id: 'book-1',
+        subject: 'Maths',
+      }),
+      BookFactory.sample({
+        id: 'book-2',
+        subject: 'French',
+      }),
+    ]);
+
+    fakeClient.openstax.setOpenstaxSubjects([
+      'Maths',
+      'Business',
+      'Humanities',
+    ]);
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/explore/openstax']}>
+        <App
+          apiClient={fakeClient}
+          boclipsSecurity={stubBoclipsSecurity}
+          reactQueryClient={new QueryClient()}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await wrapper.findByText('Our best content aligned to OpenStax courses'),
+    ).toBeVisible();
+
+    expect(wrapper.getByLabelText('subject Maths')).toBeVisible();
+    expect(wrapper.getByLabelText('subject Business')).toBeVisible();
+    expect(wrapper.getByLabelText('subject Humanities')).toBeVisible();
+    expect(wrapper.queryByLabelText('subject French')).toBeNull();
   });
 });

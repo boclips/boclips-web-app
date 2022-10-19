@@ -1,6 +1,10 @@
 import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { useGetBook, useGetBooksQuery } from 'src/hooks/api/openstaxQuery';
+import {
+  useGetBook,
+  useGetBooksQuery,
+  useGetOpenstaxSubjectsQuery,
+} from 'src/hooks/api/openstaxQuery';
 import { renderHook } from '@testing-library/react-hooks';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
 import { QueryClient } from 'react-query';
@@ -37,8 +41,27 @@ describe('OpenstaxQuery', () => {
     });
 
     await waitFor(() => getBooksHook.result.current.isSuccess);
+    const result = getBooksHook.result.current.data;
 
-    expect(books).toHaveLength(1);
-    expect(books[0].id).toEqual('id-1');
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toEqual('id-1');
+  });
+
+  it('gets all openstax subjects', async () => {
+    const fakeClient = new FakeBoclipsClient();
+
+    fakeClient.openstax.setOpenstaxSubjects(['Math', 'Languages', 'Science']);
+
+    const hook = renderHook(() => useGetOpenstaxSubjectsQuery(), {
+      wrapper: wrapperWithClients(fakeClient, new QueryClient()),
+    });
+
+    await waitFor(() => hook.result.current.isSuccess);
+    const result = hook.result.current.data;
+
+    expect(result).toHaveLength(3);
+    expect(result).toContain('Math');
+    expect(result).toContain('Languages');
+    expect(result).toContain('Science');
   });
 });

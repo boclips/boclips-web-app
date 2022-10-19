@@ -4,17 +4,16 @@ import Footer from 'src/components/layout/Footer';
 import { Layout } from 'src/components/layout/Layout';
 import { BookList } from 'src/components/openstax/bookList/BookList';
 import { SubjectsMenu } from 'src/components/openstax/menu/SubjectsMenu';
-import { useGetBooksQuery } from 'src/hooks/api/openstaxQuery';
+import {
+  useGetBooksQuery,
+  useGetOpenstaxSubjectsQuery,
+} from 'src/hooks/api/openstaxQuery';
 import ExploreHeader from 'src/components/openstax/exploreHeader/ExploreHeader';
 
 const ExploreView = () => {
   const { data: books, isLoading } = useGetBooksQuery();
+  const { data: subjects } = useGetOpenstaxSubjectsQuery();
   const [currentSubject, setCurrentSubject] = useState('');
-
-  const subjects = useMemo(
-    () => Array.from(new Set(books?.map((book) => book.subject))),
-    [books],
-  );
 
   useEffect(() => {
     setCurrentSubject(subjects && subjects[0]);

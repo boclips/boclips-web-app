@@ -23,3 +23,11 @@ const doGetBooks = (client: BoclipsClient) =>
     .then((booksWrapper) =>
       booksWrapper.books.map(convertApiBookToOpenstaxBook),
     );
+
+export const useGetOpenstaxSubjectsQuery = (): UseQueryResult<string[]> => {
+  const client = useBoclipsClient();
+  return useQuery('openstaxSubjects', () => doGetOpenstaxSubjects(client));
+};
+
+const doGetOpenstaxSubjects = (client: BoclipsClient) =>
+  client.openstax.getOpenstaxSubjects();
