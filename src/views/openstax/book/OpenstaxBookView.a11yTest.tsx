@@ -81,10 +81,11 @@ describe('OpenstaxBookView - accessibility', () => {
     });
     const client = setUpClientWithBook(book);
 
-    const browserHistory = createBrowserHistory();
-    browserHistory.push({ pathname: '/explore/openstax/ducklings' });
+    const history = createBrowserHistory();
+    history.push('/explore/openstax/ducklings');
+
     const wrapper = render(
-      <Router history={browserHistory}>
+      <Router location={history.location} navigator={history}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </Router>,
     );

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PageHeader from 'src/components/pageTitle/PageHeader';
 import Button from '@boclips-ui/button';
 import PlusSign from 'resources/icons/plus-sign.svg';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CreatePlaylistModal } from 'src/components/playlistModal/CreatePlaylistModal';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
@@ -10,7 +10,7 @@ import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 
 export const LibraryHeader = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleModalClose = () => {
     setModalOpen(false);
@@ -27,7 +27,7 @@ export const LibraryHeader = () => {
   };
   const handleSuccess = (playlistId: string) => {
     AnalyticsFactory.hotjar().event(HotjarEvents.PlaylistCreatedFromLibrary);
-    history.push(`/playlists/${playlistId}`);
+    navigate(`/playlists/${playlistId}`);
   };
 
   const createButtonRef: React.RefObject<HTMLButtonElement> = React.useRef();

@@ -4,7 +4,6 @@ import {
   render,
   RenderResult,
   waitFor,
-  waitForElementToBeRemoved,
 } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
@@ -15,7 +14,7 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { BoclipsClient } from 'boclips-api-client';
 import userEvent from '@testing-library/user-event';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
-import { QueryClient } from 'react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { Link } from 'boclips-api-client/dist/types';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
@@ -137,7 +136,7 @@ describe('LibraryView', () => {
     const wrapper = renderLibraryView(client);
 
     expect(await wrapper.findByText('My collection about cats')).toBeVisible();
-    expect(wrapper.getByLabelText('Thumbnail of Title 1')).toBeVisible();
+    expect(await wrapper.findByLabelText('Thumbnail of Title 1')).toBeVisible();
     expect(wrapper.getByLabelText('Thumbnail of Title 2')).toBeVisible();
     expect(wrapper.getByLabelText('Thumbnail of Title 3')).toBeVisible();
     expect(wrapper.queryByLabelText('Thumbnail of Title 4')).toBeNull();
@@ -164,7 +163,7 @@ describe('LibraryView', () => {
     const wrapper = renderLibraryView(client);
 
     expect(await wrapper.findByText('My collection about cats')).toBeVisible();
-    expect(wrapper.getByLabelText('Thumbnail of Title 1')).toBeVisible();
+    expect(await wrapper.findByLabelText('Thumbnail of Title 1')).toBeVisible();
     expect(wrapper.getByTestId('default-thumbnail-2')).toBeVisible();
   });
 
@@ -249,18 +248,24 @@ describe('LibraryView', () => {
       const wrapper = renderLibraryView(client);
 
       await openPlaylistCreationModal(wrapper);
-      fillPlaylistName(wrapper, 'My new playlist');
-      fillPlaylistDescription(wrapper, 'Blabla new playlist');
+
+      fireEvent.change(wrapper.getByPlaceholderText('Add name'), {
+        target: { value: 'new playlist name' },
+      });
+
+      fireEvent.change(wrapper.getByPlaceholderText('Add description'), {
+        target: { value: 'Blabla new playlist' },
+      });
+
       confirmPlaylistCreationModal(wrapper);
 
-      await waitForElementToBeRemoved(
-        wrapper.queryByLabelText('Create new playlist'),
+      await waitFor(() =>
+        expect(wrapper.getByTestId('playlistTitle')).toHaveTextContent(
+          'new playlist name',
+        ),
       );
 
-      expect(await wrapper.findByTestId('playlistTitle')).toHaveTextContent(
-        'My new playlist',
-      );
-      expect(await wrapper.findByText('Blabla new playlist')).toBeVisible();
+      expect(await wrapper.getByText('Blabla new playlist')).toBeVisible();
     });
 
     it('sends playlist created Hotjar event', async () => {

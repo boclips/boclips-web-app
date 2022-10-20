@@ -25,7 +25,12 @@ const VideoCardTitle = ({ video }: Partial<Props>) => {
     trackNavigateToVideoDetails(video, boclipsClient);
   };
   return (
-    <Link className="inline-flex" onClick={onClick} to={`/videos/${video.id}`}>
+    <Link
+      className="inline-flex"
+      onClick={onClick}
+      to={`/videos/${video.id}`}
+      state={{ userNavigation: true }}
+    >
       <Typography.Link className="truncate">{video?.title}</Typography.Link>
     </Link>
   );

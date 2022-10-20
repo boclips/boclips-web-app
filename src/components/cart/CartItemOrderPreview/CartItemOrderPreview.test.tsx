@@ -4,7 +4,7 @@ import { CartItemOrderPreview } from 'src/components/cart/CartItemOrderPreview/C
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 describe('Cart Item Preview', () => {
   it('displays correct message when no additional services', async () => {
@@ -25,7 +25,7 @@ describe('Cart Item Preview', () => {
       ],
     };
 
-    client.setQueryData('cart', cart);
+    client.setQueryData(['cart'], cart);
 
     const video = VideoFactory.sample({
       id: 'video-id',
@@ -66,7 +66,7 @@ describe('Cart Item Preview', () => {
 
     await fakeClient.carts.addItemToCart(cart, 'video-id');
 
-    client.setQueryData('cart', cart);
+    client.setQueryData(['cart'], cart);
 
     const video = VideoFactory.sample({
       id: 'video-id',

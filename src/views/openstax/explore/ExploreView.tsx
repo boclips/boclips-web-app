@@ -13,7 +13,7 @@ import ExploreHeader from 'src/components/openstax/exploreHeader/ExploreHeader';
 const ExploreView = () => {
   const { data: books, isLoading } = useGetBooksQuery();
   const { data: subjects } = useGetOpenstaxSubjectsQuery();
-  const [currentSubject, setCurrentSubject] = useState('');
+  const [currentSubject, setCurrentSubject] = useState<string>('');
 
   useEffect(() => {
     setCurrentSubject(subjects && subjects[0]);

@@ -1,5 +1,5 @@
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { BoclipsClient } from 'boclips-api-client';
 
 export const useGetSuggestionsQuery = (query: string) => {

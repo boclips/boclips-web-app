@@ -38,6 +38,7 @@ export const SearchResults = ({
         className="mb-8"
         style={{ maxHeight: '265px' }}
         key={`placeholder-${video?.id}`}
+        data-qa="video-card-placeholder"
       >
         <VideoCardPlaceholder />
       </div>

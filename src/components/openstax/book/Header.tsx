@@ -6,7 +6,7 @@ import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import { useOpenstaxMobileMenu } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 import { TextButton } from 'src/components/common/textButton/TextButton';
 import BackArrow from 'src/resources/icons/back-arrow.svg';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 
@@ -19,10 +19,10 @@ export const Header = ({ bookTitle, chapterTitle }: Props) => {
   const breakpoint = useMediaBreakPoint();
   const isNotDesktop = breakpoint.type !== 'desktop';
   const { setIsOpen } = useOpenstaxMobileMenu();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const goToExplorePage = () => {
-    history.push('/explore/openstax');
+    navigate('/explore/openstax');
   };
 
   return (

@@ -6,9 +6,8 @@ import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { MemoryRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 describe(`VideoGridCard`, () => {
   it('should call onfilterchange when clicking channel name', () => {
@@ -18,7 +17,7 @@ describe(`VideoGridCard`, () => {
     });
     const filterSpy = jest.fn();
     const wrapper = render(
-      <Router history={createMemoryHistory()}>
+      <MemoryRouter>
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
           <QueryClientProvider client={new QueryClient()}>
             <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
@@ -30,7 +29,7 @@ describe(`VideoGridCard`, () => {
             </BoclipsSecurityProvider>
           </QueryClientProvider>
         </BoclipsClientProvider>
-      </Router>,
+      </MemoryRouter>,
     );
 
     fireEvent.click(wrapper.getByText('Channel-1'));
@@ -49,7 +48,7 @@ describe(`VideoGridCard`, () => {
     });
 
     const wrapper = render(
-      <Router history={createMemoryHistory()}>
+      <MemoryRouter>
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
           <QueryClientProvider client={new QueryClient()}>
             <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
@@ -57,7 +56,7 @@ describe(`VideoGridCard`, () => {
             </BoclipsSecurityProvider>
           </QueryClientProvider>
         </BoclipsClientProvider>
-      </Router>,
+      </MemoryRouter>,
     );
 
     expect(wrapper.getByText('this is a badge')).toBeInTheDocument();

@@ -1,5 +1,5 @@
 import { BoclipsClient } from 'boclips-api-client';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 
 export const getEducationLevelsQuery = (client: BoclipsClient) => {
@@ -8,7 +8,7 @@ export const getEducationLevelsQuery = (client: BoclipsClient) => {
 
 export const useGetEducationLevelsQuery = () => {
   const client = useBoclipsClient();
-  return useQuery('educationLevels', async () =>
+  return useQuery(['educationLevels'], async () =>
     getEducationLevelsQuery(client),
   );
 };

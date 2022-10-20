@@ -1,5 +1,5 @@
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { BoclipsClient } from 'boclips-api-client';
 import {
   CreateCollectionRequest,

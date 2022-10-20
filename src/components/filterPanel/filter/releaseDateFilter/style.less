@@ -1,5 +1,5 @@
-@import "~@boclips-ui/styles/src/colors";
-@import "~@boclips-ui/styles/src/focus";
+@import '~@boclips-ui/styles/src/colors';
+@import '~@boclips-ui/styles/src/focus';
 
 .duet-date {
   &:hover {
@@ -38,7 +38,7 @@
   .duet-date__input {
     #focus;
     border: 2px solid @gray-500;
-    border-radius: .25rem;
+    border-radius: 0.25rem;
     height: 40px;
     background: @white;
     font-size: 0.875rem;
@@ -59,7 +59,7 @@
 
   .duet-date__toggle {
     #focus;
-    height: calc(100% - .25rem);
+    height: calc(100% - 0.25rem);
     width: 36px;
     right: 2px;
     top: 2px;
@@ -75,7 +75,7 @@
   .duet-date__day {
     #focus;
     color: @gray-800;
-    border-radius: .25rem;
+    border-radius: 0.25rem;
     font-size: 0.875rem;
     letter-spacing: 0.0012em;
     line-height: 150%;
@@ -94,10 +94,11 @@
   .duet-date__select select:focus + .duet-date__select-label {
     outline: 4px solid @blue-700;
     outline-offset: 2px;
-    border-radius: .25rem;
+    border-radius: 0.25rem;
   }
 
-  .duet-date__day[aria-pressed=true], .duet-date__day:focus {
+  .duet-date__day[aria-pressed='true'],
+  .duet-date__day:focus {
     background: @blue-800;
     color: @white;
     font-weight: 500;
@@ -108,10 +109,11 @@
     color: @white;
   }
 
-  .duet-date__prev, .duet-date__next {
+  .duet-date__prev,
+  .duet-date__next {
     #focus;
     color: @gray-800;
-    border-radius: .25rem;
+    border-radius: 0.25rem;
     transition: none;
 
     &:hover {

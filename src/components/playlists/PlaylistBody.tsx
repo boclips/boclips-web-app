@@ -15,8 +15,6 @@ interface Props {
 }
 
 const PlaylistBody = ({ playlist }: Props) => {
-  const mainRef: React.RefObject<HTMLElement> = React.useRef();
-
   const isEmptyPlaylist = playlist.videos && playlist.videos.length === 0;
 
   const shouldRemoveVideoCardFromView = (
@@ -25,7 +23,9 @@ const PlaylistBody = ({ playlist }: Props) => {
   ) => {
     if (playlistId === playlist.id) {
       cleanUp();
-      mainRef.current.focus();
+      setTimeout(() => {
+        document.querySelector('main')?.focus();
+      }, 100);
     }
   };
 
@@ -47,7 +47,6 @@ const PlaylistBody = ({ playlist }: Props) => {
       )}
       <main
         tabIndex={-1}
-        ref={mainRef}
         className={
           isEmptyPlaylist
             ? c(

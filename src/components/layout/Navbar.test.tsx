@@ -3,7 +3,7 @@ import React from 'react';
 import { render } from 'src/testSupport/render';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import NavbarResponsive from 'src/components/layout/Navbar';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import {
   resizeToDesktop,
@@ -95,10 +95,12 @@ describe('Menu Hamburger button', () => {
     },
   );
 
-  it('is not visible on desktop', () => {
+  it('is not visible on desktop', async () => {
     resizeToDesktop();
 
-    expect(wrapper.queryByLabelText('Menu')).toBeNull();
+    await waitFor(() =>
+      expect(wrapper.queryByLabelText('Menu')).not.toBeInTheDocument(),
+    );
   });
 });
 

@@ -6,7 +6,6 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { Constants } from 'src/AppConstants';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
-import userEvent from '@testing-library/user-event';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
 
@@ -39,9 +38,9 @@ describe('account button', () => {
 
     const navbar = renderAccountButton();
 
-    expect(await navbar.findByText('Account')).toBeInTheDocument();
-
     fireEvent.click(navbar.getByText('Account'));
+
+    await waitFor(() => navbar.getByTestId('account-modal'));
 
     await waitFor(() => {
       expect(navbar.getByText('Eddie Bravo')).toBeInTheDocument();
@@ -68,6 +67,8 @@ describe('account button', () => {
     expect(await navbar.findByText('Account')).toBeInTheDocument();
 
     fireEvent.click(navbar.getByText('Account'));
+
+    await waitFor(() => navbar.getByTestId('account-modal'));
 
     await waitFor(() => {
       expect(navbar.getByText('yo yo')).toBeInTheDocument();
@@ -102,9 +103,17 @@ describe('account button', () => {
     expect(await navbar.findByText('Account')).toBeInTheDocument();
 
     fireEvent.click(navbar.getByText('Account'));
-    userEvent.type(navbar.getByText('Log out'), '{esc}');
 
-    expect(navbar.queryByText('Log out')).not.toBeInTheDocument();
+    await waitFor(() => navbar.getByTestId('account-modal'));
+
+    fireEvent.keyDown(navbar.getByTestId('account-modal'), {
+      key: 'Escape',
+      code: 'Escape',
+      keyCode: 27,
+      charCode: 27,
+    });
+
+    expect(navbar.queryByTestId('account-modal')).not.toBeInTheDocument();
   });
 
   it('closes the dialog when the dialog loses focus', async () => {
@@ -114,6 +123,9 @@ describe('account button', () => {
     expect(await navbar.findByText('Account')).toBeInTheDocument();
 
     fireEvent.click(navbar.getByText('Account'));
+
+    await waitFor(() => navbar.getByTestId('account-modal'));
+
     fireEvent.blur(navbar.getByText('Log out'));
 
     expect(navbar.queryByText('Log out')).not.toBeInTheDocument();
@@ -126,6 +138,9 @@ describe('account button', () => {
     expect(await navbar.findByText('Account')).toBeVisible();
 
     fireEvent.click(navbar.getByText('Account'));
+
+    await waitFor(() => navbar.getByTestId('account-modal'));
+
     fireEvent.focus(navbar.getByText('Log out'));
 
     expect(navbar.getByText('Log out')).toBeVisible();

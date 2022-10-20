@@ -1,7 +1,7 @@
 import ArrowIconSVG from 'src/resources/icons/arrow-no-size.svg';
 import React from 'react';
 import { Typography } from '@boclips-ui/typography';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
 import { BookLogo } from 'src/components/openstax/bookLogo/BookLogo';
@@ -12,10 +12,10 @@ interface Props {
 }
 
 export const BookCard = ({ book }: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const onCardClick = (bookId) =>
-    history.push({
+    navigate({
       pathname: `/explore/openstax/${bookId}`,
     });
 

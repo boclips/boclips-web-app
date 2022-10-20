@@ -5,6 +5,7 @@ import {
   RenderResult,
   waitFor,
   within,
+  cleanup,
 } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
@@ -15,12 +16,14 @@ import { BoclipsApiErrorFactory } from 'boclips-api-client/dist/test-support/Boc
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
-import { QueryClient } from 'react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet';
 import userEvent from '@testing-library/user-event';
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
 import { lastEvent } from 'src/testSupport/lastEvent';
+
+afterEach(cleanup);
 
 describe('CartView', () => {
   const video = VideoFactory.sample({
@@ -46,7 +49,7 @@ describe('CartView', () => {
   });
 
   it('when no items in cart, displays empty cart view with basic header', async () => {
-    const wrapper = renderCartView(new FakeBoclipsClient());
+    const wrapper = await renderCartView(new FakeBoclipsClient());
 
     expect(await wrapper.findByText('Shopping cart')).toBeInTheDocument();
 
@@ -67,7 +70,7 @@ describe('CartView', () => {
     fakeClient.videos.insertVideo(video);
     fakeClient.carts.insertCartItem({ videoId: 'video-id' });
 
-    const wrapper = renderCartView(fakeClient);
+    const wrapper = await renderCartView(fakeClient);
 
     await waitFor(
       async () => {
@@ -96,7 +99,6 @@ describe('CartView', () => {
     fakeClient.videos.insertVideo(instructionalVideo);
     fakeClient.carts.insertCartItem({
       videoId: 'video-id',
-      additionalServices: { transcriptRequested: true },
     });
     fakeClient.carts.insertCartItem({ videoId: 'instructional-video-id' });
     fakeClient.users.setCurrentUserFeatures({
@@ -104,23 +106,30 @@ describe('CartView', () => {
       BO_WEB_APP_PRICES: true,
     });
 
-    const wrapper = renderCartView(fakeClient);
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/cart']}>
+        <App
+          apiClient={fakeClient}
+          boclipsSecurity={stubBoclipsSecurity}
+          reactQueryClient={new QueryClient(queryClientConfig)}
+        />
+      </MemoryRouter>,
+    );
 
-    const placeOrder = await wrapper.findByText('Place order');
-    act(() => {
-      fireEvent.click(placeOrder);
+    await waitFor(() => wrapper.getByText('Place order')).then((it) => {
+      fireEvent.click(it);
     });
 
-    const modal = await wrapper.findByTestId('order-modal');
-    expect(await within(modal).findByText('news video')).toBeVisible();
-    expect(await within(modal).findByText('Confirm order')).toBeVisible();
-    expect(await within(modal).findByText('$600')).toBeVisible();
-    expect(await within(modal).findByText('$400')).toBeVisible();
-    expect(await within(modal).findByText('$1,000')).toBeVisible();
-    expect(await within(modal).findByText('Go back to cart')).toBeVisible();
-    expect(
-      await within(modal).findByTestId('additional-services-summary'),
-    ).toBeVisible();
+    await waitFor(() => wrapper.getByTestId('order-modal')).then((it) => {
+      expect(within(it).getByText('news video')).toBeVisible();
+      expect(within(it).getByText('Confirm order')).toBeVisible();
+      expect(within(it).getByText('$600')).toBeVisible();
+      expect(within(it).getByText('$400')).toBeVisible();
+      expect(within(it).getByText('Go back to cart')).toBeVisible();
+      expect(
+        within(it).getByTestId('additional-services-summary'),
+      ).toBeVisible();
+    });
 
     expect(lastEvent(fakeClient)).toEqual({
       type: 'PLATFORM_INTERACTED_WITH',
@@ -143,7 +152,7 @@ describe('CartView', () => {
       },
     });
 
-    const wrapper = renderCartView(fakeClient);
+    const wrapper = await renderCartView(fakeClient);
 
     const placeOrder = await wrapper.findByText('Place order');
     act(() => {
@@ -164,18 +173,10 @@ describe('CartView', () => {
     fakeClient.videos.insertVideo(video);
     fakeClient.carts.insertCartItem({ videoId: 'video-id' });
 
-    const wrapper = renderCartView(fakeClient);
+    const wrapper = await renderCartView(fakeClient);
     await placeAndConfirmOrder(wrapper);
 
-    expect(await wrapper.findByText('Loading')).toBeVisible();
-
-    expect(await fakeClient.orders.getAll()).toHaveLength(1);
-
-    expect(await wrapper.findByText('Your order is confirmed')).toBeVisible();
-
-    const viewOrdersLink = await wrapper.findByTestId('view-orders');
-    expect(viewOrdersLink).toHaveAttribute('href', '/orders');
-    expect(within(viewOrdersLink).getByText('View all orders')).toBeVisible();
+    await waitFor(() => wrapper.getByText('Your order is confirmed'));
 
     expect(lastEvent(fakeClient, 'PLATFORM_INTERACTED_WITH')).toEqual({
       type: 'PLATFORM_INTERACTED_WITH',
@@ -218,7 +219,7 @@ describe('CartView', () => {
       additionalServices: { transcriptRequested: false },
     });
 
-    const wrapper = renderCartView(fakeClient);
+    const wrapper = await renderCartView(fakeClient);
 
     await waitFor(async () => {
       expect(
@@ -240,7 +241,7 @@ describe('CartView', () => {
     fakeClient.videos.insertVideo(video);
     fakeClient.carts.insertCartItem({ videoId: video.id });
 
-    const wrapper = renderCartView(fakeClient);
+    const wrapper = await renderCartView(fakeClient);
     const removeButton = await wrapper.findByText('Remove');
     fireEvent.click(removeButton);
     expect(
@@ -254,7 +255,7 @@ describe('CartView', () => {
     fakeClient.videos.insertVideo(video);
     fakeClient.carts.insertCartItem({ videoId: 'video-id' });
 
-    const wrapper = renderCartView(fakeClient);
+    const wrapper = await renderCartView(fakeClient);
 
     const title = await wrapper.findByText('news video');
 
@@ -302,7 +303,7 @@ describe('CartView', () => {
         additionalServices: {},
       });
 
-      const wrapper = renderCartView(fakeClient);
+      const wrapper = await renderCartView(fakeClient);
 
       expect(await wrapper.findByText('Shopping cart')).toBeInTheDocument();
       expect(
@@ -368,7 +369,7 @@ describe('CartView', () => {
         additionalServices: {},
       });
 
-      const wrapper = renderCartView(fakeClient);
+      const wrapper = await renderCartView(fakeClient);
 
       fireEvent.click(await wrapper.findByText('Trim video'));
 
@@ -425,7 +426,7 @@ describe('CartView', () => {
         additionalServices: {},
       });
 
-      const wrapper = renderCartView(fakeClient);
+      const wrapper = await renderCartView(fakeClient);
 
       fireEvent.click(
         await wrapper.findByText('Request other type of editing'),
@@ -477,7 +478,7 @@ describe('CartView', () => {
         additionalServices: {},
       });
 
-      const wrapper = renderCartView(fakeClient);
+      const wrapper = await renderCartView(fakeClient);
 
       fireEvent.click(await wrapper.findByText('Trim video'));
 
@@ -517,7 +518,7 @@ describe('CartView', () => {
         additionalServices: {},
       });
 
-      const wrapper = renderCartView(fakeClient);
+      const wrapper = await renderCartView(fakeClient);
 
       fireEvent.click(
         await wrapper.findByText('Request other type of editing'),
@@ -560,13 +561,13 @@ describe('CartView', () => {
         additionalServices: {},
       });
 
-      const wrapper = renderCartView(fakeClient);
+      const wrapper = await renderCartView(fakeClient);
 
       fireEvent.click(await wrapper.findByText('Trim video'));
 
       fireEvent.focus(await wrapper.findByLabelText('trim-from'));
 
-      userEvent.type(wrapper.getByLabelText('trim-from'), 'k1a2:30s');
+      await userEvent.type(wrapper.getByLabelText('trim-from'), 'k1a2:30s');
 
       expect(
         (wrapper.getByLabelText('trim-from') as HTMLInputElement).value,
@@ -586,7 +587,7 @@ describe('CartView', () => {
         BoclipsApiErrorFactory.sample({ message: 'channel is missing price' }),
       );
 
-      const wrapper = renderCartView(fakeClient);
+      const wrapper = await renderCartView(fakeClient);
       await placeAndConfirmOrder(wrapper);
 
       expect(
@@ -599,7 +600,7 @@ describe('CartView', () => {
       const fakeClient = new FakeBoclipsClient();
       fakeClient.carts.insertCartItem({ videoId: 'video-id' });
 
-      const wrapper = renderCartView(fakeClient);
+      const wrapper = await renderCartView(fakeClient);
 
       expect(
         await wrapper.findByPlaceholderText(
@@ -612,7 +613,7 @@ describe('CartView', () => {
       const fakeClient = new FakeBoclipsClient();
       fakeClient.carts.insertCartItem({ videoId: 'video-id' });
 
-      const wrapper = renderCartView(fakeClient);
+      const wrapper = await renderCartView(fakeClient);
 
       const input = await wrapper.findByPlaceholderText(
         'Add a note about this order (optional)',
@@ -640,7 +641,7 @@ describe('CartView', () => {
         BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
       });
 
-      const wrapper = renderCartView(fakeClient);
+      const wrapper = await renderCartView(fakeClient);
 
       expect(
         await wrapper.findByText('Request English Caption and Transcript file'),
@@ -689,8 +690,8 @@ async function placeAndConfirmOrder(wrapper: RenderResult) {
     .then((button) => fireEvent.click(button));
 }
 
-function renderCartView(client: FakeBoclipsClient) {
-  return render(
+async function renderCartView(client: FakeBoclipsClient) {
+  const wrapper = render(
     <MemoryRouter initialEntries={['/cart']}>
       <App
         apiClient={client}
@@ -699,4 +700,8 @@ function renderCartView(client: FakeBoclipsClient) {
       />
     </MemoryRouter>,
   );
+
+  await wrapper.findByText('Loading');
+
+  return wrapper;
 }

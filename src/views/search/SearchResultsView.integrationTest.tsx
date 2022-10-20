@@ -1,4 +1,9 @@
-import { fireEvent, render, waitFor, within } from '@testing-library/react';
+import {
+  fireEvent,
+  render,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
@@ -9,7 +14,7 @@ import {
   FacetsFactory,
 } from 'boclips-api-client/dist/test-support/FacetsFactory';
 import Navbar from 'src/components/layout/Navbar';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
@@ -96,6 +101,10 @@ describe('SearchResults', () => {
 
     fireEvent.change(searchBar, { target: { value: 'artist' } });
     fireEvent.keyDown(searchBar, { key: 'Enter', code: 'Enter' });
+
+    await waitForElementToBeRemoved(() =>
+      wrapper.getAllByTestId('video-card-placeholder'),
+    );
 
     expect((await wrapper.findByTestId('search-hits')).textContent).toEqual(
       '1',
@@ -290,17 +299,13 @@ describe('SearchResults', () => {
         }),
       );
 
-      const cart = await fakeClient.carts.getCart();
+      expect(await wrapper.findByText('Video added to cart')).toBeVisible();
 
-      await waitFor(() => {
-        expect(cart.items).toHaveLength(1);
-      });
+      await waitFor(() =>
+        expect(wrapper.getByTestId('cart-counter')).toHaveTextContent('1'),
+      );
 
       expect(wrapper.getByText('Remove')).toBeInTheDocument();
-      const addNotification = wrapper.getByRole('alert');
-      expect(
-        within(addNotification).getByText('Video added to cart'),
-      ).toBeVisible();
 
       fireEvent(
         wrapper.getByText('Remove'),
@@ -310,15 +315,11 @@ describe('SearchResults', () => {
         }),
       );
 
-      await waitFor(() => {
-        expect(cart.items).toHaveLength(0);
-      });
+      expect(await wrapper.findByText('Video removed from cart')).toBeVisible();
 
-      // selecting second alert element, as addNotification is the first one
-      const removeNotification = wrapper.getAllByRole('alert')[1];
-      expect(
-        await within(removeNotification).findByText('Video removed from cart'),
-      ).toBeVisible();
+      await waitFor(() =>
+        expect(wrapper.queryByTestId('cart-counter')).not.toBeInTheDocument(),
+      );
     });
 
     it('basket counter goes up when item added to cart in navbar', async () => {

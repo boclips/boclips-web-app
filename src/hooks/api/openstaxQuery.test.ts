@@ -7,7 +7,7 @@ import {
 } from 'src/hooks/api/openstaxQuery';
 import { renderHook } from '@testing-library/react-hooks';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
-import { QueryClient } from 'react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { waitFor } from '@testing-library/react';
 
 describe('OpenstaxQuery', () => {
@@ -25,7 +25,8 @@ describe('OpenstaxQuery', () => {
       wrapper: wrapperWithClients(fakeClient, new QueryClient()),
     });
 
-    await waitFor(() => bookHook.result.current.isSuccess);
+    await bookHook.waitFor(() => bookHook.result.current.isSuccess);
+
     expect(bookHook.result.current.data.id).toEqual('art-history-id');
     expect(bookHook.result.current.data.title).toEqual('The history of art');
   });

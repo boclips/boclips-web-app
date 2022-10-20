@@ -16,7 +16,7 @@ export const PAGE_SIZE = 10;
 const OrdersView = () => {
   const [page, setPage] = useState<number>(0);
 
-  const { isLoading, data: orders } = useGetOrdersQuery({
+  const { isInitialLoading, data: orders } = useGetOrdersQuery({
     page,
     size: PAGE_SIZE,
   });
@@ -27,7 +27,7 @@ const OrdersView = () => {
 
   const hasOrders = orders?.page.length > 0;
 
-  if (isLoading && !hasOrders) return <Loading />;
+  if (isInitialLoading && !hasOrders) return <Loading />;
 
   return (
     <Layout rowsSetup="grid-rows-default-view-with-title">

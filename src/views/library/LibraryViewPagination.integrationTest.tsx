@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
@@ -7,7 +7,7 @@ import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { BoclipsClient } from 'boclips-api-client';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
-import { QueryClient } from 'react-query';
+import { QueryClient } from '@tanstack/react-query';
 
 const insertUser = (client: FakeBoclipsClient) =>
   client.users.insertCurrentUser(UserFactory.sample());
@@ -34,9 +34,13 @@ describe('LibraryView', () => {
     loadPlaylists(client, 25);
 
     const wrapper = renderLibraryView(client);
-    expect(await wrapper.findByText('Playlist 1')).toBeVisible();
+
+    await waitFor(() => wrapper.findByText('Playlist 1')).then((it) =>
+      expect(it).toBeInTheDocument(),
+    );
+
     expect(
-      await wrapper.findByRole('button', { name: 'Next page' }),
+      wrapper.getByRole('button', { name: 'go to next page' }),
     ).toBeVisible();
   });
 
@@ -69,14 +73,21 @@ describe('LibraryView', () => {
     loadPlaylists(client, 41);
 
     const wrapper = renderLibraryView(client);
-    expect(await wrapper.findByText('Playlist 0')).toBeVisible();
+    await waitFor(() => wrapper.findByText('Playlist 0')).then((it) =>
+      expect(it).toBeInTheDocument(),
+    );
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Next page' }));
+    fireEvent.click(wrapper.getByRole('button', { name: 'go to next page' }));
+
     expect(await wrapper.findByText('Playlist 20')).toBeVisible();
     expect(wrapper.queryByText('Playlist 0')).toBeNull();
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Next page' }));
-    expect(await wrapper.findByText('Playlist 40')).toBeVisible();
+    fireEvent.click(wrapper.getByRole('button', { name: 'go to next page' }));
+
+    await waitFor(() => wrapper.getByText('Playlist 40')).then((it) => {
+      expect(it).toBeInTheDocument();
+    });
+
     expect(wrapper.queryByText('Playlist 20')).toBeNull();
   });
 

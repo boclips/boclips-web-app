@@ -172,7 +172,11 @@ describe('SearchResultsFiltering', () => {
 
       const selectedFiltersSection = wrapper.getByTestId('applied-filter-tags');
 
-      expect(within(selectedFiltersSection).getByText('News')).toBeVisible();
+      await waitFor(() =>
+        within(selectedFiltersSection).getByText('News'),
+      ).then((it) => {
+        expect(it).toBeVisible();
+      });
     });
   });
 
@@ -464,7 +468,11 @@ describe('SearchResultsFiltering', () => {
       });
       const selectedFiltersSection = wrapper.getByTestId('applied-filter-tags');
 
-      expect(within(selectedFiltersSection).getByText('$100')).toBeVisible();
+      await waitFor(() =>
+        within(selectedFiltersSection).getByText('$100'),
+      ).then((it) => {
+        expect(it).toBeVisible();
+      });
     });
 
     it(`hides price filters for users with the prices feature disabled`, async () => {
@@ -678,9 +686,12 @@ describe('SearchResultsFiltering', () => {
       });
 
       const selectedFiltersSection = wrapper.getByTestId('applied-filter-tags');
-      const appliedFilter = within(selectedFiltersSection).getByText('$100');
 
-      fireEvent.click(within(appliedFilter).getByTestId('remove-filter-10000'));
+      await waitFor(() =>
+        within(selectedFiltersSection).getByText('$100'),
+      ).then((it) => {
+        fireEvent.click(within(it).getByTestId('remove-filter-10000'));
+      });
 
       await waitFor(() => {
         expect(wrapper.queryByText('Selected filters')).toBeNull();
@@ -785,8 +796,10 @@ describe('SearchResultsFiltering', () => {
       expect(await wrapper.findByText('news video')).toBeInTheDocument();
       expect(await wrapper.queryByText('stock video')).toBeNull();
 
-      expect(await wrapper.findByRole('banner')).toHaveTextContent(
-        'You’re now previewing: my content package to preview',
+      await waitFor(() =>
+        expect(wrapper.getByRole('banner')).toHaveTextContent(
+          'You’re now previewing: my content package to preview',
+        ),
       );
     });
 
@@ -799,8 +812,10 @@ describe('SearchResultsFiltering', () => {
       expect(await wrapper.findByText('french news video')).toBeInTheDocument();
       expect(await wrapper.queryByText('stock video')).toBeNull();
 
-      expect(await wrapper.findByRole('banner')).toHaveTextContent(
-        'You’re now previewing: my content package to preview',
+      await waitFor(() =>
+        expect(wrapper.getByRole('banner')).toHaveTextContent(
+          'You’re now previewing: my content package to preview',
+        ),
       );
 
       fireEvent.click(wrapper.getByTestId('456-checkbox'));

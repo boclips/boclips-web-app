@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { QueryClient } from 'react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { SEARCH_BASE_KEY } from 'src/hooks/api/useSearchQuery';
 import { PageableFactory } from 'boclips-api-client/dist/sub-clients/common/model/PageableFactory';
 import { Video } from 'boclips-api-client/dist/types';

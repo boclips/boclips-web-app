@@ -1,4 +1,4 @@
-import { QueryClient } from 'react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { renderHook } from '@testing-library/react-hooks';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';

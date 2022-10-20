@@ -1,19 +1,26 @@
-import { fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import React from 'react';
-import { render } from 'src/testSupport/render';
 import { Search } from 'src/components/searchBar/SearchBar';
-import { Router } from 'react-router-dom';
+import { MemoryRouter, Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { lastEvent } from 'src/testSupport/lastEvent';
 import { SearchQueryCompletionsSuggestedRequest } from 'boclips-api-client/dist/sub-clients/events/model/SearchQueryCompletionsSuggestedRequest';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
 
 describe('SearchBar', () => {
   it('renders with search button displayed', () => {
+    const history = createBrowserHistory();
+
     const search = render(
       <BoclipsClientProvider client={new FakeBoclipsClient()}>
-        <Search showIconOnly={false} />
+        <QueryClientProvider client={new QueryClient(queryClientConfig)}>
+          <Router location={history.location} navigator={history}>
+            <Search showIconOnly={false} />
+          </Router>
+        </QueryClientProvider>
       </BoclipsClientProvider>,
     );
 
@@ -22,16 +29,18 @@ describe('SearchBar', () => {
 
   it('new search preserves URL query parameters except query, page, and topics', async () => {
     const history = createBrowserHistory();
-    history.push({
-      pathname:
-        '/videos?q=dogs&page=5&video_type=INSTRUCTIONAL&duration=PT1M-PT5M&topics=blah',
-    });
+
+    history.push(
+      '/videos?q=dogs&page=5&video_type=INSTRUCTIONAL&duration=PT1M-PT5M&topics=blah',
+    );
 
     const wrapper = render(
       <BoclipsClientProvider client={new FakeBoclipsClient()}>
-        <Router history={history}>
-          <Search showIconOnly={false} />
-        </Router>
+        <QueryClientProvider client={new QueryClient(queryClientConfig)}>
+          <Router location={history.location} navigator={history}>
+            <Search showIconOnly={false} />
+          </Router>
+        </QueryClientProvider>
       </BoclipsClientProvider>,
     );
 
@@ -66,11 +75,13 @@ describe('SearchBar', () => {
 
     it('display search suggestions on search change if user has feature', async () => {
       const wrapper = render(
-        <BoclipsClientProvider client={fakeBoclipsClient}>
-          <Router history={createBrowserHistory()}>
-            <Search showIconOnly={false} />
-          </Router>
-        </BoclipsClientProvider>,
+        <MemoryRouter>
+          <BoclipsClientProvider client={fakeBoclipsClient}>
+            <QueryClientProvider client={new QueryClient(queryClientConfig)}>
+              <Search showIconOnly={false} />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
+        </MemoryRouter>,
       );
 
       const searchInput = wrapper.getByPlaceholderText(
@@ -85,11 +96,13 @@ describe('SearchBar', () => {
 
     it('display search suggestions on search change for minimum of 1 character in query', async () => {
       const wrapper = render(
-        <BoclipsClientProvider client={fakeBoclipsClient}>
-          <Router history={createBrowserHistory()}>
-            <Search showIconOnly={false} />
-          </Router>
-        </BoclipsClientProvider>,
+        <MemoryRouter>
+          <BoclipsClientProvider client={fakeBoclipsClient}>
+            <QueryClientProvider client={new QueryClient(queryClientConfig)}>
+              <Search showIconOnly={false} />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
+        </MemoryRouter>,
       );
 
       const searchInput = wrapper.getByPlaceholderText(
@@ -104,11 +117,13 @@ describe('SearchBar', () => {
 
     it('sends an event when auto-suggest displayed', async () => {
       const wrapper = render(
-        <BoclipsClientProvider client={fakeBoclipsClient}>
-          <Router history={createBrowserHistory()}>
-            <Search showIconOnly={false} />
-          </Router>
-        </BoclipsClientProvider>,
+        <MemoryRouter>
+          <BoclipsClientProvider client={fakeBoclipsClient}>
+            <QueryClientProvider client={new QueryClient(queryClientConfig)}>
+              <Search showIconOnly={false} />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
+        </MemoryRouter>,
       );
 
       const searchInput = wrapper.getByPlaceholderText(
@@ -132,11 +147,13 @@ describe('SearchBar', () => {
 
     it('sends one final event when search is performed by using a suggestion', async () => {
       const wrapper = render(
-        <BoclipsClientProvider client={fakeBoclipsClient}>
-          <Router history={createBrowserHistory()}>
-            <Search showIconOnly={false} />
-          </Router>
-        </BoclipsClientProvider>,
+        <MemoryRouter>
+          <BoclipsClientProvider client={fakeBoclipsClient}>
+            <QueryClientProvider client={new QueryClient(queryClientConfig)}>
+              <Search showIconOnly={false} />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
+        </MemoryRouter>,
       );
 
       const searchInput = wrapper.getByPlaceholderText(

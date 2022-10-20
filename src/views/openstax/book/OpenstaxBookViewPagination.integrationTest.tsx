@@ -83,12 +83,14 @@ describe('Openstax book view pagination buttons', () => {
       expect(previousSectionTitle.textContent).toBe(
         'Chapter Overview (1 video)',
       );
+
+      client.clear();
     });
 
     it('renders next and previous sections even if section numeration is not continuous', async () => {
       resizeToDesktop();
       const book = BookFactory.sample({
-        id: 'ducklings',
+        id: 'ducklings-2',
         title: 'Everything to know about ducks',
         subject: 'Essentials',
         chapters: [
@@ -115,7 +117,7 @@ describe('Openstax book view pagination buttons', () => {
       const client = setUpClientWithBook(book);
 
       const wrapper = render(
-        <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
+        <MemoryRouter initialEntries={['/explore/openstax/ducklings-2']}>
           <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
         </MemoryRouter>,
       );
@@ -133,13 +135,14 @@ describe('Openstax book view pagination buttons', () => {
       );
 
       const nextChapterTitle = chapterTitle(bookDetails);
+
       const nextSectionTitle = sectionTitle(bookDetails);
 
       expect(nextChapterTitle).toBeVisible();
-      expect(nextChapterTitle.textContent).toBe('Chapter 1: Introduction');
+      expect(nextChapterTitle).toHaveTextContent('Chapter 1: Introduction');
 
       expect(nextSectionTitle).toBeVisible();
-      expect(nextSectionTitle.textContent).toBe(
+      expect(nextSectionTitle).toHaveTextContent(
         '1.99 Adventures outside (0 videos)',
       );
 
@@ -149,12 +152,13 @@ describe('Openstax book view pagination buttons', () => {
       const previousSectionTitle = sectionTitle(bookDetails);
 
       expect(previousChapterTitle).toBeVisible();
-      expect(previousChapterTitle.textContent).toBe('Chapter 1: Introduction');
+      expect(previousChapterTitle).toHaveTextContent('Chapter 1: Introduction');
 
       expect(previousSectionTitle).toBeVisible();
-      expect(previousSectionTitle.textContent).toBe(
+      expect(previousSectionTitle).toHaveTextContent(
         'Chapter Overview (1 video)',
       );
+      client.clear();
     });
   });
 
@@ -162,7 +166,7 @@ describe('Openstax book view pagination buttons', () => {
     it('navigation between chapters', async () => {
       resizeToDesktop();
       const book = BookFactory.sample({
-        id: 'ducklings',
+        id: 'ducklings-3',
         title: 'Everything to know about ducks',
         subject: 'Essentials',
         chapters: [
@@ -196,7 +200,7 @@ describe('Openstax book view pagination buttons', () => {
       const client = setUpClientWithBook(book);
 
       const wrapper = render(
-        <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
+        <MemoryRouter initialEntries={['/explore/openstax/ducklings-3']}>
           <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
         </MemoryRouter>,
       );
@@ -239,7 +243,7 @@ describe('Openstax book view pagination buttons', () => {
     it('navigation between chapters when chapter numeration is not continous', async () => {
       resizeToDesktop();
       const book = BookFactory.sample({
-        id: 'ducklings',
+        id: 'ducklings-4',
         title: 'Everything to know about ducks',
         subject: 'Essentials',
         chapters: [
@@ -273,7 +277,7 @@ describe('Openstax book view pagination buttons', () => {
       const client = setUpClientWithBook(book);
 
       const wrapper = render(
-        <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
+        <MemoryRouter initialEntries={['/explore/openstax/ducklings-4']}>
           <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
         </MemoryRouter>,
       );
@@ -316,7 +320,7 @@ describe('Openstax book view pagination buttons', () => {
     it('navigation panel has opened chapter 2 accordion when clicked next chapter button', async () => {
       resizeToDesktop();
       const book = BookFactory.sample({
-        id: 'ducklings',
+        id: 'ducklings-5',
         title: 'Everything to know about ducks',
         subject: 'Essentials',
         chapters: [
@@ -350,7 +354,7 @@ describe('Openstax book view pagination buttons', () => {
       const client = setUpClientWithBook(book);
 
       const wrapper = render(
-        <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
+        <MemoryRouter initialEntries={['/explore/openstax/ducklings-5']}>
           <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
         </MemoryRouter>,
       );

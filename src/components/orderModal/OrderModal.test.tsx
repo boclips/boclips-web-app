@@ -6,9 +6,11 @@ import {
   CartsFactory,
 } from 'boclips-api-client/dist/test-support/CartsFactory';
 import { render } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { OrderModal } from 'src/components/orderModal/OrderModal';
+import { createBrowserHistory } from 'history';
+import { Router } from 'react-router-dom';
 
 describe('Order Modal', () => {
   it('does not show total when pricing is disabled', () => {
@@ -33,10 +35,14 @@ describe('Order Modal', () => {
       ],
     });
 
+    const history = createBrowserHistory();
+
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={apiClient}>
-          <OrderModal setModalOpen={jest.fn} videos={[video]} cart={cart} />
+          <Router location={history.location} navigator={history}>
+            <OrderModal setModalOpen={jest.fn} videos={[video]} cart={cart} />
+          </Router>
         </BoclipsClientProvider>
       </QueryClientProvider>,
     );
@@ -66,10 +72,14 @@ describe('Order Modal', () => {
       ],
     });
 
+    const history = createBrowserHistory();
+
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={apiClient}>
-          <OrderModal setModalOpen={jest.fn} videos={[video]} cart={cart} />
+          <Router location={history.location} navigator={history}>
+            <OrderModal setModalOpen={jest.fn} videos={[video]} cart={cart} />
+          </Router>
         </BoclipsClientProvider>
       </QueryClientProvider>,
     );

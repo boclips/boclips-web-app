@@ -3,13 +3,12 @@ import Footer from 'src/components/layout/Footer';
 import React from 'react';
 import RefreshPageError from 'src/components/common/errors/refreshPageError/RefreshPageError';
 import { Layout } from 'src/components/layout/Layout';
+import { useLocation } from 'react-router-dom';
 
-interface Props {
-  error: any;
-}
-
-const ErrorView = ({ error }: Props) => {
-  console.error(error);
+const ErrorView = () => {
+  const location = useLocation();
+  // eslint-disable-next-line no-console
+  console.log(location?.state?.error);
 
   return (
     <Layout rowsSetup="grid-rows-home">

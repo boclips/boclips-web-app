@@ -2,6 +2,7 @@ import {
   fireEvent,
   render,
   RenderResult,
+  waitFor,
   within,
 } from '@testing-library/react';
 import { MemoryRouter, Router } from 'react-router-dom';
@@ -34,12 +35,13 @@ describe('OpenstaxBookView', () => {
     const book = createBook();
 
     const client = setUpClientWithBook(book);
-
     const wrapper = render(
       <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
+
+    await waitFor(() => wrapper.getByTestId('Loading details for book'));
 
     const loadingSkeleton = await wrapper.findByTestId(
       'Loading details for book',
@@ -78,7 +80,11 @@ describe('OpenstaxBookView', () => {
     );
 
     expect(bookDetails).toBeVisible();
+
     validateVisibleHeadings(bookDetails, 2, ['Chapter 1: Introduction']);
+
+    fireEvent.click(wrapper.getByText('Chapter Overview'));
+
     validateVisibleHeadings(bookDetails, 3, ['Chapter Overview (1 video)']);
 
     const bookToc = wrapper.getByLabelText(
@@ -249,7 +255,7 @@ describe('OpenstaxBookView', () => {
 
     expect(
       await wrapper.container.querySelector(
-        `#${chapter1OverviewNavigationLabel}`,
+        `#${chapter1OverviewNavigationLabel}-nav`,
       ),
     ).not.toBeNull();
   });
@@ -391,91 +397,97 @@ describe('OpenstaxBookView', () => {
         resize();
         const client = setUpClientWithBook(book);
 
-        const browserHistory = createBrowserHistory();
-        browserHistory.push({ pathname: `/explore/openstax/${book.id}` });
+        const history = createBrowserHistory();
+        history.replace(`/explore/openstax/${book.id}`);
+
         const wrapper = render(
-          <Router history={browserHistory}>
+          <Router location={history.location} navigator={history}>
             <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
           </Router>,
         );
 
+        await waitFor(() =>
+          wrapper.getAllByText('Everything to know about ducks'),
+        );
+
         const backButton = await wrapper.findByRole('button', { name: 'Back' });
+
         fireEvent.click(backButton);
 
-        expect(browserHistory.location.pathname).toEqual('/explore/openstax');
+        expect(history.location.pathname).toEqual('/explore/openstax');
       });
     },
   );
-});
 
-describe('mobile/tablet view', () => {
-  beforeEach(() => {
-    resizeToTablet();
-  });
-
-  it('will show the navigation view when clicking course content button', async () => {
-    const book: Book = BookFactory.sample({
-      id: uuidv4(),
-      title: 'All about ducks',
+  describe('mobile/tablet view', () => {
+    beforeEach(() => {
+      resizeToTablet();
     });
 
-    const wrapper = renderBookView(book);
+    it('will show the navigation view when clicking course content button', async () => {
+      const book: Book = BookFactory.sample({
+        id: uuidv4(),
+        title: 'All about ducks',
+      });
 
-    const courseContentButton = await wrapper.findByRole('button', {
-      name: 'Course content',
+      const wrapper = renderBookView(book);
+
+      const courseContentButton = await wrapper.findByRole('button', {
+        name: 'Course content',
+      });
+
+      expect(getTableOfContent(book, wrapper)).toBeNull();
+
+      fireEvent.click(courseContentButton);
+
+      expect(getTableOfContent(book, wrapper)).toBeVisible();
     });
 
-    expect(getTableOfContent(book, wrapper)).toBeNull();
+    it('will close the navigation view, if close is clicked', async () => {
+      const book: Book = BookFactory.sample({
+        id: uuidv4(),
+        title: 'All about ducks',
+      });
 
-    fireEvent.click(courseContentButton);
+      const wrapper = renderBookView(book);
 
-    expect(getTableOfContent(book, wrapper)).toBeVisible();
-  });
+      const courseContentButton = await wrapper.findByRole('button', {
+        name: 'Course content',
+      });
 
-  it('will close the navigation view, if close is clicked', async () => {
-    const book: Book = BookFactory.sample({
-      id: uuidv4(),
-      title: 'All about ducks',
+      fireEvent.click(courseContentButton);
+
+      const closeTableOfContent = wrapper.getByRole('button', {
+        name: 'Close the Table of contents',
+      });
+
+      fireEvent.click(closeTableOfContent);
+      expect(getTableOfContent(book, wrapper)).toBeNull();
     });
 
-    const wrapper = renderBookView(book);
+    it('back button is not visible in course content panel', async () => {
+      const book: Book = BookFactory.sample({
+        id: uuidv4(),
+        title: 'All about ducks',
+      });
 
-    const courseContentButton = await wrapper.findByRole('button', {
-      name: 'Course content',
+      const wrapper = renderBookView(book);
+
+      const courseContentButton = await wrapper.findByRole('button', {
+        name: 'Course content',
+      });
+      fireEvent.click(courseContentButton);
+
+      const tableOfContentPanel = await wrapper.getByTestId(
+        'table of contents panel',
+      );
+
+      expect(
+        await within(tableOfContentPanel).queryByRole('button', {
+          name: 'Back',
+        }),
+      ).toBeNull();
     });
-
-    fireEvent.click(courseContentButton);
-
-    const closeTableOfContent = wrapper.getByRole('button', {
-      name: 'Close the Table of contents',
-    });
-
-    fireEvent.click(closeTableOfContent);
-    expect(getTableOfContent(book, wrapper)).toBeNull();
-  });
-
-  it('back button is not visible in course content panel', async () => {
-    const book: Book = BookFactory.sample({
-      id: uuidv4(),
-      title: 'All about ducks',
-    });
-
-    const wrapper = renderBookView(book);
-
-    const courseContentButton = await wrapper.findByRole('button', {
-      name: 'Course content',
-    });
-    fireEvent.click(courseContentButton);
-
-    const tableOfContentPanel = await wrapper.getByTestId(
-      'table of contents panel',
-    );
-
-    expect(
-      await within(tableOfContentPanel).queryByRole('button', {
-        name: 'Back',
-      }),
-    ).toBeNull();
   });
 });
 
