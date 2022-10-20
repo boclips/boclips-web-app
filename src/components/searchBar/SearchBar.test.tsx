@@ -6,9 +6,9 @@ import { MemoryRouter, Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { lastEvent } from 'src/testSupport/lastEvent';
 import { SearchQueryCompletionsSuggestedRequest } from 'boclips-api-client/dist/sub-clients/events/model/SearchQueryCompletionsSuggestedRequest';
-import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
+import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 
 describe('SearchBar', () => {
   it('renders with search button displayed', () => {
