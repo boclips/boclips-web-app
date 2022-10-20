@@ -17,10 +17,12 @@
 .skeleton {
   border-radius: 4px;
   animation: skeleton ease-in 1s infinite;
-  background: linear-gradient(90deg,
-  @gray-100 25%,
-  @gray-400 37%,
-  @gray-100 63%);
+  background: linear-gradient(
+    90deg,
+    @gray-100 25%,
+    @gray-400 37%,
+    @gray-100 63%
+  );
   background-size: 200% 200%;
   border: 1px solid @gray-400 !important;
 }
@@ -30,7 +32,7 @@
     background: transparent;
     display: grid;
     grid-gap: 1rem;
-    border: 0!important;
+    border: 0 !important;
 
     & > div {
       height: 270px;
@@ -38,7 +40,6 @@
     }
   }
 }
-
 
 @keyframes skeleton {
   0% {

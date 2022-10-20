@@ -32,7 +32,7 @@ export const InputWithDebounce = ({
       onUpdate(debouncedValue);
     }
     // eslint-disable-next-line
-    }, [debouncedValue]);
+  }, [debouncedValue]);
 
   return (
     <BoInputText

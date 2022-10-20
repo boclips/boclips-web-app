@@ -1,4 +1,9 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import {
+  fireEvent,
+  render,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
@@ -90,13 +95,15 @@ describe('Playlist Body', () => {
     expect(wrapper.getByText(videoWithPrice.title)).toBeInTheDocument();
     expect(wrapper.getByText('$150')).toBeInTheDocument();
   });
+});
 
+describe('focus', () => {
   it('focuses on the main after removing the last video of a playlist', async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.collections.setCurrentUser('user-123');
     const video = VideoFactory.sample({});
     const playlist = CollectionFactory.sample({
-      id: '123',
+      id: '321111',
       owner: 'user-123',
       mine: true,
       videos: [video],
@@ -104,7 +111,15 @@ describe('Playlist Body', () => {
     });
     fakeClient.collections.addToFake(playlist);
 
-    const wrapper = getWrapper(fakeClient, playlist);
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeClient}>
+        <QueryClientProvider client={new QueryClient()}>
+          <MemoryRouter>
+            <PlaylistBody playlist={playlist} />
+          </MemoryRouter>
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
+    );
 
     await waitFor(() =>
       wrapper.getByLabelText('Add or remove from playlist'),
@@ -112,15 +127,13 @@ describe('Playlist Body', () => {
       fireEvent.click(it);
     });
 
-    await userEvent.click(
-      wrapper.getByRole('checkbox', {
-        name: 'Courage the Cowardly Dog',
-      }),
-    );
+    await userEvent.click(wrapper.getByText('Courage the Cowardly Dog'));
 
-    await waitFor(() => {
-      expect(document.activeElement).toBe(wrapper.getByRole('main'));
-    });
+    await waitForElementToBeRemoved(() => wrapper.getByText('Add to playlist'));
+
+    await waitFor(() =>
+      expect(wrapper.getByRole('main')).toBe(document.activeElement),
+    );
   });
 
   it('focuses on main after removing a video from a playlist that has more', async () => {
@@ -138,7 +151,15 @@ describe('Playlist Body', () => {
     });
     fakeClient.collections.addToFake(playlist);
 
-    const wrapper = getWrapper(fakeClient, playlist);
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeClient}>
+        <QueryClientProvider client={new QueryClient()}>
+          <MemoryRouter>
+            <PlaylistBody playlist={playlist} />
+          </MemoryRouter>
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
+    );
 
     await waitFor(() =>
       wrapper.getAllByLabelText('Add or remove from playlist'),
