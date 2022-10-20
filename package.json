@@ -18,7 +18,8 @@
     "analyse": "NODE_ENV=production webpack --config webpack/webpack.analyse.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --quiet",
     "lint:errors": "npm run lint --",
-    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "all-checks": "npm run lint:errors && npm run compile && npm run test && npm run build"
   },
   "repository": {
     "type": "git",
