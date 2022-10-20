@@ -26,7 +26,7 @@ const doGetBooks = (client: BoclipsClient) =>
 
 export const useGetOpenstaxSubjectsQuery = (): UseQueryResult<string[]> => {
   const client = useBoclipsClient();
-  return useQuery('openstaxSubjects', () => doGetOpenstaxSubjects(client));
+  return useQuery(['openstaxSubjects'], () => doGetOpenstaxSubjects(client));
 };
 
 const doGetOpenstaxSubjects = (client: BoclipsClient) =>

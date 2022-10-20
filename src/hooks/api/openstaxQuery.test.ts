@@ -8,7 +8,6 @@ import {
 import { renderHook } from '@testing-library/react-hooks';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
 import { QueryClient } from '@tanstack/react-query';
-import { waitFor } from '@testing-library/react';
 
 describe('OpenstaxQuery', () => {
   it('gets an openstax book by id', async () => {
@@ -41,7 +40,7 @@ describe('OpenstaxQuery', () => {
       wrapper: wrapperWithClients(fakeClient, new QueryClient()),
     });
 
-    await waitFor(() => getBooksHook.result.current.isSuccess);
+    await getBooksHook.waitFor(() => getBooksHook.result.current.isSuccess);
     const result = getBooksHook.result.current.data;
 
     expect(result).toHaveLength(1);
@@ -57,7 +56,7 @@ describe('OpenstaxQuery', () => {
       wrapper: wrapperWithClients(fakeClient, new QueryClient()),
     });
 
-    await waitFor(() => hook.result.current.isSuccess);
+    await hook.waitFor(() => hook.result.current.isSuccess);
     const result = hook.result.current.data;
 
     expect(result).toHaveLength(3);

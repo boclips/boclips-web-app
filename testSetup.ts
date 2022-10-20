@@ -37,17 +37,3 @@ window.Appcues = {
   identify: jest.fn(),
   track: jest.fn(),
 };
-
-// // jsdom is not good with css. This is silencing jsdom parsing css error
-// beforeEach(() => {
-//   jest.spyOn(console, 'error').mockImplementation((e) => {
-//     if (
-//       typeof e === 'string' &&
-//       e.includes('Error: Could not parse CSS stylesheet')
-//     ) {
-//       return null;
-//     }
-//
-//     return e;
-//   });
-// });

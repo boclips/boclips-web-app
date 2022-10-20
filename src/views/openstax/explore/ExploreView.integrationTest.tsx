@@ -1,6 +1,6 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { QueryClient } from '@tanstack/react-query';
 import { MemoryRouter } from 'react-router-dom';
@@ -88,7 +88,9 @@ describe(`Explore view`, () => {
       await wrapper.findByText('Our best content aligned to OpenStax courses'),
     ).toBeVisible();
 
-    expect(wrapper.getByLabelText('subject Maths')).toBeVisible();
+    await waitFor(() =>
+      expect(wrapper.getByLabelText('subject Maths')).toBeVisible(),
+    );
     expect(wrapper.getByLabelText('subject Business')).toBeVisible();
     expect(wrapper.getByLabelText('subject Humanities')).toBeVisible();
     expect(wrapper.queryByLabelText('subject French')).toBeNull();
