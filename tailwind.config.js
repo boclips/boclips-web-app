@@ -28,15 +28,15 @@ module.exports = {
     extend: {
       gridTemplateRows: {
         home: 'auto minmax(0, 458px) auto',
-        'home-responsive': 'auto minmax(100%, auto) auto',
+        'home-responsive': 'auto minmax(auto, 100%) auto',
         'navbar-responsive': 'repeat(2, auto)',
         'default-view': 'auto minmax(0, auto) auto',
         'search-view': 'auto repeat(3, auto) auto',
         'default-view-with-title':
-          'auto minmax(50px, auto) minmax(0, auto) auto',
+          'auto minmax(50px, auto) minmax(auto, 100%) auto',
         'playlist-view':
           'auto minmax(50px, auto) auto auto minmax(0, auto) auto',
-        'explore-view': 'repeat(6, auto)',
+        'explore-view': 'repeat(3, auto) minmax(auto, 100%) auto',
         'openstax-detailed-view': 'repeat(4, auto)',
         'order-view': 'auto 21px minmax(0, auto) minmax(0, auto) auto',
         'video-view': 'auto minmax(0, auto) repeat(5,auto)',
