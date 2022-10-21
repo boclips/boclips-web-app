@@ -19,6 +19,8 @@ context('OpenStax', () => {
 
     cy.findByRole('button', { name: 'book Maths book' }).click();
 
+    cy.findByAltText('Maths book cover').should('be.visible');
+
     cy.findAllByRole('heading', { name: 'Chapter 1: chapter-one' }).should(
       'have.length',
       2,
