@@ -12,14 +12,13 @@ context('OpenStax', () => {
     cy.findByRole('button', { name: 'book Physics book' }).should('be.visible');
     cy.findByRole('button', { name: 'subject Maths' }).click();
 
-    cy.wait(1000);
     cy.percySnapshot('OpenStax explore page', {
       widths: Constants.SNAPSHOT_VIEW_WIDTHS,
     });
 
     cy.findByRole('button', { name: 'book Maths book' }).click();
-
-    cy.findByAltText('Maths book cover').should('be.visible');
+    cy.findByRole('button', { name: 'Back' }).click();
+    cy.findByRole('button', { name: 'book Maths book' }).click();
 
     cy.findAllByRole('heading', { name: 'Chapter 1: chapter-one' }).should(
       'have.length',
@@ -32,7 +31,6 @@ context('OpenStax', () => {
       'be.visible',
     );
 
-    cy.wait(1000);
     cy.percySnapshot('OpenStax book page', {
       widths: Constants.SNAPSHOT_VIEW_WIDTHS,
     });
