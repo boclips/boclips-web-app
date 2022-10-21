@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import { Layout } from 'src/components/layout/Layout';
@@ -11,16 +11,16 @@ import {
 import ExploreHeader from 'src/components/openstax/exploreHeader/ExploreHeader';
 
 const ExploreView = () => {
+  const ALL = 'All';
   const { data: books, isLoading } = useGetBooksQuery();
   const { data: subjects } = useGetOpenstaxSubjectsQuery();
-  const [currentSubject, setCurrentSubject] = useState('');
-
-  useEffect(() => {
-    setCurrentSubject(subjects && subjects[0]);
-  }, [subjects]);
+  const [currentSubject, setCurrentSubject] = useState(ALL);
 
   const currentSubjectBooks = useMemo(
-    () => books?.filter((book) => subjects && book.subject === currentSubject),
+    () =>
+      currentSubject === ALL
+        ? books
+        : books?.filter((book) => subjects && book.subject === currentSubject),
     [books, subjects, currentSubject],
   );
 
@@ -28,15 +28,15 @@ const ExploreView = () => {
     <Layout rowsSetup="grid-rows-explore-view" responsiveLayout>
       <Navbar />
       <ExploreHeader />
-
-      <SubjectsMenu
-        subjects={subjects}
-        currentSubject={currentSubject}
-        onClick={setCurrentSubject}
-        isLoading={isLoading}
-      />
+      {subjects && (
+        <SubjectsMenu
+          subjects={[ALL, ...subjects]}
+          currentSubject={currentSubject}
+          onClick={setCurrentSubject}
+          isLoading={isLoading}
+        />
+      )}
       <BookList books={currentSubjectBooks} isLoading={isLoading} />
-
       <Footer />
     </Layout>
   );

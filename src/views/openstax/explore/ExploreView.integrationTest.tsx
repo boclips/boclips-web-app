@@ -8,7 +8,7 @@ import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 
 describe(`Explore view`, () => {
-  it(`shows first subject's books by default and can select other subjects`, async () => {
+  it(`shows 'All' subject as a first one and can select other subjects`, async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 
@@ -47,11 +47,23 @@ describe(`Explore view`, () => {
     );
 
     expect(await wrapper.findByText('Maths book')).toBeVisible();
-    expect(await wrapper.queryByText('French book')).toBeNull();
-
-    fireEvent.click(wrapper.getByText('French'));
-
     expect(await wrapper.findByText('French book')).toBeVisible();
+    expect(await wrapper.findByText('Physics-1')).toBeVisible();
+    expect(await wrapper.findByText('Physics-2')).toBeVisible();
+
+    fireEvent.click(wrapper.getByLabelText('subject Maths'));
+
+    expect(await wrapper.findByText('Maths book')).toBeVisible();
+    expect(await wrapper.queryByText('French book')).toBeNull();
+    expect(await wrapper.queryByText('Physics-1')).toBeNull();
+    expect(await wrapper.queryByText('Physics-2')).toBeNull();
+
+    fireEvent.click(wrapper.getByLabelText('subject French'));
+
+    expect(await wrapper.queryByText('Maths book')).toBeNull();
+    expect(await wrapper.findByText('French book')).toBeVisible();
+    expect(await wrapper.queryByText('Physics-1')).toBeNull();
+    expect(await wrapper.queryByText('Physics-2')).toBeNull();
   });
 
   it(`only show subjects that are supported`, async () => {
@@ -88,6 +100,7 @@ describe(`Explore view`, () => {
       await wrapper.findByText('Our best content aligned to OpenStax courses'),
     ).toBeVisible();
 
+    expect(wrapper.getByLabelText('subject All')).toBeVisible();
     expect(wrapper.getByLabelText('subject Maths')).toBeVisible();
     expect(wrapper.getByLabelText('subject Business')).toBeVisible();
     expect(wrapper.getByLabelText('subject Humanities')).toBeVisible();
