@@ -17,15 +17,6 @@ context('OpenStax', () => {
     });
 
     cy.findByRole('button', { name: 'book Maths book' }).click();
-    cy.findAllByRole('heading', { name: 'Chapter 1: chapter-one' }).should(
-      'have.length',
-      2,
-    );
-
-    cy.findByRole('button', { name: 'Back' }).click();
-    cy.findByRole('button', { name: 'book Maths book' }).should('be.visible');
-
-    cy.findByRole('button', { name: 'book Maths book' }).click();
 
     cy.findAllByRole('heading', { name: 'Chapter 1: chapter-one' }).should(
       'have.length',
