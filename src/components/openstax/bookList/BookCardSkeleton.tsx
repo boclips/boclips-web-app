@@ -7,6 +7,7 @@ const BookCardSkeleton = () => {
     <>
       {Array.from(Array(4)).map((_, i: number) => (
         <li
+          key={i}
           data-qa={`book-card-skeleton-${i + 1}`}
           className={c(s.bookCard, s.bookCardSkeleton)}
         />

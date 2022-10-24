@@ -7,6 +7,7 @@ const SubjectMenuItemSkeleton = () => {
     <>
       {Array.from(Array(6)).map((_, i: number) => (
         <li
+          key={i}
           data-qa={`subjects-skeleton-${i + 1}`}
           className={c(s.subject, s.subjectSkeleton)}
         />
