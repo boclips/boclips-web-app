@@ -28,12 +28,15 @@ module.exports = {
     extend: {
       gridTemplateRows: {
         home: 'auto minmax(0, 458px) auto',
-        'home-responsive': 'auto minmax(100%, auto) auto',
-        'navbar-responsive': 'repeat(2, auto)',
-        'default-view': 'auto minmax(0, auto) auto',
-        'search-view': 'auto repeat(3, auto) auto',
+        homepage: 'auto 1fr auto',
+        'search-view':
+          'minmax(74px, auto) minmax(30px, min-content) 1fr 1fr max-content',
+        navbar: 'repeat(2, auto)',
+        'cart-view': 'auto minmax(50px, auto) 1fr auto',
+        'orders-view': 'auto minmax(50px, auto) minmax(0, auto) auto',
         'default-view-with-title':
           'auto minmax(50px, auto) minmax(0, auto) auto',
+        'library-view': 'auto minmax(50px, auto) 1fr auto',
         'playlist-view':
           'auto minmax(50px, auto) auto auto minmax(0, auto) auto',
         'explore-view': 'repeat(6, auto)',

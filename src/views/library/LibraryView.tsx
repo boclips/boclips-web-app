@@ -10,7 +10,7 @@ const LibraryView = () => {
   return (
     <>
       <Helmet title="Your library" />
-      <Layout rowsSetup="grid-rows-default-view-with-title" responsiveLayout>
+      <Layout rowsSetup="grid-rows-library-view" responsiveLayout>
         <Navbar />
         <LibraryHeader />
         <Playlists />

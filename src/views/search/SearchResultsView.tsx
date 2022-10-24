@@ -167,24 +167,24 @@ const SearchResultsView = () => {
           areFiltersApplied={areFiltersApplied(debouncedFilters)}
         />
 
-        {isNoSearchResults ? (
-          <NoSearchResults
-            areFiltersApplied={areFiltersApplied(debouncedFilters)}
-            query={query}
-          />
-        ) : (
-          <SearchResults
-            results={data}
-            query={query}
-            handleFilterChange={handleFilterChange}
-            handlePageChange={handlePageChange}
-            currentPage={currentPage}
-            isFetching={isFetching && isPreviousData}
-          />
-        )}
-        {contentPackage && (
-          <ContentPackagePreviewBanner packageId={contentPackage} />
-        )}
+        {/*{isNoSearchResults ? (*/}
+        {/*  <NoSearchResults*/}
+        {/*    areFiltersApplied={areFiltersApplied(debouncedFilters)}*/}
+        {/*    query={query}*/}
+        {/*  />*/}
+        {/*) : (*/}
+        {/*  <SearchResults*/}
+        {/*    results={data}*/}
+        {/*    query={query}*/}
+        {/*    handleFilterChange={handleFilterChange}*/}
+        {/*    handlePageChange={handlePageChange}*/}
+        {/*    currentPage={currentPage}*/}
+        {/*    isFetching={isFetching && isPreviousData}*/}
+        {/*  />*/}
+        {/*)}*/}
+        {/*{contentPackage && (*/}
+        {/*  <ContentPackagePreviewBanner packageId={contentPackage} />*/}
+        {/*)}*/}
       </ErrorBoundary>
       <Footer />
     </Layout>

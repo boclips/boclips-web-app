@@ -45,72 +45,77 @@ export const FilterPanel = ({
   if (!resultsFound && !areFiltersApplied) return null;
 
   return (
-    <div className="row-start-2 row-end-5 col-start-2 col-end-8">
-      <div
-        role="group"
-        className="mb-4 flex justify-between items-center"
-        style={{ height: '1.9375rem' }}
-      >
-        <Typography.H2
-          size="xs"
-          weight="medium"
-          id="filter_by"
-          className={c('text-gray-800', {
-            'pb-2': areFiltersApplied,
-          })}
+    <div className="row-start-2 row-end-3 col-start-2 col-end-8">
+      <div style={{ height: '100%' }}>
+        <div
+          role="group"
+          className="mb-4 flex justify-between items-center"
+          style={{ height: '1.9375rem' }}
         >
-          Filter by:
-        </Typography.H2>
+          <Typography.H2
+            size="xs"
+            weight="medium"
+            id="filter_by"
+            className={c('text-gray-800', {
+              'pb-2': areFiltersApplied,
+            })}
+          >
+            Filter by:
+          </Typography.H2>
 
+          {areFiltersApplied && (
+            <TextButton
+              onClick={removeAllFilters}
+              ariaLabel="Clear all filters"
+              text="Clear all"
+            />
+          )}
+        </div>
         {areFiltersApplied && (
-          <TextButton
-            onClick={removeAllFilters}
-            ariaLabel="Clear all filters"
-            text="Clear all"
-          />
+          <SelectedFilters removeFilter={removeFilter} facets={facets} />
+        )}
+        {resultsFound && (
+          <div role="group" aria-labelledby="filter_by">
+            <SubjectFilter
+              options={options.subjects}
+              handleChange={handleChange}
+            />
+            <BestForFilter
+              options={options.bestFor}
+              handleChange={handleChange}
+            />
+            <LanguageFilter
+              options={options.languages}
+              handleChange={handleChange}
+            />
+            <EducationLevelFilter
+              options={options.educationLevels}
+              handleChange={handleChange}
+            />
+            <VideoTypeFilter
+              options={options.videoTypes}
+              handleChange={handleChange}
+            />
+            <ChannelFilter
+              options={options.channels}
+              handleChange={handleChange}
+            />
+            <CefrLevelFilter
+              options={options.cefrLevels}
+              handleChange={handleChange}
+            />
+            <DurationFilter
+              options={options.durations}
+              handleChange={handleChange}
+            />
+            <DateFilter
+              releaseDates={dateFilters}
+              handleChange={handleChange}
+            />
+            <PriceFilter options={options.prices} handleChange={handleChange} />
+          </div>
         )}
       </div>
-      {areFiltersApplied && (
-        <SelectedFilters removeFilter={removeFilter} facets={facets} />
-      )}
-      {resultsFound && (
-        <div role="group" aria-labelledby="filter_by">
-          <SubjectFilter
-            options={options.subjects}
-            handleChange={handleChange}
-          />
-          <BestForFilter
-            options={options.bestFor}
-            handleChange={handleChange}
-          />
-          <LanguageFilter
-            options={options.languages}
-            handleChange={handleChange}
-          />
-          <EducationLevelFilter
-            options={options.educationLevels}
-            handleChange={handleChange}
-          />
-          <VideoTypeFilter
-            options={options.videoTypes}
-            handleChange={handleChange}
-          />
-          <ChannelFilter
-            options={options.channels}
-            handleChange={handleChange}
-          />
-          <CefrLevelFilter
-            options={options.cefrLevels}
-            handleChange={handleChange}
-          />
-          <DurationFilter
-            options={options.durations}
-            handleChange={handleChange}
-          />
-          <DateFilter releaseDates={dateFilters} handleChange={handleChange} />
-          <PriceFilter options={options.prices} handleChange={handleChange} />
-        </div>
-      )}
     </div>
   );
 };

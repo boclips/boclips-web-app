@@ -30,7 +30,7 @@ const OrdersView = () => {
   if (isInitialLoading && !hasOrders) return <Loading />;
 
   return (
-    <Layout rowsSetup="grid-rows-default-view-with-title">
+    <Layout rowsSetup="grid-rows-orders-view">
       <Navbar />
       <PageHeader title="Your Orders" />
       {hasOrders ? (
