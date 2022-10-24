@@ -1,4 +1,4 @@
-import { useQuery, UseQueryResult } from 'react-query';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { convertApiBookToOpenstaxBook } from 'src/services/convertApiBookToOpenstaxBook';
@@ -14,7 +14,7 @@ export const useGetBook = (bookId: string): UseQueryResult<OpenstaxBook> => {
 
 export const useGetBooksQuery = (): UseQueryResult<OpenstaxBook[]> => {
   const client = useBoclipsClient();
-  return useQuery('books', () => doGetBooks(client));
+  return useQuery(['books'], () => doGetBooks(client));
 };
 
 const doGetBooks = (client: BoclipsClient) =>
@@ -26,7 +26,7 @@ const doGetBooks = (client: BoclipsClient) =>
 
 export const useGetOpenstaxSubjectsQuery = (): UseQueryResult<string[]> => {
   const client = useBoclipsClient();
-  return useQuery('openstaxSubjects', () => doGetOpenstaxSubjects(client));
+  return useQuery(['openstaxSubjects'], () => doGetOpenstaxSubjects(client));
 };
 
 const doGetOpenstaxSubjects = (client: BoclipsClient) =>

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
-import { useQueryClient } from 'react-query';
-import { useHistory } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import { useLocation } from 'react-router-dom';
 
 interface Props {
   children: React.ReactNode;
@@ -27,9 +27,9 @@ export const useGlobalQueryError = () => {
 };
 
 const useProvideError = () => {
-  const [isError, setIsError] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>();
   const client = useQueryClient();
-  const currentLocation = useHistory().location?.pathname;
+  const currentLocation = useLocation().pathname;
 
   React.useEffect(() => {
     if (isError) {
@@ -40,13 +40,10 @@ const useProvideError = () => {
 
   React.useEffect(() => {
     const queryCache = client.getQueryCache();
-    const unsubscribeHandle = queryCache.subscribe(() => {
-      setIsError(
-        client
-          .getQueryCache()
-          .getAll()
-          .some((query) => query.state.status === 'error'),
-      );
+    const unsubscribeHandle = queryCache.subscribe((it) => {
+      if (it.query.state.status === 'error') {
+        setIsError(true);
+      }
     });
 
     return () => unsubscribeHandle();

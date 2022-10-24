@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import { BoInputText } from 'src/components/common/input/BoInputText';
@@ -9,12 +9,20 @@ describe('The mighty Bodal', () => {
     window.resizeTo(1680, 1024);
   });
   it('can find the modal by role=dialog', () => {
-    const wrapper = render(<Bodal title="Title" />);
+    const wrapper = render(
+      <Bodal title="Title">
+        <span>i must be here!</span>
+      </Bodal>,
+    );
     expect(wrapper.getByRole('dialog')).toBeVisible();
   });
 
   it('renders the title that is assigned to the modal', () => {
-    const wrapper = render(<Bodal title="Hello Bodal" />);
+    const wrapper = render(
+      <Bodal title="Hello Bodal">
+        <span>i must be here!</span>
+      </Bodal>,
+    );
     const bodal = wrapper.getByLabelText('Hello Bodal', {
       selector: '[role=dialog]',
     });
@@ -23,7 +31,11 @@ describe('The mighty Bodal', () => {
   });
 
   it('has describedby attribute assigned to the modal', () => {
-    const wrapper = render(<Bodal title="Hello Bodal" />);
+    const wrapper = render(
+      <Bodal title="Hello Bodal">
+        <span>i must be here!</span>
+      </Bodal>,
+    );
     const modal = wrapper.getByRole('dialog');
     const screenReaderText = wrapper.getByText(
       'This is a dialog for Hello Bodal. Escape will cancel and close the window.',
@@ -36,7 +48,11 @@ describe('The mighty Bodal', () => {
 
   it('calls onConfirm when confirm button is clicked', () => {
     const handleConfirm = jest.fn();
-    const wrapper = render(<Bodal title="Title" onConfirm={handleConfirm} />);
+    const wrapper = render(
+      <Bodal title="Title" onConfirm={handleConfirm}>
+        <span>i must be here!</span>
+      </Bodal>,
+    );
     const button = wrapper.getByRole('button', { name: 'Confirm' });
     fireEvent.click(button);
     expect(handleConfirm).toBeCalledTimes(1);
@@ -44,7 +60,11 @@ describe('The mighty Bodal', () => {
 
   it('calls onCancel when cancel button is clicked', () => {
     const handleCancel = jest.fn();
-    const wrapper = render(<Bodal title="Title" onCancel={handleCancel} />);
+    const wrapper = render(
+      <Bodal title="Title" onCancel={handleCancel}>
+        <span>i must be here!</span>
+      </Bodal>,
+    );
     const button = wrapper.getByRole('button', { name: 'Cancel' });
     fireEvent.click(button);
     expect(handleCancel).toBeCalledTimes(1);
@@ -57,8 +77,11 @@ describe('The mighty Bodal', () => {
         title="Title"
         confirmButtonText="Press me!"
         onConfirm={handleConfirm}
-      />,
+      >
+        <span>i must be here!</span>
+      </Bodal>,
     );
+
     const button = wrapper.getByRole('button', { name: 'Press me!' });
     fireEvent.click(button);
     expect(button).toBeVisible();
@@ -68,11 +91,9 @@ describe('The mighty Bodal', () => {
   it('can change the name of the cancel button', () => {
     const handleCancel = jest.fn();
     const wrapper = render(
-      <Bodal
-        title="Title"
-        cancelButtonText="Press me!"
-        onCancel={handleCancel}
-      />,
+      <Bodal title="Title" cancelButtonText="Press me!" onCancel={handleCancel}>
+        <span>i must be here!</span>
+      </Bodal>,
     );
     const button = wrapper.getByRole('button', { name: 'Press me!' });
     fireEvent.click(button);
@@ -89,7 +110,11 @@ describe('The mighty Bodal', () => {
 
   it('calls onCancel when clicking on X', () => {
     const handleCancel = jest.fn();
-    const wrapper = render(<Bodal onCancel={handleCancel} title="The Bodal" />);
+    const wrapper = render(
+      <Bodal onCancel={handleCancel} title="The Bodal">
+        <span>i must be here!</span>
+      </Bodal>,
+    );
     const closeButton = wrapper.getByLabelText('Close The Bodal modal');
     fireEvent.click(closeButton);
     expect(handleCancel).toBeCalledTimes(1);
@@ -103,7 +128,9 @@ describe('The mighty Bodal', () => {
         onConfirm={onConfirmSpy}
         title="The Bodal"
         confirmButtonText="confirm with spinner"
-      />,
+      >
+        <span>i must be here!</span>
+      </Bodal>,
     );
     const confirmButton = wrapper.getByText('confirm with spinner');
 
@@ -115,7 +142,11 @@ describe('The mighty Bodal', () => {
 
   it(`attempts to cancel on pressing esc`, () => {
     const cancelSpy = jest.fn();
-    const wrapper = render(<Bodal title="test" onCancel={cancelSpy} />);
+    const wrapper = render(
+      <Bodal title="test" onCancel={cancelSpy}>
+        <span>i must be here!</span>
+      </Bodal>,
+    );
 
     fireEvent.keyDown(wrapper.getByRole('dialog'), { key: 'Escape' });
 
@@ -147,12 +178,24 @@ describe('The mighty Bodal', () => {
     expect(wrapper.getByLabelText('Focus me (Optional)')).toHaveFocus();
   });
 
-  it(`traps focus to bodal`, () => {
+  it(`traps focus to bodal`, async () => {
     const inputRef = React.createRef<HTMLInputElement>();
+    const user = userEvent.setup();
 
     const wrapper = render(
       <div data-qa="main">
-        <Bodal title="test" initialFocusRef={inputRef}>
+        <BoInputText
+          id="no-focus-text"
+          labelText="Don't focus me"
+          inputType="text"
+          onChange={jest.fn()}
+        />
+        <Bodal
+          title="test"
+          initialFocusRef={inputRef}
+          onCancel={jest.fn()}
+          onConfirm={jest.fn()}
+        >
           <BoInputText
             onChange={jest.fn()}
             id="focus-text"
@@ -161,23 +204,24 @@ describe('The mighty Bodal', () => {
             inputType="text"
           />
         </Bodal>
-        <BoInputText
-          id="no-focus-text"
-          labelText="Don't focus me"
-          inputType="text"
-          onChange={jest.fn()}
-        />
       </div>,
     );
 
     expect(wrapper.getByLabelText('Focus me (Optional)')).toHaveFocus();
-    userEvent.tab();
-    expect(wrapper.getByRole('button', { name: 'Cancel' })).toHaveFocus();
-    userEvent.tab();
-    expect(wrapper.getByRole('button', { name: 'Confirm' })).toHaveFocus();
-    userEvent.tab();
+    user.tab();
 
-    expect(wrapper.getByLabelText('Close test modal')).toHaveFocus();
+    await waitFor(() =>
+      expect(wrapper.getByRole('button', { name: 'Cancel' })).toHaveFocus(),
+    );
+    user.tab();
+    await waitFor(() =>
+      expect(wrapper.getByRole('button', { name: 'Confirm' })).toHaveFocus(),
+    );
+    user.tab();
+    await waitFor(() =>
+      expect(wrapper.getByLabelText('Close test modal')).toHaveFocus(),
+    );
+
     expect(
       wrapper.getByLabelText("Don't focus me (Optional)"),
     ).not.toHaveFocus();
@@ -190,7 +234,9 @@ describe('The mighty Bodal', () => {
     const wrapper = render(
       <div>
         <div>
-          <Bodal title="Title" onCancel={handleCancel} />
+          <Bodal title="Title" onCancel={handleCancel}>
+            <span>i must be here!</span>
+          </Bodal>
         </div>
         <div>Hello</div>
       </div>,
@@ -203,11 +249,9 @@ describe('The mighty Bodal', () => {
   it('onCancel invoked when mouse down outside of bodal when closeOnClickOutside prop is set', () => {
     const handleOnCancel = jest.fn();
     const wrapper = render(
-      <Bodal
-        title="Hello Bodal"
-        onCancel={handleOnCancel}
-        closeOnClickOutside
-      />,
+      <Bodal title="Hello Bodal" onCancel={handleOnCancel} closeOnClickOutside>
+        <span>i must be here!</span>
+      </Bodal>,
     );
     const bodal = wrapper.getByRole('dialog');
 
@@ -218,7 +262,11 @@ describe('The mighty Bodal', () => {
 
   it('onCancel invoked when mouse down outside of bodal and closeOnClickOutside prop not set', () => {
     const handleOnCancel = jest.fn();
-    const wrapper = render(<Bodal title="Bodal" onCancel={handleOnCancel} />);
+    const wrapper = render(
+      <Bodal title="Bodal" onCancel={handleOnCancel}>
+        <span>i must be here!</span>
+      </Bodal>,
+    );
     const bodal = wrapper.getByRole('dialog');
 
     fireEvent.mouseDown(bodal);
@@ -233,7 +281,9 @@ describe('The mighty Bodal', () => {
         title="Bodal"
         onCancel={handleOnCancel}
         closeOnClickOutside={false}
-      />,
+      >
+        <span>i must be here!</span>
+      </Bodal>,
     );
     const bodal = wrapper.getByRole('dialog');
 
@@ -245,11 +295,9 @@ describe('The mighty Bodal', () => {
   it('onCancel invoked when escape key down (when escape pressed with no focus on/within bodal)', () => {
     const handleOnCancel = jest.fn();
     const wrapper = render(
-      <Bodal
-        title="Hello Bodal"
-        onCancel={handleOnCancel}
-        closeOnClickOutside
-      />,
+      <Bodal title="Hello Bodal" onCancel={handleOnCancel} closeOnClickOutside>
+        <span>i must be here!</span>
+      </Bodal>,
     );
 
     const body = wrapper.baseElement;

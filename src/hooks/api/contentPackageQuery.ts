@@ -1,7 +1,7 @@
 import { BoclipsClient } from 'boclips-api-client';
 import { ContentPackage } from 'boclips-api-client/dist/sub-clients/contentPackages/model/ContentPackage';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 export const doGetContentPackage = (
   contentPackageId: string,
@@ -12,7 +12,7 @@ export const doGetContentPackage = (
 
 export const useGetContentPackage = (contentPackageId: string) => {
   const apiClient = useBoclipsClient();
-  return useQuery('contentPackage', () =>
+  return useQuery(['contentPackage'], () =>
     doGetContentPackage(contentPackageId, apiClient),
   );
 };

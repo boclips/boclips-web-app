@@ -1,6 +1,6 @@
 import { Order } from 'boclips-api-client/dist/sub-clients/orders/model/Order';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from '@boclips-ui/button';
 import { OrderThumbnail } from 'src/components/ordersTable/OrderThumbnail';
 import { OrderStatusField } from 'src/components/common/OrderStatusField';
@@ -14,10 +14,10 @@ interface Props {
 }
 
 export const OrdersCard = ({ order }: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const goToOrder = () => {
-    history.push({
+    navigate({
       pathname: `/orders/${order.id}`,
     });
   };

@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
 import { useOwnAndSharedPlaylistsQuery } from 'src/hooks/api/playlistsQuery';
-import { QueryClient } from 'react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 
 describe('playlistsQuery', () => {

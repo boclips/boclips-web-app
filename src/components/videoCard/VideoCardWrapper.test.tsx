@@ -200,16 +200,16 @@ describe('Video card', () => {
         </BoclipsSecurityProvider>,
       );
 
-      fireEvent.click(await wrapper.findByLabelText('Add to playlist'));
+      await waitFor(() =>
+        wrapper.getByLabelText('Add or remove from playlist'),
+      ).then((it) => {
+        fireEvent.click(it);
+      });
 
-      const checkbox = await wrapper.findByRole('checkbox');
-      fireEvent.click(checkbox);
+      fireEvent.click(wrapper.getByText('first playlist'));
 
-      await waitFor(async () => {
-        expect(await wrapper.findByRole('checkbox')).toHaveProperty(
-          'checked',
-          false,
-        );
+      await waitFor(() => wrapper.getByRole('checkbox')).then((it) => {
+        expect(it).toHaveProperty('checked', false);
       });
     });
   });

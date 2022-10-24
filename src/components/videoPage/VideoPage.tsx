@@ -1,7 +1,7 @@
 import React from 'react';
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import { Video } from 'boclips-api-client/dist/types';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import BackArrow from 'resources/icons/back-arrow.svg';
 import c from 'classnames';
 import { TextButton } from 'src/components/common/textButton/TextButton';
@@ -14,13 +14,13 @@ interface Props {
 }
 
 export const VideoPage = ({ video }: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const userNavigatedToPageViaApp = useLocation().state?.userNavigated;
 
   const goToPreviousPage = () => {
-    history.goBack();
+    navigate(-1);
   };
 
-  const userNavigatedToPageViaApp = history.action === 'PUSH';
   const videoMetadataTopMargin = userNavigatedToPageViaApp ? 'lg:mt-8' : '';
 
   return (
@@ -35,7 +35,6 @@ export const VideoPage = ({ video }: Props) => {
         )}
         <VideoPlayer video={video} />
       </main>
-
       <section
         className={c(s.headerSection, videoMetadataTopMargin, 'flex flex-col')}
         aria-labelledby="video-title"

@@ -31,6 +31,7 @@ export const displayNotification = (
     progress: undefined,
     icon: false,
     theme: undefined,
+    toastId: title,
   };
 
   if (type === 'error') {

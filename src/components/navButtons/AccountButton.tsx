@@ -86,8 +86,13 @@ export const AccountButton = () => {
         </div>
       )}
 
-      {displayModal && (
-        <div ref={ref} className={s.tooltip} onBlur={handleDialogBlur}>
+      {displayModal && !isLoading && (
+        <div
+          data-qa="account-modal"
+          ref={ref}
+          className={s.tooltip}
+          onBlur={handleDialogBlur}
+        >
           <div className="font-medium">
             {data.firstName} {data.lastName}
           </div>

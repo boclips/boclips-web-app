@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { CartOrderSummary } from 'src/components/cart/CartOrderSummary';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import {

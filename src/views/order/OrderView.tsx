@@ -17,9 +17,9 @@ const OrderHelmet = ({ orderId }: { orderId?: string }) => {
 
 const OrderTable = () => {
   const orderId = useGetIdFromLocation('orders');
-  const { data: order, isLoading } = useFindOrGetOrder(orderId);
+  const { data: order, isInitialLoading } = useFindOrGetOrder(orderId);
 
-  if (isLoading)
+  if (isInitialLoading)
     return (
       <>
         <OrderHelmet orderId={orderId} />

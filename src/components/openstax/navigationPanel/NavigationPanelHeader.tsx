@@ -6,7 +6,7 @@ import Button from '@boclips-ui/button';
 import CloseButtonIcon from 'src/resources/icons/cross-icon.svg';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useOpenstaxMobileMenu } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 import { BookLogo } from 'src/components/openstax/bookLogo/BookLogo';
 import s from './style.module.less';
@@ -17,12 +17,12 @@ interface Props {
 
 const NavigationPanelHeader = ({ book }: Props) => {
   const isNotDesktop = useMediaBreakPoint().type !== 'desktop';
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { setIsOpen } = useOpenstaxMobileMenu();
 
   const goToExplorePage = () => {
-    history.push('/explore/openstax');
+    navigate('/explore/openstax');
   };
 
   return (

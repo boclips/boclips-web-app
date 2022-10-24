@@ -3,7 +3,7 @@ import { Video } from 'boclips-api-client/dist/types';
 import { CartItemOrderPreview } from 'src/components/cart/CartItemOrderPreview/CartItemOrderPreview';
 import { usePlaceOrderQuery } from 'src/hooks/api/orderQuery';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getTotalPriceDisplayValue } from 'src/services/getTotalPriceDisplayValue';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
@@ -24,7 +24,7 @@ export interface Props {
 }
 
 export const OrderModal = ({ setModalOpen, videos, cart }: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const boclipsClient = useBoclipsClient();
 
   const {
@@ -35,19 +35,23 @@ export const OrderModal = ({ setModalOpen, videos, cart }: Props) => {
     isLoading,
   } = usePlaceOrderQuery();
 
-  const { data: user, isLoading: isUserLoading } = useGetUserQuery();
+  const { data: user, isInitialLoading: isUserLoading } = useGetUserQuery();
 
   React.useEffect(() => {
     if (isSuccess) {
-      history.push({ pathname: '/order-confirmed' }, { orderLocation });
+      navigate('/order-confirmed', {
+        state: {
+          orderLocation,
+        },
+      });
     }
-  }, [history, isSuccess, orderLocation]);
+  }, [navigate, isSuccess, orderLocation]);
 
   React.useEffect(() => {
     if (error) {
-      history.push({ pathname: '/error' }, { error });
+      navigate('/error', { state: error });
     }
-  }, [history, error, orderLocation]);
+  }, [navigate, error, orderLocation]);
 
   const handleConfirm = () => {
     trackOrderConfirmed(boclipsClient);
@@ -69,7 +73,7 @@ export const OrderModal = ({ setModalOpen, videos, cart }: Props) => {
       title="Order summary"
       confirmButtonText="Confirm order"
       onConfirm={handleConfirm}
-      isLoading={isUserLoading || !user || isLoading}
+      isLoading={isLoading || !user || isUserLoading}
       onCancel={() => setModalOpen(false)}
       dataQa="order-modal"
       cancelButtonText="Go back to cart"

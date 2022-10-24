@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SearchBar from '@boclips-ui/search-bar';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   convertToURLSearchParams,
   useLocationParams,
@@ -19,7 +19,7 @@ interface Props {
 }
 
 export const Search = ({ showIconOnly, onSearch }: Props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const apiClient = useBoclipsClient();
   const [searchLocation] = useSearchQueryLocationParams();
   const query = useLocationParams().get('q');
@@ -67,7 +67,7 @@ export const Search = ({ showIconOnly, onSearch }: Props) => {
       );
     }
 
-    return history.push({
+    return navigate({
       pathname: '/videos',
       search: params.toString(),
     });

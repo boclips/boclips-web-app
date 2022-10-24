@@ -54,9 +54,8 @@
   button {
     position: relative;
 
-
     .createdBy {
-    @apply text-gray-900 hover:underline hover:decoration-solid;
+      @apply text-gray-900 hover:underline hover:decoration-solid;
       max-width: 100px;
       white-space: nowrap;
       overflow: hidden;
@@ -64,7 +63,7 @@
     }
   }
 
-  span{
+  span {
     --bo-ui-badge-margin: 0;
     --bo-ui-badge-padding: 2px 4px 2px 4px;
     position: relative;
@@ -73,9 +72,9 @@
     display: flex;
     align-items: center;
 
-    &:nth-child(n+2){
-      &:before{
-        height:24px;
+    &:nth-child(n + 2) {
+      &:before {
+        height: 24px;
         content: '•';
         color: @blue-800;
         padding-right: 4px;
@@ -86,4 +85,3 @@
     }
   }
 }
-

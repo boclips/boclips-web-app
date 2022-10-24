@@ -34,7 +34,7 @@ export const CopyVideoLinkButton = ({ video, onClick }: Props) => {
       onCopy={handleCopied}
       textToCopy={link}
       disabled={!isFetched}
-      dataQa={`copy-button-${video.id}`}
+      dataQa={`copy-button-${isFetched}`}
     />
   );
 };

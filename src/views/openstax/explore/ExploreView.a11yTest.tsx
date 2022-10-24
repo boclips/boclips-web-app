@@ -2,7 +2,7 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
 import { render } from '@testing-library/react';
 import React from 'react';
-import { QueryClient } from 'react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';

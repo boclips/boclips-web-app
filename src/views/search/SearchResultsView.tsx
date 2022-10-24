@@ -12,7 +12,7 @@ import { FilterPanel } from 'src/components/filterPanel/FilterPanel';
 import { SearchResults } from 'src/components/searchResults/SearchResults';
 import Footer from 'src/components/layout/Footer';
 import { FilterKey } from 'src/types/search/FilterKey';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { NoSearchResults } from 'src/components/noResults/NoSearchResults';
 import { Loading } from 'src/components/common/Loading';
@@ -42,13 +42,15 @@ const SearchResultsView = () => {
 
   const boclipsClient = useBoclipsClient();
 
-  const { data, isLoading, isFetching, isPreviousData } = useSearchQuery({
-    query,
-    page: currentPage - 1,
-    pageSize: PAGE_SIZE,
-    contentPackage,
-    filters: { ...debouncedFilters, topics: filtersFromURL.topics },
-  });
+  const { data, isInitialLoading, isFetching, isPreviousData } = useSearchQuery(
+    {
+      query,
+      page: currentPage - 1,
+      pageSize: PAGE_SIZE,
+      contentPackage,
+      filters: { ...debouncedFilters, topics: filtersFromURL.topics },
+    },
+  );
 
   const hasNextPage = currentPage < data?.pageSpec?.totalPages;
 
@@ -149,7 +151,7 @@ const SearchResultsView = () => {
     from: filtersFromURL.release_date_from,
   };
 
-  if (isLoading) return <Loading />;
+  if (isInitialLoading) return <Loading />;
 
   return (
     <Layout rowsSetup="grid-rows-search-view">

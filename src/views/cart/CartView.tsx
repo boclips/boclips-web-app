@@ -9,7 +9,7 @@ import { Layout } from 'src/components/layout/Layout';
 import PageHeader from 'src/components/pageTitle/PageHeader';
 
 const CartView = () => {
-  const { data: cart, isLoading: isCartLoading } = useCartQuery();
+  const { data: cart, isInitialLoading: isCartLoading } = useCartQuery();
   const hasItemsInCart = cart?.items?.length > 0;
 
   const cartInfo = hasItemsInCart && (

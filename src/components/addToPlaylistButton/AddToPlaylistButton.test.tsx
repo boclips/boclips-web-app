@@ -1,7 +1,12 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { render } from 'src/testSupport/render';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import { fireEvent, RenderResult, waitFor } from '@testing-library/react';
+import {
+  fireEvent,
+  RenderResult,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import React from 'react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
@@ -110,26 +115,31 @@ describe('Add to playlist button', () => {
         </BoclipsClientProvider>,
       );
 
-      const playlistButton = await wrapper.findByLabelText('Add to playlist');
-      fireEvent.click(playlistButton);
+      await waitFor(() =>
+        wrapper.getByLabelText('Add or remove from playlist'),
+      ).then((it) => {
+        fireEvent.click(it);
+      });
 
-      userEvent.tab();
+      await waitFor(() =>
+        expect(
+          wrapper.getByRole('checkbox', {
+            name: 'Playlist 6777',
+          }),
+        ).toHaveFocus(),
+      );
 
-      expect(
-        await wrapper.findByRole('checkbox', {
-          name: 'Playlist 6777',
-        }),
-      ).toHaveFocus();
+      await userEvent.tab();
 
-      userEvent.tab();
+      await waitFor(() =>
+        expect(
+          wrapper.getByRole('button', {
+            name: 'Create new playlist',
+          }),
+        ).toHaveFocus(),
+      );
 
-      expect(
-        await wrapper.findByRole('button', {
-          name: 'Create new playlist',
-        }),
-      ).toHaveFocus();
-
-      userEvent.tab();
+      await userEvent.tab();
 
       expect(
         await wrapper.findByLabelText('close add to playlist'),
@@ -146,18 +156,21 @@ describe('Add to playlist button', () => {
         </BoclipsClientProvider>,
       );
 
-      const playlistButton = await wrapper.findByLabelText('Add to playlist');
-      fireEvent.click(playlistButton);
+      await waitFor(() => wrapper.getByLabelText('Add to playlist')).then(
+        (it) => {
+          fireEvent.click(it);
+        },
+      );
 
-      userEvent.tab();
+      await waitFor(() =>
+        expect(
+          wrapper.getByRole('button', {
+            name: 'Create new playlist',
+          }),
+        ).toHaveFocus(),
+      );
 
-      expect(
-        await wrapper.findByRole('button', {
-          name: 'Create new playlist',
-        }),
-      ).toHaveFocus();
-
-      userEvent.tab();
+      await userEvent.tab();
 
       expect(
         await wrapper.findByLabelText('close add to playlist'),
@@ -241,13 +254,19 @@ describe('Add to playlist button', () => {
 
     const wrapper = renderWrapper(fakeClient);
 
-    const playlistButton = await wrapper.findByLabelText('Add to playlist');
+    await waitFor(() =>
+      wrapper.getByLabelText('Add or remove from playlist'),
+    ).then((it) => {
+      fireEvent.click(it);
+    });
 
-    fireEvent.click(playlistButton);
-
-    const playlistCheckbox = await wrapper.findByLabelText(playlist.title);
-
-    fireEvent.click(playlistCheckbox);
+    await waitFor(() =>
+      wrapper.getByRole('checkbox', {
+        name: playlist.title,
+      }),
+    ).then((it) => {
+      fireEvent.click(it);
+    });
 
     await waitFor(() =>
       expect(hotjarVideoRemovedFromPlaylist).toHaveBeenCalledWith(
@@ -317,7 +336,10 @@ describe('Add to playlist button', () => {
 
       createPlaylist(wrapper, 'ornament');
 
-      fireEvent.click(await wrapper.findByLabelText('Add to playlist'));
+      fireEvent.click(
+        await wrapper.findByLabelText('Add or remove from playlist'),
+      );
+
       expect(
         await wrapper.findByRole('checkbox', { name: 'ornament' }),
       ).toBeChecked();
@@ -330,11 +352,16 @@ describe('Add to playlist button', () => {
 
       createPlaylist(wrapper, 'river');
 
-      expect(await wrapper.findByTestId('create-river-playlist')).toBeVisible();
+      await waitForElementToBeRemoved(() =>
+        wrapper.getByTestId('playlist-modal'),
+      );
 
       expect(
+        await wrapper.findByTestId('create-river-playlist'),
+      ).toBeInTheDocument();
+      expect(
         await wrapper.findByTestId('add-video-to-river-playlist'),
-      ).toBeVisible();
+      ).toBeInTheDocument();
     });
 
     it('closes the modal and pop up on successful creation of playlist', async () => {

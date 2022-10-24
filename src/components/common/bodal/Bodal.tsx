@@ -25,6 +25,7 @@ export interface Props {
   dataQa?: string;
   initialFocusRef?: React.RefObject<HTMLElement>;
   closeOnClickOutside?: boolean;
+  children: React.ReactNode;
 }
 
 export const Bodal: React.FC<Props> = ({

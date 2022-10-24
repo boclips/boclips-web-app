@@ -5,7 +5,7 @@ import {
   ChapterFactory,
   SectionFactory,
 } from 'boclips-api-client/dist/test-support/BookFactory';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
@@ -164,7 +164,7 @@ describe('OpenstaxBookNavigationPanel', () => {
     expect(wrapper.queryByText('button')).toBeNull();
   });
 
-  it('chapters can be expanded and collapsed, first chapter expanded by default', () => {
+  it('chapters can be expanded and collapsed, first chapter expanded by default', async () => {
     resizeToDesktop();
 
     const book: OpenstaxBook = OpenstaxBookFactory.sample({
@@ -210,16 +210,22 @@ describe('OpenstaxBookNavigationPanel', () => {
       name: 'Chapter 1: default expanded',
     });
     chapter1Button.click();
-    expect(
-      wrapper.queryByRole('heading', { name: '1.1 initially visible' }),
-    ).toBeNull();
+
+    await waitFor(() =>
+      expect(
+        wrapper.queryByRole('heading', { name: '1.1 initially visible' }),
+      ).toBeNull(),
+    );
 
     const chapter2Button = wrapper.getByRole('button', {
       name: 'Chapter 2: default collapsed',
     });
     chapter2Button.click();
-    expect(
-      wrapper.getByRole('heading', { name: '2.1 initially hidden' }),
-    ).toBeVisible();
+
+    await waitFor(() =>
+      expect(
+        wrapper.getByRole('heading', { name: '2.1 initially hidden' }),
+      ).toBeVisible(),
+    );
   });
 });

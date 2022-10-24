@@ -26,7 +26,8 @@ const Playlists = () => {
     AnalyticsFactory.hotjar().event(HotjarEvents.PlaylistLinkCopied);
   const [page, setPage] = useState<number>(1);
 
-  const { data: playlists, isLoading } = useOwnAndSharedPlaylistsQuery(page);
+  const { data: playlists, isInitialLoading } =
+    useOwnAndSharedPlaylistsQuery(page);
 
   const handlePageChange = (newPage: number) => {
     window.scrollTo({ top: 0 });
@@ -52,7 +53,7 @@ const Playlists = () => {
 
   return (
     <main tabIndex={-1} className={s.playlistsWrapper}>
-      {isLoading ? (
+      {isInitialLoading ? (
         <SkeletonTiles className={s.skeletonCard} rows={3} cols={4} />
       ) : (
         playlists.page.length > 0 && (

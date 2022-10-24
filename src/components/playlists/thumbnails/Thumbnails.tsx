@@ -9,9 +9,17 @@ interface Props {
 }
 
 const Thumbnails = ({ videos }: Props) => {
-  const { data: firstVideo } = useFindOrGetVideo(videos[0]?.id);
-  const { data: secondVideo } = useFindOrGetVideo(videos[1]?.id);
-  const { data: thirdVideo } = useFindOrGetVideo(videos[2]?.id);
+  const { data: firstVideo, isLoading: firstLoading } = useFindOrGetVideo(
+    videos[0]?.id,
+  );
+  const { data: secondVideo, isLoading: secondLoading } = useFindOrGetVideo(
+    videos[1]?.id,
+  );
+  const { data: thirdVideo, isLoading: thirdLoading } = useFindOrGetVideo(
+    videos[2]?.id,
+  );
+
+  const loading = [firstLoading, secondLoading, thirdLoading];
 
   const getThumbnailUrl = (video: Video) =>
     video.playback?.links?.thumbnail?.getOriginalLink();
@@ -19,7 +27,7 @@ const Thumbnails = ({ videos }: Props) => {
   return (
     <div className={s.thumbnailsContainer}>
       {[firstVideo, secondVideo, thirdVideo].map((video, i) => {
-        if (video) {
+        if (video && loading[i] === false) {
           return (
             <div
               className={s.thumbnails}

@@ -7,8 +7,7 @@ import {
 } from 'src/hooks/api/openstaxQuery';
 import { renderHook } from '@testing-library/react-hooks';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
-import { QueryClient } from 'react-query';
-import { waitFor } from '@testing-library/react';
+import { QueryClient } from '@tanstack/react-query';
 
 describe('OpenstaxQuery', () => {
   it('gets an openstax book by id', async () => {
@@ -25,7 +24,8 @@ describe('OpenstaxQuery', () => {
       wrapper: wrapperWithClients(fakeClient, new QueryClient()),
     });
 
-    await waitFor(() => bookHook.result.current.isSuccess);
+    await bookHook.waitFor(() => bookHook.result.current.isSuccess);
+
     expect(bookHook.result.current.data.id).toEqual('art-history-id');
     expect(bookHook.result.current.data.title).toEqual('The history of art');
   });
@@ -40,7 +40,7 @@ describe('OpenstaxQuery', () => {
       wrapper: wrapperWithClients(fakeClient, new QueryClient()),
     });
 
-    await waitFor(() => getBooksHook.result.current.isSuccess);
+    await getBooksHook.waitFor(() => getBooksHook.result.current.isSuccess);
     const result = getBooksHook.result.current.data;
 
     expect(result).toHaveLength(1);
@@ -56,7 +56,7 @@ describe('OpenstaxQuery', () => {
       wrapper: wrapperWithClients(fakeClient, new QueryClient()),
     });
 
-    await waitFor(() => hook.result.current.isSuccess);
+    await hook.waitFor(() => hook.result.current.isSuccess);
     const result = hook.result.current.data;
 
     expect(result).toHaveLength(3);
