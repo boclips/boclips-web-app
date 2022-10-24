@@ -3,12 +3,13 @@
 .gridCard {
   width: 100%;
   position: relative;
-  min-height: 330px;
+  min-height: 268px;
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
   display: grid;
   grid-template-rows:
     minmax(min-content, max-content) minmax(min-content, max-content)
     auto auto;
+  align-content: start;
 
   &:hover {
     .playerBadge {
