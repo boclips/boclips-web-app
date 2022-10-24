@@ -27,6 +27,7 @@ import '@percy/cypress';
 import '@testing-library/cypress/add-commands';
 
 Cypress.Commands.add('bo', (callback) => {
+  // @ts-ignore
   cy.window().then(({ bo }) => {
     callback(bo);
   });
