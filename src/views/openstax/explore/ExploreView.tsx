@@ -12,8 +12,9 @@ import ExploreHeader from 'src/components/openstax/exploreHeader/ExploreHeader';
 
 const ExploreView = () => {
   const ALL = 'All';
-  const { data: books, isLoading } = useGetBooksQuery();
-  const { data: subjects } = useGetOpenstaxSubjectsQuery();
+  const { data: books, isLoading: areBooksLoading } = useGetBooksQuery();
+  const { data: subjects, isLoading: areSubjectsLoading } =
+    useGetOpenstaxSubjectsQuery();
   const [currentSubject, setCurrentSubject] = useState(ALL);
 
   const currentSubjectBooks = useMemo(
@@ -24,18 +25,19 @@ const ExploreView = () => {
     [books, subjects, currentSubject],
   );
 
+  const isLoading = areBooksLoading || areSubjectsLoading;
+
   return (
     <Layout rowsSetup="grid-rows-explore-view" responsiveLayout>
       <Navbar />
       <ExploreHeader />
-      {subjects && (
-        <SubjectsMenu
-          subjects={[ALL, ...subjects]}
-          currentSubject={currentSubject}
-          onClick={setCurrentSubject}
-          isLoading={isLoading}
-        />
-      )}
+      <SubjectsMenu
+        subjects={isLoading ? [] : [ALL, ...subjects]}
+        currentSubject={currentSubject}
+        onClick={setCurrentSubject}
+        isLoading={isLoading}
+      />
+
       <BookList books={currentSubjectBooks} isLoading={isLoading} />
       <Footer />
     </Layout>
