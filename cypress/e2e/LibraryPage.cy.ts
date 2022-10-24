@@ -36,6 +36,7 @@ context('Libray page', () => {
     cy.findByText('My playlist').click();
 
     cy.get('[data-qa="playlistTitle"]').should('be.visible');
+    cy.findAllByLabelText('Add or remove from playlist').should('exist');
 
     cy.percySnapshot('Playlist with videos view', {
       widths: snapshotViewWidths,
