@@ -34,7 +34,7 @@ const GridCard = ({
           to={{
             pathname: link,
           }}
-          state={{ name }}
+          state={{ name, userNavigated: true }}
           onClick={onLinkClicked}
           aria-label={`${name} grid card`}
         >
