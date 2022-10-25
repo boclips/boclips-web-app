@@ -49,10 +49,7 @@ const PlaylistBody = ({ playlist }: Props) => {
         tabIndex={-1}
         className={
           isEmptyPlaylist
-            ? c(
-                s.emptyPlaylistWrapper,
-                'grid-row-start-4 grid-row-end-4 col-start-2 col-end-26',
-              )
+            ? c(s.emptyPlaylistWrapper, 'col-start-2 col-end-26')
             : c(
                 s.cardWrapper,
                 'grid-row-start-5 grid-row-end-5 col-start-2 col-end-26',

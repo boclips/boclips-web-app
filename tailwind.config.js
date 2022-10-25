@@ -36,7 +36,7 @@ module.exports = {
         'orders-view': 'minmax(74px, auto) minmax(50px, auto) 1fr auto',
         'library-view': 'minmax(74px, auto) minmax(50px, auto) 1fr auto',
         'playlist-view':
-          'minmax(74px, auto) minmax(50px, auto) min-content auto 1fr auto',
+          'minmax(74px, auto) minmax(50px, auto) min-content 1fr auto',
         'explore-view': 'minmax(74px, auto) min-content min-content 1fr auto',
         'openstax-detailed-view':
           'minmax(74px, auto) min-content min-content 1fr auto',
