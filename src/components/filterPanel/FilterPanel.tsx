@@ -45,7 +45,7 @@ export const FilterPanel = ({
   if (!resultsFound && !areFiltersApplied) return null;
 
   return (
-    <div className="row-start-2 row-end-5 col-start-2 col-end-8">
+    <div className="row-start-2 row-end-4 col-start-2 col-end-8">
       <div
         role="group"
         className="mb-4 flex justify-between items-center"

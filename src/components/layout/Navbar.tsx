@@ -49,7 +49,7 @@ const NavbarResponsive = (): ReactElement => {
       <nav
         className={c(
           s.navbarResponsive,
-          'grid col-span-full grid-rows-navbar-responsive items-center gap-x-2 lg:gap-x-6 grid-cols-container',
+          'grid col-span-full grid-rows-navbar items-center gap-x-2 lg:gap-x-6 grid-cols-container',
         )}
         aria-label="Boclips navigation bar"
       >

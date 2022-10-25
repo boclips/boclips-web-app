@@ -83,7 +83,7 @@ export const SearchResults = ({
       />
       <main
         tabIndex={-1}
-        className={c('col-start-8 col-end-26 row-end-4', {
+        className={c('col-start-8 col-end-26 row-end-5', {
           'row-start-3': hasSearchTopics,
           'row-start-2': !hasSearchTopics,
         })}

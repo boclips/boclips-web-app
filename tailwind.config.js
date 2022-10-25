@@ -28,18 +28,20 @@ module.exports = {
     extend: {
       gridTemplateRows: {
         home: 'auto minmax(0, 458px) auto',
-        'home-responsive': 'auto minmax(100%, auto) auto',
-        'navbar-responsive': 'repeat(2, auto)',
-        'default-view': 'auto minmax(0, auto) auto',
-        'search-view': 'auto repeat(3, auto) auto',
-        'default-view-with-title':
-          'auto minmax(50px, auto) minmax(0, auto) auto',
+        homepage: 'auto 1fr auto',
+        'search-view':
+          'minmax(74px, auto) minmax(30px, min-content) auto 1fr auto',
+        navbar: 'repeat(2, auto)',
+        'cart-view': 'minmax(74px, auto) minmax(50px, auto) 1fr auto',
+        'orders-view': 'minmax(74px, auto) minmax(50px, auto) 1fr auto',
+        'library-view': 'minmax(74px, auto) minmax(50px, auto) 1fr auto',
         'playlist-view':
-          'auto minmax(50px, auto) auto auto minmax(0, auto) auto',
-        'explore-view': 'repeat(6, auto)',
-        'openstax-detailed-view': 'repeat(4, auto)',
-        'order-view': 'auto 21px minmax(0, auto) minmax(0, auto) auto',
-        'video-view': 'auto minmax(0, auto) repeat(5,auto)',
+          'minmax(74px, auto) minmax(50px, auto) min-content auto 1fr auto',
+        'explore-view': 'minmax(74px, auto) min-content min-content 1fr auto',
+        'openstax-detailed-view':
+          'minmax(74px, auto) min-content min-content 1fr auto',
+        'order-view': 'minmax(74px, auto) 21px min-content 1fr auto',
+        'video-view': 'minmax(74px, auto) minmax(0, auto) repeat(5,auto)',
       },
       gridTemplateColumns: {
         container:

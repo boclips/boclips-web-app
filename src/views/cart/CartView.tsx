@@ -22,7 +22,7 @@ const CartView = () => {
   if (isCartLoading) return <Loading />;
 
   return (
-    <Layout rowsSetup="grid-rows-default-view-with-title">
+    <Layout rowsSetup="grid-rows-cart-view">
       <Navbar />
       <PageHeader title="Shopping cart" cartItems={cartInfo} />
       {hasItemsInCart ? <Cart cart={cart} /> : <EmptyCart />}

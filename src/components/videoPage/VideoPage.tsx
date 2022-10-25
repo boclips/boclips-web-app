@@ -21,22 +21,37 @@ export const VideoPage = ({ video }: Props) => {
     navigate(-1);
   };
 
-  const videoMetadataTopMargin = userNavigatedToPageViaApp ? 'lg:mt-8' : '';
-
   return (
     <>
-      <main tabIndex={-1} className={s.playerSection}>
-        {userNavigatedToPageViaApp && (
+      {userNavigatedToPageViaApp && (
+        <div
+          className={c('col-start-2 col-end-26', {
+            'row-start-2 row-end-2': userNavigatedToPageViaApp,
+          })}
+        >
           <TextButton
             onClick={goToPreviousPage}
             icon={<BackArrow />}
             text="Back"
           />
-        )}
+        </div>
+      )}
+      <main
+        tabIndex={-1}
+        className={c(s.playerSection, {
+          '!row-start-3': userNavigatedToPageViaApp,
+        })}
+      >
         <VideoPlayer video={video} />
       </main>
       <section
-        className={c(s.headerSection, videoMetadataTopMargin, 'flex flex-col')}
+        className={c(
+          s.headerSection,
+          {
+            '!row-start-3': userNavigatedToPageViaApp,
+          },
+          'flex flex-col',
+        )}
         aria-labelledby="video-title"
       >
         <VideoHeaderWithDescription video={video} />

@@ -38,7 +38,7 @@ export const OrdersTable = ({ orders, paginationPage }: Props) => {
   return (
     <main
       tabIndex={-1}
-      className="col-start-2 col-end-26 row-start-3 row-end-4 flex items-center"
+      className="col-start-2 col-end-26 row-start-3 row-end-4 flex items-start"
     >
       <List
         className="w-full"
