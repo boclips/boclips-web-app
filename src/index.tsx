@@ -12,6 +12,9 @@ import { Integrations } from '@sentry/tracing';
 import App from './App';
 import { Constants } from './AppConstants';
 import { FallbackApp } from './FallbackApp';
+import { defineCustomElements } from '@duetds/date-picker/dist/loader';
+
+defineCustomElements(window);
 
 // eslint-disable-next-line import/extensions
 import { loadHotjar } from './thirdParty/loadHotjar.js';
@@ -56,6 +59,7 @@ if (Constants.IS_SENTRY_ENABLED) {
 }
 
 const onLogin = async () => {
+  console.log('hello');
   try {
     const apiClient = await ApiBoclipsClient.create(
       axios,

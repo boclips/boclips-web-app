@@ -9,7 +9,7 @@ interface Props {
 export const SearchResultsSummary = ({ count, query }: Props) => {
   return (
     <Typography.Body className="text-gray-800 ml-1 pt-1" role="status">
-      Showing <span data-qa="search-hits">{count}</span> videos
+      Showing hello!! <span data-qa="search-hits">{count}</span> videos
       {query?.length > 0 && ` for "${query}"`}
     </Typography.Body>
   );

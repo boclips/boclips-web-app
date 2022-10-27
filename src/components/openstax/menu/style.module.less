@@ -1,5 +1,5 @@
-@import '~@boclips-ui/styles/src/colors';
-@import '~@boclips-ui/styles/src/focus';
+@import '@boclips-ui/styles/src/colors';
+@import '@boclips-ui/styles/src/focus';
 
 #barOnBottom {
   content: '';
@@ -54,10 +54,12 @@
 
   border-radius: 4px;
   animation: skeleton ease-in 1s infinite;
-  background: linear-gradient(90deg,
-  @gray-100 25%,
-  @gray-400 37%,
-  @gray-100 63%);
+  background: linear-gradient(
+    90deg,
+    @gray-100 25%,
+    @gray-400 37%,
+    @gray-100 63%
+  );
   background-size: 200% 200%;
   border: 1px solid @gray-400 !important;
 }

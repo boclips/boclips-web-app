@@ -1,4 +1,4 @@
-import { currencyFormat } from 'simple-currency-format';
+import { currencyFormat } from 'simple-currency-format/dist/simple-currency-format.cjs.production.min';
 
 export const createPriceDisplayValue = (
   amount?: number,

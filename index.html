@@ -6,9 +6,16 @@
     <script src='//fast.appcues.com/50444.js'></script>
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico"/>
     <base href='/'/>
+    
 </head>
 <body>
-$SPA_VARS
+ <script type="text/javascript">
+        window.Environment = {
+            AUTH_ENDPOINT: 'https://login.staging-boclips.com',
+            API_PREFIX: 'https://api.staging-boclips.com',
+        };
+    </script>
 <div id='root'></div>
+<script type="module" src="/src/index.tsx"></script>
 </body>
 </html>

@@ -3,7 +3,6 @@ import { Route, Switch, useLocation } from 'react-router-dom';
 import { BoclipsClient } from 'boclips-api-client';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Loading } from 'src/components/common/Loading';
-import { hot } from 'react-hot-loader/root';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
 import { trackPageRendered } from 'src/components/common/analytics/Analytics';
@@ -246,4 +245,4 @@ const App = ({
   );
 };
 
-export default hot(App);
+export default App;

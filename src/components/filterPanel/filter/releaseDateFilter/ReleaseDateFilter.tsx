@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { defineCustomElements } from '@duetds/date-picker/dist/loader';
 import { enGB } from './helpers/localization';
 import { dateAdapter } from './helpers/dateAdapter';
 import useListener from './hooks/useListener';
@@ -24,7 +23,6 @@ const DateSelect = ({
   id = 'date',
   ...props
 }: Props): React.ReactElement => {
-  defineCustomElements(window);
 
   const ref = useRef(null);
   useListener(ref, 'duetChange', onChange);
