@@ -14,6 +14,11 @@ import { CartItemFactory } from 'boclips-api-client/dist/test-support/CartsFacto
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { sleep } from 'src/testSupport/sleep';
+import {
+  BookFactory,
+  ChapterFactory,
+  SectionFactory,
+} from 'boclips-api-client/dist/test-support/BookFactory';
 
 describe('Video View', () => {
   let fakeClient;
@@ -131,6 +136,30 @@ describe('Video View', () => {
 
     expect(await wrapper.findByText('video-id')).toBeVisible();
     expect(wrapper.queryByText('Add to cart')).toBeNull();
+  });
+
+  it(`will display embed video as primary button when navigation from explore section`, async () => {
+    const book = BookFactory.sample({
+      id: 'book-id',
+      chapters: [
+        ChapterFactory.sample({
+          sections: [
+            SectionFactory.sample({
+              videoIds: ['video-id'],
+            }),
+          ],
+        }),
+      ],
+    });
+    fakeClient.openstax.setOpenstaxBooks([book]);
+    fakeClient.videos.insertVideo(exampleVideo);
+    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+
+    const wrapper = renderVideoView(['/explore/openstax/book-id']);
+
+    expect(await wrapper.findByText('video-id')).toBeVisible();
+    expect(wrapper.queryByText('Add to cart')).toBeNull();
+    expect(wrapper.getByRole('button', { name: 'embed' })).toBeVisible();
   });
 
   it('copy to clipboard button is visible in the page', async () => {
