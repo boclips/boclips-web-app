@@ -47,17 +47,17 @@ describe(`embed button`, () => {
     expect(within(notification).getByText('Embed code copied!')).toBeVisible();
   });
 
-  it(`shows tooltip when hovering on button`, () => {
+  it(`shows tooltip when hovering on button and no label`, () => {
     const video = VideoFactory.sample({});
     const fakeClient = new FakeBoclipsClient();
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
         <ToastContainer />
-        <EmbedButton video={video} />
+        <EmbedButton video={video} iconOnly />
       </BoclipsClientProvider>,
     );
 
     fireEvent.mouseOver(wrapper.getByRole('button', { name: 'embed' }));
-    expect(screen.getByText('Copy embed code'));
+    expect(screen.getByText('Get embed code'));
   });
 });

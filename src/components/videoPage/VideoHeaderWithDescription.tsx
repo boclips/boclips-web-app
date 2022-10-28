@@ -10,6 +10,10 @@ import { Typography } from '@boclips-ui/typography';
 import { VideoInfo } from 'src/components/common/videoInfo/VideoInfo';
 import { VideoDescription } from 'src/components/videoPage/VideoDescription';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { EmbedButton } from 'src/components/embedButton/EmbedButton';
+import { useLocation } from 'react-router-dom';
+import { DownloadTranscriptButton } from 'src/components/downloadTranscriptButton/DownloadTranscriptButton';
+import { isEmbedMode } from 'src/components/videoPage/isEmbedMode';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
 
@@ -18,6 +22,9 @@ interface Props {
 }
 
 export const VideoHeaderWithDescription = ({ video }: Props) => {
+  const embedMode = isEmbedMode(useLocation().state?.originPathname);
+  const videoHasTranscript = !!video.links.transcript;
+
   const mixpanel = AnalyticsFactory.mixpanel();
   const trackVideoCopy = () => {
     AnalyticsFactory.appcues().sendEvent(
@@ -65,19 +72,26 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
             }}
           />
           <CopyVideoLinkButton video={video} onClick={trackVideoCopy} />
+          {embedMode && videoHasTranscript && (
+            <DownloadTranscriptButton video={video} />
+          )}
         </div>
-        <FeatureGate linkName="cart">
-          <AddToCartButton
-            video={video}
-            width="200px"
-            onClick={() => {
-              AnalyticsFactory.appcues().sendEvent(
-                AppcuesEvent.ADD_TO_CART_FROM_VIDEO_PAGE,
-              );
-              mixpanel.track('video_details_cart_add');
-            }}
-          />
-        </FeatureGate>
+        {embedMode ? (
+          <EmbedButton video={video} iconOnly={false} />
+        ) : (
+          <FeatureGate linkName="cart">
+            <AddToCartButton
+              video={video}
+              width="200px"
+              onClick={() => {
+                AnalyticsFactory.appcues().sendEvent(
+                  AppcuesEvent.ADD_TO_CART_FROM_VIDEO_PAGE,
+                );
+                mixpanel.track('video_details_cart_add');
+              }}
+            />
+          </FeatureGate>
+        )}
       </div>
     </>
   );
