@@ -28,7 +28,7 @@ export const BookCard = ({ book }: Props) => {
     >
       <BookLogo book={book} />
       <div className={s.bookTitle}>
-        <Typography.H2 size="sm" className="font-medium">
+        <Typography.H2 size="xs" className="!text-base">
           {book.title}
         </Typography.H2>
         <span className="text-gray-700 text-sm">

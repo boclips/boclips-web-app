@@ -9,7 +9,7 @@ const ExploreHeader = () => {
       aria-labelledby="page-header"
     >
       <div className="flex grow flex-col space-y-2 md:space-y-4 mb-4">
-        <Typography.H1 size="md" id="page-header">
+        <Typography.H1 size="lg" id="page-header">
           Our best content aligned to OpenStax courses
         </Typography.H1>
 
