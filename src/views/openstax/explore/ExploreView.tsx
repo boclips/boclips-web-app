@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import { Layout } from 'src/components/layout/Layout';
@@ -24,6 +24,20 @@ const ExploreView = () => {
         : books?.filter((book) => subjects && book.subject === currentSubject),
     [books, subjects, currentSubject],
   );
+
+  useEffect(() => {
+    const firstBook = currentSubjectBooks?.[0];
+    const isNavFocused = document
+      .querySelector('main')
+      .contains(document.activeElement);
+
+    if (firstBook !== undefined && isNavFocused) {
+      const element: HTMLButtonElement = document.querySelector(
+        `[aria-label="book ${firstBook.title}"]`,
+      );
+      element.focus();
+    }
+  }, [currentSubjectBooks]);
 
   const isLoading = areBooksLoading || areSubjectsLoading;
 

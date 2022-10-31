@@ -6,6 +6,7 @@ import { QueryClient } from '@tanstack/react-query';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import userEvent from '@testing-library/user-event';
 
 describe(`Explore view`, () => {
   it(`shows 'All' subject as a first one and can select other subjects`, async () => {
@@ -108,5 +109,47 @@ describe(`Explore view`, () => {
     expect(wrapper.getByLabelText('subject Business')).toBeVisible();
     expect(wrapper.getByLabelText('subject Humanities')).toBeVisible();
     expect(wrapper.queryByLabelText('subject French')).toBeNull();
+  });
+
+  describe('Subject menu focus', () => {
+    it('changes the focus when subject is selected', async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+      fakeClient.openstax.setOpenstaxBooks([
+        BookFactory.sample({
+          id: 'book-1',
+          subject: 'Maths',
+          title: 'Maths',
+        }),
+        BookFactory.sample({
+          id: 'book-2',
+          subject: 'French',
+        }),
+      ]);
+
+      fakeClient.openstax.setOpenstaxSubjects([
+        'Maths',
+        'Business',
+        'Humanities',
+      ]);
+
+      const wrapper = render(
+        <MemoryRouter initialEntries={['/explore/openstax']}>
+          <App
+            apiClient={fakeClient}
+            boclipsSecurity={stubBoclipsSecurity}
+            reactQueryClient={new QueryClient()}
+          />
+        </MemoryRouter>,
+      );
+
+      await waitFor(() => wrapper.getAllByText('Maths'));
+
+      await userEvent.type(wrapper.getByLabelText('subject Maths'), '{enter}');
+
+      await waitFor(() =>
+        expect(wrapper.getByLabelText('book Maths')).toHaveFocus(),
+      );
+    });
   });
 });
