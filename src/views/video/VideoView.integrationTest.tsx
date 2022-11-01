@@ -19,6 +19,9 @@ import {
   ChapterFactory,
   SectionFactory,
 } from 'boclips-api-client/dist/test-support/BookFactory';
+import userEvent from '@testing-library/user-event';
+import { Link } from 'boclips-api-client/dist/types';
+import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 
 describe('Video View', () => {
   let fakeClient;
@@ -48,7 +51,7 @@ describe('Video View', () => {
     ],
   });
 
-  const renderVideoView = (initialEntries: string[]) => {
+  const renderView = (initialEntries: string[]) => {
     return render(
       <MemoryRouter initialEntries={initialEntries}>
         <App
@@ -75,7 +78,7 @@ describe('Video View', () => {
   it('on video page video details are rendered', async () => {
     fakeClient.videos.insertVideo(exampleVideo);
 
-    const wrapper = renderVideoView(['/videos/video-id']);
+    const wrapper = renderView(['/videos/video-id']);
 
     expect(await wrapper.findByText('video-id')).toBeVisible();
     expect(
@@ -96,7 +99,7 @@ describe('Video View', () => {
   it('on video page education level badges are rendered', async () => {
     fakeClient.videos.insertVideo(exampleVideo);
 
-    const wrapper = renderVideoView(['/videos/video-id']);
+    const wrapper = renderView(['/videos/video-id']);
 
     await waitFor(async () => {
       expect(
@@ -120,7 +123,7 @@ describe('Video View', () => {
 
     fakeClient.videos.insertVideo(exampleVideo);
 
-    const wrapper = renderVideoView(['/videos/video-id']);
+    const wrapper = renderView(['/videos/video-id']);
 
     expect(await wrapper.findByText('video-id')).toBeVisible();
     expect(
@@ -128,43 +131,97 @@ describe('Video View', () => {
     ).toBeNull();
   });
 
+  describe('video page navigated from explore view', () => {
+    it(`will display embed video as primary button`, async () => {
+      const book = getBookWithVideo(exampleVideo);
+
+      fakeClient.openstax.setOpenstaxBooks([book]);
+      fakeClient.videos.insertVideo(exampleVideo);
+      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+
+      const wrapper = renderView([`/explore/openstax/${book.id}`]);
+
+      await userEvent.click(await wrapper.findByText(exampleVideo.title));
+
+      expect(
+        await wrapper.findByRole('button', { name: 'embed' }),
+      ).toBeVisible();
+      expect(wrapper.getByText('Get embed code')).toBeVisible();
+      expect(await wrapper.queryByText('Add to cart')).not.toBeInTheDocument();
+    });
+
+    it(`will display download transcripts button when transcripts are available`, async () => {
+      const newVideo = {
+        ...exampleVideo,
+        links: {
+          ...exampleVideo.links,
+          transcript: new Link({ href: 'fake-link' }),
+        },
+      };
+
+      const book = getBookWithVideo(newVideo);
+      fakeClient.openstax.setOpenstaxBooks([book]);
+      fakeClient.videos.insertVideo(newVideo);
+      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+
+      const wrapper = renderView([`/explore/openstax/${book.id}`]);
+
+      await userEvent.click(await wrapper.findByText(newVideo.title));
+
+      expect(
+        await wrapper.findByRole('button', { name: 'download-transcript' }),
+      ).toBeVisible();
+    });
+
+    it(`will not display transcript button when video does not have transcript`, async () => {
+      const newVideo = {
+        ...exampleVideo,
+        links: {
+          ...exampleVideo.links,
+          transcript: null,
+        },
+      };
+
+      const book = getBookWithVideo(newVideo);
+
+      fakeClient.openstax.setOpenstaxBooks([book]);
+      fakeClient.videos.insertVideo(newVideo);
+      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+
+      const wrapper = renderView([`/explore/openstax/${book.id}`]);
+
+      await userEvent.click(await wrapper.findByText(newVideo.title));
+
+      expect(
+        await wrapper.queryByRole('button', { name: 'download-transcript' }),
+      ).not.toBeInTheDocument();
+    });
+
+    const getBookWithVideo = (video: Video) =>
+      BookFactory.sample({
+        id: 'book-id',
+        chapters: [
+          ChapterFactory.sample({
+            sections: [
+              SectionFactory.sample({
+                title: 'section title',
+                videos: [video],
+                videoIds: ['video-id'],
+              }),
+            ],
+          }),
+        ],
+      });
+  });
+
   it(`does not display add to cart button when user does not have cart link`, async () => {
     fakeClient.links.cart = null;
     fakeClient.videos.insertVideo(exampleVideo);
 
-    const wrapper = renderVideoView(['/videos/video-id']);
+    const wrapper = renderView(['/videos/video-id']);
 
     expect(await wrapper.findByText('video-id')).toBeVisible();
     expect(wrapper.queryByText('Add to cart')).toBeNull();
-  });
-
-  it(`will display embed video as primary button when navigation from explore section`, async () => {
-    const book = BookFactory.sample({
-      id: 'book-id',
-      chapters: [
-        ChapterFactory.sample({
-          sections: [
-            SectionFactory.sample({
-              title: 'section title',
-              videos: [exampleVideo],
-              videoIds: ['video-id'],
-            }),
-          ],
-        }),
-      ],
-    });
-    fakeClient.openstax.setOpenstaxBooks([book]);
-    fakeClient.videos.insertVideo(exampleVideo);
-    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
-
-    const wrapper = renderVideoView(['/explore/openstax/book-id']);
-
-    fireEvent.click(await wrapper.findByText(exampleVideo.title));
-
-    // to ensure we're on video details page
-    expect(await wrapper.findByText('Back')).toBeVisible();
-    expect(wrapper.queryByText('Add to cart')).toBeNull();
-    // expect(wrapper.getByRole('button', { name: 'embed' })).toBeVisible();
   });
 
   it('copy to clipboard button is visible in the page', async () => {
@@ -174,7 +231,7 @@ describe('Video View', () => {
 
     fakeClient.videos.insertVideo(video);
 
-    const wrapper = renderVideoView(['/videos/video-id']);
+    const wrapper = renderView(['/videos/video-id']);
 
     const button = await wrapper.findByLabelText('Copy video link');
 
@@ -190,7 +247,7 @@ describe('Video View', () => {
 
       fakeClient.videos.insertVideo(video);
 
-      const wrapper = renderVideoView(['/videos/video-3']);
+      const wrapper = renderView(['/videos/video-3']);
 
       await wrapper.findByText('the coolest video you ever did see');
 
@@ -210,7 +267,7 @@ describe('Video View', () => {
       fakeClient.videos.insertVideo(video);
       fakeClient.carts.insertCartItem(cartItem);
 
-      const wrapper = renderVideoView(['/cart']);
+      const wrapper = renderView(['/cart']);
 
       await waitFor(() =>
         wrapper.getByText('the coolest video you ever did see'),
@@ -241,7 +298,7 @@ describe('Video View', () => {
       }),
     );
 
-    const wrapper = renderVideoView(['/videos/invalid-video-id']);
+    const wrapper = renderView(['/videos/invalid-video-id']);
     expect(await wrapper.findByText('Page not found!')).toBeVisible();
     expect(
       await wrapper.findByRole('button', { name: 'Contact Support' }),
@@ -259,7 +316,7 @@ describe('Video View', () => {
 
       fakeClient.videos.insertVideo(video);
 
-      const wrapper = renderVideoView(['/videos/video-1']);
+      const wrapper = renderView(['/videos/video-1']);
 
       expect(
         await wrapper.findByText('the coolest video you ever did see'),
@@ -295,7 +352,7 @@ describe('Video View', () => {
         VideoFactory.sample({ title: 'I am recommended' }),
       ]);
 
-      const wrapper = renderVideoView(['/videos/video-id']);
+      const wrapper = renderView(['/videos/video-id']);
 
       expect(await wrapper.findByText('Explore similar videos')).toBeVisible();
       expect(await wrapper.findByText('I am recommended')).toBeVisible();
@@ -305,7 +362,7 @@ describe('Video View', () => {
       fakeClient.videos.insertVideo(exampleVideo);
       fakeClient.videos.setRecommendationsForVideo(exampleVideo.id, []);
 
-      const wrapper = renderVideoView(['/videos/video-id']);
+      const wrapper = renderView(['/videos/video-id']);
 
       // wait until similar videos are potentially rendered
       await sleep(500);

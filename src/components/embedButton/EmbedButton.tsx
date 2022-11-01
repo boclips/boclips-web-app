@@ -9,8 +9,9 @@ import { displayNotification } from '../common/notification/displayNotification'
 
 interface Props {
   video: Video;
+  iconOnly?: boolean;
 }
-export const EmbedButton = ({ video }: Props) => {
+export const EmbedButton = ({ video, iconOnly = true }: Props) => {
   const client = useBoclipsClient();
   const onClick = async () => {
     const link = await client.videos.createEmbedCode(video);
@@ -23,18 +24,19 @@ export const EmbedButton = ({ video }: Props) => {
     );
   };
 
-  return (
-    <Tooltip text="Copy embed code">
-      <Button
-        className={s.embedButton}
-        iconOnly
-        icon={<EmbedIcon />}
-        name="Embed"
-        aria-label="embed"
-        onClick={onClick}
-        width="40px"
-        height="40px"
-      />
-    </Tooltip>
+  const button = (
+    <Button
+      className={s.embedButton}
+      iconOnly={iconOnly}
+      icon={<EmbedIcon />}
+      name="Embed"
+      aria-label="embed"
+      onClick={onClick}
+      width={iconOnly ? '40px' : '200px'}
+      height="40px"
+      text={!iconOnly && 'Get embed code'}
+    />
   );
+
+  return iconOnly ? <Tooltip text="Get embed code">{button}</Tooltip> : button;
 };
