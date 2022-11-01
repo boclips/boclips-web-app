@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import SearchBar from '@boclips-ui/search-bar';
 import { useSearchQuery } from 'src/hooks/api/useSearchQuery';
+import DrawerVideo from 'src/components/slidingDrawer/DrawerVideo';
 
 const DrawerVideoSearch = () => {
   const [query, setQuery] = useState<string>(null);
@@ -18,7 +19,7 @@ const DrawerVideoSearch = () => {
       />
       <div>
         {data?.page.map((video) => (
-          <span>{video.title}</span>
+          <DrawerVideo video={video} />
         ))}
       </div>
     </div>
