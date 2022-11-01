@@ -69,7 +69,9 @@ const PlaylistView = ({ followPlaylist }: Props) => {
             <SlidingDrawer
               isOpen={isDrawerOpen}
               onClose={() => setIsDrawerOpen(false)}
-            />
+            >
+              <span>Hello again!</span>
+            </SlidingDrawer>
             <PlaylistBody playlist={playlist} />
           </>
         )}

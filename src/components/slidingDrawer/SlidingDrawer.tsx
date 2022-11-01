@@ -5,6 +5,7 @@ import s from './style.module.less';
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  children: React.ReactNode;
 }
 
 const SlidingDrawer = (props: Props) => {
@@ -15,7 +16,7 @@ const SlidingDrawer = (props: Props) => {
       <button type="button" onClick={props.onClose}>
         Close
       </button>
-      <span>Hello, World!</span>
+      {props.children}
     </div>
   );
 };
