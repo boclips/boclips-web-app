@@ -3,7 +3,7 @@ import SearchBar from '@boclips-ui/search-bar';
 import { useSearchQuery } from 'src/hooks/api/useSearchQuery';
 
 const DrawerVideoSearch = () => {
-  const [query, setQuery] = useState<string>('');
+  const [query, setQuery] = useState<string>(null);
   const { data } = useSearchQuery({
     query,
     page: 0,
