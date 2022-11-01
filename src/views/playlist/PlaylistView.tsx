@@ -11,6 +11,7 @@ import { FollowPlaylist } from 'src/services/followPlaylist';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { Helmet } from 'react-helmet';
 import SlidingDrawer from 'src/components/slidingDrawer/SlidingDrawer';
+import DrawerVideoSearch from 'src/components/slidingDrawer/DrawerVideoSearch';
 
 interface Props {
   followPlaylist: FollowPlaylist;
@@ -70,7 +71,7 @@ const PlaylistView = ({ followPlaylist }: Props) => {
               isOpen={isDrawerOpen}
               onClose={() => setIsDrawerOpen(false)}
             >
-              <span>Hello again!</span>
+              <DrawerVideoSearch />
             </SlidingDrawer>
             <PlaylistBody playlist={playlist} />
           </>
