@@ -10,6 +10,7 @@ import SlidingDrawer from 'src/components/slidingDrawer/SlidingDrawer';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { MagicPlaylistVideoCard } from 'src/components/playlists/magic/MagicPlaylistVideoCard';
 import DrawerVideoRecommendations from 'src/components/slidingDrawer/DrawerVideoRecommendations';
+import { MagicCommentCard } from 'src/components/playlists/magic/MagicCommentCard';
 import s from './style.module.less';
 
 function isElementOutViewport(el) {
@@ -140,7 +141,10 @@ const PlaylistView = () => {
                     onDragStart={drag}
                     className={c(s.item, s.box)}
                   >
-                    {it.text as string}
+                    <MagicCommentCard
+                      text={it.text as string}
+                      visualComponentId={it.uuid as string}
+                    />
                   </div>
                 </div>
               );

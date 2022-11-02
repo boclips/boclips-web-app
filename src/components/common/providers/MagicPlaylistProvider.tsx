@@ -71,13 +71,13 @@ function playlistLayoutReducer(state: State, action: Action): State {
     case 'add-section': {
       const newState = [...state];
 
-      const comment = {
+      const section = {
         type: 'section',
         text: action.text,
         uuid: uuid(),
       };
 
-      newState.push(comment);
+      newState.push(section);
 
       return newState;
     }
