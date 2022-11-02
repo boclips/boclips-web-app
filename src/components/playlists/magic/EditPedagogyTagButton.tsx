@@ -35,42 +35,41 @@ export const EditPedagogyTagButton = ({
     setTagCallback(selected[0]);
   };
 
-  const modal = (
-    <div role="dialog" className={s.modal}>
-      <div className={s.header}>
-        <Typography.Body weight="medium">Edit pedagogy tag</Typography.Body>
-        <button type="button" onClick={() => setIsModalOpen(false)}>
-          <CloseButton />
-        </button>
-      </div>
-
-      <div className="d-flex">
-        <select value={currentTag.id} onChange={(e) => onClick(e.target.value)}>
-          {tags.map((t) => (
-            <option value={t.id}>{t.label}</option>
-          ))}
-        </select>
-      </div>
-    </div>
-  );
-
-  const button = (
-    <Button
-      className={s.editButton}
-      iconOnly
-      icon={<ButtonIcon />}
-      name="Edit Tag"
-      aria-label="edit tag"
-      onClick={toggleModalState}
-      width="40px"
-      height="40px"
-    />
-  );
-
   return (
     <>
-      <Tooltip text="Edit Pedagogy Tag">{button}</Tooltip>
-      {isModalOpen && modal}
+      <Tooltip text="Edit Pedagogy Tag">
+        <Button
+          className={s.editButton}
+          iconOnly
+          icon={<ButtonIcon />}
+          name="Edit Tag"
+          aria-label="edit tag"
+          onClick={toggleModalState}
+          width="40px"
+          height="40px"
+        />
+      </Tooltip>
+      {isModalOpen && (
+        <div role="dialog" className={s.modal}>
+          <div className={s.header}>
+            <Typography.Body weight="medium">Edit pedagogy tag</Typography.Body>
+            <button type="button" onClick={() => setIsModalOpen(false)}>
+              <CloseButton />
+            </button>
+          </div>
+
+          <div className="d-flex">
+            <select
+              value={currentTag.id}
+              onChange={(e) => onClick(e.target.value)}
+            >
+              {tags.map((t) => (
+                <option value={t.id}>{t.label}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+      )}
     </>
   );
 };

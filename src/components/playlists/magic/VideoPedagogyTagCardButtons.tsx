@@ -26,15 +26,6 @@ export const PlaylistVideoCardButtons = ({
 }: CardButtonsProps) => {
   const { dispatch } = useMagicPlaylistContext();
 
-  const primaryButton = (
-    <EditPedagogyTagButton
-      video={video}
-      currentTag={currentTag}
-      tags={tags}
-      setTagCallback={setTagCallback}
-    />
-  );
-
   const onRemoveWidgetClicked = () => {
     dispatch({
       action: 'remove-widget',
@@ -60,7 +51,14 @@ export const PlaylistVideoCardButtons = ({
 
   return (
     <VideoCardButtons
-      primaryButton={primaryButton}
+      primaryButton={
+        <EditPedagogyTagButton
+          video={video}
+          currentTag={currentTag}
+          tags={tags}
+          setTagCallback={setTagCallback}
+        />
+      }
       additionalSecondaryButtons={removeWidgetButton}
       video={video}
     />
