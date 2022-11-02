@@ -6,9 +6,10 @@ import Badge from '@boclips-ui/badge';
 
 interface Props {
   video: Video;
+  visualComponentId: string;
 }
 
-export const MagicPlaylistVideoCard = ({ video }: Props) => {
+export const MagicPlaylistVideoCard = ({ video, visualComponentId }: Props) => {
   const pedagogyTags = [
     'Brain break',
     'Context builder',
@@ -41,6 +42,7 @@ export const MagicPlaylistVideoCard = ({ video }: Props) => {
             video={video}
             currentTag={pedagogyTag}
             pedagogyTags={pedagogyTags}
+            visualComponentId={visualComponentId}
             setPedagogyTagCallback={(t) => savePedagogyTag(t, video)}
           />
         </>

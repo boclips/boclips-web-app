@@ -133,7 +133,10 @@ const PlaylistView = () => {
               return (
                 <div onDrop={drop} onDragOver={allowDrop}>
                   <div draggable id={it.uuid} className={c(s.item, s.comment)}>
-                    <MagicPlaylistVideoCard video={it.video as Video} />
+                    <MagicPlaylistVideoCard
+                      video={it.video as Video}
+                      visualComponentId={it.uuid as string}
+                    />
                   </div>
                 </div>
               );

@@ -4,6 +4,7 @@ import { v4 as uuid } from 'uuid';
 
 type Action =
   | { action: 'add-video'; video: Video }
+  | { action: 'remove-widget'; id: string }
   | { action: 'add-comment'; text?: string }
   | { action: 'add-section'; text?: string }
   | { action: 'reorder'; from: string; to: string }
@@ -42,6 +43,17 @@ function playlistLayoutReducer(state: State, action: Action): State {
 
       return newState;
     }
+
+    case 'remove-widget': {
+      const newState = [...state];
+      const uuids = newState.map((it) => it.uuid);
+      const indexOfElementToRemove = uuids.indexOf(action.id);
+
+      newState.splice(indexOfElementToRemove, 1);
+
+      return newState;
+    }
+
     case 'add-comment': {
       const newState = [...state];
 
