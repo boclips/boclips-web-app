@@ -7,6 +7,7 @@ import {
 import c from 'classnames';
 import { TopVideosBlock } from 'src/components/dashboard/performance/TopVideosBlock';
 import s from './dashboardPerformance.module.less';
+import { RevenueChart } from 'src/components/dashboard/performance/RevenueChart';
 
 const DashboardPerformance = () => {
   const { data: revenue, isLoading: isRevenueLoading } = useGetRevenueQuery();
@@ -21,7 +22,9 @@ const DashboardPerformance = () => {
         <SummaryBlock revenueData={revenue} statsData={stats} />
       </div>
 
-      <div className="col-start-3 col-end-7 shadow-md" />
+      <div className="col-start-3 col-end-7 shadow-md p-6">
+        <RevenueChart revenueData={revenue} />
+      </div>
 
       <div
         className={c(
