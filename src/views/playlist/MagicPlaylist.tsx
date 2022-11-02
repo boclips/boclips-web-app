@@ -218,7 +218,7 @@ const PlaylistView = () => {
       </SlidingDrawer>
 
       <SlidingDrawer
-        isOpen={isAddSectionDrawerOpen}
+        isOpen={isAddCommentDrawerOpen}
         onClose={() => setIsAddCommentDrawerOpen(false)}
       >
         <DrawerManageSection

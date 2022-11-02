@@ -11,7 +11,7 @@ export const DrawerManageSection = ({ onSectionCreated }: Props) => {
   const { dispatch } = useMagicPlaylistContext();
   const [commentTitle, setCommentTitle] = useState('');
 
-  const createNewSection = (title) => {
+  const createNewComment = (title) => {
     dispatch({
       action: 'add-comment',
       text: title,
@@ -27,7 +27,7 @@ export const DrawerManageSection = ({ onSectionCreated }: Props) => {
         value={commentTitle}
         onChange={(e) => setCommentTitle(e.target.value)}
       />
-      <button type="button" onClick={() => createNewSection(commentTitle)}>
+      <button type="button" onClick={() => createNewComment(commentTitle)}>
         Add comment
       </button>
     </div>
