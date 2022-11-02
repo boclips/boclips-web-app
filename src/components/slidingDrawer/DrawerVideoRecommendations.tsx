@@ -3,7 +3,7 @@ import { Typography } from '@boclips-ui/typography';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { RecommendationService } from 'src/components/slidingDrawer/RecommendationService';
-import DrawerVideo from 'src/components/slidingDrawer/DrawerVideo';
+import DrawerVideoList from 'src/components/slidingDrawer/DrawerVideoList';
 
 interface Props {
   videosAddedThusFar: Video[];
@@ -39,9 +39,10 @@ const DrawerVideoRecommendations = ({
       {recommendedVideos.length > 0 && (
         <div>
           <Typography.H1 size="xs">Recommended videos</Typography.H1>
-          {recommendedVideos.map((it) => (
-            <DrawerVideo video={it} onAddPressed={onVideoAdded} />
-          ))}
+          <DrawerVideoList
+            videos={recommendedVideos}
+            onVideoAdded={onVideoAdded}
+          />
         </div>
       )}
     </>

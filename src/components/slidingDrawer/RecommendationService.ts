@@ -19,6 +19,11 @@ export class RecommendationService {
           video_ids: videoIds,
         },
       )
-      .then((response) => response.data['suggested videos']);
+      .then((response) => response.data['suggested videos'])
+      .then((recommendations) =>
+        recommendations.length > 6
+          ? recommendations.slice(0, 6)
+          : recommendations,
+      );
   }
 }
