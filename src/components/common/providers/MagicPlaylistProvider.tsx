@@ -1,14 +1,15 @@
 import React, { useReducer } from 'react';
+import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 
 type Action =
-  | { action: 'add-video'; id?: string }
+  | { action: 'add-video'; video: Video }
   | { action: 'add-comment'; text?: string }
   | { action: 'add-section'; text?: string }
   | { action: 'clear-context' };
 
 type Dispatch = (action: Action) => void;
 
-type State = Record<string, string>[];
+type State = Record<string, string | Video>[];
 
 type AccessRulesProviderProps = {
   children: React.ReactNode;
@@ -29,7 +30,7 @@ function playlistLayoutReducer(state: State, action: Action): State {
 
       const video = {
         type: 'video',
-        id: action.id,
+        video: action.video,
       };
 
       newState.push(video);
@@ -83,7 +84,7 @@ function useMagicPlaylistContext() {
   return context;
 }
 
-function MagicPlaylistProvider({ children }: AccessRulesProviderProps) {
+const MagicPlaylistProvider = ({ children }: AccessRulesProviderProps) => {
   const [state, dispatch] = useReducer(playlistLayoutReducer, initialState());
 
   const value = { state, dispatch };
@@ -93,6 +94,6 @@ function MagicPlaylistProvider({ children }: AccessRulesProviderProps) {
       {children}
     </MagicPlaylistContext.Provider>
   );
-}
+};
 
 export { useMagicPlaylistContext, MagicPlaylistProvider };

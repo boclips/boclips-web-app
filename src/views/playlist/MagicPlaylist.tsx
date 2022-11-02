@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import Navbar from 'src/components/layout/Navbar';
 import { Layout } from 'src/components/layout/Layout';
 import { Typography } from '@boclips-ui/typography';
-import { Player } from 'boclips-player-react';
 import Footer from 'src/components/layout/Footer';
 import c from 'classnames';
 import { useMagicPlaylistContext } from 'src/components/common/providers/MagicPlaylistProvider';
 import DrawerVideoSearch from 'src/components/slidingDrawer/DrawerVideoSearch';
 import SlidingDrawer from 'src/components/slidingDrawer/SlidingDrawer';
+import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
+import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import s from './style.module.less';
 
 function isElementOutViewport(el) {
@@ -43,12 +44,16 @@ const PlaylistView = () => {
   };
 
   const addVideo = () => {
-    dispatch({
-      action: 'add-video',
-      id: '62a6ff6573f2db722e7de4be',
-    });
     setIsAddOpen(false);
     setIsDrawerOpen(true);
+  };
+
+  const videoAdded = (video: Video) => {
+    dispatch({
+      action: 'add-video',
+      video,
+    });
+    setIsDrawerOpen(false);
   };
 
   const addComment = () => {
@@ -69,17 +74,19 @@ const PlaylistView = () => {
               console.log(it);
               return (
                 <div className={c(s.fullWidth, s.item, s.section)}>
-                  <Typography.H2>{it.text}</Typography.H2>
+                  <Typography.H2>{it.text as string}</Typography.H2>
                 </div>
               );
             }
             case 'comment': {
-              return <div className={c(s.item, s.comment)}>{it.text}</div>;
+              return (
+                <div className={c(s.item, s.comment)}>{it.text as string}</div>
+              );
             }
             case 'video': {
               return (
                 <div className={c(s.item, s.comment)}>
-                  <Player video={it.videoId} />
+                  <VideoPlayer video={it.video as Video} />
                 </div>
               );
             }
@@ -121,7 +128,7 @@ const PlaylistView = () => {
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
       >
-        <DrawerVideoSearch />
+        <DrawerVideoSearch onVideoAdded={videoAdded} />
       </SlidingDrawer>
       <Footer columnPosition="col-start-2 col-end-26" />
     </Layout>
