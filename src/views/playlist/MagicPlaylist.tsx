@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from 'src/components/layout/Navbar';
 import { Layout } from 'src/components/layout/Layout';
-import { Typography } from '@boclips-ui/typography';
 import Footer from 'src/components/layout/Footer';
 import c from 'classnames';
 import { useMagicPlaylistContext } from 'src/components/common/providers/MagicPlaylistProvider';
@@ -11,6 +10,7 @@ import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { MagicPlaylistVideoCard } from 'src/components/playlists/magic/MagicPlaylistVideoCard';
 import DrawerVideoRecommendations from 'src/components/slidingDrawer/DrawerVideoRecommendations';
 import { MagicCommentCard } from 'src/components/playlists/magic/MagicCommentCard';
+import { MagicSectionCard } from 'src/components/playlists/magic/MagicSectionCard';
 import s from './style.module.less';
 
 function isElementOutViewport(el) {
@@ -127,7 +127,10 @@ const PlaylistView = () => {
                     draggable
                     id={it.uuid}
                   >
-                    <Typography.H2>{it.text as string}</Typography.H2>
+                    <MagicSectionCard
+                      text={it.text as string}
+                      visualComponentId={it.uuid as string}
+                    />
                   </div>
                 </div>
               );

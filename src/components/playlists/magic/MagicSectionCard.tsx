@@ -2,6 +2,7 @@ import React from 'react';
 import { useMagicPlaylistContext } from 'src/components/common/providers/MagicPlaylistProvider';
 import Button from '@boclips-ui/button';
 import CloseIconSVG from 'src/resources/icons/cross-icon.svg';
+import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 
 interface Props {
@@ -9,7 +10,7 @@ interface Props {
   visualComponentId: string;
 }
 
-export const MagicCommentCard = ({ text, visualComponentId }: Props) => {
+export const MagicSectionCard = ({ text, visualComponentId }: Props) => {
   const { dispatch } = useMagicPlaylistContext();
 
   const onRemoveWidgetClicked = () => {
@@ -20,9 +21,9 @@ export const MagicCommentCard = ({ text, visualComponentId }: Props) => {
   };
 
   return (
-    <div className={s.comment}>
-      <div>{text}</div>
-      <div className="commentActions">
+    <div className={s.section}>
+      <Typography.H2>{text}</Typography.H2>
+      <div className="sectionActions">
         <Button
           className={s.removeWidgetBtn}
           onClick={onRemoveWidgetClicked}
