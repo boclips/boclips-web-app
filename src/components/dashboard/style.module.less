@@ -1,0 +1,52 @@
+@import '~@boclips-ui/styles/src/breakpoints';
+@import '~@boclips-ui/styles/src/colors';
+
+.icons {
+  button {
+    padding: 8px 16px 8px 16px;
+
+    span {
+      color: @gray-700 !important;
+    }
+
+    &:hover,active {
+      span{
+        color: @blue-800 !important;
+      }
+    }
+  }
+
+  .performanceIcon {
+    path {
+      stroke: none;
+      fill: @gray-700
+    }
+
+    &:hover,active {
+      path {
+        stroke: none;
+        fill: @blue-800;
+      }
+    }
+  }
+
+  .insightsIcon {
+    path {
+      stroke: @gray-700;
+    }
+
+    &:hover,active {
+      path {
+        stroke: @blue-800;
+      }
+    }
+  }
+}
+
+.header {
+  @media (min-width: @screen-md) {
+    flex-direction: row;
+    align-items: start;
+    margin-bottom: 0.5rem;
+  }
+}

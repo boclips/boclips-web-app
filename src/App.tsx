@@ -73,6 +73,10 @@ const OpenstaxBookView = lazyWithRetry(
   () => import('src/views/openstax/book/OpenstaxBookView'),
 );
 
+const DashboardView = lazyWithRetry(
+  () => import('src/views/dashboard/DashboardView'),
+);
+
 interface Props {
   apiClient: BoclipsClient;
   boclipsSecurity: BoclipsSecurity;
@@ -216,6 +220,18 @@ const App = ({
                         >
                           <Helmet title="Openstax" />
                           <OpenstaxBookView />
+                        </FeatureGate>
+                      }
+                    />
+                    <Route
+                      path="/dashboard"
+                      element={
+                        <FeatureGate
+                          feature="BO_WEB_APP_DEV"
+                          fallback={<NotFound />}
+                        >
+                          <Helmet title="Dashboard" />
+                          <DashboardView />
                         </FeatureGate>
                       }
                     />
