@@ -20,6 +20,15 @@ export const MagicPlaylistVideoCard = ({ video, id }: Props) => {
     { id: '7', label: 'Other' },
   ];
 
+  const [show, setShow] = useState(false);
+  const onMouseOver = () => {
+    setShow(true);
+  };
+
+  const onMouseOut = () => {
+    setShow(false);
+  };
+
   const index = Math.floor(Math.random() * tags.length);
   const [tag, setTag] = useState(tags[index]);
 
@@ -30,7 +39,11 @@ export const MagicPlaylistVideoCard = ({ video, id }: Props) => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div
+      onMouseOver={onMouseOver}
+      onMouseOut={onMouseOut}
+      className="flex flex-col"
+    >
       <div
         style={{
           width: '100%',

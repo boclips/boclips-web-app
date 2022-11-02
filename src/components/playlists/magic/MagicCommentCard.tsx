@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useMagicPlaylistContext } from 'src/components/common/providers/MagicPlaylistProvider';
 import Button from '@boclips-ui/button';
 import CloseIconSVG from 'src/resources/icons/cross-icon.svg';
@@ -11,6 +11,7 @@ interface Props {
 
 export const MagicCommentCard = ({ text, visualComponentId }: Props) => {
   const { dispatch } = useMagicPlaylistContext();
+  const [show, setShow] = useState(false);
 
   const onRemoveWidgetClicked = () => {
     dispatch({
@@ -19,17 +20,34 @@ export const MagicCommentCard = ({ text, visualComponentId }: Props) => {
     });
   };
 
+  const onMouseOver = () => {
+    setShow(true);
+  };
+
+  const onMouseOut = () => {
+    setShow(false);
+  };
+
   return (
-    <div className={s.comment}>
-      <div>{text}</div>
-      <div className="commentActions">
-        <Button
-          className={s.removeWidgetBtn}
-          onClick={onRemoveWidgetClicked}
-          iconOnly
-          icon={<CloseIconSVG />}
-        />
-      </div>
+    <div
+      onMouseOver={onMouseOver}
+      onMouseOut={onMouseOut}
+      className={s.comment}
+    >
+      {text}
+      {show && (
+        <div className={s.sectionActions}>
+          <Button
+            width="24px"
+            height="24px"
+            type="outline"
+            className={s.removeWidgetBtn}
+            onClick={onRemoveWidgetClicked}
+            iconOnly
+            icon={<CloseIconSVG />}
+          />
+        </div>
+      )}
     </div>
   );
 };

@@ -95,23 +95,30 @@
   --bo-ui-button-outline-background-color-hover: none;
 
   svg {
-      width: 21px !important;
-      height: 21px !important;
+    width: 21px !important;
+    height: 21px !important;
 
-      path {
-        stroke: red;
-        stroke-width: 2px;
-      }
+    path {
+      stroke: red;
+      stroke-width: 2px;
+    }
   }
 }
 
 .comment {
-  display: flex;
-  flex-direction: column;
+  padding: 1rem;
+  width: 100%;
+  height: 100%;
 }
 
 .section {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.sectionActions {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
