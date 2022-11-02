@@ -16,8 +16,6 @@ function isElementOutViewport(el) {
   const rect = el.getBoundingClientRect();
   const main = document.querySelector('main').getBoundingClientRect();
 
-  console.log(rect.right, main.right);
-
   return rect.right > main.right;
 }
 
@@ -71,6 +69,32 @@ const PlaylistView = () => {
       .map((it) => it.video as Video);
   };
 
+  function allowDrop(ev) {
+    ev.preventDefault();
+  }
+
+  const [dragged, setDragged] = useState();
+
+  function drag(ev) {
+    console.log('drag', ev.currentTarget);
+    setDragged(ev.currentTarget.id);
+    ev.dataTransfer.setData('from', ev.target.id);
+  }
+
+  function drop(ev) {
+    ev.preventDefault();
+    console.log('drag other', ev.target);
+    const data = ev.dataTransfer.getData('from');
+
+    dispatch({
+      action: 'reorder',
+      from: data,
+      to: ev.target.id,
+    });
+
+    // ev.target.appendChild(document.getElementById(data));
+  }
+
   return (
     <Layout rowsSetup="grid-rows-playlist-view" responsiveLayout>
       <Navbar />
@@ -80,20 +104,37 @@ const PlaylistView = () => {
             case 'section': {
               console.log(it);
               return (
-                <div className={c(s.fullWidth, s.item, s.section)}>
-                  <Typography.H2>{it.text as string}</Typography.H2>
+                <div
+                  className={c(s.fullWidth, s.item, s.section)}
+                  onDrop={drop}
+                  onDragOver={allowDrop}
+                >
+                  <div draggable id={it.uuid}>
+                    <Typography.H2>{it.text as string}</Typography.H2>
+                  </div>
                 </div>
               );
             }
             case 'comment': {
               return (
-                <div className={c(s.item, s.comment)}>{it.text as string}</div>
+                <div onDrop={drop} onDragOver={allowDrop}>
+                  <div
+                    draggable
+                    id={it.uuid}
+                    onDragStart={drag}
+                    className={c(s.item, s.comment)}
+                  >
+                    {it.text as string}
+                  </div>
+                </div>
               );
             }
             case 'video': {
               return (
-                <div className={c(s.item, s.comment)}>
-                  <MagicPlaylistVideoCard video={it.video as Video} />
+                <div onDrop={drop} onDragOver={allowDrop}>
+                  <div draggable id={it.uuid} className={c(s.item, s.comment)}>
+                    <MagicPlaylistVideoCard video={it.video as Video} />
+                  </div>
                 </div>
               );
             }

@@ -1,10 +1,12 @@
 import React, { useReducer } from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
+import { v4 as uuid } from 'uuid';
 
 type Action =
   | { action: 'add-video'; video: Video }
   | { action: 'add-comment'; text?: string }
   | { action: 'add-section'; text?: string }
+  | { action: 'reorder'; from: string; to: string }
   | { action: 'clear-context' };
 
 type Dispatch = (action: Action) => void;
@@ -31,6 +33,7 @@ function playlistLayoutReducer(state: State, action: Action): State {
       const video = {
         type: 'video',
         video: action.video,
+        uuid: uuid(),
       };
 
       newState.push(video);
@@ -45,6 +48,7 @@ function playlistLayoutReducer(state: State, action: Action): State {
       const comment = {
         type: 'comment',
         text: action.text,
+        uuid: uuid(),
       };
 
       newState.push(comment);
@@ -58,11 +62,39 @@ function playlistLayoutReducer(state: State, action: Action): State {
       const comment = {
         type: 'section',
         text: action.text,
+        uuid: uuid(),
       };
 
       newState.push(comment);
 
       return newState;
+    }
+
+    case 'reorder': {
+      const newState = [...state];
+
+      console.log({ from: action.from, to: action.to });
+      const uuids = newState.map((it) => it.uuid);
+      const from = uuids.indexOf(action.from);
+      const to = uuids.indexOf(action.to);
+
+      const el = newState.splice(from, 1);
+
+      newState.splice(to, 0, el);
+
+      console.log(newState);
+
+      return newState.flat(1);
+
+      // const comment = {
+      //   type: 'section',
+      //   text: action.text,
+      //   uuid: uuid(),
+      // };
+      //
+      // newState.push(comment);
+      //
+      // return newState;
     }
 
     case 'clear-context': {
