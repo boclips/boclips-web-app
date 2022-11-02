@@ -4,7 +4,7 @@ import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import React from 'react';
 import { DashboardHeader } from 'src/components/dashboard/DashboardHeader';
-import DashboardPerformance from "src/components/dashboard/DashboardPerformance";
+import DashboardPerformance from "src/components/dashboard/performance/DashboardPerformance";
 
 const DashboardView = () => {
   return (
