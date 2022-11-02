@@ -1,0 +1,90 @@
+@import '~@boclips-ui/styles/src/colors';
+@import '~@boclips-ui/styles/src/breakpoints';
+
+.editButton {
+  --bo-ui-button-svg-height: 24px;
+  --bo-ui-button-svg-width: 24px;
+
+  div {
+    svg {
+      width: 21px !important;
+      height: 21px !important;
+      path {
+        stroke: white;
+        stroke-width: 2px;
+      }
+    }
+  }
+}
+
+.playlistPanel {
+  background-color: white;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  z-index: 99;
+  border-radius: 4px;
+
+  position: absolute;
+  width: 320px;
+  max-height: 248px;
+  min-height: unset;
+  top: unset;
+  bottom: -105px;
+  right: 0;
+  border: 2px solid @blue-800;
+
+  &:after {
+    content: none;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+
+  h5 {
+    font-size: 1rem;
+    color: @gray-800;
+    font-weight: 500;
+    margin: 0;
+  }
+}
+
+.content {
+  overflow: auto;
+  height: auto;
+  padding: 1rem 1rem 0 1rem;
+
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #bccdff;
+    border-radius: 100vh;
+  }
+
+  li {
+    margin-bottom: 0.75rem;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    span {
+      line-height: 1.5rem;
+      font-size: 1rem;
+    }
+  }
+}

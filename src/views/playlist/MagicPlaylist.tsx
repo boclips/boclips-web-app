@@ -8,7 +8,7 @@ import { useMagicPlaylistContext } from 'src/components/common/providers/MagicPl
 import DrawerVideoSearch from 'src/components/slidingDrawer/DrawerVideoSearch';
 import SlidingDrawer from 'src/components/slidingDrawer/SlidingDrawer';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
+import { MagicPlaylistVideoCard } from 'src/components/playlists/magic/MagicPlaylistVideoCard';
 import DrawerVideoRecommendations from 'src/components/slidingDrawer/DrawerVideoRecommendations';
 import s from './style.module.less';
 
@@ -93,7 +93,7 @@ const PlaylistView = () => {
             case 'video': {
               return (
                 <div className={c(s.item, s.comment)}>
-                  <VideoPlayer video={it.video as Video} />
+                  <MagicPlaylistVideoCard video={it.video as Video} />
                 </div>
               );
             }

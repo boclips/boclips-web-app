@@ -18,13 +18,13 @@ import { FollowPlaylist } from 'src/services/followPlaylist';
 import UserAttributes from 'src/services/analytics/hotjar/UserAttributes';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import FallbackView from 'src/views/fallback/FallbackView';
+import { MagicPlaylistProvider } from 'src/components/common/providers/MagicPlaylistProvider';
+import MagicPlaylist from 'src/views/playlist/MagicPlaylist';
 import { BoclipsClientProvider } from './components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSecurityProvider';
 import Appcues from './services/analytics/appcues/Appcues';
 import { GlobalQueryErrorProvider } from './components/common/providers/GlobalQueryErrorProvider';
 import { JSErrorBoundary } from './components/common/errors/JSErrorBoundary';
-import { MagicPlaylistProvider } from 'src/components/common/providers/MagicPlaylistProvider';
-import MagicPlaylist from "src/views/playlist/MagicPlaylist";
 
 declare global {
   interface Window {
