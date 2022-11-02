@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { PlaylistVideoCardButtons } from 'src/components/playlists/magic/VideoPedagogyTagCardButtons';
 import Badge from '@boclips-ui/badge';
 import CoverWithVideo from 'src/components/playlists/coverWithVideo/CoverWithVideo';
+import { useMagicPlaylistContext } from 'src/components/common/providers/MagicPlaylistProvider';
+import s from './style.module.less';
 
 interface Props {
   video: Video;
@@ -10,6 +12,15 @@ interface Props {
 }
 
 export const MagicPlaylistVideoCard = ({ video, id }: Props) => {
+  const { dispatch } = useMagicPlaylistContext();
+
+  const onRemoveWidgetClicked = () => {
+    dispatch({
+      action: 'remove-widget',
+      id,
+    });
+  };
+
   const tags = [
     { id: '1', label: 'Brain break' },
     { id: '2', label: 'Context builder' },
@@ -20,13 +31,13 @@ export const MagicPlaylistVideoCard = ({ video, id }: Props) => {
     { id: '7', label: 'Other' },
   ];
 
-  const [show, setShow] = useState(false);
+  const [showCloseBtn, setShowCloseBtn] = useState(false);
   const onMouseOver = () => {
-    setShow(true);
+    setShowCloseBtn(true);
   };
 
   const onMouseOut = () => {
-    setShow(false);
+    setShowCloseBtn(false);
   };
 
   const index = Math.floor(Math.random() * tags.length);
@@ -44,6 +55,11 @@ export const MagicPlaylistVideoCard = ({ video, id }: Props) => {
       onMouseOut={onMouseOut}
       className="flex flex-col"
     >
+      {showCloseBtn && (
+        <button className={s.closeButton} onClick={onRemoveWidgetClicked}>
+          X
+        </button>
+      )}
       <div
         style={{
           width: '100%',
@@ -61,7 +77,6 @@ export const MagicPlaylistVideoCard = ({ video, id }: Props) => {
         currentTag={tag}
         tags={tags}
         setTagCallback={(t) => saveTag(t, video)}
-        visualComponentId={id}
       />
     </div>
   );
