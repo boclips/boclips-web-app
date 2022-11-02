@@ -11,6 +11,7 @@ import { MagicPlaylistVideoCard } from 'src/components/playlists/magic/MagicPlay
 import DrawerVideoRecommendations from 'src/components/slidingDrawer/DrawerVideoRecommendations';
 import { MagicCommentCard } from 'src/components/playlists/magic/MagicCommentCard';
 import { MagicSectionCard } from 'src/components/playlists/magic/MagicSectionCard';
+import { DrawerManageSection } from 'src/components/slidingDrawer/DrawerManageSection';
 import s from './style.module.less';
 
 function isElementOutViewport(el) {
@@ -25,7 +26,8 @@ const PlaylistView = () => {
   const [outOfViewport, setOutOfViewport] = useState(false);
   const panelRef = useRef();
   const { state, dispatch } = useMagicPlaylistContext();
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isAddSectionDrawerOpen, setIsAddSectionDrawerOpen] = useState(false);
 
   useEffect(() => {
     if (panelRef.current) {
@@ -35,12 +37,8 @@ const PlaylistView = () => {
   }, [isAddOpen]);
 
   const addSection = () => {
-    dispatch({
-      action: 'add-section',
-      text: 'this is a section',
-    });
-
     setIsAddOpen(false);
+    setIsAddSectionDrawerOpen(true);
   };
 
   const addVideo = () => {
@@ -211,6 +209,15 @@ const PlaylistView = () => {
         <DrawerVideoRecommendations
           videosAddedThusFar={videosAddedThusFar()}
           onVideoAdded={videoAdded}
+        />
+      </SlidingDrawer>
+
+      <SlidingDrawer
+        isOpen={isAddSectionDrawerOpen}
+        onClose={() => setIsAddSectionDrawerOpen(false)}
+      >
+        <DrawerManageSection
+          onSectionCreated={() => setIsAddSectionDrawerOpen(false)}
         />
       </SlidingDrawer>
       <Footer columnPosition="col-start-2 col-end-26" />
