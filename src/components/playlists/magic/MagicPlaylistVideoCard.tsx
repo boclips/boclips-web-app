@@ -22,6 +22,12 @@ export const MagicPlaylistVideoCard = ({ video }: Props) => {
   const index = Math.floor(Math.random() * pedagogyTags.length);
   const [pedagogyTag, setPedagogyTag] = useState(pedagogyTags[index]);
 
+  const savePedagogyTag = (tag, vid) => {
+    setPedagogyTag(tag);
+    // save to DB if needed
+    console.log(`saving pedagogy tag '${tag}' for video ${vid.id}`);
+  };
+
   return (
     <VideoGridCard
       key={video.id}
@@ -35,7 +41,7 @@ export const MagicPlaylistVideoCard = ({ video }: Props) => {
             video={video}
             currentTag={pedagogyTag}
             pedagogyTags={pedagogyTags}
-            setPedagogyTagCallback={(t) => setPedagogyTag(t)}
+            setPedagogyTagCallback={(t) => savePedagogyTag(t, video)}
           />
         </>
       }
