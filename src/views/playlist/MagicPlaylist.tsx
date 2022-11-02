@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Navbar from 'src/components/layout/Navbar';
 import { Layout } from 'src/components/layout/Layout';
 import Footer from 'src/components/layout/Footer';
+import { DrawerManageComment } from 'src/components/slidingDrawer/DrawerManageComment';
 import c from 'classnames';
 import { useMagicPlaylistContext } from 'src/components/common/providers/MagicPlaylistProvider';
 import DrawerVideoSearch from 'src/components/slidingDrawer/DrawerVideoSearch';
@@ -57,7 +58,7 @@ const PlaylistView = () => {
 
   const addComment = () => {
     setIsAddOpen(false);
-    setIsAddSectionDrawerOpen(true);
+    setIsAddCommentDrawerOpen(true);
   };
 
   const videosAddedThusFar: () => Video[] = () => {
@@ -76,7 +77,6 @@ const PlaylistView = () => {
     document.querySelectorAll(`.${s.item}`).forEach((it) => {
       it.classList.add(s.hide);
     });
-    setDragged(e.target.id);
     e.dataTransfer.setData('from', e.target.id);
   }
 
@@ -169,6 +169,7 @@ const PlaylistView = () => {
         })}
         <div className={c(s.add)}>
           <button
+            className={s.button}
             type="button"
             onClick={() => {
               setIsAddOpen(!isAddOpen);
@@ -221,7 +222,7 @@ const PlaylistView = () => {
         isOpen={isAddCommentDrawerOpen}
         onClose={() => setIsAddCommentDrawerOpen(false)}
       >
-        <DrawerManageSection
+        <DrawerManageComment
           onSectionCreated={() => setIsAddCommentDrawerOpen(false)}
         />
       </SlidingDrawer>

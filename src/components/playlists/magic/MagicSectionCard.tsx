@@ -40,8 +40,8 @@ export const MagicSectionCard = ({ text, visualComponentId }: Props) => {
       {show && (
         <div className={s.sectionActions}>
           <Button
-            width="24px"
-            height="24px"
+            width="40px"
+            height="40px"
             type="outline"
             className={s.removeWidgetBtn}
             onClick={onRemoveWidgetClicked}

@@ -7,7 +7,7 @@ interface Props {
   onSectionCreated: () => void;
 }
 
-export const DrawerManageSection = ({ onSectionCreated }: Props) => {
+export const DrawerManageComment = ({ onSectionCreated }: Props) => {
   const { dispatch } = useMagicPlaylistContext();
   const [commentTitle, setCommentTitle] = useState('');
 
@@ -22,8 +22,7 @@ export const DrawerManageSection = ({ onSectionCreated }: Props) => {
 
   return (
     <div className={c(s.drawerSearchResults)}>
-      <input
-        type="textarea"
+      <textarea
         value={commentTitle}
         onChange={(e) => setCommentTitle(e.target.value)}
       />

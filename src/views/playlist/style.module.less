@@ -23,7 +23,9 @@
   .box {
     border-radius: 4px;
     background-color: @gray-100;
-    min-height: 340px;
+    max-height: 340px;
+    height: 100%;
+    overflow: auto;
     display: grid;
   }
 
@@ -37,7 +39,7 @@
     align-items: center;
     position: relative;
 
-    button {
+    .button {
       width: 100px;
       height: 100px;
     }
