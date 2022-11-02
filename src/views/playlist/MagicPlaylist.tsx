@@ -28,6 +28,7 @@ const PlaylistView = () => {
   const { state, dispatch } = useMagicPlaylistContext();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isAddSectionDrawerOpen, setIsAddSectionDrawerOpen] = useState(false);
+  const [isAddCommentDrawerOpen, setIsAddCommentDrawerOpen] = useState(false);
 
   useEffect(() => {
     if (panelRef.current) {
@@ -55,11 +56,8 @@ const PlaylistView = () => {
   };
 
   const addComment = () => {
-    dispatch({
-      action: 'add-comment',
-      text: 'this is not a long comment',
-    });
     setIsAddOpen(false);
+    setIsAddSectionDrawerOpen(true);
   };
 
   const videosAddedThusFar: () => Video[] = () => {
@@ -71,8 +69,6 @@ const PlaylistView = () => {
   function allowDrop(ev) {
     ev.preventDefault();
   }
-
-  const [dragged, setDragged] = useState();
 
   function drag(e) {
     // console.log(e);
@@ -218,6 +214,15 @@ const PlaylistView = () => {
       >
         <DrawerManageSection
           onSectionCreated={() => setIsAddSectionDrawerOpen(false)}
+        />
+      </SlidingDrawer>
+
+      <SlidingDrawer
+        isOpen={isAddSectionDrawerOpen}
+        onClose={() => setIsAddCommentDrawerOpen(false)}
+      >
+        <DrawerManageSection
+          onSectionCreated={() => setIsAddCommentDrawerOpen(false)}
         />
       </SlidingDrawer>
       <Footer columnPosition="col-start-2 col-end-26" />

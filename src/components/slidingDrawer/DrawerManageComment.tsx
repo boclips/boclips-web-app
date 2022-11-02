@@ -9,26 +9,26 @@ interface Props {
 
 export const DrawerManageSection = ({ onSectionCreated }: Props) => {
   const { dispatch } = useMagicPlaylistContext();
-  const [sectionTitle, setSectionTitle] = useState('');
+  const [commentTitle, setCommentTitle] = useState('');
 
   const createNewSection = (title) => {
     dispatch({
-      action: 'add-section',
+      action: 'add-comment',
       text: title,
     });
-    setSectionTitle('');
+    setCommentTitle('');
     onSectionCreated();
   };
 
   return (
     <div className={c(s.drawerSearchResults)}>
       <input
-        type="text"
-        value={sectionTitle}
-        onChange={(e) => setSectionTitle(e.target.value)}
+        type="textarea"
+        value={commentTitle}
+        onChange={(e) => setCommentTitle(e.target.value)}
       />
-      <button type="button" onClick={() => createNewSection(sectionTitle)}>
-        Add section
+      <button type="button" onClick={() => createNewSection(commentTitle)}>
+        Add comment
       </button>
     </div>
   );
