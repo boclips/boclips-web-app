@@ -9,6 +9,7 @@ import DrawerVideoSearch from 'src/components/slidingDrawer/DrawerVideoSearch';
 import SlidingDrawer from 'src/components/slidingDrawer/SlidingDrawer';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
+import DrawerVideoRecommendations from 'src/components/slidingDrawer/DrawerVideoRecommendations';
 import s from './style.module.less';
 
 function isElementOutViewport(el) {
@@ -62,6 +63,12 @@ const PlaylistView = () => {
       text: 'this is not a long comment',
     });
     setIsAddOpen(false);
+  };
+
+  const videosAddedThusFar: () => Video[] = () => {
+    return state
+      .filter((it) => it.type === 'video')
+      .map((it) => it.video as Video);
   };
 
   return (
@@ -129,6 +136,7 @@ const PlaylistView = () => {
         onClose={() => setIsDrawerOpen(false)}
       >
         <DrawerVideoSearch onVideoAdded={videoAdded} />
+        <DrawerVideoRecommendations videosAddedThusFar={videosAddedThusFar()} />
       </SlidingDrawer>
       <Footer columnPosition="col-start-2 col-end-26" />
     </Layout>
