@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Navbar from 'src/components/layout/Navbar';
 import { Layout } from 'src/components/layout/Layout';
 import { usePlaylistQuery } from 'src/hooks/api/playlistsQuery';
@@ -10,8 +10,6 @@ import SkeletonPage from 'src/components/skeleton/SkeletonPage';
 import { FollowPlaylist } from 'src/services/followPlaylist';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { Helmet } from 'react-helmet';
-import SlidingDrawer from 'src/components/slidingDrawer/SlidingDrawer';
-import DrawerVideoSearch from 'src/components/slidingDrawer/DrawerVideoSearch';
 
 interface Props {
   followPlaylist: FollowPlaylist;
@@ -20,7 +18,6 @@ interface Props {
 const PlaylistView = ({ followPlaylist }: Props) => {
   const { id } = useParams<{ id: string }>();
   const title = useLocation().state?.name || 'Playlist';
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
   const {
     data: playlist,
@@ -64,15 +61,6 @@ const PlaylistView = ({ followPlaylist }: Props) => {
         ) : (
           <>
             <PlaylistHeader playlist={playlist} />
-            <button type="button" onClick={() => setIsDrawerOpen(true)}>
-              Search videos
-            </button>
-            <SlidingDrawer
-              isOpen={isDrawerOpen}
-              onClose={() => setIsDrawerOpen(false)}
-            >
-              <DrawerVideoSearch />
-            </SlidingDrawer>
             <PlaylistBody playlist={playlist} />
           </>
         )}

@@ -1,12 +1,14 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Navbar from 'src/components/layout/Navbar';
 import { Layout } from 'src/components/layout/Layout';
 import { Typography } from '@boclips-ui/typography';
 import { Player } from 'boclips-player-react';
 import Footer from 'src/components/layout/Footer';
 import c from 'classnames';
-import s from './style.module.less';
 import { useMagicPlaylistContext } from 'src/components/common/providers/MagicPlaylistProvider';
+import DrawerVideoSearch from 'src/components/slidingDrawer/DrawerVideoSearch';
+import SlidingDrawer from 'src/components/slidingDrawer/SlidingDrawer';
+import s from './style.module.less';
 
 function isElementOutViewport(el) {
   const rect = el.getBoundingClientRect();
@@ -22,6 +24,7 @@ const PlaylistView = () => {
   const [outOfViewport, setOutOfViewport] = useState(false);
   const panelRef = useRef();
   const { state, dispatch } = useMagicPlaylistContext();
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (panelRef.current) {
@@ -45,6 +48,7 @@ const PlaylistView = () => {
       id: '62a6ff6573f2db722e7de4be',
     });
     setIsAddOpen(false);
+    setIsDrawerOpen(true);
   };
 
   const addComment = () => {
@@ -113,6 +117,12 @@ const PlaylistView = () => {
           )}
         </div>
       </main>
+      <SlidingDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+      >
+        <DrawerVideoSearch />
+      </SlidingDrawer>
       <Footer columnPosition="col-start-2 col-end-26" />
     </Layout>
   );
