@@ -14,7 +14,7 @@ export async function doGetRevenueQuery(): Promise<Revenue> {
 }
 
 export const useGetRevenueQuery = () => {
-  return useQuery(['revenue'], async () => doGetRevenueQuery()).data;
+  return useQuery(['revenue'], async () => doGetRevenueQuery());
 };
 
 export async function doGetStatsQuery(type: string): Promise<Stats> {
@@ -25,5 +25,5 @@ export async function doGetStatsQuery(type: string): Promise<Stats> {
     });
 }
 export const useGetStatsQuery = (type: string) => {
-  return useQuery(['stats'], async () => doGetStatsQuery(type)).data;
+  return useQuery(['stats'], async () => doGetStatsQuery(type));
 };
