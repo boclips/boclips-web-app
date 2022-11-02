@@ -75,21 +75,31 @@ const PlaylistView = () => {
 
   const [dragged, setDragged] = useState();
 
-  function drag(ev) {
-    console.log('drag', ev.currentTarget);
-    setDragged(ev.currentTarget.id);
-    ev.dataTransfer.setData('from', ev.target.id);
+  function drag(e) {
+    // console.log(e);
+    // console.log('drag', e.currentTarget, e.target);
+    document.querySelectorAll(`.${s.item}`).forEach((it) => {
+      it.classList.add(s.hide);
+    });
+    setDragged(e.target.id);
+    e.dataTransfer.setData('from', e.target.id);
   }
 
-  function drop(ev) {
-    ev.preventDefault();
-    console.log('drag other', ev.target);
-    const data = ev.dataTransfer.getData('from');
+  function drop(e) {
+    e.preventDefault();
+    // console.log('drag other', e.target);
+    const data = e.dataTransfer.getData('from');
+
+    // console.log(e.target);
 
     dispatch({
       action: 'reorder',
       from: data,
-      to: ev.target.id,
+      to: e.target.id,
+    });
+
+    document.querySelectorAll(`.${s.item}`).forEach((it) => {
+      it.classList.remove(s.hide);
     });
 
     // ev.target.appendChild(document.getElementById(data));
@@ -108,8 +118,14 @@ const PlaylistView = () => {
                   className={c(s.fullWidth, s.item, s.section)}
                   onDrop={drop}
                   onDragOver={allowDrop}
+                  className={s.fullWidth}
                 >
-                  <div draggable id={it.uuid}>
+                  <div
+                    onDragStart={drag}
+                    className={c(s.item, s.section)}
+                    draggable
+                    id={it.uuid}
+                  >
                     <Typography.H2>{it.text as string}</Typography.H2>
                   </div>
                 </div>
@@ -122,7 +138,7 @@ const PlaylistView = () => {
                     draggable
                     id={it.uuid}
                     onDragStart={drag}
-                    className={c(s.item, s.comment)}
+                    className={c(s.item, s.box)}
                   >
                     {it.text as string}
                   </div>
@@ -132,10 +148,15 @@ const PlaylistView = () => {
             case 'video': {
               return (
                 <div onDrop={drop} onDragOver={allowDrop}>
-                  <div draggable id={it.uuid} className={c(s.item, s.comment)}>
+                  <div
+                    onDragStart={drag}
+                    draggable
+                    id={it.uuid}
+                    className={c(s.item, s.box)}
+                  >
                     <MagicPlaylistVideoCard
+                      id={it.uuid}
                       video={it.video as Video}
-                      visualComponentId={it.uuid as string}
                     />
                   </div>
                 </div>
@@ -145,7 +166,7 @@ const PlaylistView = () => {
               return null;
           }
         })}
-        <div className={c(s.item, s.add)}>
+        <div className={c(s.add)}>
           <button
             type="button"
             onClick={() => {

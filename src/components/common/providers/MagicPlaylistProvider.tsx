@@ -83,20 +83,24 @@ function playlistLayoutReducer(state: State, action: Action): State {
     }
 
     case 'reorder': {
-      const newState = [...state];
+      const newState = [...state].flat();
+      console.log(newState);
 
       console.log({ from: action.from, to: action.to });
       const uuids = newState.map((it) => it.uuid);
+      console.log(uuids);
       const from = uuids.indexOf(action.from);
+      console.log(from);
       const to = uuids.indexOf(action.to);
-
-      const el = newState.splice(from, 1);
+      console.log(to);
+      const el = newState.splice(from, 1).flat();
+      console.log(el);
 
       newState.splice(to, 0, el);
 
       console.log(newState);
 
-      return newState.flat(1);
+      return newState.flat();
 
       // const comment = {
       //   type: 'section',

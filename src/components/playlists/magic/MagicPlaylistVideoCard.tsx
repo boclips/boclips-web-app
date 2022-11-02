@@ -3,13 +3,14 @@ import VideoGridCard from 'src/components/videoCard/VideoGridCard';
 import React, { useState } from 'react';
 import { PlaylistVideoCardButtons } from 'src/components/playlists/magic/VideoPedagogyTagCardButtons';
 import Badge from '@boclips-ui/badge';
+import CoverWithVideo from 'src/components/playlists/coverWithVideo/CoverWithVideo';
 
 interface Props {
   video: Video;
-  visualComponentId: string;
+  id: string;
 }
 
-export const MagicPlaylistVideoCard = ({ video, visualComponentId }: Props) => {
+export const MagicPlaylistVideoCard = ({ video, id }: Props) => {
   const pedagogyTags = [
     'Brain break',
     'Context builder',
@@ -30,23 +31,26 @@ export const MagicPlaylistVideoCard = ({ video, visualComponentId }: Props) => {
   };
 
   return (
-    <VideoGridCard
-      key={video.id}
-      video={video}
-      buttonsRow={
-        <>
-          <span className="pedagogy-tag">
-            <Badge value={pedagogyTag} />
-          </span>
-          <PlaylistVideoCardButtons
-            video={video}
-            currentTag={pedagogyTag}
-            pedagogyTags={pedagogyTags}
-            visualComponentId={visualComponentId}
-            setPedagogyTagCallback={(t) => savePedagogyTag(t, video)}
-          />
-        </>
-      }
-    />
+    <div className="flex flex-col">
+      <div
+        style={{
+          width: '100%',
+          height: 'auto',
+        }}
+      >
+        <CoverWithVideo video={video} onSegmentPlayed={() => null} />
+      </div>
+      <span className="pedagogy-tag">
+        <Badge value={pedagogyTag} />
+      </span>
+      <span>{video.title}</span>
+      <PlaylistVideoCardButtons
+        video={video}
+        currentTag={pedagogyTag}
+        pedagogyTags={pedagogyTags}
+        setPedagogyTagCallback={(t) => savePedagogyTag(t, video)}
+        visualComponentId={id}
+      />
+    </div>
   );
 };
