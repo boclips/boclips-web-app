@@ -4,7 +4,7 @@ import PerformanceIcon from 'resources/icons/performance.svg';
 import InsightsIcon from 'resources/icons/insights.svg';
 import { TextButton } from 'src/components/common/textButton/TextButton';
 import c from 'classnames';
-import s from './style.module.less';
+import s from './dashboardHeader.module.less';
 
 export const DashboardHeader = () => {
   return (

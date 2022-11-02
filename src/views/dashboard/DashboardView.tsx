@@ -4,6 +4,7 @@ import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import React from 'react';
 import { DashboardHeader } from 'src/components/dashboard/DashboardHeader';
+import DashboardPerformance from "src/components/dashboard/DashboardPerformance";
 
 const DashboardView = () => {
   return (
@@ -12,6 +13,7 @@ const DashboardView = () => {
       <Layout rowsSetup="grid-rows-library-view" responsiveLayout>
         <Navbar />
         <DashboardHeader />
+        <DashboardPerformance />
         <Footer columnPosition="col-start-2 col-end-26" />
       </Layout>
     </>
