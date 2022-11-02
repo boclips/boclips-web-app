@@ -18,11 +18,8 @@ const DownloadVideoFiles = ({ video }: { video: OrderItemVideo }) => {
   useEffect(() => {
     apiClient.videos
       .getVideoProjection(video, 'fullProjection')
-      .then((_fetchedVideo: Video) => {
-        setAssetsUrl(
-          'https://api.staging-boclips.com/v1/videos/5e2ff495878dfc00fcdb0d11/assets',
-        );
-        // setAssetsUrl(fetchedVideo.links.assets.getOriginalLink());
+      .then((fetchedVideo: Video) => {
+        setAssetsUrl(fetchedVideo.links.assets.getOriginalLink());
       })
       .catch(() => setAssetsUrl('NOT FOUND'));
   }, [video, apiClient]);
