@@ -22,26 +22,17 @@ const DownloadCaptions = ({ video }: { video: OrderItemVideo }) => {
   useEffect(() => {
     apiClient.videos
       .getVideoProjection(video, 'fullProjection')
-      .then((fetchedVideo: Video) => {
-        setAssetsUrl(fetchedVideo.links.assets?.getOriginalLink());
+      .then((_fetchedVideo: Video) => {
+        setAssetsUrl(
+          'https://api.staging-boclips.com/v1/videos/5e2ff495878dfc00fcdb0d11/assets',
+        );
+        // setAssetsUrl(fetchedVideo.links.assets?.getOriginalLink());
       })
-      .catch(() => setAssetsUrl('ERROR'));
+      .catch(() => setAssetsUrl('NOT FOUND'));
   }, [video, apiClient]);
 
-  if (!assetsUrl) {
-    return <Loading />;
-  }
-
-  if (assetsUrl === 'ERROR') {
-    return (
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href={video._links.videoUpload.getOriginalLink()}
-      >
-        Could not find download link for assets
-      </a>
-    );
+  if (!assetsUrl || assetsUrl === 'NOT FOUND') {
+    return null;
   }
   return (
     <DownloadVideoCaptionsButton
@@ -51,35 +42,24 @@ const DownloadCaptions = ({ video }: { video: OrderItemVideo }) => {
   );
 };
 
-const RequestCaptions = ({ video }: { video: OrderItemVideo }) => (
-  <a
-    className="video-files__link"
-    target="_blank"
-    rel="noopener noreferrer"
-    href={video._links.captionAdmin.getOriginalLink()}
-  >
-    Go to Kaltura
-  </a>
-);
+const CaptionsUnavailable = () => <div>Captions unavailable</div>;
 
 const CaptionsRequested = () => <div>Captions requested</div>;
 
 const CaptionsProcessing = () => <div>Processing captions</div>;
 
-const Loading = () => <div>Loading...</div>;
-
 const computeVideoStatus = (
   video?: OrderItemVideo,
   captionsRequested?: boolean,
 ) => {
-  if (
-    video?.captionStatus === OrderCaptionStatus.AVAILABLE &&
-    captionsRequested
-  ) {
+  // if (
+  //   video?.captionStatus === OrderCaptionStatus.AVAILABLE &&
+  //   captionsRequested
+  // ) {
     return <DownloadCaptions video={video!} />;
-  }
-
-  return renderCaptionsNotReady(video, captionsRequested);
+  // }
+  //
+  // return renderCaptionsNotReady(video, captionsRequested);
 };
 
 const renderCaptionsNotReady = (
@@ -91,11 +71,11 @@ const renderCaptionsNotReady = (
       case OrderCaptionStatus.REQUESTED:
         return <CaptionsRequested />;
       case OrderCaptionStatus.UNAVAILABLE:
-        return <RequestCaptions video={video} />;
+        return <CaptionsUnavailable />;
       case OrderCaptionStatus.PROCESSING:
         return <CaptionsProcessing />;
       default: {
-        return <Loading />;
+        return null;
       }
     }
   }

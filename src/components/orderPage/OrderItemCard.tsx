@@ -5,10 +5,10 @@ import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
 import { AdditionalServicesSummaryPreview } from 'src/components/cart/AdditionalServices/AdditionalServicesSummaryPreview';
 import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import { Typography } from '@boclips-ui/typography';
+import DownloadCaptionsFile from 'src/components/orderPage/DownloadCaptionsFile';
 import s from './style.module.less';
 import { Link } from '../common/Link';
-import DownloadVideoFile from "src/components/orderPage/DownloadVideoFile";
-import DownloadCaptionsFile from "src/components/orderPage/DownloadCaptionsFile";
+import DownloadVideoFile from 'src/components/orderPage/DownloadVideoFile';
 
 interface Props {
   item: OrderItem;
@@ -47,31 +47,38 @@ export const OrderItemCard = ({ item }: Props) => {
           )}
         </Typography.Title1>
 
-        <div className="flex flex-col mb-4">
-          <Link
-            to={`/videos/${item.video.id}`}
-            state={{ userNavigated: true }}
-            className="text-gray-900 hover:text-gray-900"
-          >
-            <Typography.Title1>{item.video.title}</Typography.Title1>
-          </Link>
-          <Typography.Body size="small" className="text-gray-700">
-            ID: {item.video.id}
-          </Typography.Body>
+        <div className="flex flex-row">
+          <div className="flex flex-col mb-4">
+            <Link
+              to={`/videos/${item.video.id}`}
+              state={{ userNavigated: true }}
+              className="text-gray-900 hover:text-gray-900"
+            >
+              <Typography.Title1>{item.video.title}</Typography.Title1>
+            </Link>
+            <Typography.Body size="small" className="text-gray-700">
+              ID: {item.video.id}
+            </Typography.Body>
+            <AdditionalServicesSummaryPreview
+              captionsAndTranscriptsRequested={
+                item.captionsRequested && item.transcriptRequested
+              }
+              trim={item.trim}
+              editRequest={item.editRequest}
+            />
+          </div>
         </div>
-
-        <AdditionalServicesSummaryPreview
-          captionsAndTranscriptsRequested={
-            item.captionsRequested && item.transcriptRequested
-          }
-          trim={item.trim}
-          editRequest={item.editRequest}
-        />
-        <DownloadVideoFile video={item.video} />
-        <DownloadCaptionsFile
-          captionsRequested={item.captionsRequested}
-          video={item.video}
-        />
+        <div className="flex flex-row justify-end">
+          <div className="mr-2">
+            <DownloadCaptionsFile
+              captionsRequested={item.captionsRequested}
+              video={item.video}
+            />
+          </div>
+          <div className="mr-1">
+            <DownloadVideoFile video={item.video} />
+          </div>
+        </div>
       </div>
     </div>
   );

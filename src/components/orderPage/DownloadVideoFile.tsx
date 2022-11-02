@@ -18,45 +18,22 @@ const DownloadVideoFiles = ({ video }: { video: OrderItemVideo }) => {
   useEffect(() => {
     apiClient.videos
       .getVideoProjection(video, 'fullProjection')
-      .then((fetchedVideo: Video) => {
+      .then((_fetchedVideo: Video) => {
         setAssetsUrl(
-          fetchedVideo.links.assets.getOriginalLink(),
+          'https://api.staging-boclips.com/v1/videos/5e2ff495878dfc00fcdb0d11/assets',
         );
+        // setAssetsUrl(fetchedVideo.links.assets.getOriginalLink());
       })
-      .catch(() => setAssetsUrl('ERROR'));
+      .catch(() => setAssetsUrl('NOT FOUND'));
   }, [video, apiClient]);
 
-  if (!assetsUrl) {
-    return <Loading />;
+  if (!assetsUrl || assetsUrl === 'NOT FOUND') {
+    return null;
   }
-
-  if (assetsUrl === 'ERROR') {
-    return (
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href={video._links.videoUpload.getOriginalLink()}
-      >
-        Could not find download link for assets
-      </a>
-    );
-  }
-  // eslint-disable-next-line react/jsx-no-undef
   return <DownloadVideoAssetsButton downloadUrl={assetsUrl} />;
 };
 
-const NothingToDownload = ({ video }: { video: OrderItemVideo }) => (
-  <a
-    className="video-files__link"
-    target="_blank"
-    rel="noopener noreferrer"
-    href={video._links.videoUpload.getOriginalLink()}
-  >
-    Go to Kaltura
-  </a>
-);
-
-const Loading = () => <div>Loading...</div>;
+const NothingToDownload = () => <div>~Download unavailable</div>;
 
 const computeVideoStatus = (video?: OrderItemVideo) => {
   const maxResAvailable = video?.maxResolutionAvailable;
@@ -65,11 +42,11 @@ const computeVideoStatus = (video?: OrderItemVideo) => {
     maxResAvailable === undefined ||
     maxResAvailable === null
   ) {
-    return <Loading />;
+    return null;
   }
 
   if (!maxResAvailable) {
-    return <NothingToDownload video={video} />;
+    return <NothingToDownload />;
   }
 
   return <DownloadVideoFiles video={video!} />;

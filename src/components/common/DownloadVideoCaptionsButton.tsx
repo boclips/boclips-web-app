@@ -3,6 +3,8 @@ import React from 'react';
 import { DownloadOutlined } from '@ant-design/icons/lib';
 import debounce from 'lodash/debounce';
 import { VideoAssetsService } from 'src/services/videoAssets/VideoAssetsService';
+import Button from '@boclips-ui/button';
+import s from './DownloadVideoCaptionsButton.module.less'
 
 interface Props {
   videoTitle: string;
@@ -15,13 +17,15 @@ const DownloadVideoCaptionsButton = ({ videoTitle, downloadUrl }: Props) => {
   };
 
   return (
-    <button
-      className="asset-button"
-      type="button"
+    <Button
+      className={s.downloadCaptions}
+
       onClick={debounce(() => getCaptions(), 500)}
-    >
-      <DownloadOutlined /> Download captions
-    </button>
+      width="211px"
+      text="Download captions"
+      height="48px"
+      icon={<DownloadOutlined />}
+    />
   );
 };
 
