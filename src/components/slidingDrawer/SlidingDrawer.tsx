@@ -1,6 +1,6 @@
 import React from 'react';
 import c from 'classnames';
-import s from './style.module.less';
+import s from './SlidingDrawer.module.less';
 
 interface Props {
   isOpen: boolean;
