@@ -23,6 +23,8 @@ import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSe
 import Appcues from './services/analytics/appcues/Appcues';
 import { GlobalQueryErrorProvider } from './components/common/providers/GlobalQueryErrorProvider';
 import { JSErrorBoundary } from './components/common/errors/JSErrorBoundary';
+import { MagicPlaylistProvider } from 'src/components/common/providers/MagicPlaylistProvider';
+import MagicPlaylist from "src/views/playlist/MagicPlaylist";
 
 declare global {
   interface Window {
@@ -192,6 +194,15 @@ const App = ({
                             new FollowPlaylist(apiClient.collections)
                           }
                         />
+                      }
+                    />
+
+                    <Route
+                      path="/magic"
+                      element={
+                        <MagicPlaylistProvider>
+                          <MagicPlaylist />
+                        </MagicPlaylistProvider>
                       }
                     />
 

@@ -1,0 +1,56 @@
+@import '@boclips-ui/styles/src/colors';
+
+.gridWrapper {
+  display: grid;
+  grid-row-start: 2;
+  grid-row-end: 2;
+  grid-column-start: 2;
+  grid-column-end: 26;
+  grid-template-columns: repeat(4, 1fr);
+  //grid-auto-flow: row;
+  grid-template-rows: repeat(8, min-content);
+  grid-gap: 1rem;
+
+  .item {
+    width: 100%;
+    height: 240px;
+    border-radius: 4px;
+  }
+
+  .add {
+    background: @gray-400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    ul {
+      position: absolute;
+      width: 140px;
+      height: auto;
+      background: @gray-400;
+      top: 0;
+      right: -145px;
+      padding: 0.5rem;
+      border-radius: 4px;
+
+      &.outOfViewport {
+        left: -145px;
+      }
+
+      li {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .section {
+    height: fit-content;
+    text-decoration: underline;
+  }
+}
+
+.fullWidth {
+  grid-column-start: 1;
+  grid-column-end: 5;
+}
