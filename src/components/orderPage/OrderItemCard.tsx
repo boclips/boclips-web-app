@@ -7,6 +7,8 @@ import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 import { Link } from '../common/Link';
+import DownloadVideoFile from "src/components/orderPage/DownloadVideoFile";
+import DownloadCaptionsFile from "src/components/orderPage/DownloadCaptionsFile";
 
 interface Props {
   item: OrderItem;
@@ -64,6 +66,11 @@ export const OrderItemCard = ({ item }: Props) => {
           }
           trim={item.trim}
           editRequest={item.editRequest}
+        />
+        <DownloadVideoFile video={item.video} />
+        <DownloadCaptionsFile
+          captionsRequested={item.captionsRequested}
+          video={item.video}
         />
       </div>
     </div>
