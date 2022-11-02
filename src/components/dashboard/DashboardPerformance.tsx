@@ -5,6 +5,7 @@ import {
   useGetStatsQuery,
 } from 'src/hooks/api/dashboard/dashboardQuery';
 import { Typography } from '@boclips-ui/typography';
+import LightBulbIcon from 'src/resources/icons/light-bulb.svg';
 import c from 'classnames';
 import s from './dashboardPerformance.module.less';
 
@@ -31,7 +32,12 @@ const DashboardPerformance = () => {
         )}
       >
         <Typography.H1 size="sm">Your top 5 videos</Typography.H1>
-        <table className="mt-4 w-full h-full table-auto border-collapse">
+        <table
+          className={c(
+            'mt-4 w-full h-full table-auto border-collapse',
+            s.table,
+          )}
+        >
           <thead>
             <tr className="bg-blue-100 h-16">
               <th className="pl-6 text-left">Video title</th>
@@ -51,6 +57,27 @@ const DashboardPerformance = () => {
               ))}
           </tbody>
         </table>
+        <div
+          className={c(
+            'flex flex-row space-x-6 items-center mt-2 pl-6 box-content border-2 border-blue-400 rounded bg-blue-100',
+            s.insightBox,
+          )}
+        >
+          <LightBulbIcon />
+          <div className="flex flex-col space-y-2">
+            <Typography.Body className="text-gray-800 !font-medium">
+              Would you like to improve your video distribution and
+              click-through rate?
+            </Typography.Body>
+            <Typography.Body className="text-gray-800">
+              Go to{' '}
+              <Typography.Link className="!text-blue-800 !font-medium">
+                Content Insights
+              </Typography.Link>{' '}
+              section and review our expert’s recommendations
+            </Typography.Body>
+          </div>
+        </div>
       </div>
     </main>
   );
