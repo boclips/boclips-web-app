@@ -6,22 +6,23 @@ import Tooltip from '@boclips-ui/tooltip';
 import Button from '@boclips-ui/button';
 import CloseIconSVG from 'src/resources/icons/cross-icon.svg';
 import { useMagicPlaylistContext } from 'src/components/common/providers/MagicPlaylistProvider';
+import { BestForTag } from 'boclips-api-client/dist/sub-clients/bestForTags/model/BestForTag';
 import s from './style.module.less';
 
 interface CardButtonsProps {
   video: Video;
-  currentTag: string;
-  pedagogyTags: string[];
+  currentTag: BestForTag;
+  tags: BestForTag[];
   visualComponentId: string;
-  setPedagogyTagCallback: (tag) => void;
+  setTagCallback: (tag) => void;
 }
 
 export const PlaylistVideoCardButtons = ({
   video,
   currentTag,
-  pedagogyTags,
+  tags,
   visualComponentId,
-  setPedagogyTagCallback,
+  setTagCallback,
 }: CardButtonsProps) => {
   const { dispatch } = useMagicPlaylistContext();
 
@@ -29,8 +30,8 @@ export const PlaylistVideoCardButtons = ({
     <EditPedagogyTagButton
       video={video}
       currentTag={currentTag}
-      pedagogyTags={pedagogyTags}
-      setPedagogyTagCallback={setPedagogyTagCallback}
+      tags={tags}
+      setTagCallback={setTagCallback}
     />
   );
 

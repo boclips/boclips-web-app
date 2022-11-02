@@ -1,5 +1,8 @@
 import React from 'react';
 import { useMagicPlaylistContext } from 'src/components/common/providers/MagicPlaylistProvider';
+import Button from '@boclips-ui/button';
+import CloseIconSVG from 'src/resources/icons/cross-icon.svg';
+import s from './style.module.less';
 
 interface Props {
   text: string;
@@ -20,9 +23,12 @@ export const MagicCommentCard = ({ text, visualComponentId }: Props) => {
     <div>
       <div>{text}</div>
       <div className="commentActions">
-        <button type="button" onClick={onRemoveWidgetClicked}>
-          Remove this widget
-        </button>
+        <Button
+          className={s.removeWidgetBtn}
+          onClick={onRemoveWidgetClicked}
+          iconOnly
+          icon={<CloseIconSVG />}
+        />
       </div>
     </div>
   );

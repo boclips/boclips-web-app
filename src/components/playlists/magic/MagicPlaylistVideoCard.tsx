@@ -1,5 +1,4 @@
 import { Video } from 'boclips-api-client/dist/types';
-import VideoGridCard from 'src/components/videoCard/VideoGridCard';
 import React, { useState } from 'react';
 import { PlaylistVideoCardButtons } from 'src/components/playlists/magic/VideoPedagogyTagCardButtons';
 import Badge from '@boclips-ui/badge';
@@ -11,23 +10,23 @@ interface Props {
 }
 
 export const MagicPlaylistVideoCard = ({ video, id }: Props) => {
-  const pedagogyTags = [
-    'Brain break',
-    'Context builder',
-    'Experiment',
-    'Explainer',
-    'Hook',
-    'Review',
-    'Other',
+  const tags = [
+    { id: '1', label: 'Brain break' },
+    { id: '2', label: 'Context builder' },
+    { id: '3', label: 'Experiment' },
+    { id: '4', label: 'Explainer' },
+    { id: '5', label: 'Hook' },
+    { id: '6', label: 'Review' },
+    { id: '7', label: 'Other' },
   ];
 
-  const index = Math.floor(Math.random() * pedagogyTags.length);
-  const [pedagogyTag, setPedagogyTag] = useState(pedagogyTags[index]);
+  const index = Math.floor(Math.random() * tags.length);
+  const [tag, setTag] = useState(tags[index]);
 
-  const savePedagogyTag = (tag, vid) => {
-    setPedagogyTag(tag);
+  const saveTag = (t, vid) => {
+    setTag(t);
     // save to DB if needed
-    console.log(`saving pedagogy tag '${tag}' for video ${vid.id}`);
+    console.log(`saving tag '${t.label}' for video ${vid.id}`);
   };
 
   return (
@@ -41,14 +40,14 @@ export const MagicPlaylistVideoCard = ({ video, id }: Props) => {
         <CoverWithVideo video={video} onSegmentPlayed={() => null} />
       </div>
       <span className="pedagogy-tag">
-        <Badge value={pedagogyTag} />
+        <Badge value={tag.label} />
       </span>
       <span>{video.title}</span>
       <PlaylistVideoCardButtons
         video={video}
-        currentTag={pedagogyTag}
-        pedagogyTags={pedagogyTags}
-        setPedagogyTagCallback={(t) => savePedagogyTag(t, video)}
+        currentTag={tag}
+        tags={tags}
+        setTagCallback={(t) => saveTag(t, video)}
         visualComponentId={id}
       />
     </div>

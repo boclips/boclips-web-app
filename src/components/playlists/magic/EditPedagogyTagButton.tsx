@@ -5,19 +5,20 @@ import ButtonIcon from 'src/resources/icons/pencil.svg';
 import Tooltip from '@boclips-ui/tooltip';
 import { Typography } from '@boclips-ui/typography';
 import CloseButton from 'src/resources/icons/cross-icon.svg';
+import { BestForTag } from 'boclips-api-client/dist/sub-clients/bestForTags/model/BestForTag';
 import s from './style.module.less';
 
 interface Props {
   video: Video;
-  currentTag: string;
-  pedagogyTags: string[];
-  setPedagogyTagCallback: (tag) => void;
+  currentTag: BestForTag;
+  tags: BestForTag[];
+  setTagCallback: (tag) => void;
 }
 export const EditPedagogyTagButton = ({
   video,
   currentTag,
-  pedagogyTags,
-  setPedagogyTagCallback,
+  tags,
+  setTagCallback,
 }: Props) => {
   // eslint-disable-next-line no-console
   console.log(`video: ${video.id}`);
@@ -28,13 +29,14 @@ export const EditPedagogyTagButton = ({
     setIsModalOpen(!isModalOpen);
   };
 
-  const onClick = (tag) => {
+  const onClick = (tagId) => {
     toggleModalState();
-    setPedagogyTagCallback(tag);
+    const selected = tags.filter((t) => t.id === tagId);
+    setTagCallback(selected[0]);
   };
 
   const modal = (
-    <div role="dialog" className={s.playlistPanel}>
+    <div role="dialog" className={s.modal}>
       <div className={s.header}>
         <Typography.Body weight="medium">Edit pedagogy tag</Typography.Body>
         <button type="button" onClick={() => setIsModalOpen(false)}>
@@ -43,9 +45,9 @@ export const EditPedagogyTagButton = ({
       </div>
 
       <div className="d-flex">
-        <select value={currentTag} onChange={(e) => onClick(e.target.value)}>
-          {pedagogyTags.map((t) => (
-            <option value={t}>{t}</option>
+        <select value={currentTag.id} onChange={(e) => onClick(e.target.value)}>
+          {tags.map((t) => (
+            <option value={t.id}>{t.label}</option>
           ))}
         </select>
       </div>
