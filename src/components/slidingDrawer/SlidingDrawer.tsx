@@ -8,15 +8,13 @@ interface Props {
   children: React.ReactNode;
 }
 
-const SlidingDrawer = (props: Props) => {
+const SlidingDrawer = ({ isOpen, onClose, children }: Props) => {
   return (
-    <div
-      className={props.isOpen ? c(s.slidingDrawer, s.open) : c(s.slidingDrawer)}
-    >
-      <button type="button" onClick={props.onClose}>
+    <div className={isOpen ? c(s.slidingDrawer, s.open) : c(s.slidingDrawer)}>
+      <button type="button" onClick={onClose}>
         Close
       </button>
-      {props.children}
+      {children}
     </div>
   );
 };
