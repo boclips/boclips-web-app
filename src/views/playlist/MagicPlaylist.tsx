@@ -208,7 +208,10 @@ const PlaylistView = () => {
         onClose={() => setIsDrawerOpen(false)}
       >
         <DrawerVideoSearch onVideoAdded={videoAdded} />
-        {/*<DrawerVideoRecommendations videosAddedThusFar={videosAddedThusFar()} />*/}
+        <DrawerVideoRecommendations
+          videosAddedThusFar={videosAddedThusFar()}
+          onVideoAdded={videoAdded}
+        />
       </SlidingDrawer>
       <Footer columnPosition="col-start-2 col-end-26" />
     </Layout>
