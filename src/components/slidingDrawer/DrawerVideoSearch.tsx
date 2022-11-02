@@ -19,19 +19,21 @@ const DrawerVideoSearch = ({ onVideoAdded }: Props) => {
   });
 
   return (
-    <div>
-      <SearchBar
-        placeholder="Search for videos"
-        onSearch={(phrase) => setQuery(phrase)}
-      />
+    <>
+      <span className="flex flex-col mb-4">
+        <SearchBar
+          placeholder="Search for videos"
+          onSearch={(phrase) => setQuery(phrase)}
+        />
+      </span>
       <div className={c(s.drawerSearchResults)}>
         {data?.page.map((video, index) => (
-          <div className={`${c(s.drawerSearchResult)}${index % 3}`}>
+          <span className="flex flex-col" key={index}>
             <DrawerVideo video={video} onAddPressed={onVideoAdded} />
-          </div>
+          </span>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 

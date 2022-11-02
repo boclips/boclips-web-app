@@ -1,6 +1,7 @@
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import React from 'react';
+import Button from '@boclips-ui/button';
 
 interface Props {
   video: Video;
@@ -9,12 +10,17 @@ interface Props {
 
 const DrawerVideo = ({ video, onAddPressed }: Props) => {
   return (
-    <div>
+    <>
       <VideoPlayer video={video} />
-      <button type="button" onClick={() => onAddPressed(video)}>
-        Add
-      </button>
-    </div>
+      <span className="pt-2">
+        <Button
+          height="34px"
+          width="34px"
+          text="+"
+          onClick={() => onAddPressed(video)}
+        />
+      </span>
+    </>
   );
 };
 
