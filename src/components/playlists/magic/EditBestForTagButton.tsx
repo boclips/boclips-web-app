@@ -58,7 +58,7 @@ export const EditBestForTagButton = ({
             </button>
           </div>
 
-          <div className="d-flex">
+          <div className={s.select}>
             <select
               value={currentTag.id}
               onChange={(e) => onClick(e.target.value)}
