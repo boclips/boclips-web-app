@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useMagicPlaylistContext } from 'src/components/common/providers/MagicPlaylistProvider';
 import Button from '@boclips-ui/button';
 import CloseIconSVG from 'src/resources/icons/cross-icon.svg';
+import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 
 interface Props {
@@ -34,7 +35,12 @@ export const MagicCommentCard = ({ text, visualComponentId }: Props) => {
       onMouseOut={onMouseOut}
       className={s.comment}
     >
-      {text}
+      <Typography.Body
+        as="div"
+        className="flex h-full items-center text-center"
+      >
+        {text}
+      </Typography.Body>
       {show && (
         <div className={s.sectionActions}>
           <Button
