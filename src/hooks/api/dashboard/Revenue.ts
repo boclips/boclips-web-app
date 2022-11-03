@@ -3,18 +3,19 @@ export interface Revenue {
   contractId: string;
   today: string;
   currency: string;
-  currentPeriod: Period;
-  revenue: RevenueDetail[];
+  currentPeriod: CurrentPeriod;
+  closedPeriods: Period[];
 }
 
 export interface Period {
-  name: string;
-  startDate: string;
-  endDate: string;
-}
-
-export interface RevenueDetail {
   period: string;
   revenue: number;
   changeFromPreviousPercent: number;
+}
+
+export interface CurrentPeriod extends Period {
+  startDate: string;
+  endDate: string;
+  currentRevenue: number;
+  revenueEstimation: number;
 }

@@ -26,7 +26,12 @@ export const TopVideosBlock = ({ statsData }: Props) => {
               <th className="text-left">Video ID</th>
               <th className="text-left">Views (Total)</th>
               <th className="text-left">
-                <div className="flex flex-row content-center items-center space-x-2">
+                <div
+                  className={c(
+                    'flex flex-row content-center items-center space-x-2',
+                    s.ctrScore,
+                  )}
+                >
                   <div>CTR Score</div>
                   <QuestionIcon />
                 </div>

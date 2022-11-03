@@ -1,5 +1,9 @@
 import React from 'react';
-import { Revenue } from 'src/hooks/api/dashboard/Revenue';
+import {
+  CurrentPeriod,
+  Period,
+  Revenue,
+} from 'src/hooks/api/dashboard/Revenue';
 import {
   LineChart,
   Line,
@@ -16,13 +20,35 @@ interface Props {
 }
 
 export const RevenueChart = ({ revenueData }: Props) => {
+  const getChartData = () => {
+    revenueData.closedPeriods.sort((a, b) => {
+      return a.period < b.period ? -1 : 1;
+    });
+
+    console.log(revenueData);
+
+    const lastClosedPeriod: Period = revenueData.closedPeriods.pop();
+
+    const lastClosedPeriodData: CurrentPeriod = {
+      revenue: lastClosedPeriod.revenue,
+      period: lastClosedPeriod.period,
+      changeFromPreviousPercent: lastClosedPeriod.changeFromPreviousPercent,
+      revenueEstimation: lastClosedPeriod.revenue,
+      currentRevenue: lastClosedPeriod.revenue,
+      startDate: '',
+      endDate: '',
+    };
+
+    revenueData.closedPeriods.push(lastClosedPeriodData);
+    revenueData.closedPeriods.push(revenueData.currentPeriod);
+
+    console.log(revenueData);
+    return revenueData;
+  };
+
   const renderLineChart = revenueData && (
     <ResponsiveContainer width="90%" height={350}>
-      <LineChart
-        data={revenueData.revenue.sort((a, b) => {
-          return a.period < b.period ? -1 : 1;
-        })}
-      >
+      <LineChart data={getChartData().closedPeriods}>
         <CartesianGrid stroke="#ccc" />
         <XAxis dataKey="period" />
         <YAxis
@@ -36,8 +62,16 @@ export const RevenueChart = ({ revenueData }: Props) => {
           strokeWidth={2}
           dot={{ stroke: '#00217D', strokeWidth: 4 }}
         >
-          <LabelList dataKey="revenue" position="insideTopRight" offset={10} />
+          <LabelList dataKey="revenue" position="insideTopLeft" offset={10} />
         </Line>
+
+        <Line
+          type="monotone"
+          dataKey="revenueEstimation"
+          stroke="#8884d8"
+          strokeDasharray="5 5"
+          strokeWidth={2}
+        />
       </LineChart>
     </ResponsiveContainer>
   );

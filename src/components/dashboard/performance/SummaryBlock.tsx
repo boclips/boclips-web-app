@@ -22,7 +22,7 @@ export const SummaryBlock = ({ revenueData, statsData }: Props) => {
         </Typography.H5>
         <div className="flex flex-row content-between content-center items-center justify-between pb-4 border-gray-300 border-b-2">
           <Typography.H1 className="text-green-600">
-            ${revenueData.revenue[0].revenue}
+            ${revenueData.currentPeriod.currentRevenue}
           </Typography.H1>
           <MoneyRainIcon />
         </div>
