@@ -16,10 +16,6 @@ interface Props {
 }
 
 export const RevenueChart = ({ revenueData }: Props) => {
-  const customizedLabel = (value) => {
-    return { value };
-  };
-
   const renderLineChart = revenueData && (
     <ResponsiveContainer width="90%" height={300}>
       <LineChart
@@ -29,12 +25,16 @@ export const RevenueChart = ({ revenueData }: Props) => {
       >
         <CartesianGrid stroke="#ccc" />
         <XAxis dataKey="period" />
-        <YAxis type="number" domain={[0, dataMax => Math.round(dataMax + 1000)]} />
+        <YAxis
+          type="number"
+          domain={[0, (dataMax) => Math.round(dataMax + 1000)]}
+        />
         <Line
           type="monotone"
           dataKey="revenue"
-          stroke="#1F78B4"
-          strokeWidth={3}
+          stroke="#00217D"
+          strokeWidth={2}
+          dot={{ stroke: '#00217D', strokeWidth: 4 }}
         >
           <LabelList dataKey="revenue" position="insideBottomRight" />
         </Line>

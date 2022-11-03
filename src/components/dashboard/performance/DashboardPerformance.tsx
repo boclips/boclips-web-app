@@ -6,11 +6,11 @@ import {
 } from 'src/hooks/api/dashboard/dashboardQuery';
 import c from 'classnames';
 import { TopVideosBlock } from 'src/components/dashboard/performance/TopVideosBlock';
-import s from './dashboardPerformance.module.less';
 import { RevenueChart } from 'src/components/dashboard/performance/RevenueChart';
+import s from './dashboardPerformance.module.less';
 
 const DashboardPerformance = () => {
-  const { data: revenue, isLoading: isRevenueLoading } = useGetRevenueQuery();
+  const { data: revenue } = useGetRevenueQuery();
   const { data: stats } = useGetStatsQuery('allTime');
 
   return (
