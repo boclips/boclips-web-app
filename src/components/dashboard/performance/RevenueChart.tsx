@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { Revenue } from 'src/hooks/api/dashboard/Revenue';
 import {
   LineChart,
@@ -27,7 +27,7 @@ export const RevenueChart = ({ revenueData }: Props) => {
         <XAxis dataKey="period" />
         <YAxis
           type="number"
-          domain={[0, (dataMax) => Math.round(dataMax + 1000)]}
+          domain={[0, (dataMax) => (Math.round(dataMax / 1000) + 1) * 1000]}
         />
         <Line
           type="monotone"
@@ -36,7 +36,7 @@ export const RevenueChart = ({ revenueData }: Props) => {
           strokeWidth={2}
           dot={{ stroke: '#00217D', strokeWidth: 4 }}
         >
-          <LabelList dataKey="revenue" position="insideBottomRight" />
+          <LabelList dataKey="revenue" position="insideTopLeft" offset={10} />
         </Line>
       </LineChart>
     </ResponsiveContainer>
