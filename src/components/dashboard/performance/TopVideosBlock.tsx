@@ -32,7 +32,7 @@ export const TopVideosBlock = ({ statsData }: Props) => {
               statsData.mostPopularVideos.map((video) => (
                 <tr className="border-t-2 border-blue-400">
                   <td className="pl-6">{video.videoTitle}</td>
-                  <td className="">{video.videoTitle}</td>
+                  <td className="">{video.videoId}</td>
                   <td className="">{video.views}</td>
                 </tr>
               ))}
