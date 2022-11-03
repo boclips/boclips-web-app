@@ -9,8 +9,9 @@
       color: @gray-700 !important;
     }
 
-    &:hover,active {
-      span{
+    &:hover,
+    active {
+      span {
         color: @blue-800 !important;
       }
     }
@@ -19,10 +20,11 @@
   .performanceIcon {
     path {
       stroke: none;
-      fill: @gray-700
+      fill: @gray-700;
     }
 
-    &:hover,active {
+    &:hover,
+    active {
       path {
         stroke: none;
         fill: @blue-800;
@@ -35,7 +37,8 @@
       stroke: @gray-700;
     }
 
-    &:hover,active {
+    &:hover,
+    active {
       path {
         stroke: @blue-800;
       }
@@ -48,5 +51,33 @@
     flex-direction: row;
     align-items: start;
     margin-bottom: 0.5rem;
+  }
+}
+
+.activePerformanceButton {
+  button {
+    background-color: @blue-400;
+
+    span {
+      color: @blue-800 !important;
+    }
+    path {
+      stroke: none;
+      fill: @blue-800 !important;
+    }
+  }
+}
+
+.activeInsightButton {
+  button {
+    background-color: @blue-500;
+
+    span {
+      color: @blue-800 !important;
+    }
+
+    svg path {
+      stroke: @blue-800 !important;
+    }
   }
 }

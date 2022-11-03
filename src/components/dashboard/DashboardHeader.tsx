@@ -6,7 +6,19 @@ import { TextButton } from 'src/components/common/textButton/TextButton';
 import c from 'classnames';
 import s from './dashboardHeader.module.less';
 
-export const DashboardHeader = () => {
+interface Props {
+  showPerformanceDashboard: boolean;
+  showInsightDashboard: boolean;
+  handlePerformanceButtonClick: () => void;
+  handleInsightButtonClick: () => void;
+}
+
+export const DashboardHeader = ({
+  showPerformanceDashboard,
+  showInsightDashboard,
+  handleInsightButtonClick,
+  handlePerformanceButtonClick,
+}: Props) => {
   return (
     <PageHeader
       title="Your Quarterly Video Dashboard"
@@ -14,14 +26,18 @@ export const DashboardHeader = () => {
       button={
         <div className={c('flex flex-row', s.icons)}>
           <TextButton
-            className={s.performanceIcon}
-            onClick={null}
+            className={c(s.performanceIcon, {
+              [s.activePerformanceButton]: showPerformanceDashboard,
+            })}
+            onClick={handlePerformanceButtonClick}
             text="Performance"
             icon={<PerformanceIcon />}
           />
           <TextButton
-            className={s.insightsIcon}
-            onClick={null}
+            className={c(s.insightsIcon, {
+              [s.activeInsightButton]: showInsightDashboard,
+            })}
+            onClick={handleInsightButtonClick}
             text="Content Insights"
             icon={<InsightsIcon />}
           />

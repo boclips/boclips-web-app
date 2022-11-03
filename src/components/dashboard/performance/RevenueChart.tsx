@@ -12,6 +12,7 @@ import {
   YAxis,
   ResponsiveContainer,
   LabelList,
+  ReferenceLine,
 } from 'recharts';
 import { Typography } from '@boclips-ui/typography';
 
@@ -24,8 +25,6 @@ export const RevenueChart = ({ revenueData }: Props) => {
     revenueData.closedPeriods.sort((a, b) => {
       return a.period < b.period ? -1 : 1;
     });
-
-    console.log(revenueData);
 
     const lastClosedPeriod: Period = revenueData.closedPeriods.pop();
 
@@ -42,7 +41,10 @@ export const RevenueChart = ({ revenueData }: Props) => {
     revenueData.closedPeriods.push(lastClosedPeriodData);
     revenueData.closedPeriods.push(revenueData.currentPeriod);
 
-    console.log(revenueData);
+    revenueData.closedPeriods.forEach((period) => {
+      period.period = period.period.slice(4, 6);
+    });
+
     return revenueData;
   };
 
@@ -64,7 +66,18 @@ export const RevenueChart = ({ revenueData }: Props) => {
         >
           <LabelList dataKey="revenue" position="insideTopLeft" offset={10} />
         </Line>
-
+        <ReferenceLine
+          x="Q3"
+          stroke="#10B981"
+          strokeWidth={2}
+          offset={10}
+          label={{
+            position: 'insideTopRight',
+            value: 'Today',
+            fill: '#10B981',
+            fontSize: 14,
+          }}
+        />
         <Line
           type="monotone"
           dataKey="revenueEstimation"
