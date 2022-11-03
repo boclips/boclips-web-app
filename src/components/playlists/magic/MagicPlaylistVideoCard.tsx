@@ -4,6 +4,8 @@ import { PlaylistVideoCardButtons } from 'src/components/playlists/magic/VideoPe
 import Badge from '@boclips-ui/badge';
 import CoverWithVideo from 'src/components/playlists/coverWithVideo/CoverWithVideo';
 import { useMagicPlaylistContext } from 'src/components/common/providers/MagicPlaylistProvider';
+import Button from '@boclips-ui/button';
+import CloseIconSVG from 'src/resources/icons/cross-icon.svg';
 import s from './style.module.less';
 
 interface Props {
@@ -56,9 +58,17 @@ export const MagicPlaylistVideoCard = ({ video, id }: Props) => {
       className="flex flex-col"
     >
       {showCloseBtn && (
-        <button className={s.closeButton} onClick={onRemoveWidgetClicked}>
-          X
-        </button>
+        <div className={s.sectionActions}>
+          <Button
+            width="40px"
+            height="40px"
+            type="outline"
+            className={s.removeWidgetBtn}
+            onClick={onRemoveWidgetClicked}
+            iconOnly
+            icon={<CloseIconSVG />}
+          />
+        </div>
       )}
       <div
         style={{
