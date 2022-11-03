@@ -8,11 +8,15 @@ import Button from '@boclips-ui/button';
 
 interface Props {
   downloadUrl: string;
+  additionalOnClick?: () => void;
 }
 
-const DownloadVideoAssetsButton = ({ downloadUrl }: Props) => {
+const DownloadVideoAssetsButton = ({ downloadUrl, additionalOnClick }: Props) => {
   const getVideo = () => {
     VideoAssetsService.downlaodVideoAsset(downloadUrl);
+    if (additionalOnClick !== null) {
+      additionalOnClick()
+    }
   };
 
   return (

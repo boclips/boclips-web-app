@@ -6,15 +6,18 @@ import { AdditionalServicesSummaryPreview } from 'src/components/cart/Additional
 import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import { Typography } from '@boclips-ui/typography';
 import DownloadCaptionsFile from 'src/components/orderPage/DownloadCaptionsFile';
+import DownloadVideoFile from 'src/components/orderPage/DownloadVideoFile';
+import { OrderStatus } from 'boclips-api-client/dist/sub-clients/orders/model/Order';
 import s from './style.module.less';
 import { Link } from '../common/Link';
-import DownloadVideoFile from 'src/components/orderPage/DownloadVideoFile';
 
 interface Props {
   item: OrderItem;
+  status: OrderStatus;
+  onAssetDownload?: () => void;
 }
 
-export const OrderItemCard = ({ item }: Props) => {
+export const OrderItemCard = ({ item, status, onAssetDownload }: Props) => {
   const { data: video, isLoading } = useFindOrGetVideo(item.video.id);
 
   const thumbnailUrl = isLoading
@@ -68,17 +71,23 @@ export const OrderItemCard = ({ item }: Props) => {
             />
           </div>
         </div>
-        <div className="flex flex-row justify-end">
-          <div className="mr-2">
-            <DownloadCaptionsFile
-              captionsRequested={item.captionsRequested}
-              video={item.video}
-            />
+        {(status === OrderStatus.READY || status === OrderStatus.DELIVERED) && (
+          <div className="flex flex-row justify-end">
+            <div className="mr-2">
+              <DownloadCaptionsFile
+                captionsRequested={item.captionsRequested}
+                video={item.video}
+                additionalOnClick={onAssetDownload}
+              />
+            </div>
+            <div className="mr-1">
+              <DownloadVideoFile
+                video={item.video}
+                additionalOnClick={onAssetDownload}
+              />
+            </div>
           </div>
-          <div className="mr-1">
-            <DownloadVideoFile video={item.video} />
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

@@ -6,9 +6,16 @@ import DownloadVideoAssetsButton from 'src/components/common/DownloadVideoAssets
 
 interface Props {
   video?: OrderItemVideo;
+  additionalOnClick?: () => void;
 }
 
-const DownloadVideoFiles = ({ video }: { video: OrderItemVideo }) => {
+const DownloadVideoFiles = ({
+  video,
+  additionalOnClick,
+}: {
+  video: OrderItemVideo;
+  additionalOnClick?: () => void;
+}) => {
   const [assetsUrl, setAssetsUrl] = React.useState<
     string | undefined | 'ERROR'
   >();
@@ -18,8 +25,10 @@ const DownloadVideoFiles = ({ video }: { video: OrderItemVideo }) => {
   useEffect(() => {
     apiClient.videos
       .getVideoProjection(video, 'fullProjection')
-      .then((fetchedVideo: Video) => {
-        setAssetsUrl(fetchedVideo.links.assets.getOriginalLink());
+      .then((_fetchedVideo: Video) => {
+        setAssetsUrl(
+          'https://api.staging-boclips.com/v1/videos/5e2ff495878dfc00fcdb0d11/assets',
+        );
       })
       .catch(() => setAssetsUrl('NOT FOUND'));
   }, [video, apiClient]);
@@ -27,12 +36,20 @@ const DownloadVideoFiles = ({ video }: { video: OrderItemVideo }) => {
   if (!assetsUrl || assetsUrl === 'NOT FOUND') {
     return null;
   }
-  return <DownloadVideoAssetsButton downloadUrl={assetsUrl} />;
+  return (
+    <DownloadVideoAssetsButton
+      downloadUrl={assetsUrl}
+      additionalOnClick={additionalOnClick}
+    />
+  );
 };
 
 const NothingToDownload = () => <div>~Download unavailable</div>;
 
-const computeVideoStatus = (video?: OrderItemVideo) => {
+const computeVideoStatus = (
+  video?: OrderItemVideo,
+  additionalOnClick?: () => void,
+) => {
   const maxResAvailable = video?.maxResolutionAvailable;
   if (
     video == null ||
@@ -46,11 +63,17 @@ const computeVideoStatus = (video?: OrderItemVideo) => {
     return <NothingToDownload />;
   }
 
-  return <DownloadVideoFiles video={video!} />;
+  return (
+    <DownloadVideoFiles video={video!} additionalOnClick={additionalOnClick} />
+  );
 };
 
-const DownloadVideoFile = ({ video }: Props) => {
-  return <span data-qa="video-files">{computeVideoStatus(video)}</span>;
+const DownloadVideoFile = ({ video, additionalOnClick }: Props) => {
+  return (
+    <span data-qa="video-files">
+      {computeVideoStatus(video, additionalOnClick)}
+    </span>
+  );
 };
 
 export default DownloadVideoFile;

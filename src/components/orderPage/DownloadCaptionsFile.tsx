@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import {
-  OrderItemVideo,
   OrderCaptionStatus,
+  OrderItemVideo,
 } from 'boclips-api-client/dist/sub-clients/orders/model/OrderItem';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import DownloadVideoCaptionsButton from 'src/components/common/DownloadVideoCaptionsButton';
@@ -10,9 +10,16 @@ import DownloadVideoCaptionsButton from 'src/components/common/DownloadVideoCapt
 interface Props {
   video?: OrderItemVideo;
   captionsRequested: boolean;
+  additionalOnClick: () => void;
 }
 
-const DownloadCaptions = ({ video }: { video: OrderItemVideo }) => {
+const DownloadCaptions = ({
+  video,
+  additionalOnClick,
+}: {
+  video: OrderItemVideo;
+  additionalOnClick?: () => void;
+}) => {
   const [assetsUrl, setAssetsUrl] = React.useState<
     string | undefined | 'ERROR'
   >();
@@ -22,8 +29,10 @@ const DownloadCaptions = ({ video }: { video: OrderItemVideo }) => {
   useEffect(() => {
     apiClient.videos
       .getVideoProjection(video, 'fullProjection')
-      .then((fetchedVideo: Video) => {
-        setAssetsUrl(fetchedVideo.links.assets?.getOriginalLink());
+      .then((_fetchedVideo: Video) => {
+        setAssetsUrl(
+          'https://api.staging-boclips.com/v1/videos/5e2ff495878dfc00fcdb0d11/assets',
+        );
       })
       .catch(() => setAssetsUrl('NOT FOUND'));
   }, [video, apiClient]);
@@ -35,6 +44,7 @@ const DownloadCaptions = ({ video }: { video: OrderItemVideo }) => {
     <DownloadVideoCaptionsButton
       downloadUrl={assetsUrl}
       videoTitle={video.title}
+      additionalOnClick={additionalOnClick}
     />
   );
 };
@@ -48,12 +58,15 @@ const CaptionsProcessing = () => <div>Processing captions</div>;
 const computeVideoStatus = (
   video?: OrderItemVideo,
   captionsRequested?: boolean,
+  additionalOnClick?: () => void,
 ) => {
   if (
     video?.captionStatus === OrderCaptionStatus.AVAILABLE &&
     captionsRequested
   ) {
-    return <DownloadCaptions video={video!} />;
+    return (
+      <DownloadCaptions video={video!} additionalOnClick={additionalOnClick} />
+    );
   }
 
   return renderCaptionsNotReady(video, captionsRequested);
@@ -79,10 +92,14 @@ const renderCaptionsNotReady = (
   return null;
 };
 
-const DownloadCaptionsFile = ({ video, captionsRequested }: Props) => {
+const DownloadCaptionsFile = ({
+  video,
+  captionsRequested,
+  additionalOnClick,
+}: Props) => {
   return (
     <span data-qa="caption-files">
-      {computeVideoStatus(video, captionsRequested)}
+      {computeVideoStatus(video, captionsRequested, additionalOnClick)}
     </span>
   );
 };
