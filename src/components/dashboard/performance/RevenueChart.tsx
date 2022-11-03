@@ -41,10 +41,6 @@ export const RevenueChart = ({ revenueData }: Props) => {
     revenueData.closedPeriods.push(lastClosedPeriodData);
     revenueData.closedPeriods.push(revenueData.currentPeriod);
 
-    revenueData.closedPeriods.forEach((period) => {
-      period.period = period.period.slice(4, 6);
-    });
-
     return revenueData;
   };
 
@@ -67,7 +63,10 @@ export const RevenueChart = ({ revenueData }: Props) => {
           <LabelList dataKey="revenue" position="insideTopLeft" offset={10} />
         </Line>
         <ReferenceLine
-          x="Q3"
+          x={
+            revenueData.closedPeriods[revenueData.closedPeriods.length - 2]
+              .period
+          }
           stroke="#10B981"
           strokeWidth={2}
           offset={10}
