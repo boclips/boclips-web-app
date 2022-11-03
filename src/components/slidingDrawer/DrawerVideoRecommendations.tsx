@@ -38,7 +38,9 @@ const DrawerVideoRecommendations = ({
     <>
       {recommendedVideos.length > 0 && (
         <div>
-          <Typography.H1 size="xs">Recommended videos</Typography.H1>
+          <span className="m-2">
+            <Typography.H1 size="md">Recommended videos</Typography.H1>
+          </span>
           <DrawerVideoList
             videos={recommendedVideos}
             onVideoAdded={onVideoAdded}
