@@ -42,7 +42,7 @@ const DashboardPerformance = () => {
       </div>
       {contracts && (
         <Dropdown
-          className="w-80"
+          className="w-80 mb-80"
           options={contracts.map((con) => con.contractName)}
           onChange={(contractName) => {
             setContractId(
