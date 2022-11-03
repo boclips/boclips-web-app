@@ -37,7 +37,7 @@ export const MagicCommentCard = ({ text, visualComponentId }: Props) => {
     >
       <Typography.Body
         as="div"
-        className="flex h-full items-center text-center"
+        className={s.text}
       >
         {text}
       </Typography.Body>

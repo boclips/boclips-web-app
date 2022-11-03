@@ -188,17 +188,20 @@ const PlaylistView = () => {
             >
               <li>
                 <button onClick={addSection} type="button">
-                  add section
+                  <PlusSVG />
+                  section
                 </button>
               </li>
               <li>
                 <button onClick={addVideo} type="button">
-                  add video
+                  <PlusSVG />
+                  video
                 </button>
               </li>
               <li>
                 <button onClick={addComment} type="button">
-                  add comment
+                  <PlusSVG />
+                  comment
                 </button>
               </li>
             </ul>
