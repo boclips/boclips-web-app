@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import c from 'classnames';
 import { useMagicPlaylistContext } from 'src/components/common/providers/MagicPlaylistProvider';
 import { BoInputText } from 'src/components/common/input/BoInputText';
 import Button from '@boclips-ui/button';
@@ -12,13 +11,14 @@ interface Props {
 
 export const DrawerManageComment = ({ onSectionCreated, onClose }: Props) => {
   const { dispatch } = useMagicPlaylistContext();
-  const [commentTitle, setCommentTitle] = useState('');
+  const [comment, setComment] = useState('');
   const [commentError, setCommentError] = useState(false);
+  const inputTextRef = React.useRef();
 
   const hasErrors = () => {
     let hasErr = false;
 
-    if (commentTitle == null || commentTitle.trim() === '') {
+    if (comment == null || comment.trim() === '') {
       setCommentError(true);
       hasErr = true;
     }
@@ -26,28 +26,30 @@ export const DrawerManageComment = ({ onSectionCreated, onClose }: Props) => {
     return hasErr;
   };
 
-  const createNewComment = (title) => {
+  const createNewComment = (comm) => {
     if (!hasErrors()) {
       dispatch({
         action: 'add-comment',
-        text: title,
+        text: comm.trim(),
       });
-      setCommentTitle('');
+
+      setComment('');
       onSectionCreated();
     }
   };
 
   return (
-    <div className={c(s.drawerSearchResults)}>
+    <>
       <BoInputText
         id="comment-input"
         labelText="Comment"
         placeholder="Add comment..."
-        constraints={{ required: true, minLength: 5 }}
-        onChange={(input) => setCommentTitle(input)}
+        constraints={{ required: true }}
+        onChange={(input) => setComment(input)}
         isError={commentError}
         errorMessage="Comment is required"
         inputType="textarea"
+        ref={inputTextRef}
       />
       <div className={s.buttons}>
         <Button
@@ -57,13 +59,13 @@ export const DrawerManageComment = ({ onSectionCreated, onClose }: Props) => {
           onClick={onClose}
         />
         <Button
-          onClick={() => createNewComment(commentTitle)}
+          onClick={() => createNewComment(comment)}
           text="Add comment"
           aria-label="Add comment"
           width="120px"
           height="40px"
         />
       </div>
-    </div>
+    </>
   );
 };
