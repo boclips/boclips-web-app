@@ -116,6 +116,21 @@
     overflow: auto;
     height: 100%;
     font-size: 14px;
+    padding-right: 1rem;
+
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 100vh;
+      background: none;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #bccdff;
+      border-radius: 100vh;
+    }
   }
 
   &:after {
@@ -183,11 +198,9 @@
   padding: 1rem;
 
   * {
-
   }
 
   select {
     width: 100%;
-
   }
 }
