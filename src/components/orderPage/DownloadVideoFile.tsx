@@ -3,6 +3,8 @@ import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { OrderItemVideo } from 'boclips-api-client/dist/sub-clients/orders/model/OrderItem';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import DownloadVideoAssetsButton from 'src/components/common/DownloadVideoAssetsButton';
+import Button from '@boclips-ui/button';
+import { DownloadOutlined } from '@ant-design/icons/lib';
 
 interface Props {
   video?: OrderItemVideo;
@@ -34,7 +36,17 @@ const DownloadVideoFiles = ({
   }, [video, apiClient]);
 
   if (!assetsUrl || assetsUrl === 'NOT FOUND') {
-    return null;
+    return (
+      <Button
+        className="asset-button"
+        onClick={() => {}}
+        width="185px"
+        text="Download video"
+        height="48px"
+        icon={<DownloadOutlined />}
+        disabled
+      />
+    );
   }
   return (
     <DownloadVideoAssetsButton
@@ -56,7 +68,11 @@ const computeVideoStatus = (
     maxResAvailable === undefined ||
     maxResAvailable === null
   ) {
-    return null;
+    return (
+      <Button onClick={() => {}} disabled>
+        Awaiting available asset
+      </Button>
+    );
   }
 
   if (!maxResAvailable) {
