@@ -9,4 +9,5 @@ export interface Video {
   videoId: string;
   videoTitle: string;
   views: number;
+  ctrScore: number;
 }

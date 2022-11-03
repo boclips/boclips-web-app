@@ -4,6 +4,7 @@ import c from 'classnames';
 import s from 'src/components/dashboard/performance/dashboardPerformance.module.less';
 import LightBulbIcon from 'src/resources/icons/light-bulb.svg';
 import React from 'react';
+import QuestionIcon from 'src/resources/icons/question.svg';
 
 interface Props {
   statsData: Stats;
@@ -24,6 +25,12 @@ export const TopVideosBlock = ({ statsData }: Props) => {
               <th className="pl-6 text-left">Video title</th>
               <th className="text-left">Video ID</th>
               <th className="text-left">Views (Total)</th>
+              <th className="text-left">
+                <div className="flex flex-row content-center items-center space-x-2">
+                  <div>CTR Score</div>
+                  <QuestionIcon />
+                </div>
+              </th>
             </tr>
           </thead>
 
@@ -34,6 +41,7 @@ export const TopVideosBlock = ({ statsData }: Props) => {
                   <td className="pl-6">{video.videoTitle}</td>
                   <td className="">{video.videoId}</td>
                   <td className="">{video.views}</td>
+                  <td className="">{video.ctrScore}</td>
                 </tr>
               ))}
           </tbody>
