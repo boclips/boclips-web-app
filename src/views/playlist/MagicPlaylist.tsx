@@ -224,6 +224,7 @@ const PlaylistView = () => {
         onClose={() => setIsAddSectionDrawerOpen(false)}
       >
         <DrawerManageSection
+          onClose={() => setIsAddSectionDrawerOpen(false)}
           onSectionCreated={() => setIsAddSectionDrawerOpen(false)}
         />
       </SlidingDrawer>
