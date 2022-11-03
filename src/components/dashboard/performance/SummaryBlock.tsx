@@ -50,9 +50,11 @@ export const SummaryBlock = ({ revenueData, statsData }: Props) => {
             </Typography.H2>
           </div>
           <div className="flex flex-row content-center items-center space-x-2">
-            <Typography.Link className="!text-blue-800 text-sm">
-              Tell me why
-            </Typography.Link>
+            <a target="_blank" href="https://youtu.be/1s58rW0_LN4?t=28">
+              <Typography.Link className="!text-blue-800 text-sm">
+                Tell me why
+              </Typography.Link>
+            </a>
             <QuestionIcon />
           </div>
         </div>
