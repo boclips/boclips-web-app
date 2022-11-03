@@ -10,7 +10,7 @@ interface Props {
 
 const DrawerVideoSearch = ({ onVideoAdded }: Props) => {
   const [query, setQuery] = useState<string>(null);
-  const { data } = useSearchQuery({
+  const { data, isLoading } = useSearchQuery({
     query,
     page: 0,
     pageSize: 6,
@@ -24,8 +24,10 @@ const DrawerVideoSearch = ({ onVideoAdded }: Props) => {
           onSearch={(phrase) => setQuery(phrase)}
         />
       </span>
-      {data && (
+      {!isLoading && data ? (
         <DrawerVideoList videos={data.page} onVideoAdded={onVideoAdded} />
+      ) : (
+        <span className="text-center w-full">Loading...</span>
       )}
     </>
   );
