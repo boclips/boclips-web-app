@@ -28,6 +28,8 @@ export const DrawerManageSection = ({ onSectionCreated, onClose }: Props) => {
 
   const createNewSection = (title) => {
     if (!hasErrors()) {
+      setTitleError(false);
+
       dispatch({
         action: 'add-section',
         text: title.trim(),
@@ -44,12 +46,11 @@ export const DrawerManageSection = ({ onSectionCreated, onClose }: Props) => {
           id="section-title"
           labelText="Section title"
           placeholder="Add section title..."
-          constraints={{ required: true }}
+          constraints={{ required: true, minLength: 1 }}
           onChange={(input) => setSectionTitle(input)}
           isError={titleError}
           errorMessage="Section title is required"
           inputType="text"
-          defaultValue=""
           height="48px"
         />
       </div>
@@ -58,9 +59,7 @@ export const DrawerManageSection = ({ onSectionCreated, onClose }: Props) => {
           text="Close"
           type="label"
           aria-label="Close the drawer"
-          onClick={() => {
-            onClose();
-          }}
+          onClick={onClose}
         />
         <Button
           onClick={() => createNewSection(sectionTitle)}
