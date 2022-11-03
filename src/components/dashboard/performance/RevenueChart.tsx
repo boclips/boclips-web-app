@@ -17,7 +17,7 @@ interface Props {
 
 export const RevenueChart = ({ revenueData }: Props) => {
   const renderLineChart = revenueData && (
-    <ResponsiveContainer width="90%" height={300}>
+    <ResponsiveContainer width="90%" height={350}>
       <LineChart
         data={revenueData.revenue.sort((a, b) => {
           return a.period < b.period ? -1 : 1;
@@ -36,7 +36,7 @@ export const RevenueChart = ({ revenueData }: Props) => {
           strokeWidth={2}
           dot={{ stroke: '#00217D', strokeWidth: 4 }}
         >
-          <LabelList dataKey="revenue" position="insideTopLeft" offset={10} />
+          <LabelList dataKey="revenue" position="insideTopRight" offset={10} />
         </Line>
       </LineChart>
     </ResponsiveContainer>

@@ -3,8 +3,8 @@ import { Typography } from '@boclips-ui/typography';
 import c from 'classnames';
 import s from 'src/components/dashboard/performance/dashboardPerformance.module.less';
 import LightBulbIcon from 'src/resources/icons/light-bulb.svg';
-import React from 'react';
 import QuestionIcon from 'src/resources/icons/question.svg';
+import React from 'react';
 
 interface Props {
   statsData: Stats;
