@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { Revenue } from 'src/hooks/api/dashboard/Revenue';
 import {
   LineChart,
@@ -7,24 +7,37 @@ import {
   XAxis,
   YAxis,
   ResponsiveContainer,
+  LabelList,
 } from 'recharts';
 import { Typography } from '@boclips-ui/typography';
 
 interface Props {
   revenueData: Revenue;
 }
+
 export const RevenueChart = ({ revenueData }: Props) => {
+  const customizedLabel = (value) => {
+    return { value };
+  };
+
   const renderLineChart = revenueData && (
-    <ResponsiveContainer width="90%" height={400}>
+    <ResponsiveContainer width="90%" height={300}>
       <LineChart
         data={revenueData.revenue.sort((a, b) => {
           return a.period < b.period ? -1 : 1;
         })}
       >
-        <Line type="monotone" dataKey="uv" stroke="#8884d8" />
         <CartesianGrid stroke="#ccc" />
         <XAxis dataKey="period" />
-        <YAxis />
+        <YAxis type="number" domain={[0, dataMax => Math.round(dataMax + 1000)]} />
+        <Line
+          type="monotone"
+          dataKey="revenue"
+          stroke="#1F78B4"
+          strokeWidth={3}
+        >
+          <LabelList dataKey="revenue" position="insideBottomRight" />
+        </Line>
       </LineChart>
     </ResponsiveContainer>
   );
