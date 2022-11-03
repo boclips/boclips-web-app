@@ -18,17 +18,17 @@ const DashboardPerformance = () => {
       tabIndex={-1}
       className="grid grid-cols-6 gap-6 col-start-2 col-end-26"
     >
-      <div className="col-start-1 col-end-3 shadow-md">
+      <div className="col-start-1 col-end-3 shadow-md bg-white">
         <SummaryBlock revenueData={revenue} statsData={stats} />
       </div>
 
-      <div className="col-start-3 col-end-7 shadow-md p-6">
+      <div className="col-start-3 col-end-7 shadow-md p-6 bg-white">
         <RevenueChart revenueData={revenue} />
       </div>
 
       <div
         className={c(
-          'flex flex-col p-6 col-start-1 col-end-7 shadow-md min-h-96',
+          'flex flex-col p-6 col-start-1 col-end-7 shadow-md min-h-96 bg-white',
           s.topVideos,
         )}
       >

@@ -4,13 +4,17 @@ import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import React from 'react';
 import { DashboardHeader } from 'src/components/dashboard/DashboardHeader';
-import DashboardPerformance from "src/components/dashboard/performance/DashboardPerformance";
+import DashboardPerformance from 'src/components/dashboard/performance/DashboardPerformance';
 
 const DashboardView = () => {
   return (
     <>
       <Helmet title="Dashboard" />
-      <Layout rowsSetup="grid-rows-library-view" responsiveLayout>
+      <Layout
+        rowsSetup="grid-rows-library-view"
+        className="bg-blue-100"
+        responsiveLayout
+      >
         <Navbar />
         <DashboardHeader />
         <DashboardPerformance />
