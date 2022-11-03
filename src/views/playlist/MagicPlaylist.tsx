@@ -208,10 +208,7 @@ const PlaylistView = () => {
           )}
         </div>
       </main>
-      <SlidingDrawer
-        isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-      >
+      <SlidingDrawer isOpen={isDrawerOpen}>
         <DrawerVideoSearch onVideoAdded={videoAdded} />
         <DrawerVideoRecommendations
           videosAddedThusFar={videosAddedThusFar()}
@@ -219,20 +216,14 @@ const PlaylistView = () => {
         />
       </SlidingDrawer>
 
-      <SlidingDrawer
-        isOpen={isAddSectionDrawerOpen}
-        onClose={() => setIsAddSectionDrawerOpen(false)}
-      >
+      <SlidingDrawer isOpen={isAddSectionDrawerOpen}>
         <DrawerManageSection
           onClose={() => setIsAddSectionDrawerOpen(false)}
           onSectionCreated={() => setIsAddSectionDrawerOpen(false)}
         />
       </SlidingDrawer>
 
-      <SlidingDrawer
-        isOpen={isAddCommentDrawerOpen}
-        onClose={() => setIsAddCommentDrawerOpen(false)}
-      >
+      <SlidingDrawer isOpen={isAddCommentDrawerOpen}>
         <DrawerManageComment
           onClose={() => setIsAddCommentDrawerOpen(false)}
           onSectionCreated={() => setIsAddCommentDrawerOpen(false)}
