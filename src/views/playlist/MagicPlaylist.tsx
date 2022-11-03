@@ -13,6 +13,7 @@ import DrawerVideoRecommendations from 'src/components/slidingDrawer/DrawerVideo
 import { MagicCommentCard } from 'src/components/playlists/magic/MagicCommentCard';
 import { MagicSectionCard } from 'src/components/playlists/magic/MagicSectionCard';
 import { DrawerManageSection } from 'src/components/slidingDrawer/DrawerManageSection';
+import PlusSVG from 'resources/icons/plus-sign.svg';
 import s from './style.module.less';
 
 function isElementOutViewport(el) {
@@ -176,7 +177,7 @@ const PlaylistView = () => {
               setOutOfViewport(false);
             }}
           >
-            +
+            <PlusSVG />
           </button>
           {isAddOpen && (
             <ul
@@ -185,15 +186,21 @@ const PlaylistView = () => {
               })}
               ref={panelRef}
             >
-              <button onClick={addSection} type="button">
-                add section
-              </button>
-              <button onClick={addVideo} type="button">
-                add video
-              </button>
-              <button onClick={addComment} type="button">
-                add comment
-              </button>
+              <li>
+                <button onClick={addSection} type="button">
+                  add section
+                </button>
+              </li>
+              <li>
+                <button onClick={addVideo} type="button">
+                  add video
+                </button>
+              </li>
+              <li>
+                <button onClick={addComment} type="button">
+                  add comment
+                </button>
+              </li>
             </ul>
           )}
         </div>
