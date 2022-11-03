@@ -15,6 +15,7 @@ import { MagicSectionCard } from 'src/components/playlists/magic/MagicSectionCar
 import { DrawerManageSection } from 'src/components/slidingDrawer/DrawerManageSection';
 import PlusSVG from 'resources/icons/plus-sign.svg';
 import s from './style.module.less';
+import Button from '@boclips-ui/button';
 
 function isElementOutViewport(el) {
   const rect = el.getBoundingClientRect();
@@ -214,6 +215,9 @@ const PlaylistView = () => {
           videosAddedThusFar={videosAddedThusFar()}
           onVideoAdded={videoAdded}
         />
+        <div className={s.closeButton}>
+          <Button onClick={() => setIsDrawerOpen(false)} text="Close" />
+        </div>
       </SlidingDrawer>
 
       <SlidingDrawer isOpen={isAddSectionDrawerOpen}>
