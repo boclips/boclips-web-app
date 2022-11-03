@@ -12,3 +12,8 @@ export interface Video {
   views: number;
   ctrScore: number;
 }
+
+export interface Contract {
+  contractId: string;
+  contractName: string;
+}

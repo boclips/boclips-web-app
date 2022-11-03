@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { Revenue } from 'src/hooks/api/dashboard/Revenue';
-import { Stats } from 'src/hooks/api/dashboard/Stats';
+import { Contract, Stats } from 'src/hooks/api/dashboard/Stats';
 import { useQuery } from '@tanstack/react-query';
 
 const STAGING_URL =
@@ -12,17 +12,33 @@ const STAGING_URL =
 // const STAGING_URL =
 //   'https://api.staging-boclips.com/v1/beta/contracts/5ee0bf5bbb6460e03f3f9ecf'; // complexly
 
-export async function doGetRevenueQuery(): Promise<Revenue> {
+export async function doGetRevenueQuery(contractId: string): Promise<Revenue> {
   return axios
-    .get<Revenue>(`${STAGING_URL}/revenueReal`)
+    .get<Revenue>(
+      `https://api.staging-boclips.com/v1/beta/contracts/${contractId}/revenueReal`,
+    )
     .then((response: AxiosResponse<Revenue>) => {
       return response.data;
     });
 }
 
-export const useGetRevenueQuery = () => {
-  return useQuery(['revenue'], async () => doGetRevenueQuery());
+export const useGetRevenueQuery = (contractId: string) => {
+  return useQuery(['revenue', contractId], async () =>
+    doGetRevenueQuery(contractId),
+  );
 };
+
+export const useGetContracts = () => {
+  return useQuery(['contracts'], async () => doGetContractsQuery());
+};
+
+export async function doGetContractsQuery(): Promise<Contract[]> {
+  return axios
+    .get<Contract[]>(`https://api.staging-boclips.com/v1/beta/contracts`)
+    .then((response: AxiosResponse<Contract[]>) => {
+      return response.data;
+    });
+}
 
 export async function doGetStatsQuery(type: string): Promise<Stats> {
   return axios
