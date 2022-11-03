@@ -78,9 +78,7 @@ export const MagicPlaylistVideoCard = ({ video, id }: Props) => {
       >
         <CoverWithVideo video={video} onSegmentPlayed={() => null} />
       </div>
-      <span className="pedagogy-tag">
-        <Badge value={tag.label} />
-      </span>
+      <Badge value={tag.label} />
       <span>{video.title}</span>
       <PlaylistVideoCardButtons
         video={video}

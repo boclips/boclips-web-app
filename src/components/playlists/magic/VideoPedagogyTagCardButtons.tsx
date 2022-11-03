@@ -1,7 +1,7 @@
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { VideoCardButtons } from 'src/components/videoCard/buttons/VideoCardButtons';
-import { EditPedagogyTagButton } from 'src/components/playlists/magic/EditPedagogyTagButton';
+import { EditBestForTagButton } from 'src/components/playlists/magic/EditBestForTagButton';
 import { BestForTag } from 'boclips-api-client/dist/sub-clients/bestForTags/model/BestForTag';
 
 interface CardButtonsProps {
@@ -20,7 +20,7 @@ export const PlaylistVideoCardButtons = ({
   return (
     <VideoCardButtons
       primaryButton={
-        <EditPedagogyTagButton
+        <EditBestForTagButton
           video={video}
           currentTag={currentTag}
           tags={tags}

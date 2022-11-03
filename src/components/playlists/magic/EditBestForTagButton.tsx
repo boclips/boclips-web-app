@@ -14,7 +14,7 @@ interface Props {
   tags: BestForTag[];
   setTagCallback: (tag) => void;
 }
-export const EditPedagogyTagButton = ({
+export const EditBestForTagButton = ({
   video,
   currentTag,
   tags,
@@ -37,7 +37,7 @@ export const EditPedagogyTagButton = ({
 
   return (
     <>
-      <Tooltip text="Edit Pedagogy Tag">
+      <Tooltip text="Edit Best For Tag">
         <Button
           className={s.editButton}
           iconOnly
@@ -52,7 +52,7 @@ export const EditPedagogyTagButton = ({
       {isModalOpen && (
         <div role="dialog" className={s.modal}>
           <div className={s.header}>
-            <Typography.Body weight="medium">Edit pedagogy tag</Typography.Body>
+            <Typography.Body weight="medium">Edit Best For tag</Typography.Body>
             <button type="button" onClick={() => setIsModalOpen(false)}>
               <CloseButton />
             </button>
