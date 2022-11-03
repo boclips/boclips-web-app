@@ -35,10 +35,7 @@ export const MagicCommentCard = ({ text, visualComponentId }: Props) => {
       onMouseOut={onMouseOut}
       className={s.comment}
     >
-      <Typography.Body
-        as="div"
-        className={s.text}
-      >
+      <Typography.Body as="div" className={s.text}>
         {text}
       </Typography.Body>
       {show && (

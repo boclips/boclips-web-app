@@ -52,11 +52,7 @@ export const MagicPlaylistVideoCard = ({ video, id }: Props) => {
   };
 
   return (
-    <div
-      onMouseOver={onMouseOver}
-      onMouseOut={onMouseOut}
-      className="flex flex-col"
-    >
+    <div onMouseOver={onMouseOver} onMouseOut={onMouseOut} className={s.card}>
       {showCloseBtn && (
         <div className={s.sectionActions}>
           <Button
@@ -78,8 +74,8 @@ export const MagicPlaylistVideoCard = ({ video, id }: Props) => {
       >
         <CoverWithVideo video={video} onSegmentPlayed={() => null} />
       </div>
-      <Badge value={tag.label} />
-      <span>{video.title}</span>
+      <Badge customClassName={s.badge} value={tag.label} />
+      <span className={s.title}>{video.title}</span>
       <PlaylistVideoCardButtons
         video={video}
         currentTag={tag}
