@@ -1,5 +1,6 @@
 export interface Stats {
   totalNumberOfVideos: number;
+  totalNumberOfViews: number;
   totalMinutesWatched: number;
   numberOfVideosOrdered: number;
   mostPopularVideos: Video[];

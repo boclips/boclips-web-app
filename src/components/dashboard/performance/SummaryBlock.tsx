@@ -46,7 +46,7 @@ export const SummaryBlock = ({ revenueData, statsData }: Props) => {
           <div className="flex flex-row content-between content-center items-center justify-between">
             <Typography.Body className="text-gray-700">Views</Typography.Body>
             <Typography.H2 size="md" className="text-gray-800">
-              {statsData.totalNumberOfVideos}
+              {statsData.totalNumberOfViews}
             </Typography.H2>
           </div>
           <div className="flex flex-row content-center items-center space-x-2">
