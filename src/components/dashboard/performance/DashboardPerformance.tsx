@@ -49,6 +49,7 @@ const DashboardPerformance = () => {
               contracts.find((con) => con.contractName === contractName.value)
                 .contractId,
             );
+            window.scrollTo({ top: 0 });
           }}
           value={contracts[0].contractName}
           placeholder="Select contract"
