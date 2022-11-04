@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FilterKey } from '../types/search/FilterKey';
 
 export const useLocationParams = () => {
@@ -10,6 +10,7 @@ export const useLocationParams = () => {
 export type SearchFilters = { [key in FilterKey]: string[] };
 
 export interface SearchQueryLocationParams {
+  pathName?: string;
   query: string;
   page: number;
   content_package?: string;
@@ -48,6 +49,7 @@ export const useSearchQueryLocationParams = (): [
       const params = convertToURLSearchParams(search);
 
       navigate({
+        pathname: search.pathName,
         search: `?${params.toString()}`,
       });
     },

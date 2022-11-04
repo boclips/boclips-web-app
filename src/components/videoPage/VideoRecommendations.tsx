@@ -6,12 +6,8 @@ import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import VideoGridCard from 'src/components/videoCard/VideoGridCard';
-import {
-  convertToURLSearchParams,
-  useSearchQueryLocationParams,
-} from 'src/hooks/useLocationParams';
+import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
 import { FilterKey } from 'src/types/search/FilterKey';
-import { useNavigate } from 'react-router-dom';
 import { VideoCardButtons } from '../videoCard/buttons/VideoCardButtons';
 
 interface Props {
@@ -20,8 +16,8 @@ interface Props {
 
 const VideoRecommendations = ({ video }: Props) => {
   const { data: recommendedVideos } = useGetVideoRecommendations(video);
-  const [searchLocation] = useSearchQueryLocationParams();
-  const navigate = useNavigate();
+  const [searchLocation, setSearchLocation] = useSearchQueryLocationParams();
+  const { filters: filtersFromURL } = searchLocation;
   const mixpanel = AnalyticsFactory.mixpanel();
   const trackAddToCart = () => {
     AnalyticsFactory.appcues().sendEvent(
@@ -31,14 +27,13 @@ const VideoRecommendations = ({ video }: Props) => {
   };
 
   const handleFilterChange = (key: FilterKey, values: string[]) => {
-    searchLocation.filters[key] = values;
-    const params = convertToURLSearchParams(searchLocation);
-    params.set('page', '1');
-    params.delete('topics');
+    const newFilters = { ...filtersFromURL, [key]: values };
 
-    return navigate({
-      pathname: '/videos',
-      search: params.toString(),
+    setSearchLocation({
+      pathName: '/videos',
+      query: '',
+      page: 1,
+      filters: newFilters,
     });
   };
 
