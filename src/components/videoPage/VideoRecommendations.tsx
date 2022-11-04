@@ -6,6 +6,8 @@ import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import VideoGridCard from 'src/components/videoCard/VideoGridCard';
+import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
+import { FilterKey } from 'src/types/search/FilterKey';
 import { VideoCardButtons } from '../videoCard/buttons/VideoCardButtons';
 
 interface Props {
@@ -14,12 +16,25 @@ interface Props {
 
 const VideoRecommendations = ({ video }: Props) => {
   const { data: recommendedVideos } = useGetVideoRecommendations(video);
+  const [searchLocation, setSearchLocation] = useSearchQueryLocationParams();
+  const { filters: filtersFromURL } = searchLocation;
   const mixpanel = AnalyticsFactory.mixpanel();
   const trackAddToCart = () => {
     AnalyticsFactory.appcues().sendEvent(
       AppcuesEvent.ADD_TO_CART_FROM_RECOMMENDED_VIDEOS,
     );
     mixpanel.track('video_recommendation_cart_add');
+  };
+
+  const handleFilterChange = (key: FilterKey, values: string[]) => {
+    const newFilters = { ...filtersFromURL, [key]: values };
+
+    setSearchLocation({
+      pathName: '/videos',
+      query: '',
+      page: 1,
+      filters: newFilters,
+    });
   };
 
   return recommendedVideos && recommendedVideos.length ? (
@@ -41,6 +56,7 @@ const VideoRecommendations = ({ video }: Props) => {
           <VideoGridCard
             key={recommendedVideo.id}
             video={recommendedVideo}
+            handleFilterChange={handleFilterChange}
             onLinkClicked={() => {
               mixpanel.track('video_recommendation_clicked');
             }}

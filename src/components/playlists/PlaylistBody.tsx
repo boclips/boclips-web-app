@@ -7,6 +7,8 @@ import { Typography } from '@boclips-ui/typography';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import VideoGridCard from 'src/components/videoCard/VideoGridCard';
+import { FilterKey } from 'src/types/search/FilterKey';
+import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
 import s from './style.module.less';
 import { VideoCardButtons } from '../videoCard/buttons/VideoCardButtons';
 
@@ -15,6 +17,9 @@ interface Props {
 }
 
 const PlaylistBody = ({ playlist }: Props) => {
+  const [searchLocation, setSearchLocation] = useSearchQueryLocationParams();
+  const { filters: filtersFromURL } = searchLocation;
+
   const isEmptyPlaylist = playlist.videos && playlist.videos.length === 0;
 
   const shouldRemoveVideoCardFromView = (
@@ -27,6 +32,17 @@ const PlaylistBody = ({ playlist }: Props) => {
         document.querySelector('main')?.focus();
       }, 100);
     }
+  };
+
+  const handleFilterChange = (key: FilterKey, values: string[]) => {
+    const newFilters = { ...filtersFromURL, [key]: values };
+
+    setSearchLocation({
+      pathName: '/videos',
+      query: '',
+      page: 1,
+      filters: newFilters,
+    });
   };
 
   return (
@@ -63,6 +79,7 @@ const PlaylistBody = ({ playlist }: Props) => {
             <VideoGridCard
               key={video.id}
               video={video}
+              handleFilterChange={handleFilterChange}
               buttonsRow={
                 <VideoCardButtons
                   video={video}
