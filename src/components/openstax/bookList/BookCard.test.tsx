@@ -4,10 +4,11 @@ import {
 } from 'boclips-api-client/dist/test-support/BookFactory';
 import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
 import { BookCard } from 'src/components/openstax/bookList/BookCard';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 
 describe('BookCard', () => {
   it('shows book title and number of videos', () => {
@@ -70,5 +71,42 @@ describe('BookCard', () => {
     expect(
       wrapper.getByAltText('Olive trees generic cover'),
     ).toBeInTheDocument();
+  });
+
+  describe('a11y', () => {
+    it('focuses main when esc is pressed', async () => {
+      const book = OpenstaxBookFactory.sample({
+        title: 'Olive trees',
+        logoUrl: 'svg.com',
+        chapters: [
+          ChapterFactory.sample({
+            sections: [
+              SectionFactory.sample({
+                videoIds: ['1', '2'],
+              }),
+            ],
+          }),
+        ],
+      });
+
+      const history = createBrowserHistory();
+
+      const wrapper = render(
+        <Router location={history.location} navigator={history}>
+          <main tabIndex={-1}>this is main</main>
+          <BookCard book={book} />
+        </Router>,
+      );
+
+      await userEvent.tab();
+
+      expect(wrapper.getByLabelText(`book ${book.title}`)).toHaveFocus();
+
+      fireEvent.keyDown(wrapper.getByLabelText(`book ${book.title}`), {
+        key: 'Escape',
+      });
+
+      expect(wrapper.getByRole('main')).toHaveFocus();
+    });
   });
 });

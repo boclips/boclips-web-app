@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
 import { BookLogo } from 'src/components/openstax/bookLogo/BookLogo';
+import { handleEscapeKeyEvent } from 'src/services/handleKeyEvent';
 import s from './style.module.less';
 
 interface Props {
@@ -13,6 +14,9 @@ interface Props {
 
 export const BookCard = ({ book }: Props) => {
   const navigate = useNavigate();
+  const onKeyDown = () => {
+    document.querySelector('main').focus();
+  };
 
   const onCardClick = (bookId) =>
     navigate({
@@ -25,6 +29,7 @@ export const BookCard = ({ book }: Props) => {
       type="button"
       aria-label={`book ${book.title}`}
       className={s.bookCard}
+      onKeyDown={(e) => handleEscapeKeyEvent(e, onKeyDown)}
     >
       <BookLogo book={book} />
       <div className={s.bookTitle}>
