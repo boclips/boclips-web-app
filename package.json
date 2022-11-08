@@ -108,7 +108,7 @@
     "@duetds/date-picker": "^1.4.0",
     "@loadable/component": "^5.15.2",
     "@radix-ui/react-accordion": "^1.0.0",
-    "@sentry/integrations": "^7.15.0",
+    "@sentry/integrations": "^7.17.4",
     "@sentry/react": "^7.15.0",
     "@sentry/tracing": "^7.15.0",
     "@tailwindcss/forms": "^0.4.0",
