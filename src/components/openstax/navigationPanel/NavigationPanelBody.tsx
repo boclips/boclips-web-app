@@ -20,7 +20,6 @@ import s from './style.module.less';
 interface Props {
   book: OpenstaxBook;
 }
-
 const NavigationPanelBody = ({ book }: Props) => {
   const location = useLocation();
   const [currentSectionLink, setCurrentSectionLink] =
@@ -30,8 +29,11 @@ const NavigationPanelBody = ({ book }: Props) => {
     currentSectionLink === sectionLink;
 
   const [expandedChapters, setExpandedChapters] = useState(['chapter-1']);
+  const [openedLastChapter, setOpenedLastChapter] =
+    useState<boolean>(undefined);
 
   const { setIsOpen } = useOpenstaxMobileMenu();
+  const lastChapter = `chapter-${book.chapters.length}`;
 
   useEffect(() => {
     const newSectionLink = location.hash.replace('#', '');
@@ -103,6 +105,25 @@ const NavigationPanelBody = ({ book }: Props) => {
   const linksOnlyToChapter = (newSectionLink) =>
     newSectionLink.split('-').length <= 2;
 
+  useEffect(() => {
+    if (openedLastChapter) {
+      const lastChapterButton = document.getElementById(`${lastChapter}-nav`);
+      const chapterContainer = lastChapterButton.nextElementSibling;
+      const nav = document.getElementById('chapter-nav');
+      nav.scrollBy(0, chapterContainer.scrollHeight);
+    }
+  }, [openedLastChapter]);
+
+  const onValueChange = (values: string[]) => {
+    const expandedMore = values.length > expandedChapters.length;
+    const selectedChapter = values[values.length - 1];
+
+    const expandedLastChapter = expandedMore && selectedChapter === lastChapter;
+
+    setOpenedLastChapter(expandedLastChapter);
+    setExpandedChapters(values);
+  };
+
   return (
     <nav
       className={s.tocContent}
@@ -112,7 +133,7 @@ const NavigationPanelBody = ({ book }: Props) => {
       <Accordion.Root
         type="multiple"
         value={expandedChapters}
-        onValueChange={setExpandedChapters}
+        onValueChange={onValueChange}
       >
         {book.chapters.map((chapter) => (
           <Accordion.Item
