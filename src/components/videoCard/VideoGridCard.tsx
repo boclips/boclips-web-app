@@ -53,19 +53,17 @@ const VideoGridCard = ({
           </Typography.Body>
         )}
 
-        <span>
-          <button
-            onClick={() =>
-              handleFilterChange &&
-              handleFilterChange('channel', [video.channelId])
-            }
-            type="button"
-          >
-            <Typography.Body as="div" size="small" className={s.createdBy}>
-              {video.createdBy}
-            </Typography.Body>
-          </button>
-        </span>
+        <button
+          onClick={() =>
+            handleFilterChange &&
+            handleFilterChange('channel', [video.channelId])
+          }
+          type="button"
+        >
+          <Typography.Body as="div" size="small" className={s.createdBy}>
+            {video.createdBy}
+          </Typography.Body>
+        </button>
       </div>
     }
     footer={<div className="p-1 self-end">{buttonsRow}</div>}

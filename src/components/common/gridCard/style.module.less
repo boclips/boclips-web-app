@@ -52,16 +52,40 @@
   color: @gray-700;
   margin-left: 0.25rem;
   align-items: center;
+  overflow: hidden;
 
   button {
     position: relative;
+    flex: 1;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
 
     .createdBy {
       @apply text-gray-900 hover:underline hover:decoration-solid;
-      max-width: 100px;
+      max-width: 100%;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    &:before {
+      height: 24px;
+      content: '•';
+      color: @blue-800;
+      padding-right: 4px;
+      line-height: 1.5rem;
+      font-size: 1rem;
+      z-index: 1;
+    }
+
+    &:only-child{
+      &:before {
+        content: none;
+      }
     }
   }
 
