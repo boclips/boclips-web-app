@@ -38,16 +38,20 @@ export const PlaylistModal = ({
   const handleDescriptionChange = (description: string) =>
     setPlaylistForm({ ...playlistForm, description });
 
-  const validate = () => {
+  const validate = (): boolean => {
     const userTitle = playlistForm.title;
     if (userTitle == null || userTitle === '') {
       setTitleError(true);
+      return false;
     }
+    return true;
   };
 
   const onConfirm = () => {
-    validate();
-    handleConfirm(playlistForm.title, playlistForm.description);
+    const isValid = validate();
+    if (isValid) {
+      handleConfirm(playlistForm.title, playlistForm.description);
+    }
   };
 
   return (

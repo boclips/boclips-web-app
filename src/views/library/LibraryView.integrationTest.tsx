@@ -280,8 +280,8 @@ describe('LibraryView', () => {
 
       await openPlaylistCreationModal(wrapper);
 
-      fillPlaylistName(wrapper, 'My new playlist');
-      fillPlaylistDescription(wrapper, 'Blabla new playlist');
+      await fillPlaylistName(wrapper, 'My new playlist');
+      await fillPlaylistDescription(wrapper, 'Blabla new playlist');
       confirmPlaylistCreationModal(wrapper);
 
       await waitFor(() =>
@@ -298,7 +298,7 @@ describe('LibraryView', () => {
       client.collections.setCreateCollectionErrorMessage('500 server error');
 
       await openPlaylistCreationModal(wrapper);
-      fillPlaylistName(wrapper, 'My new playlist');
+      await fillPlaylistName(wrapper, 'My new playlist');
       confirmPlaylistCreationModal(wrapper);
 
       expect(
@@ -315,7 +315,7 @@ describe('LibraryView', () => {
       const wrapper = renderLibraryView(client);
 
       await openPlaylistCreationModal(wrapper);
-      fillPlaylistName(wrapper, 'My new playlist');
+      await fillPlaylistName(wrapper, 'My new playlist');
       confirmPlaylistCreationModal(wrapper);
 
       await waitFor(() => {

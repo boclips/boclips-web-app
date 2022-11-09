@@ -121,7 +121,7 @@ export const BoInputText = React.forwardRef(
           </Typography.Body>
         )}
         {isError && (
-          <span className={s.errorMessage}>
+          <span className={s.errorMessage} role="alert">
             <ErrorIconSVG />
             {errorMessage}
           </span>
