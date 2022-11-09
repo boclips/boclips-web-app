@@ -119,7 +119,7 @@ describe(`Explore view`, () => {
         BookFactory.sample({
           id: 'book-1',
           subject: 'Maths',
-          title: 'Maths',
+          title: 'Algebra',
         }),
         BookFactory.sample({
           id: 'book-2',
@@ -145,11 +145,17 @@ describe(`Explore view`, () => {
 
       await waitFor(() => wrapper.getAllByText('Maths'));
 
-      await userEvent.type(wrapper.getByLabelText('subject Maths'), '{enter}');
+      await userEvent.click(wrapper.getByText('All'));
 
-      await waitFor(() =>
-        expect(wrapper.getByLabelText('book Maths')).toHaveFocus(),
-      );
+      await userEvent.tab();
+
+      await userEvent.keyboard('{enter}');
+
+      await waitFor(() => wrapper.getAllByText('Algebra'));
+
+      await waitFor(() => {
+        expect(wrapper.getByLabelText('book Algebra')).toHaveFocus();
+      });
     });
   });
 });
