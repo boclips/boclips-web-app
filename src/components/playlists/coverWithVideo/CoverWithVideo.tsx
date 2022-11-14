@@ -29,7 +29,9 @@ const CoverWithVideo = ({ video, onSegmentPlayed }: Props) => {
   }, [ref]);
 
   const handleSegmentPlayed = (_: PlayerVideo, start: number, end: number) => {
-    onSegmentPlayed(start, end);
+    if (onSegmentPlayed) {
+      onSegmentPlayed(start, end);
+    }
   };
 
   switch (showPlayer) {
