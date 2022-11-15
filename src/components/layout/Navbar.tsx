@@ -10,7 +10,7 @@ import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { Constants } from 'src/AppConstants';
 import { useBoclipsSecurity } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
-import LibraryButton from 'src/components/navButtons/LibraryButton';
+import PlaylistsButton from 'src/components/navButtons/PlaylistsButton';
 import SkipLink from 'src/components/skipLink/SkipLink';
 import ExploreButton from 'src/components/navButtons/ExploreButton';
 import SideMenu from 'src/components/layout/SideMenu';
@@ -74,7 +74,7 @@ const NavbarResponsive = (): ReactElement => {
             <FeatureGate feature="BO_WEB_APP_OPENSTAX">
               <ExploreButton />
             </FeatureGate>
-            <LibraryButton />
+            <PlaylistsButton />
             <AccountButton />
             <FeatureGate linkName="cart">
               <CartButton />

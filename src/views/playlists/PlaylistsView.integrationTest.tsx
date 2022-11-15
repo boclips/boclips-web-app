@@ -25,9 +25,9 @@ import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 const insertUser = (client: FakeBoclipsClient) =>
   client.users.insertCurrentUser(UserFactory.sample());
 
-const renderLibraryView = (client: BoclipsClient) =>
+const renderPlaylistsView = (client: BoclipsClient) =>
   render(
-    <MemoryRouter initialEntries={['/library']}>
+    <MemoryRouter initialEntries={['/playlists']}>
       <App
         apiClient={client}
         boclipsSecurity={stubBoclipsSecurity}
@@ -36,16 +36,16 @@ const renderLibraryView = (client: BoclipsClient) =>
     </MemoryRouter>,
   );
 
-describe('LibraryView', () => {
+describe('PlaylistsView', () => {
   beforeEach(() => {
     window.resizeTo(1680, 1024);
   });
 
-  it('loads the title for library page', async () => {
+  it('loads the title for playlists page', async () => {
     const client = new FakeBoclipsClient();
     insertUser(client);
-    const wrapper = renderLibraryView(client);
-    expect(await wrapper.findByTitle('Your Library')).toBeVisible();
+    const wrapper = renderPlaylistsView(client);
+    expect(await wrapper.findByTitle('Playlists')).toBeVisible();
   });
 
   it('renders playlists created by the user', async () => {
@@ -59,7 +59,7 @@ describe('LibraryView', () => {
 
     playlists.forEach((it) => client.collections.addToFake(it));
 
-    const wrapper = renderLibraryView(client);
+    const wrapper = renderPlaylistsView(client);
 
     expect(await wrapper.findByText('Playlist 1')).toBeVisible();
     expect(await wrapper.findByText('Playlist 2')).toBeVisible();
@@ -81,7 +81,7 @@ describe('LibraryView', () => {
 
     playlists.forEach((it) => client.collections.addToFake(it));
 
-    const wrapper = renderLibraryView(client);
+    const wrapper = renderPlaylistsView(client);
 
     expect(await wrapper.findByText('Playlist 1')).toBeVisible();
     expect(await wrapper.findByText('Shared with you')).toBeVisible();
@@ -108,7 +108,7 @@ describe('LibraryView', () => {
 
     playlists.forEach((it) => client.collections.addToFake(it));
 
-    const wrapper = renderLibraryView(client);
+    const wrapper = renderPlaylistsView(client);
 
     const shareButton = await wrapper.findByTestId(`share-playlist-button-1`);
 
@@ -141,7 +141,7 @@ describe('LibraryView', () => {
     client.collections.addToFake(playlist);
     videos.forEach((it) => client.videos.insertVideo(it));
 
-    const wrapper = renderLibraryView(client);
+    const wrapper = renderPlaylistsView(client);
 
     expect(await wrapper.findByText('My collection about cats')).toBeVisible();
     expect(await wrapper.findByLabelText('Thumbnail of Title 1')).toBeVisible();
@@ -168,7 +168,7 @@ describe('LibraryView', () => {
     client.collections.addToFake(playlist);
     videos.forEach((it) => client.videos.insertVideo(it));
 
-    const wrapper = renderLibraryView(client);
+    const wrapper = renderPlaylistsView(client);
 
     expect(await wrapper.findByText('My collection about cats')).toBeVisible();
     expect(await wrapper.findByLabelText('Thumbnail of Title 1')).toBeVisible();
@@ -192,7 +192,7 @@ describe('LibraryView', () => {
     it('shows Create new playlist button', async () => {
       const client = new FakeBoclipsClient();
       insertUser(client);
-      const wrapper = renderLibraryView(client);
+      const wrapper = renderPlaylistsView(client);
 
       expect(
         await wrapper.findByRole('button', { name: 'Create new playlist' }),
@@ -202,7 +202,7 @@ describe('LibraryView', () => {
     it('opens a modal when clicking the Create new playlist button', async () => {
       const client = new FakeBoclipsClient();
       insertUser(client);
-      const wrapper = renderLibraryView(client);
+      const wrapper = renderPlaylistsView(client);
 
       const createPlaylistButton = await wrapper.findByRole('button', {
         name: 'Create new playlist',
@@ -227,7 +227,7 @@ describe('LibraryView', () => {
     it('can cancel modal', async () => {
       const client = new FakeBoclipsClient();
       insertUser(client);
-      const wrapper = renderLibraryView(client);
+      const wrapper = renderPlaylistsView(client);
 
       await openPlaylistCreationModal(wrapper);
 
@@ -240,7 +240,7 @@ describe('LibraryView', () => {
     it('cannot create a playlist without a title', async () => {
       const client = new FakeBoclipsClient();
       insertUser(client);
-      const wrapper = renderLibraryView(client);
+      const wrapper = renderPlaylistsView(client);
 
       await openPlaylistCreationModal(wrapper);
 
@@ -253,7 +253,7 @@ describe('LibraryView', () => {
     it('can create a playlist with title and description', async () => {
       const client = new FakeBoclipsClient();
       insertUser(client);
-      const wrapper = renderLibraryView(client);
+      const wrapper = renderPlaylistsView(client);
 
       await openPlaylistCreationModal(wrapper);
 
@@ -284,7 +284,7 @@ describe('LibraryView', () => {
 
       const client = new FakeBoclipsClient();
       insertUser(client);
-      const wrapper = renderLibraryView(client);
+      const wrapper = renderPlaylistsView(client);
 
       await openPlaylistCreationModal(wrapper);
 
@@ -302,7 +302,7 @@ describe('LibraryView', () => {
     it('can display an error message on failed playlist creation', async () => {
       const client = new FakeBoclipsClient();
       insertUser(client);
-      const wrapper = renderLibraryView(client);
+      const wrapper = renderPlaylistsView(client);
       client.collections.setCreateCollectionErrorMessage('500 server error');
 
       await openPlaylistCreationModal(wrapper);
@@ -320,7 +320,7 @@ describe('LibraryView', () => {
     it('display spinner in confirm button after creating playlist', async () => {
       const client = new FakeBoclipsClient();
       insertUser(client);
-      const wrapper = renderLibraryView(client);
+      const wrapper = renderPlaylistsView(client);
 
       await openPlaylistCreationModal(wrapper);
       await fillPlaylistName(wrapper, 'My new playlist');
@@ -334,7 +334,7 @@ describe('LibraryView', () => {
     it(`returns focus to create playlist button after playlist creation cancelled`, async () => {
       const client = new FakeBoclipsClient();
       insertUser(client);
-      const wrapper = renderLibraryView(client);
+      const wrapper = renderPlaylistsView(client);
       await openPlaylistCreationModal(wrapper);
 
       fireEvent.keyDown(wrapper.getByRole('dialog'), { key: 'Escape' });

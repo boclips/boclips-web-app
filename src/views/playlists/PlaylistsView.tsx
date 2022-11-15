@@ -3,16 +3,16 @@ import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import { Layout } from 'src/components/layout/Layout';
 import Playlists from 'src/components/playlists/Playlists';
-import { LibraryHeader } from 'src/components/libraryHeader/LibraryHeader';
+import { PlaylistsHeader } from 'src/components/libraryHeader/PlaylistsHeader';
 import { Helmet } from 'react-helmet';
 
-const LibraryView = () => {
+const PlaylistsView = () => {
   return (
     <>
-      <Helmet title="Your library" />
+      <Helmet title="Playlists" />
       <Layout rowsSetup="grid-rows-library-view" responsiveLayout>
         <Navbar />
-        <LibraryHeader />
+        <PlaylistsHeader />
         <Playlists />
         <Footer columnPosition="col-start-2 col-end-26" />
       </Layout>
@@ -20,4 +20,4 @@ const LibraryView = () => {
   );
 };
 
-export default LibraryView;
+export default PlaylistsView;

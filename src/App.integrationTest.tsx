@@ -66,4 +66,19 @@ describe('App', () => {
 
     expect(await wrapper.findByText('Page not found!')).toBeVisible();
   });
+
+  it('redirects to playlists page if accessing library', async () => {
+    const apiClient = new FakeBoclipsClient();
+
+    apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/library']}>
+        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+      </MemoryRouter>,
+    );
+
+    expect(wrapper.queryByText('Page not found!')).not.toBeInTheDocument();
+    expect(await wrapper.findByText('Playlists')).toBeVisible();
+  });
 });

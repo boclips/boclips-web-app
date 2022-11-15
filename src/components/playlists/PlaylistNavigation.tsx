@@ -12,11 +12,11 @@ interface Props {
 const PlaylistNavigation = ({ playlist }: Props) => {
   return (
     <nav
-      aria-label="Your library"
+      aria-label="Playlists"
       className={c(s.playlistNavigation, 'order-first')}
     >
-      <Link to="/library" data-qa="to-library-link">
-        Your Library
+      <Link to="/playlists" data-qa="to-library-link">
+        Playlists
       </Link>
       <Arrow />
       <Link to={`/playlists/${playlist.id}`} data-qa="playlist-title-link">

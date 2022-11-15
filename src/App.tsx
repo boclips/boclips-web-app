@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { BoclipsClient } from 'boclips-api-client';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Loading } from 'src/components/common/Loading';
@@ -57,8 +57,8 @@ const AccessDeniedView = lazyWithRetry(
   () => import('src/views/accessDenied/AccessDenied'),
 );
 
-const LibraryView = lazyWithRetry(
-  () => import('src/views/library/LibraryView'),
+const PlaylistsView = lazyWithRetry(
+  () => import('src/views/playlists/PlaylistsView'),
 );
 
 const PlaylistView = lazyWithRetry(
@@ -182,7 +182,12 @@ const App = ({
                       element={<OrderConfirmationView />}
                     />
 
-                    <Route path="/library" element={<LibraryView />} />
+                    <Route path="/playlists" element={<PlaylistsView />} />
+
+                    <Route
+                      path="/library"
+                      element={<Navigate to="/playlists" replace />}
+                    />
 
                     <Route
                       path="/playlists/:id"

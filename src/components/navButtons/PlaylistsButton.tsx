@@ -4,15 +4,15 @@ import c from 'classnames';
 import s from './style.module.less';
 import YourLibraryIcon from '../../resources/icons/your-library.svg';
 
-const LibraryButton = () => {
+const PlaylistsButton = () => {
   const navigate = useNavigate();
 
   const location = useLocation();
-  const isOnLibraryPage = location.pathname.includes('library');
+  const isOnLibraryPage = location.pathname.includes('playlists');
 
   const onClick = () => {
     navigate({
-      pathname: '/library',
+      pathname: '/playlists',
     });
   };
 
@@ -25,15 +25,15 @@ const LibraryButton = () => {
       <button
         type="button"
         onClick={onClick}
-        data-qa="library-button"
+        data-qa="playlist-button"
         className={s.headerButton}
       >
         <YourLibraryIcon className={s.navbarIcon} />
-        <span>Your Library</span>
+        <span>Playlists</span>
         <span className="sr-only"> find your playlists here</span>
       </button>
     </div>
   );
 };
 
-export default LibraryButton;
+export default PlaylistsButton;

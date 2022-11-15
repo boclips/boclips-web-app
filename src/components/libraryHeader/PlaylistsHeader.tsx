@@ -8,7 +8,7 @@ import { displayNotification } from 'src/components/common/notification/displayN
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 
-export const LibraryHeader = () => {
+export const PlaylistsHeader = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -35,7 +35,7 @@ export const LibraryHeader = () => {
   return (
     <>
       <PageHeader
-        title="Your Library"
+        title="Playlists"
         button={
           <Button
             icon={<PlusSign />}

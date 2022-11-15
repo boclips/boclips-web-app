@@ -24,7 +24,7 @@ const SideMenu = ({ user, logOut }: Props) => {
         <FeatureGate feature="BO_WEB_APP_OPENSTAX">
           <Link to="/explore/openstax">Explore</Link>
         </FeatureGate>
-        <Link to="/library">Your library</Link>
+        <Link to="/playlists">Playlists</Link>
         <Link to="/orders">Your orders</Link>
         <FeatureGate linkName="cart">
           <Link to="/cart">Cart</Link>

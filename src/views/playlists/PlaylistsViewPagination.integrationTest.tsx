@@ -12,9 +12,9 @@ import { QueryClient } from '@tanstack/react-query';
 const insertUser = (client: FakeBoclipsClient) =>
   client.users.insertCurrentUser(UserFactory.sample());
 
-const renderLibraryView = (client: BoclipsClient) =>
+const renderPlaylistsView = (client: BoclipsClient) =>
   render(
-    <MemoryRouter initialEntries={['/library']}>
+    <MemoryRouter initialEntries={['/playlists']}>
       <App
         apiClient={client}
         boclipsSecurity={stubBoclipsSecurity}
@@ -23,7 +23,7 @@ const renderLibraryView = (client: BoclipsClient) =>
     </MemoryRouter>,
   );
 
-describe('LibraryView', () => {
+describe('PlaylistsView', () => {
   beforeEach(() => {
     window.resizeTo(1680, 1024);
   });
@@ -33,7 +33,7 @@ describe('LibraryView', () => {
     insertUser(client);
     loadPlaylists(client, 25);
 
-    const wrapper = renderLibraryView(client);
+    const wrapper = renderPlaylistsView(client);
 
     await waitFor(() => wrapper.findByText('Playlist 1')).then((it) =>
       expect(it).toBeInTheDocument(),
@@ -49,7 +49,7 @@ describe('LibraryView', () => {
     insertUser(client);
     loadPlaylists(client, 15);
 
-    const wrapper = renderLibraryView(client);
+    const wrapper = renderPlaylistsView(client);
     expect(await wrapper.findByText('Playlist 1')).toBeVisible();
     expect(
       await wrapper.queryByRole('button', { name: 'Next page' }),
@@ -61,7 +61,7 @@ describe('LibraryView', () => {
     insertUser(client);
     loadPlaylists(client, 10);
 
-    const wrapper = renderLibraryView(client);
+    const wrapper = renderPlaylistsView(client);
 
     expect(await wrapper.findByText('Playlist 1')).toBeVisible();
     expect(await wrapper.findByText('Playlist 2')).toBeVisible();
@@ -72,7 +72,7 @@ describe('LibraryView', () => {
     insertUser(client);
     loadPlaylists(client, 41);
 
-    const wrapper = renderLibraryView(client);
+    const wrapper = renderPlaylistsView(client);
     await waitFor(() => wrapper.findByText('Playlist 0')).then((it) =>
       expect(it).toBeInTheDocument(),
     );

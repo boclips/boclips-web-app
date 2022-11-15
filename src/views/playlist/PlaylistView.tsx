@@ -33,7 +33,7 @@ const PlaylistView = ({ followPlaylist }: Props) => {
           if (hasBeenBookmarked) {
             displayNotification(
               'success',
-              `Playlist '${playlist.title}' has been added to your Library`,
+              `Playlist '${playlist.title}' has been created`,
               '',
               `playlist-has-been-followed`,
             );

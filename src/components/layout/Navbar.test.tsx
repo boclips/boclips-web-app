@@ -126,7 +126,7 @@ describe('Search bar', () => {
   });
 });
 
-describe('Your library in Navbar', () => {
+describe('Playlists in Navbar', () => {
   const client = new FakeBoclipsClient();
   let wrapper;
 
@@ -147,7 +147,7 @@ describe('Your library in Navbar', () => {
 
     expect(
       await wrapper.findByRole('button', {
-        name: 'Your Library find your playlists here',
+        name: 'Playlists find your playlists here',
       }),
     ).toBeVisible();
   });
@@ -159,7 +159,7 @@ describe('Your library in Navbar', () => {
     resize();
 
     fireEvent.click(await wrapper.findByLabelText('Menu'));
-    expect(wrapper.getByText('Your library')).toBeVisible();
+    expect(wrapper.getByText('Playlists')).toBeVisible();
   });
 });
 

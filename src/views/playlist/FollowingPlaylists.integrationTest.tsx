@@ -109,9 +109,7 @@ describe('following a playlist', () => {
     );
 
     expect(
-      await wrapper.findByText(
-        "Playlist 'Hello test' has been added to your Library",
-      ),
+      await wrapper.findByText("Playlist 'Hello test' has been created"),
     ).toBeVisible();
   });
 
@@ -146,9 +144,7 @@ describe('following a playlist', () => {
     await sleep(1000);
 
     expect(
-      wrapper.queryByText(
-        "Playlist 'Hello test' has been added to your Library",
-      ),
+      wrapper.queryByText("Playlist 'Hello test' has been created"),
     ).toBeNull();
   });
 });

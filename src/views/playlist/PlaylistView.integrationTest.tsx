@@ -84,7 +84,7 @@ describe('Playlist view', () => {
       </MemoryRouter>,
     );
 
-    await waitFor(() => screen.getByText('Your Library'));
+    await waitFor(() => screen.getByText('Playlists'));
 
     expect(await screen.findByTestId('playlistTitle')).toBeVisible();
     expect(await screen.findByText('Very nice description')).toBeVisible();
@@ -266,9 +266,7 @@ describe('Playlist view', () => {
       );
 
       expect(
-        await wrapper.findByText(
-          "Playlist 'Hello test' has been added to your Library",
-        ),
+        await wrapper.findByText("Playlist 'Hello test' has been created"),
       ).toBeVisible();
     });
 
@@ -303,9 +301,7 @@ describe('Playlist view', () => {
       await sleep(1000);
 
       expect(
-        wrapper.queryByText(
-          "Playlist 'Hello test' has been added to your Library",
-        ),
+        wrapper.queryByText("Playlist 'Hello test' has been created"),
       ).toBeNull();
     });
   });
@@ -339,7 +335,7 @@ describe('Playlist view', () => {
 
       fireEvent.click(await wrapper.findByTestId('to-library-link'));
 
-      expect(history.location.pathname).toEqual('/library');
+      expect(history.location.pathname).toEqual('/playlists');
     });
 
     it('history.pushs to playlist page when title link clicked', async () => {
