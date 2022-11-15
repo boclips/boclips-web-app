@@ -4,7 +4,7 @@ context('Playlist page', () => {
   it('renders empty playlist', () => {
     cy.visit('/');
     cy.bo((bo) => bo.create.emptyPlaylist());
-    cy.get('[data-qa="library-button"]').click();
+    cy.get('[data-qa="playlists-button"]').click();
 
     cy.findByText('My empty playlist').click();
 

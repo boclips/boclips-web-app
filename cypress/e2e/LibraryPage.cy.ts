@@ -5,7 +5,7 @@ context('Libray page', () => {
 
   it('renders empty library', () => {
     cy.visit('/');
-    cy.get('[data-qa="library-button"]').click();
+    cy.get('[data-qa="playlists-button"]').click();
 
     cy.findByRole('button', { name: 'Create new playlist' }).should(
       'be.visible',
@@ -18,7 +18,7 @@ context('Libray page', () => {
   it('renders playlist with videos', () => {
     cy.visit('/');
     cy.bo((bo) => bo.create.playlistWithVideos());
-    cy.get('[data-qa="library-button"]').click();
+    cy.get('[data-qa="playlists-button"]').click();
 
     cy.findAllByRole('progressbar').should('not.exist');
     cy.findByRole('link', { name: /My Playlist/i }).should('exist');
