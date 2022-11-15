@@ -6,6 +6,7 @@ export class CollectionFactory {
     return {
       id: '1',
       owner: 'owner',
+      ownerName: 'Owner Name',
       title: 'title',
       videos: [],
       updatedAt: new Date(),

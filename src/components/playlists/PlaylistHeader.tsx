@@ -7,6 +7,7 @@ import PlaylistDescription from 'src/components/playlists/PlaylistDescription';
 import { Typography } from '@boclips-ui/typography';
 import { PlaylistEditButton } from 'src/components/playlists/PlaylistEditButton';
 import PlaylistNavigation from 'src/components/playlists/PlaylistNavigation';
+import PlaylistOwnerBadge from 'src/components/playlists/PlaylistOwnerBadge';
 import s from './style.module.less';
 
 interface Props {
@@ -38,6 +39,9 @@ const PlaylistHeader = ({ playlist }: Props) => {
       <div className={s.playlistButtons}>
         <PlaylistShareButton link={toLibraryLink(playlist.id)} />
         {playlist.mine && <PlaylistEditButton playlist={playlist} />}
+      </div>
+      <div className={s.playlistOwnerContainer}>
+        <PlaylistOwnerBadge playlist={playlist} />
       </div>
       {playlist.description && (
         <PlaylistDescription description={playlist.description} />

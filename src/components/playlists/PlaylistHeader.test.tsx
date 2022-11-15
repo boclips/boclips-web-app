@@ -35,6 +35,43 @@ describe('Playlist Header', () => {
     expect(titleElement.innerHTML).toBe(title);
   });
 
+  it('has visible You when current user is playlist owner', async () => {
+    const title = 'test playlist';
+    const playlist = CollectionFactory.sample({
+      id: '123',
+      title,
+      description: 'Description',
+      mine: true,
+    });
+
+    const wrapper = render(
+      <MemoryRouter>
+        <PlaylistHeader playlist={playlist} />
+      </MemoryRouter>,
+    );
+
+    expect(wrapper.getByText('By: You')).toBeVisible();
+  });
+
+  it('has visible playlist owner name', async () => {
+    const title = 'test playlist';
+    const playlist = CollectionFactory.sample({
+      id: '123',
+      title,
+      description: 'Description',
+      mine: false,
+      ownerName: 'The Owner',
+    });
+
+    const wrapper = render(
+      <MemoryRouter>
+        <PlaylistHeader playlist={playlist} />
+      </MemoryRouter>,
+    );
+
+    expect(wrapper.getByText('By: The Owner')).toBeVisible();
+  });
+
   it('has a share button', async () => {
     const playlist = CollectionFactory.sample({
       id: '123',

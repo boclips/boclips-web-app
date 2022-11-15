@@ -63,14 +63,20 @@ describe('LibraryView', () => {
 
     expect(await wrapper.findByText('Playlist 1')).toBeVisible();
     expect(await wrapper.findByText('Playlist 2')).toBeVisible();
+
+    expect(await wrapper.findAllByText('By: You')).toHaveLength(2);
   });
 
   it('displays shared playlists', async () => {
     const client = new FakeBoclipsClient();
-    insertUser(client);
 
     const playlists = [
-      CollectionFactory.sample({ id: '1', title: 'Playlist 1', mine: false }),
+      CollectionFactory.sample({
+        id: '1',
+        title: 'Playlist 1',
+        mine: false,
+        ownerName: 'The Owner',
+      }),
     ];
 
     playlists.forEach((it) => client.collections.addToFake(it));
@@ -79,6 +85,8 @@ describe('LibraryView', () => {
 
     expect(await wrapper.findByText('Playlist 1')).toBeVisible();
     expect(await wrapper.findByText('Shared with you')).toBeVisible();
+
+    expect(await wrapper.findByText('By: The Owner')).toBeVisible();
   });
 
   it('has a share button that copies playlist link to clipboard', async () => {

@@ -88,6 +88,7 @@ describe('Playlist view', () => {
 
     expect(await screen.findByTestId('playlistTitle')).toBeVisible();
     expect(await screen.findByText('Very nice description')).toBeVisible();
+    expect(await screen.findByText('By: You')).toBeVisible();
   });
 
   it('displays video title for all videos in the playlist', async () => {

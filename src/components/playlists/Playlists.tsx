@@ -12,6 +12,7 @@ import Pagination from '@boclips-ui/pagination';
 import c from 'classnames';
 import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collections/model/ListViewCollection';
 import { getMediaBreakpoint } from '@boclips-ui/use-media-breakpoints';
+import PlaylistOwnerBadge from 'src/components/playlists/PlaylistOwnerBadge';
 import s from './style.module.less';
 import GridCard from '../common/gridCard/GridCard';
 import paginationStyles from '../common/pagination/pagination.module.less';
@@ -96,6 +97,11 @@ const Playlists = () => {
                     >
                       <Thumbnails videos={playlist.videos} />
                     </Link>
+                  }
+                  subheader={
+                    <div className={s.playlistSubheader}>
+                      <PlaylistOwnerBadge playlist={playlist} />
+                    </div>
                   }
                   footer={
                     <div className="w-fit	self-end p-1">

@@ -115,7 +115,6 @@
   --bo-ui-button-outline-background-color-hover: transparent;
   --bo-ui-button-outline-svg-fill: transparent;
   --bo-ui-button-outline-svg-stroke: @blue-800;
-  margin-bottom: 1.5rem;
 
   button {
     width: auto;
@@ -132,6 +131,12 @@
       }
     }
   }
+}
+
+.playlistOwnerContainer {
+  width: 100%;
+  padding: 0.5rem 0;
+  color: @gray-700;
 }
 
 .playlistModalWrapper {
@@ -202,6 +207,16 @@
   }
 }
 
+.playlistSubheader {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  color: @gray-800;
+  margin: 0 0.25rem;
+  align-items: center;
+  overflow: hidden;
+}
+
 @media screen and (min-width: @screen-sm) {
   .cardWrapper {
     grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -213,6 +228,7 @@
 
   .playlistHeaderContainer {
     flex-direction: column;
+    align-items: flex-start;
   }
 
   .gridView {
@@ -233,6 +249,7 @@
 
   .playlistHeaderContainer {
     flex-direction: row;
+    align-items: center;
   }
 
   .gridView {
