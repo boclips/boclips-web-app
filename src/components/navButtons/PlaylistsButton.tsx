@@ -25,7 +25,7 @@ const PlaylistsButton = () => {
       <button
         type="button"
         onClick={onClick}
-        data-qa="playlist-button"
+        data-qa="playlists-button"
         className={s.headerButton}
       >
         <YourLibraryIcon className={s.navbarIcon} />
