@@ -10,12 +10,11 @@ const ExploreHeader = () => {
     >
       <div className="flex grow flex-col space-y-2 md:space-y-4 mb-4">
         <Typography.H1 size="lg" id="page-header">
-          Our best content aligned to OpenStax courses
+          Our OpenStax collection
         </Typography.H1>
 
         <Typography.H2 size="xs" weight="regular">
-          Review videos hand-picked by our curators and decide if they are right
-          for your course
+          Explore our video library, expertly curated for your ebook
         </Typography.H2>
       </div>
       <img

@@ -50,9 +50,7 @@ describe('App', () => {
     );
 
     expect(wrapper.queryByText('Page not found!')).not.toBeInTheDocument();
-    expect(
-      await wrapper.findByText('Our best content aligned to OpenStax courses'),
-    ).toBeVisible();
+    expect(await wrapper.findByText('Our OpenStax collection')).toBeVisible();
   });
 
   it(`renders the not found page if user doesn't have openstax role`, async () => {

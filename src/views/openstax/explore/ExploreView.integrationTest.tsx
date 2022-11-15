@@ -97,9 +97,7 @@ describe(`Explore view`, () => {
       </MemoryRouter>,
     );
 
-    expect(
-      await wrapper.findByText('Our best content aligned to OpenStax courses'),
-    ).toBeVisible();
+    expect(await wrapper.findByText('Our OpenStax collection')).toBeVisible();
 
     await waitFor(() =>
       expect(wrapper.getByLabelText('subject Maths')).toBeVisible(),
