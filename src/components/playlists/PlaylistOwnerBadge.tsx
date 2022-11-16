@@ -8,7 +8,7 @@ interface Props {
 }
 
 const PlaylistOwnerBadge = ({ playlist }: Props) => {
-  if (!playlist.ownerName.trim()) return null;
+  if (!playlist.ownerName || !playlist.ownerName.trim()) return null;
 
   const ownerName = playlist.mine ? 'You' : playlist.ownerName;
 
