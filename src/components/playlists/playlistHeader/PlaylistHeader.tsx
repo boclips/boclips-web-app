@@ -1,11 +1,11 @@
 import React from 'react';
-import { PlaylistShareButton } from 'src/components/playlists/PlaylistShareButton';
+import { PlaylistShareButton } from 'src/components/playlists/playlistHeader/PlaylistShareButton';
 import { Constants } from 'src/AppConstants';
 import c from 'classnames';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import PlaylistDescription from 'src/components/playlists/PlaylistDescription';
 import { Typography } from '@boclips-ui/typography';
-import { PlaylistEditButton } from 'src/components/playlists/PlaylistEditButton';
+import { OptionsButton } from 'src/components/playlists/OptionsButton';
 import PlaylistNavigation from 'src/components/playlists/PlaylistNavigation';
 import s from './style.module.less';
 
@@ -37,7 +37,7 @@ const PlaylistHeader = ({ playlist }: Props) => {
       </Typography.H1>
       <div className={s.playlistButtons}>
         <PlaylistShareButton link={toLibraryLink(playlist.id)} />
-        {playlist.mine && <PlaylistEditButton playlist={playlist} />}
+        {playlist.mine && <OptionsButton playlist={playlist} />}
       </div>
       {playlist.description && (
         <PlaylistDescription description={playlist.description} />
