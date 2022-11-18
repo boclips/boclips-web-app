@@ -76,7 +76,7 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
             <DownloadTranscriptButton video={video} />
           )}
         </div>
-        {embedMode ? (
+        {embedMode && video.links.createEmbedCode ? (
           <EmbedButton video={video} iconOnly={false} />
         ) : (
           <FeatureGate linkName="cart">
