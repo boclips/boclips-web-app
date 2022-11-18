@@ -6,7 +6,7 @@ import { Collection } from 'boclips-api-client/dist/sub-clients/collections/mode
 import PlaylistDescription from 'src/components/playlists/PlaylistDescription';
 import { Typography } from '@boclips-ui/typography';
 import PlaylistNavigation from 'src/components/playlists/PlaylistNavigation';
-import PlaylistOwnerBadge from 'src/components/playlists/PlaylistOwnerBadge';
+import PlaylistOwnerBadge from 'src/components/playlists/playlistHeader/PlaylistOwnerBadge';
 import { OptionsButton } from './OptionsButton';
 import s from './style.module.less';
 

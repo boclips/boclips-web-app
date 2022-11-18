@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import React from 'react';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { MemoryRouter } from 'react-router-dom';
-import PlaylistOwnerBadge from 'src/components/playlists/PlaylistOwnerBadge';
+import PlaylistOwnerBadge from 'src/components/playlists/playlistHeader/PlaylistOwnerBadge';
 
 describe('Playlist Owner Badge', () => {
   it('displays you when playlist is owned by current user', async () => {
