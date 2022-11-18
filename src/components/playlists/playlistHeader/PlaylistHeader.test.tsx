@@ -1,12 +1,16 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
-import PlaylistHeader from 'src/components/playlists/PlaylistHeader';
+import PlaylistHeader from 'src/components/playlists/playlistHeader/PlaylistHeader';
 import { Constants } from 'src/AppConstants';
 import { ToastContainer } from 'react-toastify';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { MemoryRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
+import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 describe('Playlist Header', () => {
   Object.assign(navigator, {
@@ -154,7 +158,7 @@ describe('Playlist Header', () => {
     );
   });
 
-  it('has an edit button', async () => {
+  it('has an options button', async () => {
     const playlist = CollectionFactory.sample({
       id: '123',
       title: 'Playlist title',
@@ -167,8 +171,57 @@ describe('Playlist Header', () => {
       </MemoryRouter>,
     );
 
-    const editButton = await wrapper.findByText('Edit playlist');
+    await waitFor(() => wrapper.getByText('Options')).then((it) => {
+      expect(it).toBeInTheDocument();
+    });
+  });
 
-    expect(editButton).toBeVisible();
+  it('opens dropdown when clicked', async () => {
+    const playlist = CollectionFactory.sample({
+      id: '123',
+      title: 'Playlist title',
+      description: 'Description',
+    });
+
+    const wrapper = render(
+      <MemoryRouter>
+        <PlaylistHeader playlist={playlist} />
+      </MemoryRouter>,
+    );
+
+    await waitFor(() => wrapper.getByText('Options')).then((it) => {
+      expect(it).toBeInTheDocument();
+    });
+
+    await userEvent.click(wrapper.getByRole('button', { name: 'Options' }));
+
+    expect(await wrapper.findByText('Edit')).toBeInTheDocument();
+  });
+
+  it('open edit modal when clicked on edit', async () => {
+    const playlist = CollectionFactory.sample({
+      id: '123',
+      title: 'Playlist title',
+      description: 'Description',
+    });
+
+    const wrapper = render(
+      <MemoryRouter>
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <QueryClientProvider client={new QueryClient()}>
+            <PlaylistHeader playlist={playlist} />
+          </QueryClientProvider>
+        </BoclipsClientProvider>
+      </MemoryRouter>,
+    );
+
+    await waitFor(() => wrapper.getByText('Options')).then(async (it) => {
+      expect(it).toBeInTheDocument();
+      await userEvent.click(it);
+    });
+
+    await userEvent.click(wrapper.getByText('Edit'));
+
+    expect(await wrapper.findByTestId('playlist-modal')).toBeVisible();
   });
 });

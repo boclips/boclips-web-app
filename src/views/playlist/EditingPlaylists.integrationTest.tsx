@@ -16,6 +16,9 @@ import {
   FakeBoclipsClient,
 } from 'boclips-api-client/dist/test-support';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import userEvent from '@testing-library/user-event';
+import { QueryClient } from '@tanstack/react-query';
+import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
 
 describe('editing a playlist', () => {
   let client = null;
@@ -39,7 +42,7 @@ describe('editing a playlist', () => {
     );
   });
 
-  it('edit playlist button is not visible for playlists shared with me by other user', async () => {
+  it('edit playlist popup is displayed with populated values when edit button is clicked', async () => {
     const newPlaylist = CollectionFactory.sample({
       id: '123',
       title: 'Hello there',
@@ -56,12 +59,19 @@ describe('editing a playlist', () => {
 
     const wrapper = render(
       <Router location={history.location} navigator={history}>
-        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+        <App
+          apiClient={client}
+          boclipsSecurity={stubBoclipsSecurity}
+          reactQueryClient={createReactQueryClient()}
+        />
       </Router>,
     );
 
-    const editPlaylistButton = await wrapper.findByText('Edit playlist');
-    fireEvent.click(editPlaylistButton);
+    await waitFor(() => wrapper.getByText('Options')).then(async (it) => {
+      await userEvent.click(it);
+    });
+
+    await userEvent.click(wrapper.getByText('Edit'));
 
     const editPlaylistPopup = await wrapper.findByTestId('playlist-modal');
     expect(editPlaylistPopup).toBeVisible();
@@ -78,7 +88,7 @@ describe('editing a playlist', () => {
     ).toBeVisible();
   });
 
-  it('edit playlist popup is displayed with populated values when edit button is clicked', async () => {
+  it('edit playlist button is not visible for playlists shared with me by other user', async () => {
     const newPlaylist = CollectionFactory.sample({
       id: '123',
       title: 'Hello there',
@@ -96,13 +106,17 @@ describe('editing a playlist', () => {
 
     const wrapper = render(
       <Router location={history.location} navigator={history}>
-        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+        <App
+          apiClient={client}
+          boclipsSecurity={stubBoclipsSecurity}
+          reactQueryClient={new QueryClient()}
+        />
       </Router>,
     );
 
     await waitFor(() => wrapper.findByTestId('playlistTitle'));
-    const editPlaylistButton = wrapper.queryByText('Edit playlist');
-    expect(editPlaylistButton).toBeNull();
+
+    expect(await wrapper.queryByText('Options')).toBeNull();
   });
 
   it('can edit playlist', async () => {
@@ -117,13 +131,24 @@ describe('editing a playlist', () => {
 
     client.collections.addToFake(newPlaylist);
 
+    const history = createBrowserHistory();
+    history.push('/playlists/123');
+
     const wrapper = render(
-      <MemoryRouter initialEntries={['/playlists/123']}>
-        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
-      </MemoryRouter>,
+      <Router location={history.location} navigator={history}>
+        <App
+          apiClient={client}
+          boclipsSecurity={stubBoclipsSecurity}
+          reactQueryClient={new QueryClient()}
+        />
+      </Router>,
     );
 
-    fireEvent.click(await wrapper.findByText('Edit playlist'));
+    await waitFor(() => wrapper.getByText('Options')).then(async (it) => {
+      await userEvent.click(it);
+    });
+
+    await userEvent.click(wrapper.getByText('Edit'));
 
     fireEvent.change(wrapper.getByDisplayValue('Hello there'), {
       target: { value: 'Good bye' },
@@ -173,7 +198,11 @@ describe('editing a playlist', () => {
       </MemoryRouter>,
     );
 
-    fireEvent.click(await wrapper.findByText('Edit playlist'));
+    await waitFor(() => wrapper.getByText('Options')).then(async (it) => {
+      await userEvent.click(it);
+    });
+
+    await userEvent.click(wrapper.getByText('Edit'));
 
     await waitFor(() => wrapper.getByTestId('playlist-modal'));
 
@@ -225,7 +254,11 @@ describe('editing a playlist', () => {
       </MemoryRouter>,
     );
 
-    fireEvent.click(await wrapper.findByText('Edit playlist'));
+    await waitFor(() => wrapper.getByText('Options')).then(async (it) => {
+      await userEvent.click(it);
+    });
+
+    await userEvent.click(wrapper.getByText('Edit'));
 
     await waitFor(() => wrapper.getByTestId('playlist-modal'));
 
@@ -268,7 +301,11 @@ describe('editing a playlist', () => {
       </MemoryRouter>,
     );
 
-    fireEvent.click(await wrapper.findByText('Edit playlist'));
+    await waitFor(() => wrapper.getByText('Options')).then(async (it) => {
+      await userEvent.click(it);
+    });
+
+    await userEvent.click(wrapper.getByText('Edit'));
 
     fireEvent.change(wrapper.getByDisplayValue('Hello there'), {
       target: { value: 'Good bye' },
@@ -313,7 +350,11 @@ describe('editing a playlist', () => {
       </MemoryRouter>,
     );
 
-    fireEvent.click(await wrapper.findByText('Edit playlist'));
+    await waitFor(() => wrapper.getByText('Options')).then(async (it) => {
+      await userEvent.click(it);
+    });
+
+    await userEvent.click(wrapper.getByText('Edit'));
 
     fireEvent.change(wrapper.getByDisplayValue('Hello there'), {
       target: { value: 'Good bye' },
@@ -352,7 +393,11 @@ describe('editing a playlist', () => {
       </MemoryRouter>,
     );
 
-    fireEvent.click(await wrapper.findByText('Edit playlist'));
+    await waitFor(() => wrapper.getByText('Options')).then(async (it) => {
+      await userEvent.click(it);
+    });
+
+    await userEvent.click(wrapper.getByText('Edit'));
 
     fireEvent.change(wrapper.getByDisplayValue('Hello there'), {
       target: { value: '' },

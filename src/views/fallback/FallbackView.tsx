@@ -9,6 +9,7 @@ const FallbackView = () => {
   const location = useLocation();
   // eslint-disable-next-line no-console
   console.log(location?.state?.error);
+  console.log(location);
 
   return (
     <Layout rowsSetup="grid-rows-search-view">

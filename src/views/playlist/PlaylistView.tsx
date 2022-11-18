@@ -4,7 +4,7 @@ import { Layout } from 'src/components/layout/Layout';
 import { usePlaylistQuery } from 'src/hooks/api/playlistsQuery';
 import { useLocation, useParams } from 'react-router-dom';
 import Footer from 'src/components/layout/Footer';
-import PlaylistHeader from 'src/components/playlists/PlaylistHeader';
+import PlaylistHeader from 'src/components/playlists/playlistHeader/PlaylistHeader';
 import PlaylistBody from 'src/components/playlists/PlaylistBody';
 import SkeletonPage from 'src/components/skeleton/SkeletonPage';
 import { FollowPlaylist } from 'src/services/followPlaylist';

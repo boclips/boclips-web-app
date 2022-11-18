@@ -38,6 +38,14 @@ window.Appcues = {
   track: jest.fn(),
 };
 
+window.ResizeObserver =
+    window.ResizeObserver ||
+    jest.fn().mockImplementation(() => ({
+      disconnect: jest.fn(),
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+    }));
+
 // jsdom is not good with css. This is silencing jsdom parsing css error
 beforeEach(() => {
   jest.spyOn(console, 'error').mockImplementation((e) => {
