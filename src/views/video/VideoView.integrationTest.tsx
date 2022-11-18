@@ -49,6 +49,10 @@ describe('Video View', () => {
       { code: 'EL1', label: 'EL1 label' },
       { code: 'EL2', label: 'EL2 label' },
     ],
+    links: {
+      ...VideoFactory.sample({}).links,
+      createEmbedCode: new Link({ href: 'todo' }),
+    },
   });
 
   const renderView = (initialEntries: string[]) => {
@@ -148,6 +152,34 @@ describe('Video View', () => {
       ).toBeVisible();
       expect(wrapper.getByText('Get embed code')).toBeVisible();
       expect(await wrapper.queryByText('Add to cart')).not.toBeInTheDocument();
+    });
+
+    it(`will not display embed video nor download transcript when there's no embed link`, async () => {
+      const videoWithoutEmbedOption = {
+        ...exampleVideo,
+        links: {
+          ...exampleVideo.links,
+          createEmbedCode: null,
+        },
+      };
+      const book = getBookWithVideo(videoWithoutEmbedOption);
+
+      fakeClient.openstax.setOpenstaxBooks([book]);
+      fakeClient.videos.insertVideo(videoWithoutEmbedOption);
+      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+
+      const wrapper = renderView([`/explore/openstax/${book.id}`]);
+
+      await userEvent.click(await wrapper.findByText(exampleVideo.title));
+
+      // wait for video page to be rendered
+      expect(
+        await wrapper.findByRole('button', { name: 'Copy video link' }),
+      ).toBeVisible();
+
+      expect(
+        await wrapper.queryByRole('button', { name: 'embed' }),
+      ).not.toBeInTheDocument();
     });
 
     it(`will display download transcripts button when transcripts are available`, async () => {
