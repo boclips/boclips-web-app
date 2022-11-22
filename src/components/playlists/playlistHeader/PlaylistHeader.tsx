@@ -41,7 +41,7 @@ const PlaylistHeader = ({ playlist }: Props) => {
       </div>
       <div className={s.playlistButtons}>
         <PlaylistShareButton link={toLibraryLink(playlist.id)} />
-        {playlist.mine && <OptionsButton playlist={playlist} />}
+        <OptionsButton playlist={playlist} />
       </div>
       {playlist.description && (
         <PlaylistDescription description={playlist.description} />

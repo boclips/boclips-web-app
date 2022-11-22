@@ -4,6 +4,8 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import React from 'react';
 import { CreatePlaylistModal } from 'src/components/playlistModal/CreatePlaylistModal';
 import { fireEvent, waitFor } from '@testing-library/react';
+import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
+import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 
 describe('Create new playlist modal', () => {
   it('creates a playlist with playlist name and description', async () => {
@@ -93,6 +95,47 @@ describe('Create new playlist modal', () => {
 
     expect(wrapper.queryByTestId('playlist-modal')).toBeInTheDocument();
     await waitFor(() => expect(handleOnError).toBeCalledTimes(1));
+  });
+
+  it('can use an existing playlist as a template', async () => {
+    const apiClient = new FakeBoclipsClient();
+    const createPlaylistSpy = jest
+      .spyOn(apiClient.collections, 'create')
+      .mockImplementation(() => Promise.resolve('playlist-id'));
+
+    const videos = [
+      VideoFactory.sample({ id: 'video1' }),
+      VideoFactory.sample({ id: 'video2' }),
+      VideoFactory.sample({ id: 'video3' }),
+    ];
+
+    const playlist = CollectionFactory.sample({
+      title: 'Original playlist',
+      description: 'Description of original playlist',
+      videos,
+      mine: false,
+    });
+
+    const wrapper = render(
+      <BoclipsClientProvider client={apiClient}>
+        <CreatePlaylistModal
+          playlist={playlist}
+          onCancel={jest.fn}
+          onSuccess={jest.fn}
+          onError={jest.fn}
+        />
+      </BoclipsClientProvider>,
+    );
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create playlist' }));
+    await waitFor(() =>
+      expect(createPlaylistSpy).toHaveBeenCalledWith({
+        title: 'Original playlist',
+        description: 'Description of original playlist',
+        videos: [...videos.map((v) => v.id)],
+        origin: 'BO_WEB_APP',
+      }),
+    );
   });
 });
 

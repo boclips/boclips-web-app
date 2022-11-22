@@ -2,39 +2,38 @@ import React, { useState } from 'react';
 import OptionsDotsSVG from 'src/resources/icons/options-dots.svg';
 import c from 'classnames';
 import PencilSVG from 'src/resources/icons/pencil.svg';
+import CopySVG from 'src/resources/icons/copy.svg';
 import { EditPlaylistModal } from 'src/components/playlistModal/EditPlaylistModal';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import Button from '@boclips-ui/button';
-import { Typography } from '@boclips-ui/typography';
+import { OptionItem } from 'src/components/playlists/playlistHeader/OptionItem';
+import { CopyPlaylistModal } from 'src/components/playlists/playlistHeader/CopyPlaylistModal';
 import s from './style.module.less';
 
 interface Props {
   playlist: Collection;
 }
 
-export const OptionsButton = ({ playlist }: Props) => {
-  const [showEditPlaylistModal, setShowEditPlaylistModal] =
-    useState<boolean>(false);
+const enum PlaylistModalState {
+  NONE,
+  EDIT,
+  DUPLICATE,
+}
 
-  const handleEditPlaylistSuccess = (playlistTitle: string) => {
-    displayNotification(
-      'success',
-      `Playlist "${playlistTitle}" edited`,
-      '',
-      `edit-playlist-success`,
-    );
-    setShowEditPlaylistModal(false);
+export const OptionsButton = ({ playlist }: Props) => {
+  const [modalState, setModalState] = useState<PlaylistModalState>(
+    PlaylistModalState.NONE,
+  );
+
+  const showSuccessNotification = (message: string, dataQa?: string) => {
+    displayNotification('success', message, '', dataQa);
+    setModalState(PlaylistModalState.NONE);
   };
 
-  const handleEditPlaylistError = (playlistTitle: string) => {
-    displayNotification(
-      'error',
-      `Error: Failed to edit playlist "${playlistTitle}"`,
-      'Please try again',
-      `edit-playlist-failed`,
-    );
+  const showErrorNotification = (message: string, dataQa?: string) => {
+    displayNotification('error', message, 'Please try again', dataQa);
   };
 
   return (
@@ -57,34 +56,44 @@ export const OptionsButton = ({ playlist }: Props) => {
               align="end"
             >
               <DropdownMenu.Group>
-                {/* VV dropdown item start VV */}
-                <DropdownMenu.Item
-                  className={s.optionsItem}
-                  textValue="Edit playlist"
+                {playlist.mine && (
+                  <OptionItem
+                    text="Edit"
+                    label="Edit playlist"
+                    icon={<PencilSVG aria-hidden />}
+                    onSelect={() => {
+                      setModalState(PlaylistModalState.EDIT);
+                    }}
+                  />
+                )}
+                <OptionItem
+                  text="Make a copy"
+                  label="Make a copy of this playlist"
+                  icon={<CopySVG aria-hidden />}
                   onSelect={() => {
-                    setShowEditPlaylistModal(true);
+                    setModalState(PlaylistModalState.DUPLICATE);
                   }}
-                >
-                  <PencilSVG aria-hidden />
-                  <Typography.Body as="span" weight="medium">
-                    Edit
-                  </Typography.Body>
-                </DropdownMenu.Item>
-                {/* AA dropdown item end AA */}
+                />
               </DropdownMenu.Group>
             </DropdownMenu.Content>
           </DropdownMenu.Portal>
         </DropdownMenu.Root>
       </div>
-      {showEditPlaylistModal && (
-        <div className={s.playlistModalWrapper}>
-          <EditPlaylistModal
-            playlist={playlist}
-            onCancel={() => setShowEditPlaylistModal(false)}
-            onSuccess={handleEditPlaylistSuccess}
-            onError={handleEditPlaylistError}
-          />
-        </div>
+      {modalState === PlaylistModalState.EDIT && (
+        <EditPlaylistModal
+          playlist={playlist}
+          showSuccessNotification={showSuccessNotification}
+          showErrorNotification={showErrorNotification}
+          onCancel={() => setModalState(PlaylistModalState.NONE)}
+        />
+      )}
+      {modalState === PlaylistModalState.DUPLICATE && (
+        <CopyPlaylistModal
+          playlist={playlist}
+          showSuccessNotification={showSuccessNotification}
+          showErrorNotification={showErrorNotification}
+          onCancel={() => setModalState(PlaylistModalState.NONE)}
+        />
       )}
     </>
   );

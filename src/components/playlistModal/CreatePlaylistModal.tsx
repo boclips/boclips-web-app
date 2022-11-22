@@ -4,16 +4,21 @@ import {
   PlaylistFormProps,
   PlaylistModal,
 } from 'src/components/playlistModal/PlaylistModal';
+import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 
 export interface Props {
+  title?: string;
   videoId?: string;
+  playlist?: Collection;
   onCancel: () => void;
   onSuccess: (playlistId?: string, playlistName?: string) => void;
   onError: (playlistName: string) => void;
 }
 
 export const CreatePlaylistModal = ({
+  title = 'Create new playlist',
   videoId = null,
+  playlist = null,
   onCancel,
   onSuccess,
   onError,
@@ -39,16 +44,24 @@ export const CreatePlaylistModal = ({
     }
   }, [playlistId, onSuccess, isSuccess, isError]);
 
-  const handleConfirm = (title: string, description?: string) => {
-    setPlaylistFormUsedInMutation({ title, description });
+  const handleConfirm = (
+    playlistTitle: string,
+    playlistDescription?: string,
+  ) => {
+    setPlaylistFormUsedInMutation({
+      title: playlistTitle,
+      description: playlistDescription,
+    });
     let videos = [];
-    if (videoId) {
+    if (playlist) {
+      videos = playlist.videos.map((video) => video.id);
+    } else if (videoId) {
       videos = [videoId];
     }
 
     createPlaylist({
-      title,
-      description,
+      title: playlistTitle,
+      description: playlistDescription,
       origin: 'BO_WEB_APP',
       videos,
     });
@@ -56,10 +69,11 @@ export const CreatePlaylistModal = ({
 
   return (
     <PlaylistModal
+      playlist={playlist}
       handleConfirm={handleConfirm}
       onCancel={onCancel}
       isLoading={isLoading}
-      title="Create new playlist"
+      title={title}
       confirmButtonText="Create playlist"
     />
   );

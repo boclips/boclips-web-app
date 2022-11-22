@@ -116,7 +116,11 @@ describe('editing a playlist', () => {
 
     await waitFor(() => wrapper.findByTestId('playlistTitle'));
 
-    expect(await wrapper.queryByText('Options')).toBeNull();
+    await waitFor(() => wrapper.getByText('Options')).then(async (it) => {
+      await userEvent.click(it);
+    });
+
+    expect(await wrapper.queryByText('Edit')).toBeNull();
   });
 
   it('can edit playlist', async () => {
