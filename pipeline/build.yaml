@@ -21,6 +21,7 @@ caches:
 params:
   PERCY_TOKEN:
   PERCY_PROJECT_ID:
+  PERCY_SKIP:
 
 run:
   path: sh
@@ -30,9 +31,6 @@ run:
     SENTRY_RELEASE="boclips-web-app-$(cat ../version/tag)"
     export SENTRY_RELEASE
     npm ci
-    PERCY_TARGET_COMMIT=$(npx percy-baseline-commit)
-    echo "$PERCY_TARGET_COMMIT"
-    export PERCY_TARGET_COMMIT
     npm run fake &
     npm run test
     npm run lint
@@ -43,9 +41,18 @@ run:
       sleep 1
       times=$(( times + 1 ))
     done
-    npm run test-visual
-    npm run build
-    npm run test-visual:wait
+    if [ "${PERCY_SKIP}" = "true" ]
+    then
+      echo "PERCY_SKIP set to true, skipping percy steps"
+      npm run build
+    else
+      PERCY_TARGET_COMMIT=$(npx percy-baseline-commit)
+      echo "$PERCY_TARGET_COMMIT"
+      export PERCY_TARGET_COMMIT
+      npm run test-visual
+      npm run build
+      npm run test-visual:wait
+    fi
     cp -R ./dist/ ../dist/html/
     cp application.conf Dockerfile ../dist
   dir: source
