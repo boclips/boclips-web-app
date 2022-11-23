@@ -35,7 +35,7 @@ export const PlaylistShareButton = ({ link }: Props) => {
         onClick={handleClick}
         icon={<CopyLinkIcon />}
         type="outline"
-        text="Get shareable link"
+        text="Get view-only link"
       />
     </div>
   );

@@ -89,9 +89,9 @@ describe('Playlist Header', () => {
       </MemoryRouter>,
     );
 
-    const shareButton = await wrapper.findByTestId('share-playlist-button');
-
-    expect(shareButton).toBeVisible();
+    expect(
+      await wrapper.findByRole('button', { name: 'Get view-only link' }),
+    ).toBeVisible();
   });
 
   it('copies the playlist link on the playlist page and shows notification', async () => {
@@ -109,7 +109,9 @@ describe('Playlist Header', () => {
       </MemoryRouter>,
     );
 
-    const shareButton = await wrapper.findByTestId('share-playlist-button');
+    const shareButton = await wrapper.findByRole('button', {
+      name: 'Get view-only link',
+    });
 
     fireEvent.click(shareButton);
 
@@ -147,7 +149,9 @@ describe('Playlist Header', () => {
       </MemoryRouter>,
     );
 
-    const shareButton = await wrapper.findByTestId('share-playlist-button');
+    const shareButton = await wrapper.findByRole('button', {
+      name: 'Get view-only link',
+    });
 
     fireEvent.click(shareButton);
 
