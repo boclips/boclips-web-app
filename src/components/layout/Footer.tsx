@@ -4,17 +4,14 @@ import c from 'classnames';
 import s from './footer.module.less';
 
 interface Props {
-  columnPosition?: string;
+  className?: string;
 }
 
-const Footer = ({ columnPosition }: Props) => {
+const Footer = ({ className }: Props) => {
   const currentDate = new Date();
 
   return (
-    <footer
-      className={c(`${columnPosition}`, s.footer)}
-      aria-label="Boclips footer"
-    >
+    <footer className={c(`${className}`, s.footer)} aria-label="Boclips footer">
       <Typography.Body
         size="small"
         as="div"

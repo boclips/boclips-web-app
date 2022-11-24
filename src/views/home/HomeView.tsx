@@ -9,7 +9,7 @@ const HomeView = () => {
     <Layout rowsSetup="grid-rows-homepage" responsiveLayout>
       <Navbar />
       <DisciplinesWidget />
-      <Footer columnPosition="col-start-2 col-end-26" />
+      <Footer className="col-start-2 col-end-26" />
     </Layout>
   );
 };

@@ -14,7 +14,7 @@ const PlaylistsView = () => {
         <Navbar />
         <PlaylistsHeader />
         <Playlists />
-        <Footer columnPosition="col-start-2 col-end-26" />
+        <Footer className="col-start-2 col-end-26" />
       </Layout>
     </>
   );

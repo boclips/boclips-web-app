@@ -30,7 +30,7 @@ const VideoView = () => {
       <ErrorBoundary fallback={<Fallback isVideoNotFound={isVideoNotFound} />}>
         <VideoPage video={video} />
       </ErrorBoundary>
-      <Footer columnPosition="row-start-6 row-end-6" />
+      <Footer className="row-start-6 row-end-6" />
     </Layout>
   );
 };
