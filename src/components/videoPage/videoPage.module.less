@@ -1,24 +1,39 @@
 @import '~@boclips-ui/styles/src/breakpoints';
 
 .fullWidth {
-  @apply col-start-2 col-end-26;
+  grid-column-start: 2;
+  grid-column-end: 26;
+}
+
+.backButton {
+  grid-column-start: 2;
+  grid-column-end: 26;
+  grid-row-start: 2;
+  grid-row-end: 2;
 }
 
 .playerSection {
-  @apply fullWidth row-start-2 lg:col-start-2 lg:col-end-18 lg:row-end-4;
+  grid-column-start: 2;
+  grid-column-end: 26;
+  grid-row-start: 3;
+  grid-row-end: 4;
 }
 
 .headerSection {
-  @apply fullWidth row-start-3 row-end-3 lg:col-start-18 lg:col-end-26 lg:row-start-2 lg:row-end-4;
-}
+  grid-column-start: 2;
+  grid-column-end: 26;
+  grid-row-start: 4;
+  grid-row-end: 4;
 
-.descriptionSection {
-  margin-top: 1rem;
-  @apply fullWidth row-start-4 row-end-4 -mt-2 lg:col-start-2 lg:col-end-18 lg:row-start-4 lg:row-end-4;
+  display: flex;
+  flex-direction: column;
 }
 
 .recommendedVideosSection {
-  @apply fullWidth row-start-4 row-end-6 col-start-2 col-end-26;
+  grid-column-start: 2;
+  grid-column-end: 26;
+  grid-row-start: 5;
+  grid-row-end: 5;
 }
 
 .recommendedVideosSectionTitle {
@@ -33,7 +48,21 @@
 }
 
 @media screen and (min-width: @screen-lg) {
+
+  .playerSection {
+    grid-column-start: 2;
+    grid-column-end: 18;
+  }
+
+  .headerSection {
+    grid-row-start: 3;
+    grid-column-start: 18;
+    grid-column-end: 26;
+  }
+
   .recommendedVideosGrid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-row-start: 4;
+    grid-row-end: 6;
   }
 }

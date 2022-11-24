@@ -41,7 +41,7 @@ module.exports = {
         'openstax-detailed-view':
           'minmax(74px, auto) min-content min-content 1fr auto',
         'order-view': 'minmax(74px, auto) 21px min-content 1fr auto',
-        'video-view': 'minmax(74px, auto) minmax(0, auto) repeat(5,auto)',
+        'video-view': 'minmax(74px, auto) minmax(0, auto) repeat(6,auto)',
       },
       gridTemplateColumns: {
         container:

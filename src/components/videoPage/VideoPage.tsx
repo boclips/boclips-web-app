@@ -3,7 +3,6 @@ import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import { Video } from 'boclips-api-client/dist/types';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BackArrow from 'resources/icons/back-arrow.svg';
-import c from 'classnames';
 import { TextButton } from 'src/components/common/textButton/TextButton';
 import VideoRecommendations from 'src/components/videoPage/VideoRecommendations';
 import { VideoHeaderWithDescription } from 'src/components/videoPage/VideoHeaderWithDescription';
@@ -24,11 +23,7 @@ export const VideoPage = ({ video }: Props) => {
   return (
     <>
       {userNavigatedToPageViaApp && (
-        <div
-          className={c('col-start-2 col-end-26', {
-            'row-start-2 row-end-2': userNavigatedToPageViaApp,
-          })}
-        >
+        <div className={s.backButton}>
           <TextButton
             onClick={goToPreviousPage}
             icon={<BackArrow />}
@@ -36,24 +31,10 @@ export const VideoPage = ({ video }: Props) => {
           />
         </div>
       )}
-      <main
-        tabIndex={-1}
-        className={c(s.playerSection, {
-          '!row-start-3': userNavigatedToPageViaApp,
-        })}
-      >
+      <main tabIndex={-1} className={s.playerSection}>
         <VideoPlayer video={video} />
       </main>
-      <section
-        className={c(
-          s.headerSection,
-          {
-            '!row-start-3': userNavigatedToPageViaApp,
-          },
-          'flex flex-col',
-        )}
-        aria-labelledby="video-title"
-      >
+      <section className={s.headerSection} aria-labelledby="video-title">
         <VideoHeaderWithDescription video={video} />
       </section>
       <VideoRecommendations video={video} />
