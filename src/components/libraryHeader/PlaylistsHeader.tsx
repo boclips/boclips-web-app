@@ -41,9 +41,9 @@ export const PlaylistsHeader = () => {
             icon={<PlusSign />}
             text="Create new playlist"
             onClick={() => setModalOpen(true)}
-            width="206px"
             height="48px"
             ref={createButtonRef}
+            className="max-w-max"
           />
         }
       />
