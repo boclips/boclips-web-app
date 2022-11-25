@@ -60,38 +60,40 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
         <VideoInfo video={video} />
       </div>
 
-      <div className={s.scrollableDescription}>
-        <VideoDescription video={video} />
-      </div>
-      <div className={(s.sticky, s.buttons)}>
-        <div className={s.iconButtons}>
-          <AddToPlaylistButton
-            videoId={video.id}
-            onClick={() => {
-              mixpanel.track('video_details_playlist_add');
-            }}
-          />
-          <CopyVideoLinkButton video={video} onClick={trackVideoCopy} />
-          {embedMode && videoHasTranscript && (
-            <DownloadTranscriptButton video={video} />
-          )}
+      <div className={s.descriptionAndButtons}>
+        <div className={s.scrollableDescription}>
+          <VideoDescription video={video} />
         </div>
-        {embedMode && video.links.createEmbedCode ? (
-          <EmbedButton video={video} iconOnly={false} />
-        ) : (
-          <FeatureGate linkName="cart">
-            <AddToCartButton
-              video={video}
-              width="200px"
+        <div className={(s.sticky, s.buttons)}>
+          <div className={s.iconButtons}>
+            <AddToPlaylistButton
+              videoId={video.id}
               onClick={() => {
-                AnalyticsFactory.appcues().sendEvent(
-                  AppcuesEvent.ADD_TO_CART_FROM_VIDEO_PAGE,
-                );
-                mixpanel.track('video_details_cart_add');
+                mixpanel.track('video_details_playlist_add');
               }}
             />
-          </FeatureGate>
-        )}
+            <CopyVideoLinkButton video={video} onClick={trackVideoCopy} />
+            {embedMode && videoHasTranscript && (
+              <DownloadTranscriptButton video={video} />
+            )}
+          </div>
+          {embedMode && video.links.createEmbedCode ? (
+            <EmbedButton video={video} iconOnly={false} />
+          ) : (
+            <FeatureGate linkName="cart">
+              <AddToCartButton
+                video={video}
+                width="200px"
+                onClick={() => {
+                  AnalyticsFactory.appcues().sendEvent(
+                    AppcuesEvent.ADD_TO_CART_FROM_VIDEO_PAGE,
+                  );
+                  mixpanel.track('video_details_cart_add');
+                }}
+              />
+            </FeatureGate>
+          )}
+        </div>
       </div>
     </>
   );
