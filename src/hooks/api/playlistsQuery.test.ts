@@ -14,7 +14,7 @@ describe('playlistsQuery', () => {
     // @ts-ignore
     apiClient.collections.getMySavedCollectionsWithoutDetails = collectionsSpy;
     const { result, waitFor } = renderHook(
-      () => useOwnAndSharedPlaylistsQuery(1),
+      () => useOwnAndSharedPlaylistsQuery(1, 'bla'),
       {
         wrapper: wrapperWithClients(apiClient, new QueryClient()),
       },
@@ -25,6 +25,8 @@ describe('playlistsQuery', () => {
       page: 0,
       size: 20,
       origin: 'BO_WEB_APP',
+      partialTitleMatch: true,
+      query: 'bla',
     });
   });
 });

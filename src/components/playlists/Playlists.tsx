@@ -13,6 +13,9 @@ import c from 'classnames';
 import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collections/model/ListViewCollection';
 import { getMediaBreakpoint } from '@boclips-ui/use-media-breakpoints';
 import PlaylistOwnerBadge from 'src/components/playlists/playlistHeader/PlaylistOwnerBadge';
+import SearchIcon from 'resources/icons/search-icon.svg';
+import { InputText } from '@boclips-ui/input';
+import { useDebounce } from 'src/hooks/useDebounce';
 import s from './style.module.less';
 import GridCard from '../common/gridCard/GridCard';
 import paginationStyles from '../common/pagination/pagination.module.less';
@@ -22,13 +25,17 @@ export const PLAYLISTS_PAGE_SIZE = 20;
 const Playlists = () => {
   const currentBreakpoint = getMediaBreakpoint();
   const mobileView = currentBreakpoint.type === 'mobile';
+  const [query, setQuery] = useState<string | undefined>(undefined);
+  const debouncedQuery = useDebounce(query, 1000);
 
   const linkCopiedHotjarEvent = () =>
     AnalyticsFactory.hotjar().event(HotjarEvents.PlaylistLinkCopied);
   const [page, setPage] = useState<number>(1);
 
-  const { data: playlists, isInitialLoading } =
-    useOwnAndSharedPlaylistsQuery(page);
+  const { data: playlists, isInitialLoading } = useOwnAndSharedPlaylistsQuery(
+    page,
+    debouncedQuery,
+  );
 
   const handlePageChange = (newPage: number) => {
     window.scrollTo({ top: 0 });
@@ -54,6 +61,16 @@ const Playlists = () => {
 
   return (
     <main tabIndex={-1} className={s.playlistsWrapper}>
+      <div className="mb-6 w-80">
+        <InputText
+          id="playlist-search"
+          onChange={(text) => setQuery(text)}
+          inputType="text"
+          placeholder="Search for playlists"
+          icon={<SearchIcon />}
+          constraints={{ required: true }}
+        />
+      </div>
       {isInitialLoading ? (
         <SkeletonTiles className={s.skeletonCard} rows={3} cols={4} />
       ) : (

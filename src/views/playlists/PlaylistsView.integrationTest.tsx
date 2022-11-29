@@ -4,6 +4,7 @@ import {
   render,
   RenderResult,
   waitFor,
+  waitForElementToBeRemoved,
 } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
@@ -87,6 +88,47 @@ describe('PlaylistsView', () => {
     expect(await wrapper.findByText('Shared with you')).toBeVisible();
 
     expect(await wrapper.findByText('By: The Owner')).toBeVisible();
+  });
+
+  it('can search for playlist', async () => {
+    const client = new FakeBoclipsClient();
+
+    const playlists = [
+      CollectionFactory.sample({
+        id: '1',
+        mine: true,
+        title: 'My playlist about apples',
+      }),
+      CollectionFactory.sample({
+        id: '2',
+        mine: true,
+        title: 'My playlist about pears',
+      }),
+      CollectionFactory.sample({
+        id: '3',
+        mine: false,
+        title: 'Shared pears playlist',
+        ownerName: 'The Owner',
+      }),
+    ];
+
+    playlists.forEach((it) => client.collections.addToFake(it));
+
+    const wrapper = renderPlaylistsView(client);
+
+    expect(await wrapper.findByText('My playlist about apples')).toBeVisible();
+    expect(await wrapper.findByText('My playlist about pears')).toBeVisible();
+    expect(await wrapper.findByText('Shared pears playlist')).toBeVisible();
+
+    const searchInput = wrapper.getByPlaceholderText('Search for playlists');
+    await userEvent.type(searchInput, 'pears');
+
+    await waitForElementToBeRemoved(() =>
+      wrapper.getByText('My playlist about apples'),
+    );
+
+    expect(await wrapper.findByText('My playlist about pears')).toBeVisible();
+    expect(await wrapper.findByText('Shared pears playlist')).toBeVisible();
   });
 
   it('has a share button that copies playlist link to clipboard', async () => {

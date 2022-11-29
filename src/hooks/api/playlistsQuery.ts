@@ -22,11 +22,11 @@ interface PlaylistMutationCallbacks {
   onError: (playlistId: string) => void;
 }
 
-export const useOwnAndSharedPlaylistsQuery = (page: number) => {
+export const useOwnAndSharedPlaylistsQuery = (page: number, query?: string) => {
   const client = useBoclipsClient();
   const backendPageNumber = page - 1;
-  return useQuery(playlistKeys.ownAndShared(backendPageNumber), () =>
-    doGetOwnAndSharedPlaylists(client, backendPageNumber),
+  return useQuery(playlistKeys.ownAndShared(backendPageNumber, query), () =>
+    doGetOwnAndSharedPlaylists(client, backendPageNumber, query),
   );
 };
 
@@ -138,14 +138,21 @@ const doGetOwnPlaylists = (client: BoclipsClient) =>
     .getMyCollectionsWithoutDetails({ origin: 'BO_WEB_APP' })
     .then((playlists) => playlists.page);
 
-const doGetOwnAndSharedPlaylists = (client: BoclipsClient, page: number) =>
-  client.collections
+const doGetOwnAndSharedPlaylists = (
+  client: BoclipsClient,
+  page: number,
+  query?: string,
+) => {
+  return client.collections
     .getMySavedCollectionsWithoutDetails({
+      query,
+      partialTitleMatch: true,
       page,
       size: PLAYLISTS_PAGE_SIZE,
       origin: 'BO_WEB_APP',
     })
     .then((playlists) => playlists);
+};
 
 export const usePlaylistMutation = () => {
   const client = useBoclipsClient();
