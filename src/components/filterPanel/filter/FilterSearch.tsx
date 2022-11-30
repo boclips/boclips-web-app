@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BoInputText } from 'src/components/common/input/BoInputText';
+import { InputText } from '@boclips-ui/input';
 import SearchIcon from 'resources/icons/search-icon.svg';
 import s from './FilterSearch.module.less';
 
@@ -19,12 +19,13 @@ export const FilterSearch = ({
     onSearch(text);
   };
   return (
-    <BoInputText
+    <InputText
       defaultValue={searchText}
       height="40px"
       inputType="text"
       id={`search-filter-${id.replace(' ', '')}`}
       placeholder={placeholderText}
+      constraints={{ required: false, minLength: 0 }}
       icon={<SearchIcon />}
       showLabelText={false}
       onChange={setText}
