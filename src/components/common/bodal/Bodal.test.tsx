@@ -1,7 +1,7 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { Bodal } from 'src/components/common/bodal/Bodal';
-import { BoInputText } from 'src/components/common/input/BoInputText';
+import { InputText } from '@boclips-ui/input';
 import userEvent from '@testing-library/user-event';
 
 describe('The mighty Bodal', () => {
@@ -159,13 +159,13 @@ describe('The mighty Bodal', () => {
     const wrapper = render(
       <Bodal title="test" initialFocusRef={inputRef}>
         <div>skip focus</div>
-        <BoInputText
+        <InputText
           onChange={jest.fn()}
           id="no-focus-text"
           labelText="dont-focus-input"
           inputType="text"
         />
-        <BoInputText
+        <InputText
           onChange={jest.fn()}
           id="focus-text"
           ref={inputRef}
@@ -175,7 +175,7 @@ describe('The mighty Bodal', () => {
       </Bodal>,
     );
 
-    expect(wrapper.getByLabelText('Focus me (Optional)')).toHaveFocus();
+    expect(wrapper.getByLabelText('Focus me')).toHaveFocus();
   });
 
   it(`traps focus to bodal`, async () => {
@@ -184,7 +184,7 @@ describe('The mighty Bodal', () => {
 
     const wrapper = render(
       <div data-qa="main">
-        <BoInputText
+        <InputText
           id="no-focus-text"
           labelText="Don't focus me"
           inputType="text"
@@ -196,7 +196,7 @@ describe('The mighty Bodal', () => {
           onCancel={jest.fn()}
           onConfirm={jest.fn()}
         >
-          <BoInputText
+          <InputText
             onChange={jest.fn()}
             id="focus-text"
             ref={inputRef}
@@ -207,7 +207,7 @@ describe('The mighty Bodal', () => {
       </div>,
     );
 
-    expect(wrapper.getByLabelText('Focus me (Optional)')).toHaveFocus();
+    expect(wrapper.getByLabelText('Focus me')).toHaveFocus();
     user.tab();
 
     await waitFor(() =>
@@ -222,9 +222,7 @@ describe('The mighty Bodal', () => {
       expect(wrapper.getByLabelText('Close test modal')).toHaveFocus(),
     );
 
-    expect(
-      wrapper.getByLabelText("Don't focus me (Optional)"),
-    ).not.toHaveFocus();
+    expect(wrapper.getByLabelText("Don't focus me")).not.toHaveFocus();
   });
 
   // Nice to have for later

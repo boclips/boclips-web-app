@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BoInputText } from 'src/components/common/input/BoInputText';
+import { InputText } from '@boclips-ui/input';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 
@@ -65,7 +65,7 @@ export const PlaylistModal = ({
       initialFocusRef={inputTextRef}
     >
       <div className="pb-6">
-        <BoInputText
+        <InputText
           id="playlist-name"
           labelText="Playlist name"
           placeholder="Add name"
@@ -79,10 +79,11 @@ export const PlaylistModal = ({
           height="48px"
         />
       </div>
-      <BoInputText
+      <InputText
         id="playlist-description"
         labelText="Description"
         placeholder="Add description"
+        constraints={{ required: false, minLength: 0 }}
         onChange={handleDescriptionChange}
         inputType="textarea"
         defaultValue={playlistForm.description}
