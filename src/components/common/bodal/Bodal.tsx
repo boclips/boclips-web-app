@@ -13,6 +13,7 @@ import { handleEscapeKeyEvent } from 'src/services/handleKeyEvent';
 import FocusTrap from 'focus-trap-react';
 import { Typography } from '@boclips-ui/typography';
 import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
+import c from 'classnames';
 import s from './style.module.less';
 
 export interface Props {
@@ -26,6 +27,7 @@ export interface Props {
   initialFocusRef?: React.RefObject<HTMLElement>;
   closeOnClickOutside?: boolean;
   children: React.ReactNode;
+  className?: string;
 }
 
 export const Bodal: React.FC<Props> = ({
@@ -39,6 +41,7 @@ export const Bodal: React.FC<Props> = ({
   children,
   initialFocusRef,
   closeOnClickOutside = true,
+  className,
 }: PropsWithChildren<Props>) => {
   const breakpoints = useMediaBreakPoint();
   const mobileView = breakpoints.type === 'mobile';
@@ -109,7 +112,7 @@ export const Bodal: React.FC<Props> = ({
         <div id="bodal-description" hidden>
           This is a dialog for {title}. Escape will cancel and close the window.
         </div>
-        <div className={s.modal} ref={ref}>
+        <div className={c(s.modal, className)} ref={ref}>
           <div className={s.modalContent}>
             <div className={s.modalHeader}>{header}</div>
             {children}

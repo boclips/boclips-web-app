@@ -100,6 +100,74 @@ describe('OptionsButton', () => {
     });
   });
 
+  describe('Remove', () => {
+    it('is available for owners', async () => {
+      const wrapper = render(
+        <OptionsButton playlist={CollectionFactory.sample({ mine: true })} />,
+      );
+
+      const removeButton = await getOption(wrapper, 'Remove');
+      expect(removeButton).toBeVisible();
+    });
+
+    it('is not available for non-owners', async () => {
+      const wrapper = render(
+        <OptionsButton playlist={CollectionFactory.sample({ mine: false })} />,
+      );
+
+      const removeButton = await getOption(wrapper, 'Remove');
+      expect(removeButton).toBeUndefined();
+    });
+
+    it('opens up new modal when clicking on it', async () => {
+      const apiClient = new FakeBoclipsClient();
+      const removePlaylistSpy = jest
+        .spyOn(apiClient.collections, 'delete')
+        .mockImplementation(() => Promise.resolve({}));
+
+      const videos = [
+        VideoFactory.sample({ id: 'video1' }),
+        VideoFactory.sample({ id: 'video2' }),
+        VideoFactory.sample({ id: 'video3' }),
+      ];
+
+      const wrapper = render(
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={apiClient}>
+            <OptionsButton
+              playlist={CollectionFactory.sample({
+                title: 'Original playlist',
+                description: 'Description of original playlist',
+                videos,
+                mine: true,
+              })}
+            />
+          </BoclipsClientProvider>
+        </QueryClientProvider>,
+      );
+
+      const removeButton = await getOption(wrapper, 'Remove');
+      await userEvent.click(removeButton);
+
+      const modal = wrapper.getByRole('dialog');
+
+      expect(modal).toBeVisible();
+      expect(within(modal).getByText('Remove playlist')).toBeVisible();
+      expect(within(modal).getByText('Original playlist')).toBeVisible();
+
+      await userEvent.click(
+        within(modal).getByRole('button', { name: 'Yes, remove it' }),
+      );
+
+      expect(removePlaylistSpy).toHaveBeenCalledWith({
+        title: 'Original playlist',
+        description: 'Description of original playlist',
+        videos: [...videos.map((v) => v.id)],
+        origin: 'BO_WEB_APP',
+      });
+    });
+  });
+
   const getOption = async (wrapper: RenderResult, name: string) => {
     await userEvent.click(wrapper.getByRole('button', { name: 'Options' }));
     const options = wrapper.queryAllByRole('menuitem');
