@@ -183,3 +183,9 @@ export const useEditPlaylistMutation = (playlist: Collection) => {
     },
   );
 };
+
+export const useRemovePlaylistMutation = (playlist: Collection) => {
+  const client = useBoclipsClient();
+
+  return useMutation(() => client.collections.delete(playlist));
+};

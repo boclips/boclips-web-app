@@ -3,6 +3,7 @@ import { Collection } from 'boclips-api-client/dist/sub-clients/collections/mode
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import { Typography } from '@boclips-ui/typography';
 import { useNavigate } from 'react-router-dom';
+import { useRemovePlaylistMutation } from 'src/hooks/api/playlistsQuery';
 import s from './style.module.less';
 
 export interface Props {
@@ -18,12 +19,26 @@ export const RemovePlaylistModal = ({
 }: Props) => {
   const navigate = useNavigate();
 
+  const {
+    mutate: removePlaylist,
+    isSuccess,
+    isError,
+  } = useRemovePlaylistMutation(playlist);
+
+  React.useEffect(() => {
+    if (isError) {
+      showErrorNotification(
+        `Error: Failed to remove playlist "${playlist.title}"`,
+        'remove-playlist-failed',
+      );
+    }
+    if (isSuccess) {
+      navigate('/playlists');
+    }
+  }, [isSuccess, showErrorNotification, isError, playlist]);
+
   const handleConfirm = () => {
-    navigate('/playlists');
-    showErrorNotification(
-      `Error: Failed to remove playlist "${playlist.title}"`,
-      'remove-playlist-failed',
-    );
+    removePlaylist();
   };
 
   return (

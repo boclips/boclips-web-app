@@ -4,7 +4,6 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import React from 'react';
 import { RemovePlaylistModal } from 'src/components/playlistModal/RemovePlaylistModal';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
-import { fireEvent } from '@testing-library/react';
 
 describe('Remove playlist modal', () => {
   it('displays a warning about playlist deletion', async () => {
@@ -16,17 +15,6 @@ describe('Remove playlist modal', () => {
         'Removing a playlist is a permanent action and cannot be undone.',
       ),
     ).toBeVisible();
-  });
-
-  it('redirects to playlists page after removing a playlist', async () => {
-    const wrapper = renderWrapper();
-
-    const removeButton = await wrapper.getByRole('button', {
-      name: 'Yes, remove it',
-    });
-
-    expect(removeButton).toBeVisible();
-    fireEvent.click(removeButton);
   });
 
   const renderWrapper = (
