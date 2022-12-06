@@ -122,7 +122,7 @@ const App = ({
             <JSErrorBoundary fallback={<FallbackView />}>
               <WithValidRoles
                 fallback={<AccessDeniedView />}
-                roles={[ROLES.BOCLIPS_WEB_APP_ORDER]}
+                roles={[ROLES.BOCLIPS_WEB_APP_BROWSE]}
               >
                 <Helmet title="CourseSpark" />
 
