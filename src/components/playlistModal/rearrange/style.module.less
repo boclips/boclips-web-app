@@ -1,0 +1,71 @@
+@import '~@boclips-ui/styles/src/colors';
+@import '~@boclips-ui/styles/src/focus';
+
+.listWrapper {
+  max-height: 360px;
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: @gray-400;
+    border-radius: 100vh;
+  }
+
+  li {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem 0.5rem;
+    margin: 0.5rem 0.5rem;
+    border-bottom: 2px solid @gray-400;
+    background: @white;
+    align-items: center;
+
+    #focus;
+
+    svg {
+      margin-right: 1.5rem;
+    }
+
+    h3 {
+      margin-bottom: 0.25rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .details {
+      display: flex;
+      flex-direction: row;
+
+      span {
+        --bo-ui-badge-margin: 0;
+        --bo-ui-badge-padding: 2px 4px 2px 4px;
+        position: relative;
+        padding: 0 0.25rem;
+        height: 24px;
+        display: flex;
+        align-items: center;
+
+        &:nth-child(n + 2) {
+          &:before {
+            height: 24px;
+            content: '•';
+            color: @blue-800;
+            padding-right: 4px;
+            line-height: 1.5rem;
+            font-size: 1rem;
+            z-index: 1;
+          }
+        }
+      }
+    }
+  }
+}

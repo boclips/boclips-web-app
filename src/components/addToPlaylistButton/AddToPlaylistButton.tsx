@@ -15,7 +15,7 @@ import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
 import BoCheckbox from 'src/components/common/input/BoCheckbox';
 import FocusTrap from 'focus-trap-react';
 import { handleEscapeKeyEvent } from 'src/services/handleKeyEvent';
-import { CreatePlaylistModal } from 'src/components/playlistModal/CreatePlaylistModal';
+import { CreatePlaylistModal } from 'src/components/playlistModal/createPlaylist/CreatePlaylistModal';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import PlusIcon from 'src/resources/icons/plus-sign.svg';
 import { Typography } from '@boclips-ui/typography';

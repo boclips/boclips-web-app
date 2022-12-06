@@ -29,6 +29,42 @@ describe('OptionsButton', () => {
     });
   });
 
+  describe('Reorder', () => {
+    it('should display rearrange button', async () => {
+      const wrapper = render(
+        <OptionsButton playlist={CollectionFactory.sample({ mine: true })} />,
+      );
+
+      const rearrange = await getOption(wrapper, 'Rearrange');
+      expect(rearrange).toBeVisible();
+    });
+
+    it('should display modal when rearrange button clicked', async () => {
+      const apiClient = new FakeBoclipsClient();
+
+      const wrapper = render(
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={apiClient}>
+            <OptionsButton
+              playlist={CollectionFactory.sample({
+                title: 'Example playlist',
+                mine: true,
+              })}
+            />
+          </BoclipsClientProvider>
+        </QueryClientProvider>,
+      );
+
+      const rearrange = await getOption(wrapper, 'Rearrange');
+      await userEvent.click(rearrange);
+
+      const modal = wrapper.getByRole('dialog');
+
+      expect(modal).toBeVisible();
+      expect(within(modal).getByText('Rearrange videos')).toBeVisible();
+    });
+  });
+
   describe('Make a copy', () => {
     it('is available for owners', async () => {
       const wrapper = render(

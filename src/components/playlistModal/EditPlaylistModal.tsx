@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import React, { useState } from 'react';
 import { useEditPlaylistMutation } from 'src/hooks/api/playlistsQuery';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
@@ -7,7 +5,6 @@ import {
   PlaylistFormProps,
   PlaylistModal,
 } from 'src/components/playlistModal/PlaylistModal';
-import s from 'src/components/playlists/playlistHeader/style.module.less';
 
 export interface Props {
   playlist: Collection;
@@ -74,15 +71,13 @@ export const EditPlaylistModal = ({
   };
 
   return (
-    <div className={s.playlistModalWrapper}>
-      <PlaylistModal
-        playlist={playlist}
-        handleConfirm={handleConfirm}
-        onCancel={onCancel}
-        isLoading={isLoading}
-        title="Edit playlist"
-        confirmButtonText="Save"
-      />
-    </div>
+    <PlaylistModal
+      playlist={playlist}
+      handleConfirm={handleConfirm}
+      onCancel={onCancel}
+      isLoading={isLoading}
+      title="Edit playlist"
+      confirmButtonText="Save"
+    />
   );
 };
