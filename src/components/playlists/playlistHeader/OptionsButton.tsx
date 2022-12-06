@@ -106,7 +106,7 @@ export const OptionsButton = ({ playlist }: Props) => {
           onCancel={() => setModalState(PlaylistModalState.NONE)}
         />
       )}
-      {modalState === PlaylistModalState.NONE && (
+      {modalState === PlaylistModalState.REARRANGE && (
         <RearrangeModal
           playlist={playlist}
           onCancel={() => setModalState(PlaylistModalState.NONE)}

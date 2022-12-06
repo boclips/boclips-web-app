@@ -33,7 +33,6 @@ const RearrangeModal = ({
   };
 
   const onDragEnd = (result) => {
-    // dropped outside the list
     if (!result.destination) {
       return;
     }
@@ -54,35 +53,36 @@ const RearrangeModal = ({
       <Typography.Body as="span">
         Drag & drop video titles to put them in your desired order:
       </Typography.Body>
-      <div>
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="droppable" direction="vertical">
-            {(provided) => (
-              <ul {...provided.droppableProps} ref={provided.innerRef}>
-                {list.map((item, index) => (
-                  <Draggable
-                    key={`${item.id}123`}
-                    draggableId={item.id}
-                    index={index}
-                  >
-                    {(providedOther) => (
-                      <li
-                        ref={providedOther.innerRef}
-                        {...providedOther.dragHandleProps}
-                        {...providedOther.draggableProps}
-                        draggable="true"
-                      >
-                        <span>{item.title}</span>
-                      </li>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </ul>
-            )}
-          </Droppable>
-        </DragDropContext>
-      </div>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="droppable" direction="vertical">
+          {(provided) => (
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            <ul {...provided.droppableProps} ref={provided.innerRef}>
+              {list.map((item, index) => (
+                <Draggable
+                  key={`${item.id}-key`}
+                  draggableId={item.id}
+                  index={index}
+                >
+                  {(providedOther) => (
+                    <li
+                      data-qa={`data-${item.id}`}
+                      ref={providedOther.innerRef}
+                      // eslint-disable-next-line react/jsx-props-no-spreading
+                      {...providedOther.draggableProps}
+                      // eslint-disable-next-line react/jsx-props-no-spreading
+                      {...providedOther.dragHandleProps}
+                    >
+                      {item.title}
+                    </li>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </ul>
+          )}
+        </Droppable>
+      </DragDropContext>
     </Bodal>
   );
 };

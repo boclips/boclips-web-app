@@ -203,7 +203,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
         apiClient.collections.create({
           title: 'My playlist',
           description: 'My playlist description',
-          videos: ['videos5f75b73f22a6495bdf2c2d14', 'videos123'],
+          videos: ['video-1', 'video-2', 'video-3'],
         });
       },
 
