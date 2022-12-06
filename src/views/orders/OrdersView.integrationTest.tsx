@@ -235,11 +235,11 @@ describe('OrderView', () => {
     );
   });
 
-  it(`displays access denied if user has BOCLIPS_WEB_APP_DEMO role`, async () => {
+  it(`displays access denied if user has BOCLIPS_WEB_APP_BROWSE role`, async () => {
     const fakeClient = new FakeBoclipsClient();
     const security: BoclipsSecurity = {
       ...stubBoclipsSecurity,
-      hasRole: (role) => role === 'BOCLIPS_WEB_APP_DEMO',
+      hasRole: (role) => role === 'BOCLIPS_WEB_APP_BROWSE',
     };
 
     const wrapper = render(

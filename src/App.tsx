@@ -122,11 +122,7 @@ const App = ({
             <JSErrorBoundary fallback={<FallbackView />}>
               <WithValidRoles
                 fallback={<AccessDeniedView />}
-                roles={[
-                  ROLES.BOCLIPS_WEB_APP,
-                  ROLES.BOCLIPS_WEB_APP_DEMO,
-                  ROLES.BOCLIPS_WEB_APP_BROWSE,
-                ]}
+                roles={[ROLES.BOCLIPS_WEB_APP_ORDER]}
               >
                 <Helmet title="CourseSpark" />
 
@@ -144,7 +140,7 @@ const App = ({
                           <Helmet title="Cart" />
                           <WithValidRoles
                             fallback={<AccessDeniedView />}
-                            roles={[ROLES.BOCLIPS_WEB_APP]}
+                            roles={[ROLES.BOCLIPS_WEB_APP_ORDER]}
                           >
                             <CartView />
                           </WithValidRoles>
@@ -159,7 +155,7 @@ const App = ({
                           <Helmet title="Orders" />
                           <WithValidRoles
                             fallback={<AccessDeniedView />}
-                            roles={[ROLES.BOCLIPS_WEB_APP]}
+                            roles={[ROLES.BOCLIPS_WEB_APP_ORDER]}
                           >
                             <OrdersView />
                           </WithValidRoles>
@@ -172,7 +168,7 @@ const App = ({
                       element={
                         <WithValidRoles
                           fallback={<AccessDeniedView />}
-                          roles={[ROLES.BOCLIPS_WEB_APP]}
+                          roles={[ROLES.BOCLIPS_WEB_APP_ORDER]}
                         >
                           <OrderView />
                         </WithValidRoles>
