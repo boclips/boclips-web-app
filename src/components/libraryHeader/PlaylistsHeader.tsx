@@ -3,7 +3,7 @@ import PageHeader from 'src/components/pageTitle/PageHeader';
 import Button from '@boclips-ui/button';
 import PlusSign from 'resources/icons/plus-sign.svg';
 import { useNavigate } from 'react-router-dom';
-import { CreatePlaylistModal } from 'src/components/playlistModal/CreatePlaylistModal';
+import { CreatePlaylistModal } from 'src/components/playlistModal/createPlaylist/CreatePlaylistModal';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';

@@ -4,6 +4,9 @@
 .modalWrapper {
   @apply bg-white w-screen h-screen fixed;
   z-index: 51; // header is set to 50
+  top: 103px;
+  left: 0;
+  height: 560px;
 
   .modalContent {
     @apply p-4;
@@ -36,7 +39,7 @@
     }
 
     .modal {
-      @apply p-8 bg-white rounded h-auto m-auto;
+      @apply p-8 bg-white rounded m-auto;
       position: relative;
       top: 60px;
       width: 819px;
@@ -46,6 +49,7 @@
 
     .modalContent {
       @apply p-0;
+      height: fit-content;
     }
 
     .modalHeader {

@@ -3,13 +3,15 @@ import OptionsDotsSVG from 'src/resources/icons/options-dots.svg';
 import c from 'classnames';
 import PencilSVG from 'src/resources/icons/pencil.svg';
 import CopySVG from 'src/resources/icons/copy.svg';
+import RearrangeSVG from 'src/resources/icons/rearrange.svg';
 import { EditPlaylistModal } from 'src/components/playlistModal/EditPlaylistModal';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import Button from '@boclips-ui/button';
 import { OptionItem } from 'src/components/playlists/playlistHeader/OptionItem';
-import { CopyPlaylistModal } from 'src/components/playlists/playlistHeader/CopyPlaylistModal';
+import { CopyPlaylistModal } from 'src/components/playlistModal/CopyPlaylistModal';
+import RearrangeModal from 'src/components/playlistModal/rearrange/RearrangePlaylistModal';
 import s from './style.module.less';
 
 interface Props {
@@ -20,6 +22,7 @@ const enum PlaylistModalState {
   NONE,
   EDIT,
   DUPLICATE,
+  REARRANGE,
 }
 
 export const OptionsButton = ({ playlist }: Props) => {
@@ -66,6 +69,16 @@ export const OptionsButton = ({ playlist }: Props) => {
                     }}
                   />
                 )}
+                {playlist?.mine && (
+                  <OptionItem
+                    text="Rearrange"
+                    label="Rearrange videos in this playlist"
+                    icon={<RearrangeSVG aria-hidden />}
+                    onSelect={() => {
+                      setModalState(PlaylistModalState.REARRANGE);
+                    }}
+                  />
+                )}
                 <OptionItem
                   text="Make a copy"
                   label="Make a copy of this playlist"
@@ -93,6 +106,14 @@ export const OptionsButton = ({ playlist }: Props) => {
           showSuccessNotification={showSuccessNotification}
           showErrorNotification={showErrorNotification}
           onCancel={() => setModalState(PlaylistModalState.NONE)}
+        />
+      )}
+      {modalState === PlaylistModalState.REARRANGE && (
+        <RearrangeModal
+          playlist={playlist}
+          onCancel={() => setModalState(PlaylistModalState.NONE)}
+          confirmButtonText="Update"
+          handleConfirm={() => null}
         />
       )}
     </>

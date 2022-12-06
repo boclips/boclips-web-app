@@ -1,5 +1,4 @@
-import s from 'src/components/playlists/playlistHeader/style.module.less';
-import { CreatePlaylistModal } from 'src/components/playlistModal/CreatePlaylistModal';
+import { CreatePlaylistModal } from 'src/components/playlistModal/createPlaylist/CreatePlaylistModal';
 import React from 'react';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 
@@ -31,17 +30,15 @@ export const CopyPlaylistModal = ({
   };
 
   return (
-    <div className={s.playlistModalWrapper}>
-      <CreatePlaylistModal
-        title="Make a copy"
-        playlist={{
-          ...playlist,
-          title: `Copy of ${playlist.title}`,
-        }}
-        onCancel={onCancel}
-        onSuccess={handleCopyPlaylistSuccess}
-        onError={handleCopyPlaylistError}
-      />
-    </div>
+    <CreatePlaylistModal
+      title="Make a copy"
+      playlist={{
+        ...playlist,
+        title: `Copy of ${playlist.title}`,
+      }}
+      onCancel={onCancel}
+      onSuccess={handleCopyPlaylistSuccess}
+      onError={handleCopyPlaylistError}
+    />
   );
 };
