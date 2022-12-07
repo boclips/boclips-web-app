@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import Navbar from 'src/components/layout/Navbar';
 import { Layout } from 'src/components/layout/Layout';
-import { usePlaylistQuery } from 'src/hooks/api/playlistsQuery';
+import {
+  useEditPlaylistMutation,
+  usePlaylistQuery,
+} from 'src/hooks/api/playlistsQuery';
 import { useLocation, useParams } from 'react-router-dom';
 import Footer from 'src/components/layout/Footer';
 import PlaylistHeader from 'src/components/playlists/playlistHeader/PlaylistHeader';

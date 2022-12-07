@@ -23,7 +23,7 @@ export interface Props {
   isLoading?: boolean;
   cancelButtonText?: string;
   dataQa?: string;
-  initialFocusRef?: React.RefObject<HTMLElement>;
+  initialFocusRef?: React.RefObject<HTMLElement> | string;
   closeOnClickOutside?: boolean;
   children: React.ReactNode;
 }
@@ -92,7 +92,11 @@ export const Bodal: React.FC<Props> = ({
   }, []);
 
   useEffect(() => {
-    initialFocusRef?.current.focus();
+    if (typeof initialFocusRef === 'string') {
+      document.getElementById(initialFocusRef as string)?.focus();
+    } else {
+      initialFocusRef?.current.focus();
+    }
   }, [initialFocusRef]);
 
   return (

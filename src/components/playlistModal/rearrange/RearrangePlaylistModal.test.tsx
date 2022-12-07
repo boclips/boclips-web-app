@@ -9,7 +9,6 @@ describe('Rearrange modal', () => {
     const wrapper = render(
       <RearrangeModal
         confirmButtonText="Update"
-        handleConfirm={jest.fn()}
         onCancel={jest.fn()}
         playlist={CollectionFactory.sample({
           mine: true,
@@ -29,7 +28,6 @@ describe('Rearrange modal', () => {
     const wrapper = render(
       <RearrangeModal
         confirmButtonText="Update"
-        handleConfirm={jest.fn()}
         onCancel={jest.fn()}
         playlist={CollectionFactory.sample({
           videos: [

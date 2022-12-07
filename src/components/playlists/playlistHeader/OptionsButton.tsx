@@ -113,7 +113,6 @@ export const OptionsButton = ({ playlist }: Props) => {
           playlist={playlist}
           onCancel={() => setModalState(PlaylistModalState.NONE)}
           confirmButtonText="Update"
-          handleConfirm={() => null}
         />
       )}
     </>

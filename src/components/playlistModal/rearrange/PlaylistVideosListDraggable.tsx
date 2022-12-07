@@ -15,14 +15,15 @@ const PlaylistVideosListDraggable = ({
 }) => {
   return (
     <Draggable key={`${id}-key`} draggableId={id} index={index}>
-      {({ dragHandleProps, draggableProps, innerRef }) => (
+      {(provider) => (
         <li
+          id={index === 0 ? 'first-reorder-item' : `${index}-item`}
           data-qa={`data-${id}`}
-          ref={innerRef}
+          ref={provider.innerRef}
           // eslint-disable-next-line react/jsx-props-no-spreading
-          {...draggableProps}
+          {...provider.draggableProps}
           // eslint-disable-next-line react/jsx-props-no-spreading
-          {...dragHandleProps}
+          {...provider.dragHandleProps}
         >
           <DragSVG />
 
