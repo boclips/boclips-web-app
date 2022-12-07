@@ -10,6 +10,7 @@ import { displayNotification } from 'src/components/common/notification/displayN
 import { CollectionsClient } from 'boclips-api-client/dist/sub-clients/collections/client/CollectionsClient';
 import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collections/model/ListViewCollection';
 import { PLAYLISTS_PAGE_SIZE } from 'src/components/playlists/Playlists';
+import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { playlistKeys } from './playlistKeys';
 
 interface UpdatePlaylistProps {
@@ -176,9 +177,51 @@ export const useEditPlaylistMutation = (playlist: Collection) => {
     (request: UpdateCollectionRequest) =>
       client.collections.update(playlist.id, request),
     {
+      onMutate: () => {},
       onSuccess: () => {
         queryClient.invalidateQueries(playlistKeys.detail(playlist.id));
         queryClient.invalidateQueries(playlistKeys.own);
+      },
+    },
+  );
+};
+
+export const useReorderPlaylist = (playlist: Collection) => {
+  const client = useBoclipsClient();
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    (videos: Video[]) =>
+      client.collections.update(playlist.id, {
+        videos: videos.map((it) => it.id),
+      }),
+    {
+      onMutate: async (videos: Video[]) => {
+        await queryClient.cancelQueries({
+          queryKey: ['playlists', playlist.id],
+        });
+
+        const previousPlaylist = queryClient.getQueryData([
+          'playlists',
+          playlist.id,
+        ]);
+
+        queryClient.setQueryData(['playlists', playlist.id], () => {
+          const newVideosList = { ...(previousPlaylist as Collection) };
+
+          newVideosList.videos = videos;
+
+          return newVideosList;
+        });
+
+        return previousPlaylist;
+      },
+      onError: (err, _videos, context) => {
+        console.error(err);
+        queryClient.setQueryData(['todos'], context);
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries({ queryKey: ['playlists', playlist.id] });
       },
     },
   );

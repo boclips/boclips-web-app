@@ -75,7 +75,7 @@ const PlaylistBody = ({ playlist }: Props) => {
         {isEmptyPlaylist ? (
           <EmptyCopy />
         ) : (
-          playlist.videos.map((video: Video) => (
+          playlist?.videos?.map((video: Video) => (
             <VideoGridCard
               key={video.id}
               video={video}
