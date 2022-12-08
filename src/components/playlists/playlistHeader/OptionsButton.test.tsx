@@ -183,6 +183,39 @@ describe('OptionsButton', () => {
     });
   });
 
+  describe('Remove', () => {
+    const apiClient = new FakeBoclipsClient();
+    it('is available for owners', async () => {
+      const wrapper = render(
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={apiClient}>
+            <OptionsButton
+              playlist={CollectionFactory.sample({ mine: true })}
+            />
+          </BoclipsClientProvider>
+        </QueryClientProvider>,
+      );
+
+      const removeButton = await getOption(wrapper, 'Remove');
+      expect(removeButton).toBeVisible();
+    });
+
+    it('is not available for non-owners', async () => {
+      const wrapper = render(
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={apiClient}>
+            <OptionsButton
+              playlist={CollectionFactory.sample({ mine: false })}
+            />
+          </BoclipsClientProvider>
+        </QueryClientProvider>,
+      );
+
+      const removeButton = await getOption(wrapper, 'Remove');
+      expect(removeButton).toBeUndefined();
+    });
+  });
+
   const getOption = async (wrapper: RenderResult, name: string) => {
     await userEvent.click(wrapper.getByRole('button', { name: 'Options' }));
     const options = wrapper.queryAllByRole('menuitem');

@@ -4,6 +4,7 @@ import c from 'classnames';
 import PencilSVG from 'src/resources/icons/pencil.svg';
 import CopySVG from 'src/resources/icons/copy.svg';
 import RearrangeSVG from 'src/resources/icons/rearrange.svg';
+import BinSVG from 'src/resources/icons/bin.svg';
 import { EditPlaylistModal } from 'src/components/playlistModal/EditPlaylistModal';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
@@ -13,6 +14,7 @@ import { OptionItem } from 'src/components/playlists/playlistHeader/OptionItem';
 import { CopyPlaylistModal } from 'src/components/playlistModal/CopyPlaylistModal';
 import RearrangeModal from 'src/components/playlistModal/rearrange/RearrangePlaylistModal';
 import { FeatureGate } from 'src/components/common/FeatureGate';
+import { RemovePlaylistModal } from 'src/components/playlistModal/RemovePlaylistModal';
 import s from './style.module.less';
 
 interface Props {
@@ -23,6 +25,7 @@ const enum PlaylistModalState {
   NONE,
   EDIT,
   DUPLICATE,
+  REMOVE,
   REARRANGE,
 }
 
@@ -90,6 +93,16 @@ export const OptionsButton = ({ playlist }: Props) => {
                     setModalState(PlaylistModalState.DUPLICATE);
                   }}
                 />
+                {playlist.mine && (
+                  <OptionItem
+                    text="Remove"
+                    label="Remove this playlist"
+                    icon={<BinSVG aria-hidden />}
+                    onSelect={() => {
+                      setModalState(PlaylistModalState.REMOVE);
+                    }}
+                  />
+                )}
               </DropdownMenu.Group>
             </DropdownMenu.Content>
           </DropdownMenu.Portal>
@@ -108,6 +121,12 @@ export const OptionsButton = ({ playlist }: Props) => {
           playlist={playlist}
           showSuccessNotification={showSuccessNotification}
           showErrorNotification={showErrorNotification}
+          onCancel={() => setModalState(PlaylistModalState.NONE)}
+        />
+      )}
+      {modalState === PlaylistModalState.REMOVE && (
+        <RemovePlaylistModal
+          playlist={playlist}
           onCancel={() => setModalState(PlaylistModalState.NONE)}
         />
       )}
