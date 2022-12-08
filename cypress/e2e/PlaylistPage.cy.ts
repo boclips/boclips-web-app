@@ -50,6 +50,10 @@ context('Playlist page', () => {
       );
     });
 
+    cy.percySnapshot('Reorder videos in playlist', {
+      widths: Constants.SNAPSHOT_VIEW_WIDTHS,
+    });
+
     cy.get('[data-qa="data-video-1"]')
       .focus()
       .then((el) => {
