@@ -6,7 +6,7 @@ snapshot:
     - 1280
     - 1440
     - 1680
-  minHeight: 1024
+  minHeight: 1480
   percyCSS: ".plyr__video-wrapper, section button img { display: none !important }"
 discovery:
   allowedHostnames: []
