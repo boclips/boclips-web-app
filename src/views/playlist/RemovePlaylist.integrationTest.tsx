@@ -2,12 +2,11 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { render, RenderResult, within } from '@testing-library/react';
-import { MemoryRouter, Router } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { createBrowserHistory } from 'history';
 
 describe('Remove playlist', () => {
   const playlist = CollectionFactory.sample({
@@ -25,13 +24,10 @@ describe('Remove playlist', () => {
     apiClient.collections.setCurrentUser('itsmemario');
     apiClient.collections.addToFake(playlist);
 
-    const history = createBrowserHistory();
-    history.push('/playlists/pl123');
-
     const wrapper = render(
-      <Router location={history.location} navigator={history}>
+      <MemoryRouter initialEntries={['/playlists']}>
         <App apiClient={apiClient} boclipsSecurity={stubBoclipsSecurity} />
-      </Router>,
+      </MemoryRouter>,
     );
 
     const myPlaylistsBefore = await apiClient.collections.getMyCollections({});
@@ -39,7 +35,7 @@ describe('Remove playlist', () => {
 
     await removePlaylist(wrapper);
 
-    expect(history.location.pathname).toBe('/playlists');
+    expect(window.location.pathname).toBe('/playlists');
 
     const myPlaylists = await apiClient.collections.getMyCollections({});
     expect(myPlaylists.page).toHaveLength(0);

@@ -2,54 +2,25 @@ import React from 'react';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import { Typography } from '@boclips-ui/typography';
-import { useNavigate } from 'react-router-dom';
 import { useRemovePlaylistMutation } from 'src/hooks/api/playlistsQuery';
 import s from './style.module.less';
 
 export interface Props {
   playlist: Collection;
   onCancel: () => void;
-  showErrorNotification: (message: string, dataQa: string) => void;
 }
 
-export const RemovePlaylistModal = ({
-  playlist,
-  onCancel,
-  showErrorNotification,
-}: Props) => {
-  const navigate = useNavigate();
-
-  const {
-    mutate: removePlaylist,
-    isSuccess,
-    isError,
-  } = useRemovePlaylistMutation(playlist);
-
-  React.useEffect(() => {
-    if (isError) {
-      showErrorNotification(
-        `Error: Failed to remove playlist "${playlist.title}"`,
-        'remove-playlist-failed',
-      );
-    }
-    if (isSuccess) {
-      navigate('/playlists');
-    }
-  }, [isSuccess, showErrorNotification, isError, playlist]);
-
-  const handleConfirm = () => {
-    removePlaylist();
-  };
+export const RemovePlaylistModal = ({ playlist, onCancel }: Props) => {
+  const { mutate: removePlaylist } = useRemovePlaylistMutation(playlist);
 
   return (
     <div className={s.playlistModalWrapper}>
       <Bodal
         title="Remove playlist"
         confirmButtonText="Yes, remove it"
-        onConfirm={handleConfirm}
+        onConfirm={removePlaylist}
         onCancel={onCancel}
         isLoading={false}
-        dataQa="remove-playlist-modal"
         className={s.bodal}
       >
         <div className="flex flex-col">

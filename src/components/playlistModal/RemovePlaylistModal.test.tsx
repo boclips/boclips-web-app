@@ -20,13 +20,11 @@ describe('Remove playlist modal', () => {
   const renderWrapper = (
     fakeClient = new FakeBoclipsClient(),
     onCancel = jest.fn(),
-    showErrorNotification = jest.fn(),
   ) => {
     return render(
       <BoclipsClientProvider client={fakeClient}>
         <RemovePlaylistModal
           onCancel={onCancel}
-          showErrorNotification={showErrorNotification}
           playlist={CollectionFactory.sample({
             title: 'Original playlist',
             description: 'Description of original playlist',

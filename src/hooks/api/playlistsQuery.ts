@@ -10,6 +10,7 @@ import { displayNotification } from 'src/components/common/notification/displayN
 import { CollectionsClient } from 'boclips-api-client/dist/sub-clients/collections/client/CollectionsClient';
 import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collections/model/ListViewCollection';
 import { PLAYLISTS_PAGE_SIZE } from 'src/components/playlists/Playlists';
+import { useNavigate } from 'react-router-dom';
 import { playlistKeys } from './playlistKeys';
 
 interface UpdatePlaylistProps {
@@ -186,6 +187,20 @@ export const useEditPlaylistMutation = (playlist: Collection) => {
 
 export const useRemovePlaylistMutation = (playlist: Collection) => {
   const client = useBoclipsClient();
+  const navigate = useNavigate();
 
-  return useMutation(() => client.collections.delete(playlist));
+  return useMutation(() => client.collections.delete(playlist), {
+    onSuccess: () => {
+      navigate('/playlists');
+    },
+
+    onError: () => {
+      displayNotification(
+        'error',
+        `Error: Failed to remove playlist ${playlist.title}`,
+        'Please refresh the page and try again',
+        `remove-playlist-failed`,
+      );
+    },
+  });
 };
