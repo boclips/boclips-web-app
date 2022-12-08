@@ -11,6 +11,7 @@ import userEvent from '@testing-library/user-event';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 
 describe('Playlist Header', () => {
   Object.assign(navigator, {
@@ -187,9 +188,22 @@ describe('Playlist Header', () => {
       description: 'Description',
     });
 
+    const client = new FakeBoclipsClient();
+    client.users.insertCurrentUser(
+      UserFactory.sample({
+        features: {
+          BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST: true,
+        },
+      }),
+    );
+
     const wrapper = render(
       <MemoryRouter>
-        <PlaylistHeader playlist={playlist} />
+        <BoclipsClientProvider client={client}>
+          <QueryClientProvider client={new QueryClient()}>
+            <PlaylistHeader playlist={playlist} />
+          </QueryClientProvider>
+        </BoclipsClientProvider>
       </MemoryRouter>,
     );
 

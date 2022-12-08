@@ -71,9 +71,18 @@ describe('Playlist view - rearrange', () => {
     client.collections.clear();
     client.carts.clear();
     client.videos.clear();
+    client.users.clear();
   });
 
   it('allows to rearrange your playlist', async () => {
+    client.users.insertCurrentUser(
+      UserFactory.sample({
+        features: {
+          BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST: true,
+        },
+      }),
+    );
+
     render(
       <MemoryRouter initialEntries={['/playlists/123']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
@@ -87,7 +96,37 @@ describe('Playlist view - rearrange', () => {
     expect(screen.getByText('Rearrange')).toBeInTheDocument();
   });
 
-  it('hides rearrange when playlist is not yours', async () => {
+  it('hides rearrange option when playlist is not yours', async () => {
+    client.users.insertCurrentUser(
+      UserFactory.sample({
+        features: {
+          BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST: true,
+        },
+      }),
+    );
+
+    render(
+      <MemoryRouter initialEntries={['/playlists/321']}>
+        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+      </MemoryRouter>,
+    );
+
+    await waitFor(() => screen.getByText('Options')).then(async (it) => {
+      await userEvent.click(it);
+    });
+
+    expect(screen.queryByText('Rearrange')).not.toBeInTheDocument();
+  });
+
+  it('hides rearrange option when user doesnt have feature turned on', async () => {
+    client.users.insertCurrentUser(
+      UserFactory.sample({
+        features: {
+          BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST: false,
+        },
+      }),
+    );
+
     render(
       <MemoryRouter initialEntries={['/playlists/321']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />

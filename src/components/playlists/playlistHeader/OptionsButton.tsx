@@ -12,6 +12,7 @@ import Button from '@boclips-ui/button';
 import { OptionItem } from 'src/components/playlists/playlistHeader/OptionItem';
 import { CopyPlaylistModal } from 'src/components/playlistModal/CopyPlaylistModal';
 import RearrangeModal from 'src/components/playlistModal/rearrange/RearrangePlaylistModal';
+import { FeatureGate } from 'src/components/common/FeatureGate';
 import s from './style.module.less';
 
 interface Props {
@@ -69,16 +70,18 @@ export const OptionsButton = ({ playlist }: Props) => {
                     }}
                   />
                 )}
-                {playlist?.mine && (
-                  <OptionItem
-                    text="Rearrange"
-                    label="Rearrange videos in this playlist"
-                    icon={<RearrangeSVG aria-hidden />}
-                    onSelect={() => {
-                      setModalState(PlaylistModalState.REARRANGE);
-                    }}
-                  />
-                )}
+                <FeatureGate feature="BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST">
+                  {playlist?.mine && (
+                    <OptionItem
+                      text="Rearrange"
+                      label="Rearrange videos in this playlist"
+                      icon={<RearrangeSVG aria-hidden />}
+                      onSelect={() => {
+                        setModalState(PlaylistModalState.REARRANGE);
+                      }}
+                    />
+                  )}
+                </FeatureGate>
                 <OptionItem
                   text="Make a copy"
                   label="Make a copy of this playlist"

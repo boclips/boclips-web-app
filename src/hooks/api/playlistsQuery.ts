@@ -218,7 +218,7 @@ export const useReorderPlaylist = (playlist: Collection) => {
       },
       onError: (err, _videos, context) => {
         console.error(err);
-        queryClient.setQueryData(['todos'], context);
+        queryClient.setQueryData(['playlists', playlist.id], context);
       },
       onSettled: () => {
         queryClient.invalidateQueries({ queryKey: ['playlists', playlist.id] });

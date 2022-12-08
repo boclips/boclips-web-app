@@ -7,12 +7,19 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
+import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 
 describe('OptionsButton', () => {
   describe('Edit', () => {
     it('is available for owners', async () => {
       const wrapper = render(
-        <OptionsButton playlist={CollectionFactory.sample({ mine: true })} />,
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <QueryClientProvider client={new QueryClient()}>
+            <OptionsButton
+              playlist={CollectionFactory.sample({ mine: true })}
+            />
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
       );
 
       const editButton = await getOption(wrapper, 'Edit');
@@ -21,7 +28,13 @@ describe('OptionsButton', () => {
 
     it('is not available for non-owners', async () => {
       const wrapper = render(
-        <OptionsButton playlist={CollectionFactory.sample({ mine: false })} />,
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <QueryClientProvider client={new QueryClient()}>
+            <OptionsButton
+              playlist={CollectionFactory.sample({ mine: false })}
+            />
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
       );
 
       const editButton = await getOption(wrapper, 'Edit');
@@ -31,8 +44,23 @@ describe('OptionsButton', () => {
 
   describe('Reorder', () => {
     it('should display rearrange button', async () => {
+      const client = new FakeBoclipsClient();
+      client.users.insertCurrentUser(
+        UserFactory.sample({
+          features: {
+            BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST: true,
+          },
+        }),
+      );
+
       const wrapper = render(
-        <OptionsButton playlist={CollectionFactory.sample({ mine: true })} />,
+        <BoclipsClientProvider client={client}>
+          <QueryClientProvider client={new QueryClient()}>
+            <OptionsButton
+              playlist={CollectionFactory.sample({ mine: true })}
+            />
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
       );
 
       const rearrange = await getOption(wrapper, 'Rearrange');
@@ -40,11 +68,18 @@ describe('OptionsButton', () => {
     });
 
     it('should display modal when rearrange button clicked', async () => {
-      const apiClient = new FakeBoclipsClient();
+      const client = new FakeBoclipsClient();
+      client.users.insertCurrentUser(
+        UserFactory.sample({
+          features: {
+            BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST: true,
+          },
+        }),
+      );
 
       const wrapper = render(
         <QueryClientProvider client={new QueryClient()}>
-          <BoclipsClientProvider client={apiClient}>
+          <BoclipsClientProvider client={client}>
             <OptionsButton
               playlist={CollectionFactory.sample({
                 title: 'Example playlist',
@@ -68,7 +103,13 @@ describe('OptionsButton', () => {
   describe('Make a copy', () => {
     it('is available for owners', async () => {
       const wrapper = render(
-        <OptionsButton playlist={CollectionFactory.sample({ mine: true })} />,
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <QueryClientProvider client={new QueryClient()}>
+            <OptionsButton
+              playlist={CollectionFactory.sample({ mine: true })}
+            />
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
       );
 
       const copyButton = await getOption(wrapper, 'Make a copy');
@@ -77,7 +118,13 @@ describe('OptionsButton', () => {
 
     it('is available for non-owners', async () => {
       const wrapper = render(
-        <OptionsButton playlist={CollectionFactory.sample({ mine: false })} />,
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <QueryClientProvider client={new QueryClient()}>
+            <OptionsButton
+              playlist={CollectionFactory.sample({ mine: false })}
+            />
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
       );
 
       const copyButton = await getOption(wrapper, 'Make a copy');
