@@ -1,5 +1,3 @@
-import { Constants } from '../fixtures/Constants';
-
 context('Cart page', () => {
   it('renders the cart and order flow', () => {
     cy.visit('/');
@@ -9,15 +7,11 @@ context('Cart page', () => {
 
     cy.findByText('Shopping cart');
     cy.findAllByRole('button', { name: 'Remove Remove' }); // SVG + text leads to this title
-    cy.percySnapshot('Cart view', {
-      widths: Constants.SNAPSHOT_VIEW_WIDTHS,
-    });
+    cy.percySnapshot('Cart view');
 
     cy.contains('Place order').click();
 
-    cy.percySnapshot('Order confirmation modal', {
-      widths: Constants.SNAPSHOT_VIEW_WIDTHS,
-    });
+    cy.percySnapshot('Order confirmation modal');
 
     cy.get('button').contains('Confirm order').click();
     cy.wait(100);
@@ -28,8 +22,6 @@ context('Cart page', () => {
       'exist',
     );
 
-    cy.percySnapshot('Order view', {
-      widths: Constants.SNAPSHOT_VIEW_WIDTHS,
-    });
+    cy.percySnapshot('Order view');
   });
 });

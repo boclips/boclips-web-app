@@ -1,12 +1,9 @@
-import { Constants } from '../fixtures/Constants';
 import {
   disciplines,
   k12Disciplines,
 } from '../../src/components/disciplinesWidget/disciplinesFixture';
 
 context('Homepage', () => {
-  const snapshotViewWidths = Constants.SNAPSHOT_VIEW_WIDTHS;
-
   it('has a homepage', () => {
     cy.visit('/');
     cy.bo((bo) =>
@@ -22,15 +19,11 @@ context('Homepage', () => {
 
     cy.findByLabelText('Discipline Business').should('be.visible');
 
-    cy.percySnapshot('Home Page', {
-      widths: snapshotViewWidths,
-    });
+    cy.percySnapshot('Home Page');
 
     cy.findByLabelText('Discipline Business').click();
 
-    cy.percySnapshot('Home Page with subjects', {
-      widths: snapshotViewWidths,
-    });
+    cy.percySnapshot('Home Page with subjects');
   });
 
   it('has a homepage for k12 disciplines', () => {
@@ -48,17 +41,13 @@ context('Homepage', () => {
 
     cy.findByLabelText('Discipline English Language Arts').should('be.visible');
 
-    cy.percySnapshot('K12 Home Page', {
-      widths: snapshotViewWidths,
-    });
+    cy.percySnapshot('K12 Home Page');
   });
 
   it('renders account panel', () => {
     cy.visit('/');
     cy.get('[data-qa="account-menu"]').click();
 
-    cy.percySnapshot('Account panel', {
-      widths: snapshotViewWidths,
-    });
+    cy.percySnapshot('Account panel');
   });
 });

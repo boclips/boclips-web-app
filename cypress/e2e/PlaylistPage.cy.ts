@@ -1,5 +1,3 @@
-import { Constants } from '../fixtures/Constants';
-
 context('Playlist page', () => {
   it('renders empty playlist', () => {
     cy.visit('/');
@@ -15,9 +13,7 @@ context('Playlist page', () => {
 
     cy.get('[data-qa="playlistTitle"]').should('be.visible');
 
-    cy.percySnapshot('Empty playlist view', {
-      widths: Constants.SNAPSHOT_VIEW_WIDTHS,
-    });
+    cy.percySnapshot('Empty playlist view');
   });
 
   it('can update playlist with new videos order (drag n drop)', () => {
@@ -50,9 +46,7 @@ context('Playlist page', () => {
       );
     });
 
-    cy.percySnapshot('Reorder videos in playlist', {
-      widths: Constants.SNAPSHOT_VIEW_WIDTHS,
-    });
+    cy.percySnapshot('Reorder videos in playlist');
 
     cy.get('[data-qa="data-video-1"]')
       .focus()

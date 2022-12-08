@@ -3,11 +3,8 @@ import {
   FacetsFactory,
 } from 'boclips-api-client/dist/test-support/FacetsFactory';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { Constants } from '../fixtures/Constants';
 
 context('Search page', () => {
-  const snapshotViewWidths = Constants.SNAPSHOT_VIEW_WIDTHS;
-
   it('applies filters', () => {
     cy.visit('/');
     cy.bo((bo) => bo.create.fixtureSet.eelsBiologyGeography());
@@ -19,18 +16,14 @@ context('Search page', () => {
       expect(videoCard.length).to.equal(2);
     });
 
-    cy.percySnapshot('Search before filtering', {
-      widths: snapshotViewWidths,
-    });
+    cy.percySnapshot('Search before filtering');
 
     cy.get('label').contains('Biology').click();
     cy.get('[data-qa="video-card-wrapper"]').should((videoCard) => {
       expect(videoCard.length).to.equal(1);
     });
 
-    cy.percySnapshot('Search with filters', {
-      widths: snapshotViewWidths,
-    });
+    cy.percySnapshot('Search with filters');
   });
 
   it(`displays special chars in search topics correctly`, () => {

@@ -1,8 +1,4 @@
-import { Constants } from '../fixtures/Constants';
-
 context('Libray page', () => {
-  const snapshotViewWidths = Constants.SNAPSHOT_VIEW_WIDTHS;
-
   it('renders empty library', () => {
     cy.visit('/');
     cy.get('[data-qa="playlists-button"]').click();
@@ -12,7 +8,7 @@ context('Libray page', () => {
     );
     cy.findAllByRole('progressbar').should('not.exist');
 
-    cy.percySnapshot('Empty library view', { widths: snapshotViewWidths });
+    cy.percySnapshot('Empty library view');
   });
 
   it('renders playlist with videos', () => {
@@ -23,14 +19,10 @@ context('Libray page', () => {
     cy.findAllByRole('progressbar').should('not.exist');
     cy.findByRole('link', { name: /My Playlist/i }).should('exist');
 
-    cy.percySnapshot('Library with playlist view', {
-      widths: snapshotViewWidths,
-    });
+    cy.percySnapshot('Library with playlist view');
 
     cy.get('button').contains('Create new playlist').click();
-    cy.percySnapshot('Create new playlist modal view', {
-      widths: snapshotViewWidths,
-    });
+    cy.percySnapshot('Create new playlist modal view');
 
     cy.findByLabelText('Close Create new playlist modal').click();
     cy.findByText('My playlist').click();
@@ -38,8 +30,6 @@ context('Libray page', () => {
     cy.get('[data-qa="playlistTitle"]').should('be.visible');
     cy.findAllByLabelText('Add or remove from playlist').should('exist');
 
-    cy.percySnapshot('Playlist with videos view', {
-      widths: snapshotViewWidths,
-    });
+    cy.percySnapshot('Playlist with videos view');
   });
 });

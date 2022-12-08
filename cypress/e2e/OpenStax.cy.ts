@@ -1,5 +1,3 @@
-import { Constants } from '../fixtures/Constants';
-
 context('OpenStax', () => {
   it('OpenStax user journey', () => {
     cy.visit('/');
@@ -12,9 +10,7 @@ context('OpenStax', () => {
     cy.findByRole('button', { name: 'book Physics book' }).should('be.visible');
     cy.findByRole('button', { name: 'subject Maths' }).click();
 
-    cy.percySnapshot('OpenStax explore page', {
-      widths: Constants.SNAPSHOT_VIEW_WIDTHS,
-    });
+    cy.percySnapshot('OpenStax explore page');
 
     cy.findByRole('button', { name: 'book Maths book' }).click();
 
@@ -29,8 +25,6 @@ context('OpenStax', () => {
       'be.visible',
     );
 
-    cy.percySnapshot('OpenStax book page', {
-      widths: Constants.SNAPSHOT_VIEW_WIDTHS,
-    });
+    cy.percySnapshot('OpenStax book page');
   });
 });

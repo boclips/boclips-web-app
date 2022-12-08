@@ -1,0 +1,18 @@
+version: 2
+percy:
+  defer-uploads: true
+snapshot:
+  widths:
+    - 1280
+    - 1440
+    - 1680
+  minHeight: 1024
+  percyCSS: ".plyr__video-wrapper, section button img { display: none !important }"
+discovery:
+  allowedHostnames: []
+  disallowedHostnames: []
+  networkIdleTimeout: 100
+upload:
+  files: "**/*.{png,jpg,jpeg}"
+  ignore: ""
+  stripExtensions: false
