@@ -1,8 +1,16 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
-import { useOwnAndSharedPlaylistsQuery } from 'src/hooks/api/playlistsQuery';
+import {
+  useEditPlaylistMutation,
+  useOwnAndSharedPlaylistsQuery,
+  useReorderPlaylist,
+} from 'src/hooks/api/playlistsQuery';
 import { QueryClient } from '@tanstack/react-query';
-import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import {
+  CollectionFactory,
+  FakeBoclipsClient,
+} from 'boclips-api-client/dist/test-support';
+import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 
 describe('playlistsQuery', () => {
   it('will use list projection and convert page size when loading users playlists', async () => {
@@ -27,6 +35,56 @@ describe('playlistsQuery', () => {
       origin: 'BO_WEB_APP',
       partialTitleMatch: true,
       query: 'bla',
+    });
+  });
+
+  it('safely reorders playlists', async () => {
+    const [video1, video2] = [
+      VideoFactory.sample({ id: 'video-1' }),
+      VideoFactory.sample({ id: 'video-2' }),
+    ];
+    const collection = CollectionFactory.sample({ videos: [video1, video2] });
+    const apiClient = new FakeBoclipsClient();
+    const collectionsSpy = jest.spyOn(apiClient.collections, 'safeUpdate');
+    // @ts-ignore
+    apiClient.collections.safeUpdate = collectionsSpy;
+    const { result, waitFor } = renderHook(
+      () => useReorderPlaylist(collection),
+      {
+        wrapper: wrapperWithClients(apiClient, new QueryClient()),
+      },
+    );
+
+    await act(() => result.current.mutate([video2, video1]));
+    await waitFor(() => result.current.isSuccess);
+    expect(collectionsSpy).toBeCalledWith(collection, {
+      videos: [video2.id, video1.id],
+    });
+  });
+
+  it('safely updates playlists', async () => {
+    const collection = CollectionFactory.sample({});
+    const apiClient = new FakeBoclipsClient();
+    const collectionsSpy = jest.spyOn(apiClient.collections, 'safeUpdate');
+    // @ts-ignore
+    apiClient.collections.safeUpdate = collectionsSpy;
+    const { result, waitFor } = renderHook(
+      () => useEditPlaylistMutation(collection),
+      {
+        wrapper: wrapperWithClients(apiClient, new QueryClient()),
+      },
+    );
+
+    await act(() =>
+      result.current.mutate({
+        title: 'That is great',
+        description: 'This is too',
+      }),
+    );
+    await waitFor(() => result.current.isSuccess);
+    expect(collectionsSpy).toBeCalledWith(collection, {
+      title: 'That is great',
+      description: 'This is too',
     });
   });
 });
