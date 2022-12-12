@@ -176,7 +176,7 @@ export const useEditPlaylistMutation = (playlist: Collection) => {
 
   return useMutation(
     (request: UpdateCollectionRequest) =>
-      client.collections.update(playlist.id, request),
+      client.collections.safeUpdate(playlist, request),
     {
       onMutate: () => {},
       onSuccess: () => {
@@ -213,7 +213,7 @@ export const useReorderPlaylist = (playlist: Collection) => {
 
   return useMutation(
     (videos: Video[]) =>
-      client.collections.update(playlist.id, {
+      client.collections.safeUpdate(playlist, {
         videos: videos.map((it) => it.id),
       }),
     {
