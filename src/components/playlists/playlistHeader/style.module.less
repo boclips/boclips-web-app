@@ -9,10 +9,29 @@
   border-bottom: 2px solid @gray-400;
   padding-bottom: 1.5rem;
 
-  .playlistOwnerContainer {
-    width: 100%;
+  .playlistBadges {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .playlistBadge {
     padding: 0.125rem 0 0.5rem;
     color: @gray-700;
+    display: flex;
+    align-items: center;
+
+    &::before {
+      content: '•';
+      color: @blue-900;
+      font-size: 1.5rem;
+      padding-right: 4px;
+      padding-left: 4px;
+      line-height: 1.5rem;
+    }
+
+    &:first-child::before {
+      content: none;
+    }
   }
 
   .playlistButtons {

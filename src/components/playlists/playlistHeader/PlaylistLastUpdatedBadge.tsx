@@ -2,27 +2,28 @@ import React from 'react';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { Typography } from '@boclips-ui/typography';
 import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collections/model/ListViewCollection';
+import dayjs from 'dayjs';
 import s from './style.module.less';
 
 interface Props {
   playlist: Collection | ListViewCollection;
 }
 
-const PlaylistOwnerBadge = ({ playlist }: Props) => {
-  if (!playlist.ownerName || !playlist.ownerName.trim()) return null;
+const PlaylistLastUpdatedBadge = ({ playlist }: Props) => {
+  if (!playlist.updatedAt) return null;
 
-  const ownerName = playlist.mine ? 'You' : playlist.ownerName;
+  const lastUpdatedAt = dayjs(playlist.updatedAt).format('DD MMM YYYY');
 
   return (
     <Typography.Body
       as="div"
       size="small"
-      aria-label={`playlist owned by ${ownerName}`}
+      aria-label={`Playlist last updated at ${lastUpdatedAt}`}
       className={s.playlistBadge}
     >
-      {`By: ${ownerName}`}
+      {`Last updated ${lastUpdatedAt}`}
     </Typography.Body>
   );
 };
 
-export default PlaylistOwnerBadge;
+export default PlaylistLastUpdatedBadge;
