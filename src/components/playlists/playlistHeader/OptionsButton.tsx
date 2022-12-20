@@ -5,6 +5,7 @@ import PencilSVG from 'src/resources/icons/pencil.svg';
 import CopySVG from 'src/resources/icons/copy.svg';
 import RearrangeSVG from 'src/resources/icons/rearrange.svg';
 import BinSVG from 'src/resources/icons/bin.svg';
+import CrossSVG from 'src/resources/icons/cross-icon.svg';
 import { EditPlaylistModal } from 'src/components/playlistModal/EditPlaylistModal';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
@@ -15,6 +16,7 @@ import { CopyPlaylistModal } from 'src/components/playlistModal/CopyPlaylistModa
 import RearrangeModal from 'src/components/playlistModal/rearrange/RearrangePlaylistModal';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { RemovePlaylistModal } from 'src/components/playlistModal/RemovePlaylistModal';
+import { UnfollowPlaylistModal } from 'src/components/playlistModal/UnfollowPlaylistModal';
 import s from './style.module.less';
 
 interface Props {
@@ -27,6 +29,7 @@ const enum PlaylistModalState {
   DUPLICATE,
   REMOVE,
   REARRANGE,
+  UNFOLLOW,
 }
 
 export const OptionsButton = ({ playlist }: Props) => {
@@ -70,6 +73,16 @@ export const OptionsButton = ({ playlist }: Props) => {
                     icon={<PencilSVG aria-hidden />}
                     onSelect={() => {
                       setModalState(PlaylistModalState.EDIT);
+                    }}
+                  />
+                )}
+                {!playlist.mine && (
+                  <OptionItem
+                    text="Unfollow"
+                    label="Unfollow playlist"
+                    icon={<CrossSVG aria-hidden />}
+                    onSelect={() => {
+                      setModalState(PlaylistModalState.UNFOLLOW);
                     }}
                   />
                 )}
@@ -135,6 +148,12 @@ export const OptionsButton = ({ playlist }: Props) => {
           playlist={playlist}
           onCancel={() => setModalState(PlaylistModalState.NONE)}
           confirmButtonText="Update"
+        />
+      )}
+      {modalState === PlaylistModalState.UNFOLLOW && (
+        <UnfollowPlaylistModal
+          playlist={playlist}
+          onCancel={() => setModalState(PlaylistModalState.NONE)}
         />
       )}
     </>

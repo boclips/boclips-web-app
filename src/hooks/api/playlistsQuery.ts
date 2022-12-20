@@ -207,6 +207,26 @@ export const useRemovePlaylistMutation = (playlist: Collection) => {
   });
 };
 
+export const useUnfollowPlaylistMutation = (playlist: Collection) => {
+  const client = useBoclipsClient();
+  const navigate = useNavigate();
+
+  return useMutation(() => client.collections.unbookmark(playlist), {
+    onSuccess: () => {
+      navigate('/playlists');
+    },
+
+    onError: () => {
+      displayNotification(
+        'error',
+        `Error: Failed to unfollow playlist ${playlist.title}`,
+        'Please refresh the page and try again',
+        `unfollow-playlist-failed`,
+      );
+    },
+  });
+};
+
 export const useReorderPlaylist = (playlist: Collection) => {
   const client = useBoclipsClient();
   const queryClient = useQueryClient();

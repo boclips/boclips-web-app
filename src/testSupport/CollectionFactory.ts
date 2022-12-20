@@ -1,5 +1,6 @@
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
+import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 
 export class CollectionFactory {
   static sample(collection: Partial<Collection>): Collection {
@@ -16,6 +17,9 @@ export class CollectionFactory {
       subjects: [],
       ageRange: null,
       links: this.sampleLinks({}),
+      permissions: {
+        anyone: CollectionPermission.VIEW_ONLY,
+      },
       ...collection,
     };
   }

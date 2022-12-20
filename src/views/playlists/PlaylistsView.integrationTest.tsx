@@ -71,16 +71,14 @@ describe('PlaylistsView', () => {
   it('displays shared playlists', async () => {
     const client = new FakeBoclipsClient();
 
-    const playlists = [
-      CollectionFactory.sample({
-        id: '1',
-        title: 'Playlist 1',
-        mine: false,
-        ownerName: 'The Owner',
-      }),
-    ];
-
-    playlists.forEach((it) => client.collections.addToFake(it));
+    const playlist = CollectionFactory.sample({
+      id: '1',
+      title: 'Playlist 1',
+      mine: false,
+      ownerName: 'The Owner',
+    });
+    client.collections.addToFake(playlist);
+    await client.collections.bookmark(playlist);
 
     const wrapper = renderPlaylistsView(client);
 
@@ -93,7 +91,7 @@ describe('PlaylistsView', () => {
   it('can search for playlist', async () => {
     const client = new FakeBoclipsClient();
 
-    const playlists = [
+    const myPlaylists = [
       CollectionFactory.sample({
         id: '1',
         mine: true,
@@ -104,15 +102,18 @@ describe('PlaylistsView', () => {
         mine: true,
         title: 'My playlist about pears',
       }),
-      CollectionFactory.sample({
-        id: '3',
-        mine: false,
-        title: 'Shared pears playlist',
-        ownerName: 'The Owner',
-      }),
     ];
 
-    playlists.forEach((it) => client.collections.addToFake(it));
+    const sharedPlaylist = CollectionFactory.sample({
+      id: '3',
+      mine: false,
+      title: 'Shared pears playlist',
+      ownerName: 'The Owner',
+    });
+
+    myPlaylists.forEach((it) => client.collections.addToFake(it));
+    client.collections.addToFake(sharedPlaylist);
+    await client.collections.bookmark(sharedPlaylist);
 
     const wrapper = renderPlaylistsView(client);
 

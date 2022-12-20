@@ -42,6 +42,38 @@ describe('OptionsButton', () => {
     });
   });
 
+  describe('Unfollow', () => {
+    it('is not available for owners', async () => {
+      const wrapper = render(
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <QueryClientProvider client={new QueryClient()}>
+            <OptionsButton
+              playlist={CollectionFactory.sample({ mine: true })}
+            />
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      const editButton = await getOption(wrapper, 'Unfollow');
+      expect(editButton).toBeUndefined();
+    });
+
+    it('is available for non-owners', async () => {
+      const wrapper = render(
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <QueryClientProvider client={new QueryClient()}>
+            <OptionsButton
+              playlist={CollectionFactory.sample({ mine: false })}
+            />
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      const editButton = await getOption(wrapper, 'Unfollow');
+      expect(editButton).toBeVisible();
+    });
+  });
+
   describe('Reorder', () => {
     it('should display rearrange button', async () => {
       const client = new FakeBoclipsClient();
