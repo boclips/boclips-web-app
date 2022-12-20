@@ -25,14 +25,14 @@ export const RemovePlaylistModal = ({ playlist, onCancel }: Props) => {
       >
         <div className="flex flex-col">
           <Typography.Body className="mt-3">
-            Are you sure you want to remove
+            Remove the
             <Typography.Body weight="medium">
               {` ${playlist.title} `}
             </Typography.Body>
             playlist?
           </Typography.Body>
           <Typography.Body className="mt-2 mb-2.5">
-            Removing a playlist is a permanent action and cannot be undone.
+            You will not be able to recover it.
           </Typography.Body>
         </div>
       </Bodal>

@@ -9,11 +9,12 @@ describe('Remove playlist modal', () => {
   it('displays a warning about playlist deletion', async () => {
     const wrapper = renderWrapper();
 
+    expect(
+      await wrapper.getByText('Remove the', { exact: false }),
+    ).toBeVisible();
     expect(await wrapper.getByText('Original playlist')).toBeVisible();
     expect(
-      await wrapper.getByText(
-        'Removing a playlist is a permanent action and cannot be undone.',
-      ),
+      await wrapper.getByText('You will not be able to recover it.'),
     ).toBeVisible();
   });
 
