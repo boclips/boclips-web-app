@@ -7,6 +7,7 @@ const boclipsPlayer: Player = {
   destroy: jest.fn(),
   onEnd: jest.fn(),
   onError: jest.fn(),
+  onReady: jest.fn(),
 };
 
 export const PlayerFactory = {
