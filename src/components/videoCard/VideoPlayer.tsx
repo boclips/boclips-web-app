@@ -6,6 +6,7 @@ import { useBoclipsSecurity } from 'src/components/common/providers/BoclipsSecur
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
 import { AnalyticsOptions } from 'boclips-player/dist/Events/AnalyticsOptions';
 import s from './VideoPlayer.module.less';
+import 'boclips-player/dist/main.css';
 
 const getPlayerOptions = (
   security: BoclipsSecurity,
