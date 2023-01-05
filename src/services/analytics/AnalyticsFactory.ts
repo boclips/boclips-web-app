@@ -4,10 +4,13 @@ import Hotjar from 'src/services/analytics/hotjar/Hotjar';
 import mixpanel from 'mixpanel-browser';
 import { Constants } from 'src/AppConstants';
 import BucketService from 'src/services/analytics/bucket/BucketService';
+import { PendoService } from 'src/services/analytics/pendo/PendoService';
 import MixpanelService from './mixpanel/MixpanelService';
 
 export default class AnalyticsFactory {
   private static appcuesService: AnalyticsService;
+
+  private static pendoService: PendoService;
 
   private static hotjarService: HotjarService;
 
@@ -20,6 +23,13 @@ export default class AnalyticsFactory {
       this.appcuesService = new AnalyticsService(window.Appcues);
     }
     return this.appcuesService;
+  }
+
+  public static pendo(): PendoService {
+    if (!this.pendoService) {
+      this.pendoService = new PendoService(window.pendo);
+    }
+    return this.pendoService;
   }
 
   public static hotjar(): HotjarService {

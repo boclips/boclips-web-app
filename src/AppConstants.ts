@@ -21,6 +21,10 @@ export class AppConstants {
     return this.window.Environment.IS_HOTJAR_ENABLED === 'true';
   }
 
+  public get IS_PENDO_ENABLED(): boolean {
+    return this.window.Environment.IS_PENDO_ENABLED === 'true';
+  }
+
   public get IS_SENTRY_ENABLED(): boolean {
     return this.window.Environment.IS_SENTRY_ENABLED === 'true';
   }

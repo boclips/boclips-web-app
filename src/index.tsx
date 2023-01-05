@@ -16,6 +16,8 @@ import { FallbackApp } from './FallbackApp';
 
 // eslint-disable-next-line import/extensions
 import { loadHotjar } from './thirdParty/loadHotjar.js';
+// eslint-disable-next-line import/extensions
+import { loadPendo } from './thirdParty/loadPendo.js';
 
 const addHubspotScript = () => {
   const hubspotScript = document.createElement('script');
@@ -49,6 +51,10 @@ const initializeSentry = () => {
 
 if (Constants.IS_HOTJAR_ENABLED) {
   loadHotjar();
+}
+
+if (Constants.IS_PENDO_ENABLED) {
+  loadPendo();
 }
 
 if (Constants.IS_HUBSPOT_ENABLED) {
