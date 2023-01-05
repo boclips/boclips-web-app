@@ -95,9 +95,17 @@ module.exports = {
         ],
       },
       {
-        test: /.svg$/i,
+        test: /\.svg$/i,
         exclude: /node_modules/,
-        loader: 'svg-react-loader',
+        use: [
+          {
+            loader: '@svgr/webpack',
+            options: {
+              prettier: false,
+              svgo: false,
+            },
+          },
+        ],
       },
     ],
   },
