@@ -23,9 +23,11 @@ import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSe
 import Appcues from './services/analytics/appcues/Appcues';
 import { GlobalQueryErrorProvider } from './components/common/providers/GlobalQueryErrorProvider';
 import { JSErrorBoundary } from './components/common/errors/JSErrorBoundary';
+import Pendo = pendo.Pendo;
 
 declare global {
   interface Window {
+    pendo: Pendo;
     Appcues: Appcues;
     hj: (command: string, id?: string, payload?: object) => void;
   }
@@ -92,6 +94,7 @@ const App = ({
     apiClient.users
       .getCurrentUser()
       .then((user) => {
+        AnalyticsFactory.pendo().identify(user.id, user.accountId);
         AnalyticsFactory.appcues().identify({
           email: user.email,
           firstName: user.firstName,
