@@ -13,7 +13,7 @@ export class PendoService {
 
   public identify(userId: string, accountId: string) {
     if (this.pendoInstance) {
-      this.pendoInstance.identify({
+      this.pendoInstance.initialize({
         visitor: {
           id: userId,
         },
