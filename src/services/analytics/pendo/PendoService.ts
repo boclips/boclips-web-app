@@ -1,3 +1,4 @@
+import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import Pendo = pendo.Pendo;
 
 export class PendoService {
@@ -11,14 +12,16 @@ export class PendoService {
     }
   }
 
-  public identify(userId: string, accountId: string) {
+  public identify(user: User) {
     if (this.pendoInstance) {
       this.pendoInstance.initialize({
         visitor: {
-          id: userId,
+          id: user.id,
+          email: user.email,
+          full_name: `${user.firstName} ${user.lastName}`,
         },
         account: {
-          id: accountId || 'n/a',
+          id: user.accountId || 'n/a',
         },
       });
     }

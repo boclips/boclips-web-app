@@ -94,7 +94,7 @@ const App = ({
     apiClient.users
       .getCurrentUser()
       .then((user) => {
-        AnalyticsFactory.pendo().identify(user.id, user.accountId);
+        AnalyticsFactory.pendo().identify(user);
         AnalyticsFactory.appcues().identify({
           email: user.email,
           firstName: user.firstName,
