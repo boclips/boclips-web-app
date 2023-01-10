@@ -2,6 +2,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
 import {
   useEditPlaylistMutation,
+  useOwnAndEditableSharedPlaylistsQuery,
   useOwnAndSharedPlaylistsQuery,
   useReorderPlaylist,
 } from 'src/hooks/api/playlistsQuery';
@@ -85,6 +86,29 @@ describe('playlistsQuery', () => {
     expect(collectionsSpy).toBeCalledWith(collection, {
       title: 'That is great',
       description: 'This is too',
+    });
+  });
+
+  it('will get own and editable playlists', async () => {
+    const apiClient = new FakeBoclipsClient();
+    const collectionsSpy = jest.spyOn(
+      apiClient.collections,
+      'getMySavedAndEditableCollectionsWithoutDetails',
+    );
+    // @ts-ignore
+    apiClient.collections.getMySavedAndEditableCollectionsWithoutDetails =
+      collectionsSpy;
+
+    const playlistHook = renderHook(
+      () => useOwnAndEditableSharedPlaylistsQuery(),
+      {
+        wrapper: wrapperWithClients(apiClient, new QueryClient()),
+      },
+    );
+
+    await playlistHook.waitFor(() => playlistHook.result.current.isSuccess);
+    expect(collectionsSpy).toBeCalledWith({
+      origin: 'BO_WEB_APP',
     });
   });
 });

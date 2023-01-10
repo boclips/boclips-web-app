@@ -6,7 +6,7 @@ import React, { useRef, useState } from 'react';
 import CloseButton from 'src/resources/icons/cross-icon.svg';
 import {
   useAddToPlaylistMutation,
-  useOwnPlaylistsQuery,
+  useOwnAndEditableSharedPlaylistsQuery,
   useRemoveFromPlaylistMutation,
 } from 'src/hooks/api/playlistsQuery';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
@@ -42,7 +42,7 @@ export const AddToPlaylistButton = ({ videoId, onCleanup, onClick }: Props) => {
 
   CloseOnClickOutside(ref, () => setIsOpen(false));
 
-  const { data: playlists } = useOwnPlaylistsQuery();
+  const { data: playlists } = useOwnAndEditableSharedPlaylistsQuery();
 
   const playlistCreatedHotjarEvent = () => {
     AnalyticsFactory.hotjar().event(HotjarEvents.PlaylistCreatedFromVideo);

@@ -8,6 +8,7 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { BoclipsClient } from 'boclips-api-client';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { QueryClient } from '@tanstack/react-query';
+import { Link } from 'boclips-api-client/dist/types';
 
 const insertUser = (client: FakeBoclipsClient) =>
   client.users.insertCurrentUser(UserFactory.sample());
@@ -96,6 +97,12 @@ describe('PlaylistsView', () => {
       const playlist = CollectionFactory.sample({
         id: `${i}`,
         title: `Playlist ${i}`,
+        links: CollectionFactory.sampleLinks({
+          bookmark: undefined,
+          unbookmark: new Link({
+            href: `https://api.boclips.com/v1/collections/${i}?bookmarked=false`,
+          }),
+        }),
       });
       client.collections.addToFake(playlist);
     });

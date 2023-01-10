@@ -32,9 +32,11 @@ export const useOwnAndSharedPlaylistsQuery = (page: number, query?: string) => {
   );
 };
 
-export const useOwnPlaylistsQuery = () => {
+export const useOwnAndEditableSharedPlaylistsQuery = () => {
   const client = useBoclipsClient();
-  return useQuery(playlistKeys.own, () => doGetOwnPlaylists(client));
+  return useQuery(playlistKeys.own, () =>
+    doGetOwnAndEditableSharedPlaylists(client),
+  );
 };
 
 export const usePlaylistQuery = (id: string) => {
@@ -135,10 +137,14 @@ export const useRemoveFromPlaylistMutation = (
   );
 };
 
-const doGetOwnPlaylists = (client: BoclipsClient) =>
+const doGetOwnAndEditableSharedPlaylists = (client: BoclipsClient) =>
   client.collections
-    .getMyCollectionsWithoutDetails({ origin: 'BO_WEB_APP' })
-    .then((playlists) => playlists.page);
+    .getMySavedAndEditableCollectionsWithoutDetails({
+      origin: 'BO_WEB_APP',
+    })
+    .then((playlists) => {
+      return playlists.page;
+    });
 
 const doGetOwnAndSharedPlaylists = (
   client: BoclipsClient,
