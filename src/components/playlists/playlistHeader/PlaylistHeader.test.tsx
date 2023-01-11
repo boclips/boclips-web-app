@@ -12,6 +12,7 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 
 describe('Playlist Header', () => {
   Object.assign(navigator, {
@@ -77,11 +78,13 @@ describe('Playlist Header', () => {
     expect(wrapper.getByText('By: The Owner')).toBeVisible();
   });
 
-  it('has a share button', async () => {
+  it('view-only playlist has a view-only share button for non-owner', async () => {
     const playlist = CollectionFactory.sample({
       id: '123',
       title: 'Playlist title',
       description: 'Description',
+      mine: false,
+      permissions: { anyone: CollectionPermission.VIEW_ONLY },
     });
 
     const wrapper = render(
@@ -95,12 +98,31 @@ describe('Playlist Header', () => {
     ).toBeVisible();
   });
 
+  it('editable playlist has a share button for non-owner', async () => {
+    const playlist = CollectionFactory.sample({
+      id: '123',
+      title: 'Playlist title',
+      description: 'Description',
+      mine: false,
+      permissions: { anyone: CollectionPermission.EDIT },
+    });
+
+    const wrapper = render(
+      <MemoryRouter>
+        <PlaylistHeader playlist={playlist} />
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByRole('button', { name: 'Share' })).toBeVisible();
+  });
+
   it('copies the playlist link on the playlist page and shows notification', async () => {
     jest.spyOn(navigator.clipboard, 'writeText');
     const playlist = CollectionFactory.sample({
       id: '123',
       title: 'Playlist title',
       description: 'Description',
+      mine: false,
     });
 
     const wrapper = render(
@@ -141,6 +163,7 @@ describe('Playlist Header', () => {
       id: '123',
       title: 'Playlist title',
       description: 'Description',
+      mine: false,
     });
 
     const wrapper = render(
