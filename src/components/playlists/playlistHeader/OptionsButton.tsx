@@ -17,6 +17,7 @@ import RearrangeModal from 'src/components/playlistModal/rearrange/RearrangePlay
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { RemovePlaylistModal } from 'src/components/playlistModal/RemovePlaylistModal';
 import { UnfollowPlaylistModal } from 'src/components/playlistModal/UnfollowPlaylistModal';
+import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 import s from './style.module.less';
 
 interface Props {
@@ -87,7 +88,9 @@ export const OptionsButton = ({ playlist }: Props) => {
                   />
                 )}
                 <FeatureGate feature="BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST">
-                  {playlist?.mine && (
+                  {(playlist?.mine ||
+                    playlist?.permissions.anyone ===
+                      CollectionPermission.EDIT) && (
                     <OptionItem
                       text="Rearrange"
                       label="Rearrange videos in this playlist"

@@ -1,6 +1,5 @@
 import React from 'react';
-import { PlaylistShareButton } from 'src/components/playlists/playlistHeader/PlaylistShareButton';
-import { Constants } from 'src/AppConstants';
+import { PlaylistShareButton } from 'src/components/playlists/playlistHeader/shareButton/PlaylistShareButton';
 import c from 'classnames';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import PlaylistDescription from 'src/components/playlists/PlaylistDescription';
@@ -16,10 +15,6 @@ interface Props {
 }
 
 const PlaylistHeader = ({ playlist }: Props) => {
-  const toLibraryLink = (id) => {
-    return `${Constants.HOST}/playlists/${id}`;
-  };
-
   return (
     <section
       className={c(
@@ -44,7 +39,7 @@ const PlaylistHeader = ({ playlist }: Props) => {
         </div>
       </div>
       <div className={s.playlistButtons}>
-        <PlaylistShareButton link={toLibraryLink(playlist.id)} />
+        <PlaylistShareButton playlist={playlist} />
         <OptionsButton playlist={playlist} />
       </div>
       {playlist.description && (
