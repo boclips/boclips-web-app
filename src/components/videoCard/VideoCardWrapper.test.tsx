@@ -212,6 +212,47 @@ describe('Video card', () => {
         expect(it).toHaveProperty('checked', false);
       });
     });
+
+    it('can add video to a playlist when having a lot of them', async () => {
+      const fakeClient = new FakeBoclipsClient();
+
+      fakeClient.users.insertCurrentUser(UserFactory.sample());
+
+      fakeClient.collections.setCurrentUser('i-am-user-id');
+
+      // fake client default pageSize is 10
+      for (let i = 0; i <= 20; i++) {
+        fakeClient.collections.addToFake(
+          CollectionFactory.sample({
+            id: `playlist-${i}`,
+            title: `playlist ${i}`,
+            origin: 'BO_WEB_APP',
+            owner: 'i-am-user-id',
+          }),
+        );
+      }
+
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={fakeClient}>
+            <VideoCardWrapper video={video} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      fireEvent.click(await wrapper.findByLabelText('Add to playlist'));
+
+      const checkbox = await wrapper.findByRole('checkbox', {
+        name: 'playlist 15',
+      });
+      fireEvent.click(checkbox);
+
+      await waitFor(async () => {
+        expect(
+          await wrapper.findByRole('checkbox', { name: 'playlist 15' }),
+        ).toHaveProperty('checked', true);
+      });
+    });
   });
 
   describe('video interacted with events', () => {
