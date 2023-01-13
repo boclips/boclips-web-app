@@ -17,11 +17,11 @@ import userEvent from '@testing-library/user-event';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { QueryClient } from '@tanstack/react-query';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { Link } from 'boclips-api-client/dist/types';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { Constants } from 'src/AppConstants';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
 
 const insertUser = (client: FakeBoclipsClient) =>
   client.users.insertCurrentUser(UserFactory.sample());
@@ -102,18 +102,23 @@ describe('PlaylistsView', () => {
         mine: true,
         title: 'My playlist about pears',
       }),
+      CollectionFactory.sample({
+        id: '3',
+        mine: false,
+        title: 'Shared pears playlist',
+        ownerName: 'The Owner',
+        links: {
+          self: new Link({
+            href: 'https://api.boclips.com/v1/collections/1',
+          }),
+          unbookmark: new Link({
+            href: 'https://api.staging-boclips.com/v1/collections/623707aa9d7ac66705d8b280?bookmarked=false',
+          }),
+        },
+      }),
     ];
 
-    const sharedPlaylist = CollectionFactory.sample({
-      id: '3',
-      mine: false,
-      title: 'Shared pears playlist',
-      ownerName: 'The Owner',
-    });
-
     myPlaylists.forEach((it) => client.collections.addToFake(it));
-    client.collections.addToFake(sharedPlaylist);
-    await client.collections.bookmark(sharedPlaylist);
 
     const wrapper = renderPlaylistsView(client);
 

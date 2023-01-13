@@ -15,6 +15,8 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import PlaylistBody from 'src/components/playlists/PlaylistBody';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import userEvent from '@testing-library/user-event';
+import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 
 describe('Playlist Body', () => {
   const getWrapper = (
@@ -25,13 +27,15 @@ describe('Playlist Body', () => {
     }),
   ) => {
     return render(
-      <BoclipsClientProvider client={fakeClient}>
-        <QueryClientProvider client={new QueryClient()}>
-          <MemoryRouter>
-            <PlaylistBody playlist={playlist} />
-          </MemoryRouter>
-        </QueryClientProvider>
-      </BoclipsClientProvider>,
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={new QueryClient()}>
+            <MemoryRouter>
+              <PlaylistBody playlist={playlist} />
+            </MemoryRouter>
+          </QueryClientProvider>
+        </BoclipsClientProvider>
+      </BoclipsSecurityProvider>,
     );
   };
 
@@ -112,13 +116,15 @@ describe('focus', () => {
     fakeClient.collections.addToFake(playlist);
 
     const wrapper = render(
-      <BoclipsClientProvider client={fakeClient}>
-        <QueryClientProvider client={new QueryClient()}>
-          <MemoryRouter>
-            <PlaylistBody playlist={playlist} />
-          </MemoryRouter>
-        </QueryClientProvider>
-      </BoclipsClientProvider>,
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={new QueryClient()}>
+            <MemoryRouter>
+              <PlaylistBody playlist={playlist} />
+            </MemoryRouter>
+          </QueryClientProvider>
+        </BoclipsClientProvider>
+      </BoclipsSecurityProvider>,
     );
 
     await waitFor(() =>
@@ -152,13 +158,15 @@ describe('focus', () => {
     fakeClient.collections.addToFake(playlist);
 
     const wrapper = render(
-      <BoclipsClientProvider client={fakeClient}>
-        <QueryClientProvider client={new QueryClient()}>
-          <MemoryRouter>
-            <PlaylistBody playlist={playlist} />
-          </MemoryRouter>
-        </QueryClientProvider>
-      </BoclipsClientProvider>,
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={new QueryClient()}>
+            <MemoryRouter>
+              <PlaylistBody playlist={playlist} />
+            </MemoryRouter>
+          </QueryClientProvider>
+        </BoclipsClientProvider>
+      </BoclipsSecurityProvider>,
     );
 
     await waitFor(() =>

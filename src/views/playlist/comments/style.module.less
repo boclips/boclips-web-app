@@ -1,0 +1,139 @@
+@import '~@boclips-ui/styles/src/colors';
+
+.button {
+  --bo-ui-button-outline-background-color-hover: none;
+  --bo-ui-button-icon-only-padding: 0;
+
+  position: relative;
+
+  &.pointerEvent {
+    pointer-events: none;
+  }
+
+  svg {
+    path {
+      fill: transparent !important;
+    }
+  }
+}
+
+.bubble {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  color: @white;
+  background-color: @blue-800;
+  width: 20px;
+  height: 20px;
+  font-size: 0.75rem;
+  line-height: 0.75rem;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &.inline {
+    position: relative;
+    top: auto;
+    right: auto;
+  }
+}
+
+.sliderPanel {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  right: -100%;
+  top: 0;
+  z-index: 49;
+  height: 100%;
+  width: 391px;
+  background-color: @white;
+  animation: slideOut 0.5s forwards;
+
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 74px;
+    padding: 2rem 1.5rem 1rem 1.5rem;
+
+    border-bottom: 1px solid @gray-400;
+
+    --bo-ui-button-icon-only-padding: 8px 4px;
+    --bo-ui-button-outline-background-color-hover: transparent;
+    --bo-ui-button-outline-border: none;
+    --bo-ui-button-outline-border-hover: none;
+
+    .headerText {
+      padding: 0 0.5rem 0 1rem;
+    }
+  }
+
+  .input {
+    padding: 1rem 1.5rem;
+  }
+
+  .body {
+    overflow: auto;
+    padding: 0 2rem;
+
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 100vh;
+      background: none;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: @blue-500;
+      border-radius: 100vh;
+    }
+
+    .comment {
+      display: flex;
+      flex-direction: column;
+      margin-top: 1rem;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      div {
+        padding-left: 2rem;
+      }
+
+      .name {
+        display: flex;
+        flex-direction: row;
+        padding-left: 0;
+
+        span {
+          margin-left: 0.785rem;
+        }
+      }
+      .date {
+        color: @gray-700;
+      }
+    }
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: row;
+    align-self: flex-end;
+    padding: 0.25rem 2rem;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    right: -100%;
+  }
+  to {
+    right: 0;
+  }
+}

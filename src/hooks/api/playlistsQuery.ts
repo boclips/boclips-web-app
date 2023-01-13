@@ -2,6 +2,7 @@ import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientP
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { BoclipsClient } from 'boclips-api-client';
 import {
+  AddCommentToCollectionVideRequest,
   CreateCollectionRequest,
   UpdateCollectionRequest,
 } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';
@@ -44,6 +45,52 @@ export const usePlaylistQuery = (id: string) => {
 
   return useQuery(playlistKeys.detail(id), () =>
     client.collections.get(id, 'details'),
+  );
+};
+
+export const doAddCommentToVideo = (
+  collection: Collection,
+  request: AddCommentToCollectionVideRequest,
+  client: BoclipsClient,
+) => {
+  return client.collections.addCommentToCollectionVideo(collection, request);
+};
+
+export const useAddCommentToVideo = () => {
+  const client = useBoclipsClient();
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    ({
+      playlist,
+      request,
+    }: {
+      playlist: Collection;
+      request: AddCommentToCollectionVideRequest;
+    }) => doAddCommentToVideo(playlist, request, client),
+    {
+      onSuccess: (playlist) => {
+        displayNotification(
+          'success',
+          `Comment added to "${playlist.title}"`,
+          '',
+          `add-comment-${playlist.id}-to-playlist`,
+        );
+      },
+      onError: (playlist: Collection) => {
+        displayNotification(
+          'error',
+          `Error: Failed to add a comment to a video -- ${playlist.title}`,
+          'Please refresh the page and try again',
+          `add-comment-${playlist.id}-to-playlist`,
+        );
+      },
+      onSettled: ({ id }) => {
+        queryClient.invalidateQueries({
+          queryKey: ['playlists', id],
+        });
+      },
+    },
   );
 };
 

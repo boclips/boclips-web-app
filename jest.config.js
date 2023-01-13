@@ -11,7 +11,10 @@ module.exports = {
     '^uuid$': require.resolve('uuid'),
   },
   testEnvironment: 'jsdom',
-  testMatch: ['**/*.(integrationTest|a11yTest|test).(ts|tsx)'],
+  testMatch: [
+    '**/*.(integrationTest|a11yTest|test).(ts|tsx)',
+    '**/tests/*.(integrationTest|a11yTest|test).(ts|tsx)',
+  ],
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/dist/'],
   transform: {
     '^.+\\.(ts|tsx)$': [
