@@ -8,7 +8,10 @@ describe('Pendo Service', () => {
       email: 'user@monday.com',
       firstName: 'M',
       lastName: 'J',
-      accountId: 'account-id',
+      account: {
+        id: 'account-id',
+        name: 'account name',
+      },
     });
 
     const initializeSpy = jest.fn();
@@ -27,17 +30,18 @@ describe('Pendo Service', () => {
       },
       account: {
         id: 'account-id',
+        name: 'account name',
       },
     });
   });
   it('uses n/a when there is no account id defined', () => {
-    const user = UserFactory.sample({
+    let user = UserFactory.sample({
       id: 'user-id',
       email: 'user@monday.com',
       firstName: 'M',
       lastName: 'J',
-      accountId: undefined,
     });
+    user = { ...user, account: null };
 
     const initializeSpy = jest.fn();
     const service = new PendoService({
@@ -55,6 +59,7 @@ describe('Pendo Service', () => {
       },
       account: {
         id: 'n/a',
+        name: 'n/a',
       },
     });
   });

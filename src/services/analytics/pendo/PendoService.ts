@@ -21,7 +21,8 @@ export class PendoService {
           full_name: `${user.firstName} ${user.lastName}`,
         },
         account: {
-          id: user.accountId || 'n/a',
+          id: user.account?.id || 'n/a',
+          name: user.account?.name || 'n/a',
         },
       });
     }
