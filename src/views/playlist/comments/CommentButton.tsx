@@ -19,7 +19,7 @@ const CommentButton = ({ videoId, collection }: CommentButtonProps) => {
   return (
     <FeatureGate
       feature="BO_WEB_APP_ADD_COMMENT_TO_VIDEO_IN_COLLECTION"
-      fallback={<div>nothing here </div>}
+      fallback={null}
     >
       <Button
         data-qa="add-comment-button"

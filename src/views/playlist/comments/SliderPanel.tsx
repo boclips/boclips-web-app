@@ -86,7 +86,7 @@ const SliderPanel = ({
       <section className={s.body}>
         {comments.map((it) => {
           return (
-            <div className={s.comment}>
+            <div key={it.id} className={s.comment}>
               <div className={s.name}>
                 <AccountSVG />
                 <Typography.Body as="span" size="small" weight="medium">
