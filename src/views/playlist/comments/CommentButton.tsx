@@ -17,30 +17,34 @@ const CommentButton = ({ videoId, collection }: CommentButtonProps) => {
   const numberOfComments = collection.comments?.videos[videoId]?.length;
 
   return (
-    <FeatureGate
-      feature="BO_WEB_APP_ADD_COMMENT_TO_VIDEO_IN_COLLECTION"
-      fallback={null}
-    >
-      <Button
-        data-qa="add-comment-button"
-        onClick={() => setIsSliderOpen(!isSliderOpen)}
-        iconOnly
-        icon={<CommentSVG />}
-        type="outline"
-        className={c(s.button, { [s.pointerEvent]: isSliderOpen })}
-        width="40px"
-        height="40px"
-        suffix={numberOfComments && <Bubble number={numberOfComments} />}
-      />
-      {isSliderOpen && (
-        <SliderPanel
-          comments={numberOfComments ? collection.comments.videos[videoId] : []}
-          closeSliderOnClick={() => setIsSliderOpen(false)}
-          videoId={videoId}
-          collection={collection}
+    collection?.mine && (
+      <FeatureGate
+        feature="BO_WEB_APP_ADD_COMMENT_TO_VIDEO_IN_COLLECTION"
+        fallback={null}
+      >
+        <Button
+          data-qa="add-comment-button"
+          onClick={() => setIsSliderOpen(!isSliderOpen)}
+          iconOnly
+          icon={<CommentSVG />}
+          type="outline"
+          className={c(s.button, { [s.pointerEvent]: isSliderOpen })}
+          width="40px"
+          height="40px"
+          suffix={numberOfComments && <Bubble number={numberOfComments} />}
         />
-      )}
-    </FeatureGate>
+        {isSliderOpen && (
+          <SliderPanel
+            comments={
+              numberOfComments ? collection.comments.videos[videoId] : []
+            }
+            closeSliderOnClick={() => setIsSliderOpen(false)}
+            videoId={videoId}
+            collection={collection}
+          />
+        )}
+      </FeatureGate>
+    )
   );
 };
 

@@ -330,4 +330,40 @@ describe('comment button', () => {
 
     expect(wrapper.queryByText('this is a comment')).not.toBeInTheDocument();
   });
+
+  it('doesnt display the comment button if playlist is his', () => {
+    const video = VideoFactory.sample({ id: '123', title: 'title' });
+    const client = new FakeBoclipsClient();
+    const user = UserFactory.sample();
+    client.users.setCurrentUserFeatures({
+      BO_WEB_APP_ADD_COMMENT_TO_VIDEO_IN_COLLECTION: true,
+    });
+    client.collections.setCurrentUser(user.id);
+    const collection = CollectionFactory.sample({
+      id: 'collection-id',
+      mine: false,
+      owner: '123',
+      comments: {
+        videos: {},
+      },
+    });
+
+    const wrapper = render(
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <BoclipsClientProvider client={client}>
+          <QueryClientProvider client={new QueryClient()}>
+            <VideoCardButtons
+              video={video}
+              iconOnly
+              additionalSecondaryButtons={
+                <CommentButton videoId={video.id} collection={collection} />
+              }
+            />
+          </QueryClientProvider>
+        </BoclipsClientProvider>
+      </BoclipsSecurityProvider>,
+    );
+
+    expect(wrapper.queryByTestId('add-comment-button')).not.toBeInTheDocument();
+  });
 });
