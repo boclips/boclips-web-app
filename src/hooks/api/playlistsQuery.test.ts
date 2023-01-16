@@ -5,6 +5,7 @@ import {
   useOwnAndEditableSharedPlaylistsQuery,
   useOwnAndSharedPlaylistsQuery,
   useReorderPlaylist,
+  useUpdatePlaylistPermissionsMutation,
 } from 'src/hooks/api/playlistsQuery';
 import { QueryClient } from '@tanstack/react-query';
 import {
@@ -12,6 +13,7 @@ import {
   FakeBoclipsClient,
 } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
+import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 
 describe('playlistsQuery', () => {
   it('will use list projection and convert page size when loading users playlists', async () => {
@@ -111,5 +113,28 @@ describe('playlistsQuery', () => {
       origin: 'BO_WEB_APP',
       size: 1000,
     });
+  });
+
+  it('will update playlist permissions', async () => {
+    const collection = CollectionFactory.sample({});
+
+    const apiClient = new FakeBoclipsClient();
+    const collectionsSpy = jest.spyOn(
+      apiClient.collections,
+      'updatePermission',
+    );
+    // @ts-ignore
+    apiClient.collections.updatePermission = collectionsSpy;
+
+    const { result } = renderHook(
+      () => useUpdatePlaylistPermissionsMutation(collection),
+      {
+        wrapper: wrapperWithClients(apiClient, new QueryClient()),
+      },
+    );
+
+    await act(() => result.current.mutate(CollectionPermission.EDIT));
+
+    expect(collectionsSpy).toBeCalled();
   });
 });

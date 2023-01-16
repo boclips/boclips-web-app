@@ -101,6 +101,20 @@ describe('The mighty Bodal', () => {
     expect(handleCancel).toBeCalledTimes(1);
   });
 
+  it(`doesn't display cancel button if displayCancelButton set to false`, () => {
+    const wrapper = render(
+      <Bodal
+        title="Title"
+        cancelButtonText="Press me!"
+        displayCancelButton={false}
+      >
+        <span>i must be here!</span>
+      </Bodal>,
+    );
+    const button = wrapper.queryByRole('button', { name: 'Press me!' });
+    expect(button).toBeNull();
+  });
+
   it('renders content', () => {
     const content = <div>Hello</div>;
     const wrapper = render(<Bodal title="Title">{content}</Bodal>);

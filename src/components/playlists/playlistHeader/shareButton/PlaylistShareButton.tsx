@@ -37,7 +37,10 @@ export const PlaylistShareButton = ({ playlist }: Props) => {
   return (
     <>
       {isEditable ? (
-        <OwnOrEditablePlaylistShareButton handleClick={handleClick} />
+        <OwnOrEditablePlaylistShareButton
+          playlist={playlist}
+          handleClick={handleClick}
+        />
       ) : (
         <ViewOnlyPlaylistShareButton handleClick={handleClick} />
       )}

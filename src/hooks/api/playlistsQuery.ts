@@ -13,6 +13,7 @@ import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collecti
 import { PLAYLISTS_PAGE_SIZE } from 'src/components/playlists/Playlists';
 import { useNavigate } from 'react-router-dom';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
+import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 import { playlistKeys } from './playlistKeys';
 
 interface UpdatePlaylistProps {
@@ -259,6 +260,41 @@ export const useRemovePlaylistMutation = (playlist: Collection) => {
       );
     },
   });
+};
+
+export const useUpdatePlaylistPermissionsMutation = (playlist: Collection) => {
+  const client = useBoclipsClient();
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    (permission: CollectionPermission) =>
+      client.collections
+        .updatePermission(playlist, { anyone: permission })
+        .then(() => permission),
+    {
+      onSuccess: (permission) => {
+        displayNotification(
+          'success',
+          `Success: playlist permissions changed to ${permission}`,
+          '',
+          `update-playlist-permissions-success`,
+        );
+      },
+
+      onError: () => {
+        displayNotification(
+          'error',
+          `Error: Failed to change playlist permissions`,
+          'Please refresh the page and try again',
+          `update-playlist-permissions-failed`,
+        );
+      },
+      onSettled: () => {
+        console.log({ queryKey: ['playlists', playlist.id] });
+        queryClient.refetchQueries({ queryKey: ['playlists', playlist.id] });
+      },
+    },
+  );
 };
 
 export const useUnfollowPlaylistMutation = (playlist: Collection) => {

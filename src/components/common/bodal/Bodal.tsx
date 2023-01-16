@@ -13,6 +13,7 @@ import { handleEscapeKeyEvent } from 'src/services/handleKeyEvent';
 import FocusTrap from 'focus-trap-react';
 import { Typography } from '@boclips-ui/typography';
 import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
+import c from 'classnames';
 import s from './style.module.less';
 
 export interface Props {
@@ -26,6 +27,8 @@ export interface Props {
   initialFocusRef?: React.RefObject<HTMLElement> | string;
   closeOnClickOutside?: boolean;
   children: React.ReactNode;
+  confirmButtonIcon?: React.ReactElement;
+  displayCancelButton?: boolean;
 }
 
 export const Bodal: React.FC<Props> = ({
@@ -39,15 +42,19 @@ export const Bodal: React.FC<Props> = ({
   children,
   initialFocusRef,
   closeOnClickOutside = true,
+  confirmButtonIcon,
+  displayCancelButton = true,
 }: PropsWithChildren<Props>) => {
   const breakpoints = useMediaBreakPoint();
   const mobileView = breakpoints.type === 'mobile';
 
   const getSpinner = (): ReactElement =>
-    isLoading && (
+    isLoading ? (
       <span data-qa="spinner" className="pb-2">
         <LoadingOutlined />
       </span>
+    ) : (
+      confirmButtonIcon
     );
   const header = (
     <>
@@ -67,7 +74,9 @@ export const Bodal: React.FC<Props> = ({
 
   const footer = (
     <>
-      <TextButton onClick={onCancel} text={cancelButtonText} />
+      {displayCancelButton && (
+        <TextButton onClick={onCancel} text={cancelButtonText} />
+      )}
       <Button
         onClick={onConfirm}
         text={confirmButtonText}
@@ -118,7 +127,14 @@ export const Bodal: React.FC<Props> = ({
             <div className={s.modalHeader}>{header}</div>
             {children}
           </div>
-          <div className={s.modalFooter}>{footer}</div>
+          <div
+            className={c(
+              s.modalFooter,
+              displayCancelButton ? [s.twoButtonFooter] : [s.oneButtonFooter],
+            )}
+          >
+            {footer}
+          </div>
         </div>
       </div>
     </FocusTrap>

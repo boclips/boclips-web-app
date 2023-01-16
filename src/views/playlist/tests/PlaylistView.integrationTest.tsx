@@ -26,6 +26,7 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { CollectionFactory as collectionFactory } from 'src/testSupport/CollectionFactory';
 import { sleep } from 'src/testSupport/sleep';
+import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 
 const createVideoWithThumbnail = (id: string, videoTitle: string) => {
   return VideoFactory.sample({
@@ -58,6 +59,7 @@ describe('Playlist view', () => {
     videos,
     owner: 'myuserid',
     mine: true,
+    permissions: { anyone: CollectionPermission.VIEW_ONLY },
   });
 
   beforeEach(() => {
@@ -205,6 +207,37 @@ describe('Playlist view', () => {
       'Add or remove from playlist',
     );
     expect(remainingVideos).toHaveLength(4);
+  });
+
+  it('can change playlist permission as an owner', async () => {
+    const updatePermissionFunction = jest.spyOn(
+      client.collections,
+      'updatePermission',
+    );
+
+    render(
+      <MemoryRouter initialEntries={['/playlists/123']}>
+        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+      </MemoryRouter>,
+    );
+
+    await waitFor(() => screen.getByText('Share'));
+
+    const shareLinkButton = screen.getByRole('button', { name: 'Share' });
+
+    fireEvent.click(shareLinkButton);
+
+    await waitFor(() => screen.getByTestId('playlist-permissions-modal'));
+
+    const permissionDropdown = screen.getByRole('button', { name: 'can view' });
+    expect(permissionDropdown).toBeVisible();
+
+    fireEvent.click(permissionDropdown);
+    fireEvent.click(screen.getByText('can edit'));
+
+    await waitFor(() => {
+      expect(updatePermissionFunction).toHaveBeenCalled();
+    });
   });
 
   describe('following a playlist', () => {
