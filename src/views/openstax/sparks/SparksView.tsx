@@ -8,9 +8,9 @@ import {
   useGetBooksQuery,
   useGetOpenstaxSubjectsQuery,
 } from 'src/hooks/api/openstaxQuery';
-import ExploreHeader from 'src/components/openstax/exploreHeader/ExploreHeader';
+import SparksHeader from 'src/components/openstax/sparksHeader/SparksHeader';
 
-const ExploreView = () => {
+const SparksView = () => {
   const ALL = 'All';
   const { data: books, isLoading: areBooksLoading } = useGetBooksQuery();
   const { data: subjects, isLoading: areSubjectsLoading } =
@@ -42,9 +42,9 @@ const ExploreView = () => {
   const isLoading = areBooksLoading || areSubjectsLoading;
 
   return (
-    <Layout rowsSetup="grid-rows-explore-view" responsiveLayout>
+    <Layout rowsSetup="grid-rows-sparks-view" responsiveLayout>
       <Navbar />
-      <ExploreHeader />
+      <SparksHeader />
       <SubjectsMenu
         subjects={isLoading ? [] : [ALL, ...subjects]}
         currentSubject={currentSubject}
@@ -58,4 +58,4 @@ const ExploreView = () => {
   );
 };
 
-export default ExploreView;
+export default SparksView;

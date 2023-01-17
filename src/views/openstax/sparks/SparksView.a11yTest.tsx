@@ -8,7 +8,7 @@ import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { axe } from 'jest-axe';
 
-describe(`Explore view`, () => {
+describe(`Sparks view`, () => {
   it(`has no violations`, async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
@@ -31,7 +31,7 @@ describe(`Explore view`, () => {
     ]);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/explore/openstax']}>
+      <MemoryRouter initialEntries={['/sparks/openstax']}>
         <App
           apiClient={fakeClient}
           boclipsSecurity={stubBoclipsSecurity}

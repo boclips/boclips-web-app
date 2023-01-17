@@ -44,7 +44,7 @@ describe('App', () => {
     apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/explore/openstax']}>
+      <MemoryRouter initialEntries={['/sparks/openstax']}>
         <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
       </MemoryRouter>,
     );
@@ -59,7 +59,7 @@ describe('App', () => {
     apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: false });
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/explore/openstax']}>
+      <MemoryRouter initialEntries={['/sparks/openstax']}>
         <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
       </MemoryRouter>,
     );
@@ -80,5 +80,20 @@ describe('App', () => {
 
     expect(wrapper.queryByText('Page not found!')).not.toBeInTheDocument();
     expect(await wrapper.findByText('Playlists')).toBeVisible();
+  });
+
+  it('redirects to /openstax page if accessing deprecated url', async () => {
+    const apiClient = new FakeBoclipsClient();
+
+    apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/explore/openstax']}>
+        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+      </MemoryRouter>,
+    );
+
+    expect(wrapper.queryByText('Page not found!')).not.toBeInTheDocument();
+    expect(await wrapper.findByText('Our OpenStax collection')).toBeVisible();
   });
 });

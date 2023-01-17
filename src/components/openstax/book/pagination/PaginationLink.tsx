@@ -11,7 +11,7 @@ export const PaginationLink = ({ bookId, hash, children }: PageLinkProps) => (
   <HashLink
     scroll={() => {}}
     to={{
-      pathname: `/explore/openstax/${bookId}`,
+      pathname: `/sparks/openstax/${bookId}`,
       hash,
     }}
     className={s.sectionLink}

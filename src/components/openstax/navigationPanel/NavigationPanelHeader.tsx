@@ -21,8 +21,8 @@ const NavigationPanelHeader = ({ book }: Props) => {
 
   const { setIsOpen } = useOpenstaxMobileMenu();
 
-  const goToExplorePage = () => {
-    navigate('/explore/openstax');
+  const goToSparksPage = () => {
+    navigate('/sparks/openstax');
   };
 
   return (
@@ -32,11 +32,7 @@ const NavigationPanelHeader = ({ book }: Props) => {
       aria-labelledby="navigation-header"
     >
       {!isNotDesktop && (
-        <TextButton
-          onClick={goToExplorePage}
-          text="Back"
-          icon={<BackArrow />}
-        />
+        <TextButton onClick={goToSparksPage} text="Back" icon={<BackArrow />} />
       )}
       <div className={s.tocHeader}>
         {!isNotDesktop && <BookLogo book={book} className="mr-4" />}

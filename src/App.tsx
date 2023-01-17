@@ -1,5 +1,11 @@
 import React, { Suspense, useEffect } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useParams,
+} from 'react-router-dom';
 import { BoclipsClient } from 'boclips-api-client';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Loading } from 'src/components/common/Loading';
@@ -67,8 +73,8 @@ const PlaylistView = lazyWithRetry(
   () => import('src/views/playlist/PlaylistView'),
 );
 
-const ExploreView = lazyWithRetry(
-  () => import('src/views/openstax/explore/ExploreView'),
+const SparksView = lazyWithRetry(
+  () => import('src/views/openstax/sparks/SparksView'),
 );
 
 const OpenstaxBookView = lazyWithRetry(
@@ -204,19 +210,19 @@ const App = ({
                     />
 
                     <Route
-                      path="/explore/openstax"
+                      path="/sparks/openstax"
                       element={
                         <FeatureGate
                           feature="BO_WEB_APP_OPENSTAX"
                           fallback={<NotFound />}
                         >
-                          <Helmet title="Explore" />
-                          <ExploreView />
+                          <Helmet title="Sparks" />
+                          <SparksView />
                         </FeatureGate>
                       }
                     />
                     <Route
-                      path="/explore/openstax/:id"
+                      path="/sparks/openstax/:id"
                       element={
                         <FeatureGate
                           feature="BO_WEB_APP_OPENSTAX"
@@ -226,6 +232,14 @@ const App = ({
                           <OpenstaxBookView />
                         </FeatureGate>
                       }
+                    />
+                    <Route
+                      path="/explore/openstax"
+                      element={<NavigateToOpenstaxSparks />}
+                    />
+                    <Route
+                      path="/explore/openstax/:id"
+                      element={<NavigateToOpenstaxSparks />}
                     />
                     <Route
                       path="*"
@@ -246,6 +260,12 @@ const App = ({
       </GlobalQueryErrorProvider>
     </QueryClientProvider>
   );
+};
+
+const NavigateToOpenstaxSparks = () => {
+  const { id } = useParams();
+  const path = `/sparks/openstax${id ? `/${id}` : ''}`;
+  return <Navigate to={path} replace />;
 };
 
 export default App;

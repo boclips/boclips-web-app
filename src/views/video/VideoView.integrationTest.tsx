@@ -135,7 +135,7 @@ describe('Video View', () => {
     ).toBeNull();
   });
 
-  describe('video page navigated from explore view', () => {
+  describe('video page navigated from sparks view', () => {
     it(`will display embed video as primary button`, async () => {
       const book = getBookWithVideo(exampleVideo);
 
@@ -143,7 +143,7 @@ describe('Video View', () => {
       fakeClient.videos.insertVideo(exampleVideo);
       fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 
-      const wrapper = renderView([`/explore/openstax/${book.id}`]);
+      const wrapper = renderView([`/sparks/openstax/${book.id}`]);
 
       await userEvent.click(await wrapper.findByText(exampleVideo.title));
 
@@ -168,7 +168,7 @@ describe('Video View', () => {
       fakeClient.videos.insertVideo(videoWithoutEmbedOption);
       fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 
-      const wrapper = renderView([`/explore/openstax/${book.id}`]);
+      const wrapper = renderView([`/sparks/openstax/${book.id}`]);
 
       await userEvent.click(await wrapper.findByText(exampleVideo.title));
 
@@ -196,7 +196,7 @@ describe('Video View', () => {
       fakeClient.videos.insertVideo(newVideo);
       fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 
-      const wrapper = renderView([`/explore/openstax/${book.id}`]);
+      const wrapper = renderView([`/sparks/openstax/${book.id}`]);
 
       await userEvent.click(await wrapper.findByText(newVideo.title));
 
@@ -220,7 +220,7 @@ describe('Video View', () => {
       fakeClient.videos.insertVideo(newVideo);
       fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 
-      const wrapper = renderView([`/explore/openstax/${book.id}`]);
+      const wrapper = renderView([`/sparks/openstax/${book.id}`]);
 
       await userEvent.click(await wrapper.findByText(newVideo.title));
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 
-const ExploreHeader = () => {
+const SparksHeader = () => {
   return (
     <section
       className="col-start-2 col-end-26 grid-row-start-2 grid-row-end-2 mt-2 flex flex-col md:flex-row"
@@ -26,4 +26,4 @@ const ExploreHeader = () => {
   );
 };
 
-export default ExploreHeader;
+export default SparksHeader;

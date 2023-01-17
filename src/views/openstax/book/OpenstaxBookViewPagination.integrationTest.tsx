@@ -45,7 +45,7 @@ describe('Openstax book view pagination buttons', () => {
       const client = setUpClientWithBook(book);
 
       const wrapper = render(
-        <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
+        <MemoryRouter initialEntries={['/sparks/openstax/ducklings']}>
           <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
         </MemoryRouter>,
       );
@@ -117,7 +117,7 @@ describe('Openstax book view pagination buttons', () => {
       const client = setUpClientWithBook(book);
 
       const wrapper = render(
-        <MemoryRouter initialEntries={['/explore/openstax/ducklings-2']}>
+        <MemoryRouter initialEntries={['/sparks/openstax/ducklings-2']}>
           <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
         </MemoryRouter>,
       );
@@ -200,7 +200,7 @@ describe('Openstax book view pagination buttons', () => {
       const client = setUpClientWithBook(book);
 
       const wrapper = render(
-        <MemoryRouter initialEntries={['/explore/openstax/ducklings-3']}>
+        <MemoryRouter initialEntries={['/sparks/openstax/ducklings-3']}>
           <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
         </MemoryRouter>,
       );
@@ -277,7 +277,7 @@ describe('Openstax book view pagination buttons', () => {
       const client = setUpClientWithBook(book);
 
       const wrapper = render(
-        <MemoryRouter initialEntries={['/explore/openstax/ducklings-4']}>
+        <MemoryRouter initialEntries={['/sparks/openstax/ducklings-4']}>
           <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
         </MemoryRouter>,
       );
@@ -354,7 +354,7 @@ describe('Openstax book view pagination buttons', () => {
       const client = setUpClientWithBook(book);
 
       const wrapper = render(
-        <MemoryRouter initialEntries={['/explore/openstax/ducklings-5']}>
+        <MemoryRouter initialEntries={['/sparks/openstax/ducklings-5']}>
           <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
         </MemoryRouter>,
       );

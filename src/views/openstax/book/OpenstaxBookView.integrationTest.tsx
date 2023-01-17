@@ -36,7 +36,7 @@ describe('OpenstaxBookView', () => {
 
     const client = setUpClientWithBook(book);
     const wrapper = render(
-      <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
+      <MemoryRouter initialEntries={[`/sparks/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -61,7 +61,7 @@ describe('OpenstaxBookView', () => {
     const client = setUpClientWithBook(book);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
+      <MemoryRouter initialEntries={[`/sparks/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -110,7 +110,7 @@ describe('OpenstaxBookView', () => {
     const client = setUpClientWithBook(book);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
+      <MemoryRouter initialEntries={[`/sparks/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -156,7 +156,7 @@ describe('OpenstaxBookView', () => {
     const client = setUpClientWithBook(book);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
+      <MemoryRouter initialEntries={[`/sparks/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -213,7 +213,7 @@ describe('OpenstaxBookView', () => {
     const client = setUpClientWithBook(book);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
+      <MemoryRouter initialEntries={[`/sparks/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -237,7 +237,7 @@ describe('OpenstaxBookView', () => {
     const client = setUpClientWithBook(book);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
+      <MemoryRouter initialEntries={[`/sparks/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -267,7 +267,7 @@ describe('OpenstaxBookView', () => {
     const client = setUpClientWithBook(book);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
+      <MemoryRouter initialEntries={[`/sparks/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -302,7 +302,7 @@ describe('OpenstaxBookView', () => {
     const client = setUpClientWithBook(book);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
+      <MemoryRouter initialEntries={[`/sparks/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -336,7 +336,7 @@ describe('OpenstaxBookView', () => {
     const client = setUpClientWithBook(book);
 
     render(
-      <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
+      <MemoryRouter initialEntries={[`/sparks/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -349,7 +349,7 @@ describe('OpenstaxBookView', () => {
 
     const wrapper = render(
       <MemoryRouter
-        initialEntries={[`/explore/openstax/${book.id}#chapter-blabla`]}
+        initialEntries={[`/sparks/openstax/${book.id}#chapter-blabla`]}
       >
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
@@ -363,7 +363,7 @@ describe('OpenstaxBookView', () => {
     ['tablet', resizeToTablet],
     ['mobile', resizeToMobile],
   ])(
-    'back button to explore page on %s',
+    'back button to sparks page on %s',
     (_deviceType: string, resize: () => void) => {
       const book: Book = BookFactory.sample({
         id: uuidv4(),
@@ -383,7 +383,7 @@ describe('OpenstaxBookView', () => {
         const client = setUpClientWithBook(book);
 
         const wrapper = render(
-          <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
+          <MemoryRouter initialEntries={[`/sparks/openstax/${book.id}`]}>
             <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
           </MemoryRouter>,
         );
@@ -393,12 +393,12 @@ describe('OpenstaxBookView', () => {
         ).toBeVisible();
       });
 
-      it(`navigates back to explore page when clicked`, async () => {
+      it(`navigates back to sparks page when clicked`, async () => {
         resize();
         const client = setUpClientWithBook(book);
 
         const history = createBrowserHistory();
-        history.replace(`/explore/openstax/${book.id}`);
+        history.replace(`/sparks/openstax/${book.id}`);
 
         const wrapper = render(
           <Router location={history.location} navigator={history}>
@@ -414,7 +414,7 @@ describe('OpenstaxBookView', () => {
 
         fireEvent.click(backButton);
 
-        expect(history.location.pathname).toEqual('/explore/openstax');
+        expect(history.location.pathname).toEqual('/sparks/openstax');
       });
     },
   );
@@ -496,7 +496,7 @@ const renderBookView = (book: Book): RenderResult => {
   client.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
   client.openstax.setOpenstaxBooks([book]);
   return render(
-    <MemoryRouter initialEntries={[`/explore/openstax/${book.id}`]}>
+    <MemoryRouter initialEntries={[`/sparks/openstax/${book.id}`]}>
       <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
     </MemoryRouter>,
   );

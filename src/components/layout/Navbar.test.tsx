@@ -163,7 +163,7 @@ describe('Playlists in Navbar', () => {
   });
 });
 
-describe('Explore Openstax in Navbar', () => {
+describe('Openstax sparks in Navbar', () => {
   describe('When user has BO_WEB_APP_OPENSTAX feature flag', () => {
     const client = new FakeBoclipsClient();
     let wrapper;
@@ -180,11 +180,11 @@ describe('Explore Openstax in Navbar', () => {
       );
     });
 
-    it(`will show the Explore menu option on desktop`, async () => {
+    it(`will show the Sparks menu option on desktop`, async () => {
       resizeToDesktop();
 
       expect(
-        await wrapper.findByRole('button', { name: 'Explore openstax books' }),
+        await wrapper.findByRole('button', { name: 'Sparks' }),
       ).toBeVisible();
     });
 
@@ -192,13 +192,13 @@ describe('Explore Openstax in Navbar', () => {
       ['mobile', resizeToMobile],
       ['tablet', resizeToTablet],
     ])(
-      'will show the Explore menu option on %s',
+      'will show the Sparks menu option on %s',
       async (_screenType: string, resize: () => void) => {
         resize();
 
         fireEvent.click(await wrapper.findByLabelText('Menu'));
 
-        expect(wrapper.getByText('Explore')).toBeVisible();
+        expect(wrapper.getByText('Sparks')).toBeVisible();
       },
     );
   });
@@ -219,11 +219,11 @@ describe('Explore Openstax in Navbar', () => {
       );
     });
 
-    it(`will not show the Explore menu option on desktop`, async () => {
+    it(`will not show the Sparks menu option on desktop`, async () => {
       resizeToDesktop();
 
       expect(
-        await wrapper.queryByRole('button', { name: 'Explore openstax books' }),
+        await wrapper.queryByRole('button', { name: 'Sparks' }),
       ).toBeNull();
     });
 
@@ -231,13 +231,13 @@ describe('Explore Openstax in Navbar', () => {
       ['mobile', resizeToMobile],
       ['tablet', resizeToTablet],
     ])(
-      'will not show the Explore menu option on %s',
+      'will not show the Sparks menu option on %s',
       async (_screenType: string, resize: () => void) => {
         resize();
 
         fireEvent.click(await wrapper.findByLabelText('Menu'));
 
-        expect(wrapper.queryByText('Explore openstax books')).toBeNull();
+        expect(wrapper.queryByText('Sparks')).toBeNull();
       },
     );
   });

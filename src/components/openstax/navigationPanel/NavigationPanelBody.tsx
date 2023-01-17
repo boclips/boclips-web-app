@@ -59,7 +59,7 @@ const NavigationPanelBody = ({ book }: Props) => {
         window.scrollTo({ top: 0 });
       }}
       to={{
-        pathname: `/explore/openstax/${book.id}`,
+        pathname: `/sparks/openstax/${book.id}`,
         hash: sectionLink,
       }}
     >

@@ -7,12 +7,12 @@ import { Router } from 'react-router-dom';
 import { fireEvent, render } from '@testing-library/react';
 import App from 'src/App';
 
-describe('explore button', () => {
+describe('sparks button', () => {
   beforeEach(() => {
     window.resizeTo(1680, 1024);
   });
 
-  it('pushes openstax explore page to history', async () => {
+  it('pushes openstax sparks page to history', async () => {
     const fakeBoclipsClient = new FakeBoclipsClient();
     fakeBoclipsClient.users.setCurrentUserFeatures({
       BO_WEB_APP_OPENSTAX: true,
@@ -31,10 +31,8 @@ describe('explore button', () => {
       </BoclipsClientProvider>,
     );
 
-    fireEvent.click(
-      await wrapper.findByRole('button', { name: 'Explore openstax books' }),
-    );
+    fireEvent.click(await wrapper.findByRole('button', { name: 'Sparks' }));
 
-    expect(history.location.pathname).toEqual('/explore/openstax');
+    expect(history.location.pathname).toEqual('/sparks/openstax');
   });
 });

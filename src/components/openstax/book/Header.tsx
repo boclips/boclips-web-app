@@ -21,18 +21,14 @@ export const Header = ({ bookTitle, chapterTitle }: Props) => {
   const { setIsOpen } = useOpenstaxMobileMenu();
   const navigate = useNavigate();
 
-  const goToExplorePage = () => {
-    navigate('/explore/openstax');
+  const goToSparksPage = () => {
+    navigate('/sparks/openstax');
   };
 
   return (
     <div className={s.bookHeader}>
       {isNotDesktop && (
-        <TextButton
-          onClick={goToExplorePage}
-          text="Back"
-          icon={<BackArrow />}
-        />
+        <TextButton onClick={goToSparksPage} text="Back" icon={<BackArrow />} />
       )}
       <PageHeader
         title={bookTitle}
