@@ -290,7 +290,6 @@ export const useUpdatePlaylistPermissionsMutation = (playlist: Collection) => {
         );
       },
       onSettled: () => {
-        console.log({ queryKey: ['playlists', playlist.id] });
         queryClient.refetchQueries({ queryKey: ['playlists', playlist.id] });
       },
     },
