@@ -17,6 +17,7 @@ export const BestForFilter = ({ options = [], handleChange }: Props) => {
       title="Best for"
       handleChange={handleChange}
       filterName="best_for"
+      showExplanation
     />
   ) : null;
 };

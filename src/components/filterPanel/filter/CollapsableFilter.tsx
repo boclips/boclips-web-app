@@ -5,12 +5,14 @@ interface Props {
   title: string;
   children: React.ReactNode;
   handleFilterToggle?: (isOpen: boolean) => void;
+  showExplanation?: boolean;
 }
 
 export const CollapsableFilter = ({
   title,
   children,
   handleFilterToggle,
+  showExplanation,
 }: Props) => {
   const [open, setOpen] = useState<boolean>(true);
 
@@ -30,6 +32,7 @@ export const CollapsableFilter = ({
         text={title}
         filterIsOpen={open}
         toggleFilter={toggleFilter}
+        showExplanation={showExplanation}
       />
       {open && <div id={ariaId}>{children}</div>}
     </div>

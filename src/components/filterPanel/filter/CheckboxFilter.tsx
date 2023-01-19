@@ -12,6 +12,7 @@ interface Props {
   handleChange: (filter: string, values: string[]) => void;
   filtersSearch?: React.ReactNode;
   handleFilterToggle?: (isOpen: boolean) => void;
+  showExplanation?: boolean;
 }
 
 export const CheckboxFilter = ({
@@ -21,6 +22,7 @@ export const CheckboxFilter = ({
   handleChange,
   filtersSearch,
   handleFilterToggle,
+  showExplanation,
 }: Props) => {
   const [searchLocation] = useSearchQueryLocationParams();
 
@@ -37,7 +39,11 @@ export const CheckboxFilter = ({
   };
 
   return (
-    <CollapsableFilter title={title} handleFilterToggle={handleFilterToggle}>
+    <CollapsableFilter
+      title={title}
+      handleFilterToggle={handleFilterToggle}
+      showExplanation={showExplanation}
+    >
       <div className="px-4">
         <Typography.Body>{filtersSearch}</Typography.Body>
       </div>
