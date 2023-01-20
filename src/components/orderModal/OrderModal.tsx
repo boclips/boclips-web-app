@@ -77,6 +77,7 @@ export const OrderModal = ({ setModalOpen, videos, cart }: Props) => {
       onCancel={() => setModalOpen(false)}
       dataQa="order-modal"
       cancelButtonText="Go back to cart"
+      smallSize={false}
     >
       <Typography.Body>
         Please confirm you want to place the following order:

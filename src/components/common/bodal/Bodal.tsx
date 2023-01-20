@@ -29,6 +29,7 @@ export interface Props {
   children: React.ReactNode;
   confirmButtonIcon?: React.ReactElement;
   displayCancelButton?: boolean;
+  smallSize?: boolean;
 }
 
 export const Bodal: React.FC<Props> = ({
@@ -44,6 +45,7 @@ export const Bodal: React.FC<Props> = ({
   closeOnClickOutside = true,
   confirmButtonIcon,
   displayCancelButton = true,
+  smallSize = true,
 }: PropsWithChildren<Props>) => {
   const breakpoints = useMediaBreakPoint();
   const mobileView = breakpoints.type === 'mobile';
@@ -122,7 +124,7 @@ export const Bodal: React.FC<Props> = ({
         <div id="bodal-description" hidden>
           This is a dialog for {title}. Escape will cancel and close the window.
         </div>
-        <div className={s.modal} ref={ref}>
+        <div className={c(s.modal, { [s.small]: smallSize })} ref={ref}>
           <div className={s.modalContent}>
             <div className={s.modalHeader}>{header}</div>
             {children}

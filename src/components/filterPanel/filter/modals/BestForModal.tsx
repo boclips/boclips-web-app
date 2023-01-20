@@ -60,6 +60,7 @@ const BestForModal = ({ setOpen }) => {
       confirmButtonText="OK, great!"
       onConfirm={() => setOpen(false)}
       dataQa="best-for-modal"
+      smallSize={false}
     >
       <Typography.Body as="section" className={s.header}>
         Our tags are a suggested model for the typical pedagogical flow of a
