@@ -8,7 +8,7 @@ import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import userEvent from '@testing-library/user-event';
 
-describe(`Sparks view`, () => {
+describe(`Explore view`, () => {
   it(`shows 'All' subject as a first one and can select other subjects`, async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
@@ -38,7 +38,7 @@ describe(`Sparks view`, () => {
     ]);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/sparks/openstax']}>
+      <MemoryRouter initialEntries={['/explore/openstax']}>
         <App
           apiClient={fakeClient}
           boclipsSecurity={stubBoclipsSecurity}
@@ -88,7 +88,7 @@ describe(`Sparks view`, () => {
     ]);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/sparks/openstax']}>
+      <MemoryRouter initialEntries={['/explore/openstax']}>
         <App
           apiClient={fakeClient}
           boclipsSecurity={stubBoclipsSecurity}
@@ -132,7 +132,7 @@ describe(`Sparks view`, () => {
       ]);
 
       const wrapper = render(
-        <MemoryRouter initialEntries={['/sparks/openstax']}>
+        <MemoryRouter initialEntries={['/explore/openstax']}>
           <App
             apiClient={fakeClient}
             boclipsSecurity={stubBoclipsSecurity}

@@ -82,7 +82,7 @@ describe('OpenstaxBookView - accessibility', () => {
     const client = setUpClientWithBook(book);
 
     const history = createBrowserHistory();
-    history.push('/sparks/openstax/ducklings');
+    history.push('/explore/openstax/ducklings');
 
     const wrapper = render(
       <Router location={history.location} navigator={history}>

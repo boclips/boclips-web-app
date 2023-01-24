@@ -1,10 +1,10 @@
 import React from 'react';
-import SparksHeader from 'src/components/openstax/sparksHeader/SparksHeader';
+import ExploreHeader from 'src/components/openstax/exploreHeader/ExploreHeader';
 import { render } from '@testing-library/react';
 
-describe('OpenStax Sparks page Header', () => {
+describe('OpenStax Explore page Header', () => {
   it('displays header text and an OpenStax ally logo', () => {
-    const header = render(<SparksHeader />);
+    const header = render(<ExploreHeader />);
 
     expect(header.getByText('Our OpenStax collection')).toBeVisible();
     expect(

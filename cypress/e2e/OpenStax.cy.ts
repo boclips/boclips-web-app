@@ -3,14 +3,14 @@ context('OpenStax', () => {
     cy.visit('/');
     cy.bo((bo) => bo.create.fixtureSet.openstaxBooks());
 
-    cy.findByRole('button', { name: 'Sparks' }).click();
+    cy.findByRole('button', { name: 'Explore openstax books' }).click();
 
     cy.findByRole('button', { name: 'book Maths book' }).should('be.visible');
     cy.findByRole('button', { name: 'subject Physics' }).click();
     cy.findByRole('button', { name: 'book Physics book' }).should('be.visible');
     cy.findByRole('button', { name: 'subject Maths' }).click();
 
-    cy.percySnapshot('OpenStax sparks page');
+    cy.percySnapshot('OpenStax explore page');
 
     cy.findByRole('button', { name: 'book Maths book' }).click();
 

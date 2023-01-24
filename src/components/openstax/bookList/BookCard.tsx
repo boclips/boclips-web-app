@@ -20,7 +20,7 @@ export const BookCard = ({ book }: Props) => {
 
   const onCardClick = (bookId) =>
     navigate({
-      pathname: `/sparks/openstax/${bookId}`,
+      pathname: `/explore/openstax/${bookId}`,
     });
 
   return (
