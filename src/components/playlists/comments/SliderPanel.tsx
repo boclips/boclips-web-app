@@ -2,15 +2,14 @@ import { Collection } from 'boclips-api-client/dist/sub-clients/collections/mode
 import { useAddCommentToVideo } from 'src/hooks/api/playlistsQuery';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import React, { useRef, useState } from 'react';
-import s from 'src/views/playlist/comments/style.module.less';
+import s from 'src/components/playlists/comments/style.module.less';
 import { Typography } from '@boclips-ui/typography';
 import Button from '@boclips-ui/button';
 import CloseSVG from 'src/resources/icons/cross-icon.svg';
 import { InputText } from '@boclips-ui/input';
 import AccountSVG from 'src/resources/icons/account-icon.svg';
-import { TextButton } from 'src/components/common/textButton/TextButton';
-import ReplySVG from 'src/resources/icons/reply-icon.svg';
 import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
+import Bubble from './Bubble';
 
 type Props = {
   closeSliderOnClick: () => void;
@@ -31,6 +30,7 @@ const SliderPanel = ({
   videoId,
   collection,
 }: Props) => {
+  const [comment, setComment] = useState<string>('');
   const { mutate: addCommentToVideo } = useAddCommentToVideo();
   const { data: user } = useGetUserQuery();
   const ref = useRef(null);
@@ -50,8 +50,6 @@ const SliderPanel = ({
     setComment('');
   };
 
-  const [comment, setComment] = useState<string>();
-
   return (
     <aside
       ref={ref}
@@ -60,7 +58,7 @@ const SliderPanel = ({
     >
       <section className={s.header}>
         <Typography.Body className={s.headerText} weight="medium">
-          Comments
+          Comments <Bubble inline number={comments.length} />
         </Typography.Body>
         <Button
           onClick={closeSliderOnClick}
@@ -81,7 +79,11 @@ const SliderPanel = ({
           inputType="textarea"
           onChange={(text) => setComment(text)}
           placeholder="Add a comment"
+          height="96px"
         />
+        {comment.length > 0 && (
+          <Button onClick={() => addComment()} height="32px" text="Reply" />
+        )}
       </section>
       <section className={s.body}>
         {comments.map((it) => {
@@ -104,13 +106,6 @@ const SliderPanel = ({
             </div>
           );
         })}
-      </section>
-      <section className={s.footer}>
-        <TextButton
-          onClick={() => addComment()}
-          icon={<ReplySVG />}
-          text="Reply"
-        />
       </section>
     </aside>
   );

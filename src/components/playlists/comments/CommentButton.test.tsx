@@ -1,5 +1,5 @@
 import { render, waitFor, within } from '@testing-library/react';
-import CommentButton from 'src/views/playlist/comments/CommentButton';
+import CommentButton from 'src/components/playlists/comments/CommentButton';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import React from 'react';
 import { VideoCardButtons } from 'src/components/videoCard/buttons/VideoCardButtons';
@@ -203,10 +203,14 @@ describe('comment button', () => {
 
     const slider = wrapper.getByTestId(`slider-panel-${video.id}`);
 
+    expect(await within(slider).queryByText('Reply')).not.toBeInTheDocument();
+
     await userEvent.type(
       within(slider).getByPlaceholderText('Add a comment'),
       'this is a comment',
     );
+
+    expect(await within(slider).queryByText('Reply')).toBeInTheDocument();
 
     await userEvent.click(within(slider).getByText('Reply'));
 
@@ -331,7 +335,7 @@ describe('comment button', () => {
     expect(wrapper.queryByText('this is a comment')).not.toBeInTheDocument();
   });
 
-  it('doesnt display the comment button if playlist is his', () => {
+  it('doesnt display the comment button if playlist isnt his', () => {
     const video = VideoFactory.sample({ id: '123', title: 'title' });
     const client = new FakeBoclipsClient();
     const user = UserFactory.sample();

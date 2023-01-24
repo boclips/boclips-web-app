@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Button from '@boclips-ui/button';
-import CommentSVG from 'resources/icons/comment-icon.svg';
+import CommentSVG from 'src/resources/icons/comment-icon.svg';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
-import Bubble from 'src/views/playlist/comments/Bubble';
-import SliderPanel from 'src/views/playlist/comments/SliderPanel';
+import Bubble from 'src/components/playlists/comments/Bubble';
+import SliderPanel from 'src/components/playlists/comments/SliderPanel';
 import c from 'classnames';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import s from './style.module.less';

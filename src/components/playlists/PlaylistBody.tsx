@@ -9,7 +9,7 @@ import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import VideoGridCard from 'src/components/videoCard/VideoGridCard';
 import { FilterKey } from 'src/types/search/FilterKey';
 import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
-import CommentButton from 'src/views/playlist/comments/CommentButton';
+import CommentButton from 'src/components/playlists/comments/CommentButton';
 import s from './style.module.less';
 import { VideoCardButtons } from '../videoCard/buttons/VideoCardButtons';
 

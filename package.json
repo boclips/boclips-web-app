@@ -47,7 +47,7 @@
     "audit-ci": "^5.1.2",
     "autoprefixer": "10.4.5",
     "boclips-percy-baseline": "0.3.0",
-    "boclips-api-client": "52.17.0",
+    "boclips-api-client": "52.18.1",
     "css-loader": "^6.7.2",
     "css-minimizer-webpack-plugin": "^3.4.1",
     "cypress": "^10.10.0",
