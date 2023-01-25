@@ -12,7 +12,7 @@ const kilobyte = 1024;
 
 module.exports = merge(common, {
   mode: 'production',
-  devtool: false,
+  devtool: 'source-map',
   output: {
     filename: '[name].[fullhash:20].js',
     chunkFilename: '[name].[chunkhash:20].chunk.js',
