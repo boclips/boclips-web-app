@@ -9,6 +9,7 @@ import CloseSVG from 'src/resources/icons/cross-icon.svg';
 import { InputText } from '@boclips-ui/input';
 import AccountSVG from 'src/resources/icons/account-icon.svg';
 import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
+import c from 'classnames';
 import Bubble from './Bubble';
 
 type Props = {
@@ -70,7 +71,7 @@ const SliderPanel = ({
           data-qa="close-button"
         />
       </section>
-      <section className={s.input}>
+      <section className={c(s.input, { [s.margin]: comment.length === 0 })}>
         <Typography.Body className={s.headerText} weight="medium">
           {collection.videos.find((it) => it.id === videoId)?.title}
         </Typography.Body>
@@ -79,7 +80,6 @@ const SliderPanel = ({
           inputType="textarea"
           onChange={(text) => setComment(text)}
           placeholder="Add a comment"
-          height="96px"
         />
         {comment.length > 0 && (
           <Button onClick={() => addComment()} height="32px" text="Reply" />
