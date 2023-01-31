@@ -159,6 +159,7 @@ export const AddToPlaylistButton = ({ videoId, onCleanup, onClick }: Props) => {
           />
         </div>
       )}
+
       <Tooltip text={buttonDescription}>
         <Button
           text={buttonDescription}
@@ -182,6 +183,7 @@ export const AddToPlaylistButton = ({ videoId, onCleanup, onClick }: Props) => {
           height="40px"
         />
       </Tooltip>
+
       {isOpen && !showCreatePlaylistModal && (
         <FocusTrap
           focusTrapOptions={{

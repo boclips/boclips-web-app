@@ -1,10 +1,19 @@
 @import '~@boclips-ui/styles/src/colors';
 
+.buttonsWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.25rem;
+  align-self: flex-end;
+}
+
 .iconOnlyButtons {
   display: flex;
   flex-direction: row;
   --bo-ui-button-svg-height: 18px;
   --bo-ui-button-svg-width: 18px;
+
   & > div {
     margin-right: 0.25rem;
   }

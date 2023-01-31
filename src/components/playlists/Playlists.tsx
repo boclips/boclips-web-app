@@ -121,7 +121,7 @@ const Playlists = () => {
                     </div>
                   }
                   footer={
-                    <div className="w-fit	self-end p-1">
+                    <div className="p-2 items-end flex">
                       <CopyButton
                         ariaLabel="Copy playlist link"
                         textToCopy={`${Constants.HOST}/playlists/${playlist.id}`}

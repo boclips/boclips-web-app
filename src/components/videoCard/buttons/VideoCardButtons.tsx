@@ -3,7 +3,6 @@ import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import { FeatureGate } from 'src/components/common/FeatureGate';
-import c from 'classnames';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import s from './style.module.less';
@@ -41,8 +40,8 @@ export const VideoCardButtons = ({
   };
 
   return (
-    <div className="flex flex-row justify-between" key={`copy-${video.id}`}>
-      <div className={c(s.iconOnlyButtons)}>
+    <div className={s.buttonsWrapper} key={`copy-${video.id}`}>
+      <div className={s.iconOnlyButtons}>
         <AddToPlaylistButton
           videoId={video.id}
           onCleanup={onCleanupAddToPlaylist}

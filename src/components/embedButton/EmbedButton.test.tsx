@@ -1,16 +1,11 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import {
-  fireEvent,
-  render,
-  waitFor,
-  within,
-  screen,
-} from '@testing-library/react';
+import { fireEvent, render, waitFor, within } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { EmbedButton } from 'src/components/embedButton/EmbedButton';
 import React from 'react';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { ToastContainer } from 'react-toastify';
+import userEvent from '@testing-library/user-event';
 
 describe(`embed button`, () => {
   Object.assign(navigator, {
@@ -47,7 +42,7 @@ describe(`embed button`, () => {
     expect(within(notification).getByText('Embed code copied!')).toBeVisible();
   });
 
-  it(`shows tooltip when hovering on button and no label`, () => {
+  it(`shows tooltip when hovering on button and no label`, async () => {
     const video = VideoFactory.sample({});
     const fakeClient = new FakeBoclipsClient();
     const wrapper = render(
@@ -57,7 +52,11 @@ describe(`embed button`, () => {
       </BoclipsClientProvider>,
     );
 
-    fireEvent.mouseOver(wrapper.getByRole('button', { name: 'embed' }));
-    expect(screen.getByText('Get embed code'));
+    await userEvent.hover(wrapper.getByRole('button', { name: 'embed' }));
+
+    await waitFor(() => {
+      expect(wrapper.getByRole('tooltip')).toBeInTheDocument();
+      expect(wrapper.getAllByText('Get embed code')).toHaveLength(2);
+    });
   });
 });

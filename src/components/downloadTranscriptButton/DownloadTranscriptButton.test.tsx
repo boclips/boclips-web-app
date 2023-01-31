@@ -1,5 +1,5 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import React from 'react';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import { DownloadTranscriptButton } from 'src/components/downloadTranscriptButton/DownloadTranscriptButton';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
 import { sleep } from 'src/testSupport/sleep';
+import userEvent from '@testing-library/user-event';
 
 describe(`download transcript button`, () => {
   it(`downloads the transcript on click`, async () => {
@@ -68,7 +69,7 @@ describe(`download transcript button`, () => {
     expect(await wrapper.findByText('Download failed!')).toBeVisible();
   });
 
-  it(`shows tooltip when hovering on button`, () => {
+  it(`shows tooltip when hovering on button`, async () => {
     const video = VideoFactory.sample({});
     const fakeClient = new FakeBoclipsClient();
     const wrapper = render(
@@ -78,9 +79,13 @@ describe(`download transcript button`, () => {
       </BoclipsClientProvider>,
     );
 
-    fireEvent.mouseOver(
+    await userEvent.hover(
       wrapper.getByRole('button', { name: 'download-transcript' }),
     );
-    expect(screen.getByText('Download transcript'));
+
+    await waitFor(() => {
+      expect(wrapper.getByRole('tooltip')).toBeInTheDocument();
+      expect(wrapper.getAllByText('Download transcript')).toHaveLength(2);
+    });
   });
 });

@@ -43,7 +43,7 @@ const VideoGridCard = ({
         video={video}
       />
     }
-    footer={<div className="p-1 self-end">{buttonsRow}</div>}
+    footer={buttonsRow}
   />
 );
 
