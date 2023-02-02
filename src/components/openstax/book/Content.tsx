@@ -19,7 +19,7 @@ interface Props {
 export const Content = ({ book }: Props) => {
   const location = useLocation();
   const [selectedChapter, setSelectedChapter] = useState<OpenstaxChapter>(
-    getSelectedChapter(book, 'chapter-1'),
+    getSelectedChapter(book, 'chapter-0'),
   );
 
   const [selectedChapterElement, setSelectedChapterElement] =

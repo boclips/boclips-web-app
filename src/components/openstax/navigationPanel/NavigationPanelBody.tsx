@@ -24,12 +24,12 @@ interface Props {
 const NavigationPanelBody = ({ book }: Props) => {
   const location = useLocation();
   const [currentSectionLink, setCurrentSectionLink] =
-    useState<string>('chapter-1');
+    useState<string>('chapter-0');
 
   const isSelectedSection = (sectionLink: string) =>
     currentSectionLink === sectionLink;
 
-  const [expandedChapters, setExpandedChapters] = useState(['chapter-1']);
+  const [expandedChapters, setExpandedChapters] = useState(['chapter-0']);
 
   const { setIsOpen } = useOpenstaxMobileMenu();
 
@@ -74,19 +74,19 @@ const NavigationPanelBody = ({ book }: Props) => {
   );
 
   const updateTableOfContent = (newSelection: string) => {
-    const chapterNumber = getSelectedChapter(book, newSelection)?.number;
-    const chapterToExpand = `chapter-${chapterNumber}`;
+    const chapterIndex = getSelectedChapter(book, newSelection)?.index;
+    const chapterToExpand = `chapter-${chapterIndex}`;
 
     setExpandedChapters([chapterToExpand]);
-    handleScrollInTableOfContent(chapterNumber);
+    handleScrollInTableOfContent(chapterIndex);
   };
 
-  const handleScrollInTableOfContent = (chapterNumber: number) => {
+  const handleScrollInTableOfContent = (chapterIndex: number) => {
     const nav = document.getElementById('chapter-nav');
 
     const height = [];
 
-    for (let i = 1; i < chapterNumber; i++) {
+    for (let i = 1; i < chapterIndex; i++) {
       const scroll = document.getElementById(
         `chapter-${i + 1}-nav`,
       )?.offsetHeight;
@@ -116,15 +116,15 @@ const NavigationPanelBody = ({ book }: Props) => {
       >
         {book.chapters.map((chapter) => (
           <Accordion.Item
-            value={`chapter-${chapter.number}`}
-            key={`chapter-${chapter.number}`}
+            value={`chapter-${chapter.index}`}
+            key={`chapter-${chapter.index}`}
             className={s.tocItemWrapper}
           >
             <Accordion.Header
               className="pt-4"
               asChild
               aria-label={chapter.displayLabel}
-              id={`chapter-${chapter.number}-nav`}
+              id={`chapter-${chapter.index}-nav`}
             >
               <Accordion.Trigger
                 aria-label={chapter.displayLabel}

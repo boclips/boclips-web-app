@@ -5,23 +5,17 @@ import {
 } from 'src/types/OpenstaxBook';
 import { ChapterElementInfo } from 'src/components/openstax/book/ChapterElement';
 
-const INITIAL_CHAPTER_NUMBER = 1;
-
-const selectedChapterNumber = (locationHash: string): number => {
-  const matchedChapterNumber = locationHash.match('chapter-(\\d+)-*.*');
-  return matchedChapterNumber
-    ? Number(matchedChapterNumber[1])
-    : INITIAL_CHAPTER_NUMBER;
+const selectedChapterIndex = (locationHash: string): number => {
+  const matchedChapterIndex = locationHash.match('chapter-(\\d+)-*.*');
+  return matchedChapterIndex ? Number(matchedChapterIndex[1]) : 0;
 };
 
 export const getSelectedChapter = (
   book: OpenstaxBook,
   sectionLink: string,
 ): OpenstaxChapter => {
-  const chapterNumber = selectedChapterNumber(sectionLink);
-  const foundChapter = book?.chapters.find(
-    (chapter) => chapter.number === chapterNumber,
-  );
+  const chapterIndex = selectedChapterIndex(sectionLink);
+  const foundChapter = book?.chapters[chapterIndex];
 
   return foundChapter || book.chapters[0];
 };
@@ -56,7 +50,7 @@ export const chapterOverviewInfo = (
   if (chapter.chapterOverview === undefined) return undefined;
 
   return {
-    id: `chapter-${chapter.number}`,
+    id: `chapter-${chapter.index}`,
     displayLabel: chapter.chapterOverview.displayLabel,
     videos: chapter.chapterOverview.videos,
   };
@@ -68,7 +62,7 @@ export const discussionPromptInfo = (
   if (chapter.discussionPrompt === undefined) return undefined;
 
   return {
-    id: `chapter-${chapter.number}-discussion-prompt`,
+    id: `chapter-${chapter.index}-discussion-prompt`,
     displayLabel: chapter.discussionPrompt.displayLabel,
     videos: chapter.discussionPrompt.videos,
   };
@@ -107,7 +101,7 @@ export const sectionInfo = (
   if (section === undefined) return undefined;
 
   return {
-    id: `chapter-${chapter.number}-section-${section.number}`,
+    id: `chapter-${chapter.index}-section-${section.number}`,
     displayLabel: section.displayLabel,
     videos: section.videos,
   };
@@ -177,15 +171,7 @@ const getChapterId = (
   sectionLink: string,
   offset: number,
 ) => {
-  const index = selectedChapterIndex(book, sectionLink);
+  const index = selectedChapterIndex(sectionLink);
   const effectiveIndex = ensureIndex(index + offset, book.chapters);
-  return `chapter-${book.chapters[effectiveIndex].number}`;
+  return `chapter-${effectiveIndex}`;
 };
-
-const selectedChapterIndex = (
-  book: OpenstaxBook,
-  sectionLink: string,
-): number =>
-  book.chapters.findIndex(
-    (chapter) => chapter.number === selectedChapterNumber(sectionLink),
-  );

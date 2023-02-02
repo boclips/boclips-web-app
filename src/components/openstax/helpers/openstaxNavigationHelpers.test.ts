@@ -28,17 +28,22 @@ describe('openstaxNavigationHelper', () => {
   });
 
   it.each([
-    ['chapter-1', 'Chapter Overview'],
-    ['chapter-1-section-1', '1.1 Section 1'],
-    ['chapter-1-discussion-prompt', 'Discussion Prompt'],
-    ['chapter-2', '2.1 Section 1'],
-    ['chapter-2-section-1', '2.1 Section 1'],
-    ['chapter-2-section-2', '2.2 Section 2'],
+    ['chapter-0', 'Chapter Overview', 'chapter-0'],
+    ['chapter-0-section-1', '1.1 Section 1', 'chapter-0-section-1'],
+    [
+      'chapter-0-discussion-prompt',
+      'Discussion Prompt',
+      'chapter-0-discussion-prompt',
+    ],
+    ['chapter-1', '2.1 Section 1', 'chapter-1-section-1'],
+    ['chapter-1-section-1', '2.1 Section 1', 'chapter-1-section-1'],
+    ['chapter-1-section-2', '2.2 Section 2', 'chapter-1-section-2'],
   ])(
     'maps %s correctly to section titled as %s',
-    (key: string, sectionTitle: string) => {
-      const section = getSelectedChapterElement(book, key);
+    (navigationFragment: string, sectionTitle: string, sectionId: string) => {
+      const section = getSelectedChapterElement(book, navigationFragment);
       expect(section.displayLabel).toBe(sectionTitle);
+      expect(section.id).toBe(sectionId);
     },
   );
 
@@ -58,7 +63,7 @@ describe('openstaxNavigationHelper', () => {
   );
 
   it('unknown section in a valid chapter shows the first valid chapter element', () => {
-    const section = getSelectedChapterElement(book, 'chapter-1-section-12');
+    const section = getSelectedChapterElement(book, 'chapter-0-section-12');
     expect(section.displayLabel).toBe('Chapter Overview');
   });
 });

@@ -83,7 +83,7 @@ describe('OpenstaxBook converter', () => {
     expect(openstaxBook.chapters.length).toEqual(1);
     const chapter = openstaxBook.chapters[0];
     expect(chapter.title).toEqual('chapterA');
-    expect(chapter.number).toEqual(1);
+    expect(chapter.index).toEqual(0);
     expect(chapter.displayLabel).toEqual('Chapter 1: chapterA');
     expect(chapter.videoCount).toEqual(4);
     expect(chapter.sections.length).toEqual(2);
@@ -211,21 +211,21 @@ describe('OpenstaxBook converter', () => {
     expect(openstaxBook.chapters[0].discussionPrompt.videos[0].id).toEqual('2');
   });
 
-  it('orders chapters based on their number', () => {
+  it('chapters are indexed properly', () => {
     const apiBook = BookFactory.sample({
       chapters: [
-        ChapterFactory.sample({ number: 3 }),
-        ChapterFactory.sample({ number: 5 }),
-        ChapterFactory.sample({ number: 1 }),
+        ChapterFactory.sample(),
+        ChapterFactory.sample(),
+        ChapterFactory.sample(),
       ],
     });
 
     const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
 
     expect(openstaxBook.chapters.length).toEqual(3);
-    expect(openstaxBook.chapters[0].number).toEqual(1);
-    expect(openstaxBook.chapters[1].number).toEqual(3);
-    expect(openstaxBook.chapters[2].number).toEqual(5);
+    expect(openstaxBook.chapters[0].index).toEqual(0);
+    expect(openstaxBook.chapters[1].index).toEqual(1);
+    expect(openstaxBook.chapters[2].index).toEqual(2);
   });
 
   it('orders sections based on their number', () => {
@@ -246,5 +246,78 @@ describe('OpenstaxBook converter', () => {
     expect(openstaxBook.chapters[0].sections[0].number).toEqual(1);
     expect(openstaxBook.chapters[0].sections[1].number).toEqual(3);
     expect(openstaxBook.chapters[0].sections[2].number).toEqual(12);
+  });
+});
+
+describe('display labels', () => {
+  it('prefixes chapter title with number', () => {
+    const apiBook = BookFactory.sample({
+      chapters: [
+        ChapterFactory.sample({
+          number: 1,
+          title: 'Ducks',
+        }),
+      ],
+    });
+
+    const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
+
+    expect(openstaxBook.chapters[0].displayLabel).toEqual('Chapter 1: Ducks');
+  });
+
+  it('does not prefix with chapter number if title already has it', () => {
+    const apiBook = BookFactory.sample({
+      chapters: [
+        ChapterFactory.sample({
+          title: 'Chapter 1: Ducks',
+        }),
+      ],
+    });
+
+    const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
+
+    expect(openstaxBook.chapters[0].displayLabel).toEqual('Chapter 1: Ducks');
+  });
+
+  it('prefixes section title with number', () => {
+    const apiBook = BookFactory.sample({
+      chapters: [
+        ChapterFactory.sample({
+          title: 'Chapter 1: Ducks',
+          sections: [
+            SectionFactory.sample({
+              title: 'Section',
+              number: 1,
+            }),
+          ],
+        }),
+      ],
+    });
+
+    const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
+
+    const section = openstaxBook.chapters[0].sections[0];
+    expect(section.displayLabel).toEqual('1.1 Section');
+  });
+
+  it('does not prefix with section number if title already has it', () => {
+    const apiBook = BookFactory.sample({
+      chapters: [
+        ChapterFactory.sample({
+          title: 'Chapter 1: Ducks',
+          sections: [
+            SectionFactory.sample({
+              title: '1.1 Section',
+              number: 1,
+            }),
+          ],
+        }),
+      ],
+    });
+
+    const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
+
+    const section = openstaxBook.chapters[0].sections[0];
+    expect(section.displayLabel).toEqual('1.1 Section');
   });
 });

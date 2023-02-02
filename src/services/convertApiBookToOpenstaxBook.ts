@@ -20,7 +20,9 @@ export const convertApiBookToOpenstaxBook = (apiBook: Book): OpenstaxBook => {
     subject: apiBook.subject,
     title: apiBook.title,
     chapters: apiBook.chapters
-      .map(convertApiChapterToOpenstaxChapter)
+      .map((chapter, index) =>
+        convertApiChapterToOpenstaxChapter(chapter, index),
+      )
       .sort((a, b) => a.number - b.number),
     logoUrl: apiBook.logoUrl,
   };
@@ -41,7 +43,11 @@ export const convertApiBookSectionToOpenstaxSection = (
   apiSection: Section,
 ): OpenstaxSection => {
   return {
-    displayLabel: `${chapterNumber}.${apiSection.number} ${apiSection.title}`,
+    displayLabel: apiSection.title.startsWith(
+      `${chapterNumber}.${apiSection.number} `,
+    )
+      ? apiSection.title
+      : `${chapterNumber}.${apiSection.number} ${apiSection.title}`,
     number: apiSection.number,
     title: apiSection.title,
     videoCount: apiSection.videoIds.length,
@@ -52,6 +58,7 @@ export const convertApiBookSectionToOpenstaxSection = (
 
 export const convertApiChapterToOpenstaxChapter = (
   apiChapter: Chapter,
+  index: number,
 ): OpenstaxChapter => {
   let videoCount = 0;
   apiChapter.sections.forEach((section) => {
@@ -59,8 +66,11 @@ export const convertApiChapterToOpenstaxChapter = (
   });
 
   return {
-    displayLabel: `Chapter ${apiChapter.number}: ${apiChapter.title}`,
-    number: apiChapter.number,
+    displayLabel: apiChapter.title.startsWith(`Chapter ${apiChapter.number}: `)
+      ? apiChapter.title
+      : `Chapter ${apiChapter.number}: ${apiChapter.title}`,
+    number: -1,
+    index,
     chapterOverview: getChapterOverview(apiChapter),
     discussionPrompt: getDiscussionPrompt(apiChapter),
     sections: getNumberedSections(apiChapter)

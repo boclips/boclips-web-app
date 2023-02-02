@@ -16,6 +16,7 @@ export interface OpenstaxChapter extends Chapter {
   chapterOverview: OpenstaxChapterIntro;
   discussionPrompt: OpenstaxChapterIntro;
   sections: OpenstaxSection[];
+  index: number;
 }
 
 export interface OpenstaxChapterIntro {
