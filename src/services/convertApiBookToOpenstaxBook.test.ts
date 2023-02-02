@@ -172,7 +172,7 @@ describe('OpenstaxBook converter', () => {
     const section = openstaxBook.chapters[0].sections[0];
     expect(section.displayLabel).toEqual('1.2 sectionA');
     expect(section.title).toEqual('sectionA');
-    expect(section.number).toEqual(2);
+    expect(section.index).toEqual(0);
     expect(section.videos).toEqual(apiBook.chapters[0].sections[0].videos);
     expect(section.videoIds).toEqual(apiBook.chapters[0].sections[0].videoIds);
     expect(section.videoCount).toEqual(2);
@@ -211,7 +211,7 @@ describe('OpenstaxBook converter', () => {
     expect(openstaxBook.chapters[0].discussionPrompt.videos[0].id).toEqual('2');
   });
 
-  it('chapters are indexed properly', () => {
+  it('chapters are indexed based on array position', () => {
     const apiBook = BookFactory.sample({
       chapters: [
         ChapterFactory.sample(),
@@ -228,14 +228,14 @@ describe('OpenstaxBook converter', () => {
     expect(openstaxBook.chapters[2].index).toEqual(2);
   });
 
-  it('orders sections based on their number', () => {
+  it('sections are indexed based on array order', () => {
     const apiBook = BookFactory.sample({
       chapters: [
         ChapterFactory.sample({
           sections: [
-            SectionFactory.sample({ number: 12 }),
-            SectionFactory.sample({ number: 1 }),
-            SectionFactory.sample({ number: 3 }),
+            SectionFactory.sample(),
+            SectionFactory.sample(),
+            SectionFactory.sample(),
           ],
         }),
       ],
@@ -243,9 +243,9 @@ describe('OpenstaxBook converter', () => {
 
     const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
 
-    expect(openstaxBook.chapters[0].sections[0].number).toEqual(1);
-    expect(openstaxBook.chapters[0].sections[1].number).toEqual(3);
-    expect(openstaxBook.chapters[0].sections[2].number).toEqual(12);
+    expect(openstaxBook.chapters[0].sections[0].index).toEqual(0);
+    expect(openstaxBook.chapters[0].sections[1].index).toEqual(1);
+    expect(openstaxBook.chapters[0].sections[2].index).toEqual(2);
   });
 });
 

@@ -27,4 +27,5 @@ export interface OpenstaxChapterIntro {
 export interface OpenstaxSection extends Section {
   videoCount: number;
   displayLabel: string;
+  index: number;
 }

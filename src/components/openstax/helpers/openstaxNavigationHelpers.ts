@@ -36,8 +36,8 @@ export const getSelectedChapterElement = (
     matchingElement = discussionPromptInfo(chapter);
   }
   if (sectionLink.match('chapter-\\d+-section-\\d+$')) {
-    const sectionNumber = Number(sectionLink.split('-')[3]);
-    const section = chapter.sections.find((it) => it.number === sectionNumber);
+    const sectionIndex = Number(sectionLink.split('-')[3]);
+    const section = chapter.sections[sectionIndex];
     matchingElement = sectionInfo(chapter, section);
   }
 
@@ -101,7 +101,7 @@ export const sectionInfo = (
   if (section === undefined) return undefined;
 
   return {
-    id: `chapter-${chapter.index}-section-${section.number}`,
+    id: `chapter-${chapter.index}-section-${section.index}`,
     displayLabel: section.displayLabel,
     videos: section.videos,
   };

@@ -41,6 +41,7 @@ export const convertApiBookToOpenstaxBook = (apiBook: Book): OpenstaxBook => {
 export const convertApiBookSectionToOpenstaxSection = (
   chapterNumber: number,
   apiSection: Section,
+  sectionIndex: number,
 ): OpenstaxSection => {
   return {
     displayLabel: apiSection.title.startsWith(
@@ -53,6 +54,7 @@ export const convertApiBookSectionToOpenstaxSection = (
     videoCount: apiSection.videoIds.length,
     videoIds: apiSection.videoIds,
     videos: apiSection.videos,
+    index: sectionIndex,
   };
 };
 
@@ -69,13 +71,17 @@ export const convertApiChapterToOpenstaxChapter = (
     displayLabel: apiChapter.title.startsWith(`Chapter ${apiChapter.number}: `)
       ? apiChapter.title
       : `Chapter ${apiChapter.number}: ${apiChapter.title}`,
-    number: -1,
+    number: apiChapter.number,
     index,
     chapterOverview: getChapterOverview(apiChapter),
     discussionPrompt: getDiscussionPrompt(apiChapter),
     sections: getNumberedSections(apiChapter)
-      .map((section) =>
-        convertApiBookSectionToOpenstaxSection(apiChapter.number, section),
+      .map((section, sectionIndex) =>
+        convertApiBookSectionToOpenstaxSection(
+          apiChapter.number,
+          section,
+          sectionIndex,
+        ),
       )
       .sort((a, b) => a.number - b.number),
     title: apiChapter.title,

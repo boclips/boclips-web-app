@@ -84,7 +84,7 @@ describe('OpenstaxBookNavigationPanel', () => {
     });
     expect(sectionNinetyNineLink).toHaveAttribute(
       'href',
-      '/explore/openstax/book_id#chapter-0-section-99',
+      '/explore/openstax/book_id#chapter-0-section-0',
     );
 
     const videoLabel = wrapper.getByText('4 videos');
