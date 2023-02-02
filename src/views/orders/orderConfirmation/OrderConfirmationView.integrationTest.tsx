@@ -46,7 +46,7 @@ describe('OrderConfirmationView', () => {
   });
 
   describe('window titles', () => {
-    xit('displays window title', async () => {
+    it('displays window title', async () => {
       const history = createBrowserHistory();
       history.push('/order-confirmed', {
         orderLocation: '123',

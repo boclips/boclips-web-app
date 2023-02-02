@@ -239,25 +239,6 @@ describe('The mighty Bodal', () => {
     expect(wrapper.getByLabelText("Don't focus me")).not.toHaveFocus();
   });
 
-  // Nice to have for later
-  xit('calls onCancel when clicking outside of the modal', () => {
-    const handleCancel = jest.fn();
-
-    const wrapper = render(
-      <div>
-        <div>
-          <Bodal title="Title" onCancel={handleCancel}>
-            <span>i must be here!</span>
-          </Bodal>
-        </div>
-        <div>Hello</div>
-      </div>,
-    );
-
-    fireEvent.click(wrapper.getByText('Hello'));
-    expect(handleCancel).toBeCalledTimes(1);
-  });
-
   it('onCancel invoked when mouse down outside of bodal when closeOnClickOutside prop is set', () => {
     const handleOnCancel = jest.fn();
     const wrapper = render(
