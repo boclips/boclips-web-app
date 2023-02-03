@@ -3,7 +3,6 @@ import HotjarService from 'src/services/analytics/hotjar/HotjarService';
 import Hotjar from 'src/services/analytics/hotjar/Hotjar';
 import mixpanel from 'mixpanel-browser';
 import { Constants } from 'src/AppConstants';
-import BucketService from 'src/services/analytics/bucket/BucketService';
 import { PendoService } from 'src/services/analytics/pendo/PendoService';
 import MixpanelService from './mixpanel/MixpanelService';
 
@@ -15,8 +14,6 @@ export default class AnalyticsFactory {
   private static hotjarService: HotjarService;
 
   private static mixpanelService: MixpanelService;
-
-  private static bucketService: BucketService;
 
   public static appcues(): AnalyticsService {
     if (!this.appcuesService) {
@@ -51,20 +48,5 @@ export default class AnalyticsFactory {
       }
     }
     return this.mixpanelService;
-  }
-
-  public static bucket(): Promise<BucketService> {
-    return import('@bucketco/tracking-sdk').then(({ default: bucket }) => {
-      if (!this.bucketService) {
-        const bucketToken = Constants.BUCKET_TOKEN;
-        if (bucketToken !== null) {
-          bucket.init(bucketToken, {});
-          this.bucketService = new BucketService(bucket);
-        } else {
-          this.bucketService = new BucketService(null);
-        }
-      }
-      return this.bucketService;
-    });
   }
 }

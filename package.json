@@ -107,7 +107,6 @@
     "@boclips-ui/use-media-breakpoints": "3.0.2",
     "@boclips-ui/video-card": "^7.0.6",
     "@boclips-ui/video-card-placeholder": "3.0.2",
-    "@bucketco/tracking-sdk": "^1.0.0",
     "@duetds/date-picker": "^1.4.0",
     "@loadable/component": "^5.15.2",
     "@radix-ui/react-accordion": "^1.0.0",
