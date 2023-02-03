@@ -20,10 +20,10 @@ export const convertApiBookToOpenstaxBook = (apiBook: Book): OpenstaxBook => {
     subject: apiBook.subject,
     title: apiBook.title,
     chapters: apiBook.chapters
+      .sort((a, b) => a.number - b.number)
       .map((chapter, index) =>
         convertApiChapterToOpenstaxChapter(chapter, index),
-      )
-      .sort((a, b) => a.number - b.number),
+      ),
     logoUrl: apiBook.logoUrl,
   };
 
@@ -76,14 +76,14 @@ export const convertApiChapterToOpenstaxChapter = (
     chapterOverview: getChapterOverview(apiChapter),
     discussionPrompt: getDiscussionPrompt(apiChapter),
     sections: getNumberedSections(apiChapter)
+      .sort((a, b) => a.number - b.number)
       .map((section, sectionIndex) =>
         convertApiBookSectionToOpenstaxSection(
           apiChapter.number,
           section,
           sectionIndex,
         ),
-      )
-      .sort((a, b) => a.number - b.number),
+      ),
     title: apiChapter.title,
     videoCount,
   };

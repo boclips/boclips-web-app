@@ -89,6 +89,63 @@ describe('OpenstaxBook converter', () => {
     expect(chapter.sections.length).toEqual(2);
   });
 
+  it('orders chapters and sections according to their numbers', () => {
+    const apiBook = BookFactory.sample({
+      chapters: [
+        ChapterFactory.sample({
+          number: 2,
+          sections: [
+            SectionFactory.sample({
+              number: 3,
+            }),
+            SectionFactory.sample({
+              number: 1,
+            }),
+            SectionFactory.sample({
+              number: 2,
+            }),
+          ],
+        }),
+        ChapterFactory.sample({
+          number: 1,
+          sections: [
+            SectionFactory.sample({
+              number: 2,
+            }),
+            SectionFactory.sample({
+              number: 1,
+            }),
+            SectionFactory.sample({
+              number: 3,
+            }),
+          ],
+        }),
+      ],
+    });
+
+    const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
+
+    const chapter1 = openstaxBook.chapters[0];
+    expect(chapter1.number).toEqual(1);
+    expect(chapter1.index).toEqual(0);
+    expect(chapter1.sections[0].number).toEqual(1);
+    expect(chapter1.sections[0].index).toEqual(0);
+    expect(chapter1.sections[1].number).toEqual(2);
+    expect(chapter1.sections[1].index).toEqual(1);
+    expect(chapter1.sections[2].number).toEqual(3);
+    expect(chapter1.sections[2].index).toEqual(2);
+
+    const chapter2 = openstaxBook.chapters[1];
+    expect(chapter2.number).toEqual(2);
+    expect(chapter2.index).toEqual(1);
+    expect(chapter2.sections[0].number).toEqual(1);
+    expect(chapter2.sections[0].index).toEqual(0);
+    expect(chapter2.sections[1].number).toEqual(2);
+    expect(chapter2.sections[1].index).toEqual(1);
+    expect(chapter2.sections[2].number).toEqual(3);
+    expect(chapter2.sections[2].index).toEqual(2);
+  });
+
   describe('chapter video count', () => {
     it("returns 0 when no videos are mapped to chapter of it's sections", () => {
       const chapter: Chapter = ChapterFactory.sample({
