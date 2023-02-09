@@ -78,6 +78,11 @@ describe('collapsable filter', () => {
         'Best for reexamining previously learned facts, ideas, or concepts',
       ),
     ).toBeInTheDocument();
+    expect(
+      wrapper.getByText(
+        'Best for flexible and adaptive facts, ideas, or concepts',
+      ),
+    ).toBeInTheDocument();
   });
 
   const renderWrapper = (title: string, contents: string) => {

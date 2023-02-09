@@ -5,6 +5,7 @@ import TutorialSVG from 'src/resources/icons/bestFor/tutorial.svg';
 import ApplicationSVG from 'src/resources/icons/bestFor/application.svg';
 import SynthesisSVG from 'src/resources/icons/bestFor/synthesis.svg';
 import ReviewSVG from 'src/resources/icons/bestFor/review.svg';
+import OtherSVG from 'src/resources/icons/bestFor/other.svg';
 import React from 'react';
 
 export const bestForInfo = [
@@ -47,7 +48,7 @@ export const bestForInfo = [
   },
   {
     title: 'Other',
-    icon: <ReviewSVG />,
-    description: 'Other',
+    icon: <OtherSVG />,
+    description: 'Best for flexible and adaptive facts, ideas, or concepts',
   },
 ];
