@@ -9,6 +9,8 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { MemoryRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import userEvent from '@testing-library/user-event';
+import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
+import dayjs from 'dayjs';
 
 describe(`VideoGridCard`, () => {
   it('should call onfilterchange when clicking channel name', () => {
@@ -59,6 +61,29 @@ describe(`VideoGridCard`, () => {
 
     expect(wrapper.getByText('Review')).toBeInTheDocument();
     expect(wrapper.queryByText('Synthesis')).not.toBeInTheDocument();
+  });
+
+  it('should display hours of the duration when duration more than 60 mins', () => {
+    const video = VideoFactory.sample({
+      createdBy: 'Channel-1',
+      channelId: 'channel-1-id',
+      bestFor: [{ label: 'Review' }, { label: 'Synthesis' }],
+      playback: PlaybackFactory.sample({ duration: dayjs.duration('PT1H36S') }),
+    });
+
+    const wrapper = render(
+      <MemoryRouter>
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <QueryClientProvider client={new QueryClient()}>
+            <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+              <VideoGridCard video={video} buttonsRow={<div />} />
+            </BoclipsSecurityProvider>
+          </QueryClientProvider>
+        </BoclipsClientProvider>
+      </MemoryRouter>,
+    );
+
+    expect(wrapper.getByText('1:00:36')).toBeInTheDocument();
   });
 
   it('should display best for tag description when hovered', async () => {

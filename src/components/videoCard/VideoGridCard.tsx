@@ -31,7 +31,9 @@ const VideoGridCard = ({
     playerBadge={
       video.playback.duration && (
         <div className="text-white">
-          {video.playback.duration.format('mm:ss')}
+          {video.playback.duration.asMinutes() > 60
+            ? video.playback.duration.format('H:mm:ss')
+            : video.playback.duration.format('mm:ss')}
         </div>
       )
     }
