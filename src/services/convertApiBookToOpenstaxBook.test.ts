@@ -57,7 +57,7 @@ describe('OpenstaxBook converter', () => {
     const apiBook: Book = BookFactory.sample({
       chapters: [
         {
-          number: 1,
+          index: 0,
           title: 'chapterA',
           sections: [
             SectionFactory.sample({
@@ -84,66 +84,8 @@ describe('OpenstaxBook converter', () => {
     const chapter = openstaxBook.chapters[0];
     expect(chapter.title).toEqual('chapterA');
     expect(chapter.index).toEqual(0);
-    expect(chapter.displayLabel).toEqual('Chapter 1: chapterA');
     expect(chapter.videoCount).toEqual(4);
     expect(chapter.sections.length).toEqual(2);
-  });
-
-  it('orders chapters and sections according to their numbers', () => {
-    const apiBook = BookFactory.sample({
-      chapters: [
-        ChapterFactory.sample({
-          number: 2,
-          sections: [
-            SectionFactory.sample({
-              number: 3,
-            }),
-            SectionFactory.sample({
-              number: 1,
-            }),
-            SectionFactory.sample({
-              number: 2,
-            }),
-          ],
-        }),
-        ChapterFactory.sample({
-          number: 1,
-          sections: [
-            SectionFactory.sample({
-              number: 2,
-            }),
-            SectionFactory.sample({
-              number: 1,
-            }),
-            SectionFactory.sample({
-              number: 3,
-            }),
-          ],
-        }),
-      ],
-    });
-
-    const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
-
-    const chapter1 = openstaxBook.chapters[0];
-    expect(chapter1.number).toEqual(1);
-    expect(chapter1.index).toEqual(0);
-    expect(chapter1.sections[0].number).toEqual(1);
-    expect(chapter1.sections[0].index).toEqual(0);
-    expect(chapter1.sections[1].number).toEqual(2);
-    expect(chapter1.sections[1].index).toEqual(1);
-    expect(chapter1.sections[2].number).toEqual(3);
-    expect(chapter1.sections[2].index).toEqual(2);
-
-    const chapter2 = openstaxBook.chapters[1];
-    expect(chapter2.number).toEqual(2);
-    expect(chapter2.index).toEqual(1);
-    expect(chapter2.sections[0].number).toEqual(1);
-    expect(chapter2.sections[0].index).toEqual(0);
-    expect(chapter2.sections[1].number).toEqual(2);
-    expect(chapter2.sections[1].index).toEqual(1);
-    expect(chapter2.sections[2].number).toEqual(3);
-    expect(chapter2.sections[2].index).toEqual(2);
   });
 
   describe('chapter video count', () => {
@@ -207,11 +149,11 @@ describe('OpenstaxBook converter', () => {
     const apiBook: Book = BookFactory.sample({
       chapters: [
         ChapterFactory.sample({
-          number: 1,
+          index: 0,
           sections: [
             {
               title: 'sectionA',
-              number: 2,
+              index: 0,
               videos: [
                 VideoFactory.sample({ id: '1' }),
                 VideoFactory.sample({ id: '2' }),
@@ -227,7 +169,6 @@ describe('OpenstaxBook converter', () => {
     expect(openstaxBook.chapters.length).toEqual(1);
     expect(openstaxBook.chapters[0].sections.length).toEqual(1);
     const section = openstaxBook.chapters[0].sections[0];
-    expect(section.displayLabel).toEqual('1.2 sectionA');
     expect(section.title).toEqual('sectionA');
     expect(section.index).toEqual(0);
     expect(section.videos).toEqual(apiBook.chapters[0].sections[0].videos);
@@ -239,14 +180,16 @@ describe('OpenstaxBook converter', () => {
     const apiBook: Book = BookFactory.sample({
       chapters: [
         ChapterFactory.sample({
-          number: 1,
+          index: 0,
           sections: [
             {
+              index: 0,
               title: 'Chapter Overview',
               videoIds: [],
               videos: [VideoFactory.sample({ id: '1' })],
             },
             {
+              index: 1,
               title: 'Discussion Prompt',
               videoIds: [],
               videos: [VideoFactory.sample({ id: '2' })],
@@ -258,22 +201,22 @@ describe('OpenstaxBook converter', () => {
 
     const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
     expect(openstaxBook.chapters[0].sections).toHaveLength(0);
-    expect(openstaxBook.chapters[0].chapterOverview.displayLabel).toEqual(
+    expect(openstaxBook.chapters[0].chapterOverview.title).toEqual(
       'Chapter Overview',
     );
     expect(openstaxBook.chapters[0].chapterOverview.videos[0].id).toEqual('1');
-    expect(openstaxBook.chapters[0].discussionPrompt.displayLabel).toEqual(
+    expect(openstaxBook.chapters[0].discussionPrompt.title).toEqual(
       'Discussion Prompt',
     );
     expect(openstaxBook.chapters[0].discussionPrompt.videos[0].id).toEqual('2');
   });
 
-  it('chapters are indexed based on array position', () => {
+  it('chapters order received from the backend is maintained', () => {
     const apiBook = BookFactory.sample({
       chapters: [
-        ChapterFactory.sample(),
-        ChapterFactory.sample(),
-        ChapterFactory.sample(),
+        ChapterFactory.sample({ index: 0 }),
+        ChapterFactory.sample({ index: 2 }),
+        ChapterFactory.sample({ index: 1 }),
       ],
     });
 
@@ -281,18 +224,18 @@ describe('OpenstaxBook converter', () => {
 
     expect(openstaxBook.chapters.length).toEqual(3);
     expect(openstaxBook.chapters[0].index).toEqual(0);
-    expect(openstaxBook.chapters[1].index).toEqual(1);
-    expect(openstaxBook.chapters[2].index).toEqual(2);
+    expect(openstaxBook.chapters[1].index).toEqual(2);
+    expect(openstaxBook.chapters[2].index).toEqual(1);
   });
 
-  it('sections are indexed based on array order', () => {
+  it('sections order received from the backend is maintained', () => {
     const apiBook = BookFactory.sample({
       chapters: [
         ChapterFactory.sample({
           sections: [
-            SectionFactory.sample(),
-            SectionFactory.sample(),
-            SectionFactory.sample(),
+            SectionFactory.sample({ index: 0 }),
+            SectionFactory.sample({ index: 2 }),
+            SectionFactory.sample({ index: 1 }),
           ],
         }),
       ],
@@ -301,80 +244,7 @@ describe('OpenstaxBook converter', () => {
     const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
 
     expect(openstaxBook.chapters[0].sections[0].index).toEqual(0);
-    expect(openstaxBook.chapters[0].sections[1].index).toEqual(1);
-    expect(openstaxBook.chapters[0].sections[2].index).toEqual(2);
-  });
-});
-
-describe('display labels', () => {
-  it('prefixes chapter title with number', () => {
-    const apiBook = BookFactory.sample({
-      chapters: [
-        ChapterFactory.sample({
-          number: 1,
-          title: 'Ducks',
-        }),
-      ],
-    });
-
-    const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
-
-    expect(openstaxBook.chapters[0].displayLabel).toEqual('Chapter 1: Ducks');
-  });
-
-  it('does not prefix with chapter number if title already has it', () => {
-    const apiBook = BookFactory.sample({
-      chapters: [
-        ChapterFactory.sample({
-          title: 'Chapter 1: Ducks',
-        }),
-      ],
-    });
-
-    const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
-
-    expect(openstaxBook.chapters[0].displayLabel).toEqual('Chapter 1: Ducks');
-  });
-
-  it('prefixes section title with number', () => {
-    const apiBook = BookFactory.sample({
-      chapters: [
-        ChapterFactory.sample({
-          title: 'Chapter 1: Ducks',
-          sections: [
-            SectionFactory.sample({
-              title: 'Section',
-              number: 1,
-            }),
-          ],
-        }),
-      ],
-    });
-
-    const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
-
-    const section = openstaxBook.chapters[0].sections[0];
-    expect(section.displayLabel).toEqual('1.1 Section');
-  });
-
-  it('does not prefix with section number if title already has it', () => {
-    const apiBook = BookFactory.sample({
-      chapters: [
-        ChapterFactory.sample({
-          title: 'Chapter 1: Ducks',
-          sections: [
-            SectionFactory.sample({
-              title: '1.1 Section',
-              number: 1,
-            }),
-          ],
-        }),
-      ],
-    });
-
-    const openstaxBook = convertApiBookToOpenstaxBook(apiBook);
-
-    const section = openstaxBook.chapters[0].sections[0];
-    expect(section.displayLabel).toEqual('1.1 Section');
+    expect(openstaxBook.chapters[0].sections[1].index).toEqual(2);
+    expect(openstaxBook.chapters[0].sections[2].index).toEqual(1);
   });
 });

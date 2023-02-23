@@ -12,20 +12,16 @@ export interface OpenstaxBook extends Book {
 
 export interface OpenstaxChapter extends Chapter {
   videoCount: number;
-  displayLabel: string;
   chapterOverview: OpenstaxChapterIntro;
   discussionPrompt: OpenstaxChapterIntro;
   sections: OpenstaxSection[];
-  index: number;
 }
 
 export interface OpenstaxChapterIntro {
-  displayLabel: string;
+  title: string;
   videos: Video[];
 }
 
 export interface OpenstaxSection extends Section {
   videoCount: number;
-  displayLabel: string;
-  index: number;
 }

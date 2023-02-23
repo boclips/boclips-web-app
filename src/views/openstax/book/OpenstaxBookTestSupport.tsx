@@ -37,12 +37,12 @@ export const createBook = () => {
     subject: 'Essentials',
     chapters: [
       {
-        title: 'Introduction',
-        number: 1,
+        title: 'Chapter 1: Introduction',
+        index: 0,
         sections: [
           {
-            title: 'Life at the coop',
-            number: 1,
+            title: '1.1 Life at the coop',
+            index: 2,
             videos: [
               VideoFactory.sample({
                 title: 'Baby ducks playing',
@@ -52,30 +52,32 @@ export const createBook = () => {
             videoIds: ['2'],
           },
           {
-            title: 'Adventures outside',
-            number: 2,
+            title: '1.2 Adventures outside',
+            index: 3,
             videos: [],
             videoIds: [],
           },
           {
             title: 'Chapter Overview',
+            index: 0,
             videos: [VideoFactory.sample({ title: 'Baby ducks playing' })],
             videoIds: ['2'],
           },
           {
             title: 'Discussion Prompt',
+            index: 1,
             videos: [VideoFactory.sample({ title: 'Baby ducks playing' })],
             videoIds: ['2'],
           },
         ],
       },
       {
-        title: 'Epilogue',
-        number: 2,
+        title: 'Chapter 2: Epilogue',
+        index: 1,
         sections: [
           {
-            title: 'This is the end',
-            number: 1,
+            title: '2.1 This is the end',
+            index: 0,
             videos: [VideoFactory.sample({ title: 'Baby ducks playing' })],
             videoIds: ['2'],
           },

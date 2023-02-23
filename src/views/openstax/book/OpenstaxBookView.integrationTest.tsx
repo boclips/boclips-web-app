@@ -192,12 +192,12 @@ describe('OpenstaxBookView', () => {
       subject: 'Essentials',
       chapters: [
         {
-          title: 'Introduction',
-          number: 1,
+          title: 'Chapter 1: Introduction',
+          index: 0,
           sections: [
             {
-              title: 'Life at the coop',
-              number: 1,
+              title: '1.1 Life at the coop',
+              index: 0,
               videos: [
                 VideoFactory.sample({
                   title: 'Baby ducks playing',
@@ -371,8 +371,8 @@ describe('OpenstaxBookView', () => {
         subject: 'Essentials',
         chapters: [
           {
-            title: 'Introduction',
-            number: 1,
+            title: 'Chapter 1: Introduction',
+            index: 0,
             sections: [SectionFactory.sample()],
           },
         ],

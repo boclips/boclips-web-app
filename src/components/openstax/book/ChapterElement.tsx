@@ -9,7 +9,7 @@ import { VideoGridCardContainer } from './VideoGridCardContainer';
 
 export interface ChapterElementInfo {
   id: string;
-  displayLabel: string;
+  title: string;
   videos: Video[];
 }
 
@@ -24,7 +24,7 @@ export const ChapterElement = ({ info }: Props) => {
   return (
     <section className={c(s.section)} id={info.id}>
       <Typography.H3 size="xs" className="text-gray-800 my-4" weight="regular">
-        {info.displayLabel}{' '}
+        {info.title}{' '}
         <span className="text-gray-700">{numberOfVideosLabel}</span>
       </Typography.H3>
       {videoCount > 0 ? (

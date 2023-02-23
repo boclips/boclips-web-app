@@ -18,12 +18,12 @@ describe('OpenstaxBookView - accessibility', () => {
       subject: 'Essentials',
       chapters: [
         {
-          title: 'Introduction',
-          number: 1,
+          title: 'Chapter 1: Introduction',
+          index: 0,
           sections: [
             {
-              title: 'Section 1',
-              number: 1,
+              title: '1.1 Section 1',
+              index: 0,
               videos: [
                 VideoFactory.sample({
                   id: '1',
@@ -34,8 +34,8 @@ describe('OpenstaxBookView - accessibility', () => {
               videoIds: ['1'],
             },
             {
-              title: 'Section 2',
-              number: 2,
+              title: '1.2 Section 2',
+              index: 1,
               videos: [
                 VideoFactory.sample({
                   id: '2',
@@ -48,12 +48,12 @@ describe('OpenstaxBookView - accessibility', () => {
           ],
         },
         {
-          title: 'Epilogue',
-          number: 2,
+          title: 'Chapter 2: Epilogue',
+          index: 1,
           sections: [
             {
-              title: 'Section 1',
-              number: 1,
+              title: '2.1 Section 1',
+              index: 0,
               videos: [
                 VideoFactory.sample({
                   id: '3',
@@ -64,8 +64,8 @@ describe('OpenstaxBookView - accessibility', () => {
               videoIds: ['3'],
             },
             {
-              title: 'Section 2',
-              number: 2,
+              title: '2.2 Section 2',
+              index: 1,
               videos: [
                 VideoFactory.sample({
                   id: '4',

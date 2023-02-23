@@ -15,7 +15,9 @@ export const getSelectedChapter = (
   sectionLink: string,
 ): OpenstaxChapter => {
   const chapterIndex = selectedChapterIndex(sectionLink);
-  const foundChapter = book?.chapters[chapterIndex];
+  const foundChapter = book?.chapters.find(
+    (chapter) => chapter.index === chapterIndex,
+  );
 
   return foundChapter || book.chapters[0];
 };
@@ -37,8 +39,11 @@ export const getSelectedChapterElement = (
   }
   if (sectionLink.match('chapter-\\d+-section-\\d+$')) {
     const sectionIndex = Number(sectionLink.split('-')[3]);
-    const section = chapter.sections[sectionIndex];
-    matchingElement = sectionInfo(chapter, section);
+    const foundSection = chapter.sections.find(
+      (section) => section.index === sectionIndex,
+    );
+
+    matchingElement = sectionInfo(chapter, foundSection);
   }
 
   return matchingElement !== undefined ? matchingElement : defaultFirstElement;
@@ -51,7 +56,7 @@ export const chapterOverviewInfo = (
 
   return {
     id: `chapter-${chapter.index}`,
-    displayLabel: chapter.chapterOverview.displayLabel,
+    title: chapter.chapterOverview.title,
     videos: chapter.chapterOverview.videos,
   };
 };
@@ -63,7 +68,7 @@ export const discussionPromptInfo = (
 
   return {
     id: `chapter-${chapter.index}-discussion-prompt`,
-    displayLabel: chapter.discussionPrompt.displayLabel,
+    title: chapter.discussionPrompt.title,
     videos: chapter.discussionPrompt.videos,
   };
 };
@@ -96,13 +101,13 @@ export const firstChapterElementInfo = (
 
 export const sectionInfo = (
   chapter: OpenstaxChapter,
-  section: OpenstaxSection,
+  section: OpenstaxSection | undefined,
 ): ChapterElementInfo => {
   if (section === undefined) return undefined;
 
   return {
     id: `chapter-${chapter.index}-section-${section.index}`,
-    displayLabel: section.displayLabel,
+    title: section.title,
     videos: section.videos,
   };
 };

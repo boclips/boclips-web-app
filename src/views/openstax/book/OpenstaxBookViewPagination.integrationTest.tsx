@@ -24,15 +24,17 @@ describe('Openstax book view pagination buttons', () => {
         subject: 'Essentials',
         chapters: [
           {
-            title: 'Introduction',
-            number: 1,
+            title: 'Chapter 1: Introduction',
+            index: 0,
             sections: [
               {
+                index: 0,
                 title: 'Chapter Overview',
                 videos: [VideoFactory.sample({ title: 'Baby ducks playing' })],
                 videoIds: ['2'],
               },
               {
+                index: 1,
                 title: 'Discussion Prompt',
                 videos: [VideoFactory.sample({ title: 'Baby ducks playing' })],
                 videoIds: ['2'],
@@ -95,17 +97,18 @@ describe('Openstax book view pagination buttons', () => {
         subject: 'Essentials',
         chapters: [
           {
-            title: 'Introduction',
-            number: 1,
+            title: 'Chapter 1: Introduction',
+            index: 0,
             sections: [
               {
+                index: 0,
                 title: 'Chapter Overview',
                 videos: [VideoFactory.sample({ title: 'Baby ducks playing' })],
                 videoIds: ['2'],
               },
               {
-                title: 'Adventures outside',
-                number: 99,
+                index: 1,
+                title: '1.99 Adventures outside',
                 videos: [],
                 videoIds: [],
               },
@@ -171,24 +174,24 @@ describe('Openstax book view pagination buttons', () => {
         subject: 'Essentials',
         chapters: [
           {
-            title: 'Introduction',
-            number: 1,
+            title: 'Chapter 1: Introduction',
+            index: 0,
             sections: [
               {
-                title: 'The beginning',
-                number: 1,
+                title: '1.1 The beginning',
+                index: 0,
                 videos: [],
                 videoIds: [],
               },
             ],
           },
           {
-            title: 'Epilogue',
-            number: 2,
+            title: 'Chapter 2: Epilogue',
+            index: 1,
             sections: [
               {
-                title: 'The end',
-                number: 1,
+                title: '2.1 The end',
+                index: 0,
                 videos: [],
                 videoIds: [],
               },
@@ -248,24 +251,24 @@ describe('Openstax book view pagination buttons', () => {
         subject: 'Essentials',
         chapters: [
           {
-            title: 'Introduction',
-            number: 1,
+            title: 'Chapter 1: Introduction',
+            index: 0,
             sections: [
               {
-                title: 'The beginning',
-                number: 1,
+                title: '1.1 The beginning',
+                index: 0,
                 videos: [],
                 videoIds: [],
               },
             ],
           },
           {
-            title: 'Epilogue',
-            number: 99,
+            title: 'Chapter 99: Epilogue',
+            index: 1,
             sections: [
               {
-                title: 'The end',
-                number: 1,
+                title: '99.1 The end',
+                index: 0,
                 videos: [],
                 videoIds: [],
               },
@@ -325,24 +328,24 @@ describe('Openstax book view pagination buttons', () => {
         subject: 'Essentials',
         chapters: [
           {
-            title: 'Introduction',
-            number: 1,
+            title: 'Chapter 1: Introduction',
+            index: 0,
             sections: [
               {
-                title: 'The beginning',
-                number: 1,
+                title: '1.1 The beginning',
+                index: 0,
                 videos: [],
                 videoIds: [],
               },
             ],
           },
           {
-            title: 'Epilogue',
-            number: 2,
+            title: 'Chapter 2: Epilogue',
+            index: 1,
             sections: [
               {
-                title: 'The end',
-                number: 1,
+                title: '2.1 The end',
+                index: 0,
                 videos: [],
                 videoIds: [],
               },

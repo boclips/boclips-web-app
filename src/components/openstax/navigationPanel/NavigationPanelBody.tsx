@@ -123,15 +123,15 @@ const NavigationPanelBody = ({ book }: Props) => {
             <Accordion.Header
               className="pt-4"
               asChild
-              aria-label={chapter.displayLabel}
+              aria-label={chapter.title}
               id={`chapter-${chapter.index}-nav`}
             >
               <Accordion.Trigger
-                aria-label={chapter.displayLabel}
+                aria-label={chapter.title}
                 className={s.accordionTrigger}
               >
                 <Typography.H2 size="xs" className={s.tocItem}>
-                  <span className={s.label}>{chapter.displayLabel}</span>
+                  <span className={s.label}>{chapter.title}</span>
                   <span className={s.icon}>
                     <ChevronDownIcon aria-hidden />
                   </span>
@@ -144,17 +144,17 @@ const NavigationPanelBody = ({ book }: Props) => {
             <Accordion.Content>
               {chapter.chapterOverview &&
                 renderSectionLevelLabel(
-                  chapter.chapterOverview.displayLabel,
+                  chapter.chapterOverview.title,
                   chapterOverviewInfo(chapter).id,
                 )}
               {chapter.discussionPrompt &&
                 renderSectionLevelLabel(
-                  chapter.discussionPrompt.displayLabel,
+                  chapter.discussionPrompt.title,
                   discussionPromptInfo(chapter).id,
                 )}
               {chapter.sections.map((section) =>
                 renderSectionLevelLabel(
-                  section.displayLabel,
+                  section.title,
                   sectionInfo(chapter, section).id,
                 ),
               )}

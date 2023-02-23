@@ -24,22 +24,22 @@ describe('OpenstaxBookNavigationPanel', () => {
       logoUrl: 'test',
       chapters: [
         ChapterFactory.sample({
-          number: 1,
-          title: 'should show chapter 1',
+          index: 0,
+          title: 'Chapter 1: should show chapter 1',
           sections: [
             SectionFactory.sample({
-              number: undefined,
+              index: 0,
               title: 'Chapter Overview',
               videoIds: ['1'],
             }),
             SectionFactory.sample({
-              number: undefined,
+              index: 1,
               title: 'Discussion Prompt',
               videoIds: ['2'],
             }),
             SectionFactory.sample({
-              number: 99,
-              title: 'section 99',
+              index: 2,
+              title: '1.99 section 99',
               videoIds: ['1', '2'],
             }),
           ],
@@ -84,7 +84,7 @@ describe('OpenstaxBookNavigationPanel', () => {
     });
     expect(sectionNinetyNineLink).toHaveAttribute(
       'href',
-      '/explore/openstax/book_id#chapter-0-section-0',
+      '/explore/openstax/book_id#chapter-0-section-2',
     );
 
     const videoLabel = wrapper.getByText('4 videos');
@@ -170,23 +170,23 @@ describe('OpenstaxBookNavigationPanel', () => {
     const book: OpenstaxBook = OpenstaxBookFactory.sample({
       chapters: [
         ChapterFactory.sample({
-          number: 1,
-          title: 'default expanded',
+          index: 0,
+          title: 'Chapter 1: default expanded',
           sections: [
             SectionFactory.sample({
-              number: 1,
-              title: 'initially visible',
+              index: 0,
+              title: '1.1 initially visible',
               videoIds: ['1', '2'],
             }),
           ],
         }),
         ChapterFactory.sample({
-          number: 2,
-          title: 'default collapsed',
+          index: 1,
+          title: 'Chapter 2: default collapsed',
           sections: [
             SectionFactory.sample({
-              number: 1,
-              title: 'initially hidden',
+              index: 0,
+              title: '2.1 initially hidden',
               videoIds: ['1', '2'],
             }),
           ],

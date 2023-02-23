@@ -10,18 +10,18 @@ describe('openstaxNavigationHelper', () => {
   const book: OpenstaxBook = OpenstaxBookFactory.sample({
     chapters: [
       ChapterFactory.sample({
-        number: 1,
+        index: 0,
         sections: [
-          SectionFactory.sample({ title: 'Chapter Overview' }),
-          SectionFactory.sample({ number: 1, title: 'Section 1' }),
-          SectionFactory.sample({ title: 'Discussion Prompt' }),
+          SectionFactory.sample({ index: 0, title: 'Chapter Overview' }),
+          SectionFactory.sample({ index: 2, title: '1.1 Section 1' }),
+          SectionFactory.sample({ index: 1, title: 'Discussion Prompt' }),
         ],
       }),
       ChapterFactory.sample({
-        number: 2,
+        index: 1,
         sections: [
-          SectionFactory.sample({ number: 1, title: 'Section 1' }),
-          SectionFactory.sample({ number: 2, title: 'Section 2' }),
+          SectionFactory.sample({ index: 0, title: '2.1 Section 1' }),
+          SectionFactory.sample({ index: 1, title: '2.2 Section 2' }),
         ],
       }),
     ],
@@ -29,7 +29,7 @@ describe('openstaxNavigationHelper', () => {
 
   it.each([
     ['chapter-0', 'Chapter Overview', 'chapter-0'],
-    ['chapter-0-section-0', '1.1 Section 1', 'chapter-0-section-0'],
+    ['chapter-0-section-2', '1.1 Section 1', 'chapter-0-section-2'],
     [
       'chapter-0-discussion-prompt',
       'Discussion Prompt',
@@ -42,7 +42,7 @@ describe('openstaxNavigationHelper', () => {
     'maps %s correctly to section titled as %s',
     (navigationFragment: string, sectionTitle: string, sectionId: string) => {
       const section = getSelectedChapterElement(book, navigationFragment);
-      expect(section.displayLabel).toBe(sectionTitle);
+      expect(section.title).toBe(sectionTitle);
       expect(section.id).toBe(sectionId);
     },
   );
@@ -54,16 +54,17 @@ describe('openstaxNavigationHelper', () => {
     ['discussion-prompt'],
     ['chapter-overview'],
     ['blabla'],
+    ['chapter-0-section-2137'],
   ])(
     'unknown key %s is mapped to first available section in the book',
     (key: string) => {
       const section = getSelectedChapterElement(book, key);
-      expect(section.displayLabel).toBe('Chapter Overview');
+      expect(section.title).toBe('Chapter Overview');
     },
   );
 
   it('unknown section in a valid chapter shows the first valid chapter element', () => {
     const section = getSelectedChapterElement(book, 'chapter-0-section-12');
-    expect(section.displayLabel).toBe('Chapter Overview');
+    expect(section.title).toBe('Chapter Overview');
   });
 });

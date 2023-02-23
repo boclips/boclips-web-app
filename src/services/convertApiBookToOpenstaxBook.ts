@@ -19,11 +19,9 @@ export const convertApiBookToOpenstaxBook = (apiBook: Book): OpenstaxBook => {
     videoCount: 0,
     subject: apiBook.subject,
     title: apiBook.title,
-    chapters: apiBook.chapters
-      .sort((a, b) => a.number - b.number)
-      .map((chapter, index) =>
-        convertApiChapterToOpenstaxChapter(chapter, index),
-      ),
+    chapters: apiBook.chapters.map((chapter) =>
+      convertApiChapterToOpenstaxChapter(chapter),
+    ),
     logoUrl: apiBook.logoUrl,
   };
 
@@ -39,28 +37,19 @@ export const convertApiBookToOpenstaxBook = (apiBook: Book): OpenstaxBook => {
 };
 
 export const convertApiBookSectionToOpenstaxSection = (
-  chapterNumber: number,
   apiSection: Section,
-  sectionIndex: number,
 ): OpenstaxSection => {
   return {
-    displayLabel: apiSection.title.startsWith(
-      `${chapterNumber}.${apiSection.number} `,
-    )
-      ? apiSection.title
-      : `${chapterNumber}.${apiSection.number} ${apiSection.title}`,
-    number: apiSection.number,
+    index: apiSection.index,
     title: apiSection.title,
     videoCount: apiSection.videoIds.length,
     videoIds: apiSection.videoIds,
     videos: apiSection.videos,
-    index: sectionIndex,
   };
 };
 
 export const convertApiChapterToOpenstaxChapter = (
   apiChapter: Chapter,
-  index: number,
 ): OpenstaxChapter => {
   let videoCount = 0;
   apiChapter.sections.forEach((section) => {
@@ -68,22 +57,12 @@ export const convertApiChapterToOpenstaxChapter = (
   });
 
   return {
-    displayLabel: apiChapter.title.startsWith(`Chapter ${apiChapter.number}: `)
-      ? apiChapter.title
-      : `Chapter ${apiChapter.number}: ${apiChapter.title}`,
-    number: apiChapter.number,
-    index,
+    index: apiChapter.index,
     chapterOverview: getChapterOverview(apiChapter),
     discussionPrompt: getDiscussionPrompt(apiChapter),
-    sections: getNumberedSections(apiChapter)
-      .sort((a, b) => a.number - b.number)
-      .map((section, sectionIndex) =>
-        convertApiBookSectionToOpenstaxSection(
-          apiChapter.number,
-          section,
-          sectionIndex,
-        ),
-      ),
+    sections: getNumberedSections(apiChapter).map((section) =>
+      convertApiBookSectionToOpenstaxSection(section),
+    ),
     title: apiChapter.title,
     videoCount,
   };
@@ -107,7 +86,7 @@ function getChapterIntro(apiChapter: Chapter, title: string) {
   const section = apiChapter.sections.find((it) => it.title === title);
   if (section !== undefined) {
     chapterIntro = {
-      displayLabel: title,
+      title,
       videos: section.videos,
     };
   }

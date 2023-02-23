@@ -272,19 +272,19 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
               title: 'Maths book',
               chapters: [
                 {
-                  title: 'chapter-one',
-                  number: 1,
+                  title: 'Chapter 1: chapter-one',
+                  index: 0,
                   sections: [
                     {
-                      title: 'section we dinna want to view',
+                      title: '1.1 section we dinna want to view',
                       videoIds: [],
-                      number: 1,
+                      index: 0,
                       videos: bigListOfVideos,
                     },
                     {
-                      title: 'section we want to view',
+                      title: '1.2 section we want to view',
                       videoIds: [],
-                      number: 2,
+                      index: 1,
                       videos: [
                         VideoFactory.sample({
                           title: 'our target video',

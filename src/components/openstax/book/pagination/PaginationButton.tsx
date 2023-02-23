@@ -89,7 +89,7 @@ export const PreviousSectionButton = ({ book, hash }: ButtonProps) => {
       bookId={book.id}
       hash={element.id}
       secondaryLabel="Previous section"
-      primaryLabel={element.displayLabel}
+      primaryLabel={element.title}
       direction="previous"
     />
   );
@@ -105,7 +105,7 @@ export const PreviousChapterButton = ({ book, hash }: ButtonProps) => {
       bookId={book.id}
       hash={element.id}
       secondaryLabel="Previous chapter"
-      primaryLabel={chapter.displayLabel}
+      primaryLabel={chapter.title}
       direction="previous"
     />
   );
@@ -119,7 +119,7 @@ export const NextSectionButton = ({ book, hash }: ButtonProps) => {
       bookId={book.id}
       hash={element.id}
       secondaryLabel="Next section"
-      primaryLabel={element.displayLabel}
+      primaryLabel={element.title}
       direction="next"
     />
   );
@@ -135,7 +135,7 @@ export const NextChapterButton = ({ book, hash }: ButtonProps) => {
       bookId={book.id}
       hash={element.id}
       secondaryLabel="Next chapter"
-      primaryLabel={chapter.displayLabel}
+      primaryLabel={chapter.title}
       direction="next"
     />
   );

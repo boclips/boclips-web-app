@@ -24,7 +24,7 @@ export const Content = ({ book }: Props) => {
 
   const [selectedChapterElement, setSelectedChapterElement] =
     useState<ChapterElementInfo>({
-      displayLabel: '',
+      title: '',
       id: '',
       videos: [],
     });
@@ -43,10 +43,7 @@ export const Content = ({ book }: Props) => {
       tabIndex={-1}
       className={s.main}
     >
-      <Header
-        bookTitle={book.title}
-        chapterTitle={selectedChapter.displayLabel}
-      />
+      <Header bookTitle={book.title} chapterTitle={selectedChapter.title} />
       <ChapterElement info={selectedChapterElement} />
     </main>
   );

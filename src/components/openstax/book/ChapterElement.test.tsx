@@ -20,7 +20,7 @@ describe('OpenstaxChapterElement', () => {
       const wrapper = renderWithClients(
         <ChapterElement
           info={{
-            displayLabel: '2.1 Life at the coop ',
+            title: '2.1 Life at the coop ',
             videos,
             id: 'section-2.1',
           }}
@@ -41,7 +41,7 @@ describe('OpenstaxChapterElement', () => {
     const wrapper = renderWithClients(
       <ChapterElement
         info={{
-          displayLabel: '2.1 Life at the coop ',
+          title: '2.1 Life at the coop ',
           videos: [
             VideoFactory.sample({
               title: videoTitle,
@@ -65,7 +65,7 @@ describe('OpenstaxChapterElement', () => {
     const wrapper = renderWithClients(
       <ChapterElement
         info={{
-          displayLabel: '2.1 Life at the coop ',
+          title: '2.1 Life at the coop ',
           videos: [],
           id: 'section-2.1',
         }}
