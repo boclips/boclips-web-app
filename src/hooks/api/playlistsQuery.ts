@@ -95,6 +95,50 @@ export const useAddCommentToVideo = () => {
   );
 };
 
+export const doRemoveCommentFromVideo = (
+  collection: Collection,
+  commentId: string,
+  client: BoclipsClient,
+) => {
+  return client.collections.removeCommentFromCollectionVideo(
+    collection,
+    commentId,
+  );
+};
+
+export const useRemoveCommentFromPlaylistVideo = (playlist: Collection) => {
+  const client = useBoclipsClient();
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    (commentId: string) =>
+      doRemoveCommentFromVideo(playlist, commentId, client),
+    {
+      onSuccess: () => {
+        displayNotification(
+          'success',
+          `Comment removed from "${playlist.title}"`,
+          '',
+          `remove-comment-${playlist.id}-to-playlist`,
+        );
+      },
+      onError: () => {
+        displayNotification(
+          'error',
+          `Error: Failed to remove comment from a video -- ${playlist.title}`,
+          'Please refresh the page and try again',
+          `remove-comment-${playlist.id}-to-playlist`,
+        );
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries({
+          queryKey: ['playlists', playlist.id],
+        });
+      },
+    },
+  );
+};
+
 export const doAddToPlaylist = (
   playlist: Collection | ListViewCollection,
   videoId: string,

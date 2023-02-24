@@ -4,6 +4,7 @@ import {
   useEditPlaylistMutation,
   useOwnAndEditableSharedPlaylistsQuery,
   useOwnAndSharedPlaylistsQuery,
+  useRemoveCommentFromPlaylistVideo,
   useReorderPlaylist,
   useUpdatePlaylistPermissionsMutation,
 } from 'src/hooks/api/playlistsQuery';
@@ -134,6 +135,44 @@ describe('playlistsQuery', () => {
     );
 
     await act(() => result.current.mutate(CollectionPermission.EDIT));
+
+    expect(collectionsSpy).toBeCalled();
+  });
+
+  it('will remove comment from a playlist video', async () => {
+    const collection = CollectionFactory.sample({
+      comments: {
+        videos: {
+          'video-id': [
+            {
+              id: 'comment-id',
+              userId: 'user-id',
+              name: 'userName',
+              email: 'user@boclips.com',
+              text: 'My user comment',
+              createdAt: 'now',
+            },
+          ],
+        },
+      },
+    });
+
+    const apiClient = new FakeBoclipsClient();
+    const collectionsSpy = jest.spyOn(
+      apiClient.collections,
+      'removeCommentFromCollectionVideo',
+    );
+    // @ts-ignore
+    apiClient.collections.removeCommentFromCollectionVideo = collectionsSpy;
+
+    const { result } = renderHook(
+      () => useRemoveCommentFromPlaylistVideo(collection),
+      {
+        wrapper: wrapperWithClients(apiClient, new QueryClient()),
+      },
+    );
+
+    await act(() => result.current.mutate('comment-id'));
 
     expect(collectionsSpy).toBeCalled();
   });

@@ -1,5 +1,8 @@
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
-import { useAddCommentToVideo } from 'src/hooks/api/playlistsQuery';
+import {
+  useAddCommentToVideo,
+  useRemoveCommentFromPlaylistVideo,
+} from 'src/hooks/api/playlistsQuery';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import React, { useRef, useState } from 'react';
 import s from 'src/components/playlists/comments/style.module.less';
@@ -8,8 +11,10 @@ import Button from '@boclips-ui/button';
 import CloseSVG from 'src/resources/icons/cross-icon.svg';
 import { InputText } from '@boclips-ui/input';
 import AccountSVG from 'src/resources/icons/account-icon.svg';
+import BinSVG from 'src/resources/icons/bin.svg';
 import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
 import c from 'classnames';
+import Tooltip from '@boclips-ui/tooltip';
 import Bubble from './Bubble';
 
 type Props = {
@@ -17,6 +22,7 @@ type Props = {
   videoId: string;
   comments?: Array<{
     id: string;
+    userId: string;
     name?: string;
     email: string;
     text: string;
@@ -33,6 +39,8 @@ const SliderPanel = ({
 }: Props) => {
   const [comment, setComment] = useState<string>('');
   const { mutate: addCommentToVideo } = useAddCommentToVideo();
+  const { mutate: removeCommentFromVideo } =
+    useRemoveCommentFromPlaylistVideo(collection);
   const { data: user } = useGetUserQuery();
   const ref = useRef(null);
 
@@ -89,11 +97,29 @@ const SliderPanel = ({
         {comments.map((it) => {
           return (
             <div key={it.id} className={s.comment}>
-              <div className={s.name}>
-                <AccountSVG />
-                <Typography.Body as="span" size="small" weight="medium">
-                  {it.name}
-                </Typography.Body>
+              <div className={s.commentHeader}>
+                <div className={s.name}>
+                  <AccountSVG />
+                  <Typography.Body as="span" size="small" weight="medium">
+                    {it.name}
+                  </Typography.Body>
+                </div>
+                <div>
+                  <Tooltip text="Remove comment">
+                    <Button
+                      text="Remove comment"
+                      aria-label="remove-comment-button"
+                      dataQa="remove-comment-button"
+                      iconOnly
+                      icon={<BinSVG className={s.removeCommentIcon} />}
+                      onClick={() => removeCommentFromVideo(it.id)}
+                      type="label"
+                      width="18px"
+                      height="18px"
+                      className={s.removeCommentButton}
+                    />
+                  </Tooltip>
+                </div>
               </div>
               <div className={s.date}>
                 <Typography.Body as="span" size="small">

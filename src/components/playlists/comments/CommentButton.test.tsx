@@ -60,6 +60,7 @@ describe('comment button', () => {
           [video.id]: [
             {
               id: 'id-123',
+              userId: user.id,
               name: 'remy o',
               email: 'remy@boclips.com',
               text: 'this is a comment',
@@ -67,6 +68,7 @@ describe('comment button', () => {
             },
             {
               id: 'id-1234',
+              userId: user.id,
               name: 'remy o',
               email: 'remy@boclips.com',
               text: 'this is a comment',
@@ -119,6 +121,7 @@ describe('comment button', () => {
           [video.id]: [
             {
               id: 'id-1234',
+              userId: user.id,
               name: 'remy o',
               email: 'remy@boclips.com',
               text: 'this is a comment',
@@ -237,6 +240,7 @@ describe('comment button', () => {
           [video.id]: [
             {
               id: 'id-1234',
+              userId: user.id,
               name: 'remy o',
               email: 'remy@boclips.com',
               text: 'this is a comment',

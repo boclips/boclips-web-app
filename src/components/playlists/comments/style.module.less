@@ -126,14 +126,39 @@
         padding-left: 2rem;
       }
 
-      .name {
+      .commentHeader {
         display: flex;
         flex-direction: row;
+        justify-content: space-between;
         padding-left: 0;
+
+        div {
+          padding-left: 0;
+        }
 
         span {
           margin-left: 0.785rem;
         }
+
+        .removeCommentButton{
+
+          &:hover {
+            background-color: transparent;
+          }
+
+          .removeCommentIcon {
+            path {
+              fill: none;
+              stroke: @blue-900;
+            }
+          }
+        }
+
+      }
+
+      .name {
+        display: flex;
+        flex-direction: row;
       }
 
       .date {

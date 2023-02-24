@@ -24,6 +24,7 @@ describe('Leaving comments on a video in collection', () => {
           [video.id]: [
             {
               id: 'video1',
+              userId: 'user-id',
               name: 'remy o',
               email: 'remy@boclips.com',
               text: 'this is a comment',
