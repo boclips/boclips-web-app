@@ -37,11 +37,11 @@ const SliderPanel = ({
   videoId,
   collection,
 }: Props) => {
+  const { data: user, isLoading } = useGetUserQuery();
   const [comment, setComment] = useState<string>('');
   const { mutate: addCommentToVideo } = useAddCommentToVideo();
   const { mutate: removeCommentFromVideo } =
     useRemoveCommentFromPlaylistVideo(collection);
-  const { data: user } = useGetUserQuery();
   const ref = useRef(null);
 
   CloseOnClickOutside(ref, () => closeSliderOnClick());
@@ -97,29 +97,31 @@ const SliderPanel = ({
         {comments.map((it) => {
           return (
             <div key={it.id} className={s.comment}>
-              <div className={s.commentHeader}>
+              <div data-qa={it.id} className={s.commentHeader}>
                 <div className={s.name}>
                   <AccountSVG />
                   <Typography.Body as="span" size="small" weight="medium">
                     {it.name}
                   </Typography.Body>
                 </div>
-                <div>
-                  <Tooltip text="Remove comment">
-                    <Button
-                      text="Remove comment"
-                      aria-label="remove-comment-button"
-                      dataQa="remove-comment-button"
-                      iconOnly
-                      icon={<BinSVG className={s.removeCommentIcon} />}
-                      onClick={() => removeCommentFromVideo(it.id)}
-                      type="label"
-                      width="18px"
-                      height="18px"
-                      className={s.removeCommentButton}
-                    />
-                  </Tooltip>
-                </div>
+                {!isLoading && it.userId === user.id && (
+                  <div>
+                    <Tooltip text="Remove comment">
+                      <Button
+                        text="Remove comment"
+                        aria-label="remove-comment-button"
+                        dataQa="remove-comment-button"
+                        iconOnly
+                        icon={<BinSVG className={s.removeCommentIcon} />}
+                        onClick={() => removeCommentFromVideo(it.id)}
+                        type="label"
+                        width="18px"
+                        height="18px"
+                        className={s.removeCommentButton}
+                      />
+                    </Tooltip>
+                  </div>
+                )}
               </div>
               <div className={s.date}>
                 <Typography.Body as="span" size="small">
