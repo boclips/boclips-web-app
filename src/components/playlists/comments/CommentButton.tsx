@@ -6,6 +6,7 @@ import Bubble from 'src/components/playlists/comments/Bubble';
 import SliderPanel from 'src/components/playlists/comments/SliderPanel';
 import c from 'classnames';
 import { FeatureGate } from 'src/components/common/FeatureGate';
+import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 import s from './style.module.less';
 
 type CommentButtonProps = {
@@ -17,7 +18,7 @@ const CommentButton = ({ videoId, collection }: CommentButtonProps) => {
   const numberOfComments = collection.comments?.videos[videoId]?.length;
 
   return (
-    collection?.mine && (
+    collection?.permissions.anyone === CollectionPermission.EDIT && (
       <FeatureGate
         feature="BO_WEB_APP_ADD_COMMENT_TO_VIDEO_IN_COLLECTION"
         fallback={null}

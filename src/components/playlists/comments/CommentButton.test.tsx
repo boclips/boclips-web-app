@@ -11,6 +11,7 @@ import userEvent from '@testing-library/user-event';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 
 describe('comment button', () => {
   it('displays a comment button', async () => {
@@ -339,18 +340,23 @@ describe('comment button', () => {
     expect(wrapper.queryByText('this is a comment')).not.toBeInTheDocument();
   });
 
-  it('doesnt display the comment button if playlist isnt his', () => {
+  it('displays the comment button if playlist is shared', async () => {
     const video = VideoFactory.sample({ id: '123', title: 'title' });
     const client = new FakeBoclipsClient();
     const user = UserFactory.sample();
+    const user2 = UserFactory.sample();
     client.users.setCurrentUserFeatures({
       BO_WEB_APP_ADD_COMMENT_TO_VIDEO_IN_COLLECTION: true,
     });
     client.collections.setCurrentUser(user.id);
     const collection = CollectionFactory.sample({
+      title: '',
       id: 'collection-id',
       mine: false,
-      owner: '123',
+      owner: user2.id,
+      permissions: {
+        anyone: CollectionPermission.EDIT,
+      },
       comments: {
         videos: {},
       },
@@ -372,6 +378,8 @@ describe('comment button', () => {
       </BoclipsSecurityProvider>,
     );
 
-    expect(wrapper.queryByTestId('add-comment-button')).not.toBeInTheDocument();
+    await waitFor(() =>
+      expect(wrapper.getByTestId('add-comment-button')).toBeInTheDocument(),
+    );
   });
 });
