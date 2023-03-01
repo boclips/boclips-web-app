@@ -10,7 +10,8 @@ export const SparksHeader = () => {
         className="text-center"
         size={{ mobile: 'md', tablet: 'lg', desktop: 'xl' }}
       >
-        <span className={s.sparksTitle}>Spark</span> learning with our video picks
+        <span className={s.sparksTitle}>Spark</span> learning with our video
+        picks
       </Typography.H1>
       <Typography.Body as="p" className={c('text-center', s.sparksDescription)}>
         Discover our video collections: Pedagogically-sequenced and
