@@ -1,14 +1,13 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import { SparksView } from 'src/views/sparks/SparksView';
+import { SparksWidget } from 'src/components/sparks/SparksWidget';
 
-describe('SparksView', () => {
+describe('Sparks page header', () => {
   it('displays sparks page header and description', () => {
-    const wrapper = render(<SparksView />);
+    const wrapper = render(<SparksWidget />);
 
-    expect(
-      wrapper.getByText('Spark learning with our video picks'),
-    ).toBeVisible();
+    expect(wrapper.getByText('Spark')).toBeVisible();
+    expect(wrapper.getByText('learning with our video picks')).toBeVisible();
 
     expect(
       wrapper.getByText(
