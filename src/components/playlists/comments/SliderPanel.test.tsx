@@ -9,6 +9,7 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import SliderPanel from 'src/components/playlists/comments/SliderPanel';
+import userEvent from '@testing-library/user-event';
 
 describe('slider panel', () => {
   it('shows remove comment button to comment owner', async () => {
@@ -56,6 +57,64 @@ describe('slider panel', () => {
     await waitFor(() =>
       expect(wrapper.getByTestId('remove-comment-button')).toBeInTheDocument(),
     );
+  });
+
+  it('removes text in a textarea after adding the comment', async () => {
+    const video = VideoFactory.sample({ id: '123' });
+    const client = new FakeBoclipsClient();
+    const user = UserFactory.sample();
+    client.users.setCurrentUserFeatures({
+      BO_WEB_APP_ADD_COMMENT_TO_VIDEO_IN_COLLECTION: true,
+    });
+    client.collections.setCurrentUser(user.id);
+
+    const collection = CollectionFactory.sample({
+      id: 'collection-id',
+      comments: {
+        videos: {
+          [video.id]: [
+            {
+              id: 'id-123',
+              userId: user.id,
+              name: 'u ser',
+              email: 'user@boclips.com',
+              text: 'this is a user comment',
+              createdAt: Date.now().toString(),
+            },
+          ],
+        },
+      },
+    });
+
+    const wrapper = render(
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <BoclipsClientProvider client={client}>
+          <QueryClientProvider client={new QueryClient()}>
+            <SliderPanel
+              closeSliderOnClick={null}
+              videoId={video.id}
+              collection={collection}
+              comments={collection.comments.videos[video.id]}
+            />
+          </QueryClientProvider>
+        </BoclipsClientProvider>
+      </BoclipsSecurityProvider>,
+    );
+
+    await waitFor(() => wrapper.getByTestId(`slider-panel-${video.id}`)).then(
+      async (it) => {
+        await userEvent.type(
+          within(it).getByPlaceholderText('Add a comment'),
+          'this is a comment',
+        );
+      },
+    );
+
+    await userEvent.click(await wrapper.getByText('Reply'));
+
+    expect(
+      wrapper.queryByDisplayValue('this is a comment'),
+    ).not.toBeInTheDocument();
   });
 
   it('does not show remove comment button on non-owner comments', async () => {

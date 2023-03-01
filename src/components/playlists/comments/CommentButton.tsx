@@ -18,7 +18,8 @@ const CommentButton = ({ videoId, collection }: CommentButtonProps) => {
   const numberOfComments = collection.comments?.videos[videoId]?.length;
 
   return (
-    collection?.permissions.anyone === CollectionPermission.EDIT && (
+    (collection?.permissions.anyone === CollectionPermission.EDIT ||
+      collection.mine) && (
       <FeatureGate
         feature="BO_WEB_APP_ADD_COMMENT_TO_VIDEO_IN_COLLECTION"
         fallback={null}
@@ -32,7 +33,7 @@ const CommentButton = ({ videoId, collection }: CommentButtonProps) => {
           className={c(s.button, { [s.pointerEvent]: isSliderOpen })}
           width="40px"
           height="40px"
-          suffix={numberOfComments && <Bubble number={numberOfComments} />}
+          suffix={numberOfComments > 0 && <Bubble number={numberOfComments} />}
         />
         {isSliderOpen && (
           <SliderPanel

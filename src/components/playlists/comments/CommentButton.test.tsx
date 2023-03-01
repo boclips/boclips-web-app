@@ -340,7 +340,7 @@ describe('comment button', () => {
     expect(wrapper.queryByText('this is a comment')).not.toBeInTheDocument();
   });
 
-  it('displays the comment button if playlist is shared', async () => {
+  it('displays the comment button if playlist has EDIT permission', async () => {
     const video = VideoFactory.sample({ id: '123', title: 'title' });
     const client = new FakeBoclipsClient();
     const user = UserFactory.sample();
@@ -381,5 +381,24 @@ describe('comment button', () => {
     await waitFor(() =>
       expect(wrapper.getByTestId('add-comment-button')).toBeInTheDocument(),
     );
+
+    await userEvent.click(wrapper.getByTestId('add-comment-button'));
+
+    await waitFor(() => wrapper.getByTestId(`slider-panel-${video.id}`)).then(
+      async (it) => {
+        await userEvent.type(
+          within(it).getByPlaceholderText('Add a comment'),
+          'this is a comment',
+        );
+      },
+    );
+
+    await userEvent.click(
+      within(wrapper.getByTestId(`slider-panel-${video.id}`)).getByText(
+        'Reply',
+      ),
+    );
+
+    expect(wrapper.queryByText('this is a comment')).toBeInTheDocument();
   });
 });

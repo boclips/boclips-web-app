@@ -43,6 +43,7 @@ const SliderPanel = ({
   const { mutate: removeCommentFromVideo } =
     useRemoveCommentFromPlaylistVideo(collection);
   const ref = useRef(null);
+  const textareaRef = useRef(null);
 
   CloseOnClickOutside(ref, () => closeSliderOnClick());
 
@@ -56,7 +57,9 @@ const SliderPanel = ({
         text: comment,
       },
     });
+
     setComment('');
+    textareaRef.current.value = '';
   };
 
   return (
@@ -84,13 +87,14 @@ const SliderPanel = ({
           {collection.videos.find((it) => it.id === videoId)?.title}
         </Typography.Body>
         <InputText
-          id={videoId}
+          ref={textareaRef}
+          id={`${videoId}-comment`}
           inputType="textarea"
           onChange={(text) => setComment(text)}
           placeholder="Add a comment"
         />
         {comment.length > 0 && (
-          <Button onClick={() => addComment()} height="32px" text="Reply" />
+          <Button onClick={addComment} height="32px" text="Reply" />
         )}
       </section>
       <section className={s.body}>
