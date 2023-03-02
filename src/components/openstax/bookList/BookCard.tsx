@@ -6,6 +6,7 @@ import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
 import { BookLogo } from 'src/components/openstax/bookLogo/BookLogo';
 import { handleEscapeKeyEvent } from 'src/services/handleKeyEvent';
+import { useAlignmentProvider } from 'src/components/common/providers/AlignmentContextProvider';
 import s from './style.module.less';
 
 interface Props {
@@ -14,13 +15,14 @@ interface Props {
 
 export const BookCard = ({ book }: Props) => {
   const navigate = useNavigate();
+  const provider = useAlignmentProvider();
   const onKeyDown = () => {
     document.querySelector('main').focus();
   };
 
   const onCardClick = (bookId) =>
     navigate({
-      pathname: `/explore/openstax/${bookId}`,
+      pathname: `/explore/${provider.navigationPath}/${bookId}`,
     });
 
   return (

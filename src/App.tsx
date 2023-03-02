@@ -24,6 +24,7 @@ import Appcues from './services/analytics/appcues/Appcues';
 import { GlobalQueryErrorProvider } from './components/common/providers/GlobalQueryErrorProvider';
 import { JSErrorBoundary } from './components/common/errors/JSErrorBoundary';
 import Pendo = pendo.Pendo;
+import SparksView from 'src/views/sparks/SparksView';
 
 declare global {
   interface Window {
@@ -183,6 +184,8 @@ const App = ({
                     />
 
                     <Route path="/playlists" element={<PlaylistsView />} />
+
+                    <Route path="/sparks" element={<SparksView />} />
 
                     <Route
                       path="/library"

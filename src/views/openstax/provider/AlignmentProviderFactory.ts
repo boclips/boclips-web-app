@@ -4,6 +4,8 @@ export const getProviderByName = (provider: string): AlignmentProvider => {
   switch (provider.toLowerCase().split('-').join(' ')) {
     case 'openstax':
       return {
+        name: 'OpenStax',
+        navigationPath: 'openstax',
         header: 'Our OpenStax collection',
         description:
           'Explore our video library, expertly curated for your ebook',
@@ -15,6 +17,8 @@ export const getProviderByName = (provider: string): AlignmentProvider => {
       };
     case 'ngss':
       return {
+        name: 'NGSS',
+        navigationPath: 'ngss',
         header: 'Our NGSS collection',
         description:
           'Explore our K12 science library, which includes experiments and real-world applications',
@@ -25,6 +29,8 @@ export const getProviderByName = (provider: string): AlignmentProvider => {
       };
     case 'common core math':
       return {
+        name: 'Common Core Math',
+        navigationPath: 'common-core-math',
         header: 'Our Common Core Math collection',
         description:
           'Explore our video collection, aligned to each learning standard',
@@ -42,3 +48,5 @@ export const getProviderByName = (provider: string): AlignmentProvider => {
 const SUPPORTED_PROVIDERS = ['openstax', 'ngss', 'common core math'];
 export const isProviderSupported = (providerName: string) =>
   SUPPORTED_PROVIDERS.includes(providerName.toLowerCase().split('-').join(' '));
+export const getAllProviders = () =>
+  SUPPORTED_PROVIDERS.map((providerName) => getProviderByName(providerName));
