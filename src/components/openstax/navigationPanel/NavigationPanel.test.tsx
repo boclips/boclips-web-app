@@ -14,6 +14,8 @@ import {
   resizeToMobile,
   resizeToTablet,
 } from 'src/testSupport/resizeTo';
+import { getProviderByName } from 'src/views/openstax/provider/AlignmentProviderFactory';
+import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 
 describe('OpenstaxBookNavigationPanel', () => {
   it('renders book title with logo, chapters, chapter intros and sections', async () => {
@@ -49,7 +51,9 @@ describe('OpenstaxBookNavigationPanel', () => {
 
     const wrapper = render(
       <OpenstaxMobileMenuProvider>
-        <NavigationPanel book={book} />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <NavigationPanel book={book} />
+        </AlignmentContextProvider>
       </OpenstaxMobileMenuProvider>,
     );
 
@@ -96,7 +100,9 @@ describe('OpenstaxBookNavigationPanel', () => {
 
     const wrapper = render(
       <OpenstaxMobileMenuProvider>
-        <NavigationPanel book={OpenstaxBookFactory.sample()} />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <NavigationPanel book={OpenstaxBookFactory.sample()} />
+        </AlignmentContextProvider>
       </OpenstaxMobileMenuProvider>,
     );
 
@@ -114,12 +120,14 @@ describe('OpenstaxBookNavigationPanel', () => {
       resize();
       const wrapper = render(
         <OpenstaxMobileMenuProvider>
-          <NavigationPanel
-            book={OpenstaxBookFactory.sample({
-              title: 'book',
-              logoUrl: 'logo',
-            })}
-          />
+          <AlignmentContextProvider provider={getProviderByName('openstax')}>
+            <NavigationPanel
+              book={OpenstaxBookFactory.sample({
+                title: 'book',
+                logoUrl: 'logo',
+              })}
+            />
+          </AlignmentContextProvider>
         </OpenstaxMobileMenuProvider>,
       );
 
@@ -195,7 +203,9 @@ describe('OpenstaxBookNavigationPanel', () => {
     });
     const wrapper = render(
       <OpenstaxMobileMenuProvider>
-        <NavigationPanel book={book} />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <NavigationPanel book={book} />
+        </AlignmentContextProvider>
       </OpenstaxMobileMenuProvider>,
     );
 

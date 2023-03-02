@@ -10,12 +10,18 @@ import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/Open
 import OpenstaxBookSkeletonPage from 'src/components/skeleton/openstax/OpenstaxBookSkeletonPage';
 import { Helmet } from 'react-helmet';
 import PaginationPanel from 'src/components/openstax/book/pagination/PaginationPanel';
+import {
+  getProviderByName,
+  isProviderSupported,
+} from 'src/views/openstax/provider/AlignmentProviderFactory';
+import NotFound from 'src/views/notFound/NotFound';
+import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 
 const OpenstaxBookView = () => {
-  const { id: bookId } = useParams();
+  const { id: bookId, provider: providerName } = useParams();
   const { data: book, isInitialLoading } = useGetBook(bookId);
 
-  return (
+  return isProviderSupported(providerName) ? (
     <>
       {book?.title && <Helmet title={book.title} />}
       <Layout
@@ -27,14 +33,20 @@ const OpenstaxBookView = () => {
           <OpenstaxBookSkeletonPage />
         ) : (
           <OpenstaxMobileMenuProvider>
-            <NavigationPanel book={book} />
-            <Content book={book} />
-            <PaginationPanel book={book} />
+            <AlignmentContextProvider
+              provider={getProviderByName(providerName)}
+            >
+              <NavigationPanel book={book} />
+              <Content book={book} />
+              <PaginationPanel book={book} />
+            </AlignmentContextProvider>
           </OpenstaxMobileMenuProvider>
         )}
         <Footer />
       </Layout>
     </>
+  ) : (
+    <NotFound />
   );
 };
 

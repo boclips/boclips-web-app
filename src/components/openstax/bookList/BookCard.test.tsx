@@ -9,6 +9,8 @@ import React from 'react';
 import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { getProviderByName } from 'src/views/openstax/provider/AlignmentProviderFactory';
+import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 
 describe('BookCard', () => {
   it('shows book title and number of videos', () => {
@@ -30,7 +32,9 @@ describe('BookCard', () => {
 
     const wrapper = render(
       <Router location={history.location} navigator={history}>
-        <BookCard book={book} />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <BookCard book={book} />
+        </AlignmentContextProvider>
       </Router>,
     );
     const card = wrapper.getByRole('button', { name: 'book Olive trees' });
@@ -49,7 +53,9 @@ describe('BookCard', () => {
 
     const wrapper = render(
       <Router location={history.location} navigator={history}>
-        <BookCard book={book} />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <BookCard book={book} />
+        </AlignmentContextProvider>
       </Router>,
     );
     expect(wrapper.getByAltText('Olive trees cover')).toBeInTheDocument();
@@ -65,7 +71,9 @@ describe('BookCard', () => {
 
     const wrapper = render(
       <Router location={history.location} navigator={history}>
-        <BookCard book={book} />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <BookCard book={book} />
+        </AlignmentContextProvider>
       </Router>,
     );
     expect(
@@ -94,7 +102,9 @@ describe('BookCard', () => {
       const wrapper = render(
         <Router location={history.location} navigator={history}>
           <main tabIndex={-1}>this is main</main>
-          <BookCard book={book} />
+          <AlignmentContextProvider provider={getProviderByName('openstax')}>
+            <BookCard book={book} />
+          </AlignmentContextProvider>
         </Router>,
       );
 

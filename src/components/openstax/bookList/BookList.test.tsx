@@ -4,6 +4,8 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import React from 'react';
 import { BookList } from 'src/components/openstax/bookList/BookList';
 import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
+import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
+import { getProviderByName } from 'src/views/openstax/provider/AlignmentProviderFactory';
 
 describe('Openstax book list', () => {
   it(`displays all books`, async () => {
@@ -16,7 +18,9 @@ describe('Openstax book list', () => {
 
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
-        <BookList books={books} isLoading={false} />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <BookList books={books} isLoading={false} />
+        </AlignmentContextProvider>
       </BoclipsClientProvider>,
     );
 
@@ -34,7 +38,9 @@ describe('Openstax book list', () => {
 
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
-        <BookList books={books} isLoading={false} />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <BookList books={books} isLoading={false} />
+        </AlignmentContextProvider>
       </BoclipsClientProvider>,
     );
 
@@ -52,7 +58,9 @@ describe('Openstax book list', () => {
 
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
-        <BookList books={books} isLoading />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <BookList books={books} isLoading />
+        </AlignmentContextProvider>
       </BoclipsClientProvider>,
     );
 

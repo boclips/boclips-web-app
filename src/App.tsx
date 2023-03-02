@@ -201,7 +201,7 @@ const App = ({
                     />
 
                     <Route
-                      path="/explore/openstax"
+                      path="/explore/:provider"
                       element={
                         <FeatureGate
                           feature="BO_WEB_APP_OPENSTAX"
@@ -213,7 +213,7 @@ const App = ({
                       }
                     />
                     <Route
-                      path="/explore/openstax/:id"
+                      path="/explore/:provider/:id"
                       element={
                         <FeatureGate
                           feature="BO_WEB_APP_OPENSTAX"

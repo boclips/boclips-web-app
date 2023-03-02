@@ -9,9 +9,17 @@ import {
   useGetOpenstaxSubjectsQuery,
 } from 'src/hooks/api/openstaxQuery';
 import ExploreHeader from 'src/components/openstax/exploreHeader/ExploreHeader';
+import { useParams } from 'react-router';
+import NotFound from 'src/views/notFound/NotFound';
+import {
+  getProviderByName,
+  isProviderSupported,
+} from 'src/views/openstax/provider/AlignmentProviderFactory';
+import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 
 const ExploreView = () => {
   const ALL = 'All';
+  const { provider: providerName } = useParams();
   const { data: books, isLoading: areBooksLoading } = useGetBooksQuery();
   const { data: subjects, isLoading: areSubjectsLoading } =
     useGetOpenstaxSubjectsQuery();
@@ -41,20 +49,24 @@ const ExploreView = () => {
 
   const isLoading = areBooksLoading || areSubjectsLoading;
 
-  return (
+  return isProviderSupported(providerName) ? (
     <Layout rowsSetup="grid-rows-explore-view" responsiveLayout>
       <Navbar />
-      <ExploreHeader />
-      <SubjectsMenu
-        subjects={isLoading ? [] : [ALL, ...subjects]}
-        currentSubject={currentSubject}
-        onClick={setCurrentSubject}
-        isLoading={isLoading}
-      />
+      <AlignmentContextProvider provider={getProviderByName(providerName)}>
+        <ExploreHeader />
+        <SubjectsMenu
+          subjects={isLoading ? [] : [ALL, ...subjects]}
+          currentSubject={currentSubject}
+          onClick={setCurrentSubject}
+          isLoading={isLoading}
+        />
 
-      <BookList books={currentSubjectBooks} isLoading={isLoading} />
+        <BookList books={currentSubjectBooks} isLoading={isLoading} />
+      </AlignmentContextProvider>
       <Footer />
     </Layout>
+  ) : (
+    <NotFound />
   );
 };
 

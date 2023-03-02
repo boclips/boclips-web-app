@@ -67,6 +67,21 @@ describe(`Explore view`, () => {
     expect(await wrapper.queryByText('Physics-2')).toBeNull();
   });
 
+  it('shows Page not found when used non existing provider', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/explore/wrong-provider']}>
+        <App
+          apiClient={fakeClient}
+          boclipsSecurity={stubBoclipsSecurity}
+          reactQueryClient={new QueryClient()}
+        />
+      </MemoryRouter>,
+    );
+    expect(await wrapper.findByText('Page not found!')).toBeVisible();
+  });
+
   it(`only show subjects that are supported`, async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });

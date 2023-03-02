@@ -54,6 +54,20 @@ describe('OpenstaxBookView', () => {
     expect(loadingSkeleton).not.toBeInTheDocument();
   });
 
+  it('shows Page not found when used non existing provider', async () => {
+    resizeToDesktop();
+    const book = createBook();
+
+    const client = setUpClientWithBook(book);
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={[`/explore/wrong-provider/${book.id}`]}>
+        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+      </MemoryRouter>,
+    );
+    expect(await wrapper.findByText('Page not found!')).toBeVisible();
+  });
+
   it('by default renders book details with first chapter and first section selected', async () => {
     resizeToDesktop();
     const book = createBook();
