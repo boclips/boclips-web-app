@@ -1,3 +1,4 @@
+@import '~@boclips-ui/styles/src/breakpoints';
 @import '~@boclips-ui/styles/src/focus';
 
 .sparksCard {
@@ -18,8 +19,20 @@
 
 .sparksCardLogo {
   margin-bottom: 1rem;
-  display: block;
-  max-height: 54px;
   width: auto;
   height: auto;
 }
+
+@media screen and (min-width: @screen-sm) {
+  .sparksCardLogo {
+    max-height: 35px;
+    vector-effect: non-scaling-stroke;
+  }
+}
+
+@media screen and (min-width: @screen-md) {
+  .sparksCardLogo {
+    max-height: 54px;
+  }
+}
+

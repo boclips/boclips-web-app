@@ -28,7 +28,10 @@ const SparksCard = ({ provider }: Props) => {
         src={provider.logoUrl}
         className={s.sparksCardLogo}
       />
-      <Typography.H1 size="lg" className="mb-4 text-left">
+      <Typography.H1
+        size={{ mobile: 'md', tablet: 'md', desktop: 'lg' }}
+        className="mb-2 text-left"
+      >
         {provider.name}
       </Typography.H1>
       <Typography.Body className={s.sparksCardDescription}>

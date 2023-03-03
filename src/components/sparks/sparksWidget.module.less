@@ -3,16 +3,23 @@
 
 .sparksCardWrapper {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-gap: 1.5rem;
   place-content: start;
   margin-top: 2rem;
+}
+@media screen and (min-width: @screen-md) {
+  .sparksCardWrapper {
+    position: relative;
+    padding: 0 4rem 0 4rem;
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media screen and (min-width: @screen-lg) {
   .sparksCardWrapper {
     position: relative;
     padding: 0 4rem 0 4rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 
     &:after {
       @apply rounded;
