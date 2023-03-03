@@ -32,9 +32,10 @@ export const getProviderByName = (provider: string): AlignmentProvider => {
         description:
           'Explore our K12 science library, which includes experiments and real-world applications',
         imgAltText: 'NGSS logo',
-        logoUrl: 'https://www.nextgenscience.org/themes/custom/ngss/logo.png',
+        logoUrl:
+          'https://assets.boclips.com/boclips-public-static-files/boclips/sparks/ngss/ngss-big-logo.png',
         themeDefaultLogoUrl:
-          'https://www.nextgenscience.org/sites/default/files/2022-09/accordion_logo.png',
+          'https://assets.boclips.com/boclips-public-static-files/boclips/sparks/ngss/ngss-theme-logo.png',
         types: [
           'Elementary School',
           'Middle School',
@@ -51,9 +52,9 @@ export const getProviderByName = (provider: string): AlignmentProvider => {
           'Explore our video collection, aligned to each learning standard',
         imgAltText: 'Common Core Math logo',
         logoUrl:
-          'https://seeklogo.com/images/C/common-core-state-standards-initiative-logo-B8085DE27C-seeklogo.com.png?v=637938247620000000',
+          'https://assets.boclips.com/boclips-public-static-files/boclips/sparks/common-core-math/common-core-math-big-logo.png',
         themeDefaultLogoUrl:
-          'https://thewestfieldnews.com/wp-content/uploads/2015/05/image58.jpg',
+          'https://assets.boclips.com/boclips-public-static-files/boclips/sparks/common-core-math/common-core-math-theme-logo.jpg',
         types: ['Elementary School', 'Middle School', 'High School'].sort(),
       };
     default:
