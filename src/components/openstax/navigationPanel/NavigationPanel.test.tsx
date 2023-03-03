@@ -140,7 +140,9 @@ describe('OpenstaxBookNavigationPanel', () => {
 
     const wrapper = render(
       <OpenstaxMobileMenuProvider triggerOpen>
-        <NavigationPanel book={OpenstaxBookFactory.sample()} />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <NavigationPanel book={OpenstaxBookFactory.sample()} />
+        </AlignmentContextProvider>
       </OpenstaxMobileMenuProvider>,
     );
 
@@ -160,7 +162,9 @@ describe('OpenstaxBookNavigationPanel', () => {
 
     const wrapper = render(
       <OpenstaxMobileMenuProvider triggerOpen>
-        <NavigationPanel book={OpenstaxBookFactory.sample()} />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <NavigationPanel book={OpenstaxBookFactory.sample()} />
+        </AlignmentContextProvider>
       </OpenstaxMobileMenuProvider>,
     );
 
