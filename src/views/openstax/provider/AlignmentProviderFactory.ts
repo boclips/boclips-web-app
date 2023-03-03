@@ -14,6 +14,15 @@ export const getProviderByName = (provider: string): AlignmentProvider => {
           'https://assets.boclips.com/boclips-public-static-files/boclips/openstax/openstax_ally_logo.png',
         themeDefaultLogoUrl:
           'https://assets.boclips.com/boclips-public-static-files/boclips/openstax/OSX-ALLY-Blue-RGB-150dpi.png',
+        types: [
+          'Math',
+          'Science',
+          'Social Science',
+          'Humanities',
+          'Business',
+          'High School',
+          'College Success',
+        ].sort(),
       };
     case 'ngss':
       return {
@@ -26,6 +35,12 @@ export const getProviderByName = (provider: string): AlignmentProvider => {
         logoUrl: 'https://www.nextgenscience.org/themes/custom/ngss/logo.png',
         themeDefaultLogoUrl:
           'https://www.nextgenscience.org/sites/default/files/2022-09/accordion_logo.png',
+        types: [
+          'Elementary School',
+          'Middle School',
+          'High School',
+          'Teacher Resources',
+        ].sort(),
       };
     case 'common core math':
       return {
@@ -39,6 +54,7 @@ export const getProviderByName = (provider: string): AlignmentProvider => {
           'https://seeklogo.com/images/C/common-core-state-standards-initiative-logo-B8085DE27C-seeklogo.com.png?v=637938247620000000',
         themeDefaultLogoUrl:
           'https://thewestfieldnews.com/wp-content/uploads/2015/05/image58.jpg',
+        types: ['Elementary School', 'Middle School', 'High School'].sort(),
       };
     default:
       throw new Error(`Provider '${provider}' not supported`);

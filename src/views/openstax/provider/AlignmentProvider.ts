@@ -6,4 +6,5 @@ export interface AlignmentProvider {
   imgAltText: string;
   logoUrl: string;
   themeDefaultLogoUrl: string;
+  types: string[];
 }

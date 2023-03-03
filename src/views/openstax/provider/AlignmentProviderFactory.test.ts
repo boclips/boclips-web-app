@@ -11,6 +11,15 @@ describe('Provider Factory', () => {
       'Explore our video library, expertly curated for your ebook',
     );
     expect(provider.imgAltText).toEqual("We're an OpenStax ally");
+    expect(provider.types).toEqual([
+      'Business',
+      'College Success',
+      'High School',
+      'Humanities',
+      'Math',
+      'Science',
+      'Social Science',
+    ]);
   });
 
   it('ngss provider is returned', () => {
@@ -23,6 +32,12 @@ describe('Provider Factory', () => {
       'Explore our K12 science library, which includes experiments and real-world applications',
     );
     expect(provider.imgAltText).toEqual('NGSS logo');
+    expect(provider.types).toEqual([
+      'Elementary School',
+      'High School',
+      'Middle School',
+      'Teacher Resources',
+    ]);
   });
 
   it('common core math provider is returned', () => {
@@ -35,6 +50,11 @@ describe('Provider Factory', () => {
       'Explore our video collection, aligned to each learning standard',
     );
     expect(provider.imgAltText).toEqual('Common Core Math logo');
+    expect(provider.types).toEqual([
+      'Elementary School',
+      'High School',
+      'Middle School',
+    ]);
   });
 
   it('throws error when provider not supported', () => {

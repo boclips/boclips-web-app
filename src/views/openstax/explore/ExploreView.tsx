@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import { Layout } from 'src/components/layout/Layout';
@@ -21,16 +21,28 @@ const ExploreView = () => {
   const ALL = 'All';
   const { provider: providerName } = useParams();
   const { data: books, isLoading: areBooksLoading } = useGetBooksQuery();
+
+  const provider = isProviderSupported(providerName)
+    ? getProviderByName(providerName)
+    : undefined;
+
   const { data: subjects, isLoading: areSubjectsLoading } =
     useGetOpenstaxSubjectsQuery();
   const [currentSubject, setCurrentSubject] = useState(ALL);
+
+  const getTypes = useCallback(
+    () => (providerName === 'openstax' ? subjects : provider?.types),
+    [provider, providerName, subjects],
+  );
 
   const currentSubjectBooks = useMemo(
     () =>
       currentSubject === ALL
         ? books
-        : books?.filter((book) => subjects && book.subject === currentSubject),
-    [books, subjects, currentSubject],
+        : books?.filter(
+            (book) => getTypes() && book.subject === currentSubject,
+          ),
+    [currentSubject, books, getTypes],
   );
 
   useEffect(() => {
@@ -49,13 +61,13 @@ const ExploreView = () => {
 
   const isLoading = areBooksLoading || areSubjectsLoading;
 
-  return isProviderSupported(providerName) ? (
+  return provider ? (
     <Layout rowsSetup="grid-rows-explore-view" responsiveLayout>
       <Navbar />
-      <AlignmentContextProvider provider={getProviderByName(providerName)}>
+      <AlignmentContextProvider provider={provider}>
         <ExploreHeader />
         <SubjectsMenu
-          subjects={isLoading ? [] : [ALL, ...subjects]}
+          subjects={isLoading ? [] : [ALL, ...getTypes()]}
           currentSubject={currentSubject}
           onClick={setCurrentSubject}
           isLoading={isLoading}
