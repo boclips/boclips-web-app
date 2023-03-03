@@ -1,9 +1,15 @@
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
+import SparksLeftSVG from 'src/resources/sparks/sparks-left.svg';
+import SparksRightSVG from 'src/resources/sparks/sparks-right.svg';
 import c from 'classnames';
+import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import s from './sparksHeader.module.less';
 
 export const SparksHeader = () => {
+  const breakpoints = useMediaBreakPoint();
+  const desktopView = breakpoints.type === 'desktop';
+
   return (
     <div className={s.sparksHeader}>
       <Typography.H1
@@ -17,6 +23,12 @@ export const SparksHeader = () => {
         Discover our video collections: Pedagogically-sequenced and
         expertly-curated for your course
       </Typography.Body>
+      {desktopView && (
+        <>
+          <SparksLeftSVG className={s.sparksLeft} />
+          <SparksRightSVG className={s.sparksRight} />
+        </>
+      )}
     </div>
   );
 };
