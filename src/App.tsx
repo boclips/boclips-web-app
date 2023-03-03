@@ -24,7 +24,6 @@ import Appcues from './services/analytics/appcues/Appcues';
 import { GlobalQueryErrorProvider } from './components/common/providers/GlobalQueryErrorProvider';
 import { JSErrorBoundary } from './components/common/errors/JSErrorBoundary';
 import Pendo = pendo.Pendo;
-import SparksView from 'src/views/sparks/SparksView';
 
 declare global {
   interface Window {
@@ -71,6 +70,8 @@ const PlaylistView = lazyWithRetry(
 const ExploreView = lazyWithRetry(
   () => import('src/views/openstax/explore/ExploreView'),
 );
+
+const SparksView = lazyWithRetry(() => import('src/views/sparks/SparksView'));
 
 const OpenstaxBookView = lazyWithRetry(
   () => import('src/views/openstax/book/OpenstaxBookView'),
@@ -185,7 +186,18 @@ const App = ({
 
                     <Route path="/playlists" element={<PlaylistsView />} />
 
-                    <Route path="/sparks" element={<SparksView />} />
+                    <Route
+                      path="/sparks"
+                      element={
+                        <FeatureGate
+                          feature="BO_WEB_APP_OPENSTAX"
+                          fallback={<NotFound />}
+                        >
+                          <Helmet title="Sparks" />
+                          <SparksView />
+                        </FeatureGate>
+                      }
+                    />
 
                     <Route
                       path="/library"
