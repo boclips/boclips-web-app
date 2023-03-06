@@ -24,7 +24,7 @@ const SparksCard = ({ provider }: Props) => {
       className={s.sparksCard}
     >
       <img
-        alt={provider.imgAltText}
+        alt={`${provider.name} logo`}
         src={provider.logoUrl}
         className={s.sparksCardLogo}
       />

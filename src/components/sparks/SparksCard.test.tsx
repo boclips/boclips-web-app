@@ -36,6 +36,6 @@ describe('Sparks card', () => {
       </MemoryRouter>,
     );
 
-    expect(wrapper.getByAltText(`We're an OpenStax ally`)).toBeVisible();
+    expect(wrapper.getByAltText(`OpenStax logo`)).toBeVisible();
   });
 });

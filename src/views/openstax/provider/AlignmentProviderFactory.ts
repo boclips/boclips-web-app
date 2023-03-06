@@ -9,7 +9,6 @@ export const getProviderByName = (provider: string): AlignmentProvider => {
         header: 'Our OpenStax collection',
         description:
           'Explore our video library, expertly curated for your ebook',
-        imgAltText: "We're an OpenStax ally",
         logoUrl:
           'https://assets.boclips.com/boclips-public-static-files/boclips/openstax/openstax_ally_logo.png',
         themeDefaultLogoUrl:
@@ -31,7 +30,6 @@ export const getProviderByName = (provider: string): AlignmentProvider => {
         header: 'Our NGSS collection',
         description:
           'Explore our K12 science library, which includes experiments and real-world applications',
-        imgAltText: 'NGSS logo',
         logoUrl:
           'https://assets.boclips.com/boclips-public-static-files/boclips/sparks/ngss/ngss-big-logo.png',
         themeDefaultLogoUrl:
@@ -50,7 +48,6 @@ export const getProviderByName = (provider: string): AlignmentProvider => {
         header: 'Our Common Core Math collection',
         description:
           'Explore our video collection, aligned to each learning standard',
-        imgAltText: 'Common Core Math logo',
         logoUrl:
           'https://assets.boclips.com/boclips-public-static-files/boclips/sparks/common-core-math/common-core-math-big-logo.png',
         themeDefaultLogoUrl:

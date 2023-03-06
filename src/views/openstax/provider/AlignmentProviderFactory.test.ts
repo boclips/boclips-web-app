@@ -10,7 +10,6 @@ describe('Provider Factory', () => {
     expect(provider.description).toEqual(
       'Explore our video library, expertly curated for your ebook',
     );
-    expect(provider.imgAltText).toEqual("We're an OpenStax ally");
     expect(provider.types).toEqual([
       'Business',
       'College Success',
@@ -31,7 +30,6 @@ describe('Provider Factory', () => {
     expect(provider.description).toEqual(
       'Explore our K12 science library, which includes experiments and real-world applications',
     );
-    expect(provider.imgAltText).toEqual('NGSS logo');
     expect(provider.types).toEqual([
       'Elementary School',
       'High School',
@@ -49,7 +47,6 @@ describe('Provider Factory', () => {
     expect(provider.description).toEqual(
       'Explore our video collection, aligned to each learning standard',
     );
-    expect(provider.imgAltText).toEqual('Common Core Math logo');
     expect(provider.types).toEqual([
       'Elementary School',
       'High School',

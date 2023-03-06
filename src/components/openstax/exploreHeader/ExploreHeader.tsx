@@ -20,7 +20,7 @@ const ExploreHeader = () => {
         </Typography.H2>
       </div>
       <img
-        alt={provider.imgAltText}
+        alt={`${provider.name} logo`}
         className={s.providerLogo}
         src={provider.logoUrl}
       />
