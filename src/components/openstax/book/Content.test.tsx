@@ -85,13 +85,9 @@ describe('OpenstaxBookContent', () => {
       </OpenstaxMobileMenuProvider>,
     );
 
-    expect(
-      wrapper.queryByRole('link', { name: 'Previous chapter' }),
-    ).toBeNull();
+    expect(wrapper.queryByRole('link', { name: 'Previous' })).toBeNull();
 
-    expect(
-      wrapper.queryByRole('link', { name: 'Previous section' }),
-    ).toBeNull();
+    expect(wrapper.queryByRole('link', { name: 'Previous' })).toBeNull();
   });
 
   it('show previous section button when not on the first section', () => {
@@ -104,11 +100,11 @@ describe('OpenstaxBookContent', () => {
       </OpenstaxMobileMenuProvider>,
     );
 
-    navigateTo(wrapper, 'Next section');
+    navigateTo(wrapper, 'Next');
 
     expect(
       wrapper.getByRole('link', {
-        name: 'Previous section 1.1 Life at the coop',
+        name: 'Previous 1.1 Life at the coop',
       }),
     ).toBeVisible();
   });
@@ -125,7 +121,7 @@ describe('OpenstaxBookContent', () => {
 
     expect(
       wrapper.getByRole('link', {
-        name: 'Next section 1.2 Adventures outside',
+        name: 'Next 1.2 Adventures outside',
       }),
     ).toBeVisible();
   });
@@ -140,11 +136,10 @@ describe('OpenstaxBookContent', () => {
       </OpenstaxMobileMenuProvider>,
     );
 
-    navigateTo(wrapper, 'Next section');
-    navigateTo(wrapper, 'Next chapter');
+    navigateTo(wrapper, 'Next');
+    navigateTo(wrapper, 'Next');
 
-    expect(wrapper.queryByRole('link', { name: 'Next chapter' })).toBeNull();
-    expect(wrapper.queryByRole('link', { name: 'Next section' })).toBeNull();
+    expect(wrapper.queryByRole('link', { name: 'Next' })).toBeNull();
   });
 
   it(`show chapter navigation button instead of section ones when chapter change is possible`, () => {
@@ -157,14 +152,14 @@ describe('OpenstaxBookContent', () => {
       </OpenstaxMobileMenuProvider>,
     );
 
-    navigateTo(wrapper, 'Next section');
+    navigateTo(wrapper, 'Next');
     expect(
       wrapper.getByRole('link', {
-        name: 'Next chapter Chapter 2: Epilogue',
+        name: 'Next Chapter 2: Epilogue',
       }),
     ).toBeVisible();
 
-    navigateTo(wrapper, 'Next chapter');
+    navigateTo(wrapper, 'Next');
 
     const epilouge = chapterTitle(wrapper.container);
     expect(epilouge).toBeVisible();
@@ -172,11 +167,11 @@ describe('OpenstaxBookContent', () => {
 
     expect(
       wrapper.getByRole('link', {
-        name: 'Previous chapter Chapter 1: Introduction',
+        name: 'Previous Chapter 1: Introduction',
       }),
     ).toBeVisible();
 
-    navigateTo(wrapper, 'Previous chapter');
+    navigateTo(wrapper, 'Previous');
 
     const introduction = chapterTitle(wrapper.container);
     expect(introduction).toBeVisible();

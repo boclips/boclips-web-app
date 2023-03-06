@@ -58,7 +58,7 @@ describe('Openstax book view pagination buttons', () => {
       });
       expect(titles).toHaveLength(2);
 
-      navigateTo(wrapper, 'Next section');
+      navigateTo(wrapper, 'Next');
 
       const bookDetails = wrapper.getByLabelText(
         'Content for Everything to know about ducks',
@@ -73,7 +73,7 @@ describe('Openstax book view pagination buttons', () => {
       expect(nextSectionTitle).toBeVisible();
       expect(nextSectionTitle.textContent).toBe('Discussion Prompt (1 video)');
 
-      navigateTo(wrapper, 'Previous section');
+      navigateTo(wrapper, 'Previous');
 
       const previousChapterTitle = chapterTitle(bookDetails);
       const previousSectionTitle = sectionTitle(bookDetails);
@@ -131,7 +131,7 @@ describe('Openstax book view pagination buttons', () => {
       });
       expect(titles).toHaveLength(2);
 
-      navigateTo(wrapper, 'Next section');
+      navigateTo(wrapper, 'Next');
 
       const bookDetails = wrapper.getByLabelText(
         'Content for Everything to know about ducks',
@@ -149,7 +149,7 @@ describe('Openstax book view pagination buttons', () => {
         '1.99 Adventures outside (0 videos)',
       );
 
-      navigateTo(wrapper, 'Previous section');
+      navigateTo(wrapper, 'Previous');
 
       const previousChapterTitle = chapterTitle(bookDetails);
       const previousSectionTitle = sectionTitle(bookDetails);
@@ -214,7 +214,7 @@ describe('Openstax book view pagination buttons', () => {
       });
       expect(titles).toHaveLength(2);
 
-      navigateTo(wrapper, 'Next chapter');
+      navigateTo(wrapper, 'Next');
 
       const bookDetails = wrapper.getByLabelText(
         'Content for Everything to know about ducks',
@@ -229,7 +229,7 @@ describe('Openstax book view pagination buttons', () => {
       expect(nextSectionTitle).toBeVisible();
       expect(nextSectionTitle.textContent).toBe('2.1 The end (0 videos)');
 
-      navigateTo(wrapper, 'Previous chapter');
+      navigateTo(wrapper, 'Previous');
 
       const previousChapterTitle = chapterTitle(bookDetails);
       const previousSectionTitle = sectionTitle(bookDetails);
@@ -243,7 +243,7 @@ describe('Openstax book view pagination buttons', () => {
       );
     });
 
-    it('navigation between chapters when chapter numeration is not continous', async () => {
+    it('navigation between chapters when chapter numeration is not continuous', async () => {
       resizeToDesktop();
       const book = BookFactory.sample({
         id: 'ducklings-4',
@@ -291,7 +291,7 @@ describe('Openstax book view pagination buttons', () => {
       });
       expect(titles).toHaveLength(2);
 
-      navigateTo(wrapper, 'Next chapter');
+      navigateTo(wrapper, 'Next');
 
       const bookDetails = wrapper.getByLabelText(
         'Content for Everything to know about ducks',
@@ -306,7 +306,7 @@ describe('Openstax book view pagination buttons', () => {
       expect(nextSectionTitle).toBeVisible();
       expect(nextSectionTitle.textContent).toBe('99.1 The end (0 videos)');
 
-      navigateTo(wrapper, 'Previous chapter');
+      navigateTo(wrapper, 'Previous');
 
       const previousChapterTitle = chapterTitle(bookDetails);
       const previousSectionTitle = sectionTitle(bookDetails);
@@ -368,7 +368,7 @@ describe('Openstax book view pagination buttons', () => {
       });
       expect(titles).toHaveLength(2);
 
-      navigateTo(wrapper, 'Next chapter');
+      navigateTo(wrapper, 'Next');
 
       const bookToc = wrapper.getByLabelText(
         'Table of contents of Everything to know about ducks',

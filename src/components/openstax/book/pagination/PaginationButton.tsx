@@ -88,7 +88,7 @@ export const PreviousSectionButton = ({ book, hash }: ButtonProps) => {
     <PaginationButton
       bookId={book.id}
       hash={element.id}
-      secondaryLabel="Previous section"
+      secondaryLabel="Previous"
       primaryLabel={element.title}
       direction="previous"
     />
@@ -104,7 +104,7 @@ export const PreviousChapterButton = ({ book, hash }: ButtonProps) => {
     <PaginationButton
       bookId={book.id}
       hash={element.id}
-      secondaryLabel="Previous chapter"
+      secondaryLabel="Previous"
       primaryLabel={chapter.title}
       direction="previous"
     />
@@ -118,7 +118,7 @@ export const NextSectionButton = ({ book, hash }: ButtonProps) => {
     <PaginationButton
       bookId={book.id}
       hash={element.id}
-      secondaryLabel="Next section"
+      secondaryLabel="Next"
       primaryLabel={element.title}
       direction="next"
     />
@@ -134,7 +134,7 @@ export const NextChapterButton = ({ book, hash }: ButtonProps) => {
     <PaginationButton
       bookId={book.id}
       hash={element.id}
-      secondaryLabel="Next chapter"
+      secondaryLabel="Next"
       primaryLabel={chapter.title}
       direction="next"
     />
