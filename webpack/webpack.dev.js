@@ -17,6 +17,7 @@ module.exports = merge(common, {
     port: 9000,
     host: 'localhost',
     hot: true,
+    historyApiFallback: true,
     client: { overlay: false },
   },
   plugins: [
