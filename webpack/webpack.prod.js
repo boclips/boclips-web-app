@@ -7,7 +7,6 @@ const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
 const common = require('./webpack.common');
 
-const srcPath = path.resolve(__dirname, '../src');
 const kilobyte = 1024;
 
 module.exports = merge(common, {
@@ -23,7 +22,7 @@ module.exports = merge(common, {
       chunkFilename: '[name].[chunkhash:20].chunk.css',
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve(srcPath, 'index.html'),
+      template: path.resolve(path.resolve(__dirname, '../src'), 'index.html'),
     }),
     new webpack.EnvironmentPlugin(['SENTRY_RELEASE']),
   ],
