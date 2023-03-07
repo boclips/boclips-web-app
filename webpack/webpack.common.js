@@ -30,11 +30,6 @@ module.exports = {
         use: [
           {
             loader: require.resolve('babel-loader'),
-            options: {
-              plugins: [
-                isDevelopment && require.resolve('react-refresh/babel'),
-              ].filter(Boolean),
-            },
           },
           {
             loader: 'ts-loader',
@@ -48,7 +43,7 @@ module.exports = {
                     style: true,
                   }),
                   isDevelopment && ReactRefreshTypeScript(),
-                ],
+                ].filter(Boolean),
               }),
             },
           },
@@ -133,5 +128,5 @@ module.exports = {
         { from: path.resolve(__dirname, '../src/resources'), to: 'assets' },
       ],
     }),
-  ],
+  ].filter(Boolean),
 };
