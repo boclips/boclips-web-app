@@ -7,7 +7,6 @@ const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
 const common = require('./webpack.common');
 
-const srcPath = path.resolve(__dirname, '../src');
 const kilobyte = 1024;
 
 module.exports = merge(common, {
@@ -23,7 +22,7 @@ module.exports = merge(common, {
       chunkFilename: '[name].[chunkhash:20].chunk.css',
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve(srcPath, 'index.html'),
+      template: path.resolve(path.resolve(__dirname, '../src'), 'index.html'),
     }),
     new webpack.EnvironmentPlugin(['SENTRY_RELEASE']),
   ],
@@ -37,16 +36,17 @@ module.exports = merge(common, {
       chunks: 'all',
       name: false,
       maxInitialRequests: Infinity,
-      minSize: 0,
+      minSize: 1015 * kilobyte,
+      maxSize: 1536 * kilobyte,
       cacheGroups: {
+        default: {
+          priority: -20,
+          reuseExistingChunk: true,
+        },
         vendor: {
           test: /[\\/]node_modules[\\/]/,
-          name(module) {
-            const packageName = module.context.match(
-              /[\\/]node_modules[\\/](.*?)([\\/]|$)/,
-            )[1];
-            return `npm.${packageName.replace('@', '')}`;
-          },
+          priority: -10,
+          reuseExistingChunk: true,
         },
       },
     },

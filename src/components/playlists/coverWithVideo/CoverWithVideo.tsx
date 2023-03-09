@@ -19,11 +19,9 @@ const CoverWithVideo = ({ video, onSegmentPlayed }: Props) => {
 
   useEffect(() => {
     if (ref) {
-      // @ts-ignore
-      ref.container?.querySelector('video').oncanplay = () => {
+      ref.getContainer().querySelector('video').oncanplay = () => {
         ref.play();
-        // @ts-ignore
-        ref.container?.style.zIndex = '1';
+        ref.getContainer().style.zIndex = '1';
       };
     }
   }, [ref]);

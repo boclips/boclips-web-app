@@ -1,22 +1,22 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const tsImportPluginFactory = require('ts-import-plugin');
-
 const path = require('path');
+const ReactRefreshTypeScript = require('react-refresh-typescript');
+const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
-const srcPath = path.resolve(__dirname, '../src');
-const resourcePath = path.resolve(__dirname, '../src/resources');
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  entry: path.resolve(srcPath, 'index.tsx'),
+  entry: path.resolve(path.resolve(__dirname, '../src'), 'index.tsx'),
 
   // Allows ts(x) and js files to be imported without extension
   resolve: {
     fallback: { querystring: require.resolve('querystring-es3') },
     extensions: ['.ts', '.tsx', '.js', '.less'],
     alias: {
-      src: srcPath,
-      resources: resourcePath,
+      src: path.resolve(__dirname, '../src'),
+      resources: path.resolve(__dirname, '../src/resources'),
 
       // Needed when library is linked via `npm link` to app
       react: path.resolve('./node_modules/react'),
@@ -29,7 +29,7 @@ module.exports = {
         exclude: ['/node_modules/', '/storybook'],
         use: [
           {
-            loader: 'babel-loader',
+            loader: require.resolve('babel-loader'),
           },
           {
             loader: 'ts-loader',
@@ -42,7 +42,8 @@ module.exports = {
                     libraryDirectory: 'lib',
                     style: true,
                   }),
-                ],
+                  isDevelopment && ReactRefreshTypeScript(),
+                ].filter(Boolean),
               }),
             },
           },
@@ -109,9 +110,23 @@ module.exports = {
       },
     ],
   },
+  // Add cache configuration for the entire build process
+  cache: {
+    type: 'filesystem',
+    name: 'bwa-cache',
+    cacheDirectory: path.resolve(__dirname, '../node_modules'),
+    store: 'pack',
+    buildDependencies: {
+      config: [__filename],
+    },
+  },
   plugins: [
+    isDevelopment && new ReactRefreshPlugin(),
+    new MiniCssExtractPlugin({ filename: '[name].css', ignoreOrder: true }),
     new CopyWebpackPlugin({
-      patterns: [{ from: resourcePath, to: 'assets' }],
+      patterns: [
+        { from: path.resolve(__dirname, '../src/resources'), to: 'assets' },
+      ],
     }),
-  ],
+  ].filter(Boolean),
 };
