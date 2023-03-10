@@ -12,7 +12,7 @@ const Logo = (): ReactElement => {
     : 'CourseSpark logo - Go to homepage';
 
   return (
-    <Link to="/" aria-label={logoTitle} className={s.logo}>
+    <Link to="/" reloadDocument aria-label={logoTitle} className={s.logo}>
       {user?.organisation?.logoUrl ? (
         <img alt={logoTitle} src={user?.organisation?.logoUrl} />
       ) : (
