@@ -138,11 +138,17 @@ export const getFilterLabel = (
 };
 
 const getChannelLabel = (id, channels?: Channel[]) => {
-  return channels ? channels.find((it) => it.id === id).name : id;
+  if (!channels) {
+    return id;
+  }
+  return channels.find((it) => it.id === id)?.name || id;
 };
 
 const getSubjectsLabel = (id, subjects?: Subject[]) => {
-  return subjects ? subjects.find((it) => it.id === id).name : id;
+  if (!subjects) {
+    return id;
+  }
+  return subjects.find((it) => it.id === id)?.name || id;
 };
 
 const getVideoTypeLabel = (name: string): string => {
