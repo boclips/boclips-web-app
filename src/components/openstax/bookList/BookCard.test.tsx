@@ -33,7 +33,7 @@ describe('BookCard', () => {
     const wrapper = render(
       <Router location={history.location} navigator={history}>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
-          <BookCard book={book} />
+          <BookCard theme={book} />
         </AlignmentContextProvider>
       </Router>,
     );
@@ -54,7 +54,7 @@ describe('BookCard', () => {
     const wrapper = render(
       <Router location={history.location} navigator={history}>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
-          <BookCard book={book} />
+          <BookCard theme={book} />
         </AlignmentContextProvider>
       </Router>,
     );
@@ -72,7 +72,7 @@ describe('BookCard', () => {
     const wrapper = render(
       <Router location={history.location} navigator={history}>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
-          <BookCard book={book} />
+          <BookCard theme={book} />
         </AlignmentContextProvider>
       </Router>,
     );
@@ -103,7 +103,7 @@ describe('BookCard', () => {
         <Router location={history.location} navigator={history}>
           <main tabIndex={-1}>this is main</main>
           <AlignmentContextProvider provider={getProviderByName('openstax')}>
-            <BookCard book={book} />
+            <BookCard theme={book} />
           </AlignmentContextProvider>
         </Router>,
       );

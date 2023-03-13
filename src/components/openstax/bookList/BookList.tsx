@@ -1,7 +1,7 @@
 import React from 'react';
-import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import c from 'classnames';
 import BookCardSkeleton from 'src/components/openstax/bookList/BookCardSkeleton';
+import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import s from './style.module.less';
 import { BookCard } from './BookCard';
 
@@ -11,11 +11,11 @@ interface Props {
 }
 
 const BookCards = ({ books }: Omit<Props, 'isLoading'>) => {
-  const booksWithMappings = books?.filter((it) => it.chapters.length > 0);
+  const booksWithMappings = books?.filter((it) => it.subject.length > 0);
   return (
     <>
       {booksWithMappings.map((it) => (
-        <BookCard key={it.id} book={it} />
+        <BookCard key={it.id} theme={it} />
       ))}
     </>
   );

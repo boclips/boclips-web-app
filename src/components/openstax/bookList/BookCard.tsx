@@ -2,18 +2,18 @@ import ArrowIconSVG from 'src/resources/icons/arrow-no-size.svg';
 import React from 'react';
 import { Typography } from '@boclips-ui/typography';
 import { useNavigate } from 'react-router-dom';
-import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
 import { BookLogo } from 'src/components/openstax/bookLogo/BookLogo';
 import { handleEscapeKeyEvent } from 'src/services/handleKeyEvent';
 import { useAlignmentProvider } from 'src/components/common/providers/AlignmentContextProvider';
+import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import s from './style.module.less';
 
 interface Props {
-  book: OpenstaxBook;
+  theme: OpenstaxBook;
 }
 
-export const BookCard = ({ book }: Props) => {
+export const BookCard = ({ theme }: Props) => {
   const navigate = useNavigate();
   const provider = useAlignmentProvider();
   const onKeyDown = () => {
@@ -27,19 +27,19 @@ export const BookCard = ({ book }: Props) => {
 
   return (
     <button
-      onClick={() => onCardClick(book.id)}
+      onClick={() => onCardClick(theme.id)}
       type="button"
-      aria-label={`book ${book.title}`}
+      aria-label={`book ${theme.title}`}
       className={s.bookCard}
       onKeyDown={(e) => handleEscapeKeyEvent(e, onKeyDown)}
     >
-      <BookLogo book={book} />
+      <BookLogo book={theme} />
       <div className={s.bookTitle}>
         <Typography.H2 size="xs" className="!text-base truncate">
-          {book.title}
+          {theme.title}
         </Typography.H2>
         <span className="text-gray-700 text-sm">
-          {getVideoCountLabel(book.videoCount)}
+          {getVideoCountLabel(theme.videoCount)}
         </span>
       </div>
       <div className={s.arrow}>

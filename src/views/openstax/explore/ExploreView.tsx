@@ -5,7 +5,7 @@ import { Layout } from 'src/components/layout/Layout';
 import { BookList } from 'src/components/openstax/bookList/BookList';
 import { SubjectsMenu } from 'src/components/openstax/menu/SubjectsMenu';
 import {
-  useGetBooksQuery,
+  useGetThemesByProviderQuery,
   useGetTypesByProviderQuery,
 } from 'src/hooks/api/openstaxQuery';
 import ExploreHeader from 'src/components/openstax/exploreHeader/ExploreHeader';
@@ -20,7 +20,8 @@ import { AlignmentContextProvider } from 'src/components/common/providers/Alignm
 const ExploreView = () => {
   const ALL = 'All';
   const { provider: providerName } = useParams();
-  const { data: books, isLoading: areBooksLoading } = useGetBooksQuery();
+  const { data: themes, isLoading: areBooksLoading } =
+    useGetThemesByProviderQuery(providerName);
 
   const provider = isProviderSupported(providerName)
     ? getProviderByName(providerName)
@@ -28,14 +29,15 @@ const ExploreView = () => {
 
   const { data: types, isLoading: areTypesLoading } =
     useGetTypesByProviderQuery(providerName);
+
   const [currentType, setCurrentType] = useState(ALL);
 
   const currentTypeThemes = useMemo(
     () =>
       currentType === ALL
-        ? books
-        : books?.filter((book) => types && book.subject === currentType),
-    [types, currentType, books],
+        ? themes
+        : themes?.filter((theme) => types && theme.subject === currentType),
+    [types, currentType, themes],
   );
 
   useEffect(() => {

@@ -1,13 +1,14 @@
 import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import {
-  useGetBook,
+  useGetThemeByProviderAndId,
   useGetBooksQuery,
   useGetTypesByProviderQuery,
 } from 'src/hooks/api/openstaxQuery';
 import { renderHook } from '@testing-library/react-hooks';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
 import { QueryClient } from '@tanstack/react-query';
+import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe('OpenstaxQuery', () => {
   it('gets an openstax book by id', async () => {
@@ -20,7 +21,7 @@ describe('OpenstaxQuery', () => {
 
     fakeClient.openstax.setOpenstaxBooks([book]);
 
-    const bookHook = renderHook(() => useGetBook('art-history-id'), {
+    const bookHook = renderHook(() => useGetThemeByProviderAndId('art-history-id'), {
       wrapper: wrapperWithClients(fakeClient, new QueryClient()),
     });
 
@@ -67,5 +68,32 @@ describe('OpenstaxQuery', () => {
     expect(result).toContain('Math');
     expect(result).toContain('Languages');
     expect(result).toContain('Science');
+  });
+
+  it('gets provider themes', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const openstax = [
+      ThemeFactory.sample({ id: '1', provider: 'openstax' }),
+      ThemeFactory.sample({ id: '2', provider: 'openstax' }),
+    ];
+
+    const ngss = [ThemeFactory.sample({ id: '3', provider: 'ngss' })];
+
+    fakeClient.alignments.setThemesByProvider(
+      {
+        providerName: 'openstax',
+        themes: openstax,
+      },
+      {
+        providerName: 'ngss',
+        themes: ngss,
+      },
+    );
+
+    const result = await fakeClient.alignments.getThemesByProvider('openstax');
+
+    expect(result).toHaveLength(2);
+    expect(result[0].id).toEqual('1');
+    expect(result[1].id).toEqual('2');
   });
 });

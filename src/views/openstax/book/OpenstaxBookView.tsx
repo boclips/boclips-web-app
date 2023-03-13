@@ -3,7 +3,7 @@ import { Layout } from 'src/components/layout/Layout';
 import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import { useParams } from 'react-router';
-import { useGetBook } from 'src/hooks/api/openstaxQuery';
+import { useGetThemeByProviderAndId } from 'src/hooks/api/openstaxQuery';
 import { Content } from 'src/components/openstax/book/Content';
 import { NavigationPanel } from 'src/components/openstax/navigationPanel/NavigationPanel';
 import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
@@ -18,8 +18,11 @@ import NotFound from 'src/views/notFound/NotFound';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 
 const OpenstaxBookView = () => {
-  const { id: bookId, provider: providerName } = useParams();
-  const { data: book, isInitialLoading } = useGetBook(bookId);
+  const { id, provider: providerName } = useParams();
+  const { data: book, isInitialLoading } = useGetThemeByProviderAndId(
+    providerName,
+    id,
+  );
 
   return isProviderSupported(providerName) ? (
     <>
