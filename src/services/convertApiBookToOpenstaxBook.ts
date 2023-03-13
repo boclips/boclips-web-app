@@ -23,6 +23,8 @@ export const convertApiBookToOpenstaxBook = (apiBook: Book): OpenstaxBook => {
       convertApiChapterToOpenstaxChapter(chapter),
     ),
     logoUrl: apiBook.logoUrl,
+    provider: apiBook.provider,
+    links: apiBook.links,
   };
 
   let videoCount = 0;

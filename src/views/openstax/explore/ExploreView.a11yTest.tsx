@@ -24,7 +24,7 @@ describe(`Explore view`, () => {
       }),
     ]);
 
-    fakeClient.openstax.setOpenstaxSubjects([
+    fakeClient.alignments.setTypesForProvider('openstax', [
       'Maths',
       'Business',
       'Humanities',

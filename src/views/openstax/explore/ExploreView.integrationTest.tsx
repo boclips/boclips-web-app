@@ -13,7 +13,11 @@ describe(`Explore view`, () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 
-    fakeClient.openstax.setOpenstaxSubjects(['Maths', 'French', 'Physics']);
+    fakeClient.alignments.setTypesForProvider('openstax', [
+      'Maths',
+      'French',
+      'Physics',
+    ]);
     fakeClient.openstax.setOpenstaxBooks([
       BookFactory.sample({
         id: 'book-1',
@@ -96,7 +100,7 @@ describe(`Explore view`, () => {
       }),
     ]);
 
-    fakeClient.openstax.setOpenstaxSubjects([
+    fakeClient.alignments.setTypesForProvider('openstax', [
       'Maths',
       'Business',
       'Humanities',
@@ -140,7 +144,7 @@ describe(`Explore view`, () => {
         }),
       ]);
 
-      fakeClient.openstax.setOpenstaxSubjects([
+      fakeClient.alignments.setTypesForProvider('openstax', [
         'Maths',
         'Business',
         'Humanities',

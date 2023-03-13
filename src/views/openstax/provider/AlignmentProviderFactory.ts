@@ -13,15 +13,6 @@ export const getProviderByName = (provider: string): AlignmentProvider => {
           'https://assets.boclips.com/boclips-public-static-files/boclips/openstax/openstax_ally_logo.png',
         themeDefaultLogoUrl:
           'https://assets.boclips.com/boclips-public-static-files/boclips/openstax/OSX-ALLY-Blue-RGB-150dpi.png',
-        types: [
-          'Math',
-          'Science',
-          'Social Science',
-          'Humanities',
-          'Business',
-          'High School',
-          'College Success',
-        ].sort(),
       };
     case 'ngss':
       return {
@@ -34,12 +25,6 @@ export const getProviderByName = (provider: string): AlignmentProvider => {
           'https://assets.boclips.com/boclips-public-static-files/boclips/sparks/ngss/ngss-big-logo.png',
         themeDefaultLogoUrl:
           'https://assets.boclips.com/boclips-public-static-files/boclips/sparks/ngss/ngss-theme-logo.png',
-        types: [
-          'Elementary School',
-          'Middle School',
-          'High School',
-          'Teacher Resources',
-        ].sort(),
       };
     case 'common core math':
       return {
@@ -52,7 +37,6 @@ export const getProviderByName = (provider: string): AlignmentProvider => {
           'https://assets.boclips.com/boclips-public-static-files/boclips/sparks/common-core-math/common-core-math-big-logo.png',
         themeDefaultLogoUrl:
           'https://assets.boclips.com/boclips-public-static-files/boclips/sparks/common-core-math/common-core-math-theme-logo.jpg',
-        types: ['Elementary School', 'Middle School', 'High School'].sort(),
       };
     default:
       throw new Error(`Provider '${provider}' not supported`);

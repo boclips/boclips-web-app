@@ -3,7 +3,7 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import {
   useGetBook,
   useGetBooksQuery,
-  useGetOpenstaxSubjectsQuery,
+  useGetTypesByProviderQuery,
 } from 'src/hooks/api/openstaxQuery';
 import { renderHook } from '@testing-library/react-hooks';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
@@ -47,12 +47,16 @@ describe('OpenstaxQuery', () => {
     expect(result[0].id).toEqual('id-1');
   });
 
-  it('gets all openstax subjects', async () => {
+  it('gets all openstax types', async () => {
     const fakeClient = new FakeBoclipsClient();
 
-    fakeClient.openstax.setOpenstaxSubjects(['Math', 'Languages', 'Science']);
+    fakeClient.alignments.setTypesForProvider('openstax', [
+      'Math',
+      'Languages',
+      'Science',
+    ]);
 
-    const hook = renderHook(() => useGetOpenstaxSubjectsQuery(), {
+    const hook = renderHook(() => useGetTypesByProviderQuery('openstax'), {
       wrapper: wrapperWithClients(fakeClient, new QueryClient()),
     });
 

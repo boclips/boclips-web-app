@@ -59,7 +59,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
 
   const boSetOpenstax = (books: Partial<Book>[]) => {
     const subjects = Array.from(new Set(books.map((book) => book.subject)));
-    apiClient.openstax.setOpenstaxSubjects(subjects);
+    apiClient.alignments.setTypesForProvider('openstax', subjects);
 
     apiClient.openstax.setOpenstaxBooks(
       books.map((book) => ({

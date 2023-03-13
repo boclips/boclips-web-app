@@ -5,5 +5,4 @@ export interface AlignmentProvider {
   description: string;
   logoUrl: string;
   themeDefaultLogoUrl: string;
-  types: string[];
 }

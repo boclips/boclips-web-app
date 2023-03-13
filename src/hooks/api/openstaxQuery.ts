@@ -24,10 +24,14 @@ const doGetBooks = (client: BoclipsClient) =>
       booksWrapper.books.map(convertApiBookToOpenstaxBook),
     );
 
-export const useGetOpenstaxSubjectsQuery = (): UseQueryResult<string[]> => {
+export const useGetTypesByProviderQuery = (
+  provider: string,
+): UseQueryResult<string[]> => {
   const client = useBoclipsClient();
-  return useQuery(['openstaxSubjects'], () => doGetOpenstaxSubjects(client));
+  return useQuery(['typesByProvider', provider], () =>
+    doGetTypesByProvider(client, provider),
+  );
 };
 
-const doGetOpenstaxSubjects = (client: BoclipsClient) =>
-  client.openstax.getOpenstaxSubjects();
+const doGetTypesByProvider = (client: BoclipsClient, provider: string) =>
+  client.alignments.getAllTypesByProvider(provider);

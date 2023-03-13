@@ -10,15 +10,6 @@ describe('Provider Factory', () => {
     expect(provider.description).toEqual(
       'Explore our video library, expertly curated for your ebook',
     );
-    expect(provider.types).toEqual([
-      'Business',
-      'College Success',
-      'High School',
-      'Humanities',
-      'Math',
-      'Science',
-      'Social Science',
-    ]);
   });
 
   it('ngss provider is returned', () => {
@@ -30,12 +21,6 @@ describe('Provider Factory', () => {
     expect(provider.description).toEqual(
       'Explore our K12 science library, which includes experiments and real-world applications',
     );
-    expect(provider.types).toEqual([
-      'Elementary School',
-      'High School',
-      'Middle School',
-      'Teacher Resources',
-    ]);
   });
 
   it('common core math provider is returned', () => {
@@ -47,11 +32,6 @@ describe('Provider Factory', () => {
     expect(provider.description).toEqual(
       'Explore our video collection, aligned to each learning standard',
     );
-    expect(provider.types).toEqual([
-      'Elementary School',
-      'High School',
-      'Middle School',
-    ]);
   });
 
   it('throws error when provider not supported', () => {
