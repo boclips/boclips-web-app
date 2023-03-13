@@ -32,8 +32,12 @@ describe('Openstax book list', () => {
     const fakeClient = new FakeBoclipsClient();
 
     const books = [
-      OpenstaxBookFactory.sample({ title: 'Maths' }),
-      OpenstaxBookFactory.sample({ title: 'Physics', chapters: [] }),
+      OpenstaxBookFactory.sample({ provider: 'openstax', title: 'Maths' }),
+      OpenstaxBookFactory.sample({
+        provider: 'openstax',
+        title: 'Physics',
+        topics: [],
+      }),
     ];
 
     const wrapper = render(

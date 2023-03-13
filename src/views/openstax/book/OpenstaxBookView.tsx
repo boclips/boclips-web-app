@@ -19,7 +19,7 @@ import { AlignmentContextProvider } from 'src/components/common/providers/Alignm
 
 const OpenstaxBookView = () => {
   const { id, provider: providerName } = useParams();
-  const { data: book, isInitialLoading } = useGetThemeByProviderAndId(
+  const { data: book, isLoading } = useGetThemeByProviderAndId(
     providerName,
     id,
   );
@@ -32,7 +32,7 @@ const OpenstaxBookView = () => {
         responsiveLayout
       >
         <Navbar />
-        {isInitialLoading ? (
+        {isLoading ? (
           <OpenstaxBookSkeletonPage />
         ) : (
           <OpenstaxMobileMenuProvider>

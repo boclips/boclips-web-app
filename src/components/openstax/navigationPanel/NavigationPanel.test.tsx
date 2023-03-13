@@ -1,10 +1,6 @@
 import { render } from 'src/testSupport/render';
 import React from 'react';
 import { NavigationPanel } from 'src/components/openstax/navigationPanel/NavigationPanel';
-import {
-  ChapterFactory,
-  SectionFactory,
-} from 'boclips-api-client/dist/test-support/BookFactory';
 import { fireEvent, waitFor } from '@testing-library/react';
 import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
@@ -16,6 +12,10 @@ import {
 } from 'src/testSupport/resizeTo';
 import { getProviderByName } from 'src/views/openstax/provider/AlignmentProviderFactory';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
+import {
+  TargetFactory,
+  TopicFactory,
+} from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe('OpenstaxBookNavigationPanel', () => {
   it('renders book title with logo, chapters, chapter intros and sections', async () => {
@@ -23,23 +23,24 @@ describe('OpenstaxBookNavigationPanel', () => {
 
     const book: OpenstaxBook = OpenstaxBookFactory.sample({
       title: 'should show book title',
+      provider: 'openstax',
       logoUrl: 'test',
-      chapters: [
-        ChapterFactory.sample({
+      topics: [
+        TopicFactory.sample({
           index: 0,
           title: 'Chapter 1: should show chapter 1',
-          sections: [
-            SectionFactory.sample({
+          targets: [
+            TargetFactory.sample({
               index: 0,
               title: 'Chapter Overview',
               videoIds: ['1'],
             }),
-            SectionFactory.sample({
+            TargetFactory.sample({
               index: 1,
               title: 'Discussion Prompt',
               videoIds: ['2'],
             }),
-            SectionFactory.sample({
+            TargetFactory.sample({
               index: 2,
               title: '1.99 section 99',
               videoIds: ['1', '2'],
@@ -72,7 +73,7 @@ describe('OpenstaxBookNavigationPanel', () => {
     });
     expect(chapterOverviewLink).toHaveAttribute(
       'href',
-      '/explore/openstax/book_id#chapter-0',
+      '/explore/openstax/theme-id#chapter-0',
     );
 
     const discussionPromptLink = wrapper.getByRole('link', {
@@ -80,7 +81,7 @@ describe('OpenstaxBookNavigationPanel', () => {
     });
     expect(discussionPromptLink).toHaveAttribute(
       'href',
-      '/explore/openstax/book_id#chapter-0-discussion-prompt',
+      '/explore/openstax/theme-id#chapter-0-discussion-prompt',
     );
 
     const sectionNinetyNineLink = wrapper.getByRole('link', {
@@ -88,7 +89,7 @@ describe('OpenstaxBookNavigationPanel', () => {
     });
     expect(sectionNinetyNineLink).toHaveAttribute(
       'href',
-      '/explore/openstax/book_id#chapter-0-section-2',
+      '/explore/openstax/theme-id#chapter-0-section-2',
     );
 
     const videoLabel = wrapper.getByText('4 videos');
@@ -180,23 +181,23 @@ describe('OpenstaxBookNavigationPanel', () => {
     resizeToDesktop();
 
     const book: OpenstaxBook = OpenstaxBookFactory.sample({
-      chapters: [
-        ChapterFactory.sample({
+      topics: [
+        TopicFactory.sample({
           index: 0,
           title: 'Chapter 1: default expanded',
-          sections: [
-            SectionFactory.sample({
+          targets: [
+            TargetFactory.sample({
               index: 0,
               title: '1.1 initially visible',
               videoIds: ['1', '2'],
             }),
           ],
         }),
-        ChapterFactory.sample({
+        TopicFactory.sample({
           index: 1,
           title: 'Chapter 2: default collapsed',
-          sections: [
-            SectionFactory.sample({
+          targets: [
+            TargetFactory.sample({
               index: 0,
               title: '2.1 initially hidden',
               videoIds: ['1', '2'],

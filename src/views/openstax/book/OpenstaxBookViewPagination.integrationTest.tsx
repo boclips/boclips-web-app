@@ -4,29 +4,30 @@ import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import React from 'react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
 import { resizeToDesktop } from 'src/testSupport/resizeTo';
 import {
   chapterTitle,
   navigateTo,
   sectionTitle,
-  setUpClientWithBook,
+  setUpClientWithTheme,
   validateVisibleHeadings,
 } from 'src/views/openstax/book/OpenstaxBookTestSupport';
+import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe('Openstax book view pagination buttons', () => {
   describe('section navigation', () => {
     it('renders next and previous sections when clicking pagination buttons', async () => {
       resizeToDesktop();
-      const book = BookFactory.sample({
+      const theme = ThemeFactory.sample({
         id: 'ducklings',
+        provider: 'openstax',
         title: 'Everything to know about ducks',
-        subject: 'Essentials',
-        chapters: [
+        type: 'Essentials',
+        topics: [
           {
             title: 'Chapter 1: Introduction',
             index: 0,
-            sections: [
+            targets: [
               {
                 index: 0,
                 title: 'Chapter Overview',
@@ -44,7 +45,7 @@ describe('Openstax book view pagination buttons', () => {
         ],
       });
 
-      const client = setUpClientWithBook(book);
+      const client = setUpClientWithTheme(theme);
 
       const wrapper = render(
         <MemoryRouter initialEntries={['/explore/openstax/ducklings']}>
@@ -91,15 +92,16 @@ describe('Openstax book view pagination buttons', () => {
 
     it('renders next and previous sections even if section numeration is not continuous', async () => {
       resizeToDesktop();
-      const book = BookFactory.sample({
+      const theme = ThemeFactory.sample({
         id: 'ducklings-2',
+        provider: 'openstax',
         title: 'Everything to know about ducks',
-        subject: 'Essentials',
-        chapters: [
+        type: 'Essentials',
+        topics: [
           {
             title: 'Chapter 1: Introduction',
             index: 0,
-            sections: [
+            targets: [
               {
                 index: 0,
                 title: 'Chapter Overview',
@@ -117,7 +119,7 @@ describe('Openstax book view pagination buttons', () => {
         ],
       });
 
-      const client = setUpClientWithBook(book);
+      const client = setUpClientWithTheme(theme);
 
       const wrapper = render(
         <MemoryRouter initialEntries={['/explore/openstax/ducklings-2']}>
@@ -168,15 +170,16 @@ describe('Openstax book view pagination buttons', () => {
   describe('chapters navigation', () => {
     it('navigation between chapters', async () => {
       resizeToDesktop();
-      const book = BookFactory.sample({
+      const theme = ThemeFactory.sample({
         id: 'ducklings-3',
+        provider: 'openstax',
         title: 'Everything to know about ducks',
-        subject: 'Essentials',
-        chapters: [
+        type: 'Essentials',
+        topics: [
           {
             title: 'Chapter 1: Introduction',
             index: 0,
-            sections: [
+            targets: [
               {
                 title: '1.1 The beginning',
                 index: 0,
@@ -188,7 +191,7 @@ describe('Openstax book view pagination buttons', () => {
           {
             title: 'Chapter 2: Epilogue',
             index: 1,
-            sections: [
+            targets: [
               {
                 title: '2.1 The end',
                 index: 0,
@@ -200,7 +203,7 @@ describe('Openstax book view pagination buttons', () => {
         ],
       });
 
-      const client = setUpClientWithBook(book);
+      const client = setUpClientWithTheme(theme);
 
       const wrapper = render(
         <MemoryRouter initialEntries={['/explore/openstax/ducklings-3']}>
@@ -245,15 +248,16 @@ describe('Openstax book view pagination buttons', () => {
 
     it('navigation between chapters when chapter numeration is not continuous', async () => {
       resizeToDesktop();
-      const book = BookFactory.sample({
+      const theme = ThemeFactory.sample({
         id: 'ducklings-4',
         title: 'Everything to know about ducks',
-        subject: 'Essentials',
-        chapters: [
+        provider: 'openstax',
+        type: 'Essentials',
+        topics: [
           {
             title: 'Chapter 1: Introduction',
             index: 0,
-            sections: [
+            targets: [
               {
                 title: '1.1 The beginning',
                 index: 0,
@@ -265,7 +269,7 @@ describe('Openstax book view pagination buttons', () => {
           {
             title: 'Chapter 99: Epilogue',
             index: 1,
-            sections: [
+            targets: [
               {
                 title: '99.1 The end',
                 index: 0,
@@ -277,7 +281,7 @@ describe('Openstax book view pagination buttons', () => {
         ],
       });
 
-      const client = setUpClientWithBook(book);
+      const client = setUpClientWithTheme(theme);
 
       const wrapper = render(
         <MemoryRouter initialEntries={['/explore/openstax/ducklings-4']}>
@@ -322,15 +326,16 @@ describe('Openstax book view pagination buttons', () => {
 
     it('navigation panel has opened chapter 2 accordion when clicked next chapter button', async () => {
       resizeToDesktop();
-      const book = BookFactory.sample({
+      const theme = ThemeFactory.sample({
         id: 'ducklings-5',
+        provider: 'openstax',
         title: 'Everything to know about ducks',
-        subject: 'Essentials',
-        chapters: [
+        type: 'Essentials',
+        topics: [
           {
             title: 'Chapter 1: Introduction',
             index: 0,
-            sections: [
+            targets: [
               {
                 title: '1.1 The beginning',
                 index: 0,
@@ -342,7 +347,7 @@ describe('Openstax book view pagination buttons', () => {
           {
             title: 'Chapter 2: Epilogue',
             index: 1,
-            sections: [
+            targets: [
               {
                 title: '2.1 The end',
                 index: 0,
@@ -354,7 +359,7 @@ describe('Openstax book view pagination buttons', () => {
         ],
       });
 
-      const client = setUpClientWithBook(book);
+      const client = setUpClientWithTheme(theme);
 
       const wrapper = render(
         <MemoryRouter initialEntries={['/explore/openstax/ducklings-5']}>

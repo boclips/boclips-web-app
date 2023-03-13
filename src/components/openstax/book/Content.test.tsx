@@ -9,6 +9,8 @@ import {
   navigateTo,
 } from 'src/views/openstax/book/OpenstaxBookTestSupport';
 import PaginationPanel from 'src/components/openstax/book/pagination/PaginationPanel';
+import { getProviderByName } from 'src/views/openstax/provider/AlignmentProviderFactory';
+import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 
 describe('OpenstaxBookContent', () => {
   let book: OpenstaxBook;
@@ -16,13 +18,14 @@ describe('OpenstaxBookContent', () => {
   beforeEach(() => {
     book = OpenstaxBookFactory.sample({
       id: 'ducklings',
+      provider: 'openstax',
       title: 'Everything to know about ducks',
-      subject: 'Essentials',
-      chapters: [
+      type: 'Essentials',
+      topics: [
         {
           title: 'Chapter 1: Introduction',
           index: 0,
-          sections: [
+          targets: [
             {
               title: '1.1 Life at the coop',
               index: 0,
@@ -40,7 +43,7 @@ describe('OpenstaxBookContent', () => {
         {
           title: 'Chapter 2: Epilogue',
           index: 1,
-          sections: [
+          targets: [
             {
               title: '2.1 This is the end',
               index: 0,
@@ -58,8 +61,10 @@ describe('OpenstaxBookContent', () => {
 
     const wrapper = renderWithClients(
       <OpenstaxMobileMenuProvider>
-        <Content book={book} />
-        <PaginationPanel book={book} />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <Content book={book} />
+          <PaginationPanel book={book} />
+        </AlignmentContextProvider>
       </OpenstaxMobileMenuProvider>,
     );
 
@@ -80,8 +85,10 @@ describe('OpenstaxBookContent', () => {
 
     const wrapper = renderWithClients(
       <OpenstaxMobileMenuProvider>
-        <Content book={book} />
-        <PaginationPanel book={book} />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <Content book={book} />
+          <PaginationPanel book={book} />
+        </AlignmentContextProvider>
       </OpenstaxMobileMenuProvider>,
     );
 
@@ -95,8 +102,10 @@ describe('OpenstaxBookContent', () => {
 
     const wrapper = renderWithClients(
       <OpenstaxMobileMenuProvider>
-        <Content book={book} />
-        <PaginationPanel book={book} />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <Content book={book} />
+          <PaginationPanel book={book} />
+        </AlignmentContextProvider>
       </OpenstaxMobileMenuProvider>,
     );
 
@@ -114,8 +123,10 @@ describe('OpenstaxBookContent', () => {
 
     const wrapper = renderWithClients(
       <OpenstaxMobileMenuProvider>
-        <Content book={book} />
-        <PaginationPanel book={book} />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <Content book={book} />
+          <PaginationPanel book={book} />
+        </AlignmentContextProvider>
       </OpenstaxMobileMenuProvider>,
     );
 
@@ -131,8 +142,10 @@ describe('OpenstaxBookContent', () => {
 
     const wrapper = renderWithClients(
       <OpenstaxMobileMenuProvider>
-        <Content book={book} />
-        <PaginationPanel book={book} />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <Content book={book} />
+          <PaginationPanel book={book} />
+        </AlignmentContextProvider>
       </OpenstaxMobileMenuProvider>,
     );
 
@@ -147,8 +160,10 @@ describe('OpenstaxBookContent', () => {
 
     const wrapper = renderWithClients(
       <OpenstaxMobileMenuProvider>
-        <Content book={book} />
-        <PaginationPanel book={book} />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <Content book={book} />
+          <PaginationPanel book={book} />
+        </AlignmentContextProvider>
       </OpenstaxMobileMenuProvider>,
     );
 

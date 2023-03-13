@@ -46,7 +46,7 @@ const NavigationPanelHeader = ({ book }: Props) => {
           size="sm"
           className="text-gray-900"
           id="navigation-header"
-          aria-label={`${book.title} navigation`}
+          aria-label={`${book?.title} navigation`}
         >
           {book.title}
         </Typography.H1>

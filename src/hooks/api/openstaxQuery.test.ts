@@ -1,8 +1,7 @@
-import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import {
   useGetThemeByProviderAndId,
-  useGetBooksQuery,
+  useGetThemesByProviderQuery,
   useGetTypesByProviderQuery,
 } from 'src/hooks/api/openstaxQuery';
 import { renderHook } from '@testing-library/react-hooks';
@@ -11,38 +10,51 @@ import { QueryClient } from '@tanstack/react-query';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe('OpenstaxQuery', () => {
-  it('gets an openstax book by id', async () => {
+  it('gets theme by provider and by id', async () => {
     const fakeClient = new FakeBoclipsClient();
 
-    const book = BookFactory.sample({
+    const theme = ThemeFactory.sample({
+      provider: 'openstax',
       title: 'The history of art',
       id: 'art-history-id',
     });
 
-    fakeClient.openstax.setOpenstaxBooks([book]);
-
-    const bookHook = renderHook(() => useGetThemeByProviderAndId('art-history-id'), {
-      wrapper: wrapperWithClients(fakeClient, new QueryClient()),
+    fakeClient.alignments.setThemesByProvider({
+      providerName: 'openstax',
+      themes: [theme],
     });
 
-    await bookHook.waitFor(() => bookHook.result.current.isSuccess);
+    const themeHook = renderHook(
+      () => useGetThemeByProviderAndId('openstax', 'art-history-id'),
+      {
+        wrapper: wrapperWithClients(fakeClient, new QueryClient()),
+      },
+    );
 
-    expect(bookHook.result.current.data.id).toEqual('art-history-id');
-    expect(bookHook.result.current.data.title).toEqual('The history of art');
+    await themeHook.waitFor(() => themeHook.result.current.isSuccess);
+
+    expect(themeHook.result.current.data.id).toEqual('art-history-id');
+    expect(themeHook.result.current.data.title).toEqual('The history of art');
   });
 
-  it('gets all books', async () => {
+  it('gets all themes', async () => {
     const fakeClient = new FakeBoclipsClient();
 
-    const books = [BookFactory.sample({ id: 'id-1' })];
-    fakeClient.openstax.setOpenstaxBooks(books);
-
-    const getBooksHook = renderHook(() => useGetBooksQuery(), {
-      wrapper: wrapperWithClients(fakeClient, new QueryClient()),
+    const themes = [ThemeFactory.sample({ id: 'id-1' })];
+    fakeClient.alignments.setThemesByProvider({
+      providerName: 'openstax',
+      themes,
     });
 
-    await getBooksHook.waitFor(() => getBooksHook.result.current.isSuccess);
-    const result = getBooksHook.result.current.data;
+    const getThemesHook = renderHook(
+      () => useGetThemesByProviderQuery('openstax'),
+      {
+        wrapper: wrapperWithClients(fakeClient, new QueryClient()),
+      },
+    );
+
+    await getThemesHook.waitFor(() => getThemesHook.result.current.isSuccess);
+    const result = getThemesHook.result.current.data;
 
     expect(result).toHaveLength(1);
     expect(result[0].id).toEqual('id-1');

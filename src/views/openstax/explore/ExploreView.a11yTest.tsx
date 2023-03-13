@@ -1,5 +1,4 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
 import { render } from '@testing-library/react';
 import React from 'react';
 import { QueryClient } from '@tanstack/react-query';
@@ -7,22 +6,26 @@ import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { axe } from 'jest-axe';
+import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe(`Explore view`, () => {
   it(`has no violations`, async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
-    fakeClient.openstax.setOpenstaxBooks([
-      BookFactory.sample({
-        id: 'book-1',
-        title: 'Book about Math',
-        subject: 'Maths',
-      }),
-      BookFactory.sample({
-        id: 'book-2',
-        subject: 'Maths',
-      }),
-    ]);
+    fakeClient.alignments.setThemesByProvider({
+      providerName: 'openstax',
+      themes: [
+        ThemeFactory.sample({
+          id: 'book-1',
+          title: 'Book about Math',
+          type: 'Maths',
+        }),
+        ThemeFactory.sample({
+          id: 'book-2',
+          type: 'Maths',
+        }),
+      ],
+    });
 
     fakeClient.alignments.setTypesForProvider('openstax', [
       'Maths',

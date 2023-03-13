@@ -11,7 +11,7 @@ interface Props {
 }
 
 const BookCards = ({ books }: Omit<Props, 'isLoading'>) => {
-  const booksWithMappings = books?.filter((it) => it.subject.length > 0);
+  const booksWithMappings = books?.filter((it) => it.chapters.length > 0);
   return (
     <>
       {booksWithMappings.map((it) => (

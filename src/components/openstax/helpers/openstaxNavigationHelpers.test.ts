@@ -2,26 +2,26 @@ import { getSelectedChapterElement } from 'src/components/openstax/helpers/opens
 import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
 import {
-  ChapterFactory,
-  SectionFactory,
-} from 'boclips-api-client/dist/test-support/BookFactory';
+  TargetFactory,
+  TopicFactory,
+} from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe('openstaxNavigationHelper', () => {
   const book: OpenstaxBook = OpenstaxBookFactory.sample({
-    chapters: [
-      ChapterFactory.sample({
+    topics: [
+      TopicFactory.sample({
         index: 0,
-        sections: [
-          SectionFactory.sample({ index: 0, title: 'Chapter Overview' }),
-          SectionFactory.sample({ index: 2, title: '1.1 Section 1' }),
-          SectionFactory.sample({ index: 1, title: 'Discussion Prompt' }),
+        targets: [
+          TargetFactory.sample({ index: 0, title: 'Chapter Overview' }),
+          TargetFactory.sample({ index: 2, title: '1.1 Section 1' }),
+          TargetFactory.sample({ index: 1, title: 'Discussion Prompt' }),
         ],
       }),
-      ChapterFactory.sample({
+      TopicFactory.sample({
         index: 1,
-        sections: [
-          SectionFactory.sample({ index: 0, title: '2.1 Section 1' }),
-          SectionFactory.sample({ index: 1, title: '2.2 Section 2' }),
+        targets: [
+          TargetFactory.sample({ index: 0, title: '2.1 Section 1' }),
+          TargetFactory.sample({ index: 1, title: '2.2 Section 2' }),
         ],
       }),
     ],

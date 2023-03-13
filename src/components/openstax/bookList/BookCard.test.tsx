@@ -1,7 +1,3 @@
-import {
-  ChapterFactory,
-  SectionFactory,
-} from 'boclips-api-client/dist/test-support/BookFactory';
 import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
 import { BookCard } from 'src/components/openstax/bookList/BookCard';
 import { fireEvent, render } from '@testing-library/react';
@@ -11,16 +7,20 @@ import { Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { getProviderByName } from 'src/views/openstax/provider/AlignmentProviderFactory';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
+import {
+  TargetFactory,
+  TopicFactory,
+} from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe('BookCard', () => {
   it('shows book title and number of videos', () => {
     const book = OpenstaxBookFactory.sample({
       title: 'Olive trees',
       logoUrl: 'svg.com',
-      chapters: [
-        ChapterFactory.sample({
-          sections: [
-            SectionFactory.sample({
+      topics: [
+        TopicFactory.sample({
+          targets: [
+            TargetFactory.sample({
               videoIds: ['1', '2'],
             }),
           ],
@@ -86,10 +86,10 @@ describe('BookCard', () => {
       const book = OpenstaxBookFactory.sample({
         title: 'Olive trees',
         logoUrl: 'svg.com',
-        chapters: [
-          ChapterFactory.sample({
-            sections: [
-              SectionFactory.sample({
+        topics: [
+          TopicFactory.sample({
+            targets: [
+              TargetFactory.sample({
                 videoIds: ['1', '2'],
               }),
             ],
