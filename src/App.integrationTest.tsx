@@ -57,6 +57,7 @@ describe('App', () => {
     const apiClient = new FakeBoclipsClient();
 
     apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: false });
+    apiClient.alignments.setTypesForProvider('openstax', []);
 
     const wrapper = render(
       <MemoryRouter initialEntries={['/explore/openstax']}>
