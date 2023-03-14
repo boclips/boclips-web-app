@@ -1,7 +1,3 @@
-import {
-  ChapterFactory,
-  SectionFactory,
-} from 'boclips-api-client/dist/test-support/BookFactory';
 import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
 import { BookCard } from 'src/components/openstax/bookList/BookCard';
 import { fireEvent, render } from '@testing-library/react';
@@ -9,16 +5,22 @@ import React from 'react';
 import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { getProviderByName } from 'src/views/openstax/provider/AlignmentProviderFactory';
+import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
+import {
+  TargetFactory,
+  TopicFactory,
+} from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe('BookCard', () => {
   it('shows book title and number of videos', () => {
     const book = OpenstaxBookFactory.sample({
       title: 'Olive trees',
       logoUrl: 'svg.com',
-      chapters: [
-        ChapterFactory.sample({
-          sections: [
-            SectionFactory.sample({
+      topics: [
+        TopicFactory.sample({
+          targets: [
+            TargetFactory.sample({
               videoIds: ['1', '2'],
             }),
           ],
@@ -30,7 +32,9 @@ describe('BookCard', () => {
 
     const wrapper = render(
       <Router location={history.location} navigator={history}>
-        <BookCard book={book} />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <BookCard theme={book} />
+        </AlignmentContextProvider>
       </Router>,
     );
     const card = wrapper.getByRole('button', { name: 'book Olive trees' });
@@ -49,7 +53,9 @@ describe('BookCard', () => {
 
     const wrapper = render(
       <Router location={history.location} navigator={history}>
-        <BookCard book={book} />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <BookCard theme={book} />
+        </AlignmentContextProvider>
       </Router>,
     );
     expect(wrapper.getByAltText('Olive trees cover')).toBeInTheDocument();
@@ -65,7 +71,9 @@ describe('BookCard', () => {
 
     const wrapper = render(
       <Router location={history.location} navigator={history}>
-        <BookCard book={book} />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <BookCard theme={book} />
+        </AlignmentContextProvider>
       </Router>,
     );
     expect(
@@ -78,10 +86,10 @@ describe('BookCard', () => {
       const book = OpenstaxBookFactory.sample({
         title: 'Olive trees',
         logoUrl: 'svg.com',
-        chapters: [
-          ChapterFactory.sample({
-            sections: [
-              SectionFactory.sample({
+        topics: [
+          TopicFactory.sample({
+            targets: [
+              TargetFactory.sample({
                 videoIds: ['1', '2'],
               }),
             ],
@@ -94,7 +102,9 @@ describe('BookCard', () => {
       const wrapper = render(
         <Router location={history.location} navigator={history}>
           <main tabIndex={-1}>this is main</main>
-          <BookCard book={book} />
+          <AlignmentContextProvider provider={getProviderByName('openstax')}>
+            <BookCard theme={book} />
+          </AlignmentContextProvider>
         </Router>,
       );
 

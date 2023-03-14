@@ -15,8 +15,8 @@ import { VideoFacets } from 'boclips-api-client/dist/sub-clients/videos/model/Vi
 import { Subject } from 'boclips-api-client/dist/sub-clients/subjects/model/Subject';
 import { UserFeatureKey } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import { disciplines } from 'src/components/disciplinesWidget/disciplinesFixture';
-import { Book } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
-import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
+import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
 
 export interface Bo {
   interact(callback: (apiClient: FakeBoclipsClient) => void): void;
@@ -57,17 +57,18 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
     );
   };
 
-  const boSetOpenstax = (books: Partial<Book>[]) => {
-    const subjects = Array.from(new Set(books.map((book) => book.subject)));
-    apiClient.openstax.setOpenstaxSubjects(subjects);
+  const boSetOpenstax = (themes: Partial<Theme>[]) => {
+    const types = Array.from(new Set(themes.map((theme) => theme.type)));
+    apiClient.alignments.setTypesForProvider('openstax', types);
 
-    apiClient.openstax.setOpenstaxBooks(
-      books.map((book) => ({
-        ...BookFactory.sample(book),
+    apiClient.alignments.setThemesByProvider({
+      providerName: 'openstax',
+      themes: themes.map((theme) => ({
+        ...ThemeFactory.sample(theme),
         logoUrl:
           'https://assets.boclips.com/boclips-public-static-files/boclips/openstax/high_school_statistics_web_card.svg',
       })),
-    );
+    });
   };
 
   const boSetFeatures = (features: {
@@ -266,15 +267,16 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
         openstaxBooks: () => {
           boSetFeatures({ BO_WEB_APP_OPENSTAX: true });
           boSetOpenstax([
-            BookFactory.sample({
+            ThemeFactory.sample({
               id: 'book-1',
-              subject: 'Maths',
+              provider: 'openstax',
+              type: 'Maths',
               title: 'Maths book',
-              chapters: [
+              topics: [
                 {
                   title: 'Chapter 1: chapter-one',
                   index: 0,
-                  sections: [
+                  targets: [
                     {
                       title: '1.1 section we dinna want to view',
                       videoIds: [],
@@ -297,59 +299,70 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
                 },
               ],
             }),
-            BookFactory.sample({
+            ThemeFactory.sample({
               id: 'book-2',
-              subject: 'Physics',
+              provider: 'openstax',
+              type: 'Physics',
               title: 'Physics book',
             }),
-            BookFactory.sample({
+            ThemeFactory.sample({
               id: 'book-3',
-              subject: 'Physics',
+              provider: 'openstax',
+              type: 'Physics',
               title: 'Physics book 2',
             }),
-            BookFactory.sample({
+            ThemeFactory.sample({
               id: 'book-4',
-              subject: 'Physics',
+              provider: 'openstax',
+              type: 'Physics',
               title: 'Physics book 3',
             }),
-            BookFactory.sample({
+            ThemeFactory.sample({
               id: 'book-5',
-              subject: 'Physics',
+              provider: 'openstax',
+              type: 'Physics',
               title: 'Physics book 4',
             }),
-            BookFactory.sample({
+            ThemeFactory.sample({
               id: 'book-6',
-              subject: 'Physics',
+              provider: 'openstax',
+              type: 'Physics',
               title: 'Physics book 5',
             }),
-            BookFactory.sample({
+            ThemeFactory.sample({
               id: 'book-7',
-              subject: 'Physics',
+              provider: 'openstax',
+              type: 'Physics',
               title: 'Physics book 6',
             }),
-            BookFactory.sample({
+            ThemeFactory.sample({
               id: 'book-8',
-              subject: 'Amazing subject',
+              provider: 'openstax',
+              type: 'Amazing subject',
               title: 'Amazing subject book',
             }),
-            BookFactory.sample({
+            ThemeFactory.sample({
               id: 'book-9',
-              subject: 'Long subject name',
+              provider: 'openstax',
+              type: 'Long subject name',
               title: 'Long subject book',
             }),
-            BookFactory.sample({
+            ThemeFactory.sample({
               id: 'book-10',
-              subject: 'Geography',
+              provider: 'openstax',
+              type: 'Geography',
               title: 'Geography book',
             }),
-            BookFactory.sample({
+            ThemeFactory.sample({
               id: 'book-11',
-              subject: 'History',
+              provider: 'openstax',
+              type: 'History',
               title: 'History book',
             }),
-            BookFactory.sample({
+            ThemeFactory.sample({
               id: 'book-12',
-              subject: 'Architecture',
+              provider: 'openstax',
+              type: 'Architecture',
               title: 'Architecture book',
             }),
           ]);

@@ -5,22 +5,23 @@ import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
 import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
-import { setUpClientWithBook } from 'src/views/openstax/book/OpenstaxBookTestSupport';
-import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
-import { Book } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
+import { setUpClientWithTheme } from 'src/views/openstax/book/OpenstaxBookTestSupport';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
+import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe('OpenstaxBookView - accessibility', () => {
   it('has no violations', async () => {
-    const book: Book = BookFactory.sample({
+    const theme: Theme = ThemeFactory.sample({
       id: 'ducklings',
+      provider: 'openstax',
       title: 'Everything to know about ducks',
-      subject: 'Essentials',
-      chapters: [
+      type: 'Essentials',
+      topics: [
         {
           title: 'Chapter 1: Introduction',
           index: 0,
-          sections: [
+          targets: [
             {
               title: '1.1 Section 1',
               index: 0,
@@ -50,7 +51,7 @@ describe('OpenstaxBookView - accessibility', () => {
         {
           title: 'Chapter 2: Epilogue',
           index: 1,
-          sections: [
+          targets: [
             {
               title: '2.1 Section 1',
               index: 0,
@@ -79,7 +80,7 @@ describe('OpenstaxBookView - accessibility', () => {
         },
       ],
     });
-    const client = setUpClientWithBook(book);
+    const client = setUpClientWithTheme(theme);
 
     const history = createBrowserHistory();
     history.push('/explore/openstax/ducklings');

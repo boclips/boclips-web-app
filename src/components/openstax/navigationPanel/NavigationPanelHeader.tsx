@@ -9,6 +9,7 @@ import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import { useNavigate } from 'react-router-dom';
 import { useOpenstaxMobileMenu } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 import { BookLogo } from 'src/components/openstax/bookLogo/BookLogo';
+import { useAlignmentProvider } from 'src/components/common/providers/AlignmentContextProvider';
 import s from './style.module.less';
 
 interface Props {
@@ -18,11 +19,12 @@ interface Props {
 const NavigationPanelHeader = ({ book }: Props) => {
   const isNotDesktop = useMediaBreakPoint().type !== 'desktop';
   const navigate = useNavigate();
+  const provider = useAlignmentProvider();
 
   const { setIsOpen } = useOpenstaxMobileMenu();
 
   const goToExplorePage = () => {
-    navigate('/explore/openstax');
+    navigate(`/explore/${provider.navigationPath}`);
   };
 
   return (
@@ -44,7 +46,7 @@ const NavigationPanelHeader = ({ book }: Props) => {
           size="sm"
           className="text-gray-900"
           id="navigation-header"
-          aria-label={`${book.title} navigation`}
+          aria-label={`${book?.title} navigation`}
         >
           {book.title}
         </Typography.H1>

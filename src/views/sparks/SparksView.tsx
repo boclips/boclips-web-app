@@ -4,7 +4,7 @@ import { Layout } from 'src/components/layout/Layout';
 import Footer from 'src/components/layout/Footer';
 import { SparksWidget } from 'src/components/sparks/SparksWidget';
 
-export const SparksView = () => {
+const SparksView = () => {
   return (
     <Layout rowsSetup="grid-rows-homepage" responsiveLayout>
       <Navbar />
@@ -13,3 +13,5 @@ export const SparksView = () => {
     </Layout>
   );
 };
+
+export default SparksView;

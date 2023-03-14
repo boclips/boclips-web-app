@@ -1,12 +1,12 @@
 import { fireEvent, RenderResult, within } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { Book } from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { BookFactory } from 'boclips-api-client/dist/test-support/BookFactory';
 import { v4 as uuidv4 } from 'uuid';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
+import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 
-export const getTableOfContent = (book: Book, wrapper: RenderResult) =>
-  wrapper.queryByLabelText(`Table of contents of ${book.title}`);
+export const getTableOfContent = (theme: Theme, wrapper: RenderResult) =>
+  wrapper.queryByLabelText(`Table of contents of ${theme.title}`);
 
 export const validateVisibleHeadings = (
   element: HTMLElement,
@@ -23,23 +23,27 @@ export const validateVisibleHeadings = (
   }
 };
 
-export const setUpClientWithBook = (book: Book) => {
+export const setUpClientWithTheme = (theme: Theme) => {
   const client = new FakeBoclipsClient();
-  client.openstax.setOpenstaxBooks([book]);
+  client.alignments.setThemesByProvider({
+    providerName: 'openstax',
+    themes: [theme],
+  });
   client.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
   return client;
 };
 
-export const createBook = () => {
-  return BookFactory.sample({
+export const createTheme = () => {
+  return ThemeFactory.sample({
     id: uuidv4(),
+    provider: 'openstax',
     title: 'Everything to know about ducks',
-    subject: 'Essentials',
-    chapters: [
+    type: 'Essentials',
+    topics: [
       {
         title: 'Chapter 1: Introduction',
         index: 0,
-        sections: [
+        targets: [
           {
             title: '1.1 Life at the coop',
             index: 2,
@@ -74,7 +78,7 @@ export const createBook = () => {
       {
         title: 'Chapter 2: Epilogue',
         index: 1,
-        sections: [
+        targets: [
           {
             title: '2.1 This is the end',
             index: 0,

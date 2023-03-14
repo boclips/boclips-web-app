@@ -14,14 +14,14 @@ import { CartItemFactory } from 'boclips-api-client/dist/test-support/CartsFacto
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { sleep } from 'src/testSupport/sleep';
-import {
-  BookFactory,
-  ChapterFactory,
-  SectionFactory,
-} from 'boclips-api-client/dist/test-support/BookFactory';
 import userEvent from '@testing-library/user-event';
 import { Link } from 'boclips-api-client/dist/types';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
+import {
+  TargetFactory,
+  ThemeFactory,
+  TopicFactory,
+} from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe('Video View', () => {
   let fakeClient;
@@ -137,13 +137,16 @@ describe('Video View', () => {
 
   describe('video page navigated from explore view', () => {
     it(`will display embed video as primary button`, async () => {
-      const book = getBookWithVideo(exampleVideo);
+      const theme = getThemeWithVideo(exampleVideo);
 
-      fakeClient.openstax.setOpenstaxBooks([book]);
+      fakeClient.alignments.setThemesByProvider({
+        providerName: 'openstax',
+        themes: [theme],
+      });
       fakeClient.videos.insertVideo(exampleVideo);
       fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 
-      const wrapper = renderView([`/explore/openstax/${book.id}`]);
+      const wrapper = renderView([`/explore/openstax/${theme.id}`]);
 
       await userEvent.click(await wrapper.findByText(exampleVideo.title));
 
@@ -162,13 +165,16 @@ describe('Video View', () => {
           createEmbedCode: null,
         },
       };
-      const book = getBookWithVideo(videoWithoutEmbedOption);
+      const theme = getThemeWithVideo(videoWithoutEmbedOption);
 
-      fakeClient.openstax.setOpenstaxBooks([book]);
+      fakeClient.alignments.setThemesByProvider({
+        providerName: 'openstax',
+        themes: [theme],
+      });
       fakeClient.videos.insertVideo(videoWithoutEmbedOption);
       fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 
-      const wrapper = renderView([`/explore/openstax/${book.id}`]);
+      const wrapper = renderView([`/explore/openstax/${theme.id}`]);
 
       await userEvent.click(await wrapper.findByText(exampleVideo.title));
 
@@ -191,12 +197,15 @@ describe('Video View', () => {
         },
       };
 
-      const book = getBookWithVideo(newVideo);
-      fakeClient.openstax.setOpenstaxBooks([book]);
+      const theme = getThemeWithVideo(newVideo);
+      fakeClient.alignments.setThemesByProvider({
+        providerName: 'openstax',
+        themes: [theme],
+      });
       fakeClient.videos.insertVideo(newVideo);
       fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 
-      const wrapper = renderView([`/explore/openstax/${book.id}`]);
+      const wrapper = renderView([`/explore/openstax/${theme.id}`]);
 
       await userEvent.click(await wrapper.findByText(newVideo.title));
 
@@ -214,13 +223,16 @@ describe('Video View', () => {
         },
       };
 
-      const book = getBookWithVideo(newVideo);
+      const theme = getThemeWithVideo(newVideo);
 
-      fakeClient.openstax.setOpenstaxBooks([book]);
+      fakeClient.alignments.setThemesByProvider({
+        providerName: 'openstax',
+        themes: [theme],
+      });
       fakeClient.videos.insertVideo(newVideo);
       fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 
-      const wrapper = renderView([`/explore/openstax/${book.id}`]);
+      const wrapper = renderView([`/explore/openstax/${theme.id}`]);
 
       await userEvent.click(await wrapper.findByText(newVideo.title));
 
@@ -229,13 +241,14 @@ describe('Video View', () => {
       ).not.toBeInTheDocument();
     });
 
-    const getBookWithVideo = (video: Video) =>
-      BookFactory.sample({
+    const getThemeWithVideo = (video: Video) =>
+      ThemeFactory.sample({
         id: 'book-id',
-        chapters: [
-          ChapterFactory.sample({
-            sections: [
-              SectionFactory.sample({
+        provider: 'openstax',
+        topics: [
+          TopicFactory.sample({
+            targets: [
+              TargetFactory.sample({
                 title: 'section title',
                 videos: [video],
                 videoIds: ['video-id'],

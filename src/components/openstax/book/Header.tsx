@@ -8,6 +8,7 @@ import { TextButton } from 'src/components/common/textButton/TextButton';
 import BackArrow from 'src/resources/icons/back-arrow.svg';
 import { useNavigate } from 'react-router-dom';
 import { Typography } from '@boclips-ui/typography';
+import { useAlignmentProvider } from 'src/components/common/providers/AlignmentContextProvider';
 import s from './style.module.less';
 
 interface Props {
@@ -17,12 +18,13 @@ interface Props {
 
 export const Header = ({ bookTitle, chapterTitle }: Props) => {
   const breakpoint = useMediaBreakPoint();
+  const providerPath = useAlignmentProvider().navigationPath;
   const isNotDesktop = breakpoint.type !== 'desktop';
   const { setIsOpen } = useOpenstaxMobileMenu();
   const navigate = useNavigate();
 
   const goToExplorePage = () => {
-    navigate('/explore/openstax');
+    navigate(`/explore/${providerPath}`);
   };
 
   return (

@@ -15,6 +15,7 @@ import {
   getSelectedChapter,
   sectionInfo,
 } from 'src/components/openstax/helpers/openstaxNavigationHelpers';
+import { useAlignmentProvider } from 'src/components/common/providers/AlignmentContextProvider';
 import s from './style.module.less';
 
 interface Props {
@@ -23,6 +24,7 @@ interface Props {
 
 const NavigationPanelBody = ({ book }: Props) => {
   const location = useLocation();
+  const provider = useAlignmentProvider();
   const [currentSectionLink, setCurrentSectionLink] =
     useState<string>('chapter-0');
 
@@ -59,7 +61,7 @@ const NavigationPanelBody = ({ book }: Props) => {
         window.scrollTo({ top: 0 });
       }}
       to={{
-        pathname: `/explore/openstax/${book.id}`,
+        pathname: `/explore/${provider.navigationPath}/${book.id}`,
         hash: sectionLink,
       }}
     >

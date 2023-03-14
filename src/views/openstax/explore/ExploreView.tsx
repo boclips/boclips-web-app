@@ -5,28 +5,43 @@ import { Layout } from 'src/components/layout/Layout';
 import { BookList } from 'src/components/openstax/bookList/BookList';
 import { SubjectsMenu } from 'src/components/openstax/menu/SubjectsMenu';
 import {
-  useGetBooksQuery,
-  useGetOpenstaxSubjectsQuery,
+  useGetThemesByProviderQuery,
+  useGetTypesByProviderQuery,
 } from 'src/hooks/api/openstaxQuery';
 import ExploreHeader from 'src/components/openstax/exploreHeader/ExploreHeader';
+import { useParams } from 'react-router';
+import NotFound from 'src/views/notFound/NotFound';
+import {
+  getProviderByName,
+  isProviderSupported,
+} from 'src/views/openstax/provider/AlignmentProviderFactory';
+import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 
 const ExploreView = () => {
   const ALL = 'All';
-  const { data: books, isLoading: areBooksLoading } = useGetBooksQuery();
-  const { data: subjects, isLoading: areSubjectsLoading } =
-    useGetOpenstaxSubjectsQuery();
-  const [currentSubject, setCurrentSubject] = useState(ALL);
+  const { provider: providerName } = useParams();
+  const { data: themes, isLoading: areBooksLoading } =
+    useGetThemesByProviderQuery(providerName);
 
-  const currentSubjectBooks = useMemo(
+  const provider = isProviderSupported(providerName)
+    ? getProviderByName(providerName)
+    : undefined;
+
+  const { data: types, isLoading: areTypesLoading } =
+    useGetTypesByProviderQuery(providerName);
+
+  const [currentType, setCurrentType] = useState(ALL);
+
+  const currentTypeThemes = useMemo(
     () =>
-      currentSubject === ALL
-        ? books
-        : books?.filter((book) => subjects && book.subject === currentSubject),
-    [books, subjects, currentSubject],
+      currentType === ALL
+        ? themes
+        : themes?.filter((theme) => types && theme.subject === currentType),
+    [types, currentType, themes],
   );
 
   useEffect(() => {
-    const firstBook = currentSubjectBooks?.[0];
+    const firstBook = currentTypeThemes?.[0];
     const isNavFocused = document
       .querySelector('main')
       .contains(document.activeElement);
@@ -37,24 +52,28 @@ const ExploreView = () => {
       );
       element.focus();
     }
-  }, [currentSubjectBooks]);
+  }, [currentTypeThemes]);
 
-  const isLoading = areBooksLoading || areSubjectsLoading;
+  const isLoading = areBooksLoading || areTypesLoading;
 
-  return (
+  return provider ? (
     <Layout rowsSetup="grid-rows-explore-view" responsiveLayout>
       <Navbar />
-      <ExploreHeader />
-      <SubjectsMenu
-        subjects={isLoading ? [] : [ALL, ...subjects]}
-        currentSubject={currentSubject}
-        onClick={setCurrentSubject}
-        isLoading={isLoading}
-      />
+      <AlignmentContextProvider provider={provider}>
+        <ExploreHeader />
+        <SubjectsMenu
+          subjects={isLoading ? [] : [ALL, ...types]}
+          currentSubject={currentType}
+          onClick={setCurrentType}
+          isLoading={isLoading}
+        />
 
-      <BookList books={currentSubjectBooks} isLoading={isLoading} />
+        <BookList books={currentTypeThemes} isLoading={isLoading} />
+      </AlignmentContextProvider>
       <Footer />
     </Layout>
+  ) : (
+    <NotFound />
   );
 };
 

@@ -3,6 +3,8 @@ import { renderWithClients } from 'src/testSupport/render';
 import { Header } from 'src/components/openstax/book/Header';
 import { RenderResult } from '@testing-library/react';
 import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
+import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
+import { getProviderByName } from 'src/views/openstax/provider/AlignmentProviderFactory';
 
 describe('OpenstaxBookHeader', () => {
   it('shows book and chapter title', () => {
@@ -42,7 +44,9 @@ describe('OpenstaxBookHeader', () => {
   const renderDefaultOpenstaxBookHeader = (): RenderResult =>
     renderWithClients(
       <OpenstaxMobileMenuProvider>
-        <Header bookTitle="spies" chapterTitle="Chapter 1: Title" />
+        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <Header bookTitle="spies" chapterTitle="Chapter 1: Title" />
+        </AlignmentContextProvider>
       </OpenstaxMobileMenuProvider>,
     );
 });

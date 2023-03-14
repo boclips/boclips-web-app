@@ -71,6 +71,8 @@ const ExploreView = lazyWithRetry(
   () => import('src/views/openstax/explore/ExploreView'),
 );
 
+const SparksView = lazyWithRetry(() => import('src/views/sparks/SparksView'));
+
 const OpenstaxBookView = lazyWithRetry(
   () => import('src/views/openstax/book/OpenstaxBookView'),
 );
@@ -185,6 +187,19 @@ const App = ({
                     <Route path="/playlists" element={<PlaylistsView />} />
 
                     <Route
+                      path="/sparks"
+                      element={
+                        <FeatureGate
+                          feature="BO_WEB_APP_OPENSTAX"
+                          fallback={<NotFound />}
+                        >
+                          <Helmet title="Sparks" />
+                          <SparksView />
+                        </FeatureGate>
+                      }
+                    />
+
+                    <Route
                       path="/library"
                       element={<Navigate to="/playlists" replace />}
                     />
@@ -201,7 +216,7 @@ const App = ({
                     />
 
                     <Route
-                      path="/explore/openstax"
+                      path="/explore/:provider"
                       element={
                         <FeatureGate
                           feature="BO_WEB_APP_OPENSTAX"
@@ -213,7 +228,7 @@ const App = ({
                       }
                     />
                     <Route
-                      path="/explore/openstax/:id"
+                      path="/explore/:provider/:id"
                       element={
                         <FeatureGate
                           feature="BO_WEB_APP_OPENSTAX"
