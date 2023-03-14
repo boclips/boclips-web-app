@@ -56,12 +56,32 @@ describe('OpenstaxBookView', () => {
 
   it('shows Page not found when used non existing provider', async () => {
     resizeToDesktop();
-    const book = createTheme();
+    const theme = createTheme();
 
-    const client = setUpClientWithTheme(book);
+    const client = setUpClientWithTheme(theme);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={[`/explore/wrong-provider/${book.id}`]}>
+      <MemoryRouter initialEntries={[`/explore/wrong-provider/${theme.id}`]}>
+        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
+      </MemoryRouter>,
+    );
+    expect(await wrapper.findByText('Page not found!')).toBeVisible();
+  });
+
+  it('shows Page not found when used provider not matched to theme', async () => {
+    resizeToDesktop();
+    const openstaxTheme = createTheme();
+
+    const client = setUpClientWithTheme(openstaxTheme);
+    client.alignments.setThemesByProvider({
+      providerName: 'common-core-math',
+      themes: [],
+    });
+
+    const wrapper = render(
+      <MemoryRouter
+        initialEntries={[`/explore/common-core-math/${openstaxTheme.id}`]}
+      >
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );

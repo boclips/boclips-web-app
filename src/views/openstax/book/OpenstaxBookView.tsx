@@ -19,14 +19,18 @@ import { AlignmentContextProvider } from 'src/components/common/providers/Alignm
 
 const OpenstaxBookView = () => {
   const { id, provider: providerName } = useParams();
-  const { data: book, isLoading } = useGetThemeByProviderAndId(
+  const { data: theme, isLoading } = useGetThemeByProviderAndId(
     providerName,
     id,
   );
 
-  return isProviderSupported(providerName) ? (
+  const provider = isProviderSupported(providerName)
+    ? getProviderByName(providerName)
+    : undefined;
+
+  return provider && (isLoading || theme) ? (
     <>
-      {book?.title && <Helmet title={book.title} />}
+      {theme?.title && <Helmet title={theme.title} />}
       <Layout
         rowsSetup="grid-rows-openstax-detailed-view items-start"
         responsiveLayout
@@ -36,12 +40,10 @@ const OpenstaxBookView = () => {
           <OpenstaxBookSkeletonPage />
         ) : (
           <OpenstaxMobileMenuProvider>
-            <AlignmentContextProvider
-              provider={getProviderByName(providerName)}
-            >
-              <NavigationPanel book={book} />
-              <Content book={book} />
-              <PaginationPanel book={book} />
+            <AlignmentContextProvider provider={provider}>
+              <NavigationPanel book={theme} />
+              <Content book={theme} />
+              <PaginationPanel book={theme} />
             </AlignmentContextProvider>
           </OpenstaxMobileMenuProvider>
         )}
