@@ -116,7 +116,7 @@ const NavigationPanelBody = ({ book }: Props) => {
         value={expandedChapters}
         onValueChange={setExpandedChapters}
       >
-        {book.chapters.map((chapter) => (
+        {book.topics.map((chapter) => (
           <Accordion.Item
             value={`chapter-${chapter.index}`}
             key={`chapter-${chapter.index}`}
@@ -154,7 +154,7 @@ const NavigationPanelBody = ({ book }: Props) => {
                   chapter.discussionPrompt.title,
                   discussionPromptInfo(chapter).id,
                 )}
-              {chapter.sections.map((section) =>
+              {chapter.targets.map((section) =>
                 renderSectionLevelLabel(
                   section.title,
                   sectionInfo(chapter, section).id,

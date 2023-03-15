@@ -17,16 +17,16 @@ export const convertApiTheme = (apiTheme: Theme): OpenstaxBook => {
   const openstaxBook = {
     id: apiTheme.id,
     videoCount: 0,
-    subject: apiTheme.type,
+    type: apiTheme.type,
     title: apiTheme.title,
-    chapters: apiTheme.topics.map((topic) => convertApiTopic(topic)),
+    topics: apiTheme.topics.map((topic) => convertApiTopic(topic)),
     logoUrl: apiTheme.logoUrl,
     provider: apiTheme.provider,
     links: apiTheme.links,
   };
 
   let videoCount = 0;
-  openstaxBook.chapters.forEach((chapter) => {
+  openstaxBook.topics.forEach((chapter) => {
     videoCount += chapter.videoCount;
   });
 
@@ -56,7 +56,7 @@ export const convertApiTopic = (apiTopic: Topic): OpenstaxChapter => {
     index: apiTopic.index,
     chapterOverview: getChapterOverview(apiTopic),
     discussionPrompt: getDiscussionPrompt(apiTopic),
-    sections: getNumberedSections(apiTopic).map((section) =>
+    targets: getNumberedSections(apiTopic).map((section) =>
       convertApiTarget(section),
     ),
     title: apiTopic.title,
@@ -67,7 +67,7 @@ export const convertApiTopic = (apiTopic: Topic): OpenstaxChapter => {
 function getNumberedSections(apiTopic: Topic) {
   const chapterIntros = [CHAPTER_OVERVIEW, DISCUSSION_PROMPT];
   return apiTopic.targets.filter(
-    (section) => !chapterIntros.includes(section.title),
+    (target) => !chapterIntros.includes(target.title),
   );
 }
 

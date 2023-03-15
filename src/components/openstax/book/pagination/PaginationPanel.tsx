@@ -33,12 +33,11 @@ const PaginationPanel = ({ book }: Props) => {
   }
 
   const showNextChapterButton = () =>
-    !showNextSectionButton() &&
-    currentChapter?.index < last(book.chapters).index;
+    !showNextSectionButton() && currentChapter?.index < last(book.topics).index;
 
   const showPrevChapterButton = () =>
     !showPrevSectionButton() &&
-    currentChapter?.index > first(book.chapters).index;
+    currentChapter?.index > first(book.topics).index;
 
   const showNextSectionButton = () =>
     allSectionsInChapter.length &&

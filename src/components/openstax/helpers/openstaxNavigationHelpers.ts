@@ -15,11 +15,11 @@ export const getSelectedChapter = (
   sectionLink: string,
 ): OpenstaxChapter => {
   const chapterIndex = selectedChapterIndex(sectionLink);
-  const foundChapter = book?.chapters.find(
+  const foundChapter = book?.topics.find(
     (chapter) => chapter.index === chapterIndex,
   );
 
-  return foundChapter || book.chapters[0];
+  return foundChapter || book.topics[0];
 };
 export const getSelectedChapterElement = (
   book: OpenstaxBook,
@@ -39,7 +39,7 @@ export const getSelectedChapterElement = (
   }
   if (sectionLink.match('chapter-\\d+-section-\\d+$')) {
     const sectionIndex = Number(sectionLink.split('-')[3]);
-    const foundSection = chapter.sections.find(
+    const foundSection = chapter.targets.find(
       (section) => section.index === sectionIndex,
     );
 
@@ -84,8 +84,8 @@ const defaultChapterElementInfo = (
     return discussionPromptInfo(chapter);
   }
 
-  if (chapter?.sections && chapter.sections.length !== 0) {
-    return sectionInfo(chapter, chapter.sections[0]);
+  if (chapter?.targets && chapter.targets.length !== 0) {
+    return sectionInfo(chapter, chapter.targets[0]);
   }
 
   return undefined;
@@ -147,7 +147,7 @@ export const getAllSectionsInChapter = (
   return [
     chapterOverviewInfo(chapter),
     discussionPromptInfo(chapter),
-    ...chapter.sections.map((it) => sectionInfo(chapter, it)),
+    ...chapter.targets.map((it) => sectionInfo(chapter, it)),
   ].filter((it) => it);
 };
 
@@ -177,6 +177,6 @@ const getChapterId = (
   offset: number,
 ) => {
   const index = selectedChapterIndex(sectionLink);
-  const effectiveIndex = ensureIndex(index + offset, book.chapters);
+  const effectiveIndex = ensureIndex(index + offset, book.topics);
   return `chapter-${effectiveIndex}`;
 };

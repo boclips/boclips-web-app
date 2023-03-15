@@ -1,20 +1,20 @@
-import {
-  Book,
-  Chapter,
-  Section,
-} from 'boclips-api-client/dist/sub-clients/openstax/model/Books';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
+import {
+  Theme,
+  Topic,
+  Target,
+} from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
 
-export interface OpenstaxBook extends Book {
+export interface OpenstaxBook extends Theme {
   videoCount: number;
-  chapters: OpenstaxChapter[];
+  topics: OpenstaxChapter[];
 }
 
-export interface OpenstaxChapter extends Chapter {
+export interface OpenstaxChapter extends Topic {
   videoCount: number;
   chapterOverview: OpenstaxChapterIntro;
   discussionPrompt: OpenstaxChapterIntro;
-  sections: OpenstaxSection[];
+  targets: OpenstaxSection[];
 }
 
 export interface OpenstaxChapterIntro {
@@ -22,6 +22,6 @@ export interface OpenstaxChapterIntro {
   videos: Video[];
 }
 
-export interface OpenstaxSection extends Section {
+export interface OpenstaxSection extends Target {
   videoCount: number;
 }

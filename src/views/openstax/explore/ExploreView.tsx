@@ -36,7 +36,7 @@ const ExploreView = () => {
     () =>
       currentType === ALL
         ? themes
-        : themes?.filter((theme) => types && theme.subject === currentType),
+        : themes?.filter((theme) => types && theme.type === currentType),
     [types, currentType, themes],
   );
 

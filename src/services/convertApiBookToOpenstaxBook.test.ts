@@ -25,7 +25,7 @@ describe('OpenstaxBook converter', () => {
     const openstaxBook = convertApiTheme(apiTheme);
 
     expect(openstaxBook.id).toEqual('bookid');
-    expect(openstaxBook.subject).toEqual('Maths');
+    expect(openstaxBook.type).toEqual('Maths');
     expect(openstaxBook.title).toEqual('Algebra and Trigonometry');
     expect(openstaxBook.logoUrl).toEqual('svg.com');
     expect(openstaxBook.provider).toEqual('openstax');
@@ -83,12 +83,12 @@ describe('OpenstaxBook converter', () => {
     });
 
     const openstaxBook = convertApiTheme(apiTheme);
-    expect(openstaxBook.chapters.length).toEqual(1);
-    const chapter = openstaxBook.chapters[0];
+    expect(openstaxBook.topics.length).toEqual(1);
+    const chapter = openstaxBook.topics[0];
     expect(chapter.title).toEqual('chapterA');
     expect(chapter.index).toEqual(0);
     expect(chapter.videoCount).toEqual(4);
-    expect(chapter.sections.length).toEqual(2);
+    expect(chapter.targets.length).toEqual(2);
   });
 
   describe('topic video count', () => {
@@ -106,7 +106,7 @@ describe('OpenstaxBook converter', () => {
         ThemeFactory.sample({ topics: [topic] }),
       );
 
-      expect(openstaxBook.chapters[0].videoCount).toEqual(0);
+      expect(openstaxBook.topics[0].videoCount).toEqual(0);
     });
 
     it('returns sum of targets videos correctly', () => {
@@ -123,7 +123,7 @@ describe('OpenstaxBook converter', () => {
         ThemeFactory.sample({ topics: [topic] }),
       );
 
-      expect(openstaxBook.chapters[0].videoCount).toEqual(1);
+      expect(openstaxBook.topics[0].videoCount).toEqual(1);
     });
 
     it('returns sum of targets videos even when a targets has no videos', () => {
@@ -144,7 +144,7 @@ describe('OpenstaxBook converter', () => {
         ThemeFactory.sample({ topics: [topic] }),
       );
 
-      expect(openstaxBook.chapters[0].videoCount).toEqual(1);
+      expect(openstaxBook.topics[0].videoCount).toEqual(1);
     });
   });
 
@@ -169,9 +169,9 @@ describe('OpenstaxBook converter', () => {
     });
 
     const openstaxBook = convertApiTheme(apiTheme);
-    expect(openstaxBook.chapters.length).toEqual(1);
-    expect(openstaxBook.chapters[0].sections.length).toEqual(1);
-    const section = openstaxBook.chapters[0].sections[0];
+    expect(openstaxBook.topics.length).toEqual(1);
+    expect(openstaxBook.topics[0].targets.length).toEqual(1);
+    const section = openstaxBook.topics[0].targets[0];
     expect(section.title).toEqual('sectionA');
     expect(section.index).toEqual(0);
     expect(section.videos).toEqual(apiTheme.topics[0].targets[0].videos);
@@ -203,15 +203,15 @@ describe('OpenstaxBook converter', () => {
     });
 
     const openstaxBook = convertApiTheme(apiTheme);
-    expect(openstaxBook.chapters[0].sections).toHaveLength(0);
-    expect(openstaxBook.chapters[0].chapterOverview.title).toEqual(
+    expect(openstaxBook.topics[0].targets).toHaveLength(0);
+    expect(openstaxBook.topics[0].chapterOverview.title).toEqual(
       'Chapter Overview',
     );
-    expect(openstaxBook.chapters[0].chapterOverview.videos[0].id).toEqual('1');
-    expect(openstaxBook.chapters[0].discussionPrompt.title).toEqual(
+    expect(openstaxBook.topics[0].chapterOverview.videos[0].id).toEqual('1');
+    expect(openstaxBook.topics[0].discussionPrompt.title).toEqual(
       'Discussion Prompt',
     );
-    expect(openstaxBook.chapters[0].discussionPrompt.videos[0].id).toEqual('2');
+    expect(openstaxBook.topics[0].discussionPrompt.videos[0].id).toEqual('2');
   });
 
   it('topics order received from the backend is maintained', () => {
@@ -225,10 +225,10 @@ describe('OpenstaxBook converter', () => {
 
     const openstaxBook = convertApiTheme(apiTheme);
 
-    expect(openstaxBook.chapters.length).toEqual(3);
-    expect(openstaxBook.chapters[0].index).toEqual(0);
-    expect(openstaxBook.chapters[1].index).toEqual(2);
-    expect(openstaxBook.chapters[2].index).toEqual(1);
+    expect(openstaxBook.topics.length).toEqual(3);
+    expect(openstaxBook.topics[0].index).toEqual(0);
+    expect(openstaxBook.topics[1].index).toEqual(2);
+    expect(openstaxBook.topics[2].index).toEqual(1);
   });
 
   it('targets order received from the backend is maintained', () => {
@@ -246,8 +246,8 @@ describe('OpenstaxBook converter', () => {
 
     const openstaxBook = convertApiTheme(apiTheme);
 
-    expect(openstaxBook.chapters[0].sections[0].index).toEqual(0);
-    expect(openstaxBook.chapters[0].sections[1].index).toEqual(2);
-    expect(openstaxBook.chapters[0].sections[2].index).toEqual(1);
+    expect(openstaxBook.topics[0].targets[0].index).toEqual(0);
+    expect(openstaxBook.topics[0].targets[1].index).toEqual(2);
+    expect(openstaxBook.topics[0].targets[2].index).toEqual(1);
   });
 });
