@@ -9,8 +9,6 @@ import c from 'classnames';
 import { useOpenstaxMobileMenu } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 import { useLocation } from 'react-router-dom';
 import {
-  chapterOverviewInfo,
-  discussionPromptInfo,
   firstChapterElementInfo,
   getSelectedChapter,
   sectionInfo,
@@ -144,16 +142,6 @@ const NavigationPanelBody = ({ book }: Props) => {
               </Accordion.Trigger>
             </Accordion.Header>
             <Accordion.Content>
-              {chapter.chapterOverview &&
-                renderSectionLevelLabel(
-                  chapter.chapterOverview.title,
-                  chapterOverviewInfo(chapter).id,
-                )}
-              {chapter.discussionPrompt &&
-                renderSectionLevelLabel(
-                  chapter.discussionPrompt.title,
-                  discussionPromptInfo(chapter).id,
-                )}
               {chapter.targets.map((section) =>
                 renderSectionLevelLabel(
                   section.title,

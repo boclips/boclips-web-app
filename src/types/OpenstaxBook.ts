@@ -1,4 +1,3 @@
-import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import {
   Theme,
   Topic,
@@ -12,14 +11,7 @@ export interface OpenstaxBook extends Theme {
 
 export interface OpenstaxChapter extends Topic {
   videoCount: number;
-  chapterOverview: OpenstaxChapterIntro;
-  discussionPrompt: OpenstaxChapterIntro;
   targets: OpenstaxSection[];
-}
-
-export interface OpenstaxChapterIntro {
-  title: string;
-  videos: Video[];
 }
 
 export interface OpenstaxSection extends Target {

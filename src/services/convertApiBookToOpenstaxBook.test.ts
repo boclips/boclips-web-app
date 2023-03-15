@@ -179,41 +179,6 @@ describe('OpenstaxBook converter', () => {
     expect(section.videoCount).toEqual(2);
   });
 
-  it('converts Chapter Overview & Discussion Prompt with proper display labels', () => {
-    const apiTheme: Theme = ThemeFactory.sample({
-      topics: [
-        TopicFactory.sample({
-          index: 0,
-          targets: [
-            {
-              index: 0,
-              title: 'Chapter Overview',
-              videoIds: [],
-              videos: [VideoFactory.sample({ id: '1' })],
-            },
-            {
-              index: 1,
-              title: 'Discussion Prompt',
-              videoIds: [],
-              videos: [VideoFactory.sample({ id: '2' })],
-            },
-          ],
-        }),
-      ],
-    });
-
-    const openstaxBook = convertApiTheme(apiTheme);
-    expect(openstaxBook.topics[0].targets).toHaveLength(0);
-    expect(openstaxBook.topics[0].chapterOverview.title).toEqual(
-      'Chapter Overview',
-    );
-    expect(openstaxBook.topics[0].chapterOverview.videos[0].id).toEqual('1');
-    expect(openstaxBook.topics[0].discussionPrompt.title).toEqual(
-      'Discussion Prompt',
-    );
-    expect(openstaxBook.topics[0].discussionPrompt.videos[0].id).toEqual('2');
-  });
-
   it('topics order received from the backend is maintained', () => {
     const apiTheme: Theme = ThemeFactory.sample({
       topics: [
