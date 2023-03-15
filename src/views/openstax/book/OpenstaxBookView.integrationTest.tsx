@@ -29,6 +29,7 @@ import {
   TargetFactory,
   ThemeFactory,
 } from 'boclips-api-client/dist/test-support/ThemeFactory';
+import userEvent from '@testing-library/user-event';
 
 describe('OpenstaxBookView', () => {
   it('renders loading skeletons before data is loaded', async () => {
@@ -130,10 +131,10 @@ describe('OpenstaxBookView', () => {
       'Chapter 2: Epilogue',
     ]);
     validateVisibleHeadings(bookToc, 3, [
-      'Chapter Overview',
-      'Discussion Prompt',
       '1.1 Life at the coop',
       '1.2 Adventures outside',
+      'Chapter Overview',
+      'Discussion Prompt',
     ]);
   });
 
@@ -288,10 +289,10 @@ describe('OpenstaxBookView', () => {
       'Chapter Overview',
     );
 
+    await userEvent.click(wrapper.getByText('Chapter Overview'));
+
     expect(
-      await wrapper.container.querySelector(
-        `#${chapter1OverviewNavigationLabel}-nav`,
-      ),
+      wrapper.container.querySelector(`#${chapter1OverviewNavigationLabel}`),
     ).not.toBeNull();
   });
 

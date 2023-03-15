@@ -31,12 +31,6 @@ export const getSelectedChapterElement = (
   const defaultFirstElement = defaultChapterElementInfo(chapter);
   let matchingElement;
 
-  if (sectionLink.match('chapter-\\d+$')) {
-    matchingElement = chapterOverviewInfo(chapter);
-  }
-  if (sectionLink.match('chapter-\\d+-discussion-prompt$')) {
-    matchingElement = discussionPromptInfo(chapter);
-  }
   if (sectionLink.match('chapter-\\d+-section-\\d+$')) {
     const sectionIndex = Number(sectionLink.split('-')[3]);
     const foundSection = chapter.sections.find(
@@ -49,41 +43,9 @@ export const getSelectedChapterElement = (
   return matchingElement !== undefined ? matchingElement : defaultFirstElement;
 };
 
-export const chapterOverviewInfo = (
-  chapter: OpenstaxChapter,
-): ChapterElementInfo => {
-  if (chapter.chapterOverview === undefined) return undefined;
-
-  return {
-    id: `chapter-${chapter.index}`,
-    title: chapter.chapterOverview.title,
-    videos: chapter.chapterOverview.videos,
-  };
-};
-
-export const discussionPromptInfo = (
-  chapter: OpenstaxChapter,
-): ChapterElementInfo => {
-  if (chapter.discussionPrompt === undefined) return undefined;
-
-  return {
-    id: `chapter-${chapter.index}-discussion-prompt`,
-    title: chapter.discussionPrompt.title,
-    videos: chapter.discussionPrompt.videos,
-  };
-};
-
 const defaultChapterElementInfo = (
   chapter: OpenstaxChapter | null,
 ): ChapterElementInfo => {
-  if (chapter?.chapterOverview) {
-    return chapterOverviewInfo(chapter);
-  }
-
-  if (chapter?.discussionPrompt) {
-    return discussionPromptInfo(chapter);
-  }
-
   if (chapter?.sections && chapter.sections.length !== 0) {
     return sectionInfo(chapter, chapter.sections[0]);
   }
@@ -144,11 +106,9 @@ export const getAllSectionsInChapter = (
 ): ChapterElementInfo[] => {
   if (!chapter) return [];
 
-  return [
-    chapterOverviewInfo(chapter),
-    discussionPromptInfo(chapter),
-    ...chapter.sections.map((it) => sectionInfo(chapter, it)),
-  ].filter((it) => it);
+  return chapter.sections
+    .map((it) => sectionInfo(chapter, it))
+    .filter((it) => it);
 };
 
 export const getAllElementsInCurrentChapter = (

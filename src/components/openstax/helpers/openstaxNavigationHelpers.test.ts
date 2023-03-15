@@ -28,13 +28,9 @@ describe('openstaxNavigationHelper', () => {
   });
 
   it.each([
-    ['chapter-0', 'Chapter Overview', 'chapter-0'],
+    ['chapter-0', 'Chapter Overview', 'chapter-0-section-0'],
     ['chapter-0-section-2', '1.1 Section 1', 'chapter-0-section-2'],
-    [
-      'chapter-0-discussion-prompt',
-      'Discussion Prompt',
-      'chapter-0-discussion-prompt',
-    ],
+    ['chapter-0-section-1', 'Discussion Prompt', 'chapter-0-section-1'],
     ['chapter-1', '2.1 Section 1', 'chapter-1-section-0'],
     ['chapter-1-section-0', '2.1 Section 1', 'chapter-1-section-0'],
     ['chapter-1-section-1', '2.2 Section 2', 'chapter-1-section-1'],

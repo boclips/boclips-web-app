@@ -73,7 +73,7 @@ describe('OpenstaxBookNavigationPanel', () => {
     });
     expect(chapterOverviewLink).toHaveAttribute(
       'href',
-      '/explore/openstax/theme-id#chapter-0',
+      '/explore/openstax/theme-id#chapter-0-section-0',
     );
 
     const discussionPromptLink = wrapper.getByRole('link', {
@@ -81,7 +81,7 @@ describe('OpenstaxBookNavigationPanel', () => {
     });
     expect(discussionPromptLink).toHaveAttribute(
       'href',
-      '/explore/openstax/theme-id#chapter-0-discussion-prompt',
+      '/explore/openstax/theme-id#chapter-0-section-1',
     );
 
     const sectionNinetyNineLink = wrapper.getByRole('link', {
