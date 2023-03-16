@@ -2,13 +2,13 @@ import React, { useEffect, useMemo, useState } from 'react';
 import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import { Layout } from 'src/components/layout/Layout';
-import { BookList } from 'src/components/openstax/bookList/BookList';
-import { SubjectsMenu } from 'src/components/openstax/menu/SubjectsMenu';
+import { ThemeList } from 'src/components/explore/themeList/ThemeList';
+import { TypesMenu } from 'src/components/explore/menu/TypesMenu';
 import {
   useGetThemesByProviderQuery,
   useGetTypesByProviderQuery,
 } from 'src/hooks/api/openstaxQuery';
-import ExploreHeader from 'src/components/openstax/exploreHeader/ExploreHeader';
+import ExploreHeader from 'src/components/explore/exploreHeader/ExploreHeader';
 import { useParams } from 'react-router';
 import NotFound from 'src/views/notFound/NotFound';
 import {
@@ -20,7 +20,7 @@ import { AlignmentContextProvider } from 'src/components/common/providers/Alignm
 const ExploreView = () => {
   const ALL = 'All';
   const { provider: providerName } = useParams();
-  const { data: themes, isLoading: areBooksLoading } =
+  const { data: themes, isLoading: areThemesLoading } =
     useGetThemesByProviderQuery(providerName);
 
   const provider = isProviderSupported(providerName)
@@ -36,39 +36,39 @@ const ExploreView = () => {
     () =>
       currentType === ALL
         ? themes
-        : themes?.filter((theme) => types && theme.type === currentType),
+        : themes?.filter((theme) => theme.type === currentType),
     [types, currentType, themes],
   );
 
   useEffect(() => {
-    const firstBook = currentTypeThemes?.[0];
+    const firstTheme = currentTypeThemes?.[0];
     const isNavFocused = document
       .querySelector('main')
       .contains(document.activeElement);
 
-    if (firstBook !== undefined && isNavFocused) {
+    if (firstTheme !== undefined && isNavFocused) {
       const element: HTMLButtonElement = document.querySelector(
-        `[aria-label="book ${firstBook.title}"]`,
+        `[aria-label="theme ${firstTheme.title}"]`,
       );
       element.focus();
     }
   }, [currentTypeThemes]);
 
-  const isLoading = areBooksLoading || areTypesLoading;
+  const isLoading = areThemesLoading || areTypesLoading;
 
   return provider ? (
     <Layout rowsSetup="grid-rows-explore-view" responsiveLayout>
       <Navbar />
       <AlignmentContextProvider provider={provider}>
         <ExploreHeader />
-        <SubjectsMenu
-          subjects={isLoading ? [] : [ALL, ...types]}
-          currentSubject={currentType}
+        <TypesMenu
+          types={isLoading ? [] : [ALL, ...types]}
+          currentType={currentType}
           onClick={setCurrentType}
           isLoading={isLoading}
         />
 
-        <BookList books={currentTypeThemes} isLoading={isLoading} />
+        <ThemeList themes={currentTypeThemes} isLoading={isLoading} />
       </AlignmentContextProvider>
       <Footer />
     </Layout>

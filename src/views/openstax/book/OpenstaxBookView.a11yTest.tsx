@@ -10,7 +10,7 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 
-describe('OpenstaxBookView - accessibility', () => {
+describe('ThemeView - accessibility', () => {
   it('has no violations', async () => {
     const theme: Theme = ThemeFactory.sample({
       id: 'ducklings',

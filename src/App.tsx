@@ -73,8 +73,8 @@ const ExploreView = lazyWithRetry(
 
 const SparksView = lazyWithRetry(() => import('src/views/sparks/SparksView'));
 
-const OpenstaxBookView = lazyWithRetry(
-  () => import('src/views/openstax/book/OpenstaxBookView'),
+const ThemeView = lazyWithRetry(
+  () => import('src/views/openstax/book/ThemeView'),
 );
 
 interface Props {
@@ -235,7 +235,7 @@ const App = ({
                           fallback={<NotFound />}
                         >
                           <Helmet title="Openstax" />
-                          <OpenstaxBookView />
+                          <ThemeView />
                         </FeatureGate>
                       }
                     />

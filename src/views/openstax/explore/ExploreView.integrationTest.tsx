@@ -59,14 +59,14 @@ describe(`Explore view`, () => {
     expect(await wrapper.findByText('Physics-1')).toBeVisible();
     expect(await wrapper.findByText('Physics-2')).toBeVisible();
 
-    fireEvent.click(wrapper.getByLabelText('subject Maths'));
+    fireEvent.click(wrapper.getByLabelText('type Maths'));
 
     expect(await wrapper.findByText('Maths book')).toBeVisible();
     expect(await wrapper.queryByText('French book')).toBeNull();
     expect(await wrapper.queryByText('Physics-1')).toBeNull();
     expect(await wrapper.queryByText('Physics-2')).toBeNull();
 
-    fireEvent.click(wrapper.getByLabelText('subject French'));
+    fireEvent.click(wrapper.getByLabelText('type French'));
 
     expect(await wrapper.queryByText('Maths book')).toBeNull();
     expect(await wrapper.findByText('French book')).toBeVisible();
@@ -125,17 +125,17 @@ describe(`Explore view`, () => {
     expect(await wrapper.findByText('Our OpenStax collection')).toBeVisible();
 
     await waitFor(() =>
-      expect(wrapper.getByLabelText('subject Maths')).toBeVisible(),
+      expect(wrapper.getByLabelText('type Maths')).toBeVisible(),
     );
 
-    expect(wrapper.getByLabelText('subject All')).toBeVisible();
-    expect(wrapper.getByLabelText('subject Business')).toBeVisible();
-    expect(wrapper.getByLabelText('subject Humanities')).toBeVisible();
-    expect(wrapper.queryByLabelText('subject French')).toBeNull();
+    expect(wrapper.getByLabelText('type All')).toBeVisible();
+    expect(wrapper.getByLabelText('type Business')).toBeVisible();
+    expect(wrapper.getByLabelText('type Humanities')).toBeVisible();
+    expect(wrapper.queryByLabelText('type French')).toBeNull();
   });
 
-  describe('Subject menu focus', () => {
-    it('changes the focus when subject is selected', async () => {
+  describe('Type menu focus', () => {
+    it('changes the focus when type is selected', async () => {
       const fakeClient = new FakeBoclipsClient();
       fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
       fakeClient.alignments.setThemesByProvider({
@@ -180,7 +180,7 @@ describe(`Explore view`, () => {
       await waitFor(() => wrapper.getAllByText('Algebra'));
 
       await waitFor(() => {
-        expect(wrapper.getByLabelText('book Algebra')).toHaveFocus();
+        expect(wrapper.getByLabelText('theme Algebra')).toHaveFocus();
       });
     });
   });

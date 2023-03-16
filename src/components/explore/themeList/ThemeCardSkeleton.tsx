@@ -1,0 +1,19 @@
+import React from 'react';
+import c from 'classnames';
+import s from './style.module.less';
+
+const ThemeCardSkeleton = () => {
+  return (
+    <>
+      {Array.from(Array(4)).map((_, i: number) => (
+        <li
+          key={i}
+          data-qa={`theme-card-skeleton-${i + 1}`}
+          className={c(s.themeCard, s.themeCardSkeleton)}
+        />
+      ))}
+    </>
+  );
+};
+
+export default ThemeCardSkeleton;

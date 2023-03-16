@@ -31,7 +31,7 @@ import {
 } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import userEvent from '@testing-library/user-event';
 
-describe('OpenstaxBookView', () => {
+describe('ThemeView', () => {
   it('renders loading skeletons before data is loaded', async () => {
     const theme = createTheme();
 
@@ -179,7 +179,7 @@ describe('OpenstaxBookView', () => {
 
     expect(
       wrapper.getByText(
-        "We don't have any videos for this section yet. We're working on it!",
+        "We don't have any videos for this target yet. We're working on it!",
       ),
     ).toBeVisible();
   });
