@@ -14,21 +14,21 @@ export interface TargetInfo {
 }
 
 interface Props {
-  target: TargetInfo;
+  data: TargetInfo;
 }
 
-export const TargetElement = ({ target }: Props) => {
-  const videoCount = target.videos?.length;
+export const TargetDetails = ({ data }: Props) => {
+  const videoCount = data.videos?.length;
   const numberOfVideosLabel = `(${getVideoCountLabel(videoCount)})`;
 
   return (
-    <section className={c(s.target)} id={target.id}>
+    <section className={c(s.target)} id={data.id}>
       <Typography.H3 size="xs" className="text-gray-800 my-4" weight="regular">
-        {target.title}{' '}
+        {data.title}{' '}
         <span className="text-gray-700">{numberOfVideosLabel}</span>
       </Typography.H3>
       {videoCount > 0 ? (
-        <VideoGridCardContainer videos={target.videos} />
+        <VideoGridCardContainer videos={data.videos} />
       ) : (
         renderEmptyMappingMessaging()
       )}

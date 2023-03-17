@@ -3,16 +3,16 @@ import React from 'react';
 import NextArrow from 'src/resources/icons/next-section-arrow.svg';
 import PreviousArrow from 'src/resources/icons/prev-section-arrow.svg';
 import {
-  getNextChapterElementInfo,
-  getNextChapterId,
-  getPreviousChapterElementInfo,
-  getPreviousChapterId,
-  getSelectedChapter,
-  getSelectedChapterElement,
-} from 'src/components/explore/helpers/openstaxNavigationHelpers';
-import { OpenstaxBook } from 'src/types/OpenstaxBook';
+  getNextTargetInfo,
+  getNextTopicId,
+  getPreviousTargetInfo,
+  getPreviousTopicId,
+  getSelectedTarget,
+  getSelectedTopic,
+} from 'src/components/explore/helpers/themeNavigationHelpers';
 import { PaginationLink } from 'src/components/explore/theme/pagination/PaginationLink';
 import c from 'classnames';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
 import s from './style.module.less';
 
 interface Props {
@@ -72,17 +72,17 @@ const Label = ({ primaryLabel, secondaryLabel, className }: LabelsProps) => (
     <Typography.Body size="small" className="text-gray-700">
       {secondaryLabel}
     </Typography.Body>
-    <Typography.Link className={s.sectionTitle}>{primaryLabel}</Typography.Link>
+    <Typography.Link>{primaryLabel}</Typography.Link>
   </div>
 );
 
 interface ButtonProps {
-  theme: OpenstaxBook;
+  theme: Theme;
   hash: string;
 }
 
 export const PreviousSectionButton = ({ theme, hash }: ButtonProps) => {
-  const element = getPreviousChapterElementInfo(theme, hash);
+  const element = getPreviousTargetInfo(theme, hash);
 
   return (
     <PaginationButton
@@ -95,47 +95,47 @@ export const PreviousSectionButton = ({ theme, hash }: ButtonProps) => {
   );
 };
 
-export const PreviousChapterButton = ({ theme, hash }: ButtonProps) => {
-  const previousChapterHash = getPreviousChapterId(theme, hash);
-  const chapter = getSelectedChapter(theme, previousChapterHash);
-  const element = getSelectedChapterElement(theme, previousChapterHash);
+export const PreviousTopicButton = ({ theme, hash }: ButtonProps) => {
+  const previousTopicHash = getPreviousTopicId(theme, hash);
+  const topic = getSelectedTopic(theme, previousTopicHash);
+  const target = getSelectedTarget(theme, previousTopicHash);
 
   return (
     <PaginationButton
       themeId={theme.id}
-      hash={element.id}
+      hash={target.id}
       secondaryLabel="Previous"
-      primaryLabel={chapter.title}
+      primaryLabel={topic.title}
       direction="previous"
     />
   );
 };
 
-export const NextSectionButton = ({ theme, hash }: ButtonProps) => {
-  const element = getNextChapterElementInfo(theme, hash);
+export const NextTargetButton = ({ theme, hash }: ButtonProps) => {
+  const target = getNextTargetInfo(theme, hash);
 
   return (
     <PaginationButton
       themeId={theme.id}
-      hash={element.id}
+      hash={target.id}
       secondaryLabel="Next"
-      primaryLabel={element.title}
+      primaryLabel={target.title}
       direction="next"
     />
   );
 };
 
-export const NextChapterButton = ({ theme, hash }: ButtonProps) => {
-  const nextChapterHash = getNextChapterId(theme, hash);
-  const chapter = getSelectedChapter(theme, nextChapterHash);
-  const element = getSelectedChapterElement(theme, nextChapterHash);
+export const NextTopicButton = ({ theme, hash }: ButtonProps) => {
+  const nextTopicHash = getNextTopicId(theme, hash);
+  const topic = getSelectedTopic(theme, nextTopicHash);
+  const target = getSelectedTarget(theme, nextTopicHash);
 
   return (
     <PaginationButton
       themeId={theme.id}
-      hash={element.id}
+      hash={target.id}
       secondaryLabel="Next"
-      primaryLabel={chapter.title}
+      primaryLabel={topic.title}
       direction="next"
     />
   );

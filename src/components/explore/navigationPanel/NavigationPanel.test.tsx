@@ -2,8 +2,6 @@ import { render } from 'src/testSupport/render';
 import React from 'react';
 import { NavigationPanel } from 'src/components/explore/navigationPanel/NavigationPanel';
 import { fireEvent, waitFor } from '@testing-library/react';
-import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
-import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 import {
   resizeToDesktop,
@@ -14,14 +12,16 @@ import { getProviderByName } from 'src/views/openstax/provider/AlignmentProvider
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 import {
   TargetFactory,
+  ThemeFactory,
   TopicFactory,
 } from 'boclips-api-client/dist/test-support/ThemeFactory';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
 
-describe('OpenstaxBookNavigationPanel', () => {
-  it('renders book title with logo, chapters, chapter intros and sections', async () => {
+describe('Theme NavigationPanel', () => {
+  it('renders theme title with logo, topics, topic intros and targets for openstax', async () => {
     resizeToDesktop();
 
-    const book: OpenstaxBook = OpenstaxBookFactory.sample({
+    const theme: Theme = ThemeFactory.sample({
       title: 'should show book title',
       provider: 'openstax',
       logoUrl: 'test',
@@ -53,7 +53,7 @@ describe('OpenstaxBookNavigationPanel', () => {
     const wrapper = render(
       <OpenstaxMobileMenuProvider>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
-          <NavigationPanel book={book} />
+          <NavigationPanel theme={theme} />
         </AlignmentContextProvider>
       </OpenstaxMobileMenuProvider>,
     );
@@ -73,7 +73,7 @@ describe('OpenstaxBookNavigationPanel', () => {
     });
     expect(chapterOverviewLink).toHaveAttribute(
       'href',
-      '/explore/openstax/theme-id#chapter-0-section-0',
+      '/explore/openstax/theme-id#topic-0-target-0',
     );
 
     const discussionPromptLink = wrapper.getByRole('link', {
@@ -81,7 +81,7 @@ describe('OpenstaxBookNavigationPanel', () => {
     });
     expect(discussionPromptLink).toHaveAttribute(
       'href',
-      '/explore/openstax/theme-id#chapter-0-section-1',
+      '/explore/openstax/theme-id#topic-0-target-1',
     );
 
     const sectionNinetyNineLink = wrapper.getByRole('link', {
@@ -89,7 +89,7 @@ describe('OpenstaxBookNavigationPanel', () => {
     });
     expect(sectionNinetyNineLink).toHaveAttribute(
       'href',
-      '/explore/openstax/theme-id#chapter-0-section-2',
+      '/explore/openstax/theme-id#topic-0-target-2',
     );
 
     const videoLabel = wrapper.getByText('4 videos');
@@ -102,7 +102,7 @@ describe('OpenstaxBookNavigationPanel', () => {
     const wrapper = render(
       <OpenstaxMobileMenuProvider>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
-          <NavigationPanel book={OpenstaxBookFactory.sample()} />
+          <NavigationPanel theme={ThemeFactory.sample()} />
         </AlignmentContextProvider>
       </OpenstaxMobileMenuProvider>,
     );
@@ -123,7 +123,7 @@ describe('OpenstaxBookNavigationPanel', () => {
         <OpenstaxMobileMenuProvider>
           <AlignmentContextProvider provider={getProviderByName('openstax')}>
             <NavigationPanel
-              book={OpenstaxBookFactory.sample({
+              theme={ThemeFactory.sample({
                 title: 'book',
                 logoUrl: 'logo',
               })}
@@ -142,7 +142,7 @@ describe('OpenstaxBookNavigationPanel', () => {
     const wrapper = render(
       <OpenstaxMobileMenuProvider triggerOpen>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
-          <NavigationPanel book={OpenstaxBookFactory.sample()} />
+          <NavigationPanel theme={ThemeFactory.sample()} />
         </AlignmentContextProvider>
       </OpenstaxMobileMenuProvider>,
     );
@@ -164,7 +164,7 @@ describe('OpenstaxBookNavigationPanel', () => {
     const wrapper = render(
       <OpenstaxMobileMenuProvider triggerOpen>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
-          <NavigationPanel book={OpenstaxBookFactory.sample()} />
+          <NavigationPanel theme={ThemeFactory.sample()} />
         </AlignmentContextProvider>
       </OpenstaxMobileMenuProvider>,
     );
@@ -177,10 +177,10 @@ describe('OpenstaxBookNavigationPanel', () => {
     expect(wrapper.queryByText('button')).toBeNull();
   });
 
-  it('chapters can be expanded and collapsed, first chapter expanded by default', async () => {
+  it('topics can be expanded and collapsed, first topic expanded by default', async () => {
     resizeToDesktop();
 
-    const book: OpenstaxBook = OpenstaxBookFactory.sample({
+    const theme: Theme = ThemeFactory.sample({
       topics: [
         TopicFactory.sample({
           index: 0,
@@ -209,7 +209,7 @@ describe('OpenstaxBookNavigationPanel', () => {
     const wrapper = render(
       <OpenstaxMobileMenuProvider>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
-          <NavigationPanel book={book} />
+          <NavigationPanel theme={theme} />
         </AlignmentContextProvider>
       </OpenstaxMobileMenuProvider>,
     );

@@ -1,38 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { OpenstaxBook, OpenstaxChapter } from 'src/types/OpenstaxBook';
 import { Header } from 'src/components/explore/theme/Header';
 import { useLocation } from 'react-router-dom';
 import {
-  getSelectedChapter,
-  getSelectedChapterElement,
-} from 'src/components/explore/helpers/openstaxNavigationHelpers';
+  getSelectedTarget,
+  getSelectedTopic,
+} from 'src/components/explore/helpers/themeNavigationHelpers';
 import {
-  TargetElement,
+  TargetDetails,
   TargetInfo,
-} from 'src/components/explore/theme/TargetElement';
+} from 'src/components/explore/theme/TargetDetails';
+import {
+  Theme,
+  Topic,
+} from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
 import s from './style.module.less';
 
 interface Props {
-  theme: OpenstaxBook;
+  theme: Theme;
 }
 
 export const Content = ({ theme }: Props) => {
   const location = useLocation();
-  const [selectedChapter, setSelectedChapter] = useState<OpenstaxChapter>(
-    getSelectedChapter(theme, 'chapter-0'),
+  const [selectedTopic, setSelectedTopic] = useState<Topic>(
+    getSelectedTopic(theme, 'topic-0'),
   );
 
-  const [selectedChapterElement, setSelectedChapterElement] =
-    useState<TargetInfo>({
-      title: '',
-      id: '',
-      videos: [],
-    });
+  const [selectedTarget, setSelectedTarget] = useState<TargetInfo>({
+    title: '',
+    id: '',
+    videos: [],
+  });
 
   useEffect(() => {
     const newTargetLink = location.hash.replace('#', '');
-    setSelectedChapter(getSelectedChapter(theme, newTargetLink));
-    setSelectedChapterElement(getSelectedChapterElement(theme, newTargetLink));
+    setSelectedTopic(getSelectedTopic(theme, newTargetLink));
+    setSelectedTarget(getSelectedTarget(theme, newTargetLink));
 
     window.scrollTo({ top: 0 });
   }, [location.hash]);
@@ -43,8 +45,8 @@ export const Content = ({ theme }: Props) => {
       tabIndex={-1}
       className={s.main}
     >
-      <Header themeTitle={theme.title} topicTitle={selectedChapter.title} />
-      <TargetElement target={selectedChapterElement} />
+      <Header themeTitle={theme.title} topicTitle={selectedTopic.title} />
+      <TargetDetails data={selectedTarget} />
     </main>
   );
 };

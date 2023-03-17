@@ -6,11 +6,11 @@ import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
 import { ThemeLogo } from 'src/components/explore/themeLogo/ThemeLogo';
 import { handleEscapeKeyEvent } from 'src/services/handleKeyEvent';
 import { useAlignmentProvider } from 'src/components/common/providers/AlignmentContextProvider';
-import { OpenstaxBook } from 'src/types/OpenstaxBook';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
 import s from './style.module.less';
 
 interface Props {
-  theme: OpenstaxBook;
+  theme: Theme;
 }
 
 export const ThemeCard = ({ theme }: Props) => {
@@ -24,6 +24,12 @@ export const ThemeCard = ({ theme }: Props) => {
     navigate({
       pathname: `/explore/${provider.navigationPath}/${themeId}`,
     });
+
+  const getTotalVideoCount = () => {
+    return theme.topics
+      .flatMap((topic) => topic.targets.map((target) => target.videoIds.length))
+      .reduce((a, b) => a + b);
+  };
 
   return (
     <button
@@ -39,7 +45,7 @@ export const ThemeCard = ({ theme }: Props) => {
           {theme.title}
         </Typography.H2>
         <span className="text-gray-700 text-sm">
-          {getVideoCountLabel(theme.videoCount)}
+          {getVideoCountLabel(getTotalVideoCount())}
         </span>
       </div>
       <div className={s.arrow}>

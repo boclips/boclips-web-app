@@ -16,12 +16,12 @@ describe(`Explore view`, () => {
       providerName: 'openstax',
       themes: [
         ThemeFactory.sample({
-          id: 'book-1',
+          id: 'theme-1',
           title: 'Book about Math',
           type: 'Maths',
         }),
         ThemeFactory.sample({
-          id: 'book-2',
+          id: 'theme-2',
           type: 'Maths',
         }),
       ],

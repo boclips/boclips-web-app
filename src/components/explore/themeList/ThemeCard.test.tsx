@@ -1,4 +1,3 @@
-import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
 import { ThemeCard } from 'src/components/explore/themeList/ThemeCard';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
@@ -9,12 +8,13 @@ import { getProviderByName } from 'src/views/openstax/provider/AlignmentProvider
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 import {
   TargetFactory,
+  ThemeFactory,
   TopicFactory,
 } from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe('ThemeCard', () => {
   it('shows theme title and number of videos', () => {
-    const theme = OpenstaxBookFactory.sample({
+    const theme = ThemeFactory.sample({
       title: 'Olive trees',
       logoUrl: 'svg.com',
       topics: [
@@ -44,7 +44,7 @@ describe('ThemeCard', () => {
   });
 
   it('shows theme cover when logo url is present', () => {
-    const theme = OpenstaxBookFactory.sample({
+    const theme = ThemeFactory.sample({
       title: 'Olive trees',
       logoUrl: 'svg.com',
     });
@@ -62,7 +62,7 @@ describe('ThemeCard', () => {
   });
 
   it('shows generic theme cover when logo url is not present', () => {
-    const theme = OpenstaxBookFactory.sample({
+    const theme = ThemeFactory.sample({
       title: 'Olive trees',
       logoUrl: '',
     });
@@ -83,7 +83,7 @@ describe('ThemeCard', () => {
 
   describe('a11y', () => {
     it('focuses main when esc is pressed', async () => {
-      const theme = OpenstaxBookFactory.sample({
+      const theme = ThemeFactory.sample({
         title: 'Olive trees',
         logoUrl: 'svg.com',
         topics: [

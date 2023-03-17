@@ -243,7 +243,7 @@ describe('Video View', () => {
 
     const getThemeWithVideo = (video: Video) =>
       ThemeFactory.sample({
-        id: 'book-id',
+        id: 'theme-id',
         provider: 'openstax',
         topics: [
           TopicFactory.sample({

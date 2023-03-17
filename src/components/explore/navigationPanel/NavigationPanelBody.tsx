@@ -3,55 +3,57 @@ import * as Accordion from '@radix-ui/react-accordion';
 import { Typography } from '@boclips-ui/typography';
 import ChevronDownIcon from 'src/resources/icons/chevron-down.svg';
 import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
-import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { HashLink } from 'react-router-hash-link';
 import c from 'classnames';
 import { useOpenstaxMobileMenu } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 import { useLocation } from 'react-router-dom';
 import {
-  firstChapterElementInfo,
-  getSelectedChapter,
-  sectionInfo,
-} from 'src/components/explore/helpers/openstaxNavigationHelpers';
+  firstTargetInfo,
+  getSelectedTopic,
+  targetInfo,
+} from 'src/components/explore/helpers/themeNavigationHelpers';
 import { useAlignmentProvider } from 'src/components/common/providers/AlignmentContextProvider';
+import {
+  Theme,
+  Topic,
+} from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
 import s from './style.module.less';
 
 interface Props {
-  book: OpenstaxBook;
+  theme: Theme;
 }
 
-const NavigationPanelBody = ({ book }: Props) => {
+const NavigationPanelBody = ({ theme }: Props) => {
   const location = useLocation();
   const provider = useAlignmentProvider();
-  const [currentSectionLink, setCurrentSectionLink] =
-    useState<string>('chapter-0');
+  const [currentTargetLink, setCurrentTargetLink] = useState<string>('topic-0');
 
-  const isSelectedSection = (sectionLink: string) =>
-    currentSectionLink === sectionLink;
+  const isSelectedTarget = (targetLink: string) =>
+    currentTargetLink === targetLink;
 
-  const [expandedChapters, setExpandedChapters] = useState(['chapter-0']);
+  const [expandedTopics, setExpandedTopics] = useState(['topic-0']);
 
   const { setIsOpen } = useOpenstaxMobileMenu();
 
   useEffect(() => {
-    const newSectionLink = location.hash.replace('#', '');
+    const newTargetLink = location.hash.replace('#', '');
 
-    updateTableOfContent(newSectionLink);
+    updateTableOfContent(newTargetLink);
 
-    if (linksOnlyToChapter(newSectionLink)) {
-      const firstChapterElement = firstChapterElementInfo(book, newSectionLink);
-      if (firstChapterElement !== undefined) {
-        setCurrentSectionLink(firstChapterElement.id);
+    if (linksOnlyToTopic(newTargetLink)) {
+      const firstTarget = firstTargetInfo(theme, newTargetLink);
+      if (firstTarget !== undefined) {
+        setCurrentTargetLink(firstTarget.id);
       }
     } else {
-      setCurrentSectionLink(newSectionLink);
+      setCurrentTargetLink(newTargetLink);
     }
   }, [location.hash]);
 
-  const renderSectionLevelLabel = (label: string, sectionLink: string) => (
+  const renderTargetLevelLabel = (label: string, targetLink: string) => (
     <HashLink
-      key={sectionLink}
-      className={s.sectionAnchor}
+      key={targetLink}
+      className={s.targetAnchor}
       onClick={() => {
         setIsOpen(false);
       }}
@@ -59,13 +61,13 @@ const NavigationPanelBody = ({ book }: Props) => {
         window.scrollTo({ top: 0 });
       }}
       to={{
-        pathname: `/explore/${provider.navigationPath}/${book.id}`,
-        hash: sectionLink,
+        pathname: `/explore/${provider.navigationPath}/${theme.id}`,
+        hash: targetLink,
       }}
     >
       <Typography.H3
         className={c(s.courseTitle, {
-          [s.selectedSection]: isSelectedSection(sectionLink),
+          [s.selectedSection]: isSelectedTarget(targetLink),
         })}
       >
         {label}
@@ -74,21 +76,21 @@ const NavigationPanelBody = ({ book }: Props) => {
   );
 
   const updateTableOfContent = (newSelection: string) => {
-    const chapterIndex = getSelectedChapter(book, newSelection)?.index;
-    const chapterToExpand = `chapter-${chapterIndex}`;
+    const topicIndex = getSelectedTopic(theme, newSelection)?.index;
+    const topicToExpand = `topic-${topicIndex}`;
 
-    setExpandedChapters([chapterToExpand]);
-    handleScrollInTableOfContent(chapterIndex);
+    setExpandedTopics([topicToExpand]);
+    handleScrollInTableOfContent(topicIndex);
   };
 
-  const handleScrollInTableOfContent = (chapterIndex: number) => {
-    const nav = document.getElementById('chapter-nav');
+  const handleScrollInTableOfContent = (topicIndex: number) => {
+    const nav = document.getElementById('topic-nav');
 
     const height = [];
 
-    for (let i = 1; i < chapterIndex; i++) {
+    for (let i = 1; i < topicIndex; i++) {
       const scroll = document.getElementById(
-        `chapter-${i + 1}-nav`,
+        `topic-${i + 1}-nav`,
       )?.offsetHeight;
 
       height.push(scroll);
@@ -100,52 +102,57 @@ const NavigationPanelBody = ({ book }: Props) => {
     );
   };
 
-  const linksOnlyToChapter = (newSectionLink) =>
-    newSectionLink.split('-').length <= 2;
+  const linksOnlyToTopic = (newTargetLink) =>
+    newTargetLink.split('-').length <= 2;
+
+  const getTotalVideoCount = (topic: Topic) =>
+    topic.targets
+      .map((target) => target.videoIds.length)
+      .reduce((a, b) => a + b);
 
   return (
     <nav
       className={s.tocContent}
-      aria-label={`Table of contents of ${book.title}`}
-      id="chapter-nav"
+      aria-label={`Table of contents of ${theme.title}`}
+      id="topic-nav"
     >
       <Accordion.Root
         type="multiple"
-        value={expandedChapters}
-        onValueChange={setExpandedChapters}
+        value={expandedTopics}
+        onValueChange={setExpandedTopics}
       >
-        {book.topics.map((chapter) => (
+        {theme.topics.map((topic) => (
           <Accordion.Item
-            value={`chapter-${chapter.index}`}
-            key={`chapter-${chapter.index}`}
+            value={`topic-${topic.index}`}
+            key={`topic-${topic.index}`}
             className={s.tocItemWrapper}
           >
             <Accordion.Header
               className="pt-4"
               asChild
-              aria-label={chapter.title}
-              id={`chapter-${chapter.index}-nav`}
+              aria-label={topic.title}
+              id={`topic-${topic.index}-nav`}
             >
               <Accordion.Trigger
-                aria-label={chapter.title}
+                aria-label={topic.title}
                 className={s.accordionTrigger}
               >
                 <Typography.H2 size="xs" className={s.tocItem}>
-                  <span className={s.label}>{chapter.title}</span>
+                  <span className={s.label}>{topic.title}</span>
                   <span className={s.icon}>
                     <ChevronDownIcon aria-hidden />
                   </span>
                 </Typography.H2>
                 <div className="text-gray-700 text-sm">
-                  {getVideoCountLabel(chapter.videoCount)}
+                  {getVideoCountLabel(getTotalVideoCount(topic))}
                 </div>
               </Accordion.Trigger>
             </Accordion.Header>
             <Accordion.Content>
-              {chapter.targets.map((section) =>
-                renderSectionLevelLabel(
-                  section.title,
-                  sectionInfo(chapter, section).id,
+              {topic.targets.map((target) =>
+                renderTargetLevelLabel(
+                  target.title,
+                  targetInfo(topic, target).id,
                 ),
               )}
             </Accordion.Content>

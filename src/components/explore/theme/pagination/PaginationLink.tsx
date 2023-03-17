@@ -14,7 +14,7 @@ export const PaginationLink = ({ themeId, hash, children }: PageLinkProps) => (
       pathname: `/explore/openstax/${themeId}`,
       hash,
     }}
-    className={s.sectionLink}
+    className={s.targetLink}
   >
     {children}
   </HashLink>

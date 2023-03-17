@@ -1,16 +1,15 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
-import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { BoclipsClient } from 'boclips-api-client';
-import { convertApiTheme } from 'src/services/convertApiTheme';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
 
 export const useGetThemeByProviderAndId = (
   provider: string,
   id: string,
-): UseQueryResult<OpenstaxBook> => {
+): UseQueryResult<Theme> => {
   const apiClient = useBoclipsClient();
 
-  return useQuery([`book-${provider}`, id], () =>
+  return useQuery([`theme-${provider}`, id], () =>
     doGetThemeByProviderAndId(apiClient, provider, id),
   );
 };
@@ -18,10 +17,8 @@ export const useGetThemeByProviderAndId = (
 const doGetThemesByProvider = (
   client: BoclipsClient,
   provider: string,
-): Promise<OpenstaxBook[]> => {
-  return client.alignments
-    .getThemesByProvider(provider)
-    .then((themes) => themes.map((it) => convertApiTheme(it)));
+): Promise<Theme[]> => {
+  return client.alignments.getThemesByProvider(provider);
 };
 
 export const useGetTypesByProviderQuery = (
@@ -37,17 +34,14 @@ const doGetThemeByProviderAndId = (
   client: BoclipsClient,
   provider: string,
   id: string,
-) =>
-  client.alignments
-    .getThemeByProviderAndId(provider, id)
-    .then((it) => convertApiTheme(it));
+) => client.alignments.getThemeByProviderAndId(provider, id);
 
 const doGetTypesByProvider = (client: BoclipsClient, provider: string) =>
   client.alignments.getAllTypesByProvider(provider);
 
 export const useGetThemesByProviderQuery = (
   provider: string,
-): UseQueryResult<OpenstaxBook[]> => {
+): UseQueryResult<Theme[]> => {
   const client = useBoclipsClient();
   return useQuery(['themesByProvider', provider], () =>
     doGetThemesByProvider(client, provider),

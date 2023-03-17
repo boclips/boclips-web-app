@@ -22,22 +22,22 @@ describe(`Explore view`, () => {
       providerName: 'openstax',
       themes: [
         ThemeFactory.sample({
-          id: 'book-1',
+          id: 'theme-1',
           title: 'Maths book',
           type: 'Maths',
         }),
         ThemeFactory.sample({
-          id: 'book-2',
+          id: 'theme-2',
           title: 'French book',
           type: 'French',
         }),
         ThemeFactory.sample({
-          id: 'book-3',
+          id: 'theme-3',
           title: 'Physics-1',
           type: 'Physics',
         }),
         ThemeFactory.sample({
-          id: 'book-4',
+          id: 'theme-4',
           title: 'Physics-2',
           type: 'Physics',
         }),
@@ -96,11 +96,11 @@ describe(`Explore view`, () => {
       providerName: 'openstax',
       themes: [
         ThemeFactory.sample({
-          id: 'book-1',
+          id: 'theme-1',
           type: 'Maths',
         }),
         ThemeFactory.sample({
-          id: 'book-2',
+          id: 'theme-2',
           type: 'French',
         }),
       ],
@@ -142,12 +142,12 @@ describe(`Explore view`, () => {
         providerName: 'openstax',
         themes: [
           ThemeFactory.sample({
-            id: 'book-1',
+            id: 'theme-1',
             type: 'Maths',
             title: 'Algebra',
           }),
           ThemeFactory.sample({
-            id: 'book-2',
+            id: 'theme-2',
             type: 'French',
           }),
         ],

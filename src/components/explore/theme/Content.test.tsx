@@ -1,8 +1,6 @@
 import React from 'react';
 import { renderWithClients } from 'src/testSupport/render';
 import { Content } from 'src/components/explore/theme/Content';
-import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
-import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 import {
   chapterTitle,
@@ -11,12 +9,14 @@ import {
 import PaginationPanel from 'src/components/explore/theme/pagination/PaginationPanel';
 import { getProviderByName } from 'src/views/openstax/provider/AlignmentProviderFactory';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
+import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
 
 describe('Theme Content', () => {
-  let theme: OpenstaxBook;
+  let theme: Theme;
 
   beforeEach(() => {
-    theme = OpenstaxBookFactory.sample({
+    theme = ThemeFactory.sample({
       id: 'ducklings',
       provider: 'openstax',
       title: 'Everything to know about ducks',

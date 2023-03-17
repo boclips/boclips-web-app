@@ -3,17 +3,17 @@ import { render } from 'src/testSupport/render';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import React from 'react';
 import { ThemeList } from 'src/components/explore/themeList/ThemeList';
-import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 import { getProviderByName } from 'src/views/openstax/provider/AlignmentProviderFactory';
+import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe('Theme list', () => {
   it(`displays all themes`, async () => {
     const fakeClient = new FakeBoclipsClient();
 
     const themes = [
-      OpenstaxBookFactory.sample({ title: 'Maths' }),
-      OpenstaxBookFactory.sample({ title: 'Physics' }),
+      ThemeFactory.sample({ title: 'Maths' }),
+      ThemeFactory.sample({ title: 'Physics' }),
     ];
 
     const wrapper = render(
@@ -32,8 +32,8 @@ describe('Theme list', () => {
     const fakeClient = new FakeBoclipsClient();
 
     const themes = [
-      OpenstaxBookFactory.sample({ provider: 'openstax', title: 'Maths' }),
-      OpenstaxBookFactory.sample({
+      ThemeFactory.sample({ provider: 'openstax', title: 'Maths' }),
+      ThemeFactory.sample({
         provider: 'openstax',
         title: 'Physics',
         topics: [],
@@ -56,8 +56,8 @@ describe('Theme list', () => {
     const fakeClient = new FakeBoclipsClient();
 
     const themes = [
-      OpenstaxBookFactory.sample({ title: 'Maths' }),
-      OpenstaxBookFactory.sample({ title: 'Physics' }),
+      ThemeFactory.sample({ title: 'Maths' }),
+      ThemeFactory.sample({ title: 'Physics' }),
     ];
 
     const wrapper = render(

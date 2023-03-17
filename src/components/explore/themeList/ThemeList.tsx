@@ -1,12 +1,12 @@
 import React from 'react';
 import c from 'classnames';
 import ThemeCardSkeleton from 'src/components/explore/themeList/ThemeCardSkeleton';
-import { OpenstaxBook } from 'src/types/OpenstaxBook';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
 import s from './style.module.less';
 import { ThemeCard } from './ThemeCard';
 
 interface Props {
-  themes: OpenstaxBook[];
+  themes: Theme[];
   isLoading: boolean;
 }
 

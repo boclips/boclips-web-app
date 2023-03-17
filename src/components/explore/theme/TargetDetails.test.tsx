@@ -1,10 +1,10 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { TargetElement } from 'src/components/explore/theme/TargetElement';
+import { TargetDetails } from 'src/components/explore/theme/TargetDetails';
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/types';
 import { renderWithClients } from 'src/testSupport/render';
 
-describe('Target Element', () => {
+describe('Target Details', () => {
   it.each([
     [0, '(0 videos)'],
     [1, '(1 video)'],
@@ -18,11 +18,11 @@ describe('Target Element', () => {
       }
 
       const wrapper = renderWithClients(
-        <TargetElement
-          target={{
+        <TargetDetails
+          data={{
             title: '2.1 Life at the coop ',
             videos,
-            id: 'section-2.1',
+            id: 'target-2.1',
           }}
         />,
       );
@@ -39,8 +39,8 @@ describe('Target Element', () => {
     const videoTitle = 'Ducklings playing with hay';
 
     const wrapper = renderWithClients(
-      <TargetElement
-        target={{
+      <TargetDetails
+        data={{
           title: '2.1 Life at the coop ',
           videos: [
             VideoFactory.sample({
@@ -48,7 +48,7 @@ describe('Target Element', () => {
               createdBy: 'Aunt Mary',
             }),
           ],
-          id: 'section-2.1',
+          id: 'target-2.1',
         }}
       />,
     );
@@ -63,11 +63,11 @@ describe('Target Element', () => {
 
   it('renders messaging when no videos are mapped to the target', () => {
     const wrapper = renderWithClients(
-      <TargetElement
-        target={{
+      <TargetDetails
+        data={{
           title: '2.1 Life at the coop ',
           videos: [],
-          id: 'section-2.1',
+          id: 'target-2.1',
         }}
       />,
     );

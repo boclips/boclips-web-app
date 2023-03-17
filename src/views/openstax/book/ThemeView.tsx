@@ -41,7 +41,7 @@ const ThemeView = () => {
         ) : (
           <OpenstaxMobileMenuProvider>
             <AlignmentContextProvider provider={provider}>
-              <NavigationPanel book={theme} />
+              <NavigationPanel theme={theme} />
               <Content theme={theme} />
               <PaginationPanel theme={theme} />
             </AlignmentContextProvider>

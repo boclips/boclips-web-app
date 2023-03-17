@@ -1,16 +1,16 @@
 import React from 'react';
-import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import NavigationPanelHeader from 'src/components/explore/navigationPanel/NavigationPanelHeader';
 import NavigationPanelBody from 'src/components/explore/navigationPanel/NavigationPanelBody';
 import { useOpenstaxMobileMenu } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
 import s from './style.module.less';
 
 interface Props {
-  book: OpenstaxBook;
+  theme: Theme;
 }
 
-export const NavigationPanel = ({ book }: Props) => {
+export const NavigationPanel = ({ theme }: Props) => {
   const { isOpen } = useOpenstaxMobileMenu();
   const isDesktop = useMediaBreakPoint().type === 'desktop';
 
@@ -19,8 +19,8 @@ export const NavigationPanel = ({ book }: Props) => {
       {(isOpen || isDesktop) && (
         <div className={s.tocPanel}>
           <div className={s.sticky}>
-            <NavigationPanelHeader book={book} />
-            <NavigationPanelBody book={book} />
+            <NavigationPanelHeader theme={theme} />
+            <NavigationPanelBody theme={theme} />
           </div>
         </div>
       )}

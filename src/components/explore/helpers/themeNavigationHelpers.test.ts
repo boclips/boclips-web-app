@@ -1,13 +1,13 @@
-import { getSelectedChapterElement } from 'src/components/explore/helpers/openstaxNavigationHelpers';
-import { OpenstaxBook } from 'src/types/OpenstaxBook';
-import { OpenstaxBookFactory } from 'src/testSupport/OpenstaxBookFactory';
+import { getSelectedTarget } from 'src/components/explore/helpers/themeNavigationHelpers';
 import {
   TargetFactory,
+  ThemeFactory,
   TopicFactory,
 } from 'boclips-api-client/dist/test-support/ThemeFactory';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
 
-describe('openstaxNavigationHelper', () => {
-  const book: OpenstaxBook = OpenstaxBookFactory.sample({
+describe('NavigationHelper', () => {
+  const theme: Theme = ThemeFactory.sample({
     topics: [
       TopicFactory.sample({
         index: 0,
@@ -28,39 +28,39 @@ describe('openstaxNavigationHelper', () => {
   });
 
   it.each([
-    ['chapter-0', 'Chapter Overview', 'chapter-0-section-0'],
-    ['chapter-0-section-2', '1.1 Section 1', 'chapter-0-section-2'],
-    ['chapter-0-section-1', 'Discussion Prompt', 'chapter-0-section-1'],
-    ['chapter-1', '2.1 Section 1', 'chapter-1-section-0'],
-    ['chapter-1-section-0', '2.1 Section 1', 'chapter-1-section-0'],
-    ['chapter-1-section-1', '2.2 Section 2', 'chapter-1-section-1'],
+    ['topic-0', 'Chapter Overview', 'topic-0-target-0'],
+    ['topic-0-target-2', '1.1 Section 1', 'topic-0-target-2'],
+    ['topic-0-target-1', 'Discussion Prompt', 'topic-0-target-1'],
+    ['topic-1', '2.1 Section 1', 'topic-1-target-0'],
+    ['topic-1-target-0', '2.1 Section 1', 'topic-1-target-0'],
+    ['topic-1-target-1', '2.2 Section 2', 'topic-1-target-1'],
   ])(
     'maps %s correctly to section titled as %s',
     (navigationFragment: string, sectionTitle: string, sectionId: string) => {
-      const section = getSelectedChapterElement(book, navigationFragment);
+      const section = getSelectedTarget(theme, navigationFragment);
       expect(section.title).toBe(sectionTitle);
       expect(section.id).toBe(sectionId);
     },
   );
 
   it.each([
-    ['chapter-10'],
-    ['chap-1-section-abs'],
-    ['chap-kkk-section-abs'],
+    ['topic-10'],
+    ['top-1-target-abs'],
+    ['top-kkk-target-abs'],
     ['discussion-prompt'],
     ['chapter-overview'],
     ['blabla'],
-    ['chapter-0-section-2137'],
+    ['topic-0-target-2137'],
   ])(
     'unknown key %s is mapped to first available section in the book',
     (key: string) => {
-      const section = getSelectedChapterElement(book, key);
+      const section = getSelectedTarget(theme, key);
       expect(section.title).toBe('Chapter Overview');
     },
   );
 
   it('unknown section in a valid chapter shows the first valid chapter element', () => {
-    const section = getSelectedChapterElement(book, 'chapter-0-section-12');
+    const section = getSelectedTarget(theme, 'topic-0-target-12');
     expect(section.title).toBe('Chapter Overview');
   });
 });

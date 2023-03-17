@@ -1,28 +1,28 @@
 import React from 'react';
 import {
-  getAllSectionsInChapter,
-  getSelectedChapter,
-  getSelectedChapterElement,
-} from 'src/components/explore/helpers/openstaxNavigationHelpers';
+  getAllTargetsInTopic,
+  getSelectedTarget,
+  getSelectedTopic,
+} from 'src/components/explore/helpers/themeNavigationHelpers';
 import { useLocation } from 'react-router-dom';
-import { OpenstaxBook } from 'src/types/OpenstaxBook';
 import {
-  NextChapterButton,
-  NextSectionButton,
-  PreviousChapterButton,
+  NextTopicButton,
+  NextTargetButton,
+  PreviousTopicButton,
   PreviousSectionButton,
 } from 'src/components/explore/theme/pagination/PaginationButton';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
 import s from './style.module.less';
 
 interface Props {
-  theme: OpenstaxBook;
+  theme: Theme;
 }
 
 const PaginationPanel = ({ theme }: Props) => {
   const location = useLocation();
-  const currentSection = getSelectedChapterElement(theme, location.hash);
-  const currentChapter = getSelectedChapter(theme, location.hash);
-  const allSectionsInChapter = getAllSectionsInChapter(currentChapter);
+  const currentTarget = getSelectedTarget(theme, location.hash);
+  const currentTopic = getSelectedTopic(theme, location.hash);
+  const allTargetsInTopic = getAllTargetsInTopic(currentTopic);
 
   function first<T>(array: T[]): T {
     return array[0];
@@ -32,38 +32,35 @@ const PaginationPanel = ({ theme }: Props) => {
     return array[array.length - 1];
   }
 
-  const showNextChapterButton = () =>
-    !showNextSectionButton() &&
-    currentChapter?.index < last(theme.topics).index;
+  const showNextTopicButton = () =>
+    !showNextTargetButton() && currentTopic?.index < last(theme.topics).index;
 
-  const showPrevChapterButton = () =>
-    !showPrevSectionButton() &&
-    currentChapter?.index > first(theme.topics).index;
+  const showPrevTopicButton = () =>
+    !showPrevTargetButton() && currentTopic?.index > first(theme.topics).index;
 
-  const showNextSectionButton = () =>
-    allSectionsInChapter.length &&
-    currentSection.id !== last(allSectionsInChapter).id;
+  const showNextTargetButton = () =>
+    allTargetsInTopic.length && currentTarget.id !== last(allTargetsInTopic).id;
 
-  const showPrevSectionButton = () =>
-    allSectionsInChapter.length &&
-    currentSection.id !== first(allSectionsInChapter).id;
+  const showPrevTargetButton = () =>
+    allTargetsInTopic.length &&
+    currentTarget.id !== first(allTargetsInTopic).id;
 
   return (
     <div className={s.paginationPanel}>
-      {showPrevSectionButton() && (
+      {showPrevTargetButton() && (
         <PreviousSectionButton theme={theme} hash={location.hash} />
       )}
 
-      {showPrevChapterButton() && (
-        <PreviousChapterButton theme={theme} hash={location.hash} />
+      {showPrevTopicButton() && (
+        <PreviousTopicButton theme={theme} hash={location.hash} />
       )}
 
-      {showNextSectionButton() && (
-        <NextSectionButton theme={theme} hash={location.hash} />
+      {showNextTargetButton() && (
+        <NextTargetButton theme={theme} hash={location.hash} />
       )}
 
-      {showNextChapterButton() && (
-        <NextChapterButton theme={theme} hash={location.hash} />
+      {showNextTopicButton() && (
+        <NextTopicButton theme={theme} hash={location.hash} />
       )}
     </div>
   );

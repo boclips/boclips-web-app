@@ -27,16 +27,16 @@ const OpenstaxBookSkeletonPage = () => {
         <div className={o.tocPanel}>
           <div className={c(s.skeleton, o.backButton)} />
           <div className={c(s.skeleton, o.navPanelTitle)} />
-          <div className={c(s.skeleton, o.navPanelChapter)} />
+          <div className={c(s.skeleton, o.navPanelTopic)} />
           <div className={c(s.skeleton, o.navPanelVideoCount)} />
-          <div className={c(s.skeleton, o.navPanelSection)} />
-          <div className={c(s.skeleton, o.navPanelSection)} />
-          <div className={c(s.skeleton, o.navPanelSection)} />
-          <div className={c(s.skeleton, o.navPanelSection)} />
-          <div className={c(s.skeleton, o.navPanelSection)} />
-          <div className={c(s.skeleton, o.navPanelChapter)} />
+          <div className={c(s.skeleton, o.navPanelTarget)} />
+          <div className={c(s.skeleton, o.navPanelTarget)} />
+          <div className={c(s.skeleton, o.navPanelTarget)} />
+          <div className={c(s.skeleton, o.navPanelTarget)} />
+          <div className={c(s.skeleton, o.navPanelTarget)} />
+          <div className={c(s.skeleton, o.navPanelTopic)} />
           <div className={c(s.skeleton, o.navPanelVideoCount)} />
-          <div className={c(s.skeleton, o.navPanelChapter)} />
+          <div className={c(s.skeleton, o.navPanelTopic)} />
           <div className={c(s.skeleton, o.navPanelVideoCount)} />
         </div>
       )}
@@ -45,8 +45,8 @@ const OpenstaxBookSkeletonPage = () => {
           <div className={c(s.skeleton, o.backButton)} />
         )}
         <div className={c(s.skeleton, o.title)} />
-        <div className={c(s.skeleton, o.chapter)} />
-        <div className={c(s.skeleton, o.section)} />
+        <div className={c(s.skeleton, o.topic)} />
+        <div className={c(s.skeleton, o.target)} />
         <SkeletonTiles cols={getColumnsToShow()} />
       </main>
     </>
