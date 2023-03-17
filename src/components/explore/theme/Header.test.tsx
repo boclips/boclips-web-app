@@ -2,7 +2,7 @@ import React from 'react';
 import { renderWithClients } from 'src/testSupport/render';
 import { Header } from 'src/components/explore/theme/Header';
 import { RenderResult } from '@testing-library/react';
-import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
+import { ThemeMobileMenuProvider } from 'src/components/common/providers/ThemeMobileMenuProvider';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 import { getProviderByName } from 'src/views/openstax/provider/AlignmentProviderFactory';
 
@@ -43,10 +43,10 @@ describe('Theme Header', () => {
 
   const renderDefaultThemeHeader = (): RenderResult =>
     renderWithClients(
-      <OpenstaxMobileMenuProvider>
+      <ThemeMobileMenuProvider>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
           <Header themeTitle="spies" topicTitle="Chapter 1: Title" />
         </AlignmentContextProvider>
-      </OpenstaxMobileMenuProvider>,
+      </ThemeMobileMenuProvider>,
     );
 });

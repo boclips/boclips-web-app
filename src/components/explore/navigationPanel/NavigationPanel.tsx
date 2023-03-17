@@ -1,7 +1,7 @@
 import React from 'react';
 import NavigationPanelHeader from 'src/components/explore/navigationPanel/NavigationPanelHeader';
 import NavigationPanelBody from 'src/components/explore/navigationPanel/NavigationPanelBody';
-import { useOpenstaxMobileMenu } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
+import { useThemeMobileMenuContext } from 'src/components/common/providers/ThemeMobileMenuProvider';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
 import s from './style.module.less';
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const NavigationPanel = ({ theme }: Props) => {
-  const { isOpen } = useOpenstaxMobileMenu();
+  const { isOpen } = useThemeMobileMenuContext();
   const isDesktop = useMediaBreakPoint().type === 'desktop';
 
   return (

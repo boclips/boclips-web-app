@@ -5,7 +5,7 @@ import ChevronDownIcon from 'src/resources/icons/chevron-down.svg';
 import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
 import { HashLink } from 'react-router-hash-link';
 import c from 'classnames';
-import { useOpenstaxMobileMenu } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
+import { useThemeMobileMenuContext } from 'src/components/common/providers/ThemeMobileMenuProvider';
 import { useLocation } from 'react-router-dom';
 import {
   firstTargetInfo,
@@ -33,7 +33,7 @@ const NavigationPanelBody = ({ theme }: Props) => {
 
   const [expandedTopics, setExpandedTopics] = useState(['topic-0']);
 
-  const { setIsOpen } = useOpenstaxMobileMenu();
+  const { setIsOpen } = useThemeMobileMenuContext();
 
   useEffect(() => {
     const newTargetLink = location.hash.replace('#', '');

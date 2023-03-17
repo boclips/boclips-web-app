@@ -6,7 +6,7 @@ import Button from '@boclips-ui/button';
 import CloseButtonIcon from 'src/resources/icons/cross-icon.svg';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import { useNavigate } from 'react-router-dom';
-import { useOpenstaxMobileMenu } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
+import { useThemeMobileMenuContext } from 'src/components/common/providers/ThemeMobileMenuProvider';
 import { ThemeLogo } from 'src/components/explore/themeLogo/ThemeLogo';
 import { useAlignmentProvider } from 'src/components/common/providers/AlignmentContextProvider';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
@@ -21,7 +21,7 @@ const NavigationPanelHeader = ({ theme }: Props) => {
   const navigate = useNavigate();
   const provider = useAlignmentProvider();
 
-  const { setIsOpen } = useOpenstaxMobileMenu();
+  const { setIsOpen } = useThemeMobileMenuContext();
 
   const goToExplorePage = () => {
     navigate(`/explore/${provider.navigationPath}`);

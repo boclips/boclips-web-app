@@ -3,7 +3,7 @@ import PageHeader from 'src/components/pageTitle/PageHeader';
 import Button from '@boclips-ui/button';
 import OpenBookIcon from 'src/resources/icons/open-book.svg';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
-import { useOpenstaxMobileMenu } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
+import { useThemeMobileMenuContext } from 'src/components/common/providers/ThemeMobileMenuProvider';
 import { TextButton } from 'src/components/common/textButton/TextButton';
 import BackArrow from 'src/resources/icons/back-arrow.svg';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +20,7 @@ export const Header = ({ themeTitle, topicTitle }: Props) => {
   const breakpoint = useMediaBreakPoint();
   const providerPath = useAlignmentProvider().navigationPath;
   const isNotDesktop = breakpoint.type !== 'desktop';
-  const { setIsOpen } = useOpenstaxMobileMenu();
+  const { setIsOpen } = useThemeMobileMenuContext();
   const navigate = useNavigate();
 
   const goToExplorePage = () => {

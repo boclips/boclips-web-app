@@ -5,30 +5,27 @@ interface Props {
   triggerOpen?: boolean;
 }
 
-const openStaxMobileMenuContext = createContext(null);
+const themeMobileMenuContext = createContext(null);
 
-export const OpenstaxMobileMenuProvider = ({
-  children,
-  triggerOpen,
-}: Props) => {
-  const value = useOpenStaxMobileMenu();
+export const ThemeMobileMenuProvider = ({ children, triggerOpen }: Props) => {
+  const value = useThemeMobileMenu();
 
   if (triggerOpen) {
     value.isOpen = triggerOpen;
   }
 
   return (
-    <openStaxMobileMenuContext.Provider value={value}>
+    <themeMobileMenuContext.Provider value={value}>
       {children}
-    </openStaxMobileMenuContext.Provider>
+    </themeMobileMenuContext.Provider>
   );
 };
 
-export const useOpenstaxMobileMenu = () => {
-  return useContext(openStaxMobileMenuContext);
+export const useThemeMobileMenuContext = () => {
+  return useContext(themeMobileMenuContext);
 };
 
-export const useOpenStaxMobileMenu = () => {
+export const useThemeMobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   if (isOpen) {

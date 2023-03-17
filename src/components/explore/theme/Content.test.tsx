@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderWithClients } from 'src/testSupport/render';
 import { Content } from 'src/components/explore/theme/Content';
-import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
+import { ThemeMobileMenuProvider } from 'src/components/common/providers/ThemeMobileMenuProvider';
 import {
   chapterTitle,
   navigateTo,
@@ -60,12 +60,12 @@ describe('Theme Content', () => {
     window.resizeTo(1500, 1024);
 
     const wrapper = renderWithClients(
-      <OpenstaxMobileMenuProvider>
+      <ThemeMobileMenuProvider>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
           <Content theme={theme} />
           <PaginationPanel theme={theme} />
         </AlignmentContextProvider>
-      </OpenstaxMobileMenuProvider>,
+      </ThemeMobileMenuProvider>,
     );
 
     const chapters = wrapper.getAllByRole('heading', { level: 2 });
@@ -84,12 +84,12 @@ describe('Theme Content', () => {
     window.resizeTo(1500, 1024);
 
     const wrapper = renderWithClients(
-      <OpenstaxMobileMenuProvider>
+      <ThemeMobileMenuProvider>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
           <Content theme={theme} />
           <PaginationPanel theme={theme} />
         </AlignmentContextProvider>
-      </OpenstaxMobileMenuProvider>,
+      </ThemeMobileMenuProvider>,
     );
 
     expect(wrapper.queryByRole('link', { name: 'Previous' })).toBeNull();
@@ -101,12 +101,12 @@ describe('Theme Content', () => {
     window.resizeTo(1500, 1024);
 
     const wrapper = renderWithClients(
-      <OpenstaxMobileMenuProvider>
+      <ThemeMobileMenuProvider>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
           <Content theme={theme} />
           <PaginationPanel theme={theme} />
         </AlignmentContextProvider>
-      </OpenstaxMobileMenuProvider>,
+      </ThemeMobileMenuProvider>,
     );
 
     navigateTo(wrapper, 'Next');
@@ -122,12 +122,12 @@ describe('Theme Content', () => {
     window.resizeTo(1500, 1024);
 
     const wrapper = renderWithClients(
-      <OpenstaxMobileMenuProvider>
+      <ThemeMobileMenuProvider>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
           <Content theme={theme} />
           <PaginationPanel theme={theme} />
         </AlignmentContextProvider>
-      </OpenstaxMobileMenuProvider>,
+      </ThemeMobileMenuProvider>,
     );
 
     expect(
@@ -141,12 +141,12 @@ describe('Theme Content', () => {
     window.resizeTo(1500, 1024);
 
     const wrapper = renderWithClients(
-      <OpenstaxMobileMenuProvider>
+      <ThemeMobileMenuProvider>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
           <Content theme={theme} />
           <PaginationPanel theme={theme} />
         </AlignmentContextProvider>
-      </OpenstaxMobileMenuProvider>,
+      </ThemeMobileMenuProvider>,
     );
 
     navigateTo(wrapper, 'Next');
@@ -159,12 +159,12 @@ describe('Theme Content', () => {
     window.resizeTo(1500, 1024);
 
     const wrapper = renderWithClients(
-      <OpenstaxMobileMenuProvider>
+      <ThemeMobileMenuProvider>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
           <Content theme={theme} />
           <PaginationPanel theme={theme} />
         </AlignmentContextProvider>
-      </OpenstaxMobileMenuProvider>,
+      </ThemeMobileMenuProvider>,
     );
 
     navigateTo(wrapper, 'Next');

@@ -6,7 +6,7 @@ import { useParams } from 'react-router';
 import { useGetThemeByProviderAndId } from 'src/hooks/api/openstaxQuery';
 import { Content } from 'src/components/explore/theme/Content';
 import { NavigationPanel } from 'src/components/explore/navigationPanel/NavigationPanel';
-import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
+import { ThemeMobileMenuProvider } from 'src/components/common/providers/ThemeMobileMenuProvider';
 import OpenstaxBookSkeletonPage from 'src/components/skeleton/openstax/OpenstaxBookSkeletonPage';
 import { Helmet } from 'react-helmet';
 import PaginationPanel from 'src/components/explore/theme/pagination/PaginationPanel';
@@ -39,13 +39,13 @@ const ThemeView = () => {
         {isLoading ? (
           <OpenstaxBookSkeletonPage />
         ) : (
-          <OpenstaxMobileMenuProvider>
+          <ThemeMobileMenuProvider>
             <AlignmentContextProvider provider={provider}>
               <NavigationPanel theme={theme} />
               <Content theme={theme} />
               <PaginationPanel theme={theme} />
             </AlignmentContextProvider>
-          </OpenstaxMobileMenuProvider>
+          </ThemeMobileMenuProvider>
         )}
         <Footer />
       </Layout>

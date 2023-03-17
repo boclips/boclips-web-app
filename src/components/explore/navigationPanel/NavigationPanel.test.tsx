@@ -2,7 +2,7 @@ import { render } from 'src/testSupport/render';
 import React from 'react';
 import { NavigationPanel } from 'src/components/explore/navigationPanel/NavigationPanel';
 import { fireEvent, waitFor } from '@testing-library/react';
-import { OpenstaxMobileMenuProvider } from 'src/components/common/providers/OpenstaxMobileMenuProvider';
+import { ThemeMobileMenuProvider } from 'src/components/common/providers/ThemeMobileMenuProvider';
 import {
   resizeToDesktop,
   resizeToMobile,
@@ -51,11 +51,11 @@ describe('Theme NavigationPanel', () => {
     });
 
     const wrapper = render(
-      <OpenstaxMobileMenuProvider>
+      <ThemeMobileMenuProvider>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
           <NavigationPanel theme={theme} />
         </AlignmentContextProvider>
-      </OpenstaxMobileMenuProvider>,
+      </ThemeMobileMenuProvider>,
     );
 
     const bookTitle = await wrapper.findByRole('heading', { level: 1 });
@@ -100,11 +100,11 @@ describe('Theme NavigationPanel', () => {
     resizeToDesktop();
 
     const wrapper = render(
-      <OpenstaxMobileMenuProvider>
+      <ThemeMobileMenuProvider>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
           <NavigationPanel theme={ThemeFactory.sample()} />
         </AlignmentContextProvider>
-      </OpenstaxMobileMenuProvider>,
+      </ThemeMobileMenuProvider>,
     );
 
     expect(
@@ -120,7 +120,7 @@ describe('Theme NavigationPanel', () => {
     async (_screenType: string, resize: () => void) => {
       resize();
       const wrapper = render(
-        <OpenstaxMobileMenuProvider>
+        <ThemeMobileMenuProvider>
           <AlignmentContextProvider provider={getProviderByName('openstax')}>
             <NavigationPanel
               theme={ThemeFactory.sample({
@@ -129,7 +129,7 @@ describe('Theme NavigationPanel', () => {
               })}
             />
           </AlignmentContextProvider>
-        </OpenstaxMobileMenuProvider>,
+        </ThemeMobileMenuProvider>,
       );
 
       expect(wrapper.queryByAltText('book cover')).toBeNull();
@@ -140,11 +140,11 @@ describe('Theme NavigationPanel', () => {
     resizeToTablet();
 
     const wrapper = render(
-      <OpenstaxMobileMenuProvider triggerOpen>
+      <ThemeMobileMenuProvider triggerOpen>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
           <NavigationPanel theme={ThemeFactory.sample()} />
         </AlignmentContextProvider>
-      </OpenstaxMobileMenuProvider>,
+      </ThemeMobileMenuProvider>,
     );
 
     const closeButton = wrapper.getByRole('button', {
@@ -162,11 +162,11 @@ describe('Theme NavigationPanel', () => {
     resizeToTablet();
 
     const wrapper = render(
-      <OpenstaxMobileMenuProvider triggerOpen>
+      <ThemeMobileMenuProvider triggerOpen>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
           <NavigationPanel theme={ThemeFactory.sample()} />
         </AlignmentContextProvider>
-      </OpenstaxMobileMenuProvider>,
+      </ThemeMobileMenuProvider>,
     );
 
     const closeButton = wrapper.getByLabelText('Close the Table of contents');
@@ -207,11 +207,11 @@ describe('Theme NavigationPanel', () => {
       ],
     });
     const wrapper = render(
-      <OpenstaxMobileMenuProvider>
+      <ThemeMobileMenuProvider>
         <AlignmentContextProvider provider={getProviderByName('openstax')}>
           <NavigationPanel theme={theme} />
         </AlignmentContextProvider>
-      </OpenstaxMobileMenuProvider>,
+      </ThemeMobileMenuProvider>,
     );
 
     expect(
