@@ -151,6 +151,8 @@ const SearchResultsView = () => {
     from: filtersFromURL.release_date_from,
   };
 
+  const decodedQuery = decodeURIComponent(query);
+
   if (isInitialLoading) return <Loading />;
 
   return (
@@ -170,12 +172,12 @@ const SearchResultsView = () => {
         {isNoSearchResults ? (
           <NoSearchResults
             areFiltersApplied={areFiltersApplied(debouncedFilters)}
-            query={query}
+            query={decodedQuery}
           />
         ) : (
           <SearchResults
             results={data}
-            query={query}
+            query={decodedQuery}
             handleFilterChange={handleFilterChange}
             handlePageChange={handlePageChange}
             currentPage={currentPage}
