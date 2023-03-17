@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from 'src/components/layout/Navbar';
 import { Layout } from 'src/components/layout/Layout';
 import Footer from 'src/components/layout/Footer';
-import { SparksWidget } from 'src/components/sparks/SparksWidget';
+import { SparksWidget } from 'src/components/sparks/menu/SparksWidget';
 
 const SparksView = () => {
   return (

@@ -4,12 +4,12 @@ import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import { useParams } from 'react-router';
 import { useGetThemeByProviderAndId } from 'src/hooks/api/openstaxQuery';
-import { Content } from 'src/components/explore/theme/Content';
-import { NavigationPanel } from 'src/components/explore/navigationPanel/NavigationPanel';
+import { Content } from 'src/components/sparks/themePage/theme/Content';
+import { NavigationPanel } from 'src/components/sparks/themePage/navigationPanel/NavigationPanel';
 import { ThemeMobileMenuProvider } from 'src/components/common/providers/ThemeMobileMenuProvider';
 import OpenstaxBookSkeletonPage from 'src/components/skeleton/openstax/OpenstaxBookSkeletonPage';
 import { Helmet } from 'react-helmet';
-import PaginationPanel from 'src/components/explore/theme/pagination/PaginationPanel';
+import PaginationPanel from 'src/components/sparks/themePage/theme/pagination/PaginationPanel';
 import {
   getProviderByName,
   isProviderSupported,

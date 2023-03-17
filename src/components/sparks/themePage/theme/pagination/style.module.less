@@ -1,0 +1,104 @@
+@import 'node_modules/@boclips-ui/styles/src/colors';
+@import 'node_modules/@boclips-ui/styles/src/focus';
+@import 'node_modules/@boclips-ui/styles/src/breakpoints';
+
+.paginationPanel {
+  display: flex;
+  justify-content: space-between;
+  grid-row-start: 3;
+  grid-row-end: 4;
+
+  .targetLink {
+    #focus;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    &:only-child {
+      max-width: unset;
+      padding: 0;
+    }
+
+    &:hover {
+      .label {
+        span {
+          &:last-child {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+    .label {
+      display: flex;
+      flex-direction: column;
+      font-weight: 500;
+      width: 100%;
+
+      span {
+        &:last-child {
+          color: @blue-800;
+        }
+      }
+
+      &.next {
+        margin-right: 1rem;
+
+        * {
+          text-align: right;
+        }
+      }
+
+      &.prev {
+        margin-left: 1rem;
+
+        * {
+          text-align: left;
+        }
+      }
+    }
+
+    .icon {
+      position: relative;
+      top: 26px;
+    }
+  }
+}
+
+@media screen and (min-width: @screen-sm) {
+  .paginationPanel {
+    grid-column-start: 2;
+    grid-column-end: 26;
+    flex-wrap: wrap;
+
+    .targetLink {
+      width: 100%;
+      padding: 1rem 0;
+      .label {
+        padding: 0 !important;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: @screen-md) {
+  .paginationPanel {
+    grid-column-start: 2;
+    grid-column-end: 26;
+
+    .targetLink {
+      max-width: 340px;
+    }
+  }
+}
+
+@media screen and (min-width: @screen-lg) {
+  .paginationPanel {
+    grid-column-start: 8;
+    grid-column-end: 26;
+
+    .targetLink {
+      max-width: 380px;
+    }
+  }
+}

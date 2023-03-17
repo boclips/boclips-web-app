@@ -2,13 +2,13 @@ import React, { useEffect, useMemo, useState } from 'react';
 import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import { Layout } from 'src/components/layout/Layout';
-import { ThemeList } from 'src/components/explore/themeList/ThemeList';
-import { TypesMenu } from 'src/components/explore/menu/TypesMenu';
+import { ThemeList } from 'src/components/sparks/providerPage/themeList/ThemeList';
+import { TypesMenu } from 'src/components/sparks/providerPage/providerPageMenu/TypesMenu';
 import {
   useGetThemesByProviderQuery,
   useGetTypesByProviderQuery,
 } from 'src/hooks/api/openstaxQuery';
-import ExploreHeader from 'src/components/explore/exploreHeader/ExploreHeader';
+import ProviderPageHeader from 'src/components/sparks/providerPage/providerPageHeader/ProviderPageHeader';
 import { useParams } from 'react-router';
 import NotFound from 'src/views/notFound/NotFound';
 import {
@@ -60,7 +60,7 @@ const ExploreView = () => {
     <Layout rowsSetup="grid-rows-explore-view" responsiveLayout>
       <Navbar />
       <AlignmentContextProvider provider={provider}>
-        <ExploreHeader />
+        <ProviderPageHeader />
         <TypesMenu
           types={isLoading ? [] : [ALL, ...types]}
           currentType={currentType}
