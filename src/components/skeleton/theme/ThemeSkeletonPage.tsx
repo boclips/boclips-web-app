@@ -3,9 +3,9 @@ import c from 'classnames';
 import SkeletonTiles from 'src/components/skeleton/Skeleton';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import s from '../style.module.less';
-import o from './openstaxBookSkeletonPage.module.less';
+import o from './themeSkeletonPage.module.less';
 
-const OpenstaxBookSkeletonPage = () => {
+const ThemeSkeletonPage = () => {
   const screen = useMediaBreakPoint();
 
   const getColumnsToShow = () => {
@@ -53,4 +53,4 @@ const OpenstaxBookSkeletonPage = () => {
   );
 };
 
-export default OpenstaxBookSkeletonPage;
+export default ThemeSkeletonPage;

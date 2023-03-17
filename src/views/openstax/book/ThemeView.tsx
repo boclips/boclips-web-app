@@ -7,7 +7,7 @@ import { useGetThemeByProviderAndId } from 'src/hooks/api/openstaxQuery';
 import { Content } from 'src/components/sparks/themePage/theme/Content';
 import { NavigationPanel } from 'src/components/sparks/themePage/navigationPanel/NavigationPanel';
 import { ThemeMobileMenuProvider } from 'src/components/common/providers/ThemeMobileMenuProvider';
-import OpenstaxBookSkeletonPage from 'src/components/skeleton/openstax/OpenstaxBookSkeletonPage';
+import ThemeSkeletonPage from 'src/components/skeleton/theme/ThemeSkeletonPage';
 import { Helmet } from 'react-helmet';
 import PaginationPanel from 'src/components/sparks/themePage/theme/pagination/PaginationPanel';
 import {
@@ -37,7 +37,7 @@ const ThemeView = () => {
       >
         <Navbar />
         {isLoading ? (
-          <OpenstaxBookSkeletonPage />
+          <ThemeSkeletonPage />
         ) : (
           <ThemeMobileMenuProvider>
             <AlignmentContextProvider provider={provider}>
