@@ -23,8 +23,7 @@ export const Search = ({ showIconOnly, onSearch }: Props) => {
   const apiClient = useBoclipsClient();
   const [searchLocation] = useSearchQueryLocationParams();
   const query = useLocationParams().get('q');
-  const decodedQuery = decodeURIComponent(query || '');
-  const [searchTerm, setSearchTerm] = useState(decodedQuery);
+  const [searchTerm, setSearchTerm] = useState(query);
   const [completionId, setCompletionId] = useState<string>(uuidv4());
   const [componentId] = useState<string>(uuidv4());
 
@@ -52,13 +51,11 @@ export const Search = ({ showIconOnly, onSearch }: Props) => {
   }, [suggestions]);
 
   const handleSearch = (searchQuery: string, _, suggestionUsed: boolean) => {
-    const encodeQuery = encodeURIComponent(searchQuery);
-
     if (onSearch) {
-      onSearch(encodeQuery);
+      onSearch(searchQuery);
     }
 
-    searchLocation.query = encodeQuery;
+    searchLocation.query = searchQuery;
 
     const params = convertToURLSearchParams(searchLocation);
     params.set('page', '1');
@@ -86,7 +83,7 @@ export const Search = ({ showIconOnly, onSearch }: Props) => {
         placeholder="Search for videos"
         iconOnlyButton={showIconOnly}
         onSearch={handleSearch}
-        initialQuery={decodedQuery}
+        initialQuery={query}
         data-qa="search-input"
         onChange={searchBarChanged}
         suggestions={

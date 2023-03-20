@@ -147,36 +147,6 @@ describe('SearchResults', () => {
     expect(wrapper.queryByText('dogs are nice')).not.toBeInTheDocument();
   });
 
-  it('decodes URI', async () => {
-    const fakeClient = new FakeBoclipsClient();
-
-    const video = VideoFactory.sample({
-      id: '1',
-      title: '"',
-      description: 'dogs are nice',
-    });
-
-    fakeClient.videos.insertVideo(video);
-
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/videos']}>
-        <App apiClient={fakeClient} boclipsSecurity={stubBoclipsSecurity} />
-      </MemoryRouter>,
-    );
-
-    expect(await wrapper.findByText('dogs are nice')).toBeVisible();
-
-    const searchBar = wrapper.getByPlaceholderText(
-      'Search for videos',
-    ) as HTMLInputElement;
-
-    fireEvent.change(searchBar, { target: { value: '"' } });
-    fireEvent.keyDown(searchBar, { key: 'Enter', code: 'Enter' });
-
-    expect(await wrapper.findAllByText(/"/)).toHaveLength(1);
-    expect(await wrapper.queryByText(/%2522/)).not.toBeInTheDocument();
-  });
-
   it('renders the pagination', async () => {
     const fakeClient = new FakeBoclipsClient();
 

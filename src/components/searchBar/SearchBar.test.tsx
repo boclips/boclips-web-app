@@ -60,33 +60,6 @@ describe('SearchBar', () => {
     );
   });
 
-  it('escapes " character', async () => {
-    const history = createBrowserHistory();
-
-    history.push('/');
-
-    const wrapper = render(
-      <BoclipsClientProvider client={new FakeBoclipsClient()}>
-        <QueryClientProvider client={new QueryClient(queryClientConfig)}>
-          <Router location={history.location} navigator={history}>
-            <Search showIconOnly={false} />
-          </Router>
-        </QueryClientProvider>
-      </BoclipsClientProvider>,
-    );
-
-    const searchInput = wrapper.getByPlaceholderText(
-      'Search for videos',
-    ) as HTMLInputElement;
-    fireEvent.change(searchInput, { target: { value: '"' } });
-
-    const searchButton = wrapper.getByText('Search');
-    fireEvent.click(searchButton);
-
-    expect(history.location.pathname).toEqual('/videos');
-    expect(history.location.search).toEqual('?q=%2522&page=1');
-  });
-
   describe('search suggestions', () => {
     let fakeBoclipsClient;
     beforeEach(() => {
@@ -204,7 +177,7 @@ describe('SearchBar', () => {
         ]);
 
         expect(searchRelatedEvent?.searchUrl).toContain(
-          '/videos?q=U.S.%2520Senate&page=1',
+          '/videos?q=U.S.+Senate&page=1',
         );
       });
     });
