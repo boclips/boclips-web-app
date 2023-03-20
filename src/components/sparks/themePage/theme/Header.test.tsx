@@ -4,7 +4,7 @@ import { Header } from 'src/components/sparks/themePage/theme/Header';
 import { RenderResult } from '@testing-library/react';
 import { ThemeMobileMenuProvider } from 'src/components/common/providers/ThemeMobileMenuProvider';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
-import { getProviderByName } from 'src/views/openstax/provider/AlignmentProviderFactory';
+import { getProviderByName } from 'src/views/alignments/provider/AlignmentProviderFactory';
 
 describe('Theme Header', () => {
   it('shows theme and topic title', () => {

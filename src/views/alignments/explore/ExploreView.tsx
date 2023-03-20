@@ -14,7 +14,7 @@ import NotFound from 'src/views/notFound/NotFound';
 import {
   getProviderByName,
   isProviderSupported,
-} from 'src/views/openstax/provider/AlignmentProviderFactory';
+} from 'src/views/alignments/provider/AlignmentProviderFactory';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 
 const ExploreView = () => {

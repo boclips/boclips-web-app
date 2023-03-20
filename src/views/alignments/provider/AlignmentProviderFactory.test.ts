@@ -1,4 +1,4 @@
-import { getProviderByName } from 'src/views/openstax/provider/AlignmentProviderFactory';
+import { getProviderByName } from 'src/views/alignments/provider/AlignmentProviderFactory';
 
 describe('Provider Factory', () => {
   it('openstax provider is returned', () => {

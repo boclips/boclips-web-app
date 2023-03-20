@@ -4,7 +4,7 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import React from 'react';
 import { ThemeList } from 'src/components/sparks/providerPage/themeList/ThemeList';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
-import { getProviderByName } from 'src/views/openstax/provider/AlignmentProviderFactory';
+import { getProviderByName } from 'src/views/alignments/provider/AlignmentProviderFactory';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe('Theme list', () => {

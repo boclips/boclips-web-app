@@ -3,10 +3,10 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@boclips-ui/button';
 import { OrderThumbnail } from 'src/components/ordersTable/OrderThumbnail';
-import { OrderStatusField } from 'src/components/common/OrderStatusField';
-import { OrderDateField } from 'src/components/common/OrderDateField';
-import { OrderNumberField } from 'src/components/common/OrderNumberField';
-import { OrderTotalValueField } from '../common/OrderTotalValueField';
+import { OrderStatusField } from 'src/components/ordersTable/OrderStatusField';
+import { OrderDateField } from 'src/components/ordersTable/OrderDateField';
+import { OrderNumberField } from 'src/components/ordersTable/OrderNumberField';
+import { OrderTotalValueField } from './OrderTotalValueField';
 import s from './style.module.less';
 
 interface Props {

@@ -1,6 +1,6 @@
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
-import { Link } from './Link';
+import { Link } from '../common/Link';
 import { OrderInformationField } from './OrderInformationField';
 
 interface Props {

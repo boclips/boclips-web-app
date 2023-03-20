@@ -1,6 +1,6 @@
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
-import { AlignmentProvider } from 'src/views/openstax/provider/AlignmentProvider';
+import { AlignmentProvider } from 'src/views/alignments/provider/AlignmentProvider';
 import { useNavigate } from 'react-router-dom';
 import s from './sparksCard.module.less';
 

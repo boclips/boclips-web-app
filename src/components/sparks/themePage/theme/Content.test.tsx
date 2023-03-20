@@ -5,9 +5,9 @@ import { ThemeMobileMenuProvider } from 'src/components/common/providers/ThemeMo
 import {
   chapterTitle,
   navigateTo,
-} from 'src/views/openstax/book/OpenstaxBookTestSupport';
+} from 'src/views/alignments/theme/ThemeTestSupport';
 import PaginationPanel from 'src/components/sparks/themePage/theme/pagination/PaginationPanel';
-import { getProviderByName } from 'src/views/openstax/provider/AlignmentProviderFactory';
+import { getProviderByName } from 'src/views/alignments/provider/AlignmentProviderFactory';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';

@@ -1,12 +1,12 @@
 import { Order } from 'boclips-api-client/dist/sub-clients/orders/model/Order';
 
 import React from 'react';
-import { OrderDateField } from 'src/components/common/OrderDateField';
-import { OrderStatusField } from 'src/components/common/OrderStatusField';
-import { OrderInformationField } from 'src/components/common/OrderInformationField';
-import { OrderVideoQuantity } from 'src/components/common/OrderVideoQuantityField';
+import { OrderDateField } from 'src/components/ordersTable/OrderDateField';
+import { OrderStatusField } from 'src/components/ordersTable/OrderStatusField';
+import { OrderInformationField } from 'src/components/ordersTable/OrderInformationField';
+import { OrderVideoQuantity } from 'src/components/ordersTable/OrderVideoQuantityField';
 import { Typography } from '@boclips-ui/typography';
-import { OrderTotalValueField } from '../common/OrderTotalValueField';
+import { OrderTotalValueField } from '../ordersTable/OrderTotalValueField';
 import { Link } from '../common/Link';
 import s from './style.module.less';
 

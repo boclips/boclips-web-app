@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import SparksCard from 'src/components/sparks/menu/SparksCard';
-import { getProviderByName } from 'src/views/openstax/provider/AlignmentProviderFactory';
+import { getProviderByName } from 'src/views/alignments/provider/AlignmentProviderFactory';
 import { MemoryRouter } from 'react-router-dom';
 
 describe('Sparks card', () => {

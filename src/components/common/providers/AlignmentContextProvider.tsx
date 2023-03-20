@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import { AlignmentProvider } from 'src/views/openstax/provider/AlignmentProvider';
+import { AlignmentProvider } from 'src/views/alignments/provider/AlignmentProvider';
 
 interface Props {
   provider: AlignmentProvider;

@@ -2,7 +2,7 @@ import React from 'react';
 import { OrderStatus } from 'boclips-api-client/dist/sub-clients/orders/model/Order';
 import { orderDeliveryStatus } from 'src/components/ordersTable/OrderDeliveryStatus';
 import c from 'classnames';
-import { OrderInformationField } from 'src/components/common/OrderInformationField';
+import { OrderInformationField } from 'src/components/ordersTable/OrderInformationField';
 import { Typography } from '@boclips-ui/typography';
 
 interface Props {

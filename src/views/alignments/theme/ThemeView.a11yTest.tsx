@@ -5,7 +5,7 @@ import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
 import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
-import { setUpClientWithTheme } from 'src/views/openstax/book/OpenstaxBookTestSupport';
+import { setUpClientWithTheme } from 'src/views/alignments/theme/ThemeTestSupport';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';

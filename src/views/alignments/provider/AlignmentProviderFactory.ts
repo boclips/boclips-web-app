@@ -1,4 +1,4 @@
-import { AlignmentProvider } from 'src/views/openstax/provider/AlignmentProvider';
+import { AlignmentProvider } from 'src/views/alignments/provider/AlignmentProvider';
 
 export const getProviderByName = (provider: string): AlignmentProvider => {
   switch (provider.toLowerCase().split('-').join(' ')) {

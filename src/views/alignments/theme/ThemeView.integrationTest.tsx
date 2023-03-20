@@ -22,7 +22,7 @@ import {
   getTableOfContent,
   setUpClientWithTheme,
   validateVisibleHeadings,
-} from 'src/views/openstax/book/OpenstaxBookTestSupport';
+} from 'src/views/alignments/theme/ThemeTestSupport';
 import { v4 as uuidv4 } from 'uuid';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
 import {

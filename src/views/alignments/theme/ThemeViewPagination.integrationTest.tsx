@@ -11,7 +11,7 @@ import {
   sectionTitle,
   setUpClientWithTheme,
   validateVisibleHeadings,
-} from 'src/views/openstax/book/OpenstaxBookTestSupport';
+} from 'src/views/alignments/theme/ThemeTestSupport';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe('Openstax book view pagination buttons', () => {

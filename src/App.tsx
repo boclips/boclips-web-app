@@ -68,13 +68,13 @@ const PlaylistView = lazyWithRetry(
 );
 
 const ExploreView = lazyWithRetry(
-  () => import('src/views/openstax/explore/ExploreView'),
+  () => import('src/views/alignments/explore/ExploreView'),
 );
 
 const SparksView = lazyWithRetry(() => import('src/views/sparks/SparksView'));
 
 const ThemeView = lazyWithRetry(
-  () => import('src/views/openstax/book/ThemeView'),
+  () => import('src/views/alignments/theme/ThemeView'),
 );
 
 interface Props {

@@ -13,7 +13,7 @@ import PaginationPanel from 'src/components/sparks/themePage/theme/pagination/Pa
 import {
   getProviderByName,
   isProviderSupported,
-} from 'src/views/openstax/provider/AlignmentProviderFactory';
+} from 'src/views/alignments/provider/AlignmentProviderFactory';
 import NotFound from 'src/views/notFound/NotFound';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 

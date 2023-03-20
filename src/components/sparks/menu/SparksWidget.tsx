@@ -1,7 +1,7 @@
 import React from 'react';
 import { SparksHeader } from 'src/components/sparks/menu/SparksHeader';
 import SparksCard from 'src/components/sparks/menu/SparksCard';
-import { getAllProviders } from 'src/views/openstax/provider/AlignmentProviderFactory';
+import { getAllProviders } from 'src/views/alignments/provider/AlignmentProviderFactory';
 import s from './sparksWidget.module.less';
 
 export const SparksWidget = () => {
