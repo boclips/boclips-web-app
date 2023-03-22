@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import { SparksWidget } from 'src/components/sparks/menu/SparksWidget';
+import { SparksWidget } from 'src/components/sparks/widget/SparksWidget';
 import { MemoryRouter } from 'react-router-dom';
 
 describe('Sparks page header', () => {

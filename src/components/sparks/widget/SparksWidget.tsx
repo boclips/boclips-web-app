@@ -1,6 +1,6 @@
 import React from 'react';
-import { SparksHeader } from 'src/components/sparks/menu/SparksHeader';
-import SparksCard from 'src/components/sparks/menu/SparksCard';
+import { SparksHeader } from 'src/components/sparks/widget/header/SparksHeader';
+import SparksCard from 'src/components/sparks/widget/card/SparksCard';
 import { getAllProviders } from 'src/views/alignments/provider/AlignmentProviderFactory';
 import s from './sparksWidget.module.less';
 
