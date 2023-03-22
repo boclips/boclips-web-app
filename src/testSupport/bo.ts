@@ -24,7 +24,7 @@ export interface Bo {
   create: {
     fixtureSet: {
       eelsBiologyGeography: () => void;
-      openstaxBooks: () => void;
+      themes: () => void;
     };
     video: (video: Partial<Video>) => void;
     subject: (subject: Subject) => void;
@@ -57,7 +57,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
     );
   };
 
-  const boSetOpenstax = (themes: Partial<Theme>[]) => {
+  const boSetProviderThemes = (themes: Partial<Theme>[]) => {
     const types = Array.from(new Set(themes.map((theme) => theme.type)));
     apiClient.alignments.setTypesForProvider('openstax', types);
 
@@ -264,9 +264,9 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
             }),
           );
         },
-        openstaxBooks: () => {
+        themes: () => {
           boSetFeatures({ BO_WEB_APP_OPENSTAX: true });
-          boSetOpenstax([
+          boSetProviderThemes([
             ThemeFactory.sample({
               id: 'theme-1',
               provider: 'openstax',

@@ -38,7 +38,7 @@ describe('App', () => {
     expect(wrapper.queryByText('Page not found!')).not.toBeInTheDocument();
   });
 
-  it('renders the openstax page if user has correct role', async () => {
+  it('renders the provider page if user has correct role', async () => {
     const apiClient = new FakeBoclipsClient();
 
     apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
@@ -53,7 +53,7 @@ describe('App', () => {
     expect(await wrapper.findByText('Our OpenStax collection')).toBeVisible();
   });
 
-  it(`renders the not found page if user doesn't have openstax role`, async () => {
+  it(`renders the not found page if user doesn't have role to view alignments`, async () => {
     const apiClient = new FakeBoclipsClient();
 
     apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: false });

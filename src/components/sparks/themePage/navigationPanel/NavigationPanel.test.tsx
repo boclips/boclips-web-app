@@ -18,7 +18,7 @@ import {
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
 
 describe('Theme NavigationPanel', () => {
-  it('renders theme title with logo, topics, topic intros and targets for openstax', async () => {
+  it('renders theme title with logo, topics, topic intros and targets for specific provider', async () => {
     resizeToDesktop();
 
     const theme: Theme = ThemeFactory.sample({

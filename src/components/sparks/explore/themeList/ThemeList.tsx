@@ -1,6 +1,6 @@
 import React from 'react';
 import c from 'classnames';
-import ThemeCardSkeleton from 'src/components/sparks/providerPage/themeList/ThemeCardSkeleton';
+import ThemeCardSkeleton from 'src/components/sparks/explore/themeList/ThemeCardSkeleton';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
 import s from './style.module.less';
 import { ThemeCard } from './ThemeCard';

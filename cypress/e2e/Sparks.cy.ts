@@ -1,7 +1,7 @@
-context('OpenStax', () => {
-  it('OpenStax user journey', () => {
+context('Sparks', () => {
+  it('Sparks user journey', () => {
     cy.visit('/');
-    cy.bo((bo) => bo.create.fixtureSet.openstaxBooks());
+    cy.bo((bo) => bo.create.fixtureSet.themes());
 
     cy.findByRole('button', { name: 'Explore openstax books' }).click();
 

@@ -234,7 +234,6 @@ const App = ({
                           feature="BO_WEB_APP_OPENSTAX"
                           fallback={<NotFound />}
                         >
-                          <Helmet title="Openstax" />
                           <ThemeView />
                         </FeatureGate>
                       }

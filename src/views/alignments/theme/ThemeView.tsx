@@ -3,7 +3,7 @@ import { Layout } from 'src/components/layout/Layout';
 import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import { useParams } from 'react-router';
-import { useGetThemeByProviderAndId } from 'src/hooks/api/openstaxQuery';
+import { useGetThemeByProviderAndId } from 'src/hooks/api/alignmentsQuery';
 import { Content } from 'src/components/sparks/themePage/theme/Content';
 import { NavigationPanel } from 'src/components/sparks/themePage/navigationPanel/NavigationPanel';
 import { ThemeMobileMenuProvider } from 'src/components/common/providers/ThemeMobileMenuProvider';
@@ -32,7 +32,7 @@ const ThemeView = () => {
     <>
       {theme?.title && <Helmet title={theme.title} />}
       <Layout
-        rowsSetup="grid-rows-openstax-detailed-view items-start"
+        rowsSetup="grid-rows-theme-detailed-view items-start"
         responsiveLayout
       >
         <Navbar />

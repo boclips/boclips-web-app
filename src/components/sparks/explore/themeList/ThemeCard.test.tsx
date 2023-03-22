@@ -1,4 +1,4 @@
-import { ThemeCard } from 'src/components/sparks/providerPage/themeList/ThemeCard';
+import { ThemeCard } from 'src/components/sparks/explore/themeList/ThemeCard';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { createBrowserHistory } from 'history';

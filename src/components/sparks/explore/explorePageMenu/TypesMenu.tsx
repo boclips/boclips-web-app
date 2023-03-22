@@ -1,6 +1,6 @@
 import React from 'react';
-import TypeMenuItem from 'src/components/sparks/providerPage/providerPageMenu/TypeMenuItem';
-import TypeMenuItemSkeleton from 'src/components/sparks/providerPage/providerPageMenu/TypeMenuItemSkeleton';
+import TypeMenuItem from 'src/components/sparks/explore/explorePageMenu/TypeMenuItem';
+import TypeMenuItemSkeleton from 'src/components/sparks/explore/explorePageMenu/TypeMenuItemSkeleton';
 import s from './style.module.less';
 
 export interface TypesMenuProps {

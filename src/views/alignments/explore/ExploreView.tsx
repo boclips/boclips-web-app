@@ -2,13 +2,13 @@ import React, { useEffect, useMemo, useState } from 'react';
 import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import { Layout } from 'src/components/layout/Layout';
-import { ThemeList } from 'src/components/sparks/providerPage/themeList/ThemeList';
-import { TypesMenu } from 'src/components/sparks/providerPage/providerPageMenu/TypesMenu';
+import { ThemeList } from 'src/components/sparks/explore/themeList/ThemeList';
+import { TypesMenu } from 'src/components/sparks/explore/explorePageMenu/TypesMenu';
 import {
   useGetThemesByProviderQuery,
   useGetTypesByProviderQuery,
-} from 'src/hooks/api/openstaxQuery';
-import ProviderPageHeader from 'src/components/sparks/providerPage/providerPageHeader/ProviderPageHeader';
+} from 'src/hooks/api/alignmentsQuery';
+import ProviderPageHeader from 'src/components/sparks/explore/explorePageHeader/ProviderPageHeader';
 import { useParams } from 'react-router';
 import NotFound from 'src/views/notFound/NotFound';
 import {

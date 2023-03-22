@@ -46,7 +46,7 @@ describe('SparksVideoCardButtons', () => {
   });
 
   describe(`create embed code button`, () => {
-    it(`renders embed code button when user has link and is on openstax page`, () => {
+    it(`renders embed code button when user has link and is on provider explore page`, () => {
       const video = VideoFactory.sample({
         links: {
           self: new Link({ href: '', templated: false }),

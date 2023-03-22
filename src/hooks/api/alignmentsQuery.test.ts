@@ -3,13 +3,13 @@ import {
   useGetThemeByProviderAndId,
   useGetThemesByProviderQuery,
   useGetTypesByProviderQuery,
-} from 'src/hooks/api/openstaxQuery';
+} from 'src/hooks/api/alignmentsQuery';
 import { renderHook } from '@testing-library/react-hooks';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
 import { QueryClient } from '@tanstack/react-query';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 
-describe('OpenstaxQuery', () => {
+describe('AlignmentsQuery', () => {
   it('gets theme by provider and by id', async () => {
     const fakeClient = new FakeBoclipsClient();
 
@@ -60,7 +60,7 @@ describe('OpenstaxQuery', () => {
     expect(result[0].id).toEqual('id-1');
   });
 
-  it('gets all openstax types', async () => {
+  it('gets providers all types', async () => {
     const fakeClient = new FakeBoclipsClient();
 
     fakeClient.alignments.setTypesForProvider('openstax', [

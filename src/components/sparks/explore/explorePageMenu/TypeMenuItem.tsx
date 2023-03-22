@@ -1,6 +1,6 @@
 import React from 'react';
 import c from 'classnames';
-import { TypesMenuProps } from 'src/components/sparks/providerPage/providerPageMenu/TypesMenu';
+import { TypesMenuProps } from 'src/components/sparks/explore/explorePageMenu/TypesMenu';
 import s from './style.module.less';
 
 const TypeMenuItem = ({
