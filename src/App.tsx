@@ -1,11 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
-import {
-  Navigate,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { BoclipsClient } from 'boclips-api-client';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Loading } from 'src/components/common/Loading';
@@ -24,6 +18,7 @@ import { FollowPlaylist } from 'src/services/followPlaylist';
 import UserAttributes from 'src/services/analytics/hotjar/UserAttributes';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import FallbackView from 'src/views/fallback/FallbackView';
+import { RedirectFromExploreToSparks } from 'src/components/sparks/RedirectFromExploreToSparks';
 import { BoclipsClientProvider } from './components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSecurityProvider';
 import Appcues from './services/analytics/appcues/Appcues';
@@ -120,8 +115,6 @@ const App = ({
     trackPageRendered(currentLocation, apiClient);
     AnalyticsFactory.appcues().pageChanged();
   }, [currentLocation, apiClient]);
-
-  const navigate = useNavigate();
 
   return (
     <QueryClientProvider client={reactQueryClient}>
@@ -245,17 +238,11 @@ const App = ({
                         </FeatureGate>
                       }
                     />
-                    {/*<Route*/}
-                    {/*  path="/explore/openstax"*/}
-                    {/*  element={<Navigate to="/sparks/openstax" replace />}*/}
-                    {/*/>*/}
-
                     <Route
-                      path="/explore/openstax/:id"
-                      action={({ params }) => {
-                        navigate(`/sparks/openstax/${params.id}`);
-                      }}
+                      path="/explore/*"
+                      element={<RedirectFromExploreToSparks />}
                     />
+
                     <Route
                       path="*"
                       element={

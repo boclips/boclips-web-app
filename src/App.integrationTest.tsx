@@ -5,7 +5,7 @@ import App from 'src/App';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import React from 'react';
 import { MemoryRouter, Router } from 'react-router-dom';
-import { createBrowserHistory, createMemoryHistory } from 'history';
+import { createBrowserHistory } from 'history';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 
 describe('App', () => {
@@ -129,7 +129,8 @@ describe('App', () => {
     );
 
     expect(history.location.pathname).toEqual(
-      '/sparks/openstax/6334620ec2250a8569f696c3#topic-0-target-2',
+      '/sparks/openstax/6334620ec2250a8569f696c3',
     );
+    expect(history.location.hash).toEqual('#topic-0-target-2');
   });
 });
