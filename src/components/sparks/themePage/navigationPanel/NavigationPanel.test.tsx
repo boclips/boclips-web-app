@@ -73,7 +73,7 @@ describe('Theme NavigationPanel', () => {
     });
     expect(chapterOverviewLink).toHaveAttribute(
       'href',
-      '/explore/openstax/theme-id#topic-0-target-0',
+      '/sparks/openstax/theme-id#topic-0-target-0',
     );
 
     const discussionPromptLink = wrapper.getByRole('link', {
@@ -81,7 +81,7 @@ describe('Theme NavigationPanel', () => {
     });
     expect(discussionPromptLink).toHaveAttribute(
       'href',
-      '/explore/openstax/theme-id#topic-0-target-1',
+      '/sparks/openstax/theme-id#topic-0-target-1',
     );
 
     const sectionNinetyNineLink = wrapper.getByRole('link', {
@@ -89,7 +89,7 @@ describe('Theme NavigationPanel', () => {
     });
     expect(sectionNinetyNineLink).toHaveAttribute(
       'href',
-      '/explore/openstax/theme-id#topic-0-target-2',
+      '/sparks/openstax/theme-id#topic-0-target-2',
     );
 
     const videoLabel = wrapper.getByText('4 videos');

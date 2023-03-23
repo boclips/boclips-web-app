@@ -34,7 +34,7 @@ describe(`Explore view`, () => {
     ]);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/explore/openstax']}>
+      <MemoryRouter initialEntries={['/sparks/openstax']}>
         <App
           apiClient={fakeClient}
           boclipsSecurity={stubBoclipsSecurity}

@@ -1,2 +1,2 @@
 export const isEmbedMode = (originPathname?: string) =>
-  originPathname?.startsWith('/explore');
+  originPathname?.startsWith('/sparks');

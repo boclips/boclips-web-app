@@ -45,7 +45,7 @@ describe(`Explore view`, () => {
     });
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/explore/openstax']}>
+      <MemoryRouter initialEntries={['/sparks/openstax']}>
         <App
           apiClient={fakeClient}
           boclipsSecurity={stubBoclipsSecurity}
@@ -78,7 +78,7 @@ describe(`Explore view`, () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
     const wrapper = render(
-      <MemoryRouter initialEntries={['/explore/wrong-provider']}>
+      <MemoryRouter initialEntries={['/sparks/wrong-provider']}>
         <App
           apiClient={fakeClient}
           boclipsSecurity={stubBoclipsSecurity}
@@ -113,7 +113,7 @@ describe(`Explore view`, () => {
     ]);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/explore/openstax']}>
+      <MemoryRouter initialEntries={['/sparks/openstax']}>
         <App
           apiClient={fakeClient}
           boclipsSecurity={stubBoclipsSecurity}
@@ -160,7 +160,7 @@ describe(`Explore view`, () => {
       ]);
 
       const wrapper = render(
-        <MemoryRouter initialEntries={['/explore/openstax']}>
+        <MemoryRouter initialEntries={['/sparks/openstax']}>
           <App
             apiClient={fakeClient}
             boclipsSecurity={stubBoclipsSecurity}

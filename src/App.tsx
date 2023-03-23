@@ -1,5 +1,11 @@
 import React, { Suspense, useEffect } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import { BoclipsClient } from 'boclips-api-client';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Loading } from 'src/components/common/Loading';
@@ -115,6 +121,8 @@ const App = ({
     AnalyticsFactory.appcues().pageChanged();
   }, [currentLocation, apiClient]);
 
+  const navigate = useNavigate();
+
   return (
     <QueryClientProvider client={reactQueryClient}>
       <GlobalQueryErrorProvider>
@@ -216,19 +224,18 @@ const App = ({
                     />
 
                     <Route
-                      path="/explore/:provider"
+                      path="/sparks/:provider"
                       element={
                         <FeatureGate
                           feature="BO_WEB_APP_OPENSTAX"
                           fallback={<NotFound />}
                         >
-                          <Helmet title="Explore" />
                           <ExploreView />
                         </FeatureGate>
                       }
                     />
                     <Route
-                      path="/explore/:provider/:id"
+                      path="/sparks/:provider/:id"
                       element={
                         <FeatureGate
                           feature="BO_WEB_APP_OPENSTAX"
@@ -237,6 +244,17 @@ const App = ({
                           <ThemeView />
                         </FeatureGate>
                       }
+                    />
+                    {/*<Route*/}
+                    {/*  path="/explore/openstax"*/}
+                    {/*  element={<Navigate to="/sparks/openstax" replace />}*/}
+                    {/*/>*/}
+
+                    <Route
+                      path="/explore/openstax/:id"
+                      action={({ params }) => {
+                        navigate(`/sparks/openstax/${params.id}`);
+                      }}
                     />
                     <Route
                       path="*"

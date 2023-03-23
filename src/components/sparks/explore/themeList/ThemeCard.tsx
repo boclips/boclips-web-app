@@ -22,7 +22,7 @@ export const ThemeCard = ({ theme }: Props) => {
 
   const onCardClick = (themeId) =>
     navigate({
-      pathname: `/explore/${provider.navigationPath}/${themeId}`,
+      pathname: `/sparks/${provider.navigationPath}/${themeId}`,
     });
 
   const getTotalVideoCount = () => {

@@ -15,7 +15,7 @@ export const PaginationLink = ({ themeId, hash, children }: PageLinkProps) => {
     <HashLink
       scroll={() => {}}
       to={{
-        pathname: `/explore/${provider.navigationPath}/${themeId}`,
+        pathname: `/sparks/${provider.navigationPath}/${themeId}`,
         hash,
       }}
       className={s.targetLink}
