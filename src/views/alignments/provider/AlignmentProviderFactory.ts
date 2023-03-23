@@ -1,41 +1,41 @@
-import { AlignmentProvider } from 'src/views/alignments/provider/AlignmentProvider';
+import { Provider } from 'boclips-api-client/dist/sub-clients/alignments/model/provider/Provider';
 
-export const getProviderByName = (provider: string): AlignmentProvider => {
+export const getTestProviderByName = (provider: string): Provider => {
   switch (provider.toLowerCase().split('-').join(' ')) {
     case 'openstax':
       return {
         name: 'OpenStax',
         navigationPath: 'openstax',
-        header: 'Our OpenStax collection',
+        types: ['Math', 'Business'],
         description:
           'Explore our video library, expertly curated for your ebook',
         logoUrl:
           'https://assets.boclips.com/boclips-public-static-files/boclips/openstax/openstax_ally_logo.png',
-        themeDefaultLogoUrl:
+        defaultThemeLogoUrl:
           'https://assets.boclips.com/boclips-public-static-files/boclips/openstax/OSX-ALLY-Blue-RGB-150dpi.png',
       };
     case 'ngss':
       return {
         name: 'NGSS',
         navigationPath: 'ngss',
-        header: 'Our NGSS collection',
+        types: ['High School', 'Middle School'],
         description:
           'Explore our K12 science library, which includes experiments and real-world applications',
         logoUrl:
           'https://assets.boclips.com/boclips-public-static-files/boclips/sparks/ngss/ngss-big-logo.png',
-        themeDefaultLogoUrl:
+        defaultThemeLogoUrl:
           'https://assets.boclips.com/boclips-public-static-files/boclips/sparks/ngss/ngss-theme-logo.png',
       };
     case 'common core math':
       return {
         name: 'Common Core Math',
         navigationPath: 'common-core-math',
-        header: 'Our Common Core Math collection',
+        types: ['High School', 'Middle School'],
         description:
           'Explore our video collection, aligned to each learning standard',
         logoUrl:
           'https://assets.boclips.com/boclips-public-static-files/boclips/sparks/common-core-math/common-core-math-big-logo.png',
-        themeDefaultLogoUrl:
+        defaultThemeLogoUrl:
           'https://assets.boclips.com/boclips-public-static-files/boclips/sparks/common-core-math/common-core-math-theme-logo.jpg',
       };
     default:
@@ -46,5 +46,3 @@ export const getProviderByName = (provider: string): AlignmentProvider => {
 const SUPPORTED_PROVIDERS = ['openstax', 'ngss', 'common core math'];
 export const isProviderSupported = (providerName: string) =>
   SUPPORTED_PROVIDERS.includes(providerName.toLowerCase().split('-').join(' '));
-export const getAllProviders = () =>
-  SUPPORTED_PROVIDERS.map((providerName) => getProviderByName(providerName));

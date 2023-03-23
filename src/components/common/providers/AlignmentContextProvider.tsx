@@ -1,12 +1,12 @@
 import React, { createContext, useContext } from 'react';
-import { AlignmentProvider } from 'src/views/alignments/provider/AlignmentProvider';
+import { Provider } from 'boclips-api-client/dist/sub-clients/alignments/model/provider/Provider';
 
 interface Props {
-  provider: AlignmentProvider;
+  provider: Provider;
   children: React.ReactNode;
 }
 
-const alignmentProviderContext = createContext<AlignmentProvider>(null);
+const alignmentProviderContext = createContext<Provider>(null);
 
 export const AlignmentContextProvider = ({ children, provider }: Props) => {
   return (

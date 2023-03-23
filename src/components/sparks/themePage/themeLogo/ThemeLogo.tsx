@@ -18,7 +18,7 @@ export const ThemeLogo = ({ theme, className }: Props) => {
         <img src={theme.logoUrl} alt={`${theme.title} cover`} />
       ) : (
         <img
-          src={provider.themeDefaultLogoUrl}
+          src={provider.defaultThemeLogoUrl}
           alt={`${theme.title} generic cover`}
         />
       )}

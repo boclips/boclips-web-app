@@ -1,11 +1,11 @@
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
-import { AlignmentProvider } from 'src/views/alignments/provider/AlignmentProvider';
+import { Provider } from 'boclips-api-client/dist/sub-clients/alignments/model/provider/Provider';
 import { useNavigate } from 'react-router-dom';
 import s from './sparksCard.module.less';
 
 interface Props {
-  provider: AlignmentProvider;
+  provider: Provider;
 }
 
 const SparksCard = ({ provider }: Props) => {

@@ -11,7 +11,7 @@ import ThemeSkeletonPage from 'src/components/skeleton/theme/ThemeSkeletonPage';
 import { Helmet } from 'react-helmet';
 import PaginationPanel from 'src/components/sparks/themePage/theme/pagination/PaginationPanel';
 import {
-  getProviderByName,
+  getTestProviderByName,
   isProviderSupported,
 } from 'src/views/alignments/provider/AlignmentProviderFactory';
 import NotFound from 'src/views/notFound/NotFound';
@@ -25,7 +25,7 @@ const ThemeView = () => {
   );
 
   const provider = isProviderSupported(providerName)
-    ? getProviderByName(providerName)
+    ? getTestProviderByName(providerName)
     : undefined;
 
   return provider && (isLoading || theme) ? (
