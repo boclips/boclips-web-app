@@ -2,7 +2,7 @@ import { fireEvent, RenderResult, within } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { v4 as uuidv4 } from 'uuid';
-import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 export const getTableOfContent = (theme: Theme, wrapper: RenderResult) =>

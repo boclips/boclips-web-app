@@ -7,7 +7,7 @@ import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { setUpClientWithTheme } from 'src/views/alignments/theme/ThemeTestSupport';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe('ThemeView - accessibility', () => {

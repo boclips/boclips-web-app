@@ -3,7 +3,7 @@ import NavigationPanelHeader from 'src/components/sparks/themePage/navigationPan
 import NavigationPanelBody from 'src/components/sparks/themePage/navigationPanel/NavigationPanelBody';
 import { useThemeMobileMenuContext } from 'src/components/common/providers/ThemeMobileMenuProvider';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
-import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import s from './style.module.less';
 
 interface Props {

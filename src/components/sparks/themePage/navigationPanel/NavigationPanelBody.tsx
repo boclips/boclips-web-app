@@ -16,7 +16,7 @@ import { useAlignmentProvider } from 'src/components/common/providers/AlignmentC
 import {
   Theme,
   Topic,
-} from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
+} from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import s from './style.module.less';
 
 interface Props {

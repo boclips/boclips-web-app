@@ -10,7 +10,7 @@ import PaginationPanel from 'src/components/sparks/themePage/theme/pagination/Pa
 import { getProviderByName } from 'src/views/alignments/provider/AlignmentProviderFactory';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
-import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 
 describe('Theme Content', () => {
   let theme: Theme;

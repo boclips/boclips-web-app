@@ -6,7 +6,7 @@ import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
 import { ThemeLogo } from 'src/components/sparks/themePage/themeLogo/ThemeLogo';
 import { handleEscapeKeyEvent } from 'src/services/handleKeyEvent';
 import { useAlignmentProvider } from 'src/components/common/providers/AlignmentContextProvider';
-import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import s from './style.module.less';
 
 interface Props {

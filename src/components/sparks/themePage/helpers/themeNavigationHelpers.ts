@@ -3,7 +3,7 @@ import {
   Target,
   Theme,
   Topic,
-} from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
+} from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 
 const selectedTopicIndex = (locationHash: string): number => {
   const matchedTopicIndex = locationHash.match('topic-(\\d+)-*.*');

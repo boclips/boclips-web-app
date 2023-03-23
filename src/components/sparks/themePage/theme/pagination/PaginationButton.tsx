@@ -12,7 +12,7 @@ import {
 } from 'src/components/sparks/themePage/helpers/themeNavigationHelpers';
 import { PaginationLink } from 'src/components/sparks/themePage/theme/pagination/PaginationLink';
 import c from 'classnames';
-import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import s from './style.module.less';
 
 interface Props {
