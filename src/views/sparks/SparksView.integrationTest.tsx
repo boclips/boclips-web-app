@@ -30,7 +30,7 @@ describe('Sparks landing page', () => {
 
     fireEvent.click(wrapper.getByText('NGSS'));
 
-    expect(history.location.pathname).toEqual('/explore/ngss');
+    expect(history.location.pathname).toEqual('/sparks/ngss');
   });
 
   it('displays Sparks as window title', async () => {

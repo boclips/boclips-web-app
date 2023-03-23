@@ -2,33 +2,32 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import c from 'classnames';
 import s from './style.module.less';
-import ExploreIcon from '../../resources/icons/explore.svg';
+import SparksIcon from '../../resources/icons/sparks.svg';
 
-const ExploreButton = () => {
+const SparksButton = () => {
   const navigate = useNavigate();
 
   const location = useLocation();
-  const isOnExplorePage = location.pathname.includes('explore/openstax');
+  const isOnSparksPage = location.pathname.includes('sparks');
 
   const onClick = () => {
     navigate({
-      pathname: '/explore/openstax',
+      pathname: '/sparks',
     });
   };
 
   return (
     <div
       className={c(s.navButton, {
-        [s.active]: isOnExplorePage,
+        [s.active]: isOnSparksPage,
       })}
     >
       <button type="button" onClick={onClick} className={s.headerButton}>
-        <ExploreIcon className={s.navbarIcon} />
-        <span>Explore</span>
-        <span className="sr-only"> openstax books</span>
+        <SparksIcon className={s.navbarIcon} />
+        <span>Sparks</span>
       </button>
     </div>
   );
 };
 
-export default ExploreButton;
+export default SparksButton;

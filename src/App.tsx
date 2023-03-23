@@ -18,6 +18,7 @@ import { FollowPlaylist } from 'src/services/followPlaylist';
 import UserAttributes from 'src/services/analytics/hotjar/UserAttributes';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import FallbackView from 'src/views/fallback/FallbackView';
+import { RedirectFromExploreToSparks } from 'src/components/sparks/RedirectFromExploreToSparks';
 import { BoclipsClientProvider } from './components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSecurityProvider';
 import Appcues from './services/analytics/appcues/Appcues';
@@ -216,19 +217,18 @@ const App = ({
                     />
 
                     <Route
-                      path="/explore/:provider"
+                      path="/sparks/:provider"
                       element={
                         <FeatureGate
                           feature="BO_WEB_APP_OPENSTAX"
                           fallback={<NotFound />}
                         >
-                          <Helmet title="Explore" />
                           <ExploreView />
                         </FeatureGate>
                       }
                     />
                     <Route
-                      path="/explore/:provider/:id"
+                      path="/sparks/:provider/:id"
                       element={
                         <FeatureGate
                           feature="BO_WEB_APP_OPENSTAX"
@@ -238,6 +238,11 @@ const App = ({
                         </FeatureGate>
                       }
                     />
+                    <Route
+                      path="/explore/*"
+                      element={<RedirectFromExploreToSparks />}
+                    />
+
                     <Route
                       path="*"
                       element={

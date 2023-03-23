@@ -12,7 +12,7 @@ import { useBoclipsSecurity } from 'src/components/common/providers/BoclipsSecur
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import PlaylistsButton from 'src/components/navButtons/PlaylistsButton';
 import SkipLink from 'src/components/skipLink/SkipLink';
-import ExploreButton from 'src/components/navButtons/ExploreButton';
+import SparksButton from 'src/components/navButtons/SparksButton';
 import SideMenu from 'src/components/layout/SideMenu';
 import s from './navbar.module.less';
 import { Search } from '../searchBar/SearchBar';
@@ -72,7 +72,7 @@ const NavbarResponsive = (): ReactElement => {
         ) : (
           <div className={s.buttonsDesktop}>
             <FeatureGate feature="BO_WEB_APP_OPENSTAX">
-              <ExploreButton />
+              <SparksButton />
             </FeatureGate>
             <PlaylistsButton />
             <AccountButton />

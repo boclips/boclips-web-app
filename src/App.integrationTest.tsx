@@ -4,7 +4,9 @@ import { render } from '@testing-library/react';
 import App from 'src/App';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 
 describe('App', () => {
   it('renders the not found page on user having incorrect role', async () => {
@@ -44,7 +46,7 @@ describe('App', () => {
     apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/explore/openstax']}>
+      <MemoryRouter initialEntries={['/sparks/openstax']}>
         <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
       </MemoryRouter>,
     );
@@ -60,7 +62,7 @@ describe('App', () => {
     apiClient.alignments.setTypesForProvider('openstax', []);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/explore/openstax']}>
+      <MemoryRouter initialEntries={['/sparks/openstax']}>
         <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
       </MemoryRouter>,
     );
@@ -81,5 +83,56 @@ describe('App', () => {
 
     expect(wrapper.queryByText('Page not found!')).not.toBeInTheDocument();
     expect(await wrapper.findByText('Playlists')).toBeVisible();
+  });
+
+  it('redirects from explore/openstax to sparks/openstax', async () => {
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    fakeBoclipsClient.users.setCurrentUserFeatures({
+      BO_WEB_APP_OPENSTAX: true,
+    });
+
+    const history = createBrowserHistory();
+    history.push('/explore/openstax');
+
+    render(
+      <BoclipsClientProvider client={fakeBoclipsClient}>
+        <Router location={history.location} navigator={history}>
+          <App
+            boclipsSecurity={stubBoclipsSecurity}
+            apiClient={fakeBoclipsClient}
+          />
+        </Router>
+      </BoclipsClientProvider>,
+    );
+
+    expect(history.location.pathname).toEqual('/sparks/openstax');
+  });
+
+  it('redirects from specific bookmark in openstax book to sparks URL', async () => {
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    fakeBoclipsClient.users.setCurrentUserFeatures({
+      BO_WEB_APP_OPENSTAX: true,
+    });
+
+    const history = createBrowserHistory();
+    history.push(
+      '/explore/openstax/6334620ec2250a8569f696c3#chapter-0-section-2',
+    );
+
+    render(
+      <BoclipsClientProvider client={fakeBoclipsClient}>
+        <Router location={history.location} navigator={history}>
+          <App
+            boclipsSecurity={stubBoclipsSecurity}
+            apiClient={fakeBoclipsClient}
+          />
+        </Router>
+      </BoclipsClientProvider>,
+    );
+
+    expect(history.location.pathname).toEqual(
+      '/sparks/openstax/6334620ec2250a8569f696c3',
+    );
+    expect(history.location.hash).toEqual('#topic-0-target-2');
   });
 });

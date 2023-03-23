@@ -24,7 +24,7 @@ export const Header = ({ themeTitle, topicTitle }: Props) => {
   const navigate = useNavigate();
 
   const goToExplorePage = () => {
-    navigate(`/explore/${providerPath}`);
+    navigate(`/sparks/${providerPath}`);
   };
 
   return (

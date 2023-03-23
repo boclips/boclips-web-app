@@ -3,8 +3,7 @@ context('Sparks', () => {
     cy.visit('/');
     cy.bo((bo) => bo.create.fixtureSet.themes());
 
-    cy.findByRole('button', { name: 'Explore openstax books' }).click();
-
+    cy.findByRole('button', { name: 'Sparks' }).click();
     cy.findByRole('button', { name: 'theme Maths book' }).should('be.visible');
     cy.findByRole('button', { name: 'type Physics' }).click();
     cy.findByRole('button', { name: 'theme Physics book' }).should(

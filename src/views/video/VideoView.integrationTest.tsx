@@ -146,7 +146,7 @@ describe('Video View', () => {
       fakeClient.videos.insertVideo(exampleVideo);
       fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 
-      const wrapper = renderView([`/explore/openstax/${theme.id}`]);
+      const wrapper = renderView([`/sparks/openstax/${theme.id}`]);
 
       await userEvent.click(await wrapper.findByText(exampleVideo.title));
 
@@ -174,7 +174,7 @@ describe('Video View', () => {
       fakeClient.videos.insertVideo(videoWithoutEmbedOption);
       fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 
-      const wrapper = renderView([`/explore/openstax/${theme.id}`]);
+      const wrapper = renderView([`/sparks/openstax/${theme.id}`]);
 
       await userEvent.click(await wrapper.findByText(exampleVideo.title));
 
@@ -205,7 +205,7 @@ describe('Video View', () => {
       fakeClient.videos.insertVideo(newVideo);
       fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 
-      const wrapper = renderView([`/explore/openstax/${theme.id}`]);
+      const wrapper = renderView([`/sparks/openstax/${theme.id}`]);
 
       await userEvent.click(await wrapper.findByText(newVideo.title));
 
@@ -232,7 +232,7 @@ describe('Video View', () => {
       fakeClient.videos.insertVideo(newVideo);
       fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 
-      const wrapper = renderView([`/explore/openstax/${theme.id}`]);
+      const wrapper = renderView([`/sparks/openstax/${theme.id}`]);
 
       await userEvent.click(await wrapper.findByText(newVideo.title));
 

@@ -16,6 +16,7 @@ import {
   isProviderSupported,
 } from 'src/views/alignments/provider/AlignmentProviderFactory';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
+import { Helmet } from 'react-helmet';
 
 const ExploreView = () => {
   const ALL = 'All';
@@ -57,21 +58,24 @@ const ExploreView = () => {
   const isLoading = areThemesLoading || areTypesLoading;
 
   return provider ? (
-    <Layout rowsSetup="grid-rows-explore-view" responsiveLayout>
-      <Navbar />
-      <AlignmentContextProvider provider={provider}>
-        <ProviderPageHeader />
-        <TypesMenu
-          types={isLoading ? [] : [ALL, ...types]}
-          currentType={currentType}
-          onClick={setCurrentType}
-          isLoading={isLoading}
-        />
+    <>
+      <Helmet title={provider.name} />
+      <Layout rowsSetup="grid-rows-explore-view" responsiveLayout>
+        <Navbar />
+        <AlignmentContextProvider provider={provider}>
+          <ProviderPageHeader />
+          <TypesMenu
+            types={isLoading ? [] : [ALL, ...types]}
+            currentType={currentType}
+            onClick={setCurrentType}
+            isLoading={isLoading}
+          />
 
-        <ThemeList themes={currentTypeThemes} isLoading={isLoading} />
-      </AlignmentContextProvider>
-      <Footer />
-    </Layout>
+          <ThemeList themes={currentTypeThemes} isLoading={isLoading} />
+        </AlignmentContextProvider>
+        <Footer />
+      </Layout>
+    </>
   ) : (
     <NotFound />
   );

@@ -12,7 +12,7 @@ const SparksCard = ({ provider }: Props) => {
   const navigate = useNavigate();
 
   const handleOnClick = () => {
-    navigate(`/explore/${provider.navigationPath}`);
+    navigate(`/sparks/${provider.navigationPath}`);
   };
 
   return (
