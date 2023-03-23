@@ -4,7 +4,7 @@ import React from 'react';
 import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-import { getProviderByName } from 'src/views/alignments/provider/AlignmentProviderFactory';
+import { getTestProviderByName } from 'src/views/alignments/provider/AlignmentProviderFactory';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 import {
   TargetFactory,
@@ -32,7 +32,7 @@ describe('ThemeCard', () => {
 
     const wrapper = render(
       <Router location={history.location} navigator={history}>
-        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
           <ThemeCard theme={theme} />
         </AlignmentContextProvider>
       </Router>,
@@ -53,7 +53,7 @@ describe('ThemeCard', () => {
 
     const wrapper = render(
       <Router location={history.location} navigator={history}>
-        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
           <ThemeCard theme={theme} />
         </AlignmentContextProvider>
       </Router>,
@@ -71,7 +71,7 @@ describe('ThemeCard', () => {
 
     const wrapper = render(
       <Router location={history.location} navigator={history}>
-        <AlignmentContextProvider provider={getProviderByName('openstax')}>
+        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
           <ThemeCard theme={theme} />
         </AlignmentContextProvider>
       </Router>,
@@ -102,7 +102,9 @@ describe('ThemeCard', () => {
       const wrapper = render(
         <Router location={history.location} navigator={history}>
           <main tabIndex={-1}>this is main</main>
-          <AlignmentContextProvider provider={getProviderByName('openstax')}>
+          <AlignmentContextProvider
+            provider={getTestProviderByName('openstax')}
+          >
             <ThemeCard theme={theme} />
           </AlignmentContextProvider>
         </Router>,

@@ -7,6 +7,7 @@ import { QueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { createBrowserHistory } from 'history';
 import { Helmet } from 'react-helmet';
+import { getTestProviderByName } from 'src/views/alignments/provider/AlignmentProviderFactory';
 
 describe('Sparks landing page', () => {
   it('redirects to the chosen provider explore page', async () => {
@@ -15,6 +16,7 @@ describe('Sparks landing page', () => {
 
     const client = new FakeBoclipsClient();
     client.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+    client.alignments.setProviders([getTestProviderByName('ngss')]);
 
     const wrapper = render(
       <Router location={history.location} navigator={history}>
@@ -28,7 +30,7 @@ describe('Sparks landing page', () => {
 
     expect(await wrapper.findByText('Spark')).toBeVisible();
 
-    fireEvent.click(wrapper.getByText('NGSS'));
+    fireEvent.click(await wrapper.findByText('NGSS'));
 
     expect(history.location.pathname).toEqual('/sparks/ngss');
   });

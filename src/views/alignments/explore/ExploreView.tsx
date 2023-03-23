@@ -12,7 +12,7 @@ import ProviderPageHeader from 'src/components/sparks/explore/explorePageHeader/
 import { useParams } from 'react-router';
 import NotFound from 'src/views/notFound/NotFound';
 import {
-  getProviderByName,
+  getTestProviderByName,
   isProviderSupported,
 } from 'src/views/alignments/provider/AlignmentProviderFactory';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
@@ -25,7 +25,7 @@ const ExploreView = () => {
     useGetThemesByProviderQuery(providerName);
 
   const provider = isProviderSupported(providerName)
-    ? getProviderByName(providerName)
+    ? getTestProviderByName(providerName)
     : undefined;
 
   const { data: types, isLoading: areTypesLoading } =

@@ -1,14 +1,14 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import SparksCard from 'src/components/sparks/widget/card/SparksCard';
-import { getProviderByName } from 'src/views/alignments/provider/AlignmentProviderFactory';
+import { getTestProviderByName } from 'src/views/alignments/provider/AlignmentProviderFactory';
 import { MemoryRouter } from 'react-router-dom';
 
 describe('Sparks card', () => {
   it('displays the provider name', () => {
     const wrapper = render(
       <MemoryRouter initialEntries={['/sparks']}>
-        <SparksCard provider={getProviderByName('openstax')} />,
+        <SparksCard provider={getTestProviderByName('openstax')} />,
       </MemoryRouter>,
     );
 
@@ -18,7 +18,7 @@ describe('Sparks card', () => {
   it('displays the provider description', () => {
     const wrapper = render(
       <MemoryRouter initialEntries={['/sparks']}>
-        <SparksCard provider={getProviderByName('openstax')} />,
+        <SparksCard provider={getTestProviderByName('openstax')} />,
       </MemoryRouter>,
     );
 
@@ -32,7 +32,7 @@ describe('Sparks card', () => {
   it('displays the provider logo', () => {
     const wrapper = render(
       <MemoryRouter initialEntries={['/sparks']}>
-        <SparksCard provider={getProviderByName('openstax')} />,
+        <SparksCard provider={getTestProviderByName('openstax')} />,
       </MemoryRouter>,
     );
 

@@ -12,7 +12,7 @@ const ProviderPageHeader = () => {
     >
       <div className="flex grow flex-col space-y-2 md:space-y-4 mb-4">
         <Typography.H1 size="lg" id="page-header">
-          {provider.header}
+          Our {provider.name} collection
         </Typography.H1>
 
         <Typography.H2 size="xs" weight="regular">
