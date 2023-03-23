@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useThemeMobileMenuContext } from 'src/components/common/providers/ThemeMobileMenuProvider';
 import { ThemeLogo } from 'src/components/sparks/themePage/themeLogo/ThemeLogo';
 import { useAlignmentProvider } from 'src/components/common/providers/AlignmentContextProvider';
-import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import s from './style.module.less';
 
 interface Props {

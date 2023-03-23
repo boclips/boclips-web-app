@@ -1,5 +1,6 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import {
+  useGetProvidersQuery,
   useGetThemeByProviderAndId,
   useGetThemesByProviderQuery,
   useGetTypesByProviderQuery,
@@ -80,6 +81,40 @@ describe('AlignmentsQuery', () => {
     expect(result).toContain('Math');
     expect(result).toContain('Languages');
     expect(result).toContain('Science');
+  });
+
+  it('gets all providers', async () => {
+    const fakeClient = new FakeBoclipsClient();
+
+    fakeClient.alignments.setProviders([
+      {
+        name: 'OpenStax',
+        types: ['Math', 'Science'],
+        description: 'this is openstax',
+        logoUrl: 'https://logo.com',
+        defaultThemeLogoUrl: 'https://default.logo.com',
+        navigationPath: 'openstax',
+      },
+      {
+        name: 'NGSS',
+        types: ['Math', 'Science'],
+        description: 'this is ngss',
+        logoUrl: 'https://logo.com',
+        defaultThemeLogoUrl: 'https://default.logo.com',
+        navigationPath: 'ngss',
+      },
+    ]);
+
+    const hook = renderHook(() => useGetProvidersQuery(), {
+      wrapper: wrapperWithClients(fakeClient, new QueryClient()),
+    });
+
+    await hook.waitFor(() => hook.result.current.isSuccess);
+    const result = hook.result.current.data;
+
+    expect(result).toHaveLength(2);
+    expect(result[0].name).toEqual('OpenStax');
+    expect(result[1].name).toEqual('NGSS');
   });
 
   it('gets provider themes', async () => {

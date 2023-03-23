@@ -16,7 +16,7 @@ import { Subject } from 'boclips-api-client/dist/sub-clients/subjects/model/Subj
 import { UserFeatureKey } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import { disciplines } from 'src/components/disciplinesWidget/disciplinesFixture';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
-import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 
 export interface Bo {
   interact(callback: (apiClient: FakeBoclipsClient) => void): void;

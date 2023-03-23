@@ -1,7 +1,8 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { BoclipsClient } from 'boclips-api-client';
-import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
+import { Provider } from 'boclips-api-client/dist/sub-clients/alignments/model/provider/Provider';
 
 export const useGetThemeByProviderAndId = (
   provider: string,
@@ -47,3 +48,11 @@ export const useGetThemesByProviderQuery = (
     doGetThemesByProvider(client, provider),
   );
 };
+
+export const useGetProvidersQuery = (): UseQueryResult<Provider[]> => {
+  const client = useBoclipsClient();
+  return useQuery(['allProviders'], () => doGetProviders(client));
+};
+
+const doGetProviders = (client: BoclipsClient) =>
+  client.alignments.getAllProviders();

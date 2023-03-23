@@ -4,7 +4,7 @@ import {
   ThemeFactory,
   TopicFactory,
 } from 'boclips-api-client/dist/test-support/ThemeFactory';
-import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/Theme';
+import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 
 describe('NavigationHelper', () => {
   const theme: Theme = ThemeFactory.sample({
