@@ -4,7 +4,7 @@ import React from 'react';
 import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-import { getTestProviderByName } from 'src/views/alignments/provider/AlignmentProviderFactory';
+import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 import {
   TargetFactory,
@@ -32,7 +32,7 @@ describe('ThemeCard', () => {
 
     const wrapper = render(
       <Router location={history.location} navigator={history}>
-        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
+        <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
           <ThemeCard theme={theme} />
         </AlignmentContextProvider>
       </Router>,
@@ -53,7 +53,7 @@ describe('ThemeCard', () => {
 
     const wrapper = render(
       <Router location={history.location} navigator={history}>
-        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
+        <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
           <ThemeCard theme={theme} />
         </AlignmentContextProvider>
       </Router>,
@@ -71,7 +71,7 @@ describe('ThemeCard', () => {
 
     const wrapper = render(
       <Router location={history.location} navigator={history}>
-        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
+        <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
           <ThemeCard theme={theme} />
         </AlignmentContextProvider>
       </Router>,
@@ -103,7 +103,7 @@ describe('ThemeCard', () => {
         <Router location={history.location} navigator={history}>
           <main tabIndex={-1}>this is main</main>
           <AlignmentContextProvider
-            provider={getTestProviderByName('openstax')}
+            provider={ProviderFactory.sample('openstax')}
           >
             <ThemeCard theme={theme} />
           </AlignmentContextProvider>

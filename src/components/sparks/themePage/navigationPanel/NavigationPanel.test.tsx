@@ -8,7 +8,7 @@ import {
   resizeToMobile,
   resizeToTablet,
 } from 'src/testSupport/resizeTo';
-import { getTestProviderByName } from 'src/views/alignments/provider/AlignmentProviderFactory';
+import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 import {
   TargetFactory,
@@ -52,7 +52,7 @@ describe('Theme NavigationPanel', () => {
 
     const wrapper = render(
       <ThemeMobileMenuProvider>
-        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
+        <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
           <NavigationPanel theme={theme} />
         </AlignmentContextProvider>
       </ThemeMobileMenuProvider>,
@@ -101,7 +101,7 @@ describe('Theme NavigationPanel', () => {
 
     const wrapper = render(
       <ThemeMobileMenuProvider>
-        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
+        <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
           <NavigationPanel theme={ThemeFactory.sample()} />
         </AlignmentContextProvider>
       </ThemeMobileMenuProvider>,
@@ -122,7 +122,7 @@ describe('Theme NavigationPanel', () => {
       const wrapper = render(
         <ThemeMobileMenuProvider>
           <AlignmentContextProvider
-            provider={getTestProviderByName('openstax')}
+            provider={ProviderFactory.sample('openstax')}
           >
             <NavigationPanel
               theme={ThemeFactory.sample({
@@ -143,7 +143,7 @@ describe('Theme NavigationPanel', () => {
 
     const wrapper = render(
       <ThemeMobileMenuProvider triggerOpen>
-        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
+        <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
           <NavigationPanel theme={ThemeFactory.sample()} />
         </AlignmentContextProvider>
       </ThemeMobileMenuProvider>,
@@ -165,7 +165,7 @@ describe('Theme NavigationPanel', () => {
 
     const wrapper = render(
       <ThemeMobileMenuProvider triggerOpen>
-        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
+        <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
           <NavigationPanel theme={ThemeFactory.sample()} />
         </AlignmentContextProvider>
       </ThemeMobileMenuProvider>,
@@ -210,7 +210,7 @@ describe('Theme NavigationPanel', () => {
     });
     const wrapper = render(
       <ThemeMobileMenuProvider>
-        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
+        <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
           <NavigationPanel theme={theme} />
         </AlignmentContextProvider>
       </ThemeMobileMenuProvider>,

@@ -1,13 +1,13 @@
 import React from 'react';
 import ProviderPageHeader from 'src/components/sparks/explore/explorePageHeader/ProviderPageHeader';
 import { render } from '@testing-library/react';
-import { getTestProviderByName } from 'src/views/alignments/provider/AlignmentProviderFactory';
+import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 
 describe('Provider Page page Header', () => {
   it('displays header text and an OpenStax ally logo', () => {
     const header = render(
-      <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
+      <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
         <ProviderPageHeader />
       </AlignmentContextProvider>,
     );

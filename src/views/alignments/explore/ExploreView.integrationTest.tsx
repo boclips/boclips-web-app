@@ -7,16 +7,17 @@ import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import userEvent from '@testing-library/user-event';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
+import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 
 describe(`Explore view`, () => {
   it(`shows 'All' types as a first one and can select other types`, async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 
-    fakeClient.alignments.setTypesForProvider('openstax', [
-      'Maths',
-      'French',
-      'Physics',
+    fakeClient.alignments.setProviders([
+      ProviderFactory.sample('openstax', {
+        types: ['Maths', 'French', 'Physics'],
+      }),
     ]);
     fakeClient.alignments.setThemesByProvider({
       providerName: 'openstax',
@@ -106,10 +107,10 @@ describe(`Explore view`, () => {
       ],
     });
 
-    fakeClient.alignments.setTypesForProvider('openstax', [
-      'Maths',
-      'Business',
-      'Humanities',
+    fakeClient.alignments.setProviders([
+      ProviderFactory.sample('openstax', {
+        types: ['Maths', 'Business', 'Humanities'],
+      }),
     ]);
 
     const wrapper = render(
@@ -153,10 +154,10 @@ describe(`Explore view`, () => {
         ],
       });
 
-      fakeClient.alignments.setTypesForProvider('openstax', [
-        'Maths',
-        'Business',
-        'Humanities',
+      fakeClient.alignments.setProviders([
+        ProviderFactory.sample('openstax', {
+          types: ['Maths', 'Business', 'Humanities'],
+        }),
       ]);
 
       const wrapper = render(

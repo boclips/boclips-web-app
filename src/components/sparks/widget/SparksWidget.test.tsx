@@ -5,12 +5,12 @@ import { MemoryRouter } from 'react-router-dom';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { getTestProviderByName } from 'src/views/alignments/provider/AlignmentProviderFactory';
+import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 
 describe('Sparks page header', () => {
   it('displays sparks page header and description', () => {
     const fakeClient = new FakeBoclipsClient();
-    fakeClient.alignments.setProviders([getTestProviderByName('openstax')]);
+    fakeClient.alignments.setProviders([ProviderFactory.sample('openstax')]);
 
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>

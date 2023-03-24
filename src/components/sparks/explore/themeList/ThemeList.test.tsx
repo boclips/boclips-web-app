@@ -4,7 +4,7 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import React from 'react';
 import { ThemeList } from 'src/components/sparks/explore/themeList/ThemeList';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
-import { getTestProviderByName } from 'src/views/alignments/provider/AlignmentProviderFactory';
+import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe('Theme list', () => {
@@ -18,7 +18,7 @@ describe('Theme list', () => {
 
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
-        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
+        <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
           <ThemeList themes={themes} isLoading={false} />
         </AlignmentContextProvider>
       </BoclipsClientProvider>,
@@ -42,7 +42,7 @@ describe('Theme list', () => {
 
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
-        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
+        <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
           <ThemeList themes={themes} isLoading={false} />
         </AlignmentContextProvider>
       </BoclipsClientProvider>,
@@ -62,7 +62,7 @@ describe('Theme list', () => {
 
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
-        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
+        <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
           <ThemeList themes={themes} isLoading />
         </AlignmentContextProvider>
       </BoclipsClientProvider>,

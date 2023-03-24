@@ -5,31 +5,26 @@ import { Layout } from 'src/components/layout/Layout';
 import { ThemeList } from 'src/components/sparks/explore/themeList/ThemeList';
 import { TypesMenu } from 'src/components/sparks/explore/explorePageMenu/TypesMenu';
 import {
+  useGetProvidersQuery,
   useGetThemesByProviderQuery,
-  useGetTypesByProviderQuery,
 } from 'src/hooks/api/alignmentsQuery';
 import ProviderPageHeader from 'src/components/sparks/explore/explorePageHeader/ProviderPageHeader';
 import { useParams } from 'react-router';
 import NotFound from 'src/views/notFound/NotFound';
-import {
-  getTestProviderByName,
-  isProviderSupported,
-} from 'src/views/alignments/provider/AlignmentProviderFactory';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 import { Helmet } from 'react-helmet';
 
 const ExploreView = () => {
   const ALL = 'All';
-  const { provider: providerName } = useParams();
+  const { provider: providerNavigationPath } = useParams();
   const { data: themes, isLoading: areThemesLoading } =
-    useGetThemesByProviderQuery(providerName);
+    useGetThemesByProviderQuery(providerNavigationPath);
+  const { data: providers, isLoading: areProvidersLoading } =
+    useGetProvidersQuery();
 
-  const provider = isProviderSupported(providerName)
-    ? getTestProviderByName(providerName)
-    : undefined;
-
-  const { data: types, isLoading: areTypesLoading } =
-    useGetTypesByProviderQuery(providerName);
+  const provider = providers.find(
+    (it) => it.navigationPath === providerNavigationPath,
+  );
 
   const [currentType, setCurrentType] = useState(ALL);
 
@@ -38,7 +33,7 @@ const ExploreView = () => {
       currentType === ALL
         ? themes
         : themes?.filter((theme) => theme.type === currentType),
-    [types, currentType, themes],
+    [providers, currentType, themes],
   );
 
   useEffect(() => {
@@ -55,7 +50,7 @@ const ExploreView = () => {
     }
   }, [currentTypeThemes]);
 
-  const isLoading = areThemesLoading || areTypesLoading;
+  const isLoading = areThemesLoading || areProvidersLoading;
 
   return provider ? (
     <>
@@ -65,7 +60,7 @@ const ExploreView = () => {
         <AlignmentContextProvider provider={provider}>
           <ProviderPageHeader />
           <TypesMenu
-            types={isLoading ? [] : [ALL, ...types]}
+            types={isLoading ? [] : [ALL, ...provider.types]}
             currentType={currentType}
             onClick={setCurrentType}
             isLoading={isLoading}

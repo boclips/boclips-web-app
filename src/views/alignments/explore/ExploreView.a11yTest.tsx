@@ -7,6 +7,7 @@ import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { axe } from 'jest-axe';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
+import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 
 describe(`Explore view`, () => {
   it(`has no violations`, async () => {
@@ -27,10 +28,10 @@ describe(`Explore view`, () => {
       ],
     });
 
-    fakeClient.alignments.setTypesForProvider('openstax', [
-      'Maths',
-      'Business',
-      'Humanities',
+    fakeClient.alignments.setProviders([
+      ProviderFactory.sample('openstax', {
+        types: ['Maths', 'Business', 'Humanities'],
+      }),
     ]);
 
     const wrapper = render(

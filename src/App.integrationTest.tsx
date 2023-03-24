@@ -7,6 +7,7 @@ import React from 'react';
 import { MemoryRouter, Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 
 describe('App', () => {
   it('renders the not found page on user having incorrect role', async () => {
@@ -44,6 +45,7 @@ describe('App', () => {
     const apiClient = new FakeBoclipsClient();
 
     apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+    apiClient.alignments.setProviders([ProviderFactory.sample('openstax')]);
 
     const wrapper = render(
       <MemoryRouter initialEntries={['/sparks/openstax']}>
