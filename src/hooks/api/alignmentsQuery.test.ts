@@ -109,7 +109,7 @@ describe('AlignmentsQuery', () => {
       wrapper: wrapperWithClients(fakeClient, new QueryClient()),
     });
 
-    await hook.waitFor(() => hook.result.current.isSuccess);
+    await hook.waitFor(() => hook.result.current.isFetched);
     const result = hook.result.current.data;
 
     expect(result).toHaveLength(2);

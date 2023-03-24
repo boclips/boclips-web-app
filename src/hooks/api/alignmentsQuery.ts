@@ -51,7 +51,9 @@ export const useGetThemesByProviderQuery = (
 
 export const useGetProvidersQuery = (): UseQueryResult<Provider[]> => {
   const client = useBoclipsClient();
-  return useQuery(['allProviders'], () => doGetProviders(client));
+  return useQuery(['allProviders'], () => doGetProviders(client), {
+    initialData: [],
+  });
 };
 
 const doGetProviders = (client: BoclipsClient) =>

@@ -7,7 +7,7 @@ import {
   navigateTo,
 } from 'src/views/alignments/theme/ThemeTestSupport';
 import PaginationPanel from 'src/components/sparks/themePage/theme/pagination/PaginationPanel';
-import { getTestProviderByName } from 'src/views/alignments/provider/AlignmentProviderFactory';
+import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
@@ -61,7 +61,7 @@ describe('Theme Content', () => {
 
     const wrapper = renderWithClients(
       <ThemeMobileMenuProvider>
-        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
+        <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
           <Content theme={theme} />
           <PaginationPanel theme={theme} />
         </AlignmentContextProvider>
@@ -85,7 +85,7 @@ describe('Theme Content', () => {
 
     const wrapper = renderWithClients(
       <ThemeMobileMenuProvider>
-        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
+        <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
           <Content theme={theme} />
           <PaginationPanel theme={theme} />
         </AlignmentContextProvider>
@@ -102,7 +102,7 @@ describe('Theme Content', () => {
 
     const wrapper = renderWithClients(
       <ThemeMobileMenuProvider>
-        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
+        <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
           <Content theme={theme} />
           <PaginationPanel theme={theme} />
         </AlignmentContextProvider>
@@ -123,7 +123,7 @@ describe('Theme Content', () => {
 
     const wrapper = renderWithClients(
       <ThemeMobileMenuProvider>
-        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
+        <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
           <Content theme={theme} />
           <PaginationPanel theme={theme} />
         </AlignmentContextProvider>
@@ -142,7 +142,7 @@ describe('Theme Content', () => {
 
     const wrapper = renderWithClients(
       <ThemeMobileMenuProvider>
-        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
+        <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
           <Content theme={theme} />
           <PaginationPanel theme={theme} />
         </AlignmentContextProvider>
@@ -160,7 +160,7 @@ describe('Theme Content', () => {
 
     const wrapper = renderWithClients(
       <ThemeMobileMenuProvider>
-        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
+        <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
           <Content theme={theme} />
           <PaginationPanel theme={theme} />
         </AlignmentContextProvider>

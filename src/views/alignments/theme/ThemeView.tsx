@@ -10,10 +10,7 @@ import { ThemeMobileMenuProvider } from 'src/components/common/providers/ThemeMo
 import ThemeSkeletonPage from 'src/components/skeleton/theme/ThemeSkeletonPage';
 import { Helmet } from 'react-helmet';
 import PaginationPanel from 'src/components/sparks/themePage/theme/pagination/PaginationPanel';
-import {
-  getTestProviderByName,
-  isProviderSupported,
-} from 'src/views/alignments/provider/AlignmentProviderFactory';
+import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 import NotFound from 'src/views/notFound/NotFound';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 
@@ -24,8 +21,8 @@ const ThemeView = () => {
     id,
   );
 
-  const provider = isProviderSupported(providerName)
-    ? getTestProviderByName(providerName)
+  const provider = ProviderFactory.isProviderSupported(providerName)
+    ? ProviderFactory.sample(providerName)
     : undefined;
 
   return provider && (isLoading || theme) ? (

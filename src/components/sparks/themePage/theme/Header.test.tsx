@@ -4,7 +4,7 @@ import { Header } from 'src/components/sparks/themePage/theme/Header';
 import { RenderResult } from '@testing-library/react';
 import { ThemeMobileMenuProvider } from 'src/components/common/providers/ThemeMobileMenuProvider';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
-import { getTestProviderByName } from 'src/views/alignments/provider/AlignmentProviderFactory';
+import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 
 describe('Theme Header', () => {
   it('shows theme and topic title', () => {
@@ -44,7 +44,7 @@ describe('Theme Header', () => {
   const renderDefaultThemeHeader = (): RenderResult =>
     renderWithClients(
       <ThemeMobileMenuProvider>
-        <AlignmentContextProvider provider={getTestProviderByName('openstax')}>
+        <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
           <Header themeTitle="spies" topicTitle="Chapter 1: Title" />
         </AlignmentContextProvider>
       </ThemeMobileMenuProvider>,
