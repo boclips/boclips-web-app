@@ -33,7 +33,7 @@ const ExploreView = () => {
       currentType === ALL
         ? themes
         : themes?.filter((theme) => theme.type === currentType),
-    [providers, currentType, themes],
+    [currentType, themes],
   );
 
   useEffect(() => {

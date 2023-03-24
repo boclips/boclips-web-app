@@ -49,11 +49,4 @@ export class ProviderFactory {
         throw new Error(`Provider '${providerName}' not supported`);
     }
   };
-
-  static SUPPORTED_PROVIDERS = ['openstax', 'ngss', 'common core math'];
-
-  static isProviderSupported = (providerName: string) =>
-    ProviderFactory.SUPPORTED_PROVIDERS.includes(
-      providerName.toLowerCase().split('-').join(' '),
-    );
 }
