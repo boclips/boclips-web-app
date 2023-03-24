@@ -17,6 +17,7 @@ import { UserFeatureKey } from 'boclips-api-client/dist/sub-clients/organisation
 import { disciplines } from 'src/components/disciplinesWidget/disciplinesFixture';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
+import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 
 export interface Bo {
   interact(callback: (apiClient: FakeBoclipsClient) => void): void;
@@ -59,7 +60,11 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
 
   const boSetProviderThemes = (themes: Partial<Theme>[]) => {
     const types = Array.from(new Set(themes.map((theme) => theme.type)));
-    apiClient.alignments.setTypesForProvider('openstax', types);
+    apiClient.alignments.setProviders([
+      ProviderFactory.sample('openstax', { types }),
+      ProviderFactory.sample('ngss'),
+      ProviderFactory.sample('common core math'),
+    ]);
 
     apiClient.alignments.setThemesByProvider({
       providerName: 'openstax',
