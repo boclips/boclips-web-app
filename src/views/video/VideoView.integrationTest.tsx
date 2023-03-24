@@ -22,6 +22,7 @@ import {
   ThemeFactory,
   TopicFactory,
 } from 'boclips-api-client/dist/test-support/ThemeFactory';
+import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 
 describe('Video View', () => {
   let fakeClient;
@@ -143,6 +144,9 @@ describe('Video View', () => {
         providerName: 'openstax',
         themes: [theme],
       });
+      fakeClient.alignments.setProviders([
+        ProviderFactory.sample('openstax', { types: [theme.type] }),
+      ]);
       fakeClient.videos.insertVideo(exampleVideo);
       fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 
@@ -171,6 +175,9 @@ describe('Video View', () => {
         providerName: 'openstax',
         themes: [theme],
       });
+      fakeClient.alignments.setProviders([
+        ProviderFactory.sample('openstax', { types: [theme.type] }),
+      ]);
       fakeClient.videos.insertVideo(videoWithoutEmbedOption);
       fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 
@@ -204,6 +211,9 @@ describe('Video View', () => {
       });
       fakeClient.videos.insertVideo(newVideo);
       fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+      fakeClient.alignments.setProviders([
+        ProviderFactory.sample('openstax', { types: [theme.type] }),
+      ]);
 
       const wrapper = renderView([`/sparks/openstax/${theme.id}`]);
 
@@ -229,6 +239,9 @@ describe('Video View', () => {
         providerName: 'openstax',
         themes: [theme],
       });
+      fakeClient.alignments.setProviders([
+        ProviderFactory.sample('openstax', { types: [theme.type] }),
+      ]);
       fakeClient.videos.insertVideo(newVideo);
       fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
 

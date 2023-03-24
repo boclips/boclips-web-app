@@ -30,6 +30,7 @@ import {
   ThemeFactory,
 } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import userEvent from '@testing-library/user-event';
+import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 
 describe('ThemeView', () => {
   it('renders loading skeletons before data is loaded', async () => {
@@ -538,6 +539,11 @@ const renderThemeView = (theme: Theme): RenderResult => {
     providerName: 'openstax',
     themes: [theme],
   });
+  client.alignments.setProviders([
+    ProviderFactory.sample('openstax', {
+      types: [theme.type],
+    }),
+  ]);
   return render(
     <MemoryRouter initialEntries={[`/sparks/openstax/${theme.id}`]}>
       <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
