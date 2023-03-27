@@ -7,6 +7,7 @@
   place-content: start;
   margin-top: 2rem;
 }
+
 @media screen and (min-width: @screen-md) {
   .sparksCardWrapper {
     position: relative;
@@ -18,16 +19,16 @@
 @media screen and (min-width: @screen-lg) {
   .sparksCardWrapper {
     position: relative;
-    padding: 0 4rem 0 4rem;
+    padding: 0 ~"min(6.5vw, 7rem)" 0 ~"min(6.5vw, 7rem)";
     grid-template-columns: repeat(3, minmax(0, 1fr));
 
     &:after {
-      @apply rounded;
+    @apply rounded;
       content: '';
-      width: 120%;
+      width: 110%;
       height: 100%;
       top: 2rem;
-      left: -10%;
+      left: -5%;
       background: @blue-100;
       position: absolute;
       z-index: -1;
