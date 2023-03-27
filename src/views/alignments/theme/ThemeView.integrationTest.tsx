@@ -43,10 +43,10 @@ describe('ThemeView', () => {
       </MemoryRouter>,
     );
 
-    await waitFor(() => wrapper.getByTestId('Loading details for book'));
+    await waitFor(() => wrapper.getByTestId('Loading details for theme'));
 
     const loadingSkeleton = await wrapper.findByTestId(
-      'Loading details for book',
+      'Loading details for theme',
     );
 
     expect(loadingSkeleton).not.toBeNull();

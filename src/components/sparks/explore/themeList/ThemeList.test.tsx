@@ -19,7 +19,7 @@ describe('Theme list', () => {
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
         <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
-          <ThemeList themes={themes} isLoading={false} />
+          <ThemeList themes={themes} />
         </AlignmentContextProvider>
       </BoclipsClientProvider>,
     );
@@ -43,37 +43,12 @@ describe('Theme list', () => {
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
         <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
-          <ThemeList themes={themes} isLoading={false} />
+          <ThemeList themes={themes} />
         </AlignmentContextProvider>
       </BoclipsClientProvider>,
     );
 
     expect(await wrapper.findByText('Maths')).toBeInTheDocument();
     expect(wrapper.queryByText('Physics')).toBeNull();
-  });
-
-  it(`displays themes skeleton`, async () => {
-    const fakeClient = new FakeBoclipsClient();
-
-    const themes = [
-      ThemeFactory.sample({ title: 'Maths' }),
-      ThemeFactory.sample({ title: 'Physics' }),
-    ];
-
-    const wrapper = render(
-      <BoclipsClientProvider client={fakeClient}>
-        <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
-          <ThemeList themes={themes} isLoading />
-        </AlignmentContextProvider>
-      </BoclipsClientProvider>,
-    );
-
-    expect(
-      await wrapper.findByTestId('theme-card-skeleton-1'),
-    ).toBeInTheDocument();
-
-    expect(
-      await wrapper.findByTestId('theme-card-skeleton-2'),
-    ).toBeInTheDocument();
   });
 });

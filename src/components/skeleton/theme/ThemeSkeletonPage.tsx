@@ -40,7 +40,7 @@ const ThemeSkeletonPage = () => {
           <div className={c(s.skeleton, o.navPanelVideoCount)} />
         </div>
       )}
-      <main className={o.main} data-qa="Loading details for book">
+      <main className={o.main} data-qa="Loading details for theme">
         {screen.type !== 'desktop' && (
           <div className={c(s.skeleton, o.backButton)} />
         )}

@@ -1,4 +1,5 @@
 @import '~@boclips-ui/styles/src/breakpoints';
+@import '~@boclips-ui/styles/src/colors';
 
 .providerLogo {
   display: block;
@@ -16,4 +17,61 @@
     max-height: 67px;
     max-width: 213px;
   }
+}
+
+.skeleton {
+  border-radius: 4px;
+  animation: skeleton ease-in 1s infinite;
+  background: linear-gradient(
+    90deg,
+    @gray-100 25%,
+    @gray-400 37%,
+    @gray-100 63%
+  );
+  background-size: 200% 200%;
+  border: 1px solid @gray-400 !important;
+}
+
+.skeleton {
+  &.body {
+    background: transparent;
+    display: grid;
+    grid-gap: 1rem;
+    border: 0 !important;
+
+    & > div {
+      height: 270px;
+      width: 100%;
+    }
+  }
+}
+
+@keyframes skeleton {
+  0% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 0 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.title {
+  width: 120px;
+  height: 35px;
+  @apply mb-4;
+}
+
+.description {
+  width: 180px;
+  height: 20px;
+  @apply mb-4;
+}
+
+.logo {
+  width: 120px;
+  height: 60px;
+  @apply mb-4;
 }

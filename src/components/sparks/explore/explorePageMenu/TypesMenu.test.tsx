@@ -12,33 +12,12 @@ describe('Types menu', () => {
 
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
-        <TypesMenu
-          types={types}
-          currentType=""
-          onClick={() => {}}
-          isLoading={false}
-        />
+        <TypesMenu types={types} currentType="" onClick={() => {}} />
       </BoclipsClientProvider>,
     );
 
     expect(await wrapper.findByText('Maths')).toBeInTheDocument();
     expect(wrapper.getByText('French')).toBeInTheDocument();
     expect(wrapper.getByText('Physics')).toBeInTheDocument();
-  });
-
-  it(`displays types menu skeleton`, async () => {
-    const fakeClient = new FakeBoclipsClient();
-
-    const types = ['Maths', 'French', 'Physics'];
-
-    const wrapper = render(
-      <BoclipsClientProvider client={fakeClient}>
-        <TypesMenu types={types} currentType="" onClick={() => {}} isLoading />
-      </BoclipsClientProvider>,
-    );
-
-    expect(await wrapper.findByTestId('types-skeleton-1')).toBeInTheDocument();
-
-    expect(await wrapper.findByTestId('types-skeleton-6')).toBeInTheDocument();
   });
 });

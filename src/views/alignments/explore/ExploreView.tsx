@@ -13,6 +13,7 @@ import { useParams } from 'react-router';
 import NotFound from 'src/views/notFound/NotFound';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
 import { Helmet } from 'react-helmet';
+import { ExploreViewSkeleton } from 'src/views/alignments/explore/ExploreViewSkeleton';
 
 const ExploreView = () => {
   const ALL = 'All';
@@ -22,7 +23,7 @@ const ExploreView = () => {
   const { data: providers, isLoading: areProvidersLoading } =
     useGetProvidersQuery();
 
-  const provider = providers.find(
+  const provider = providers?.find(
     (it) => it.navigationPath === providerNavigationPath,
   );
 
@@ -36,41 +37,52 @@ const ExploreView = () => {
     [currentType, themes],
   );
 
-  useEffect(() => {
-    const firstTheme = currentTypeThemes?.[0];
-    const isNavFocused = document
-      .querySelector('main')
-      .contains(document.activeElement);
-
-    if (firstTheme !== undefined && isNavFocused) {
-      const element: HTMLButtonElement = document.querySelector(
-        `[aria-label="theme ${firstTheme.title}"]`,
-      );
-      element.focus();
-    }
-  }, [currentTypeThemes]);
-
   const isLoading = areThemesLoading || areProvidersLoading;
 
-  return provider ? (
-    <>
-      <Helmet title={provider.name} />
+  useEffect(() => {
+    if (!isLoading) {
+      const firstTheme = currentTypeThemes?.[0];
+      const isNavFocused = document
+        .querySelector('main')
+        .contains(document.activeElement);
+
+      if (firstTheme !== undefined && isNavFocused) {
+        const element: HTMLButtonElement = document.querySelector(
+          `[aria-label="theme ${firstTheme.title}"]`,
+        );
+        element.focus();
+      }
+    }
+  }, [currentTypeThemes, isLoading]);
+
+  const exploreViewLayout = (children: React.ReactNode) => {
+    return (
       <Layout rowsSetup="grid-rows-explore-view" responsiveLayout>
         <Navbar />
-        <AlignmentContextProvider provider={provider}>
-          <ProviderPageHeader />
-          <TypesMenu
-            types={isLoading ? [] : [ALL, ...provider.types]}
-            currentType={currentType}
-            onClick={setCurrentType}
-            isLoading={isLoading}
-          />
-
-          <ThemeList themes={currentTypeThemes} isLoading={isLoading} />
-        </AlignmentContextProvider>
+        {children}
         <Footer />
       </Layout>
-    </>
+    );
+  };
+
+  if (isLoading) {
+    return exploreViewLayout(<ExploreViewSkeleton />);
+  }
+
+  return provider ? (
+    exploreViewLayout(
+      <AlignmentContextProvider provider={provider}>
+        <Helmet title={provider.name} />
+        <ProviderPageHeader />
+        <TypesMenu
+          types={[ALL, ...provider.types]}
+          currentType={currentType}
+          onClick={setCurrentType}
+        />
+
+        <ThemeList themes={currentTypeThemes} />
+      </AlignmentContextProvider>,
+    )
   ) : (
     <NotFound />
   );

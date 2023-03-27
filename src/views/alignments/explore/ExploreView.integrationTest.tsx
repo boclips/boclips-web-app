@@ -8,8 +8,37 @@ import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import userEvent from '@testing-library/user-event';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
+import {
+  createTheme,
+  setUpClientWithTheme,
+} from 'src/views/alignments/theme/ThemeTestSupport';
 
 describe(`Explore view`, () => {
+  it('renders loading skeletons before data is loaded', async () => {
+    const theme = createTheme();
+
+    const fakeClient = setUpClientWithTheme(theme);
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/sparks/openstax']}>
+        <App
+          apiClient={fakeClient}
+          boclipsSecurity={stubBoclipsSecurity}
+          reactQueryClient={new QueryClient()}
+        />
+      </MemoryRouter>,
+    );
+
+    await waitFor(() => wrapper.getByTestId('Loading details for provider'));
+
+    const loadingSkeleton = await wrapper.findByTestId(
+      'Loading details for provider',
+    );
+
+    expect(loadingSkeleton).not.toBeNull();
+    expect(await wrapper.findByText('Our OpenStax collection')).toBeVisible();
+    expect(loadingSkeleton).not.toBeInTheDocument();
+  });
+
   it(`shows 'All' types as a first one and can select other types`, async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });

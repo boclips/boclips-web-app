@@ -1,21 +1,14 @@
 import React from 'react';
 import TypeMenuItem from 'src/components/sparks/explore/explorePageMenu/TypeMenuItem';
-import TypeMenuItemSkeleton from 'src/components/sparks/explore/explorePageMenu/TypeMenuItemSkeleton';
 import s from './style.module.less';
 
 export interface TypesMenuProps {
   types: string[];
   currentType: string;
   onClick: (subject: string) => void;
-  isLoading: boolean;
 }
 
-export const TypesMenu = ({
-  types,
-  currentType,
-  onClick,
-  isLoading,
-}: TypesMenuProps) => {
+export const TypesMenu = ({ types, currentType, onClick }: TypesMenuProps) => {
   return (
     <main
       tabIndex={-1}
@@ -23,15 +16,11 @@ export const TypesMenu = ({
     >
       <nav className={s.typeList}>
         <ul className="flex shrink-0">
-          {isLoading ? (
-            <TypeMenuItemSkeleton />
-          ) : (
-            <TypeMenuItem
-              types={types}
-              currentType={currentType}
-              onClick={onClick}
-            />
-          )}
+          <TypeMenuItem
+            types={types}
+            currentType={currentType}
+            onClick={onClick}
+          />
         </ul>
       </nav>
     </main>

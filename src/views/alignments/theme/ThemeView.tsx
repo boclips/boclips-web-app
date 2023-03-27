@@ -25,7 +25,7 @@ const ThemeView = () => {
   const { data: providers, isLoading: areProvidersLoading } =
     useGetProvidersQuery();
 
-  const provider = providers.find(
+  const provider = providers?.find(
     (it) => it.navigationPath === providerNavigationPath,
   );
 

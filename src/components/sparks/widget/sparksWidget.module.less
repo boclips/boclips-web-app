@@ -6,6 +6,7 @@
   grid-gap: 1.5rem;
   place-content: start;
   margin-top: 2rem;
+  grid-template-columns: 1fr;
 }
 
 @media screen and (min-width: @screen-md) {
@@ -13,6 +14,10 @@
     position: relative;
     padding: 0 4rem 0 4rem;
     grid-template-columns: 1fr 1fr;
+  }
+
+  .skeleton {
+    height: 263px;
   }
 }
 
@@ -33,5 +38,49 @@
       position: absolute;
       z-index: -1;
     }
+  }
+
+  .skeleton {
+    height: 350px;
+  }
+}
+
+.skeleton {
+  height: 217px;
+  border-radius: 4px;
+  animation: skeleton ease-in 1s infinite;
+  background: linear-gradient(
+    90deg,
+    @gray-100 25%,
+    @gray-400 37%,
+    @gray-100 63%
+  );
+  background-size: 200% 200%;
+  border: 1px solid @gray-400 !important;
+}
+
+.skeleton {
+  &.body {
+    background: transparent;
+    display: grid;
+    grid-gap: 1rem;
+    border: 0 !important;
+
+    & > div {
+      height: 270px;
+      width: 100%;
+    }
+  }
+}
+
+@keyframes skeleton {
+  0% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 0 50%;
+  }
+  100% {
+    background-position: 100% 50%;
   }
 }

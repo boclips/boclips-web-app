@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { MemoryRouter, Router } from 'react-router-dom';
@@ -10,6 +10,32 @@ import { Helmet } from 'react-helmet';
 import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 
 describe('Sparks landing page', () => {
+  it('renders loading skeletons before data is loaded', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+    fakeClient.alignments.setProviders([ProviderFactory.sample('ngss')]);
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/sparks']}>
+        <App
+          apiClient={fakeClient}
+          boclipsSecurity={stubBoclipsSecurity}
+          reactQueryClient={new QueryClient()}
+        />
+      </MemoryRouter>,
+    );
+
+    await waitFor(() => wrapper.getByTestId('Loading details for providers'));
+
+    const loadingSkeleton = await wrapper.findByTestId(
+      'Loading details for providers',
+    );
+
+    expect(loadingSkeleton).not.toBeNull();
+    expect(await wrapper.findByText('NGSS')).toBeVisible();
+    expect(loadingSkeleton).not.toBeInTheDocument();
+  });
+
   it('redirects to the chosen provider explore page', async () => {
     const history = createBrowserHistory();
     history.push('/sparks');
