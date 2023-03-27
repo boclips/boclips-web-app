@@ -23,17 +23,19 @@ const SparksCard = ({ provider }: Props) => {
       onClick={handleOnClick}
       className={s.sparksCard}
     >
-      <img
-        alt={`${provider.name} logo`}
-        src={provider.logoUrl}
-        className={s.sparksCardLogo}
-      />
-      <Typography.H1
-        size={{ mobile: 'md', tablet: 'md', desktop: 'lg' }}
-        className="mb-2 text-left"
-      >
-        {provider.name}
-      </Typography.H1>
+      <div>
+        <img
+          alt={`${provider.name} logo`}
+          src={provider.logoUrl}
+          className={s.sparksCardLogo}
+        />
+        <Typography.H1
+          size={{ mobile: 'md', tablet: 'md', desktop: 'lg' }}
+          className="mb-2 text-left"
+        >
+          {provider.name}
+        </Typography.H1>
+      </div>
       <Typography.Body className={s.sparksCardDescription}>
         {provider.description}
       </Typography.Body>
