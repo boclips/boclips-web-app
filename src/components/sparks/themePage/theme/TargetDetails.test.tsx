@@ -73,9 +73,7 @@ describe('Target Details', () => {
     );
 
     expect(
-      wrapper.getByText(
-        "We don't have any videos for this target yet. We're working on it!",
-      ),
+      wrapper.getByText('We’re working on it! These videos are coming soon!'),
     ).toBeVisible();
   });
 });

@@ -2,7 +2,7 @@ import { Typography } from '@boclips-ui/typography';
 import React from 'react';
 import c from 'classnames';
 import s from 'src/components/sparks/themePage/theme/style.module.less';
-import SadFace from 'src/resources/icons/sad_face.svg';
+import NotFound from 'src/resources/icons/not-found.svg';
 import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { VideoGridCardContainer } from './VideoGridCardContainer';
@@ -30,23 +30,23 @@ export const TargetDetails = ({ data }: Props) => {
       {videoCount > 0 ? (
         <VideoGridCardContainer videos={data.videos} />
       ) : (
-        renderEmptyMappingMessaging()
+        <EmptyMappingMessaging />
       )}
     </section>
   );
 };
 
-const renderEmptyMappingMessaging = () => (
+const EmptyMappingMessaging = () => (
   <div className={s.emptyMessagingGrid}>
     <div className={s.emptyCard}>
       <div className="bg-blue-500 flex items-center justify-center rounded-t">
-        <SadFace />
+        <NotFound />
       </div>
       <div />
     </div>
     <Typography.Body weight="medium" className="text-gray-700 !text-lg">
-      We don&apos;t have any videos for this target yet. <br /> We&apos;re
-      working on it!
+      We’re working on it! <br />
+      These videos are coming soon!
     </Typography.Body>
   </div>
 );
