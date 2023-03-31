@@ -16,12 +16,12 @@ export const SparksHeader = () => {
         className="text-center"
         size={{ mobile: 'md', tablet: 'lg', desktop: 'xl' }}
       >
-        <span className={s.sparksTitle}>Spark</span> learning with our video
-        picks
+        <span className={s.sparksTitle}>Spark</span> learning with our
+        hand-picked video selections
       </Typography.H1>
       <Typography.Body as="p" className={c('text-center', s.sparksDescription)}>
-        Discover our video collections: Pedagogically-sequenced and
-        expertly-curated for your course
+        Discover video collections that are skillfully curated and educationally
+        structured to enrich your course content
       </Typography.Body>
       {desktopView && (
         <>

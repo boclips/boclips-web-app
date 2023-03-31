@@ -23,11 +23,13 @@ describe('Sparks page header', () => {
     );
 
     expect(wrapper.getByText('Spark')).toBeVisible();
-    expect(wrapper.getByText('learning with our video picks')).toBeVisible();
+    expect(
+      wrapper.getByText('learning with our hand-picked video selections'),
+    ).toBeVisible();
 
     expect(
       wrapper.getByText(
-        'Discover our video collections: Pedagogically-sequenced and expertly-curated for your course',
+        'Discover video collections that are skillfully curated and educationally structured to enrich your course content',
       ),
     ).toBeVisible();
   });
