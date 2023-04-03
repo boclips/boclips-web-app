@@ -43,16 +43,16 @@ const useProvideValidation = () => {
   const [cartItemsValidation, setCartItemsValidation] =
     useState<CartItemValidationMap>({});
 
-  const flags = useFeatureFlags();
+  const { features } = useFeatureFlags();
   const isCartValid = Object.values(cartItemsValidation).every((item) => {
     return (
-      ((flags.BO_WEB_APP_REQUEST_TRIMMING &&
+      ((features.BO_WEB_APP_REQUEST_TRIMMING &&
         item.trim?.isFromValid &&
         item.trim?.isToValid) ||
-        !flags.BO_WEB_APP_REQUEST_TRIMMING) &&
-      ((flags.BO_WEB_APP_REQUEST_ADDITIONAL_EDITING &&
+        !features.BO_WEB_APP_REQUEST_TRIMMING) &&
+      ((features.BO_WEB_APP_REQUEST_ADDITIONAL_EDITING &&
         item.editRequest?.isValid) ||
-        !flags.BO_WEB_APP_REQUEST_ADDITIONAL_EDITING)
+        !features.BO_WEB_APP_REQUEST_ADDITIONAL_EDITING)
     );
   });
 

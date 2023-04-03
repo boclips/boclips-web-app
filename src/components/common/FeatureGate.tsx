@@ -3,29 +3,40 @@ import { UserFeatureKey } from 'boclips-api-client/dist/sub-clients/organisation
 import useFeatureFlags from 'src/hooks/useFeatureFlags';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { AdminLinks } from 'boclips-api-client/dist/types';
+import { Loading } from 'src/components/common/Loading';
 
 interface FeatureGateProps {
   children: React.ReactElement | React.ReactElement[];
   fallback?: React.ReactElement;
+  isView?: boolean;
 }
 
 type OptionalProps =
   | { linkName: keyof AdminLinks; feature?: never }
   | { feature: UserFeatureKey; linkName?: never };
 
-export const FeatureGate = ({
-  feature,
-  children,
-  linkName,
-  fallback,
-}: FeatureGateProps & OptionalProps) => {
+export const FeatureGate = (props: FeatureGateProps & OptionalProps) => {
+  const { feature, children, linkName, fallback, isView } = props;
   const links = useBoclipsClient().links;
-  const flags = useFeatureFlags();
+  const { features, isLoading } = useFeatureFlags();
+
+  if (isLoading) {
+    return isView ? <Loading /> : null;
+  }
+
   if (linkName) {
-    return <>{(links[linkName] && children) || fallback}</>;
+    const link = links[linkName];
+    if (link) {
+      return <>{children}</>;
+    }
   }
+
   if (feature) {
-    return <>{(flags && flags[feature] && children) || fallback}</>;
+    const isEnabled = features[feature];
+    if (isEnabled) {
+      return <>{children}</>;
+    }
   }
-  return <>{children}</>;
+
+  return <>{fallback}</>;
 };

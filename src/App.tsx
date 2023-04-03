@@ -193,6 +193,7 @@ const App = ({
                         <FeatureGate
                           feature="BO_WEB_APP_OPENSTAX"
                           fallback={<NotFound />}
+                          isView
                         >
                           <Helmet title="Sparks" />
                           <SparksView />
@@ -222,6 +223,7 @@ const App = ({
                         <FeatureGate
                           feature="BO_WEB_APP_OPENSTAX"
                           fallback={<NotFound />}
+                          isView
                         >
                           <ExploreView />
                         </FeatureGate>
@@ -233,6 +235,7 @@ const App = ({
                         <FeatureGate
                           feature="BO_WEB_APP_OPENSTAX"
                           fallback={<NotFound />}
+                          isView
                         >
                           <ThemeView />
                         </FeatureGate>

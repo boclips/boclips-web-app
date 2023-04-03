@@ -93,27 +93,6 @@ describe(`FeatureGate`, () => {
     });
   });
 
-  it(`shows component if null link provided`, async () => {
-    const fakeClient = new FakeBoclipsClient();
-
-    const client = new QueryClient();
-
-    render(
-      <BoclipsClientProvider client={fakeClient}>
-        <QueryClientProvider client={client}>
-          <div>hi</div>
-          <FeatureGate linkName={null}>
-            <div>I am hidden</div>
-          </FeatureGate>
-        </QueryClientProvider>
-      </BoclipsClientProvider>,
-    );
-
-    await waitFor(() => {
-      expect(screen.queryByText('I am hidden')).toBeInTheDocument();
-    });
-  });
-
   it(`renders the fallback if provided and feature not present`, async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.users.insertCurrentUser(
