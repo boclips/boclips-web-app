@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
 import {
-  useEditPlaylistMutation,
+    useEditPlaylistMutation, useGetPromotedPlaylistsQuery,
   useOwnAndEditableSharedPlaylistsQuery,
   useOwnAndSharedPlaylistsQuery,
   useRemoveCommentFromPlaylistVideo,
@@ -174,6 +174,23 @@ describe('playlistsQuery', () => {
 
     await act(() => result.current.mutate('comment-id'));
 
+    expect(collectionsSpy).toBeCalled();
+  });
+
+  it(`will get promoted playlists`, async () => {
+    const apiClient = new FakeBoclipsClient();
+    const collectionsSpy = jest.spyOn(
+      apiClient.collections,
+      'getPromotedCollections',
+    );
+    // @ts-ignore
+    apiClient.collections.getPromotedCollections = collectionsSpy;
+
+    const playlistHook = renderHook(() => useGetPromotedPlaylistsQuery(), {
+      wrapper: wrapperWithClients(apiClient, new QueryClient()),
+    });
+
+    await playlistHook.waitFor(() => playlistHook.result.current.isSuccess);
     expect(collectionsSpy).toBeCalled();
   });
 });

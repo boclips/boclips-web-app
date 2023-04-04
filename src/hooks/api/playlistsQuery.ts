@@ -34,6 +34,11 @@ export const useOwnAndSharedPlaylistsQuery = (page: number, query?: string) => {
   );
 };
 
+export const useGetPromotedPlaylistsQuery = () => {
+  const client = useBoclipsClient();
+  return useQuery(['promoted'], () => doGetPromotedPlaylists(client));
+};
+
 export const useOwnAndEditableSharedPlaylistsQuery = () => {
   const client = useBoclipsClient();
   return useQuery(playlistKeys.own, () =>
@@ -252,6 +257,12 @@ const doGetOwnAndSharedPlaylists = (
       size: PLAYLISTS_PAGE_SIZE,
       origin: 'BO_WEB_APP',
     })
+    .then((playlists) => playlists);
+};
+
+const doGetPromotedPlaylists = (client: BoclipsClient) => {
+  return client.collections
+    .getPromotedCollections()
     .then((playlists) => playlists);
 };
 
