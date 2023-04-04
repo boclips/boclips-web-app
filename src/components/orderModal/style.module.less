@@ -8,7 +8,9 @@
   margin-top: 1rem;
   overflow: auto;
   max-height: 50vh;
-
+  @media screen and (max-height: 900px) {
+    max-height: 20vh;
+  }
   &::-webkit-scrollbar {
     width: 7px;
   }
