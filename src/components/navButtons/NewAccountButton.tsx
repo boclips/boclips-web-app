@@ -13,7 +13,7 @@ import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
 import { Typography } from '@boclips-ui/typography';
 import Button from '@boclips-ui/button';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
-import s from './style.module.less';
+import s from './newstyle.module.less';
 import { Link } from '../common/Link';
 
 interface Props {
