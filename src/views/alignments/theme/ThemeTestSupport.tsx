@@ -35,7 +35,7 @@ export const setUpClientWithTheme = (theme: Theme) => {
       types: [theme.type],
     }),
   ]);
-  client.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+  client.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
   return client;
 };
 
