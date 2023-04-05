@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import c from 'classnames';
-import s from './style.module.less';
+import s from './newstyle.module.less';
 import FilmIcon from '../../resources/icons/film-icon.svg';
 
 const LibraryButton = () => {
