@@ -29,6 +29,7 @@ module.exports = {
       gridTemplateRows: {
         home: 'auto minmax(0, 458px) auto',
         homepage: 'auto 1fr auto',
+        newHomepage: 'auto auto auto auto auto',
         'search-view':
           'minmax(74px, auto) minmax(30px, min-content) auto 1fr auto',
         navbar: 'repeat(2, auto)',
@@ -156,6 +157,9 @@ module.exports = {
       width: {
         44: '11rem',
         max: '105rem',
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       },
     },
   },

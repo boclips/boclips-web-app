@@ -62,6 +62,11 @@
   width: 18px;
   height: 18px;
 }
+.accountIcon {
+  stroke: white;
+  width: 20px;
+  height: 20px;
+}
 
 .basketCounter {
   position: absolute;
@@ -79,25 +84,32 @@
   border-radius: 100%;
   font-weight: 500;
 }
+.userDetails {
+  background: #bccdff;
+  float:left;
+  width: 100%;
+  top: 0;
+  padding: 0.5rem;
+}
+.menu {
+  padding: 0 1rem;
 
+}
 .tooltip {
   display: flex;
   flex-direction: column;
   justify-items: center;
-  align-items: center;
+  align-items: flex-start;
   position: absolute;
-  width: 337px;
-  height: 173px;
-  bottom: -178px;
-  right: -90%;
+  width: 250px;
+  height: 190px;
+  bottom: -188px;
   background: white;
   box-shadow: 0px 2px 10px #e8e8e8;
   border-radius: 4px;
   z-index: -1;
-  padding: 1rem;
   font-size: 1rem;
   color: @gray-900;
-  justify-content: center;
   cursor: auto;
 
   a,
@@ -112,6 +124,7 @@
 
 .menuItem {
   flex-direction: row;
+  justify-content: space-between;
 
   p {
     padding-top: 4px;
@@ -122,6 +135,22 @@
   flex-direction: column;
   padding: 0 0.75rem;
   margin: 0 0.25rem;
+  white-space: nowrap;
+}
+
+.accountButton {
+  flex-direction: row;
+  justify-content: left !important;
+  padding: 0 0.75rem;
+  background: @blue-700;
+  color: white;
+  margin: 13px 0;
+  text-align: left;
+
+  svg {
+    stroke: white;
+    height: 30px !important;
+  }
 }
 
 .platformGuideIcon {
@@ -130,5 +159,6 @@
   svg {
     height: 14px;
     width: 14px;
+    display: inherit;
   }
 }

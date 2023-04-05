@@ -2,7 +2,7 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import React from 'react';
 import { render } from 'src/testSupport/render';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
-import NavbarResponsive from 'src/components/layout/Navbar';
+import NavbarResponsive from 'src/components/layout/NewNavbar';
 import { fireEvent, waitFor } from '@testing-library/react';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import {
@@ -126,6 +126,18 @@ describe(`Navbar`, () => {
       expect(
         await wrapper.getByPlaceholderText('Search for videos'),
       ).toBeVisible();
+    });
+
+    it(`search bar hidden when disabled`, () => {
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <NavbarResponsive showSearch={false} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      expect(wrapper.queryByPlaceholderText('Search for videos')).toBeNull();
     });
   });
 
