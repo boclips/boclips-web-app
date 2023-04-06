@@ -6,6 +6,7 @@ import Button from '@boclips-ui/button';
 import HomeSearchHero from 'src/resources/icons/home-illustration.svg';
 import { useNavigate } from 'react-router-dom';
 import NewNavbar from 'src/components/layout/NewNavbar';
+import { FeaturedPlaylists } from 'src/components/playlists/PromotedPlaylists';
 import FilmIcon from '../../resources/icons/film-icon.svg';
 import YourLibraryIcon from '../../resources/icons/your-library.svg';
 import s from './style.module.less';
@@ -95,6 +96,9 @@ const NewHomeView = () => {
       </div>
       <div className="row-start-2 row-end-2 col-start-17 mt-14 w-96 h-96">
         <HomeSearchHero />
+      </div>
+      <div className="row-start-3 row-end-3 col-start-2 col-end-26">
+        <FeaturedPlaylists />
       </div>
       <Footer className="col-start-2 col-end-26" />
     </Layout>
