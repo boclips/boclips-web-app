@@ -3,7 +3,6 @@ import {
   useGetProvidersQuery,
   useGetThemeByProviderAndId,
   useGetThemesByProviderQuery,
-  useGetTypesByProviderQuery,
 } from 'src/hooks/api/alignmentsQuery';
 import { renderHook } from '@testing-library/react-hooks';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
@@ -59,28 +58,6 @@ describe('AlignmentsQuery', () => {
 
     expect(result).toHaveLength(1);
     expect(result[0].id).toEqual('id-1');
-  });
-
-  it('gets providers all types', async () => {
-    const fakeClient = new FakeBoclipsClient();
-
-    fakeClient.alignments.setTypesForProvider('openstax', [
-      'Math',
-      'Languages',
-      'Science',
-    ]);
-
-    const hook = renderHook(() => useGetTypesByProviderQuery('openstax'), {
-      wrapper: wrapperWithClients(fakeClient, new QueryClient()),
-    });
-
-    await hook.waitFor(() => hook.result.current.isSuccess);
-    const result = hook.result.current.data;
-
-    expect(result).toHaveLength(3);
-    expect(result).toContain('Math');
-    expect(result).toContain('Languages');
-    expect(result).toContain('Science');
   });
 
   it('gets all providers', async () => {
