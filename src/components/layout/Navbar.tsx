@@ -71,7 +71,7 @@ const NavbarResponsive = (): ReactElement => {
           </div>
         ) : (
           <div className={s.buttonsDesktop}>
-            <FeatureGate feature="BO_WEB_APP_OPENSTAX">
+            <FeatureGate feature="BO_WEB_APP_SPARKS">
               <SparksButton />
             </FeatureGate>
             <PlaylistsButton />

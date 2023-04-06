@@ -193,7 +193,7 @@ const App = ({
                       path="/sparks"
                       element={
                         <FeatureGate
-                          feature="BO_WEB_APP_OPENSTAX"
+                          feature="BO_WEB_APP_SPARKS"
                           fallback={<NotFound />}
                           isView
                         >
@@ -223,7 +223,7 @@ const App = ({
                       path="/sparks/:provider"
                       element={
                         <FeatureGate
-                          feature="BO_WEB_APP_OPENSTAX"
+                          feature="BO_WEB_APP_SPARKS"
                           fallback={<NotFound />}
                           isView
                         >
@@ -235,7 +235,7 @@ const App = ({
                       path="/sparks/:provider/:id"
                       element={
                         <FeatureGate
-                          feature="BO_WEB_APP_OPENSTAX"
+                          feature="BO_WEB_APP_SPARKS"
                           fallback={<NotFound />}
                           isView
                         >

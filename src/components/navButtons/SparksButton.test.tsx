@@ -15,7 +15,7 @@ describe('sparks button', () => {
   it('pushes sparks page to history', async () => {
     const fakeBoclipsClient = new FakeBoclipsClient();
     fakeBoclipsClient.users.setCurrentUserFeatures({
-      BO_WEB_APP_OPENSTAX: true,
+      BO_WEB_APP_SPARKS: true,
     });
 
     const history = createBrowserHistory();
