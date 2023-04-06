@@ -40,6 +40,8 @@ const SearchResultsView = lazyWithRetry(
 
 const HomeView = lazyWithRetry(() => import('./views/home/HomeView'));
 
+const NewHomeView = lazyWithRetry(() => import('./views/newHome/NewHomeView'));
+
 const CartView = lazyWithRetry(() => import('src/views/cart/CartView'));
 
 const OrdersView = lazyWithRetry(() => import('src/views/orders/OrdersView'));
@@ -191,7 +193,7 @@ const App = ({
                       path="/sparks"
                       element={
                         <FeatureGate
-                          feature="BO_WEB_APP_OPENSTAX"
+                          feature="BO_WEB_APP_SPARKS"
                           fallback={<NotFound />}
                           isView
                         >
@@ -221,7 +223,7 @@ const App = ({
                       path="/sparks/:provider"
                       element={
                         <FeatureGate
-                          feature="BO_WEB_APP_OPENSTAX"
+                          feature="BO_WEB_APP_SPARKS"
                           fallback={<NotFound />}
                           isView
                         >
@@ -233,7 +235,7 @@ const App = ({
                       path="/sparks/:provider/:id"
                       element={
                         <FeatureGate
-                          feature="BO_WEB_APP_OPENSTAX"
+                          feature="BO_WEB_APP_SPARKS"
                           fallback={<NotFound />}
                           isView
                         >
@@ -245,6 +247,7 @@ const App = ({
                       path="/explore/*"
                       element={<RedirectFromExploreToSparks />}
                     />
+                    <Route path="/new-home" element={<NewHomeView />} />
 
                     <Route
                       path="*"

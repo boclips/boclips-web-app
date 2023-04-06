@@ -12,7 +12,7 @@ import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 describe(`Explore view`, () => {
   it(`has no violations`, async () => {
     const fakeClient = new FakeBoclipsClient();
-    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
     fakeClient.alignments.setThemesByProvider({
       providerName: 'openstax',
       themes: [

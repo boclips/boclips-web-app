@@ -148,7 +148,7 @@ describe('Video View', () => {
         ProviderFactory.sample('openstax', { types: [theme.type] }),
       ]);
       fakeClient.videos.insertVideo(exampleVideo);
-      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
 
       const wrapper = renderView([`/sparks/openstax/${theme.id}`]);
 
@@ -179,7 +179,7 @@ describe('Video View', () => {
         ProviderFactory.sample('openstax', { types: [theme.type] }),
       ]);
       fakeClient.videos.insertVideo(videoWithoutEmbedOption);
-      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
 
       const wrapper = renderView([`/sparks/openstax/${theme.id}`]);
 
@@ -210,7 +210,7 @@ describe('Video View', () => {
         themes: [theme],
       });
       fakeClient.videos.insertVideo(newVideo);
-      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
       fakeClient.alignments.setProviders([
         ProviderFactory.sample('openstax', { types: [theme.type] }),
       ]);
@@ -243,7 +243,7 @@ describe('Video View', () => {
         ProviderFactory.sample('openstax', { types: [theme.type] }),
       ]);
       fakeClient.videos.insertVideo(newVideo);
-      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
 
       const wrapper = renderView([`/sparks/openstax/${theme.id}`]);
 

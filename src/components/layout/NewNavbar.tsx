@@ -1,9 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import c from 'classnames';
-import Logo from 'src/components/logo/Logo';
 import MenuIconSVG from 'src/resources/icons/menu-icon.svg';
 import CrossIconSVG from 'src/resources/icons/cross-icon.svg';
-import { AccountButton } from 'src/components/navButtons/AccountButton';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import CartButton from 'src/components/navButtons/CartButton';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
@@ -14,15 +12,22 @@ import PlaylistsButton from 'src/components/navButtons/PlaylistsButton';
 import SkipLink from 'src/components/skipLink/SkipLink';
 import SparksButton from 'src/components/navButtons/SparksButton';
 import SideMenu from 'src/components/layout/SideMenu';
+import LibraryButton from 'src/components/navButtons/LibraryButton';
+import { HomeButton } from 'src/components/navButtons/HomeButton';
+import { NewAccountButton } from 'src/components/navButtons/NewAccountButton';
+import NewLogo from 'src/components/logo/NewLogo';
 import s from './navbar.module.less';
 import { Search } from '../searchBar/SearchBar';
 
-const NavbarResponsive = (): ReactElement => {
+interface Props {
+  showSearch?: boolean;
+}
+
+const NewNavbarResponsive = ({ showSearch = true }: Props): ReactElement => {
   const [showSideMenu, setShowSideMenu] = useState(false);
   const { data: user } = useGetUserQuery();
   const boclipsSecurity = useBoclipsSecurity();
   const breakpoints = useMediaBreakPoint();
-
   const mobileView =
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
 
@@ -54,15 +59,15 @@ const NavbarResponsive = (): ReactElement => {
         aria-label="Boclips navigation bar"
       >
         <div className={s.logo}>
-          <Logo />
+          <NewLogo />
         </div>
 
         <SkipLink />
-
-        <div className="row-start-2 row-end-2 col-start-2 col-end-26 pb-3 lg:pb-0 lg:pt-0 lg:row-start-1 lg:row-end-1 lg:col-start-8 lg:col-end-20">
-          <Search showIconOnly />
-        </div>
-
+        {showSearch && (
+          <div className="row-start-2 row-end-2 col-start-2 col-end-26 pb-3 lg:pb-0 lg:pt-0 lg:row-start-1 lg:row-end-1 lg:col-start-8 lg:col-end-18">
+            <Search showIconOnly />
+          </div>
+        )}
         {mobileView ? (
           <div className={s.buttons}>
             <button type="button" onClick={openSideMenu} aria-label="Menu">
@@ -70,15 +75,17 @@ const NavbarResponsive = (): ReactElement => {
             </button>
           </div>
         ) : (
-          <div className={s.buttonsDesktop}>
+          <div className="col-start-19 col-end-26 row-start-1 row-end-1 flex h-full justify-end ">
+            <HomeButton />
+            <LibraryButton />
             <FeatureGate feature="BO_WEB_APP_SPARKS">
               <SparksButton />
             </FeatureGate>
             <PlaylistsButton />
-            <AccountButton />
             <FeatureGate linkName="cart">
               <CartButton />
             </FeatureGate>
+            <NewAccountButton user={user} />
           </div>
         )}
       </nav>
@@ -88,4 +95,4 @@ const NavbarResponsive = (): ReactElement => {
   );
 };
 
-export default NavbarResponsive;
+export default NewNavbarResponsive;

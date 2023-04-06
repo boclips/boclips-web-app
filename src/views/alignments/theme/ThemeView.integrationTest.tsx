@@ -532,7 +532,7 @@ describe('ThemeView', () => {
 
 const renderThemeView = (theme: Theme): RenderResult => {
   const client = new FakeBoclipsClient();
-  client.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+  client.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
   client.alignments.setThemesByProvider({
     providerName: 'openstax',
     themes: [theme],
