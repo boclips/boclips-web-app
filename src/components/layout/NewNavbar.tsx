@@ -78,7 +78,7 @@ const NewNavbarResponsive = ({ showSearch = true }: Props): ReactElement => {
           <div className="col-start-19 col-end-26 row-start-1 row-end-1 flex h-full justify-end ">
             <HomeButton />
             <LibraryButton />
-            <FeatureGate feature="BO_WEB_APP_OPENSTAX">
+            <FeatureGate feature="BO_WEB_APP_SPARKS">
               <SparksButton />
             </FeatureGate>
             <PlaylistsButton />

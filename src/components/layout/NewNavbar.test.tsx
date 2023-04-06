@@ -179,12 +179,12 @@ describe(`Navbar`, () => {
   });
 
   describe('Sparks option in Navbar', () => {
-    describe('When user has BO_WEB_APP_OPENSTAX feature flag', () => {
+    describe('When user has BO_WEB_APP_SPARKS feature flag', () => {
       const client = new FakeBoclipsClient();
       let wrapper;
 
       beforeEach(() => {
-        client.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: true });
+        client.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
 
         wrapper = render(
           <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
@@ -218,12 +218,12 @@ describe(`Navbar`, () => {
       );
     });
 
-    describe('When user does not have BO_WEB_APP_OPENSTAX', () => {
+    describe('When user does not have BO_WEB_APP_SPARKS', () => {
       const client = new FakeBoclipsClient();
       let wrapper;
 
       beforeEach(() => {
-        client.users.setCurrentUserFeatures({ BO_WEB_APP_OPENSTAX: false });
+        client.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: false });
 
         wrapper = render(
           <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
