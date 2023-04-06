@@ -7,6 +7,7 @@ import HomeSearchHero from 'src/resources/icons/home-illustration.svg';
 import { useNavigate } from 'react-router-dom';
 import NewNavbar from 'src/components/layout/NewNavbar';
 import { FeaturedPlaylists } from 'src/components/playlists/PromotedPlaylists';
+import { VideoCarousel } from 'src/components/carousel/VideoCarousel';
 import FilmIcon from '../../resources/icons/film-icon.svg';
 import YourLibraryIcon from '../../resources/icons/your-library.svg';
 import s from './style.module.less';
@@ -14,58 +15,28 @@ import s from './style.module.less';
 const NewHomeView = () => {
   const navigate = useNavigate();
 
-  // const videoIds = [
-  //   '5c9e4945cbe6e54027116f7c',
-  //   '5c9e4870cbe6e54027116ee0',
-  //   '5c9e483dcbe6e54027116eb0',
-  //   '5c9e4824cbe6e54027116e9b',
-  //   '5c9e4874cbe6e54027116ee4',
-  //   '5c9e4b63cbe6e54027117040',
-  //   '5c9e4947cbe6e54027116f7e',
-  //   '5c9e4934cbe6e54027116f6b',
-  //   '5c9e493acbe6e54027116f71',
-  //   '5c9e4948cbe6e54027116f7f',
-  //   '5c9e4907cbe6e54027116f3f',
-  //   '5c9e4940cbe6e54027116f77',
-  //   '5c9e488ecbe6e54027116efd',
-  //   '5c9e4817cbe6e54027116e8e',
-  //   '5c9e47e8cbe6e54027116e60',
-  //   '5c9e4826cbe6e54027116e9d',
-  //   '5c9e490bcbe6e54027116f43',
-  //   '5c9e4871cbe6e54027116ee1',
-  //   '5c9e4b55cbe6e5402711703c',
-  //   '5c9e4b54cbe6e5402711703b',
-  //   '5c9e493ccbe6e54027116f73',
-  //   '5c9e4955cbe6e54027116f8c',
-  //   '5c9e4886cbe6e54027116ef5',
-  //   '5c9e488dcbe6e54027116efc',
-  //   '5c9e491acbe6e54027116f52',
-  //   '5c9e4964cbe6e54027116f9a',
-  //   '5c9e47f0cbe6e54027116e68',
-  //   '5c9e4959cbe6e54027116f90',
-  //   '5c9e485bcbe6e54027116ecd',
-  //   '5c9e4855cbe6e54027116ec7',
-  //   '5c9e492dcbe6e54027116f65',
-  //   '5c9e4915cbe6e54027116f4d',
-  //   '5c9e4805cbe6e54027116e7c',
-  //   '5c9e4832cbe6e54027116ea6',
-  //   '5c9e4816cbe6e54027116e8d',
-  //   '5c9e486fcbe6e54027116edf',
-  //   '5c9e4899cbe6e54027116f07',
-  //   '5c9e3f16cbe6e54027116cf1',
-  //   '5c9e4864cbe6e54027116ed5',
-  //   '5c9e4917cbe6e54027116f4f',
-  //   '5c9e47facbe6e54027116e71',
-  //   '5c9e494acbe6e54027116f81',
-  //   '5c9e4835cbe6e54027116ea9',
-  //   '5c9e4878cbe6e54027116ee8',
-  //   '5c9e485ecbe6e54027116ed0',
-  //   '5c9e47dacbe6e54027116e52',
-  //   '5c9e575bcbe6e5402711706c',
-  //   '5c9e487ecbe6e54027116eee',
-  //   '5c9e482acbe6e54027116ea1',
-  //   '5c9e47d4cbe6e54027116e4c',
-  // ];
+  const videoIds = [
+    '5e145c0ebc67ab520cac9e91',
+    '5c54d813d8eafeecae2114da',
+    '5c54d80bd8eafeecae210fc7',
+    '5d3055dde69e6810ae1141b3',
+    '5c54d7b5d8eafeecae20e1a9',
+    '5eeb5d12e18c7d5971253585',
+    '5c54da74d8eafeecae22613f',
+    '5e2726bbe78e114607caf371',
+    '5eecb63353dd5552df7fb7ad',
+    '5fec58c8a9043912467a0b8e',
+    '627b42963f890d2245611a22',
+    '63020b21d390ea774f8039d7',
+    '5eecb5112041e37f2645a4f6',
+    '6370f0124320c953bad79e60',
+    '5f16b141e1b0492a380807aa',
+    '61b22630c0410133751cc90e',
+    '5c54da67d8eafeecae225aa7',
+    '62bacd271c53ba2c2d0b5d62',
+    '5c54da48d8eafeecae22496a',
+    '5c54d5c7d8eafeecae1fe3b9',
+  ];
   return (
     <Layout rowsSetup="grid-rows-newHomepage" responsiveLayout>
       <NewNavbar showSearch={false} />
@@ -99,6 +70,9 @@ const NewHomeView = () => {
       </div>
       <div className="row-start-3 row-end-3 col-start-2 col-end-26">
         <FeaturedPlaylists />
+      </div>
+      <div className="row-start-4 row-end-4 col-start-2 col-end-26">
+        <VideoCarousel videoIds={videoIds} title="Featured Videos" />
       </div>
       <Footer className="col-start-2 col-end-26" />
     </Layout>
