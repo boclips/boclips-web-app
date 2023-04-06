@@ -22,23 +22,11 @@ const doGetThemesByProvider = (
   return client.alignments.getThemesByProvider(provider);
 };
 
-export const useGetTypesByProviderQuery = (
-  provider: string,
-): UseQueryResult<string[]> => {
-  const client = useBoclipsClient();
-  return useQuery(['typesByProvider', provider], () =>
-    doGetTypesByProvider(client, provider),
-  );
-};
-
 const doGetThemeByProviderAndId = (
   client: BoclipsClient,
   provider: string,
   id: string,
 ) => client.alignments.getThemeByProviderAndId(provider, id);
-
-const doGetTypesByProvider = (client: BoclipsClient, provider: string) =>
-  client.alignments.getAllTypesByProvider(provider);
 
 export const useGetThemesByProviderQuery = (
   provider: string,
