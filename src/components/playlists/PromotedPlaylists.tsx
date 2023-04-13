@@ -20,38 +20,41 @@ export const FeaturedPlaylists = () => {
   // const location = useLocation();
 
   return (
-    <div>
-      <Typography.H3 className="mb-4">Featured Playlists</Typography.H3>
+    <div className=" px-4 py-6 rounded-xl bg-blue-100 ">
+      <Typography.H3 className="mb-6 px-7">Featured Playlists</Typography.H3>
       {!isInitialLoading && playlists.length > 0 && (
         <CarouselProvider
-          className="my-6"
           totalSlides={playlists?.length}
           naturalSlideWidth={10}
           naturalSlideHeight={20}
           visibleSlides={4}
         >
           <div className="relative px-4">
-            <Slider className="h-56 m-auto">
-              {playlists.map((playlist: ListViewCollection, key: number) => (
-                <Slide index={key}>
-                  <Link
-                    to={{
-                      pathname: `/playlists/${playlist.id}`,
-                    }}
-                    aria-label={`${playlist.title} grid card`}
-                  >
-                    <div className="mx-4 bg-white rounded-lg shadow-lg">
-                      <Thumbnail video={playlist.videos[0]} />
-                      <div className="m-3">
-                        <Typography.H4>{playlist.title}</Typography.H4>
-                        <Typography.Body>
-                          {playlist.videos.length} videos
-                        </Typography.Body>
+            <Slider className="h-64 m-auto">
+              {playlists
+                .filter(
+                  (playlist: ListViewCollection) => playlist.videos.length > 0,
+                )
+                .map((playlist: ListViewCollection, key: number) => (
+                  <Slide index={key}>
+                    <Link
+                      to={{
+                        pathname: `/playlists/${playlist.id}`,
+                      }}
+                      aria-label={`${playlist.title} grid card`}
+                    >
+                      <div className="mx-4 bg-white rounded-lg shadow-lg pb-2">
+                        <Thumbnail video={playlist.videos[0]} />
+                        <div className="m-3">
+                          <Typography.H4>{playlist.title}</Typography.H4>
+                          <Typography.Body>
+                            {playlist.videos.length} videos
+                          </Typography.Body>
+                        </div>
                       </div>
-                    </div>
-                  </Link>
-                </Slide>
-              ))}
+                    </Link>
+                  </Slide>
+                ))}
             </Slider>
             <ButtonBack className="absolute top-1/2 left-0">
               <ChevronSVG />

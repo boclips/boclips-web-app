@@ -1,9 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
-import { useGetVideos } from 'src/hooks/api/videoQuery';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import {
   CarouselProvider,
   Slider,
@@ -12,29 +10,26 @@ import {
   ButtonNext,
 } from 'pure-react-carousel';
 import ChevronSVG from 'src/resources/icons/chevron.svg';
+import Thumbnail from 'src/components/playlists/thumbnails/Thumbnail';
 
 interface Props {
-  videoIds: string[];
+  videos: Video[];
   title: string;
 }
 
-export const VideoCarousel = ({ videoIds, title }: Props) => {
-  const { data: videos, isLoading } = useGetVideos(videoIds);
-
+export const VideoCarousel = ({ videos, title }: Props) => {
   return (
-    !isLoading &&
     videos.length > 0 && (
-      <div>
-        <Typography.H3 className="mb-4">{title}</Typography.H3>
+      <div className="px-4 py-6 rounded">
+        <Typography.H3 className="mb-4 px-7">{title}</Typography.H3>
         <CarouselProvider
-          className="my-6"
           totalSlides={videos?.length}
           naturalSlideWidth={10}
           naturalSlideHeight={20}
           visibleSlides={4}
         >
           <div className="relative px-4">
-            <Slider className="h-56 m-auto">
+            <Slider className="h-64 m-auto">
               {videos.map((video: Video, key: number) => (
                 <Slide index={key}>
                   <Link
@@ -46,9 +41,11 @@ export const VideoCarousel = ({ videoIds, title }: Props) => {
                     }}
                     aria-label={`${video.title} grid card`}
                   >
-                    <div className="bg-white rounded-2xl shadow-lg p-4 mb-10 w-full">
-                      <VideoPlayer video={video} />
-                      <Typography.H4>{video.title}</Typography.H4>
+                    <div className="mx-4 bg-white rounded-lg shadow-lg pb-2">
+                      <Thumbnail video={video} />
+                      <div className="m-3">
+                        <Typography.H4>{video.title}</Typography.H4>
+                      </div>
                     </div>
                   </Link>
                 </Slide>

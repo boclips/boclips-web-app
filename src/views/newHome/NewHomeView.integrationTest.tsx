@@ -9,6 +9,8 @@ import { createBrowserHistory } from 'history';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { resizeToDesktop } from 'src/testSupport/resizeTo';
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
+import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 
 describe('HomeView', () => {
   beforeEach(() => {
@@ -83,5 +85,37 @@ describe('HomeView', () => {
     expect(
       await wrapper.getByPlaceholderText('Search for videos'),
     ).toBeInTheDocument();
+  });
+
+  it(`displays featured videos and playlists`, async () => {
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    fakeBoclipsClient.collections.addToFake(
+      CollectionFactory.sample({
+        title: 'my promoted playlist',
+        videos: [VideoFactory.sample({})],
+        promoted: true,
+      }),
+    );
+    fakeBoclipsClient.videos.insertVideo(
+      VideoFactory.sample({
+        id: '5e145c0ebc67ab520cac9e91',
+        title: 'my promoted video',
+        promoted: true,
+      }),
+    );
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/new-home']}>
+        <App
+          reactQueryClient={createReactQueryClient()}
+          apiClient={fakeBoclipsClient}
+          boclipsSecurity={stubBoclipsSecurity}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await wrapper.findByText('my promoted playlist'),
+    ).toBeInTheDocument();
+    expect(await wrapper.findByText('my promoted video')).toBeInTheDocument();
   });
 });
