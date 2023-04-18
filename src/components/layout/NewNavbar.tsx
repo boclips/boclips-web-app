@@ -64,7 +64,7 @@ const NewNavbarResponsive = ({ showSearch = true }: Props): ReactElement => {
 
         <SkipLink />
         {showSearch && (
-          <div className="row-start-2 row-end-2 col-start-2 col-end-26 pb-3 lg:pb-0 lg:pt-0 lg:row-start-1 lg:row-end-1 lg:col-start-8 lg:col-end-18">
+          <div className="row-start-2 row-end-2 col-start-2 col-end-26 pb-3 lg:pb-0 lg:pt-0 lg:row-start-1 lg:row-end-1 lg:col-start-7 lg:col-end-15">
             <Search showIconOnly />
           </div>
         )}
