@@ -23,7 +23,7 @@ const LibraryButton = () => {
         data-qa="cart-button"
         className={s.headerButton}
       >
-        <FilmIcon className="h-6 w-6" />
+        <FilmIcon />
         <span>All videos</span>
       </button>
     </div>

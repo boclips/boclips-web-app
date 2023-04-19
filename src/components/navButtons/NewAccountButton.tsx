@@ -80,7 +80,6 @@ export const NewAccountButton = ({ user }: Props) => {
           aria-expanded={displayModal}
           aria-haspopup
           className={s.accountButton}
-          width="250px"
           icon={<MyAccountSVG className={s.navbarIcon} />}
           text={`${user.firstName} ${user.lastName}`}
           height="45px"

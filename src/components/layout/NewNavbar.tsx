@@ -75,7 +75,8 @@ const NewNavbarResponsive = ({ showSearch = true }: Props): ReactElement => {
             </button>
           </div>
         ) : (
-          <div className="col-start-19 col-end-26 row-start-1 row-end-1 flex h-full justify-end ">
+          <div className="col-start-15 col-end-26 row-start-1 row-end-1 flex h-full justify-end ">
+            <div className="flex mr-6">
             <HomeButton />
             <LibraryButton />
             <FeatureGate feature="BO_WEB_APP_SPARKS">
@@ -85,6 +86,7 @@ const NewNavbarResponsive = ({ showSearch = true }: Props): ReactElement => {
             <FeatureGate linkName="cart">
               <CartButton />
             </FeatureGate>
+            </div>
             <NewAccountButton user={user} />
           </div>
         )}
