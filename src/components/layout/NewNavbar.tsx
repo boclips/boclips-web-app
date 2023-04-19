@@ -15,9 +15,9 @@ import SideMenu from 'src/components/layout/SideMenu';
 import LibraryButton from 'src/components/navButtons/LibraryButton';
 import { HomeButton } from 'src/components/navButtons/HomeButton';
 import { NewAccountButton } from 'src/components/navButtons/NewAccountButton';
-import NewLogo from 'src/components/logo/NewLogo';
 import s from './navbar.module.less';
 import { Search } from '../searchBar/SearchBar';
+import Logo from "src/components/logo/Logo";
 
 interface Props {
   showSearch?: boolean;
@@ -59,7 +59,7 @@ const NewNavbarResponsive = ({ showSearch = true }: Props): ReactElement => {
         aria-label="Boclips navigation bar"
       >
         <div className={s.logo}>
-          <NewLogo />
+          <Logo />
         </div>
 
         <SkipLink />
