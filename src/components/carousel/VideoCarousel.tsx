@@ -44,7 +44,7 @@ export const VideoCarousel = ({ videos, title }: Props) => {
                     <div className="mx-4 bg-white rounded-lg shadow-lg pb-2">
                       <Thumbnail video={video} />
                       <div className="m-3">
-                        <Typography.H4>{video.title}</Typography.H4>
+                        <Typography.H4 className="truncate-one-line">{video.title}</Typography.H4>
                       </div>
                     </div>
                   </Link>
