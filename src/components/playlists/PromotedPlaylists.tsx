@@ -17,7 +17,6 @@ import './PromotedPlaylists.less';
 
 export const FeaturedPlaylists = () => {
   const { data: playlists, isInitialLoading } = useGetPromotedPlaylistsQuery();
-  // const location = useLocation();
 
   return (
     <div className=" px-4 py-6 rounded-xl bg-blue-100 ">
