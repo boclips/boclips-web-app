@@ -81,7 +81,7 @@ export const NewAccountButton = ({ user }: Props) => {
           aria-haspopup
           className={s.accountButton}
           icon={<MyAccountSVG className={s.navbarIcon} />}
-          text={`${user.firstName} ${user.lastName}`}
+          text={`${user.firstName}`}
           height="45px"
         />
       )}
