@@ -15,9 +15,9 @@ import SideMenu from 'src/components/layout/SideMenu';
 import LibraryButton from 'src/components/navButtons/LibraryButton';
 import { HomeButton } from 'src/components/navButtons/HomeButton';
 import { NewAccountButton } from 'src/components/navButtons/NewAccountButton';
+import Logo from 'src/components/logo/Logo';
 import s from './navbar.module.less';
 import { Search } from '../searchBar/SearchBar';
-import Logo from "src/components/logo/Logo";
 
 interface Props {
   showSearch?: boolean;
@@ -77,15 +77,15 @@ const NewNavbarResponsive = ({ showSearch = true }: Props): ReactElement => {
         ) : (
           <div className="col-start-15 col-end-26 row-start-1 row-end-1 flex h-full justify-end ">
             <div className="flex mr-6">
-            <HomeButton />
-            <LibraryButton />
-            <FeatureGate feature="BO_WEB_APP_SPARKS">
-              <SparksButton />
-            </FeatureGate>
-            <PlaylistsButton />
-            <FeatureGate linkName="cart">
-              <CartButton />
-            </FeatureGate>
+              <HomeButton />
+              <LibraryButton />
+              <FeatureGate feature="BO_WEB_APP_SPARKS">
+                <SparksButton />
+              </FeatureGate>
+              <PlaylistsButton />
+              <FeatureGate linkName="cart">
+                <CartButton />
+              </FeatureGate>
             </div>
             <NewAccountButton user={user} />
           </div>
