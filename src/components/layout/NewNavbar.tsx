@@ -25,7 +25,7 @@ interface Props {
 
 const NewNavbarResponsive = ({ showSearch = true }: Props): ReactElement => {
   const [showSideMenu, setShowSideMenu] = useState(false);
-  const { data: user } = useGetUserQuery();
+  const { data: user, isLoading: isUserLoading } = useGetUserQuery();
   const boclipsSecurity = useBoclipsSecurity();
   const breakpoints = useMediaBreakPoint();
   const mobileView =
@@ -87,7 +87,7 @@ const NewNavbarResponsive = ({ showSearch = true }: Props): ReactElement => {
                 <CartButton />
               </FeatureGate>
             </div>
-            <NewAccountButton user={user} />
+            {!isUserLoading && <NewAccountButton user={user} />}
           </div>
         )}
       </nav>

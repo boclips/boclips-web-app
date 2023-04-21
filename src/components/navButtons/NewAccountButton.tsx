@@ -1,8 +1,6 @@
 import MyAccountSVG from 'src/resources/icons/my-account-icon.svg';
 import ExternalLinkIcon from 'src/resources/icons/external-link-icon.svg';
 import React, { useRef, useState } from 'react';
-import { useGetUserQuery } from 'src/hooks/api/userQuery';
-import { Loading } from 'src/components/common/Loading';
 import c from 'classnames';
 import { useBoclipsSecurity } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { Constants } from 'src/AppConstants';
@@ -22,7 +20,6 @@ interface Props {
 export const NewAccountButton = ({ user }: Props) => {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [displayModal, setDisplayModal] = useState(false);
-  const { data, isLoading } = useGetUserQuery();
   const ref = useRef(null);
 
   CloseOnClickOutside(ref, () => setDisplayModal(false));
@@ -81,17 +78,15 @@ export const NewAccountButton = ({ user }: Props) => {
           aria-haspopup
           className={s.accountButton}
           icon={<MyAccountSVG className={s.navbarIcon} />}
-          text={`${user.firstName}`}
+          text={
+            user.firstName && user.firstName.trim().length > 0
+              ? `${user.firstName}`
+              : 'My Account'
+          }
           height="45px"
         />
       )}
-      {isLoading && displayModal && (
-        <div ref={ref} className={s.tooltip}>
-          <Loading />
-        </div>
-      )}
-
-      {displayModal && !isLoading && (
+      {displayModal && (
         <div
           data-qa="account-modal"
           ref={ref}
@@ -100,10 +95,10 @@ export const NewAccountButton = ({ user }: Props) => {
         >
           <span className={s.userDetails}>
             <div className="font-medium">
-              {data.firstName} {data.lastName}
+              {user.firstName} {user.lastName}
             </div>
             <Typography.Body as="div" size="small" className="text-gray-800">
-              {data.email}
+              {user.email}
             </Typography.Body>
           </span>
           <div role="menu" className={s.menu} aria-label="Account menu">
