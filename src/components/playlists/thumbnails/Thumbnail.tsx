@@ -8,8 +8,8 @@ interface Props {
   video: ListViewVideo;
 }
 
-const Thumbnails = ({ video }: Props) => {
-  const { data: firstVideo, isLoading: firstLoading } = useFindOrGetVideo(
+const Thumbnail = ({ video }: Props) => {
+  const { data: retrievedVideo, isLoading: firstLoading } = useFindOrGetVideo(
     video?.id,
   );
 
@@ -17,15 +17,15 @@ const Thumbnails = ({ video }: Props) => {
     fullVideo.playback?.links?.thumbnail?.getOriginalLink();
 
   return (
-    <div className="h-40">
-      {(firstVideo && firstLoading === false && (
+    <div className="h-36">
+      {(video && firstLoading === false && (
         <div
           className={s.thumbnails}
-          key={firstVideo.id}
+          key={retrievedVideo.id}
           role="img"
-          aria-label={`Thumbnail of ${firstVideo.title}`}
+          aria-label={`Thumbnail of ${retrievedVideo.title}`}
           style={{
-            background: `url(${getThumbnailUrl(firstVideo)}) center center`,
+            background: `url(${getThumbnailUrl(retrievedVideo)}) center center`,
             backgroundSize: 'cover',
           }}
         />
@@ -40,4 +40,4 @@ const Thumbnails = ({ video }: Props) => {
   );
 };
 
-export default Thumbnails;
+export default Thumbnail;

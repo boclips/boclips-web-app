@@ -20,12 +20,10 @@ export const FeaturedPlaylists = () => {
         }}
         aria-label={`${playlist.title} grid card`}
       >
-        <div className="mx-4 bg-white rounded-lg shadow-lg pb-2">
+        <div className="mx-4 bg-white rounded-lg shadow-lg pb-2 h-64">
           <Thumbnail video={playlist.videos[0]} />
-          <div className="m-3">
-            <Typography.H4 className="truncate-one-line">
-              {playlist.title}
-            </Typography.H4>
+          <div className="m-3 flex justify-between h-24 flex-col">
+            <Typography.H4 className="truncate">{playlist.title}</Typography.H4>
             <Typography.Body>{playlist.videos.length} videos</Typography.Body>
           </div>
         </div>

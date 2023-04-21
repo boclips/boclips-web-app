@@ -26,7 +26,7 @@ export const Carousel = ({ slides, title }: Props) => {
           visibleSlides={4}
         >
           <div className="relative px-4">
-            <Slider className="h-64 m-auto">
+            <Slider className="h-72 m-auto">
               {slides.map((slide: ReactElement, key: number) => (
                 <Slide index={key}>{slide}</Slide>
               ))}
