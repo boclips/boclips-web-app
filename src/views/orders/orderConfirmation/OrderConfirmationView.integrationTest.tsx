@@ -19,9 +19,9 @@ describe('OrderConfirmationView', () => {
     );
 
     expect(await wrapper.findByText('Loading')).toBeVisible();
-    expect(
-      await wrapper.findByText('Let’s find the videos you need'),
-    ).toBeVisible();
+    expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
+        'Welcome to CourseSpark!',
+    );
   });
 
   it('displays confirmation page', async () => {

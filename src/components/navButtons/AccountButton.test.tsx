@@ -38,14 +38,14 @@ describe('account button', () => {
 
     const navbar = renderAccountButton();
 
-    fireEvent.click(navbar.getByText('Account'));
+    fireEvent.click(await navbar.findByText('Eddie'));
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 
     await waitFor(() => {
       expect(navbar.getByText('Eddie Bravo')).toBeInTheDocument();
       expect(navbar.getByText('eddie@10thplanetjj.com')).toBeInTheDocument();
-      expect(navbar.getByText('Your orders')).toBeInTheDocument();
+      expect(navbar.getByText('My orders')).toBeInTheDocument();
       expect(navbar.getByText('Platform guide')).toBeInTheDocument();
       expect(navbar.getByText('Log out')).toBeInTheDocument();
     });
@@ -64,9 +64,9 @@ describe('account button', () => {
 
     const navbar = renderAccountButton();
 
-    expect(await navbar.findByText('Account')).toBeInTheDocument();
+    expect(await navbar.findByText('yo')).toBeInTheDocument();
 
-    fireEvent.click(navbar.getByText('Account'));
+    fireEvent.click(await navbar.findByText('yo'));
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 
@@ -83,11 +83,13 @@ describe('account button', () => {
    * Ideally we'd test that we'd actually get back to the home page, somehow.
    */
   it('redirects to / on logout', async () => {
-    fakeClient.users.insertCurrentUser(UserFactory.sample());
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({ firstName: 'Frank' }),
+    );
 
     const wrapper = renderAccountButton();
 
-    fireEvent.click(await wrapper.findByText('Account'));
+    fireEvent.click(await wrapper.findByText('Frank'));
 
     fireEvent.click(await wrapper.findByText('Log out'));
 
@@ -97,12 +99,12 @@ describe('account button', () => {
   });
 
   it('closes the dialog on esc', async () => {
-    fakeClient.users.insertCurrentUser(UserFactory.sample());
+    fakeClient.users.insertCurrentUser(UserFactory.sample({firstName: "Frank"}));
     const navbar = renderAccountButton();
 
-    expect(await navbar.findByText('Account')).toBeInTheDocument();
+    expect(await navbar.findByText('Frank')).toBeInTheDocument();
 
-    fireEvent.click(navbar.getByText('Account'));
+    fireEvent.click(await navbar.findByText('Frank'));
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 
@@ -117,12 +119,12 @@ describe('account button', () => {
   });
 
   it('closes the dialog when the dialog loses focus', async () => {
-    fakeClient.users.insertCurrentUser(UserFactory.sample());
+    fakeClient.users.insertCurrentUser(UserFactory.sample({firstName: "Frank"}));
     const navbar = renderAccountButton();
 
-    expect(await navbar.findByText('Account')).toBeInTheDocument();
+    expect(await navbar.findByText('Frank')).toBeInTheDocument();
 
-    fireEvent.click(navbar.getByText('Account'));
+    fireEvent.click(await navbar.findByText('Frank'));
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 
@@ -132,12 +134,12 @@ describe('account button', () => {
   });
 
   it('does not close the dialog when a child gains focus', async () => {
-    fakeClient.users.insertCurrentUser(UserFactory.sample());
+    fakeClient.users.insertCurrentUser(UserFactory.sample({firstName: "Frank"}));
     const navbar = renderAccountButton();
 
-    expect(await navbar.findByText('Account')).toBeVisible();
+    expect(await navbar.findByText('Frank')).toBeVisible();
 
-    fireEvent.click(navbar.getByText('Account'));
+    fireEvent.click(await navbar.findByText('Frank'));
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 

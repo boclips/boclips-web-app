@@ -5,35 +5,39 @@ import App from 'src/App';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { Helmet } from 'react-helmet';
-// eslint-disable-next-line import/extensions
-import { disciplines } from 'src/components/disciplinesWidget/disciplinesFixture';
 import { createBrowserHistory } from 'history';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { resizeToDesktop } from 'src/testSupport/resizeTo';
+import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
+import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 
 describe('HomeView', () => {
   beforeEach(() => {
     resizeToDesktop(1024);
   });
-  it('loads the home view text', async () => {
+  it('loads the home view buttons', async () => {
     const wrapper = render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={['/']}>
         <App
+          reactQueryClient={createReactQueryClient()}
           apiClient={new FakeBoclipsClient()}
           boclipsSecurity={stubBoclipsSecurity}
         />
       </MemoryRouter>,
     );
-
-    expect(
-      await wrapper.findByText('Let’s find the videos you need'),
-    ).toBeInTheDocument();
+    expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
+      'Welcome to CourseSpark!',
+    );
+    expect(await wrapper.findByText('Browse All Videos')).toBeInTheDocument();
+    expect(await wrapper.findByText('View My Playlists')).toBeInTheDocument();
   });
 
   it('displays Coursespark as window title', async () => {
     render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={['/']}>
         <App
+          reactQueryClient={createReactQueryClient()}
           apiClient={new FakeBoclipsClient()}
           boclipsSecurity={stubBoclipsSecurity}
         />
@@ -45,42 +49,33 @@ describe('HomeView', () => {
     expect(helmet.title).toEqual('CourseSpark');
   });
 
-  it('redirects to search (video) page with selected subject filter and query', async () => {
+  it('redirects to empty search (video) page with no filters or query', async () => {
     const fakeClient = new FakeBoclipsClient();
     const client = new QueryClient();
-
-    // eslint-disable-next-line array-callback-return
-    disciplines.map((discipline) => {
-      fakeClient.disciplines.insertMyDiscipline(discipline);
-    });
-
-    const expectedPathname = '/videos';
-    const expectedSearch = `?subject=${disciplines[0].subjects[1].id}`;
 
     const history = createBrowserHistory();
 
     const wrapper = render(
-      <Router location={history.location} navigator={history}>
+      <Router location="/" navigator={history}>
         <QueryClientProvider client={client}>
-          <App apiClient={fakeClient} boclipsSecurity={stubBoclipsSecurity} />
+          <App
+            apiClient={fakeClient}
+            boclipsSecurity={stubBoclipsSecurity}
+            reactQueryClient={createReactQueryClient()}
+          />
         </QueryClientProvider>
       </Router>,
     );
+    fireEvent.click(await wrapper.findByText('Browse All Videos'));
 
-    fireEvent.click(await wrapper.findByText(disciplines[0].name));
-
-    const subject = await wrapper.findByText(disciplines[0].subjects[1].name);
-
-    fireEvent.click(subject);
-
-    expect(history.location.pathname).toEqual(expectedPathname);
-    expect(history.location.search).toEqual(expectedSearch); // search = query parameters
+    expect(history.location.pathname).toEqual('/videos');
   });
 
   it('Search is visible on homepage', async () => {
     const wrapper = render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={['/']}>
         <App
+          reactQueryClient={createReactQueryClient()}
           apiClient={new FakeBoclipsClient()}
           boclipsSecurity={stubBoclipsSecurity}
         />
@@ -88,7 +83,39 @@ describe('HomeView', () => {
     );
 
     expect(
-      await wrapper.getByPlaceholderText('Search for videos'),
+      await wrapper.findByPlaceholderText('Search for videos'),
     ).toBeInTheDocument();
+  });
+
+  it(`displays featured videos and playlists`, async () => {
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    fakeBoclipsClient.collections.addToFake(
+      CollectionFactory.sample({
+        title: 'my promoted playlist',
+        videos: [VideoFactory.sample({})],
+        promoted: true,
+      }),
+    );
+    fakeBoclipsClient.videos.insertVideo(
+      VideoFactory.sample({
+        id: '63c04899bf161a652f79f0ed',
+        title: 'my promoted video',
+        promoted: true,
+      }),
+    );
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/']}>
+        <App
+          reactQueryClient={createReactQueryClient()}
+          apiClient={fakeBoclipsClient}
+          boclipsSecurity={stubBoclipsSecurity}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await wrapper.findByText('my promoted playlist'),
+    ).toBeInTheDocument();
+    expect(await wrapper.findByText('my promoted video')).toBeInTheDocument();
   });
 });

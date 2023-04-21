@@ -35,9 +35,9 @@ describe('App', () => {
       </MemoryRouter>,
     );
 
-    expect(
-      await wrapper.findByText('Let’s find the videos you need'),
-    ).toBeVisible();
+    expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
+      'Welcome to CourseSpark!',
+    );
     expect(wrapper.queryByText('Page not found!')).not.toBeInTheDocument();
   });
 
