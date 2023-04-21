@@ -127,6 +127,18 @@ describe(`Navbar`, () => {
         await wrapper.getByPlaceholderText('Search for videos'),
       ).toBeVisible();
     });
+
+    it(`search bar hidden when disabled`, () => {
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <NavbarResponsive showSearch={false} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      expect(wrapper.queryByPlaceholderText('Search for videos')).toBeNull();
+    });
   });
 
   describe('Playlists in Navbar', () => {

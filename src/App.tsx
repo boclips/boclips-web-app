@@ -40,8 +40,6 @@ const SearchResultsView = lazyWithRetry(
 
 const HomeView = lazyWithRetry(() => import('./views/home/HomeView'));
 
-const NewHomeView = lazyWithRetry(() => import('./views/newHome/NewHomeView'));
-
 const CartView = lazyWithRetry(() => import('src/views/cart/CartView'));
 
 const OrdersView = lazyWithRetry(() => import('src/views/orders/OrdersView'));
@@ -247,8 +245,6 @@ const App = ({
                       path="/explore/*"
                       element={<RedirectFromExploreToSparks />}
                     />
-                    <Route path="/new-home" element={<NewHomeView />} />
-
                     <Route
                       path="*"
                       element={
