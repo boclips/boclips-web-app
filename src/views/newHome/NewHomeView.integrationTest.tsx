@@ -98,7 +98,7 @@ describe('HomeView', () => {
     );
     fakeBoclipsClient.videos.insertVideo(
       VideoFactory.sample({
-        id: '5e145c0ebc67ab520cac9e91',
+        id: '63c04899bf161a652f79f0ed',
         title: 'my promoted video',
         promoted: true,
       }),

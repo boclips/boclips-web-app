@@ -36,7 +36,7 @@ describe(`PromotedPlaylists`, () => {
       </BoclipsClientProvider>,
     );
 
-    expect(wrapper.getByText('Featured Playlists')).toBeInTheDocument();
+    expect(await wrapper.findByText('Featured Playlists')).toBeInTheDocument();
     expect(
       await wrapper.findByText('my promoted playlist'),
     ).toBeInTheDocument();
@@ -70,7 +70,7 @@ describe(`PromotedPlaylists`, () => {
       </BoclipsClientProvider>,
     );
 
-    expect(wrapper.getByText('Featured Playlists')).toBeInTheDocument();
+    expect(await wrapper.findByText('Featured Playlists')).toBeInTheDocument();
     expect(
       await wrapper.findByText('my promoted playlist with videos'),
     ).toBeInTheDocument();
