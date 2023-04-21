@@ -1,31 +1,43 @@
-import { fireEvent, waitFor } from '@testing-library/react';
-import Navbar from 'src/components/layout/Navbar';
-import React from 'react';
-import { render } from 'src/testSupport/render';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
-import { Constants } from 'src/AppConstants';
-import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import React from 'react';
+import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
-import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
-import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
+import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import { Constants } from 'src/AppConstants';
+import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import NavbarResponsive from 'src/components/layout/Navbar';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-describe('account button', () => {
-  let fakeClient: FakeBoclipsClient;
-
+describe(`account button`, () => {
   beforeEach(() => {
     window.resizeTo(1680, 1024);
 
     fakeClient = new FakeBoclipsClient();
+    fakeClient.users.clear();
   });
 
   const renderAccountButton = () =>
     render(
-      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <BoclipsClientProvider client={fakeClient}>
-          <Navbar />
-        </BoclipsClientProvider>
-      </BoclipsSecurityProvider>,
+      <Router>
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <QueryClientProvider client={new QueryClient()}>
+            <BoclipsClientProvider client={fakeClient}>
+              <NavbarResponsive />
+            </BoclipsClientProvider>
+          </QueryClientProvider>
+        </BoclipsSecurityProvider>
+      </Router>,
     );
+
+  it(`text is my account if name is blank`, async () => {
+    fakeClient.users.insertCurrentUser(UserFactory.sample({ firstName: ' ' }));
+    const wrapper = renderAccountButton();
+
+    expect(await wrapper.findByText('My Account')).toBeInTheDocument();
+  });
+  let fakeClient: FakeBoclipsClient;
 
   it('opens the tooltip when clicked and close the tooltip when clicked on the body', async () => {
     fakeClient.users.insertCurrentUser(
@@ -35,7 +47,6 @@ describe('account button', () => {
         email: 'eddie@10thplanetjj.com',
       }),
     );
-
     const navbar = renderAccountButton();
 
     fireEvent.click(await navbar.findByText('Eddie'));
@@ -50,42 +61,37 @@ describe('account button', () => {
       expect(navbar.getByText('Log out')).toBeInTheDocument();
     });
   });
-
   it('does not contain your orders link in tooltip when user does not have userOrders link', async () => {
-    fakeClient.users.insertCurrentUser(
-      UserFactory.sample({
-        id: '123',
-        firstName: 'yo',
-        lastName: 'yo',
-        email: 'yoyo@ma.com',
-      }),
-    );
+    const user = UserFactory.sample({
+      id: '123',
+      firstName: 'yo',
+      lastName: 'yo',
+      email: 'yoyo@ma.com',
+    });
+    fakeClient.users.insertCurrentUser(user);
     fakeClient.links.userOrders = null;
 
-    const navbar = renderAccountButton();
+    const wrapper = renderAccountButton();
+    expect(await wrapper.findByText('yo')).toBeInTheDocument();
 
-    expect(await navbar.findByText('yo')).toBeInTheDocument();
+    fireEvent.click(await wrapper.findByText('yo'));
 
-    fireEvent.click(await navbar.findByText('yo'));
-
-    await waitFor(() => navbar.getByTestId('account-modal'));
+    await waitFor(() => wrapper.getByTestId('account-modal'));
 
     await waitFor(() => {
-      expect(navbar.getByText('yo yo')).toBeInTheDocument();
-      expect(navbar.getByText('yoyo@ma.com')).toBeInTheDocument();
-      expect(navbar.queryByText('Your orders')).toBeNull();
-      expect(navbar.getByText('Log out')).toBeInTheDocument();
+      expect(wrapper.getByText('yo yo')).toBeInTheDocument();
+      expect(wrapper.getByText('yoyo@ma.com')).toBeInTheDocument();
+      expect(wrapper.queryByText('My orders')).toBeNull();
+      expect(wrapper.getByText('Log out')).toBeInTheDocument();
     });
   });
-
   /**
    * I'm not sure this actually tests anything.
    * Ideally we'd test that we'd actually get back to the home page, somehow.
    */
   it('redirects to / on logout', async () => {
-    fakeClient.users.insertCurrentUser(
-      UserFactory.sample({ firstName: 'Frank' }),
-    );
+    const user = UserFactory.sample({ firstName: 'Frank' });
+    fakeClient.users.insertCurrentUser(user);
 
     const wrapper = renderAccountButton();
 
@@ -99,7 +105,8 @@ describe('account button', () => {
   });
 
   it('closes the dialog on esc', async () => {
-    fakeClient.users.insertCurrentUser(UserFactory.sample({firstName: "Frank"}));
+    const user = UserFactory.sample({ firstName: 'Frank' });
+    fakeClient.users.insertCurrentUser(user);
     const navbar = renderAccountButton();
 
     expect(await navbar.findByText('Frank')).toBeInTheDocument();
@@ -119,7 +126,8 @@ describe('account button', () => {
   });
 
   it('closes the dialog when the dialog loses focus', async () => {
-    fakeClient.users.insertCurrentUser(UserFactory.sample({firstName: "Frank"}));
+    const user = UserFactory.sample({ firstName: 'Frank' });
+    fakeClient.users.insertCurrentUser(user);
     const navbar = renderAccountButton();
 
     expect(await navbar.findByText('Frank')).toBeInTheDocument();
@@ -134,7 +142,8 @@ describe('account button', () => {
   });
 
   it('does not close the dialog when a child gains focus', async () => {
-    fakeClient.users.insertCurrentUser(UserFactory.sample({firstName: "Frank"}));
+    const user = UserFactory.sample({ firstName: 'Frank' });
+    fakeClient.users.insertCurrentUser(user);
     const navbar = renderAccountButton();
 
     expect(await navbar.findByText('Frank')).toBeVisible();

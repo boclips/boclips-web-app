@@ -1,8 +1,6 @@
 import MyAccountSVG from 'src/resources/icons/my-account-icon.svg';
 import ExternalLinkIcon from 'src/resources/icons/external-link-icon.svg';
 import React, { useRef, useState } from 'react';
-import { useGetUserQuery } from 'src/hooks/api/userQuery';
-import { Loading } from 'src/components/common/Loading';
 import c from 'classnames';
 import { useBoclipsSecurity } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { Constants } from 'src/AppConstants';
@@ -11,13 +9,15 @@ import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
 import { Typography } from '@boclips-ui/typography';
-import s from './style.module.less';
+import Button from '@boclips-ui/button';
+import { useGetUserQuery } from 'src/hooks/api/userQuery';
+import s from './newstyle.module.less';
 import { Link } from '../common/Link';
 
 export const AccountButton = () => {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [displayModal, setDisplayModal] = useState(false);
-  const { data, isLoading } = useGetUserQuery();
+  const { data: user, isLoading } = useGetUserQuery();
   const ref = useRef(null);
 
   CloseOnClickOutside(ref, () => setDisplayModal(false));
@@ -66,50 +66,56 @@ export const AccountButton = () => {
     <div
       onMouseEnter={onMouseEnterAction}
       onMouseLeave={onMouseLeaveAction}
-      className={c(s.navButton, { [s.active]: displayModal || onMouseEnter })}
+      className={c({ [s.active]: displayModal || onMouseEnter })}
     >
-      <button
-        type="button"
-        onClick={onClick}
-        data-qa="account-menu"
-        aria-expanded={displayModal}
-        aria-haspopup
-        className={s.headerButton}
-      >
-        <MyAccountSVG className={s.navbarIcon} />
-        <span>Account</span>
-      </button>
-
-      {isLoading && displayModal && (
-        <div ref={ref} className={s.tooltip}>
-          <Loading />
-        </div>
+      {user && !isLoading && (
+        <Button
+          onClick={onClick}
+          data-qa="account-menu"
+          aria-expanded={displayModal}
+          aria-haspopup
+          className={s.accountButton}
+          icon={<MyAccountSVG className={s.navbarIcon} />}
+          text={
+            user.firstName && user.firstName.trim().length > 0
+              ? `${user.firstName}`
+              : 'My Account'
+          }
+          height="45px"
+        />
       )}
-
-      {displayModal && !isLoading && (
+      {displayModal && (
         <div
           data-qa="account-modal"
           ref={ref}
           className={s.tooltip}
           onBlur={handleDialogBlur}
         >
-          <div className="font-medium">
-            {data.firstName} {data.lastName}
-          </div>
-          <Typography.Body as="div" size="small" className="text-gray-800">
-            {data.email}
-          </Typography.Body>
-          <div role="menu" aria-label="Account menu">
+          <span className={s.userDetails}>
+            <div className="font-medium">
+              {user.firstName} {user.lastName}
+            </div>
+            <Typography.Body as="div" size="small" className="text-gray-800">
+              {user.email}
+            </Typography.Body>
+          </span>
+          <div role="menu" className={s.menu} aria-label="Account menu">
             <FeatureGate linkName="userOrders">
-              <div className="pt-4">
+              <div className="pt-2">
                 <Link onClick={ordersOpenedEvent} to="/orders" tabIndex={-1}>
                   <Typography.Body size="small" as="button">
-                    Your orders
+                    My orders
                   </Typography.Body>
                 </Link>
               </div>
             </FeatureGate>
-
+            <div className="pt-1">
+              <Link to="/playlists" tabIndex={-1}>
+                <Typography.Body size="small" as="button">
+                  My playlists
+                </Typography.Body>
+              </Link>
+            </div>
             <div className="pt-1">
               <a
                 target="_blank"
@@ -122,14 +128,13 @@ export const AccountButton = () => {
                   as="button"
                   className={s.menuItem}
                 >
-                  <p>Platform guide</p>
+                  <span>Platform guide</span>
                   <span className={s.platformGuideIcon}>
                     <ExternalLinkIcon />
                   </span>
                 </Typography.Body>
               </a>
             </div>
-
             <div className="pt-1">
               <Typography.Link>
                 <Typography.Body

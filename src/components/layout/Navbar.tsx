@@ -14,7 +14,7 @@ import SparksButton from 'src/components/navButtons/SparksButton';
 import SideMenu from 'src/components/layout/SideMenu';
 import LibraryButton from 'src/components/navButtons/LibraryButton';
 import { HomeButton } from 'src/components/navButtons/HomeButton';
-import { NewAccountButton } from 'src/components/navButtons/NewAccountButton';
+import { AccountButton } from 'src/components/navButtons/AccountButton';
 import Logo from 'src/components/logo/Logo';
 import s from './navbar.module.less';
 import { Search } from '../searchBar/SearchBar';
@@ -87,7 +87,7 @@ const NavbarResponsive = ({ showSearch = true }: Props): ReactElement => {
                 <CartButton />
               </FeatureGate>
             </div>
-            {!isUserLoading && <NewAccountButton user={user} />}
+            {!isUserLoading && <AccountButton />}
           </div>
         )}
       </nav>

@@ -20,7 +20,7 @@ describe('OrderConfirmationView', () => {
 
     expect(await wrapper.findByText('Loading')).toBeVisible();
     expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
-        'Welcome to CourseSpark!',
+      'Welcome to CourseSpark!',
     );
   });
 
