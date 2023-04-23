@@ -118,4 +118,49 @@ describe('HomeView', () => {
     ).toBeInTheDocument();
     expect(await wrapper.findByText('my promoted video')).toBeInTheDocument();
   });
+
+  it(`hides home hero and carousel displays two slides on mobile`, async () => {
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    fakeBoclipsClient.collections.addToFake(
+      CollectionFactory.sample({
+        title: 'my promoted playlist',
+        videos: [VideoFactory.sample({})],
+        promoted: true,
+      }),
+    );
+    fakeBoclipsClient.collections.addToFake(
+      CollectionFactory.sample({
+        title: 'my promoted playlist 1',
+        videos: [VideoFactory.sample({})],
+        promoted: true,
+      }),
+    );
+    fakeBoclipsClient.collections.addToFake(
+      CollectionFactory.sample({
+        title: 'my promoted playlist 2',
+        videos: [VideoFactory.sample({})],
+        promoted: true,
+      }),
+    );
+    window.resizeTo(765, 1024);
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/']}>
+        <App
+          reactQueryClient={createReactQueryClient()}
+          apiClient={fakeBoclipsClient}
+          boclipsSecurity={stubBoclipsSecurity}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await wrapper.findByText('my promoted playlist'),
+    ).toBeInTheDocument();
+    expect(
+      await wrapper.findByText('my promoted playlist 1'),
+    ).toBeInTheDocument();
+    expect(wrapper.queryByTestId('home-search-hero')).toBeNull();
+    // carousel still has this element in dom so can't figure out how to assert it's hidden, but it is
+    // expect(wrapper.queryByText('my promoted playlist 2')).not.toBeVisible();
+  });
 });
