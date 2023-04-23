@@ -8,12 +8,16 @@ import { useNavigate } from 'react-router-dom';
 import NewNavbar from 'src/components/layout/Navbar';
 import { FeaturedPlaylists } from 'src/components/playlists/PromotedPlaylists';
 import { FeaturedVideos } from 'src/components/carousel/FeaturedVideos';
+import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import FilmIcon from '../../resources/icons/film-icon.svg';
 import YourLibraryIcon from '../../resources/icons/your-library.svg';
 import s from './style.module.less';
 
 const HomeView = () => {
   const navigate = useNavigate();
+  const breakpoints = useMediaBreakPoint();
+  const isMobileView =
+    breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
 
   return (
     <Layout rowsSetup="grid-rows-newHomepage" responsiveLayout>
@@ -43,9 +47,14 @@ const HomeView = () => {
           />
         </div>
       </div>
-      <div className="row-start-2 row-end-2 col-start-17 mt-14 w-96 h-96">
-        <HomeSearchHero />
-      </div>
+      {!isMobileView && (
+        <div
+          className="row-start-2 row-end-2 col-start-17 mt-14 w-96 h-96"
+          data-qa="home-search-hero"
+        >
+          <HomeSearchHero />
+        </div>
+      )}
       <div className="row-start-3 row-end-3 col-start-2 col-end-26">
         <FeaturedPlaylists />
       </div>
