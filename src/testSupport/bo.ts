@@ -14,7 +14,6 @@ import {
 import { VideoFacets } from 'boclips-api-client/dist/sub-clients/videos/model/VideoFacets';
 import { Subject } from 'boclips-api-client/dist/sub-clients/subjects/model/Subject';
 import { UserFeatureKey } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
-import { disciplines } from 'src/components/disciplinesWidget/disciplinesFixture';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
@@ -30,7 +29,6 @@ export interface Bo {
     video: (video: Partial<Video>) => void;
     subject: (subject: Subject) => void;
     cartWithVideos: () => void;
-    disciplines: () => void;
     emptyPlaylist: () => void;
     playlistWithVideos: () => void;
   };
@@ -125,31 +123,6 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
     );
   };
 
-  const insertDisciplines = () => {
-    const extraSubjects = [
-      { name: 'Extra Subject', id: 'extra-subject1' },
-      { name: 'General Mathematics', id: 'extra-subject2' },
-      { name: 'General Mathematics', id: 'extra-subject3' },
-      { name: 'General Mathematics', id: 'extra-subject4' },
-      { name: 'Zoology and Animal Sciences', id: 'extra-subject5' },
-    ];
-
-    disciplines.forEach((discipline) => {
-      apiClient.disciplines.insertMyDiscipline(discipline);
-      apiClient.disciplines.insertDiscipline({
-        ...discipline,
-        subjects: [...discipline.subjects, ...extraSubjects],
-      });
-      discipline.subjects.forEach((subject) =>
-        apiClient.subjects.insertSubject(subject),
-      );
-    });
-
-    extraSubjects.forEach((s) => {
-      apiClient.subjects.insertSubject(s);
-    });
-  };
-
   const bigListOfVideos = Array.from(Array(15)).map((_, i) =>
     VideoFactory.sample({
       id: `${i}`,
@@ -172,7 +145,6 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
     create: {
       video: boCreateVideo,
       subject: boCreateSubject,
-      disciplines: insertDisciplines,
 
       cartWithVideos: () => {
         apiClient.videos.insertVideo(
