@@ -20,7 +20,7 @@ const LibraryButton = () => {
       <button
         type="button"
         onClick={libraryOpenedEvent}
-        data-qa="cart-button"
+        data-qa="library-button"
         className={s.headerButton}
       >
         <FilmIcon />
