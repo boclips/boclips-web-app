@@ -8,10 +8,10 @@ import { useNavigate } from 'react-router-dom';
 import NewNavbar from 'src/components/layout/Navbar';
 import { FeaturedPlaylists } from 'src/components/playlists/PromotedPlaylists';
 import { FeaturedVideos } from 'src/components/carousel/FeaturedVideos';
+import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import FilmIcon from '../../resources/icons/film-icon.svg';
 import YourLibraryIcon from '../../resources/icons/your-library.svg';
 import s from './style.module.less';
-import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 
 const HomeView = () => {
   const navigate = useNavigate();
@@ -48,7 +48,10 @@ const HomeView = () => {
         </div>
       </div>
       {!isMobileView && (
-        <div className="row-start-2 row-end-2 col-start-17 mt-14 w-96 h-96" data-qa="home-search-hero">
+        <div
+          className="row-start-2 row-end-2 col-start-17 mt-14 w-96 h-96"
+          data-qa="home-search-hero"
+        >
           <HomeSearchHero />
         </div>
       )}
