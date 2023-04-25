@@ -238,7 +238,7 @@ const doGetOwnAndEditableSharedPlaylists = (client: BoclipsClient) =>
   client.collections
     .getMySavedAndEditableCollectionsWithoutDetails({
       origin: 'BO_WEB_APP',
-      size: 1000,
+      size: 100,
     })
     .then((playlists) => {
       return playlists.page;

@@ -113,7 +113,7 @@ describe('playlistsQuery', () => {
     await playlistHook.waitFor(() => playlistHook.result.current.isSuccess);
     expect(collectionsSpy).toBeCalledWith({
       origin: 'BO_WEB_APP',
-      size: 1000,
+      size: 100,
     });
   });
 
