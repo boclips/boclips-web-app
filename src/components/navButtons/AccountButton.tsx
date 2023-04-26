@@ -66,7 +66,7 @@ export const AccountButton = () => {
     <div
       onMouseEnter={onMouseEnterAction}
       onMouseLeave={onMouseLeaveAction}
-      className={c({ [s.active]: displayModal || onMouseEnter })}
+      className={c(s.accountMenu, { [s.active]: displayModal || onMouseEnter })}
     >
       {user && !isLoading && (
         <Button
