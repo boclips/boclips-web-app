@@ -5,6 +5,7 @@ import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { EmbedButton } from 'src/components/embedButton/EmbedButton';
 import s from './style.module.less';
 import { CopyVideoLinkButton } from './CopyVideoLinkButton';
 import { CopyVideoIdButton } from './CopyVideoIdButton';
@@ -16,7 +17,6 @@ interface VideoCardButtonsProps {
   onUrlCopied?: () => void;
   onCleanupAddToPlaylist?: (playlistId: string, cleanUp: () => void) => void;
   iconOnly?: boolean;
-  primaryButton?: React.ReactElement;
   additionalSecondaryButtons?: React.ReactElement;
 }
 
@@ -27,7 +27,6 @@ export const VideoCardButtons = ({
   onCleanupAddToPlaylist,
   onUrlCopied,
   iconOnly = false,
-  primaryButton,
   additionalSecondaryButtons,
 }: VideoCardButtonsProps) => {
   const trackCopyVideoLink = () => {
@@ -54,7 +53,9 @@ export const VideoCardButtons = ({
         {additionalSecondaryButtons}
       </div>
 
-      {primaryButton || (
+      {video.links.createEmbedCode ? (
+        <EmbedButton video={video} iconOnly={iconOnly} />
+      ) : (
         <FeatureGate linkName="cart">
           <AddToCartButton
             video={video}

@@ -44,44 +44,4 @@ describe('SparksVideoCardButtons', () => {
       ).toBeVisible();
     });
   });
-
-  describe(`create embed code button`, () => {
-    it(`renders embed code button when user has link and is on provider explore page`, () => {
-      const video = VideoFactory.sample({
-        links: {
-          self: new Link({ href: '', templated: false }),
-          logInteraction: new Link({ href: '', templated: false }),
-          createEmbedCode: new Link({ href: 'embed', templated: false }),
-        },
-      });
-
-      const wrapper = render(
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <QueryClientProvider client={new QueryClient()}>
-            <SparksVideoCardButtons video={video} />
-          </QueryClientProvider>
-        </BoclipsClientProvider>,
-      );
-
-      expect(wrapper.getByRole('button', { name: 'embed' })).toBeVisible();
-    });
-
-    it(`does not render embed code button when user doesn't have link`, () => {
-      const video = VideoFactory.sample({
-        links: {
-          self: new Link({ href: '', templated: false }),
-          logInteraction: new Link({ href: '', templated: false }),
-        },
-      });
-      const wrapper = render(
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <QueryClientProvider client={new QueryClient()}>
-            <SparksVideoCardButtons video={video} />
-          </QueryClientProvider>
-        </BoclipsClientProvider>,
-      );
-
-      expect(wrapper.queryByRole('button', { name: 'embed' })).toBeNull();
-    });
-  });
 });
