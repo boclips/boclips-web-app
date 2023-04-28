@@ -22,6 +22,7 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { Helmet } from 'react-helmet';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import { Link } from 'boclips-api-client/dist/types';
 
 describe('SearchResults', () => {
   beforeEach(() => {
@@ -354,6 +355,36 @@ describe('SearchResults', () => {
           `${cart.items.length.toString()} items in cart`,
         );
       });
+    });
+  });
+
+  describe('embed button', () => {
+    it('displays embed button if embed link present in list view', async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '2',
+          title: 'news',
+          types: [{ name: 'NEWS', id: 2 }],
+          links: {
+            self: new Link({ href: '', templated: false }),
+            logInteraction: new Link({ href: '', templated: false }),
+            createEmbedCode: new Link({ href: 'embed', templated: false }),
+          },
+        }),
+      );
+
+      const wrapper = render(
+        <MemoryRouter initialEntries={['/videos?q=news']}>
+          <App apiClient={fakeClient} boclipsSecurity={stubBoclipsSecurity} />
+        </MemoryRouter>,
+      );
+
+      expect(
+        await wrapper.findByRole('button', { name: 'embed' }),
+      ).toBeVisible();
+
+      expect(await wrapper.queryByText('Add to cart')).not.toBeInTheDocument();
     });
   });
 
