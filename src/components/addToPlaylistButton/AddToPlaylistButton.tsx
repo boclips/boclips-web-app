@@ -21,6 +21,7 @@ import PlusIcon from 'src/resources/icons/plus-sign.svg';
 import { Typography } from '@boclips-ui/typography';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { LoadingOutlined } from '@ant-design/icons';
 import s from './style.module.less';
 
 interface Props {
@@ -42,7 +43,7 @@ export const AddToPlaylistButton = ({ videoId, onCleanup, onClick }: Props) => {
 
   CloseOnClickOutside(ref, () => setIsOpen(false));
 
-  const { data: playlists } = useOwnAndEditableSharedPlaylistsQuery();
+  const { data: playlists, isLoading } = useOwnAndEditableSharedPlaylistsQuery();
 
   const playlistCreatedHotjarEvent = () => {
     AnalyticsFactory.hotjar().event(HotjarEvents.PlaylistCreatedFromVideo);
@@ -144,6 +145,9 @@ export const AddToPlaylistButton = ({ videoId, onCleanup, onClick }: Props) => {
   const buttonDescription = videoNotAddedToAnyPlaylist
     ? 'Add to playlist'
     : 'Add or remove from playlist';
+
+  const hasPlaylists = !isLoading && playlists && playlists.length > 0;
+
   return (
     <div
       id={videoId}
@@ -183,12 +187,11 @@ export const AddToPlaylistButton = ({ videoId, onCleanup, onClick }: Props) => {
           height="40px"
         />
       </Tooltip>
-
       {isOpen && !showCreatePlaylistModal && (
         <FocusTrap
           focusTrapOptions={{
             initialFocus:
-              playlists?.length > 0
+              hasPlaylists
                 ? `input[id='${playlists[0].id}']`
                 : '#create-new-playlist-button',
           }}
@@ -216,7 +219,7 @@ export const AddToPlaylistButton = ({ videoId, onCleanup, onClick }: Props) => {
               </button>
             </div>
             <ul className={s.content}>
-              {playlists?.length > 0 ? (
+              {hasPlaylists ? (
                 playlists.map((playlist: Collection) => {
                   const isSelected = playlistsContainingVideo.includes(
                     playlist.id,
@@ -232,6 +235,11 @@ export const AddToPlaylistButton = ({ videoId, onCleanup, onClick }: Props) => {
                     </li>
                   );
                 })
+              ) : isLoading ? (
+                <li>
+                  <LoadingOutlined className="mr-2" />
+                  Loading playlists...
+                </li>
               ) : (
                 <li>You have no playlists yet</li>
               )}
