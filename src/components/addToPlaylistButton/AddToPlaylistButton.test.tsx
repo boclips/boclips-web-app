@@ -39,6 +39,35 @@ describe('Add to playlist button', () => {
     ).toBeInTheDocument();
   });
 
+  it('shows loading information before playlists are loaded', async () => {
+    const fakeClient = new FakeBoclipsClient();
+
+    const playlists = [
+      CollectionFactory.sample({
+        id: '1',
+        title: 'Playlist 1',
+        owner: 'user-123',
+        mine: true,
+      }),
+    ];
+
+    fakeClient.collections.setCurrentUser('user-123');
+    playlists.forEach((it) => fakeClient.collections.addToFake(it));
+
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeClient}>
+        <AddToPlaylistButton videoId={video.id} />
+      </BoclipsClientProvider>,
+    );
+
+    const playlistButton = await wrapper.findByLabelText('Add to playlist');
+
+    fireEvent.click(playlistButton);
+
+    expect(wrapper.getByText('Loading playlists...')).toBeInTheDocument();
+    expect(await wrapper.findByText('Playlist 1')).toBeInTheDocument();
+  });
+
   it('clicking on playlist button opens popover that can be closed with X button', async () => {
     const fakeClient = new FakeBoclipsClient();
 
