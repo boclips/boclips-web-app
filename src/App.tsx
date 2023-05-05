@@ -1,5 +1,6 @@
 import React, { Suspense, useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import MyTeamView from 'src/views/team/Team';
 import { BoclipsClient } from 'boclips-api-client';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Loading } from 'src/components/common/Loading';
@@ -133,9 +134,7 @@ const App = ({
                   <Routes>
                     <Route path="/" element={<HomeView />} />
                     <Route path="/videos" element={<SearchResultsView />} />
-
                     <Route path="/videos/:id" element={<VideoView />} />
-
                     <Route
                       path="/cart"
                       element={
@@ -150,7 +149,6 @@ const App = ({
                         </>
                       }
                     />
-
                     <Route
                       path="/orders"
                       element={
@@ -165,7 +163,6 @@ const App = ({
                         </>
                       }
                     />
-
                     <Route
                       path="/orders/:id"
                       element={
@@ -177,16 +174,12 @@ const App = ({
                         </WithValidRoles>
                       }
                     />
-
                     <Route path="/error" element={<ErrorView />} />
-
                     <Route
                       path="/order-confirmed"
                       element={<OrderConfirmationView />}
                     />
-
                     <Route path="/playlists" element={<PlaylistsView />} />
-
                     <Route
                       path="/sparks"
                       element={
@@ -200,12 +193,10 @@ const App = ({
                         </FeatureGate>
                       }
                     />
-
                     <Route
                       path="/library"
                       element={<Navigate to="/playlists" replace />}
                     />
-
                     <Route
                       path="/playlists/:id"
                       element={
@@ -216,7 +207,6 @@ const App = ({
                         />
                       }
                     />
-
                     <Route
                       path="/sparks/:provider"
                       element={
@@ -245,6 +235,7 @@ const App = ({
                       path="/explore/*"
                       element={<RedirectFromExploreToSparks />}
                     />
+                    <Route path="/team" element={<MyTeamView />} />
                     <Route
                       path="*"
                       element={

@@ -1,6 +1,6 @@
 import React from 'react';
 import { doUpdateCartNote } from 'src/hooks/api/cartQuery';
-import { InputWithDebounce as CartNote } from 'src/components/cart/InputWithDebounce';
+import { TextAreaWithDebounce as CartNote } from 'src/components/cart/TextAreaWithDebounce';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { useMutation } from '@tanstack/react-query';
 import { Cart as ApiCart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';

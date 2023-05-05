@@ -11,7 +11,7 @@ interface Props {
   onUpdateWithoutDebounce?: (note: string) => void;
 }
 
-export const InputWithDebounce = ({
+export const TextAreaWithDebounce = ({
   currentValue,
   onUpdate,
   placeholder,

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useCartItemAdditionalServicesMutation } from 'src/hooks/api/cartQuery';
 import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
-import { InputWithDebounce } from 'src/components/cart/InputWithDebounce';
+import { TextAreaWithDebounce } from 'src/components/cart/TextAreaWithDebounce';
 import { useCartValidation } from 'src/components/common/providers/CartValidationProvider';
 import BoCheckbox from 'src/components/common/input/BoCheckbox';
 import { Typography } from '@boclips-ui/typography';
@@ -89,7 +89,7 @@ export const EditRequest = ({ label, cartItem, price }: Props) => {
           <Typography.Body as="div" size="small" className="mb-2">
             Specify how you’d like to edit the video
           </Typography.Body>
-          <InputWithDebounce
+          <TextAreaWithDebounce
             currentValue={cartItem.additionalServices?.editRequest}
             enableValidation={(enabled: boolean) =>
               setIsValidationEnabled(enabled)
