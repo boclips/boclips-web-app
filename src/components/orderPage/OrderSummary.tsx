@@ -48,12 +48,13 @@ export const OrderSummary = ({ order }: Props) => {
         )}
       </div>
       <Typography.Body className="w-64 text-gray-900">
-        To edit or cancel this order, please contact{' '}
+        Please reach out to{' '}
         <Link isExternalLink to="mailto:support@boclips.com">
           <Typography.Link type="inline-blue" className="font-medium">
             support@boclips.com
           </Typography.Link>
-        </Link>
+        </Link>{' '}
+        if you have any questions pertaining to your order
       </Typography.Body>
     </section>
   );

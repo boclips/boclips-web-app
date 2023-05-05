@@ -154,8 +154,9 @@ describe('order table', () => {
       '2 videos',
     );
     expect(await wrapper.findByText('i am a note')).toBeVisible();
+    expect(wrapper.getByText(/Please reach out to/)).toBeVisible();
     expect(
-      wrapper.getByText(/To edit or cancel this order, please contact/),
+      wrapper.getByText(/if you have any questions pertaining to your order/),
     ).toBeVisible();
   });
   it('does not render notes field if there is no note', async () => {
