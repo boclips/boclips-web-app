@@ -18,8 +18,8 @@ context('Cart page', () => {
     cy.get('button').contains('View order details').click();
 
     cy.findByRole('heading', { name: /Order/i }).should('exist');
-    cy.findByText('Please reach out to').should('exist');
-    cy.findByText('if you have any questions pertaining to your order').should(
+    cy.findByText(/Please reach out to/).should('exist');
+    cy.findByText(/if you have any questions pertaining to your order/).should(
       'exist',
     );
 
