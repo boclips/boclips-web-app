@@ -285,7 +285,7 @@ describe('editing a playlist', () => {
         expect(breadcrumb).toHaveTextContent('Good bye');
       },
     );
-  }, 1000);
+  });
 
   it('changes are not saved when playlist editing is cancelled', async () => {
     const newPlaylist = CollectionFactory.sample({

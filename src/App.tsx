@@ -25,6 +25,7 @@ import Appcues from './services/analytics/appcues/Appcues';
 import { GlobalQueryErrorProvider } from './components/common/providers/GlobalQueryErrorProvider';
 import { JSErrorBoundary } from './components/common/errors/JSErrorBoundary';
 import Pendo = pendo.Pendo;
+import MyTeamView from 'src/views/team/Team';
 
 declare global {
   interface Window {
@@ -133,9 +134,7 @@ const App = ({
                   <Routes>
                     <Route path="/" element={<HomeView />} />
                     <Route path="/videos" element={<SearchResultsView />} />
-
                     <Route path="/videos/:id" element={<VideoView />} />
-
                     <Route
                       path="/cart"
                       element={
@@ -150,7 +149,6 @@ const App = ({
                         </>
                       }
                     />
-
                     <Route
                       path="/orders"
                       element={
@@ -165,7 +163,6 @@ const App = ({
                         </>
                       }
                     />
-
                     <Route
                       path="/orders/:id"
                       element={
@@ -177,16 +174,12 @@ const App = ({
                         </WithValidRoles>
                       }
                     />
-
                     <Route path="/error" element={<ErrorView />} />
-
                     <Route
                       path="/order-confirmed"
                       element={<OrderConfirmationView />}
                     />
-
                     <Route path="/playlists" element={<PlaylistsView />} />
-
                     <Route
                       path="/sparks"
                       element={
@@ -200,12 +193,10 @@ const App = ({
                         </FeatureGate>
                       }
                     />
-
                     <Route
                       path="/library"
                       element={<Navigate to="/playlists" replace />}
                     />
-
                     <Route
                       path="/playlists/:id"
                       element={
@@ -216,7 +207,6 @@ const App = ({
                         />
                       }
                     />
-
                     <Route
                       path="/sparks/:provider"
                       element={
@@ -245,6 +235,7 @@ const App = ({
                       path="/explore/*"
                       element={<RedirectFromExploreToSparks />}
                     />
+                    <Route path="/team" element={<MyTeamView />} />
                     <Route
                       path="*"
                       element={
