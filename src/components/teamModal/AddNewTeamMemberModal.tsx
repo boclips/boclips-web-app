@@ -25,17 +25,18 @@ const successNotification = (userRequest: User) =>
   displayNotification(
     'success',
     `User created successfully`,
-    `Created a new user -- ${userRequest.firstName} ${userRequest.lastName}`,
+    `Created a new user — ${userRequest.firstName} ${userRequest.lastName}`,
     `user-created-${userRequest.id}`,
   );
 
-const errorNotification = (userRequest: User) =>
-  displayNotification(
-    'success',
-    `User created successfully`,
-    `Created a new user -- ${userRequest.firstName} ${userRequest.lastName}`,
-    `user-created-${userRequest.id}`,
+const errorNotification = (errorMessage: string, userRequest: User) => {
+  return displayNotification(
+    'error',
+    `User creation failed`,
+    `Failed to create a new user — ${errorMessage}`,
+    `user-creation-failed-${userRequest.id}`,
   );
+};
 
 const AddNewTeamMemberModal = ({ closeModal }: Props) => {
   const { data: user, isLoading: isLoadingUser } = useGetUserQuery();
@@ -53,7 +54,6 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
   });
 
   const firstInputRef = useRef();
-
   const formIsValid = () => Object.values(isError).every((e) => !e);
   const isFormEmpty = () => Object.values(form).some((e) => e.length === 0);
 
@@ -61,7 +61,7 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
     if (isCreateUserSuccess) {
       closeModal();
     }
-  }, [isCreateUserSuccess]);
+  }, [closeModal, isCreateUserSuccess]);
 
   const handleConfirm = () => {
     if (!formIsValid() || isFormEmpty()) {
