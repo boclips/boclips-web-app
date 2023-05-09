@@ -26,11 +26,11 @@ export const useAddNewUser = (successNotification, errorNotification) => {
   return useMutation(
     (userRequest: CreateUserRequest) => doCreateNewUser(userRequest, client),
     {
-      onSuccess: (userRequest) => {
+      onSuccess: (userRequest: User) => {
         successNotification(userRequest);
       },
-      onError: (userRequest: User) => {
-        errorNotification(userRequest);
+      onError: (error: Error, userRequest: CreateUserRequest) => {
+        return errorNotification(error.message, userRequest);
       },
     },
   );
