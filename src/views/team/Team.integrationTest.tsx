@@ -21,7 +21,7 @@ describe('My Team view', () => {
 
     expect(wrapper.getByText('My team')).toBeInTheDocument();
     expect(
-      wrapper.getByRole('button', { name: '+ Add new user' }),
+      wrapper.getByRole('button', { name: 'Add new user' }),
     ).toBeInTheDocument();
   });
 
@@ -37,10 +37,12 @@ describe('My Team view', () => {
     );
 
     await userEvent.click(
-      wrapper.getByRole('button', { name: '+ Add new user' }),
+      wrapper.getByRole('button', { name: 'Add new user' }),
     );
 
-    await waitFor(() => wrapper.getByText('Add new user'));
+    await waitFor(() =>
+      wrapper.getByRole('heading', { level: 1, name: 'Add new user' }),
+    );
 
     await userEvent.type(wrapper.getByPlaceholderText('John'), 'Andrzej');
     await userEvent.type(wrapper.getByPlaceholderText('Smith'), 'Duda');
