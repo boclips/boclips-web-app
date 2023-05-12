@@ -7,7 +7,7 @@ import s from './style.module.less';
 const Logo = (): ReactElement => {
   const { data: user } = useGetUserQuery();
 
-  const logoTitle = user?.organisation?.name
+  const logoTitle = user?.organisation?.logoUrl
     ? `${user.organisation.name} logo - Go to homepage`
     : 'CourseSpark logo - Go to homepage';
 
