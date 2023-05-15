@@ -1,0 +1,72 @@
+@import '@boclips-ui/styles/src/colors.less';
+@import '@boclips-ui/styles/src/breakpoints.less';
+
+.skeleton {
+  * {
+    color: transparent;
+  }
+
+  > div {
+    margin-right: 1rem;
+    border-radius: 4px;
+    animation: skeleton ease-in 1s infinite;
+    background: linear-gradient(
+      90deg,
+      @gray-100 25%,
+      @gray-400 37%,
+      @gray-100 63%
+    );
+    background-size: 200% 200%;
+    border: 1px solid @gray-400 !important;
+  }
+}
+
+.listItemWrapper {
+  padding: 1rem 0;
+  border-bottom: 2px solid @gray-400;
+  display: flex;
+  flex-direction: row;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.listItem {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 20%;
+  padding-right: 1rem;
+  line-break: anywhere;
+
+  &:first-child {
+    flex-basis: 15%;
+  }
+}
+
+@keyframes skeleton {
+  0% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 0 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+
+@media screen and (max-width: @screen-lg) {
+  .listItem {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 25%;
+    padding-right: 1rem;
+    line-break: anywhere;
+
+    &:first-child {
+      flex-basis: 25%;
+    }
+  }
+}

@@ -6,6 +6,9 @@ import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import userEvent from '@testing-library/user-event';
+import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
+import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
+import { AccountUserStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('My Team view', () => {
   it('renders my team page', () => {
@@ -58,5 +61,39 @@ describe('My Team view', () => {
         wrapper.getByText('User created successfully'),
       ).toBeInTheDocument(),
     );
+  });
+
+  it('lists the users with expected table headers', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'account-1' }),
+    );
+    const joe = await fakeClient.users.createUser({
+      firstName: 'Joe',
+      lastName: 'Biden',
+      email: 'joebiden@gmail.com',
+      accountId: 'account-1',
+      type: UserType.b2bUser,
+    });
+    fakeClient.users.setPermissionOfUser(joe.id, AccountUserStatus.CAN_ORDER);
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/team']}>
+        <App
+          reactQueryClient={createReactQueryClient()}
+          apiClient={fakeClient}
+          boclipsSecurity={stubBoclipsSecurity}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByText('User')).toBeVisible();
+    expect(await wrapper.findByText('Joe Biden')).toBeVisible();
+    expect(await wrapper.findByText('User email')).toBeVisible();
+    expect(await wrapper.findByText('joebiden@gmail.com')).toBeVisible();
+    expect(await wrapper.findByText('Can order')).toBeVisible();
+    expect(await wrapper.findByText('Yes')).toBeVisible();
+    expect(await wrapper.findByText('Can add users')).toBeVisible();
+    expect(await wrapper.findByText('No')).toBeVisible();
   });
 });

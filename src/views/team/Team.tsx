@@ -6,6 +6,7 @@ import Button from '@boclips-ui/button';
 import AddNewTeamMemberModal from 'src/components/teamModal/AddNewTeamMemberModal';
 import Footer from 'src/components/layout/Footer';
 import PlusSign from 'resources/icons/plus-sign.svg';
+import { UsersList } from 'src/components/usersList/UsersList';
 
 const MyTeamView = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -24,6 +25,12 @@ const MyTeamView = () => {
           />
         }
       />
+      <main
+        tabIndex={-1}
+        className="col-start-2 col-end-26 row-start-3 row-end-4 flex items-start"
+      >
+        <UsersList />
+      </main>
       {isModalOpen && (
         <AddNewTeamMemberModal closeModal={() => setIsModalOpen(false)} />
       )}

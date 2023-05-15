@@ -1,5 +1,5 @@
 import { BoclipsClient } from 'boclips-api-client';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import { CreateUserRequest } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
@@ -16,22 +16,39 @@ export const useGetUserQuery = () => {
 export const doCreateNewUser = (
   request: CreateUserRequest,
   client: BoclipsClient,
-) => {
+): Promise<User> => {
   return client.users.createUser(request);
 };
 
 export const useAddNewUser = (successNotification, errorNotification) => {
   const client = useBoclipsClient();
+  const queryClient = useQueryClient();
 
   return useMutation(
     (userRequest: CreateUserRequest) => doCreateNewUser(userRequest, client),
     {
-      onSuccess: (userRequest: User) => {
-        successNotification(userRequest);
+      onSuccess: (user: User) => {
+        successNotification(user);
+        return queryClient.invalidateQueries(['accountUsers', user.account.id]);
       },
-      onError: (error: Error, userRequest: CreateUserRequest) => {
-        return errorNotification(error.message, userRequest);
+      onError: (error: Error, user: CreateUserRequest) => {
+        return errorNotification(error.message, user);
       },
     },
+  );
+};
+
+export const doFindAccountUsers = (
+  accountId: string,
+  client: BoclipsClient,
+) => {
+  return client.accounts.getAccountUsers(accountId);
+};
+
+export const useFindAccountUsers = (accountId: string) => {
+  const client = useBoclipsClient();
+
+  return useQuery(['accountUsers', accountId], () =>
+    doFindAccountUsers(accountId, client),
   );
 };
