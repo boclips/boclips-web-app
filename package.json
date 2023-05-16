@@ -12,6 +12,7 @@
     "test-visual:open": "start-server-and-test fake http://localhost:9000/ 'percy exec -- ./node_modules/.bin/cypress open'",
     "test-visual:wait": "percy build:wait -f --project f10a8acf/boclips-web-app --commit HEAD",
     "dev": "NODE_ENV=development TAILWIND_MODE=watch webpack serve --config webpack/webpack.dev.js",
+    "local": "NODE_ENV=development TAILWIND_MODE=watch webpack serve --config webpack/webpack.local.js",
     "fake": "NODE_ENV=development TAILWIND_MODE=watch webpack serve --config webpack/webpack.fake.js",
     "compile": "tsc -p . --noEmit",
     "build": "NODE_ENV=production webpack --config webpack/webpack.prod.js",
