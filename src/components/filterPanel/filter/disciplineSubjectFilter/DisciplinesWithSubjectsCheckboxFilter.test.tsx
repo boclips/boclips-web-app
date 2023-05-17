@@ -2,7 +2,7 @@ import React from 'react';
 import {
   DisciplinesWithSubjectsCheckboxFilter,
   HierarchicalFilterOption,
-} from 'src/components/filterPanel/filter/DisciplinesWithSubjectsCheckboxFilter';
+} from 'src/components/filterPanel/filter/disciplineSubjectFilter/DisciplinesWithSubjectsCheckboxFilter';
 import { renderWithLocation } from 'src/testSupport/renderWithLocation';
 import { FilterOption } from 'src/types/FilterOption';
 import { FilterOptionFactory } from 'src/testSupport/FilterOptionFactory';
@@ -24,11 +24,26 @@ describe('DisciplinesWithSubjectsCheckboxFilter', () => {
       label: <span>History</span>,
       name: 'History',
     }),
+    FilterOptionFactory.sample({
+      hits: 8,
+      key: 'subject',
+      id: 'english',
+      label: <span>English</span>,
+      name: 'English',
+    }),
   ];
 
   const hierarchicalFilterOptions: HierarchicalFilterOption[] = [
-    { name: 'MyDiscipline', id: 'my-discipline', children: subjects },
-    { name: 'MyOtherDiscipline', id: 'my-other-discipline', children: [] },
+    {
+      name: 'MyDiscipline',
+      id: 'my-discipline',
+      children: [subjects[0], subjects[1]],
+    },
+    {
+      name: 'MyOtherDiscipline',
+      id: 'my-other-discipline',
+      children: [subjects[2]],
+    },
   ];
 
   it('will render the hierarchical options where children exist', () => {
@@ -53,7 +68,7 @@ describe('DisciplinesWithSubjectsCheckboxFilter', () => {
     expect(panel.getByText('5')).toBeInTheDocument();
     expect(panel.queryByText('Show all (2)')).toBeNull();
 
-    expect(panel.queryByText('MyOtherDiscipline')).toBeNull();
+    expect(panel.getByText('MyOtherDiscipline')).toBeInTheDocument();
   });
 
   it('will close discipline toggle onclick', () => {
@@ -66,14 +81,17 @@ describe('DisciplinesWithSubjectsCheckboxFilter', () => {
       />,
     );
 
-    const disciplineButton = panel.getByRole('button', {
-      name: 'MyDiscipline',
-    });
+    const disciplineButton = panel.getByLabelText('MyDiscipline');
+    expect(disciplineButton.getAttribute('aria-expanded')).toBe('true');
+
     expect(panel.getByText('Math')).toBeVisible();
     expect(panel.getByText('History')).toBeVisible();
 
     fireEvent.click(disciplineButton);
 
+    expect(
+      panel.getByLabelText('MyDiscipline').getAttribute('aria-expanded'),
+    ).toBe('false');
     expect(panel.queryByText('Math')).toBeNull();
     expect(panel.queryByText('History')).toBeNull();
   });

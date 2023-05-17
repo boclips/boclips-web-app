@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { FilterOptionList } from 'src/components/filterPanel/filter/FilterOptionList';
 import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
 import { FilterOption } from 'src/types/FilterOption';
-import FilterArrow from 'src/resources/icons/blue-arrow.svg';
-import { CollapsableFilter } from './CollapsableFilter';
+import { CollapsableFilter } from '../CollapsableFilter';
+import { DisciplineHeader } from './DisciplineHeader';
 
 interface Props {
   title: string;
@@ -58,6 +58,9 @@ export const DisciplinesWithSubjectsCheckboxFilter = ({
     }
   };
 
+  const isOpen = (option: HierarchicalFilterOption) =>
+    openDisciplineIds.includes(option.id);
+
   return (
     <CollapsableFilter
       title={title}
@@ -67,35 +70,23 @@ export const DisciplinesWithSubjectsCheckboxFilter = ({
       <div className="px-4">
         <Typography.Body>{filtersSearch}</Typography.Body>
       </div>
-      {options
-        .filter((option) => option.children.length > 0)
-        .map((option) => (
-          <>
-            <button
-              type="button"
-              key={option.name}
-              className="pl-4 mt-2 text-sm font-medium text-gray-700 flex items-center"
-              onClick={() => onClickDiscipline(option.id)}
-            >
-              <FilterArrow
-                className={`mr-2 ${
-                  openDisciplineIds.includes(option.id)
-                    ? 'transform rotate-180'
-                    : ''
-                }`}
-              />
-              {option.name}
-            </button>
-            {openDisciplineIds.includes(option.id) && (
-              <FilterOptionList
-                options={option.children}
-                onSelect={onSelectOption}
-                selectedOptions={searchLocation.filters[filterName] || []}
-                hierarchical
-              />
-            )}
-          </>
-        ))}
+      {options.map((option) => (
+        <>
+          <DisciplineHeader
+            name={option.name}
+            onClick={() => onClickDiscipline(option.id)}
+            isOpen={isOpen(option)}
+          />
+          {isOpen(option) && (
+            <FilterOptionList
+              options={option.children}
+              onSelect={onSelectOption}
+              selectedOptions={searchLocation.filters[filterName] || []}
+              hierarchical
+            />
+          )}
+        </>
+      ))}
     </CollapsableFilter>
   );
 };
