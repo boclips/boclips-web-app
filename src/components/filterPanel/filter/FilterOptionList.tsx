@@ -9,6 +9,7 @@ interface Props {
   options: FilterOption[];
   onSelect: (event, item) => void;
   selectedOptions: string[];
+  hierarchical?: boolean;
 }
 
 const DEFAULT_VISIBLE_OPTIONS = 5;
@@ -17,6 +18,7 @@ export const FilterOptionList = ({
   options,
   onSelect,
   selectedOptions,
+  hierarchical = false,
 }: Props) => {
   const [allExpanded, setAllExpanded] = useState<boolean>(false);
 
@@ -48,6 +50,7 @@ export const FilterOptionList = ({
         data-qa="filter-option-list"
         className={c(s.filterOptions, {
           [s.opened]: allExpanded && tooManyOptions,
+          [s.hierarchical]: hierarchical,
         })}
       >
         {optionsWithSelectedOnesFirst

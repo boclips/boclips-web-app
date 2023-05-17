@@ -14,6 +14,8 @@ import { EducationLevelFilter } from 'src/components/filterPanel/EducationLevelF
 import { TextButton } from 'src/components/common/textButton/TextButton';
 import { LanguageFilter } from 'src/components/filterPanel/LanguageFilter';
 import { CefrLevelFilter } from 'src/components/filterPanel/CefrLevelFilter';
+import { DisciplineSubjectFilter } from 'src/components/filterPanel/DisciplineSubjectFilter';
+import { FeatureGate } from 'src/components/common/FeatureGate';
 import { SelectedFilters } from './SelectedFilters';
 
 export interface DateFilters {
@@ -79,6 +81,12 @@ export const FilterPanel = ({
             options={options.subjects}
             handleChange={handleChange}
           />
+          <FeatureGate feature="BO_WEB_APP_DEV">
+            <DisciplineSubjectFilter
+              options={options.subjects}
+              handleChange={handleChange}
+            />
+          </FeatureGate>
           <BestForFilter
             options={options.bestFor}
             handleChange={handleChange}
