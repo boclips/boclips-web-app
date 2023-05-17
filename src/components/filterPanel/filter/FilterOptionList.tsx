@@ -10,6 +10,7 @@ interface Props {
   onSelect: (event, item) => void;
   selectedOptions: string[];
   hierarchical?: boolean;
+  showAll?: boolean;
 }
 
 const DEFAULT_VISIBLE_OPTIONS = 5;
@@ -19,8 +20,10 @@ export const FilterOptionList = ({
   onSelect,
   selectedOptions,
   hierarchical = false,
+  showAll = false,
 }: Props) => {
   const [allExpanded, setAllExpanded] = useState<boolean>(false);
+  const optionsToShow = showAll ? options.length : DEFAULT_VISIBLE_OPTIONS;
 
   const divideOptionsByBeingSelected = (
     toDivide: FilterOption[],
@@ -40,7 +43,7 @@ export const FilterOptionList = ({
   };
 
   const optionsWithHits = options.filter((option) => option.hits > 0);
-  const tooManyOptions = optionsWithHits.length > DEFAULT_VISIBLE_OPTIONS;
+  const tooManyOptions = optionsWithHits.length > optionsToShow;
   const optionsWithSelectedOnesFirst =
     divideOptionsByBeingSelected(optionsWithHits);
 
@@ -56,9 +59,7 @@ export const FilterOptionList = ({
         {optionsWithSelectedOnesFirst
           .slice(
             0,
-            allExpanded
-              ? optionsWithSelectedOnesFirst.length
-              : DEFAULT_VISIBLE_OPTIONS,
+            allExpanded ? optionsWithSelectedOnesFirst.length : optionsToShow,
           )
           .map((option) => (
             <FilterOptionCheckbox

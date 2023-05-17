@@ -81,6 +81,7 @@ export const DisciplinesWithSubjectsCheckboxFilter = ({
               onSelect={onSelectOption}
               selectedOptions={searchLocation.filters[filterName] || []}
               hierarchical
+              showAll
             />
           )}
         </>

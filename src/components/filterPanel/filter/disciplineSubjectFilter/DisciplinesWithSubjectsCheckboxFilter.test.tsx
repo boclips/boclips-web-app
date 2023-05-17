@@ -95,4 +95,45 @@ describe('DisciplinesWithSubjectsCheckboxFilter', () => {
     expect(panel.getByRole('checkbox', { name: 'History' })).toBeVisible();
     expect(panel.getByText('5')).toBeVisible();
   });
+
+  it('show all subjects when discipline is opened, no limit on options', () => {
+    const subjectOptions: FilterOption[] = [];
+
+    for (let i = 0; i < 20; i++) {
+      subjectOptions.push(
+        FilterOptionFactory.sample({
+          hits: 10,
+          key: 'subject',
+          id: `subject-${i}`,
+          label: <span>{`Subject ${i}`}</span>,
+          name: `Subject ${i}`,
+        }),
+      );
+    }
+    const options: HierarchicalFilterOption[] = [
+      {
+        name: 'MyDiscipline',
+        id: 'my-discipline',
+        children: subjectOptions,
+      },
+    ];
+    const panel = renderWithLocation(
+      <DisciplinesWithSubjectsCheckboxFilter
+        options={options}
+        title="Disciplines"
+        filterName="disciplines"
+        handleChange={() => {}}
+      />,
+    );
+
+    const disciplineButton = panel.getByLabelText('MyDiscipline');
+
+    fireEvent.click(disciplineButton);
+
+    for (let i = 0; i < 20; i++) {
+      expect(
+        panel.getByRole('checkbox', { name: `Subject ${i}` }),
+      ).toBeVisible();
+    }
+  });
 });
