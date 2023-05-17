@@ -32,9 +32,7 @@ export const DisciplinesWithSubjectsCheckboxFilter = ({
   showExplanation,
 }: Props) => {
   const [searchLocation] = useSearchQueryLocationParams();
-  const [openDisciplineIds, setOpenDisciplineIds] = useState(
-    options.map((option) => option.id),
-  );
+  const [openDisciplineIds, setOpenDisciplineIds] = useState([]);
 
   const onSelectOption = (_, item: string) => {
     const oldFilters = searchLocation.filters[filterName] || [];

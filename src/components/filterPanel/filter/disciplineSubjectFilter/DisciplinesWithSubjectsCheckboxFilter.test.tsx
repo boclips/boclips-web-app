@@ -46,32 +46,7 @@ describe('DisciplinesWithSubjectsCheckboxFilter', () => {
     },
   ];
 
-  it('will render the hierarchical options where children exist', () => {
-    const panel = renderWithLocation(
-      <DisciplinesWithSubjectsCheckboxFilter
-        options={hierarchicalFilterOptions}
-        title="Disciplines"
-        filterName="disciplines"
-        handleChange={() => {}}
-      />,
-    );
-
-    expect(panel.getByText('Disciplines')).toBeInTheDocument();
-    expect(panel.getByText('MyDiscipline')).toBeInTheDocument();
-    expect(panel.queryByRole('checkbox', { name: 'MyDiscipline' })).toBeNull();
-
-    expect(panel.getByRole('checkbox', { name: 'Math' })).toBeInTheDocument();
-    expect(panel.getByText('10')).toBeInTheDocument();
-    expect(
-      panel.getByRole('checkbox', { name: 'History' }),
-    ).toBeInTheDocument();
-    expect(panel.getByText('5')).toBeInTheDocument();
-    expect(panel.queryByText('Show all (2)')).toBeNull();
-
-    expect(panel.getByText('MyOtherDiscipline')).toBeInTheDocument();
-  });
-
-  it('will close discipline toggle onclick', () => {
+  it('all disciplines are collapsed by default', () => {
     const panel = renderWithLocation(
       <DisciplinesWithSubjectsCheckboxFilter
         options={hierarchicalFilterOptions}
@@ -82,17 +57,42 @@ describe('DisciplinesWithSubjectsCheckboxFilter', () => {
     );
 
     const disciplineButton = panel.getByLabelText('MyDiscipline');
-    expect(disciplineButton.getAttribute('aria-expanded')).toBe('true');
+    expect(disciplineButton.getAttribute('aria-expanded')).toBe('false');
 
-    expect(panel.getByText('Math')).toBeVisible();
-    expect(panel.getByText('History')).toBeVisible();
+    expect(panel.queryByText('Math')).toBeNull();
+    expect(panel.queryByText('History')).toBeNull();
+
+    expect(
+      panel.getByLabelText('MyOtherDiscipline').getAttribute('aria-expanded'),
+    ).toBe('false');
+    expect(panel.queryByText('English')).toBeNull();
+  });
+
+  it('can open disciplines', () => {
+    const panel = renderWithLocation(
+      <DisciplinesWithSubjectsCheckboxFilter
+        options={hierarchicalFilterOptions}
+        title="Disciplines"
+        filterName="disciplines"
+        handleChange={() => {}}
+      />,
+    );
+
+    const disciplineButton = panel.getByLabelText('MyDiscipline');
+    expect(disciplineButton.getAttribute('aria-expanded')).toBe('false');
+
+    expect(panel.queryByText('Math')).toBeNull();
+    expect(panel.queryByText('History')).toBeNull();
 
     fireEvent.click(disciplineButton);
 
     expect(
       panel.getByLabelText('MyDiscipline').getAttribute('aria-expanded'),
-    ).toBe('false');
-    expect(panel.queryByText('Math')).toBeNull();
-    expect(panel.queryByText('History')).toBeNull();
+    ).toBe('true');
+
+    expect(panel.getByRole('checkbox', { name: 'Math' })).toBeVisible();
+    expect(panel.getByText('10')).toBeVisible();
+    expect(panel.getByRole('checkbox', { name: 'History' })).toBeVisible();
+    expect(panel.getByText('5')).toBeVisible();
   });
 });

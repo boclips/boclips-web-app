@@ -77,7 +77,7 @@ describe('Discipline Subject filter', () => {
     expect(wrapper.container).toBeEmptyDOMElement();
   });
 
-  it('renders hierarchy of options', () => {
+  it('renders hierarchy of options and user can open disciplines to see subjects', () => {
     const queryClient = new QueryClient();
     queryClient.setQueryData(['discipline'], disciplines);
 
@@ -88,8 +88,11 @@ describe('Discipline Subject filter', () => {
     );
 
     expect(wrapper.getByText('Discipline 1')).toBeVisible();
+    fireEvent.click(wrapper.getByText('Discipline 1'));
     expect(wrapper.getByText('Math')).toBeVisible();
+
     expect(wrapper.getByText('Discipline 2')).toBeVisible();
+    fireEvent.click(wrapper.getByText('Discipline 2'));
     expect(wrapper.getByText('History')).toBeVisible();
     expect(wrapper.getByText('Art history')).toBeVisible();
   });
@@ -103,6 +106,9 @@ describe('Discipline Subject filter', () => {
       new FakeBoclipsClient(),
       queryClient,
     );
+
+    fireEvent.click(wrapper.getByText('Discipline 1'));
+    fireEvent.click(wrapper.getByText('Discipline 2'));
 
     fireEvent.change(getSearchInput(wrapper), { target: { value: 'his' } });
 
