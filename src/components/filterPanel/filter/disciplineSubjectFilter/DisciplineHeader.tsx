@@ -12,13 +12,13 @@ export const DisciplineHeader = ({ name, onClick, isOpen }: Props) => {
     <button
       type="button"
       key={name}
-      className="pl-4 mt-2 text-sm font-medium text-gray-700 flex items-center"
+      className="pl-4 pr-4 mt-2 text-sm font-medium text-gray-700 flex items-center justify-between w-full"
       onClick={onClick}
       aria-label={name}
       aria-expanded={isOpen}
     >
-      <FilterArrow className={`mr-2 ${isOpen ? 'transform rotate-180' : ''}`} />
       {name}
+      <FilterArrow className={`${isOpen ? 'transform rotate-180' : ''}`} />
     </button>
   );
 };
