@@ -1,5 +1,5 @@
 import { Typography } from '@boclips-ui/typography';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FilterOptionList } from 'src/components/filterPanel/filter/FilterOptionList';
 import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
 import { FilterOption } from 'src/types/FilterOption';
@@ -20,10 +20,7 @@ export interface HierarchicalFilterOption {
   name: string;
   id: string;
   children: FilterOption[];
-}
-
-export interface SelectedSubjectNumber {
-  [key: string]: number;
+  numberOfSelectedSubjects: number;
 }
 
 export const DisciplinesWithSubjectsCheckboxFilter = ({
@@ -37,23 +34,6 @@ export const DisciplinesWithSubjectsCheckboxFilter = ({
 }: Props) => {
   const [searchLocation] = useSearchQueryLocationParams();
   const [openDisciplineIds, setOpenDisciplineIds] = useState([]);
-  const [
-    selectedSubjectNumberByDiscipline,
-    setSelectedSubjectNumberByDiscipline,
-  ] = useState<SelectedSubjectNumber>({});
-
-  useEffect(() => {
-    const newState = {};
-    options.forEach((option) => {
-      const filters = searchLocation.filters[filterName] || [];
-      const selectedOptions = option.children.filter((subject) =>
-        filters.includes(subject.id),
-      );
-      newState[option.id] = selectedOptions.length;
-    });
-
-    setSelectedSubjectNumberByDiscipline(newState);
-  }, [searchLocation.filters[filterName]?.length]);
 
   const onSelectOption = (_, item: string) => {
     const oldFilters = searchLocation.filters[filterName] || [];
@@ -95,7 +75,7 @@ export const DisciplinesWithSubjectsCheckboxFilter = ({
             name={option.name}
             onClick={() => onClickDiscipline(option.id)}
             isOpen={isOpen(option)}
-            selectedSubjects={selectedSubjectNumberByDiscipline[option.id]}
+            selectedSubjects={option.numberOfSelectedSubjects}
           />
           {isOpen(option) && (
             <FilterOptionList

@@ -38,11 +38,13 @@ describe('DisciplinesWithSubjectsCheckboxFilter', () => {
       name: 'MyDiscipline',
       id: 'my-discipline',
       children: [subjects[0], subjects[1]],
+      numberOfSelectedSubjects: 0,
     },
     {
       name: 'MyOtherDiscipline',
       id: 'my-other-discipline',
       children: [subjects[2]],
+      numberOfSelectedSubjects: 0,
     },
   ];
 
@@ -115,6 +117,7 @@ describe('DisciplinesWithSubjectsCheckboxFilter', () => {
         name: 'MyDiscipline',
         id: 'my-discipline',
         children: subjectOptions,
+        numberOfSelectedSubjects: 0,
       },
     ];
     const panel = renderWithLocation(

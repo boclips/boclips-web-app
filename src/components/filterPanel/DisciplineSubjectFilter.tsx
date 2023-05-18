@@ -7,6 +7,7 @@ import { FilterOption } from 'src/types/FilterOption';
 import { searchFilterOptions } from 'src/services/sortFilterOptions';
 import { useGetDisciplinesQuery } from 'src/hooks/api/disciplinesQuery';
 import { FilterSearch } from 'src/components/filterPanel/filter/FilterSearch';
+import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
 
 interface Props {
   options?: FilterOption[];
@@ -17,6 +18,8 @@ export const DisciplineSubjectFilter = ({ options, handleChange }: Props) => {
   const [searchText, setSearchText] = useState<string>();
 
   const { data: disciplines } = useGetDisciplinesQuery();
+  const [searchLocation] = useSearchQueryLocationParams();
+  const selectedSubjectFilters = searchLocation.filters.subject || [];
 
   const filteredOptions = useMemo(
     (): FilterOption[] => searchFilterOptions(options, searchText),
@@ -25,16 +28,17 @@ export const DisciplineSubjectFilter = ({ options, handleChange }: Props) => {
 
   const disciplinesWithSubjects: HierarchicalFilterOption[] = disciplines
     ?.map((discipline) => {
-      const containedSubjectIds = discipline.subjects.map(
-        (subject) => subject.id,
-      );
+      const subjectIds = discipline.subjects.map((subject) => subject.id);
 
       return {
         name: discipline.name,
         id: discipline.id,
-        children: filteredOptions.filter((subject) =>
-          containedSubjectIds.includes(subject.id),
+        children: filteredOptions.filter((subjectOption) =>
+          subjectIds.includes(subjectOption.id),
         ),
+        numberOfSelectedSubjects: selectedSubjectFilters.filter((subjectId) =>
+          subjectIds.includes(subjectId),
+        ).length,
       };
     })
     .filter((discipline) => discipline.children.length > 0);
