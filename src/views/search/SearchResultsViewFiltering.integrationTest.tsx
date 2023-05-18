@@ -23,6 +23,8 @@ import React from 'react';
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
 import dayjs from 'src/day-js';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
+import { QueryClient } from '@tanstack/react-query';
 
 describe('SearchResultsFiltering', () => {
   let fakeClient: FakeBoclipsClient;
@@ -1174,6 +1176,81 @@ describe('SearchResultsFiltering', () => {
         expect(wrapper.queryByText('video ted stock')).toBeNull();
         expect(wrapper.queryByText('video getty news')).toBeNull();
       });
+    });
+  });
+
+  describe('Discipline Subject filters', () => {
+    const disciplines: Discipline[] = [
+      {
+        id: 'discipline-1',
+        name: 'Discipline 1',
+        code: 'discipline-1',
+        subjects: [
+          {
+            id: 'history',
+            name: 'History',
+          },
+          {
+            id: 'art-history',
+            name: 'Art history',
+          },
+        ],
+      },
+    ];
+
+    it(`displays the number of subject selected by discipline if any`, async () => {
+      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
+
+      fakeClient.videos.setFacets(
+        FacetsFactory.sample({
+          subjects: [{ id: 'history', name: 'History', hits: 12 }],
+        }),
+      );
+
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '1',
+          title: 'history video',
+          types: [{ name: 'STOCK', id: 1 }],
+        }),
+      );
+
+      const queryClient = new QueryClient();
+      queryClient.setQueryData(['discipline'], disciplines);
+
+      const wrapper = render(
+        <MemoryRouter initialEntries={['/videos']}>
+          <App
+            apiClient={fakeClient}
+            boclipsSecurity={stubBoclipsSecurity}
+            reactQueryClient={queryClient}
+          />
+        </MemoryRouter>,
+      );
+
+      const subjectsFilterPanel = await wrapper.findByText('Subjects');
+      expect(subjectsFilterPanel).toBeVisible();
+
+      const disciplineButton = wrapper.getByLabelText('Discipline 1');
+      expect(disciplineButton).toBeVisible();
+      fireEvent.click(disciplineButton);
+
+      expect(
+        wrapper.getByLabelText('Discipline 1').getAttribute('aria-expanded'),
+      ).toBe('true');
+
+      // below is just a temporary way of getting the correct checkbox
+      // after we remove the old subject filters, we should get it by using:
+      // wrapper.getByRole('checkbox', name: 'History'});
+      const historySubjectCheckbox = wrapper.getAllByText('History')[1];
+
+      expect(historySubjectCheckbox).toBeVisible();
+
+      fireEvent.click(historySubjectCheckbox);
+
+      expect(
+        wrapper.getByLabelText('1 subject selected under Discipline 1'),
+      ).toBeVisible();
     });
   });
 

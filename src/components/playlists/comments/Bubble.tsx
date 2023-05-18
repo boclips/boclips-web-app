@@ -5,12 +5,16 @@ import React from 'react';
 const Bubble = ({
   number,
   inline = false,
+  ariaLabel = '',
 }: {
   number: number;
   inline?: boolean;
+  ariaLabel?: string;
 }) => {
   return number ? (
-    <div className={c(s.bubble, { [s.inline]: inline })}>{number}</div>
+    <div aria-label={ariaLabel} className={c(s.bubble, { [s.inline]: inline })}>
+      {number}
+    </div>
   ) : null;
 };
 
