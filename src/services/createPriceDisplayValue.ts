@@ -9,6 +9,12 @@ export const createPriceDisplayValue = (
     return null;
   }
   const isDecimal = amount % 1 !== 0;
+
+  if (currency.toUpperCase() === 'CREDITS') {
+    const formattedAmount = isDecimal ? amount.toFixed(2) : amount;
+    return `${formattedAmount} Credits`;
+  }
+
   try {
     return currencyFormat(
       amount,

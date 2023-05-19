@@ -4,6 +4,23 @@ describe('get price display value', () => {
   it('returns null if nothing is passed in', () => {
     expect(createPriceDisplayValue()).toBeNull();
   });
+  describe('Credits', () => {
+    it('converts 0 credits', () => {
+      expect(createPriceDisplayValue(0, 'CREDITS', 'en-US')).toEqual(
+        '0 Credits',
+      );
+    });
+    it('converts 300.5 Credits', () => {
+      expect(createPriceDisplayValue(300.5, 'CREDITS', 'en-GB')).toEqual(
+        '300.50 Credits',
+      );
+    });
+    it('converts case insensitively', () => {
+      expect(createPriceDisplayValue(300.5, 'credits', 'en-US')).toEqual(
+        '300.50 Credits',
+      );
+    });
+  });
   describe('US Browser', () => {
     it('converts 0 USD', () => {
       expect(createPriceDisplayValue(0, 'USD', 'en-US')).toEqual('$0');
