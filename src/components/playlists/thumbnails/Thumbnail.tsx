@@ -9,33 +9,23 @@ interface Props {
 }
 
 const Thumbnail = ({ video }: Props) => {
-  const { data: retrievedVideo, isLoading: firstLoading } = useFindOrGetVideo(
-    video?.id,
-  );
 
-  const getThumbnailUrl = (fullVideo: Video) =>
-    fullVideo.playback?.links?.thumbnail?.getOriginalLink();
+  const getThumbnailUrl = (fullVideo: any) => {
+    return fullVideo.playback?._links?.thumbnail?.href;
+  };
 
   return (
     <div className="h-36">
-      {(video && firstLoading === false && (
-        <div
-          className={s.thumbnails}
-          key={retrievedVideo.id}
-          role="img"
-          aria-label={`Thumbnail of ${retrievedVideo.title}`}
-          style={{
-            background: `url(${getThumbnailUrl(retrievedVideo)}) center center`,
-            backgroundSize: 'cover',
-          }}
-        />
-      )) ?? (
-        <div
-          key="default-thumbnail"
-          data-qa="default-thumbnail"
-          className={s.thumbnails}
-        />
-      )}
+      <div
+        className={s.thumbnails}
+        // key={retrievedVideo.id}
+        role="img"
+        // aria-label={`Thumbnail of ${retrievedVideo.title}`}
+        style={{
+          background: `url(${getThumbnailUrl(video)}) center center`,
+          backgroundSize: 'cover',
+        }}
+      />
     </div>
   );
 };

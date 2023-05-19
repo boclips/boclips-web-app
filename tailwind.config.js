@@ -29,6 +29,7 @@ module.exports = {
       gridTemplateRows: {
         home: 'auto minmax(0, 458px) auto',
         homepage: 'auto 1fr auto',
+        sparks: 'minmax(74px, auto) min-content min-content min-content 1fr auto',
         newHomepage: 'auto auto auto auto',
         'search-view':
           'minmax(74px, auto) minmax(30px, min-content) auto 1fr auto',

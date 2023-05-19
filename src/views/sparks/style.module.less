@@ -1,0 +1,91 @@
+@import '~@boclips-ui/styles/src/colors';
+
+.sparksSearchHeader {
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.pocketWrapper {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  grid-template-rows: min-content min-content 1fr;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+
+
+  &.open {
+    &:after {
+      background: none;
+    }
+  }
+
+  &.isPocket{
+    border-bottom: 2px solid @gray-700;
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 100px;
+      background: linear-gradient(
+              180deg,
+              rgba(2, 0, 36, 0) 0%,
+              rgba(73, 90, 124, 0.7) 100%
+      );
+    }
+  }
+
+
+
+  .pocketButton {
+    position: absolute;
+    bottom: -24px;
+    justify-self: center;
+    z-index: 2;
+  }
+
+  .pocketHeader {
+    grid-row-start: 1;
+    grid-row-end: 1;
+    grid-column-start: 1;
+    grid-column-end: 9;
+    margin-bottom: 0.5rem;
+  }
+
+  .pocketBreadCrumbs {
+    margin-bottom: 1rem;
+    grid-row-start: 2;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 9;
+  }
+
+  .pocketVideosWrapper {
+    grid-row-start: 3;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 9;
+    max-height: 340px;
+    overflow: hidden;
+    margin-bottom: -2rem;
+    padding-bottom: 1rem;
+
+    &.open {
+      max-height: unset;
+      overflow: auto;
+    }
+
+    .pocketVideos {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-gap: 1rem;
+
+      > div {
+        min-height: 0;
+      }
+    }
+  }
+}
