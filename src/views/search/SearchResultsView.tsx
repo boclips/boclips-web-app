@@ -127,7 +127,6 @@ const SearchResultsView = () => {
       best_for: [],
       channel: [],
       subject: [],
-      prices: [],
       release_date_from: [],
       release_date_to: [],
       education_level: [],

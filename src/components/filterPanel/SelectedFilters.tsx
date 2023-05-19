@@ -77,7 +77,6 @@ export const SelectedFilters = ({ removeFilter, facets }: Props) => {
     searchQueryLocationParams.filters.channel.length,
     searchQueryLocationParams.filters.duration.length,
     searchQueryLocationParams.filters.subject.length,
-    searchQueryLocationParams.filters.prices.length,
     searchQueryLocationParams.filters.best_for.length,
     searchQueryLocationParams.filters.education_level.length,
     searchQueryLocationParams.filters.topics.length,

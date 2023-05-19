@@ -9,7 +9,6 @@ export interface Filters {
   channels: FilterOption[];
   videoTypes: FilterOption[];
   bestFor: FilterOption[];
-  prices: FilterOption[];
   educationLevels: FilterOption[];
   languages: FilterOption[];
   cefrLevels: FilterOption[];
