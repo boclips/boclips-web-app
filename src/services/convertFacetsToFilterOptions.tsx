@@ -7,7 +7,6 @@ import { Filters } from 'src/hooks/useFilterOptions';
 import { SearchFilters } from 'src/hooks/useLocationParams';
 import { DEFAULT_DURATIONS } from 'src/types/DefaultDurations';
 import { FilterOption } from 'src/types/FilterOption';
-import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
 import { FilterKey } from 'src/types/search/FilterKey';
 import { Channel } from 'boclips-api-client/dist/sub-clients/channels/model/Channel';
 import { Subject } from 'boclips-api-client/dist/sub-clients/subjects/model/Subject';
@@ -24,7 +23,6 @@ export const convertFacetsToFilterOptions = (
     bestFor: facets?.bestForTags || [],
     videoTypes: facets?.videoTypes || [],
     durations: facets?.durations || [],
-    prices: facets?.prices || [],
     educationLevels: facets?.educationLevels || [],
     languages: facets?.languages || [],
     cefrLevels: facets?.cefrLevels || [],
@@ -57,12 +55,6 @@ export const convertFacetsToFilterOptions = (
       appliedFilters?.duration || [],
       'duration',
       getDurationLabel,
-    ),
-    prices: createFilterOptions(
-      safeFacets.prices,
-      appliedFilters?.prices || [],
-      'prices',
-      getPriceLabel,
     ),
     educationLevels: createFilterOptions(
       safeFacets.educationLevels,
@@ -114,8 +106,6 @@ export const getFilterLabel = (
       return getVideoTypeLabel(id);
     case 'duration':
       return getDurationLabel(id);
-    case 'prices':
-      return getPriceLabel(id);
     case 'channel':
       return getChannelLabel(id, channels);
     case 'subject':
@@ -198,13 +188,6 @@ const getCefrLevelLabel = (name: string): string => {
     default:
       return name;
   }
-};
-
-const getPriceLabel = (name: string): string => {
-  const price = `${name.slice(0, name.length - 2)}.${name.slice(
-    name.length - 2,
-  )}`;
-  return createPriceDisplayValue(parseFloat(price), 'USD') || name;
 };
 
 const getEducationLevelsLabel = (

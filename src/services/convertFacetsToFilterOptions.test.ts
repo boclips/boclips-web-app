@@ -15,7 +15,6 @@ describe('convertFacets', () => {
       bestForTags: [FacetFactory.sample({ id: 'hooks', hits: 2 })],
       videoTypes: [FacetFactory.sample({ id: '3' })],
       channels: [FacetFactory.sample({ id: '4' })],
-      prices: [FacetFactory.sample({ id: '5' })],
       educationLevels: [
         FacetFactory.sample({ id: 'EL1', hits: 9, name: 'EL1 label' }),
         FacetFactory.sample({ id: 'EL2', hits: 52, name: 'EL2 label' }),
@@ -37,8 +36,6 @@ describe('convertFacets', () => {
     expect(filterOptions.bestFor[0].hits).toEqual(2);
     expect(filterOptions.subjects[0].id).toEqual('1');
     expect(filterOptions.subjects[0].key).toEqual('subject');
-    expect(filterOptions.prices[0].id).toEqual('5');
-    expect(filterOptions.prices[0].key).toEqual('prices');
 
     expect(filterOptions.educationLevels[0].id).toEqual('EL1');
     expect(filterOptions.educationLevels[0].key).toEqual('education_level');
@@ -69,7 +66,6 @@ describe('convertFacets', () => {
     expect(filterOptions.bestFor).toHaveLength(0);
     expect(filterOptions.channels).toHaveLength(0);
     expect(filterOptions.durations).toHaveLength(0);
-    expect(filterOptions.prices).toHaveLength(0);
     expect(filterOptions.cefrLevels).toHaveLength(0);
   });
 
@@ -105,25 +101,6 @@ describe('convertFacets', () => {
     expect(filterOptions.durations[2].name).toEqual('5 - 10 min');
     expect(filterOptions.durations[3].name).toEqual('10 - 20 min');
     expect(filterOptions.durations[4].name).toEqual('20 min +');
-  });
-
-  it('converts price facet name to display price', () => {
-    const facets = FacetsFactory.sample({
-      prices: [
-        FacetFactory.sample({ name: '10000' }),
-        FacetFactory.sample({ name: '20000' }),
-        FacetFactory.sample({ name: '30000' }),
-        FacetFactory.sample({ name: '40000' }),
-        FacetFactory.sample({ name: '50000' }),
-      ],
-    });
-
-    const filterOptions = convertFacetsToFilterOptions(facets, null);
-    expect(filterOptions.prices[0].name).toEqual('$100');
-    expect(filterOptions.prices[1].name).toEqual('$200');
-    expect(filterOptions.prices[2].name).toEqual('$300');
-    expect(filterOptions.prices[3].name).toEqual('$400');
-    expect(filterOptions.prices[4].name).toEqual('$500');
   });
 
   it('converts cefr level facets to correct display name', () => {

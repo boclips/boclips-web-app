@@ -5,7 +5,6 @@ import { SubjectFilter } from 'src/components/filterPanel/SubjectFilter';
 import { ChannelFilter } from 'src/components/filterPanel/ChannelFilter';
 import { DurationFilter } from 'src/components/filterPanel/DurationFilter';
 import { useFilterOptions } from 'src/hooks/useFilterOptions';
-import { PriceFilter } from 'src/components/filterPanel/PriceFilter';
 import c from 'classnames';
 import { DateFilter } from 'src/components/filterPanel/DateFilter';
 import { BestForFilter } from 'src/components/filterPanel/BestForFilter';
@@ -116,7 +115,6 @@ export const FilterPanel = ({
             handleChange={handleChange}
           />
           <DateFilter releaseDates={dateFilters} handleChange={handleChange} />
-          <PriceFilter options={options.prices} handleChange={handleChange} />
         </div>
       )}
     </div>

@@ -33,7 +33,6 @@ export const useSearchQueryLocationParams = (): [
       channel: locationParams.getAll('channel'),
       education_level: locationParams.getAll('education_level'),
       duration: locationParams.getAll('duration'),
-      prices: locationParams.getAll('prices'),
       release_date_from: locationParams.getAll('release_date_from'),
       release_date_to: locationParams.getAll('release_date_to'),
       topics: locationParams.getAll('topics'),

@@ -381,164 +381,6 @@ describe('SearchResultsFiltering', () => {
     });
   });
 
-  describe('price filters', () => {
-    it('displays the price filters and facet counts when hits > 0', async () => {
-      fakeClient.videos.setFacets(
-        FacetsFactory.sample({
-          prices: [
-            { id: '10000', name: '10000', hits: 10 },
-            { id: '20000', name: '20000', hits: 120 },
-            { id: '30000', name: '30000', hits: 80 },
-            { id: '50000', name: '50000', hits: 0 },
-          ],
-        }),
-      );
-
-      fakeClient.videos.insertVideo(
-        VideoFactory.sample({
-          id: '1',
-          title: 'stock video',
-          types: [{ name: 'STOCK', id: 1 }],
-        }),
-      );
-
-      const wrapper = renderSearchResultsView(['/videos?q=video']);
-
-      expect(await wrapper.findByText('Price')).toBeInTheDocument();
-      expect(await wrapper.findByText('$100')).toBeInTheDocument();
-      expect(wrapper.getByText('$200')).toBeInTheDocument();
-      expect(wrapper.getByText('$300')).toBeInTheDocument();
-      expect(wrapper.queryByText('$500')).not.toBeInTheDocument();
-    });
-
-    it('can filter videos by price', async () => {
-      fakeClient.videos.setFacets(
-        FacetsFactory.sample({
-          prices: [
-            FacetFactory.sample({ id: '10000', hits: 1, name: '10000' }),
-            FacetFactory.sample({ id: '20000', hits: 1, name: '20000' }),
-          ],
-        }),
-      );
-      const videos = [
-        VideoFactory.sample({
-          id: '1',
-          title: 'cheap video',
-          types: [{ name: 'STOCK', id: 1 }],
-          price: { amount: 10000, currency: 'USD' },
-        }),
-        VideoFactory.sample({
-          id: '2',
-          title: 'expensive video',
-          types: [{ name: 'NEWS', id: 2 }],
-          price: { amount: 20000, currency: 'USD' },
-        }),
-      ];
-
-      videos.forEach((v) => fakeClient.videos.insertVideo(v));
-
-      const wrapper = renderSearchResultsView(['/videos?q=video']);
-
-      expect(await wrapper.findByText('Price')).toBeInTheDocument();
-
-      expect(await wrapper.findByText('$100')).toBeInTheDocument();
-      expect(await wrapper.findByText('$200')).toBeInTheDocument();
-
-      await waitFor(async () => {
-        expect(await wrapper.findByText('cheap video')).toBeInTheDocument();
-        expect(await wrapper.findByText('expensive video')).toBeInTheDocument();
-      });
-
-      const hundredDollarCheckbox = wrapper.getByTestId('10000-checkbox');
-
-      fakeClient.videos.setFacets(
-        FacetsFactory.sample({
-          prices: [
-            FacetFactory.sample({ name: '10000', id: '10000', hits: 10 }),
-          ],
-        }),
-      );
-
-      fireEvent.click(wrapper.getByTestId('10000-checkbox'));
-      expect(hundredDollarCheckbox).toHaveProperty('checked', true);
-
-      expect(await wrapper.findByLabelText(/100/)).toBeInTheDocument();
-
-      await waitFor(() => {
-        expect(wrapper.getByText('cheap video')).toBeInTheDocument();
-        expect(wrapper.queryByText('expensive video')).toBeNull();
-      });
-      const selectedFiltersSection = wrapper.getByTestId('applied-filter-tags');
-
-      await waitFor(() =>
-        within(selectedFiltersSection).getByText('$100'),
-      ).then((it) => {
-        expect(it).toBeVisible();
-      });
-    });
-
-    it(`hides price filters for users with the prices feature disabled`, async () => {
-      fakeClient.videos.insertVideo(
-        VideoFactory.sample({ title: 'vid title' }),
-      );
-
-      fakeClient.videos.setFacets(
-        FacetsFactory.sample({
-          prices: [
-            FacetFactory.sample({ id: '100000', name: '100000', hits: 10 }),
-          ],
-        }),
-      );
-
-      fakeClient.users.insertCurrentUser(
-        UserFactory.sample({
-          features: { BO_WEB_APP_PRICES: false },
-          organisation: { id: 'org-bo', name: 'Boclips' },
-        }),
-      );
-
-      const wrapper = render(
-        <MemoryRouter initialEntries={['/videos']}>
-          <App apiClient={fakeClient} boclipsSecurity={stubBoclipsSecurity} />
-        </MemoryRouter>,
-      );
-
-      await waitFor(() => {
-        expect(wrapper.getByText('vid title')).toBeVisible();
-        expect(wrapper.queryByText('Price')).not.toBeInTheDocument();
-        expect(wrapper.queryByText('$1,000')).not.toBeInTheDocument();
-      });
-    });
-
-    it(`shows price filters for users with the prices feature enabled`, async () => {
-      fakeClient.videos.insertVideo(VideoFactory.sample({}));
-
-      fakeClient.videos.setFacets(
-        FacetsFactory.sample({
-          prices: [
-            FacetFactory.sample({ id: '100000', name: '100000', hits: 10 }),
-          ],
-        }),
-      );
-
-      fakeClient.users.insertCurrentUser(
-        UserFactory.sample({
-          features: { BO_WEB_APP_PRICES: true },
-          organisation: { id: 'org-bo', name: 'Boclips' },
-        }),
-      );
-
-      const wrapper = render(
-        <MemoryRouter initialEntries={['/videos']}>
-          <App apiClient={fakeClient} boclipsSecurity={stubBoclipsSecurity} />
-        </MemoryRouter>,
-      );
-
-      expect(await wrapper.findByText('Price')).toBeVisible();
-      expect(await wrapper.findByText('$1,000')).toBeVisible();
-    });
-  });
-
   describe('date filters', () => {
     it('shows the to and from date filters with placeholders', async () => {
       fakeClient.videos.insertVideo(VideoFactory.sample({ title: 'video123' }));
@@ -642,9 +484,9 @@ describe('SearchResultsFiltering', () => {
 
       fakeClient.videos.setFacets(
         FacetsFactory.sample({
-          prices: [
-            FacetFactory.sample({ id: '10000', hits: 1, name: '10000' }),
-            FacetFactory.sample({ id: '20000', hits: 1, name: '20000' }),
+          languages: [
+            { id: 'glv', hits: 1, name: 'Manx' },
+            { id: 'jpn', hits: 1, name: 'Japanese' },
           ],
         }),
       );
@@ -652,15 +494,15 @@ describe('SearchResultsFiltering', () => {
       const videos = [
         VideoFactory.sample({
           id: '1',
-          title: 'cheap video',
+          title: 'manx video',
           types: [{ name: 'STOCK', id: 1 }],
-          price: { amount: 10000, currency: 'USD' },
+          language: { code: 'glv', displayName: 'Manx' },
         }),
         VideoFactory.sample({
           id: '2',
-          title: 'expensive video',
+          title: 'japanese video',
           types: [{ name: 'NEWS', id: 2 }],
-          price: { amount: 20000, currency: 'USD' },
+          language: { code: 'jpn', displayName: 'Japanese' },
         }),
       ];
 
@@ -668,31 +510,19 @@ describe('SearchResultsFiltering', () => {
     });
 
     it('can remove filters individually from selected filter panel', async () => {
-      fakeClient.videos.insertVideo(
-        VideoFactory.sample({
-          id: '3',
-          title: 'stock video',
-          types: [{ name: 'STOCK', id: 1 }],
-          price: {
-            currency: 'USD',
-            amount: 10000,
-          },
-        }),
-      );
-
-      const wrapper = renderSearchResultsView(['/videos?&prices=10000']);
+      const wrapper = renderSearchResultsView(['/videos?&language=glv']);
 
       await waitFor(async () => {
-        expect(await wrapper.findByText('cheap video')).toBeInTheDocument();
-        expect(await wrapper.queryByText('expensive video')).toBeNull();
+        expect(await wrapper.findByText('manx video')).toBeInTheDocument();
+        expect(await wrapper.queryByText('japanese video')).toBeNull();
       });
 
       const selectedFiltersSection = wrapper.getByTestId('applied-filter-tags');
 
       await waitFor(() =>
-        within(selectedFiltersSection).getByText('$100'),
+        within(selectedFiltersSection).getByText('Manx'),
       ).then((it) => {
-        fireEvent.click(within(it).getByTestId('remove-filter-10000'));
+        fireEvent.click(within(it).getByTestId('remove-filter-glv'));
       });
 
       await waitFor(() => {
@@ -700,29 +530,17 @@ describe('SearchResultsFiltering', () => {
       });
 
       await waitFor(async () => {
-        expect(await wrapper.findByText('cheap video')).toBeInTheDocument();
-        expect(await wrapper.findByText('expensive video')).toBeInTheDocument();
+        expect(await wrapper.findByText('manx video')).toBeInTheDocument();
+        expect(await wrapper.findByText('japanese video')).toBeInTheDocument();
       });
     });
 
     it('can remove all filters from selected filters panel', async () => {
-      fakeClient.videos.insertVideo(
-        VideoFactory.sample({
-          id: '3',
-          title: 'stock video',
-          types: [{ name: 'STOCK', id: 1 }],
-          price: {
-            currency: 'USD',
-            amount: 10000,
-          },
-        }),
-      );
-
-      const wrapper = renderSearchResultsView(['/videos?q=video&prices=10000']);
+      const wrapper = renderSearchResultsView(['/videos?q=video&language=glv']);
 
       await waitFor(async () => {
-        expect(await wrapper.findByText('cheap video')).toBeInTheDocument();
-        expect(await wrapper.queryByText('expensive video')).toBeNull();
+        expect(await wrapper.findByText('manx video')).toBeInTheDocument();
+        expect(await wrapper.queryByText('japanese video')).toBeNull();
       });
 
       fireEvent.click(wrapper.getByText('Clear all'));
@@ -732,8 +550,8 @@ describe('SearchResultsFiltering', () => {
       });
 
       await waitFor(async () => {
-        expect(await wrapper.findByText('cheap video')).toBeInTheDocument();
-        expect(await wrapper.findByText('expensive video')).toBeInTheDocument();
+        expect(await wrapper.findByText('manx video')).toBeInTheDocument();
+        expect(await wrapper.findByText('japanese video')).toBeInTheDocument();
       });
     });
   });
