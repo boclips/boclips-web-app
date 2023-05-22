@@ -7,6 +7,7 @@ import AddNewTeamMemberModal from 'src/components/teamModal/AddNewTeamMemberModa
 import Footer from 'src/components/layout/Footer';
 import PlusSign from 'resources/icons/plus-sign.svg';
 import { UsersList } from 'src/components/usersList/UsersList';
+import { FeatureGate } from 'src/components/common/FeatureGate';
 
 const MyTeamView = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -29,7 +30,9 @@ const MyTeamView = () => {
         tabIndex={-1}
         className="col-start-2 col-end-26 row-start-3 row-end-4 flex items-start"
       >
-        <UsersList />
+        <FeatureGate linkName="accountUsers" isView={false}>
+          <UsersList />
+        </FeatureGate>
       </main>
       {isModalOpen && (
         <AddNewTeamMemberModal closeModal={() => setIsModalOpen(false)} />

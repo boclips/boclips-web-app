@@ -235,7 +235,17 @@ const App = ({
                       path="/explore/*"
                       element={<RedirectFromExploreToSparks />}
                     />
-                    <Route path="/team" element={<MyTeamView />} />
+                    <Route
+                      path="/team"
+                      element={
+                        <WithValidRoles
+                          fallback={<NotFound />}
+                          roles={[ROLES.ROLE_BOCLIPS_WEB_APP_MANAGE_USERS]}
+                        >
+                          <MyTeamView />
+                        </WithValidRoles>
+                      }
+                    />
                     <Route
                       path="*"
                       element={

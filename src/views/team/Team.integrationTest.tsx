@@ -96,4 +96,45 @@ describe('My Team view', () => {
     expect(await wrapper.findByText('Can add users')).toBeVisible();
     expect(await wrapper.findByText('No')).toBeVisible();
   });
+
+  it('list of users is only available only if `accountUsers` link is present', async () => {
+    const fakeClient = new FakeBoclipsClient();
+
+    fakeClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'account-1' }),
+    );
+
+    const joe = await fakeClient.users.createUser({
+      firstName: 'Joe',
+      lastName: 'Biden',
+      email: 'joebiden@gmail.com',
+      accountId: 'account-1',
+      type: UserType.b2bUser,
+    });
+
+    fakeClient.users.setPermissionOfUser(joe.id, AccountUserStatus.CAN_ORDER);
+
+    delete fakeClient.links.accountUsers;
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/team']}>
+        <App
+          reactQueryClient={createReactQueryClient()}
+          apiClient={fakeClient}
+          boclipsSecurity={stubBoclipsSecurity}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.queryByText('User')).not.toBeInTheDocument();
+    expect(await wrapper.queryByText('Joe Biden')).not.toBeInTheDocument();
+    expect(await wrapper.queryByText('User email')).not.toBeInTheDocument();
+    expect(
+      await wrapper.queryByText('joebiden@gmail.com'),
+    ).not.toBeInTheDocument();
+    expect(await wrapper.queryByText('Can order')).not.toBeInTheDocument();
+    expect(await wrapper.queryByText('Yes')).not.toBeInTheDocument();
+    expect(await wrapper.queryByText('Can add users')).not.toBeInTheDocument();
+    expect(await wrapper.queryByText('No')).not.toBeInTheDocument();
+  });
 });

@@ -48,7 +48,11 @@ export const doFindAccountUsers = (
 export const useFindAccountUsers = (accountId: string) => {
   const client = useBoclipsClient();
 
-  return useQuery(['accountUsers', accountId], () =>
-    doFindAccountUsers(accountId, client),
+  return useQuery(
+    ['accountUsers', accountId],
+    () => doFindAccountUsers(accountId, client),
+    {
+      enabled: !!accountId,
+    },
   );
 };
