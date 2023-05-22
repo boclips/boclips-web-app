@@ -1,14 +1,12 @@
 import { Typography } from '@boclips-ui/typography';
 import React, { useEffect } from 'react';
 import SparksLeftSVG from 'src/resources/sparks/sparks-left.svg';
-import SparksRightSVG from 'src/resources/sparks/sparks-right.svg';
 import c from 'classnames';
-import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import s from './sparksHeader.module.less';
 
 export const SparksHeader = () => {
-  const breakpoints = useMediaBreakPoint();
-  const desktopView = breakpoints.type === 'desktop';
+  let index = 0;
+
   const animate = (star) => {
     const rand = (min, max) =>
       Math.floor(Math.random() * (max - min + 1)) + min;
@@ -20,17 +18,16 @@ export const SparksHeader = () => {
     star.offsetHeight;
     star.style.animation = '';
   };
-  let index = 0;
 
   useEffect(() => {
     const interval = 3000;
 
     for (const star of document.getElementsByClassName(s.star)) {
-      animate(star);
+      // animate(star);
 
       setTimeout(() => {
         setInterval(() => animate(star), 3000);
-      }, index++ * (interval / 3));
+      }, index++ * (interval / 2));
     }
   }, [index]);
 

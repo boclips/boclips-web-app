@@ -2,9 +2,9 @@
 @import '~@boclips-ui/styles/src/breakpoints';
 
 :root {
-  --purple: @orange;
-  --violet: @warning;
-  --pink: @boclips-orange;
+  --color1: @orange;
+  --color2: @warning;
+  --color3: @boclips-orange;
 }
 
 .sparksHeader {
@@ -40,7 +40,7 @@
       opacity: 0.7;
     }
     path {
-      fill: var(--violet);
+      fill: var(--color2);
     }
   }
 }
@@ -49,10 +49,10 @@
   animation: background-pan 5s linear infinite;
   background: linear-gradient(
     to right,
-    var(--purple),
-    var(--violet),
-    var(--pink),
-    var(--purple)
+    var(--color1),
+    var(--color2),
+    var(--color3),
+    var(--color1)
   );
   background-size: 200%;
   -webkit-background-clip: text;
