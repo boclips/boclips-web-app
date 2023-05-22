@@ -11,8 +11,11 @@ import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
 import { Typography } from '@boclips-ui/typography';
 import Button from '@boclips-ui/button';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
-import s from './newstyle.module.less';
+import { WithValidRoles } from 'src/components/common/errors/WithValidRoles';
+import NotFound from 'src/views/notFound/NotFound';
+import { ROLES } from 'src/types/Roles';
 import { Link } from '../common/Link';
+import s from './newstyle.module.less';
 
 export const AccountButton = () => {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
@@ -36,6 +39,9 @@ export const AccountButton = () => {
 
   const ordersOpenedEvent = () => {
     AnalyticsFactory.appcues().sendEvent(AppcuesEvent.YOUR_ORDERS_OPENED);
+  };
+  const myTeamOpened = () => {
+    AnalyticsFactory.appcues().sendEvent(AppcuesEvent.MY_TEAM_OPENED);
   };
 
   const closeDialog = () => {
@@ -109,14 +115,26 @@ export const AccountButton = () => {
                 </Link>
               </div>
             </FeatureGate>
-            <div className="pt-1">
+            <WithValidRoles
+              fallback={<NotFound />}
+              roles={[ROLES.ROLE_BOCLIPS_WEB_APP_MANAGE_USERS]}
+            >
+              <div className="pt-2">
+                <Link onClick={myTeamOpened} to="/team" tabIndex={-1}>
+                  <Typography.Body size="small" as="button">
+                    My team
+                  </Typography.Body>
+                </Link>
+              </div>
+            </WithValidRoles>
+            <div className="pt-2">
               <Link to="/playlists" tabIndex={-1}>
                 <Typography.Body size="small" as="button">
                   My playlists
                 </Typography.Body>
               </Link>
             </div>
-            <div className="pt-1">
+            <div className="pt-2">
               <a
                 target="_blank"
                 href="https://www.boclips.com/boclips-platform-guide"
@@ -135,7 +153,7 @@ export const AccountButton = () => {
                 </Typography.Body>
               </a>
             </div>
-            <div className="pt-1">
+            <div className="pt-2">
               <Typography.Link>
                 <Typography.Body
                   as="button"

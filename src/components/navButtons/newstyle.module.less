@@ -13,7 +13,7 @@
 }
 
 .navButton {
-  @apply items-center justify-center relative;
+@apply items-center justify-center relative;
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -43,7 +43,7 @@
     #focus;
 
     span {
-      @apply text-xxs mt-1 font-medium;
+    @apply text-xxs mt-1 font-medium;
       color: @gray-900;
       line-height: 1.125rem;
     }
@@ -62,6 +62,7 @@
   width: 18px;
   height: 18px;
 }
+
 .accountIcon {
   stroke: white !important;
   width: 20px;
@@ -89,17 +90,19 @@
   border-radius: 100%;
   font-weight: 500;
 }
+
 .userDetails {
-  background: #bccdff;
-  float:left;
+  background: @blue-500;
   width: 100%;
-  top: 0;
   padding: 0.5rem;
+  border-radius: 4px 4px 0 0;
+  text-align: left;
 }
+
 .menu {
   padding: 0 1rem;
-
 }
+
 .tooltip {
   display: flex;
   flex-direction: column;
@@ -107,13 +110,13 @@
   align-items: flex-start;
   position: absolute;
   width: 250px;
-  height: 190px;
-  bottom: -188px;
+  height: auto;
+  padding-bottom: 1rem;
+  bottom: -225px;
   background: white;
   box-shadow: 0px 2px 10px #e8e8e8;
   border-radius: 4px;
   z-index: -1;
-  font-size: 1rem;
   color: @gray-900;
   cursor: auto;
 
