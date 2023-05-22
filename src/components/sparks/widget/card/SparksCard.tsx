@@ -30,15 +30,13 @@ const SparksCard = ({ provider }: Props) => {
           className={s.sparksCardLogo}
         />
         <Typography.H1
-          size={{ mobile: 'md', tablet: 'md', desktop: 'lg' }}
-          className="mb-2 text-left"
+          size={{ mobile: 'md', tablet: 'md', desktop: 'md' }}
+          className="mb-2"
         >
           {provider.name}
         </Typography.H1>
       </div>
-      <Typography.Body className={s.sparksCardDescription}>
-        {provider.description}
-      </Typography.Body>
+      <Typography.Body>{provider.description}</Typography.Body>
     </button>
   );
 };

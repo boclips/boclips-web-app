@@ -10,7 +10,8 @@ import GridCard from 'src/components/common/gridCard/GridCard';
 import c from 'classnames';
 import Button from '@boclips-ui/button';
 import Arrow from 'resources/icons/blue-arrow.svg';
-import Thumbnail from 'src/components/playlists/thumbnails/Thumbnail';
+import { VideosConverter } from 'boclips-api-client/dist/sub-clients/videos/model/VideosConverter';
+import CoverWithVideo from 'src/components/playlists/coverWithVideo/CoverWithVideo';
 import s from './style.module.less';
 
 const getData = (query: string) =>
@@ -70,8 +71,8 @@ const PocketVideos = ({ videosIds }: any) => {
   useEffect(() => {
     const tokenBB = async () => {
       const tokenResp = await getVideos(videosIds);
-      const response = await tokenResp.json();
-      setVideos(response.videos);
+      const { vids } = await tokenResp.json();
+      setVideos(vids?.map((it) => VideosConverter.convert(it)));
     };
 
     tokenBB();
@@ -85,7 +86,7 @@ const PocketVideos = ({ videosIds }: any) => {
             key={video.id}
             link={`/videos/${video.id}`}
             name={video.title}
-            header={<Thumbnail video={video} />}
+            header={<CoverWithVideo video={video} />}
           />
         );
       })}
@@ -108,7 +109,7 @@ const SparksView = () => {
       <div className="col-start-2 col-end-26 row-start-3 row-end-3">
         <div className={s.sparksSearchHeader}>
           <Typography.Body>
-            ...or search though the sparks to find what you need!
+            ...or search though the Sparks to find what you need!
           </Typography.Body>
         </div>
       </div>
