@@ -12,7 +12,6 @@ import { Typography } from '@boclips-ui/typography';
 import Button from '@boclips-ui/button';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { WithValidRoles } from 'src/components/common/errors/WithValidRoles';
-import NotFound from 'src/views/notFound/NotFound';
 import { ROLES } from 'src/types/Roles';
 import { Link } from '../common/Link';
 import s from './newstyle.module.less';
@@ -115,10 +114,7 @@ export const AccountButton = () => {
                 </Link>
               </div>
             </FeatureGate>
-            <WithValidRoles
-              fallback={<NotFound />}
-              roles={[ROLES.ROLE_BOCLIPS_WEB_APP_MANAGE_USERS]}
-            >
+            <WithValidRoles roles={[ROLES.ROLE_BOCLIPS_WEB_APP_MANAGE_USERS]}>
               <div className="pt-2">
                 <Link onClick={myTeamOpened} to="/team" tabIndex={-1}>
                   <Typography.Body size="small" as="button">

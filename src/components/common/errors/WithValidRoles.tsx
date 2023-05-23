@@ -4,7 +4,7 @@ import { ROLES } from 'src/types/Roles';
 
 interface Props {
   children: React.ReactNode;
-  fallback: any;
+  fallback?: React.ReactNode;
   roles: ROLES[];
 }
 
