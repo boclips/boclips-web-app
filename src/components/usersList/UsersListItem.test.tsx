@@ -13,8 +13,8 @@ describe('UsersListRow', () => {
       lastName: 'Biden',
       permission: AccountUserStatus.CAN_ORDER,
       permissions: {
-        ordering: [],
-        userManagement: [],
+        canOrder: false,
+        canManageUsers: false,
       },
     };
 
@@ -35,8 +35,8 @@ describe('UsersListRow', () => {
       lastName: 'Biden',
       permission: AccountUserStatus.VIEW_ONLY,
       permissions: {
-        ordering: [],
-        userManagement: [],
+        canOrder: false,
+        canManageUsers: false,
       },
     };
 
@@ -57,8 +57,8 @@ describe('UsersListRow', () => {
       lastName: 'Biden',
       permission: AccountUserStatus.VIEW_ONLY,
       permissions: {
-        ordering: [],
-        userManagement: [],
+        canOrder: false,
+        canManageUsers: false,
       },
     };
 

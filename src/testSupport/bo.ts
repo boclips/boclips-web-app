@@ -43,7 +43,6 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
   const boSetFacets = (facets: Partial<VideoFacets>) => {
     apiClient.videos.setFacets(
       FacetsFactory.sample({
-        prices: [FacetFactory.sample({ hits: 10, id: '1000', name: '1000' })],
         channels: [
           FacetFactory.sample({
             hits: 17,
