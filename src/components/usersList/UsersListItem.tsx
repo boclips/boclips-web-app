@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
-import { AccountUserStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { Typography } from '@boclips-ui/typography';
 import c from 'classnames';
 import s from './style.module.less';
@@ -52,12 +51,12 @@ export const UsersListItem = ({ user, isLoading }: Props) => {
       </UserInformationField>
       <UserInformationField fieldName="Can order">
         <Typography.Body size="small" as="span">
-          {user.permission === AccountUserStatus.CAN_ORDER ? 'Yes' : 'No'}{' '}
+          {user.permissions.canOrder ? 'Yes' : 'No'}{' '}
         </Typography.Body>
       </UserInformationField>
       <UserInformationField fieldName="Can add users">
         <Typography.Body size="small" as="span">
-          No
+          {user.permissions.canManageUsers ? 'Yes' : 'No'}{' '}
         </Typography.Body>
       </UserInformationField>
     </li>
