@@ -2,7 +2,6 @@ import React from 'react';
 import { render, within } from '@testing-library/react';
 import { UsersListItem } from 'src/components/usersList/UsersListItem';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
-import { AccountUserStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('UsersListRow', () => {
   it('says the user can place orders if the permissions allow that', () => {
@@ -11,7 +10,6 @@ describe('UsersListRow', () => {
       email: 'joebiden@gmail.com',
       firstName: 'Joe',
       lastName: 'Biden',
-      permission: AccountUserStatus.CAN_ORDER,
       permissions: {
         canOrder: true,
         canManageUsers: false,
@@ -33,7 +31,6 @@ describe('UsersListRow', () => {
       email: 'joebiden@gmail.com',
       firstName: 'Joe',
       lastName: 'Biden',
-      permission: AccountUserStatus.VIEW_ONLY,
       permissions: {
         canOrder: false,
         canManageUsers: false,
@@ -55,7 +52,6 @@ describe('UsersListRow', () => {
       email: 'joebiden@gmail.com',
       firstName: 'Joe',
       lastName: 'Biden',
-      permission: AccountUserStatus.VIEW_ONLY,
       permissions: {
         canOrder: false,
         canManageUsers: false,
