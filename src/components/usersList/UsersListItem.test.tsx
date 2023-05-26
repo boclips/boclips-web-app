@@ -13,7 +13,7 @@ describe('UsersListRow', () => {
       lastName: 'Biden',
       permission: AccountUserStatus.CAN_ORDER,
       permissions: {
-        canOrder: false,
+        canOrder: true,
         canManageUsers: false,
       },
     };
