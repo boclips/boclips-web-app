@@ -1,0 +1,63 @@
+@import '@boclips-ui/styles/src/colors';
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 55px;
+  align-items: center;
+}
+
+.radioGroupRoot {
+  display: flex;
+  flex-direction: row;
+  gap: 55px;
+  align-items: center;
+}
+
+.radioGroupItemWrapper {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+}
+
+.radioGroupItem {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid @gray-500;
+
+  &:hover {
+    border: 2px solid @gray-700;
+  }
+
+  &:focus {
+    border-radius: 50%;
+    border: 2px solid @blue-900;
+  }
+
+  &[aria-checked="true"] {
+    border: 2px solid @blue-800;
+  }
+
+  &[aria-checked="true"] + label > span {
+    font-weight: 500;
+  }
+}
+
+.radioGroupIndicator {
+  display: flex;
+  justify-content: center;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: @blue-800;
+  }
+}
+
+.radioItemLabel {
+  font-weight: 400;
+}
