@@ -5,7 +5,7 @@ import { FilterOption } from 'src/types/FilterOption';
 
 interface Props {
   options: FilterOption[];
-  handleChange?: (filter: string, values: string[]) => void;
+  handleChange: (filter: string, values: string[]) => void;
 }
 
 export const VideoSubtypeFilter = ({ options = [], handleChange }: Props) => {
