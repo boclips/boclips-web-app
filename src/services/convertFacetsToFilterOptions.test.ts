@@ -21,6 +21,9 @@ describe('convertFacets', () => {
       ],
       languages: [FacetFactory.sample({ id: 'eng', hits: 9, name: 'English' })],
       cefrLevels: [FacetFactory.sample({ id: 'A1', hits: 42, name: 'A1' })],
+      videoSubtypes: [
+        FacetFactory.sample({ id: 'ANIMATION', name: 'Animation', hits: 12 }),
+      ],
     });
 
     const filterOptions = convertFacetsToFilterOptions(facets, null);
@@ -56,6 +59,11 @@ describe('convertFacets', () => {
     expect(filterOptions.cefrLevels[0].key).toEqual('cefr_level');
     expect(filterOptions.cefrLevels[0].hits).toEqual(42);
     expect(filterOptions.cefrLevels[0].name).toEqual('A1 Beginner');
+
+    expect(filterOptions.videoSubtypes[0].id).toEqual('ANIMATION');
+    expect(filterOptions.videoSubtypes[0].key).toEqual('subtype');
+    expect(filterOptions.videoSubtypes[0].hits).toEqual(12);
+    expect(filterOptions.videoSubtypes[0].name).toEqual('Animation');
   });
 
   it('returns empty lists when facets are null', () => {
@@ -67,6 +75,7 @@ describe('convertFacets', () => {
     expect(filterOptions.channels).toHaveLength(0);
     expect(filterOptions.durations).toHaveLength(0);
     expect(filterOptions.cefrLevels).toHaveLength(0);
+    expect(filterOptions.videoSubtypes).toHaveLength(0);
   });
 
   it('converts video type facet name to display name', () => {
@@ -142,7 +151,7 @@ describe('convertFacets', () => {
     expect(filterOptions.cefrLevels[0].name).toEqual('a11');
   });
 
-  describe('Converting language codes', () => {
+  describe('Converting id to display name from facet', () => {
     it('can convert language code to display name from facets', () => {
       const label = getFilterLabel(
         'language',
@@ -153,6 +162,19 @@ describe('convertFacets', () => {
         [FacetFactory.sample({ id: 'eng', name: 'English' })],
       );
       expect(label).toEqual('English');
+    });
+
+    it('can convert subtype id to display name from facets', () => {
+      const label = getFilterLabel(
+        'subtype',
+        'ANIMATION',
+        [],
+        [],
+        [],
+        [],
+        [FacetFactory.sample({ id: 'ANIMATION', name: 'Animation' })],
+      );
+      expect(label).toEqual('Animation');
     });
   });
 });

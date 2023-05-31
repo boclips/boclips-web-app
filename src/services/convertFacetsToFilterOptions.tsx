@@ -26,6 +26,7 @@ export const convertFacetsToFilterOptions = (
     educationLevels: facets?.educationLevels || [],
     languages: facets?.languages || [],
     cefrLevels: facets?.cefrLevels || [],
+    videoSubtypes: facets?.videoSubtypes || [],
   };
 
   return {
@@ -72,6 +73,11 @@ export const convertFacetsToFilterOptions = (
       'cefr_level',
       getCefrLevelLabel,
     ),
+    videoSubtypes: createFilterOptions(
+      safeFacets.videoSubtypes,
+      appliedFilters?.subtype || [],
+      'subtype',
+    ),
   };
 };
 
@@ -100,6 +106,7 @@ export const getFilterLabel = (
   subjects?: Subject[],
   educationLevels?: EducationLevel[],
   languages?: Facet[],
+  subtypes?: Facet[],
 ): string => {
   switch (key) {
     case 'video_type':
@@ -122,6 +129,8 @@ export const getFilterLabel = (
       return languages?.find((l) => l.id === id)?.name;
     case 'cefr_level':
       return getCefrLevelLabel(id);
+    case 'subtype':
+      return subtypes?.find((l) => l.id === id)?.name;
     default:
       throw 'not supported filter key';
   }

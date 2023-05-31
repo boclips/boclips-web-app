@@ -133,6 +133,7 @@ const SearchResultsView = () => {
       topics: filtersFromURL.topics,
       language: [],
       cefr_level: [],
+      subtype: [],
     };
 
     setSearchLocation({

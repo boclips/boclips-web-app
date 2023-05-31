@@ -38,6 +38,7 @@ export const useSearchQueryLocationParams = (): [
       topics: locationParams.getAll('topics'),
       language: locationParams.getAll('language'),
       cefr_level: locationParams.getAll('cefr_level'),
+      subtype: locationParams.getAll('subtype'),
     },
   };
 
