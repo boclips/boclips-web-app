@@ -8,7 +8,6 @@ import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import userEvent from '@testing-library/user-event';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
-import { AccountUserStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('My Team view', () => {
   it('renders my team page', () => {
@@ -75,7 +74,10 @@ describe('My Team view', () => {
       accountId: 'account-1',
       type: UserType.b2bUser,
     });
-    fakeClient.users.setPermissionOfUser(joe.id, AccountUserStatus.CAN_ORDER);
+    fakeClient.users.setPermissionsOfUser(joe.id, {
+      canOrder: true,
+      canManageUsers: false,
+    });
 
     const wrapper = render(
       <MemoryRouter initialEntries={['/team']}>
@@ -112,7 +114,10 @@ describe('My Team view', () => {
       type: UserType.b2bUser,
     });
 
-    fakeClient.users.setPermissionOfUser(joe.id, AccountUserStatus.CAN_ORDER);
+    fakeClient.users.setPermissionsOfUser(joe.id, {
+      canOrder: true,
+      canManageUsers: false,
+    });
 
     delete fakeClient.links.accountUsers;
 
