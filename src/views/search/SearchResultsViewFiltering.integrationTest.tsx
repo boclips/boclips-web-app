@@ -1104,6 +1104,9 @@ describe('SearchResultsFiltering', () => {
 
   describe('video subtype filters', () => {
     it('displays video subtype filters with facet counts', async () => {
+      fakeClient.users.setCurrentUserFeatures({
+        BO_WEB_APP_SUBTYPE_FILTER: true,
+      });
       const facets = FacetsFactory.sample({
         videoSubtypes: [
           {
@@ -1123,14 +1126,15 @@ describe('SearchResultsFiltering', () => {
         VideoFactory.sample({
           id: '1',
           title: 'hello 1',
+          contentCategories: [{ key: 'INTERVIEW', label: 'Interview' }],
         }),
         VideoFactory.sample({
           title: '2',
           description: 'hello 2',
+          contentCategories: [{ key: 'ANIMATION', label: 'Animation' }],
         }),
       ];
 
-      fakeClient.users.insertCurrentUser(UserFactory.sample());
       videos.forEach((v) => {
         fakeClient.videos.insertVideo(v);
       });
@@ -1139,17 +1143,21 @@ describe('SearchResultsFiltering', () => {
       const wrapper = renderSearchResultsView(['/videos?q=hello']);
 
       await waitFor(() => {
-        expect(wrapper.getByText('Video subtype')).toBeInTheDocument();
-
-        expect(wrapper.getByText('Animation')).toBeInTheDocument();
-        expect(wrapper.getByTestId('ANIMATION-checkbox')).toBeInTheDocument();
-
-        expect(wrapper.getByText('Interview')).toBeInTheDocument();
-        expect(wrapper.getByTestId('INTERVIEW-checkbox')).toBeInTheDocument();
+        expect(wrapper.getByText('Video subtype')).toBeVisible();
       });
+
+      expect(wrapper.getByText('Animation')).toBeInTheDocument();
+      expect(wrapper.getByTestId('ANIMATION-checkbox')).toBeInTheDocument();
+
+      expect(wrapper.getByText('Interview')).toBeInTheDocument();
+      expect(wrapper.getByTestId('INTERVIEW-checkbox')).toBeInTheDocument();
     });
 
     it('can filter by video subtype and selects checkbox', async () => {
+      fakeClient.users.setCurrentUserFeatures({
+        BO_WEB_APP_SUBTYPE_FILTER: true,
+      });
+
       fakeClient.videos.insertVideo(
         VideoFactory.sample({
           id: '1',
@@ -1175,6 +1183,7 @@ describe('SearchResultsFiltering', () => {
       await waitFor(() => {
         expect(wrapper.getByText('animation video')).toBeVisible();
         expect(wrapper.getByText('interview video')).toBeVisible();
+        expect(wrapper.getByText('Video subtype')).toBeVisible();
       });
 
       const animationCheckbox = wrapper.getByRole('checkbox', {
