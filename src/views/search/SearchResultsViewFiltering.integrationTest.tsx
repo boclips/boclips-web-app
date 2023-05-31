@@ -1101,4 +1101,98 @@ describe('SearchResultsFiltering', () => {
       ).toBeVisible();
     });
   });
+
+  describe('video subtype filters', () => {
+    it('displays video subtype filters with facet counts', async () => {
+      const facets = FacetsFactory.sample({
+        videoSubtypes: [
+          {
+            hits: 2,
+            id: 'ANIMATION',
+            name: 'Animation',
+          },
+          {
+            hits: 3,
+            id: 'INTERVIEW',
+            name: 'Interview',
+          },
+        ],
+      });
+
+      const videos = [
+        VideoFactory.sample({
+          id: '1',
+          title: 'hello 1',
+        }),
+        VideoFactory.sample({
+          title: '2',
+          description: 'hello 2',
+        }),
+      ];
+
+      fakeClient.users.insertCurrentUser(UserFactory.sample());
+      videos.forEach((v) => {
+        fakeClient.videos.insertVideo(v);
+      });
+      fakeClient.videos.setFacets(facets);
+
+      const wrapper = renderSearchResultsView(['/videos?q=hello']);
+
+      await waitFor(() => {
+        expect(wrapper.getByText('Video subtype')).toBeInTheDocument();
+
+        expect(wrapper.getByText('Animation')).toBeInTheDocument();
+        expect(wrapper.getByTestId('ANIMATION-checkbox')).toBeInTheDocument();
+
+        expect(wrapper.getByText('Interview')).toBeInTheDocument();
+        expect(wrapper.getByTestId('INTERVIEW-checkbox')).toBeInTheDocument();
+      });
+    });
+
+    it('can filter by video subtype and selects checkbox', async () => {
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '1',
+          title: 'animation video',
+          contentCategories: [{ key: 'ANIMATION', label: 'Animation' }],
+        }),
+      );
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({
+          id: '2',
+          title: 'interview video',
+          contentCategories: [{ key: 'INTERVIEW', label: 'Interview' }],
+        }),
+      );
+      fakeClient.videos.setFacets(
+        FacetsFactory.sample({
+          videoSubtypes: [{ name: 'Animation', id: 'ANIMATION', hits: 10 }],
+        }),
+      );
+
+      const wrapper = renderSearchResultsView(['/videos?q=video']);
+
+      await waitFor(() => {
+        expect(wrapper.getByText('animation video')).toBeVisible();
+        expect(wrapper.getByText('interview video')).toBeVisible();
+      });
+
+      const animationCheckbox = wrapper.getByRole('checkbox', {
+        name: 'Animation',
+      });
+      expect(animationCheckbox).toHaveProperty('checked', false);
+      fireEvent.click(animationCheckbox);
+
+      await waitFor(() => {
+        expect(wrapper.getByText('animation video')).toBeVisible();
+        expect(wrapper.queryByText('interview video')).not.toBeInTheDocument();
+      });
+
+      expect(
+        wrapper.getByRole('checkbox', {
+          name: 'Animation',
+        }),
+      ).toHaveProperty('checked', true);
+    });
+  });
 });

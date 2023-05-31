@@ -9,4 +9,5 @@ export type FilterKey =
   | 'education_level'
   | 'language'
   | 'topics'
-  | 'cefr_level';
+  | 'cefr_level'
+  | 'subtype';

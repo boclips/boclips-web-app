@@ -41,6 +41,7 @@ export const SelectedFilters = ({ removeFilter, facets }: Props) => {
           subjects,
           educationLevels,
           facets?.languages,
+          facets?.videoSubtypes,
         ) || id,
       key: filterKey,
     };
@@ -87,6 +88,7 @@ export const SelectedFilters = ({ removeFilter, facets }: Props) => {
     subjects,
     facets,
     facets?.languages,
+    facets?.videoSubtypes,
   ]);
 
   return (

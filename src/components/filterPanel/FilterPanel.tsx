@@ -15,6 +15,7 @@ import { LanguageFilter } from 'src/components/filterPanel/LanguageFilter';
 import { CefrLevelFilter } from 'src/components/filterPanel/CefrLevelFilter';
 import { DisciplineSubjectFilter } from 'src/components/filterPanel/DisciplineSubjectFilter';
 import { FeatureGate } from 'src/components/common/FeatureGate';
+import { VideoSubtypeFilter } from 'src/components/filterPanel/VideoSubtypeFilter';
 import { SelectedFilters } from './SelectedFilters';
 
 export interface DateFilters {
@@ -100,6 +101,10 @@ export const FilterPanel = ({
           />
           <VideoTypeFilter
             options={options.videoTypes}
+            handleChange={handleChange}
+          />
+          <VideoSubtypeFilter
+            options={options.videoSubtypes}
             handleChange={handleChange}
           />
           <ChannelFilter

@@ -55,4 +55,25 @@ describe('SelectedFilters', () => {
     expect(await wrapper.findByText('French')).toBeVisible();
     expect(await wrapper.queryByText('fra')).not.toBeInTheDocument();
   });
+
+  it('displays selected subtype display name', async () => {
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/videos?subtype=ANIMATION']}>
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <QueryClientProvider client={new QueryClient()}>
+            <SelectedFilters
+              removeFilter={jest.fn}
+              facets={FacetsFactory.sample({
+                videoSubtypes: [
+                  FacetFactory.sample({ id: 'ANIMATION', name: 'Animation' }),
+                ],
+              })}
+            />
+          </QueryClientProvider>
+        </BoclipsClientProvider>
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByText('Animation')).toBeVisible();
+  });
 });
