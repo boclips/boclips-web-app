@@ -124,7 +124,7 @@
     "@tailwindcss/forms": "^0.4.0",
     "@tanstack/react-query": "^4.10.3",
     "@tanstack/react-query-devtools": "^4.11.0",
-    "@types/jest": "^27.4.1",
+    "@types/jest": "^29.5.1",
     "@types/mixpanel": "^2.14.4",
     "@types/pendo-io-browser": "^2.17.2",
     "@types/react": "^18.0.21",
