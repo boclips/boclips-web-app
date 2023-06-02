@@ -60,6 +60,8 @@ describe('My Team view', () => {
         wrapper.getByText('User created successfully'),
       ).toBeInTheDocument(),
     );
+
+    await waitFor(() => expect(wrapper.queryByRole('dialog')).toBeNull());
   });
 
   it('lists the users with expected table headers', async () => {

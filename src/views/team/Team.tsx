@@ -22,7 +22,7 @@ const MyTeamView = () => {
             height="48px"
             text="Add new user"
             icon={<PlusSign />}
-            onClick={() => setIsModalOpen(!isModalOpen)}
+            onClick={() => setIsModalOpen(true)}
           />
         }
       />

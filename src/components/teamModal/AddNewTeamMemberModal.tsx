@@ -6,19 +6,22 @@ import {
   CreateUserRequest,
   UserType,
 } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
-import { AccountUserStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
+import YesNo from 'src/components/common/yesNo/YesNo';
+import { ROLES } from 'src/types/Roles';
+import { WithValidRoles } from 'src/components/common/errors/WithValidRoles';
+import { Typography } from '@boclips-ui/typography';
 
 type Props = {
   closeModal: () => void;
 };
 
 type NewUserForm = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  accountId: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  canOrder?: boolean;
 };
 
 const successNotification = (userRequest: User) =>
@@ -29,12 +32,15 @@ const successNotification = (userRequest: User) =>
     `user-created-${userRequest.id}`,
   );
 
-const errorNotification = (errorMessage: string, userRequest: User) => {
+const errorNotification = (
+  errorMessage: string,
+  userRequest: CreateUserRequest,
+) => {
   return displayNotification(
     'error',
     `User creation failed`,
     `Failed to create a new user — ${errorMessage}`,
-    `user-creation-failed-${userRequest.id}`,
+    `user-creation-failed-${userRequest.email}`,
   );
 };
 
@@ -45,7 +51,7 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
     mutate: createUser,
     isLoading: isCreateUserLoading,
     isSuccess: isCreateUserSuccess,
-  } = useAddNewUser(successNotification, errorNotification);
+  } = useAddNewUser();
 
   const [isError, setIsError] = useState({
     firstName: false,
@@ -55,7 +61,8 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
 
   const firstInputRef = useRef();
   const formIsValid = () => Object.values(isError).every((e) => !e);
-  const isFormEmpty = () => Object.values(form).some((e) => e.length === 0);
+  const isFormIncomplete = () =>
+    !form?.firstName?.length || !form?.lastName?.length || !form?.email?.length;
 
   useEffect(() => {
     if (isCreateUserSuccess) {
@@ -64,18 +71,30 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
   }, [closeModal, isCreateUserSuccess]);
 
   const handleConfirm = () => {
-    if (!formIsValid() || isFormEmpty()) {
+    if (!formIsValid() || isFormIncomplete()) {
       return;
     }
 
     const request: CreateUserRequest = {
-      ...form,
+      firstName: form?.firstName,
+      lastName: form?.lastName,
+      email: form?.email,
       accountId: user?.account?.id,
       type: UserType.b2bUser,
-      permission: AccountUserStatus.VIEW_ONLY,
+      permissions: {
+        canOrder: form?.canOrder,
+      },
     };
 
-    createUser(request);
+    createUser(request, {
+      onSuccess: (createdUser: User) => {
+        successNotification(createdUser);
+        closeModal();
+      },
+      onError: (error: Error, userRequest: CreateUserRequest) => {
+        errorNotification(error.message, userRequest);
+      },
+    });
   };
 
   const validateTextField = (fieldName: string) =>
@@ -121,6 +140,7 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
       <InputText
         showLabelText
         labelText="Email address"
+        className="mb-6"
         id="email"
         onChange={(e) => setForm({ ...form, email: e })}
         inputType="email"
@@ -129,6 +149,18 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
         onBlur={() => validateTextField('email')}
         errorMessage="Please enter a valid email address"
       />
+      <WithValidRoles roles={[ROLES.BOCLIPS_WEB_APP_ORDER]}>
+        <div className="mb-2">
+          <Typography.Body>User permissions:</Typography.Body>
+        </div>
+        <YesNo
+          id="ordering-permission"
+          label="Can order?"
+          onValueChange={(value) => {
+            setForm({ ...form, canOrder: value });
+          }}
+        />
+      </WithValidRoles>
     </Bodal>
   );
 };

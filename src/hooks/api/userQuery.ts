@@ -20,7 +20,7 @@ export const doCreateNewUser = (
   return client.users.createUser(request);
 };
 
-export const useAddNewUser = (successNotification, errorNotification) => {
+export const useAddNewUser = () => {
   const client = useBoclipsClient();
   const queryClient = useQueryClient();
 
@@ -28,11 +28,9 @@ export const useAddNewUser = (successNotification, errorNotification) => {
     (userRequest: CreateUserRequest) => doCreateNewUser(userRequest, client),
     {
       onSuccess: (user: User) => {
-        successNotification(user);
-        return queryClient.invalidateQueries(['accountUsers', user.account.id]);
-      },
-      onError: (error: Error, user: CreateUserRequest) => {
-        return errorNotification(error.message, user);
+        // do not wait until query cache is invalidated!
+        // noinspection JSIgnoredPromiseFromCall
+        queryClient.invalidateQueries(['accountUsers', user.account.id]);
       },
     },
   );
