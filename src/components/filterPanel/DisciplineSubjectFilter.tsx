@@ -5,25 +5,30 @@ import {
 } from 'src/components/filterPanel/filter/disciplineSubjectFilter/DisciplinesWithSubjectsCheckboxFilter';
 import { FilterOption } from 'src/types/FilterOption';
 import { searchFilterOptions } from 'src/services/sortFilterOptions';
-import { useGetDisciplinesQuery } from 'src/hooks/api/disciplinesQuery';
 import { FilterSearch } from 'src/components/filterPanel/filter/FilterSearch';
 import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
+import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
 
 interface Props {
-  options?: FilterOption[];
+  disciplines?: Discipline[];
+  optionsAvailableForCurrentSearch?: FilterOption[];
   handleChange: (filter: string, values: string[]) => void;
 }
 
-export const DisciplineSubjectFilter = ({ options, handleChange }: Props) => {
+export const DisciplineSubjectFilter = ({
+  disciplines,
+  optionsAvailableForCurrentSearch,
+  handleChange,
+}: Props) => {
   const [searchText, setSearchText] = useState<string>();
 
-  const { data: disciplines } = useGetDisciplinesQuery();
   const [searchLocation] = useSearchQueryLocationParams();
   const selectedSubjectFilters = searchLocation.filters.subject || [];
 
   const filteredOptions = useMemo(
-    (): FilterOption[] => searchFilterOptions(options, searchText),
-    [options, searchText],
+    (): FilterOption[] =>
+      searchFilterOptions(optionsAvailableForCurrentSearch, searchText),
+    [optionsAvailableForCurrentSearch, searchText],
   );
 
   const disciplinesWithSubjects: HierarchicalFilterOption[] = disciplines
@@ -43,11 +48,15 @@ export const DisciplineSubjectFilter = ({ options, handleChange }: Props) => {
     })
     .filter((filterOption) => filterOption.children.length > 0);
 
-  const hasOptions = disciplines?.some(
+  const hasAnyDisciplinesWithSubjects = disciplines?.some(
     (discipline) => discipline.subjects.length > 0,
   );
 
-  return hasOptions ? (
+  const hasOptionsAvailableForCurrentSearch =
+    optionsAvailableForCurrentSearch?.length > 0;
+
+  return hasAnyDisciplinesWithSubjects &&
+    hasOptionsAvailableForCurrentSearch ? (
     <DisciplinesWithSubjectsCheckboxFilter
       title="Subjects"
       options={disciplinesWithSubjects}

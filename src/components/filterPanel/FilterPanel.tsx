@@ -15,6 +15,7 @@ import { CefrLevelFilter } from 'src/components/filterPanel/CefrLevelFilter';
 import { DisciplineSubjectFilter } from 'src/components/filterPanel/DisciplineSubjectFilter';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { VideoSubtypeFilter } from 'src/components/filterPanel/VideoSubtypeFilter';
+import { useGetDisciplinesQuery } from 'src/hooks/api/disciplinesQuery';
 import { SelectedFilters } from './SelectedFilters';
 
 export interface DateFilters {
@@ -42,8 +43,10 @@ export const FilterPanel = ({
   dateFilters,
 }: Props) => {
   const options = useFilterOptions(facets);
+  const { data: disciplines, isLoading: disciplinesLoading } =
+    useGetDisciplinesQuery();
 
-  if (!resultsFound && !areFiltersApplied) return null;
+  if ((!resultsFound && !areFiltersApplied) || disciplinesLoading) return null;
 
   return (
     <div className="row-start-2 row-end-4 col-start-2 col-end-8">
@@ -77,7 +80,8 @@ export const FilterPanel = ({
       {resultsFound && (
         <div role="group" aria-labelledby="filter_by">
           <DisciplineSubjectFilter
-            options={options.subjects}
+            disciplines={disciplines}
+            optionsAvailableForCurrentSearch={options.subjects}
             handleChange={handleChange}
           />
           <BestForFilter

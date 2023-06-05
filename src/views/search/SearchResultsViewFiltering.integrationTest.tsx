@@ -494,7 +494,9 @@ describe('SearchResultsFiltering', () => {
         expect(await wrapper.queryByText('japanese video')).toBeNull();
       });
 
-      const selectedFiltersSection = wrapper.getByTestId('applied-filter-tags');
+      const selectedFiltersSection = await wrapper.findByTestId(
+        'applied-filter-tags',
+      );
 
       await waitFor(() =>
         within(selectedFiltersSection).getByText('Manx'),
@@ -520,7 +522,7 @@ describe('SearchResultsFiltering', () => {
         expect(await wrapper.queryByText('japanese video')).toBeNull();
       });
 
-      fireEvent.click(wrapper.getByText('Clear all'));
+      fireEvent.click(await wrapper.findByText('Clear all'));
 
       await waitFor(() => {
         expect(wrapper.queryByText('Selected filters')).toBeNull();
@@ -894,13 +896,15 @@ describe('SearchResultsFiltering', () => {
 
       expect(wrapper.queryByText('hello cars stock')).not.toBeInTheDocument();
       expect(
-        wrapper.getByRole('checkbox', { name: 'B1 Intermediate' }),
+        await wrapper.findByRole('checkbox', { name: 'B1 Intermediate' }),
       ).toHaveProperty('checked', true);
 
       const selectedFilterPanel = wrapper.getByRole('region', {
         name: 'Selected filters panel',
       });
-      expect(within(selectedFilterPanel).findByText('B1 Intermediate'));
+      expect(
+        await within(selectedFilterPanel).findByText('B1 Intermediate'),
+      ).toBeVisible();
     });
 
     it('can filter cefr level query param and selects checkbox', async () => {
@@ -931,7 +935,7 @@ describe('SearchResultsFiltering', () => {
         expect(wrapper.getByText('hello cars stock')).toBeVisible();
       });
 
-      const b1Checkbox = wrapper.getByRole('checkbox', {
+      const b1Checkbox = await wrapper.findByRole('checkbox', {
         name: 'B1 Intermediate',
       });
       expect(b1Checkbox).toHaveProperty('checked', false);

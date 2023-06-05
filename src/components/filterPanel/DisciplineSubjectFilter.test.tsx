@@ -34,7 +34,7 @@ describe('Discipline Subject filter', () => {
     }),
   ];
 
-  const disciplines: Discipline[] = [
+  const disciplineFixtures: Discipline[] = [
     {
       id: 'discipline-1',
       name: 'Discipline 1',
@@ -68,23 +68,21 @@ describe('Discipline Subject filter', () => {
   ];
 
   it('does not render when no options', () => {
-    const wrapper = renderDisciplineSubjectFilter(
-      [],
-      new FakeBoclipsClient(),
-      new QueryClient(),
-    );
+    const wrapper = renderDisciplineSubjectFilter([], disciplineFixtures);
+
+    expect(wrapper.container).toBeEmptyDOMElement();
+  });
+
+  it('does not render when no disciplines with subjects', () => {
+    const wrapper = renderDisciplineSubjectFilter(filterOptions, []);
 
     expect(wrapper.container).toBeEmptyDOMElement();
   });
 
   it('renders hierarchy of options and user can open disciplines to see subjects', () => {
-    const queryClient = new QueryClient();
-    queryClient.setQueryData(['discipline'], disciplines);
-
     const wrapper = renderDisciplineSubjectFilter(
       filterOptions,
-      new FakeBoclipsClient(),
-      queryClient,
+      disciplineFixtures,
     );
 
     expect(wrapper.getByText('Discipline 1')).toBeVisible();
@@ -98,13 +96,9 @@ describe('Discipline Subject filter', () => {
   });
 
   it('filters and bolds options based on the search input', () => {
-    const queryClient = new QueryClient();
-    queryClient.setQueryData(['discipline'], disciplines);
-
     const wrapper = renderDisciplineSubjectFilter(
       filterOptions,
-      new FakeBoclipsClient(),
-      queryClient,
+      disciplineFixtures,
     );
 
     fireEvent.click(wrapper.getByText('Discipline 1'));
@@ -119,13 +113,16 @@ describe('Discipline Subject filter', () => {
 
   const renderDisciplineSubjectFilter = (
     options: FilterOption[],
-    apiClient: FakeBoclipsClient,
-    queryClient: QueryClient,
+    disciplines: Discipline[],
   ): RenderResult =>
     renderWithLocation(
-      <BoclipsClientProvider client={apiClient}>
-        <QueryClientProvider client={queryClient}>
-          <DisciplineSubjectFilter options={options} handleChange={() => {}} />
+      <BoclipsClientProvider client={new FakeBoclipsClient()}>
+        <QueryClientProvider client={new QueryClient()}>
+          <DisciplineSubjectFilter
+            disciplines={disciplines}
+            optionsAvailableForCurrentSearch={options}
+            handleChange={() => {}}
+          />
         </QueryClientProvider>
       </BoclipsClientProvider>,
     );
