@@ -17,10 +17,9 @@ import { UserFeatureKey } from 'boclips-api-client/dist/sub-clients/organisation
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
+import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
 
 export interface Bo {
-  interact(callback: (apiClient: FakeBoclipsClient) => void): void;
-
   create: {
     fixtureSet: {
       eelsBiologyGeography: () => void;
@@ -37,6 +36,8 @@ export interface Bo {
     facets: (facet: Partial<VideoFacets>) => void;
     features: (features: { [key in UserFeatureKey]?: boolean }) => void;
   };
+
+  interact(callback: (apiClient: FakeBoclipsClient) => void): void;
 }
 
 export function bo(apiClient: FakeBoclipsClient): Bo {
@@ -81,6 +82,10 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
 
   const boCreateSubject = (subject: Subject) => {
     apiClient.subjects.insertSubject(subject);
+  };
+
+  const boCreateDiscipline = (discipline: Discipline) => {
+    apiClient.disciplines.insertMyDiscipline(discipline);
   };
 
   const boCreateVideo = (video: Partial<Video>) => {
@@ -195,8 +200,17 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
             name: 'Geography and Earth Science',
           });
 
+          const discipline: Discipline = {
+            id: 'discipline-id',
+            name: 'Discipline',
+            code: 'discipline-code',
+            subjects: [biology, geography],
+          };
+
           boCreateSubject(geography);
           boCreateSubject(biology);
+
+          boCreateDiscipline(discipline);
 
           boCreateVideo({
             title:

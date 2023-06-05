@@ -18,7 +18,9 @@ context('Search page', () => {
 
     cy.percySnapshot('Search before filtering');
 
-    cy.get('label').contains('Biology').click();
+    cy.findByLabelText('Discipline').click();
+    cy.findByLabelText('Biology and Environmental Science').click();
+
     cy.get('[data-qa="video-card-wrapper"]').should((videoCard) => {
       expect(videoCard.length).to.equal(1);
     });
