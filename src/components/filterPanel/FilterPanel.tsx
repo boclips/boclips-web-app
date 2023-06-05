@@ -1,7 +1,6 @@
 import React from 'react';
 import { VideoFacets } from 'boclips-api-client/dist/sub-clients/videos/model/VideoFacets';
 import { VideoTypeFilter } from 'src/components/filterPanel/VideoTypeFilter';
-import { SubjectFilter } from 'src/components/filterPanel/SubjectFilter';
 import { ChannelFilter } from 'src/components/filterPanel/ChannelFilter';
 import { DurationFilter } from 'src/components/filterPanel/DurationFilter';
 import { useFilterOptions } from 'src/hooks/useFilterOptions';
@@ -77,16 +76,10 @@ export const FilterPanel = ({
       )}
       {resultsFound && (
         <div role="group" aria-labelledby="filter_by">
-          <SubjectFilter
+          <DisciplineSubjectFilter
             options={options.subjects}
             handleChange={handleChange}
           />
-          <FeatureGate feature="BO_WEB_APP_DEV">
-            <DisciplineSubjectFilter
-              options={options.subjects}
-              handleChange={handleChange}
-            />
-          </FeatureGate>
           <BestForFilter
             options={options.bestFor}
             handleChange={handleChange}

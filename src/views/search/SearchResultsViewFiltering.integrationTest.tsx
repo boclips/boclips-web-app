@@ -20,7 +20,6 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
 import React from 'react';
-import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
 import dayjs from 'src/day-js';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
@@ -28,12 +27,13 @@ import { QueryClient } from '@tanstack/react-query';
 
 describe('SearchResultsFiltering', () => {
   let fakeClient: FakeBoclipsClient;
+  let queryClient: QueryClient;
 
   function renderSearchResultsView(initialEntries: string[]) {
     return render(
       <MemoryRouter initialEntries={initialEntries}>
         <App
-          reactQueryClient={createReactQueryClient()}
+          reactQueryClient={queryClient}
           apiClient={fakeClient}
           boclipsSecurity={stubBoclipsSecurity}
         />
@@ -43,6 +43,7 @@ describe('SearchResultsFiltering', () => {
 
   beforeEach(() => {
     fakeClient = new FakeBoclipsClient();
+    queryClient = new QueryClient();
   });
 
   it('applies filters from url on load', async () => {
@@ -233,30 +234,6 @@ describe('SearchResultsFiltering', () => {
         expect(wrapper.queryByText('whale video')).toBeNull();
         expect(wrapper.queryByText('shark video')).toBeVisible();
       });
-    });
-  });
-
-  describe('Subject filters', () => {
-    it('displays the subject filters and facet counts', async () => {
-      fakeClient.videos.setFacets(
-        FacetsFactory.sample({
-          subjects: [{ id: 'subject1', name: 'History', hits: 12 }],
-        }),
-      );
-
-      fakeClient.videos.insertVideo(
-        VideoFactory.sample({
-          id: '1',
-          title: 'stock video',
-          types: [{ name: 'STOCK', id: 1 }],
-        }),
-      );
-
-      const wrapper = renderSearchResultsView(['/videos?q=video']);
-
-      expect(await wrapper.findByText('Subject')).toBeInTheDocument();
-      expect(await wrapper.findByText('History')).toBeInTheDocument();
-      expect(await wrapper.findByTestId('option-hits')).toHaveTextContent('12');
     });
   });
 
@@ -600,14 +577,34 @@ describe('SearchResultsFiltering', () => {
       fakeClient.videos.setFacets(
         FacetsFactory.sample({
           subjects: [
-            FacetFactory.sample({
+            {
               id: frenchSubject.id,
-              hits: 1,
+              hits: 10,
               name: frenchSubject.name,
-            }),
+            },
           ],
         }),
       );
+
+      const disciplines: Discipline[] = [
+        {
+          id: 'discipline-1',
+          name: 'Discipline 1',
+          code: 'discipline-1',
+          subjects: [
+            {
+              id: '123',
+              name: 'english',
+            },
+            {
+              id: frenchSubject.id,
+              name: frenchSubject.name,
+            },
+          ],
+        },
+      ];
+
+      queryClient.setQueryData(['discipline'], disciplines);
     });
 
     it('displays the content package preview banner', async () => {
@@ -628,6 +625,13 @@ describe('SearchResultsFiltering', () => {
         '/videos?q=video&content_package=abc',
       ]);
 
+      const subjectsFilterPanel = await wrapper.findByText('Subjects');
+      expect(subjectsFilterPanel).toBeVisible();
+
+      const disciplineButton = wrapper.getByLabelText('Discipline 1');
+      expect(disciplineButton).toBeVisible();
+      fireEvent.click(disciplineButton);
+
       expect(await wrapper.findByText('news video')).toBeInTheDocument();
       expect(await wrapper.findByText('french news video')).toBeInTheDocument();
       expect(await wrapper.queryByText('stock video')).toBeNull();
@@ -638,16 +642,17 @@ describe('SearchResultsFiltering', () => {
         ),
       );
 
-      fireEvent.click(wrapper.getByTestId('456-checkbox'));
-      expect(wrapper.getByTestId('456-checkbox')).toHaveProperty(
-        'checked',
-        true,
-      );
+      const subjectCheckbox = wrapper.getByRole('checkbox', {
+        name: 'french',
+      });
+
+      fireEvent.click(subjectCheckbox);
+
       await waitFor(async () => {
         expect(wrapper.getByText('french news video')).toBeInTheDocument();
         expect(wrapper.queryByText('news video')).toBeNull();
         expect(wrapper.queryByText('stock video')).toBeNull();
-        expect(await wrapper.findByRole('banner')).toHaveTextContent(
+        expect(wrapper.getByRole('banner')).toHaveTextContent(
           'You’re now previewing: my content package to preview',
         );
       });
@@ -1033,15 +1038,15 @@ describe('SearchResultsFiltering', () => {
         }),
       );
 
-      const queryClient = new QueryClient();
-      queryClient.setQueryData(['discipline'], disciplines);
+      const fakeQueryClient = new QueryClient();
+      fakeQueryClient.setQueryData(['discipline'], disciplines);
 
       const wrapper = render(
         <MemoryRouter initialEntries={['/videos']}>
           <App
             apiClient={fakeClient}
             boclipsSecurity={stubBoclipsSecurity}
-            reactQueryClient={queryClient}
+            reactQueryClient={fakeQueryClient}
           />
         </MemoryRouter>,
       );
@@ -1057,10 +1062,9 @@ describe('SearchResultsFiltering', () => {
         wrapper.getByLabelText('Discipline 1').getAttribute('aria-expanded'),
       ).toBe('true');
 
-      // below is just a temporary way of getting the correct checkbox
-      // after we remove the old subject filters, we should get it by using:
-      // wrapper.getByRole('checkbox', name: 'History'});
-      const historySubjectCheckbox = wrapper.getAllByText('History')[1];
+      const historySubjectCheckbox = wrapper.getByRole('checkbox', {
+        name: 'History',
+      });
 
       expect(historySubjectCheckbox).toBeVisible();
 

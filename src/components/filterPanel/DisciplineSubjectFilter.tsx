@@ -41,7 +41,7 @@ export const DisciplineSubjectFilter = ({ options, handleChange }: Props) => {
         ).length,
       };
     })
-    .filter((discipline) => discipline.children.length > 0);
+    .filter((filterOption) => filterOption.children.length > 0);
 
   const hasOptions = disciplines?.some(
     (discipline) => discipline.subjects.length > 0,
