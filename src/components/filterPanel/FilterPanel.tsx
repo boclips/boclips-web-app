@@ -15,7 +15,7 @@ import { CefrLevelFilter } from 'src/components/filterPanel/CefrLevelFilter';
 import { DisciplineSubjectFilter } from 'src/components/filterPanel/DisciplineSubjectFilter';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { VideoSubtypeFilter } from 'src/components/filterPanel/VideoSubtypeFilter';
-import { useGetDisciplinesQuery } from 'src/hooks/api/disciplinesQuery';
+import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
 import { SelectedFilters } from './SelectedFilters';
 
 export interface DateFilters {
@@ -25,6 +25,7 @@ export interface DateFilters {
 
 interface Props {
   facets?: VideoFacets;
+  disciplines?: Discipline[];
   handleChange: (filter: string, values: string[]) => void;
   removeFilter: (filter: string, value: string) => void;
   removeAllFilters: () => void;
@@ -35,6 +36,7 @@ interface Props {
 
 export const FilterPanel = ({
   facets,
+  disciplines,
   handleChange,
   removeFilter,
   removeAllFilters,
@@ -43,10 +45,8 @@ export const FilterPanel = ({
   dateFilters,
 }: Props) => {
   const options = useFilterOptions(facets);
-  const { data: disciplines, isLoading: disciplinesLoading } =
-    useGetDisciplinesQuery();
 
-  if ((!resultsFound && !areFiltersApplied) || disciplinesLoading) return null;
+  if (!resultsFound && !areFiltersApplied) return null;
 
   return (
     <div className="row-start-2 row-end-4 col-start-2 col-end-8">
