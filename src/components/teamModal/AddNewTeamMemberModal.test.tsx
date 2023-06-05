@@ -30,7 +30,7 @@ describe('My Team modal', () => {
     expect(wrapper.getByText('Email address')).toBeInTheDocument();
   });
 
-  it('creates an account', async () => {
+  it('creates a user', async () => {
     const client = new FakeBoclipsClient();
     const security: BoclipsSecurity = {
       ...stubBoclipsSecurity,
@@ -60,7 +60,8 @@ describe('My Team modal', () => {
       wrapper.getByPlaceholderText('example@email.com'),
       'dudu@wp.pl',
     );
-    await userEvent.click(wrapper.getByLabelText('Yes'));
+    await userEvent.click(wrapper.getByLabelText('Can manage users? No'));
+    await userEvent.click(wrapper.getByLabelText('Can order? Yes'));
 
     await userEvent.click(wrapper.getByRole('button', { name: 'Create' }));
 
@@ -73,6 +74,7 @@ describe('My Team modal', () => {
         type: UserType.b2bUser,
         permissions: {
           canOrder: true,
+          canManageUsers: false,
         },
       }),
     );
@@ -114,6 +116,44 @@ describe('My Team modal', () => {
   });
 
   describe('user permissions', () => {
+    it(`shows the user permission section`, async () => {
+      const client = new FakeBoclipsClient();
+      const security: BoclipsSecurity = {
+        ...stubBoclipsSecurity,
+        hasRole: () => false,
+      };
+
+      const wrapper = render(
+        <BoclipsClientProvider client={client}>
+          <QueryClientProvider client={new QueryClient()}>
+            <BoclipsSecurityProvider boclipsSecurity={security}>
+              <AddNewTeamMemberModal closeModal={() => jest.fn()} />
+            </BoclipsSecurityProvider>
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      expect(await wrapper.queryByText('User permissions')).toBeInTheDocument();
+    });
+
+    it(`shows can manager users input`, async () => {
+      const client = new FakeBoclipsClient();
+
+      const wrapper = render(
+        <BoclipsClientProvider client={client}>
+          <QueryClientProvider client={new QueryClient()}>
+            <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+              <AddNewTeamMemberModal closeModal={() => jest.fn()} />
+            </BoclipsSecurityProvider>
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      expect(
+        await wrapper.queryByText('Can manage users?'),
+      ).toBeInTheDocument();
+    });
+
     it(`doesn't show the can order field if user doesn't have ordering permission`, async () => {
       const client = new FakeBoclipsClient();
       const security: BoclipsSecurity = {
@@ -131,9 +171,6 @@ describe('My Team modal', () => {
         </BoclipsClientProvider>,
       );
 
-      expect(
-        await wrapper.queryByText('User permissions:'),
-      ).not.toBeInTheDocument();
       expect(await wrapper.queryByText('Can order?')).not.toBeInTheDocument();
     });
 
@@ -154,7 +191,6 @@ describe('My Team modal', () => {
         </BoclipsClientProvider>,
       );
 
-      expect(await wrapper.queryByText('User permissions:')).toBeVisible();
       expect(await wrapper.queryByText('Can order?')).toBeVisible();
     });
   });

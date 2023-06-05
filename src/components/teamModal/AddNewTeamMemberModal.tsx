@@ -22,6 +22,7 @@ type NewUserForm = {
   lastName?: string;
   email?: string;
   canOrder?: boolean;
+  canManageUsers?: boolean;
 };
 
 const successNotification = (userRequest: User) =>
@@ -83,6 +84,7 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
       type: UserType.b2bUser,
       permissions: {
         canOrder: form?.canOrder,
+        canManageUsers: form?.canManageUsers,
       },
     };
 
@@ -149,10 +151,19 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
         onBlur={() => validateTextField('email')}
         errorMessage="Please enter a valid email address"
       />
+      <div className="mb-4">
+        <Typography.Body className="text-gray-800">
+          User permissions
+        </Typography.Body>
+      </div>
+      <YesNo
+        id="user-management-permission"
+        label="Can manage users?"
+        onValueChange={(value) => {
+          setForm({ ...form, canManageUsers: value });
+        }}
+      />
       <WithValidRoles roles={[ROLES.BOCLIPS_WEB_APP_ORDER]}>
-        <div className="mb-2">
-          <Typography.Body>User permissions:</Typography.Body>
-        </div>
         <YesNo
           id="ordering-permission"
           label="Can order?"

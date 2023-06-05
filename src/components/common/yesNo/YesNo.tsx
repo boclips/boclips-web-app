@@ -23,7 +23,9 @@ const YesNo = ({ id, label, onValueChange }: Props) => {
 
   return (
     <div className={s.wrapper}>
-      <Typography.Body as="span">{label}</Typography.Body>
+      <Typography.Body className={s.label} as="span">
+        {label}
+      </Typography.Body>
       <RadioGroup.Root
         className={s.radioGroupRoot}
         orientation="horizontal"
