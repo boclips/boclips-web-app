@@ -26,8 +26,8 @@ import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/mode
 import { QueryClient } from '@tanstack/react-query';
 
 describe('SearchResultsFiltering', () => {
-  let fakeClient: FakeBoclipsClient;
-  let queryClient: QueryClient;
+  let fakeClient: FakeBoclipsClient = new FakeBoclipsClient();
+  let queryClient: QueryClient = new QueryClient();
 
   function renderSearchResultsView(initialEntries: string[]) {
     return render(
@@ -41,7 +41,7 @@ describe('SearchResultsFiltering', () => {
     );
   }
 
-  beforeEach(() => {
+  afterEach(() => {
     fakeClient = new FakeBoclipsClient();
     queryClient = new QueryClient();
   });
@@ -606,7 +606,9 @@ describe('SearchResultsFiltering', () => {
         },
       ];
 
-      queryClient.setQueryData(['discipline'], disciplines);
+      disciplines.forEach((discipline) =>
+        fakeClient.disciplines.insertMyDiscipline(discipline),
+      );
     });
 
     it('displays the content package preview banner', async () => {
@@ -1042,15 +1044,16 @@ describe('SearchResultsFiltering', () => {
         }),
       );
 
-      const fakeQueryClient = new QueryClient();
-      fakeQueryClient.setQueryData(['discipline'], disciplines);
+      disciplines.forEach((discipline) => {
+        fakeClient.disciplines.insertMyDiscipline(discipline);
+      });
 
       const wrapper = render(
         <MemoryRouter initialEntries={['/videos']}>
           <App
             apiClient={fakeClient}
             boclipsSecurity={stubBoclipsSecurity}
-            reactQueryClient={fakeQueryClient}
+            reactQueryClient={new QueryClient()}
           />
         </MemoryRouter>,
       );

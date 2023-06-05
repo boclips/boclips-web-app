@@ -23,7 +23,6 @@ import { BoclipsSecurityProvider } from 'src/components/common/providers/Boclips
 import { Helmet } from 'react-helmet';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { Link } from 'boclips-api-client/dist/types';
-import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
 
 describe('SearchResults', () => {
   beforeEach(() => {
@@ -465,109 +464,6 @@ describe('SearchResults', () => {
         expect(
           await wrapper.queryByTestId('video-card'),
         ).not.toBeInTheDocument();
-      });
-    });
-
-    describe('discipline subject filter', () => {
-      const disciplines: Discipline[] = [
-        {
-          id: 'discipline-1',
-          name: 'Discipline 1',
-          code: 'discipline-1',
-          subjects: [
-            {
-              id: 'math',
-              name: 'Math',
-            },
-            {
-              id: 'subject-2',
-              name: 'Subject 2',
-            },
-          ],
-        },
-        {
-          id: 'discipline-2',
-          name: 'Discipline 2',
-          code: 'discipline-2',
-          subjects: [
-            {
-              id: 'subject1',
-              name: 'History',
-            },
-            {
-              id: 'art-history',
-              name: 'Art history',
-            },
-          ],
-        },
-      ];
-
-      it(`doesn't display discipline subject filter when no BO_WEB_APP_DEV feature flag`, async () => {
-        const fakeClient = new FakeBoclipsClient();
-        fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: false });
-
-        fakeClient.videos.setFacets(
-          FacetsFactory.sample({
-            subjects: [{ id: 'subject1', name: 'History', hits: 12 }],
-          }),
-        );
-
-        fakeClient.videos.insertVideo(
-          VideoFactory.sample({
-            id: '1',
-            title: 'stock video',
-            types: [{ name: 'STOCK', id: 1 }],
-          }),
-        );
-
-        const queryClient = new QueryClient();
-        queryClient.setQueryData(['discipline'], disciplines);
-
-        const wrapper = render(
-          <MemoryRouter initialEntries={['/videos?q=stock']}>
-            <App
-              apiClient={fakeClient}
-              boclipsSecurity={stubBoclipsSecurity}
-              reactQueryClient={queryClient}
-            />
-          </MemoryRouter>,
-        );
-
-        expect(wrapper.queryByText('Subjects')).toBeNull();
-      });
-
-      it(`display discipline subject filter when user has BO_WEB_APP_DEV feature flag`, async () => {
-        const fakeClient = new FakeBoclipsClient();
-        fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
-
-        fakeClient.videos.setFacets(
-          FacetsFactory.sample({
-            subjects: [{ id: 'subject1', name: 'History', hits: 12 }],
-          }),
-        );
-
-        fakeClient.videos.insertVideo(
-          VideoFactory.sample({
-            id: '1',
-            title: 'stock video',
-            types: [{ name: 'STOCK', id: 1 }],
-          }),
-        );
-
-        const queryClient = new QueryClient();
-        queryClient.setQueryData(['discipline'], disciplines);
-
-        const wrapper = render(
-          <MemoryRouter initialEntries={['/videos?q=stock']}>
-            <App
-              apiClient={fakeClient}
-              boclipsSecurity={stubBoclipsSecurity}
-              reactQueryClient={queryClient}
-            />
-          </MemoryRouter>,
-        );
-
-        expect(await wrapper.findByText('Subjects')).toBeVisible();
       });
     });
   });

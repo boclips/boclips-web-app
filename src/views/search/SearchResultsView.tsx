@@ -23,6 +23,7 @@ import { ErrorBoundary } from 'src/components/common/errors/ErrorBoundary';
 import RefreshPageError from 'src/components/common/errors/refreshPageError/RefreshPageError';
 import { Layout } from 'src/components/layout/Layout';
 import { ContentPackagePreviewBanner } from 'src/components/contentPackagePreviewBanner/ContentPackagePreviewBanner';
+import { useGetDisciplinesQuery } from 'src/hooks/api/disciplinesQuery';
 
 export const PAGE_SIZE = 30;
 
@@ -39,6 +40,9 @@ const SearchResultsView = () => {
     useState<SearchFilters>(filtersFromURL);
 
   const debouncedFilters = useDebounce(filtersToDebounce, 1000);
+
+  const { data: disciplines, isLoading: disciplinesLoading } =
+    useGetDisciplinesQuery();
 
   const boclipsClient = useBoclipsClient();
 
@@ -151,7 +155,7 @@ const SearchResultsView = () => {
     from: filtersFromURL.release_date_from,
   };
 
-  if (isInitialLoading) return <Loading />;
+  if (isInitialLoading || disciplinesLoading) return <Loading />;
 
   return (
     <Layout rowsSetup="grid-rows-search-view">
@@ -159,6 +163,7 @@ const SearchResultsView = () => {
       <ErrorBoundary fallback={<RefreshPageError row="2" />}>
         <FilterPanel
           facets={data?.facets}
+          disciplines={disciplines}
           dateFilters={dateFilters}
           handleChange={handleFilterChange}
           removeFilter={removeFilter}
