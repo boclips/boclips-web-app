@@ -40,7 +40,9 @@ export const doFindAccountUsers = (
   accountId: string,
   client: BoclipsClient,
 ) => {
-  return client.accounts.getAccountUsers(accountId);
+  return client.accounts
+    .getAccountUsers({ id: accountId })
+    .then((response) => response.page);
 };
 
 export const useFindAccountUsers = (accountId: string) => {
