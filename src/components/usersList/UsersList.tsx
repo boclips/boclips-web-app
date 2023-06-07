@@ -8,7 +8,7 @@ const SKELETON_LIST_ITEMS = new Array(3).fill('');
 export const UsersList = () => {
   const { data: user, isLoading: isLoadingUser } = useGetUserQuery();
   const { data: accountUsers, isLoading: isLoadingAccountUsers } =
-    useFindAccountUsers(user?.account?.id);
+    useFindAccountUsers(user?.account?.id, 0, 1000);
 
   const isSkeletonLoading = isLoadingUser || isLoadingAccountUsers;
 

@@ -36,21 +36,27 @@ export const useAddNewUser = () => {
   );
 };
 
-export const doFindAccountUsers = (
-  accountId: string,
+const doFindAccountUsers = (
   client: BoclipsClient,
+  accountId: string,
+  page: number,
+  size: number,
 ) => {
   return client.accounts
-    .getAccountUsers({ id: accountId })
+    .getAccountUsers({ id: accountId, page, size })
     .then((response) => response.page);
 };
 
-export const useFindAccountUsers = (accountId: string) => {
+export const useFindAccountUsers = (
+  accountId: string,
+  page: number,
+  size: number,
+) => {
   const client = useBoclipsClient();
 
   return useQuery(
     ['accountUsers', accountId],
-    () => doFindAccountUsers(accountId, client),
+    () => doFindAccountUsers(client, accountId, page, size),
     {
       enabled: !!accountId,
     },
