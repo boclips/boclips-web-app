@@ -3,6 +3,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import { CreateUserRequest } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
+import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
+import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
 
 export const doGetUser = (client: BoclipsClient): Promise<User> => {
   return client.users.getCurrentUser();
@@ -41,10 +43,8 @@ const doFindAccountUsers = (
   accountId: string,
   page: number,
   size: number,
-) => {
-  return client.accounts
-    .getAccountUsers({ id: accountId, page, size })
-    .then((response) => response.page);
+): Promise<Pageable<AccountUser>> => {
+  return client.accounts.getAccountUsers({ id: accountId, page, size });
 };
 
 export const useFindAccountUsers = (
@@ -55,7 +55,7 @@ export const useFindAccountUsers = (
   const client = useBoclipsClient();
 
   return useQuery(
-    ['accountUsers', accountId],
+    ['accountUsers', accountId, page],
     () => doFindAccountUsers(client, accountId, page, size),
     {
       enabled: !!accountId,

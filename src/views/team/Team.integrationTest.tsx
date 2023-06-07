@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
@@ -143,5 +143,58 @@ describe('My Team view', () => {
     expect(await wrapper.queryByText('Yes')).not.toBeInTheDocument();
     expect(await wrapper.queryByText('Can add users')).not.toBeInTheDocument();
     expect(await wrapper.queryByText('No')).not.toBeInTheDocument();
+  });
+
+  it('only lists the first 25 users and shows pagination at the bottom', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'account-1' }),
+    );
+
+    for (let i = 0; i < 26; i++) {
+      // eslint-disable-next-line no-await-in-loop
+      await fakeClient.users.createUser({
+        firstName: `Joe${i}`,
+        lastName: 'Biden',
+        email: `joebiden${i}@boclips.com`,
+        accountId: 'account-1',
+        type: UserType.b2bUser,
+      });
+    }
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/team']}>
+        <App
+          reactQueryClient={createReactQueryClient()}
+          apiClient={fakeClient}
+          boclipsSecurity={stubBoclipsSecurity}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByText('Joe0 Biden')).toBeVisible();
+    for (let i = 0; i < 25; i++) {
+      expect(wrapper.getByText(`Joe${i} Biden`)).toBeVisible();
+    }
+    expect(wrapper.queryByText('Joe25 Biden')).toBeNull();
+
+    expect(
+      wrapper.getByRole('button', { name: 'Page 1 out of 2' }),
+    ).toBeVisible();
+    expect(
+      wrapper.getByRole('button', { name: 'Page 2 out of 2' }),
+    ).toBeVisible();
+    expect(
+      wrapper.getByRole('button', { name: 'go to next page' }),
+    ).toBeVisible();
+    expect(wrapper.queryByLabelText('go to previous page')).toBeNull();
+
+    fireEvent.click(wrapper.getByLabelText('go to next page'));
+
+    expect(await wrapper.findByText('Joe25 Biden')).toBeVisible();
+    expect(wrapper.getByLabelText('go to previous page')).toBeVisible();
+
+    expect(wrapper.queryByText('Joe0 Biden')).toBeNull();
+    expect(wrapper.queryByText('Joe24 Biden')).toBeNull();
   });
 });

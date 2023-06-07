@@ -3,14 +3,43 @@ import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/
 import List from 'antd/lib/list';
 import { UsersListItem } from 'src/components/usersList/UsersListItem';
 import { useFindAccountUsers, useGetUserQuery } from 'src/hooks/api/userQuery';
+import Pagination from '@boclips-ui/pagination';
+import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import c from 'classnames';
+import s from 'src/components/common/pagination/pagination.module.less';
 
 const SKELETON_LIST_ITEMS = new Array(3).fill('');
+const PAGE_SIZE = 25;
+
 export const UsersList = () => {
+  const [currentPageNumber, setCurrentPageNumber] = React.useState(0);
+
   const { data: user, isLoading: isLoadingUser } = useGetUserQuery();
-  const { data: accountUsers, isLoading: isLoadingAccountUsers } =
-    useFindAccountUsers(user?.account?.id, 0, 1000);
+  const { data: accountUsersPage, isLoading: isLoadingAccountUsers } =
+    useFindAccountUsers(user?.account?.id, currentPageNumber, PAGE_SIZE);
+
+  const accountUsers = accountUsersPage?.page || [];
+  const pageSpec = accountUsersPage?.pageSpec;
 
   const isSkeletonLoading = isLoadingUser || isLoadingAccountUsers;
+
+  const currentBreakpoint = useMediaBreakPoint();
+  const mobileView = currentBreakpoint.type === 'mobile';
+
+  const itemRender = React.useCallback(
+    (page, type) => {
+      return (
+        <Pagination
+          buttonType={type}
+          page={page}
+          mobileView={mobileView}
+          currentPage={currentPageNumber + 1}
+          totalItems={pageSpec?.totalPages}
+        />
+      );
+    },
+    [accountUsersPage, mobileView],
+  );
 
   return (
     <List
@@ -21,6 +50,20 @@ export const UsersList = () => {
       renderItem={(accountUser: AccountUser) => (
         <UsersListItem user={accountUser} isLoading={isSkeletonLoading} />
       )}
+      pagination={{
+        total: accountUsersPage?.pageSpec.totalElements,
+        className: c(s.pagination, {
+          [s.paginationEmpty]: accountUsers.length === 0,
+        }),
+        hideOnSinglePage: true,
+        pageSize: PAGE_SIZE,
+        showSizeChanger: false,
+        onChange: (page) => setCurrentPageNumber(page - 1),
+        current: currentPageNumber + 1,
+        showLessItems: mobileView,
+        prefixCls: 'bo-pagination',
+        itemRender,
+      }}
     />
   );
 };
