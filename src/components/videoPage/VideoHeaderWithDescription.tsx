@@ -16,11 +16,14 @@ import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
 
 interface Props {
-  video: Video;
+  video?: Video;
 }
 
 export const VideoHeaderWithDescription = ({ video }: Props) => {
-  const videoHasTranscript = !!video.links.transcript;
+  if (!video) {
+    return null;
+  }
+  const videoHasTranscript = video?.links?.transcript;
 
   const mixpanel = AnalyticsFactory.mixpanel();
   const trackVideoCopy = () => {
@@ -64,7 +67,7 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
         <div className={(s.sticky, s.buttons)}>
           <div className={s.iconButtons}>
             <AddToPlaylistButton
-              videoId={video.id}
+              videoId={video?.id}
               onClick={() => {
                 mixpanel.track('video_details_playlist_add');
               }}
@@ -72,7 +75,7 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
             <CopyVideoLinkButton video={video} onClick={trackVideoCopy} />
             {videoHasTranscript && <DownloadTranscriptButton video={video} />}
           </div>
-          {video.links.createEmbedCode ? (
+          {video?.links?.createEmbedCode ? (
             <EmbedButton video={video} iconOnly={false} />
           ) : (
             <FeatureGate linkName="cart">
