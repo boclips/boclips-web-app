@@ -26,6 +26,7 @@
   border-bottom: 2px solid @gray-400;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 
   &:last-child {
     border-bottom: 0;
@@ -69,4 +70,10 @@
       flex-basis: 25%;
     }
   }
+}
+
+.editButton {
+  --bo-ui-button-outline-background-color-hover: transparent;
+  --bo-ui-button-outline-svg-fill: transparent;
+  --bo-ui-button-outline-svg-stroke: @blue-800;
 }

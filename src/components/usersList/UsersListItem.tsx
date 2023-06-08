@@ -2,6 +2,8 @@ import React, { ReactElement } from 'react';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
 import { Typography } from '@boclips-ui/typography';
 import c from 'classnames';
+import Button from '@boclips-ui/button';
+import PencilSVG from 'src/resources/icons/pencil.svg';
 import s from './style.module.less';
 
 interface UserInformationFieldProps {
@@ -31,9 +33,10 @@ const UserInformationField = ({
 export interface Props {
   user: AccountUser;
   isLoading?: boolean;
+  onEdit: (user: AccountUser) => void;
 }
 
-export const UsersListItem = ({ user, isLoading }: Props) => {
+export const UsersListItem = ({ user, isLoading, onEdit }: Props) => {
   return (
     <li
       data-qa={isLoading ? 'skeleton' : ''}
@@ -59,6 +62,13 @@ export const UsersListItem = ({ user, isLoading }: Props) => {
           {user.permissions?.canManageUsers ? 'Yes' : 'No'}{' '}
         </Typography.Body>
       </UserInformationField>
+      <Button
+        onClick={() => onEdit(user)}
+        className={s.editButton}
+        text="Edit"
+        icon={<PencilSVG aria-hidden />}
+        type="outline"
+      />
     </li>
   );
 };

@@ -8,9 +8,11 @@ import Footer from 'src/components/layout/Footer';
 import PlusSign from 'resources/icons/plus-sign.svg';
 import { UsersList } from 'src/components/usersList/UsersList';
 import { FeatureGate } from 'src/components/common/FeatureGate';
+import EditTeamMemberModal from 'src/components/teamModal/EditTeamMemberModal';
 
 const MyTeamView = () => {
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isNewUserModalOpen, setIsNewUserModalOpen] = React.useState(false);
+  const [accountUserToEdit, setAccountUserToEdit] = React.useState(undefined);
 
   return (
     <Layout rowsSetup="my-team-view" responsiveLayout>
@@ -22,7 +24,7 @@ const MyTeamView = () => {
             height="48px"
             text="Add new user"
             icon={<PlusSign />}
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setIsNewUserModalOpen(true)}
           />
         }
       />
@@ -31,11 +33,19 @@ const MyTeamView = () => {
         className="col-start-2 col-end-26 row-start-3 row-end-4 flex items-start"
       >
         <FeatureGate linkName="accountUsers" isView={false}>
-          <UsersList />
+          <UsersList onEditUser={(user) => setAccountUserToEdit(user)} />
         </FeatureGate>
       </main>
-      {isModalOpen && (
-        <AddNewTeamMemberModal closeModal={() => setIsModalOpen(false)} />
+      {isNewUserModalOpen && (
+        <AddNewTeamMemberModal
+          closeModal={() => setIsNewUserModalOpen(false)}
+        />
+      )}
+      {accountUserToEdit && (
+        <EditTeamMemberModal
+          userToUpdate={accountUserToEdit}
+          closeModal={() => setAccountUserToEdit(undefined)}
+        />
       )}
       <Footer />
     </Layout>

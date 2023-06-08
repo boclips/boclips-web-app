@@ -1,5 +1,11 @@
 import React from 'react';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import {
+  fireEvent,
+  render,
+  waitFor,
+  waitForElementToBeRemoved,
+  within,
+} from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
@@ -196,5 +202,124 @@ describe('My Team view', () => {
 
     expect(wrapper.queryByText('Joe0 Biden')).toBeNull();
     expect(wrapper.queryByText('Joe24 Biden')).toBeNull();
+  });
+
+  it('can see an edit button for each user, clicking opens up the edit modal', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'account-1' }),
+    );
+    const joe = await fakeClient.users.createUser({
+      firstName: 'Joe',
+      lastName: 'Biden',
+      email: 'joey@boclips.com',
+      accountId: 'account-1',
+      type: UserType.b2bUser,
+    });
+
+    fakeClient.users.setPermissionsOfUser(joe.id, {
+      canOrder: true,
+      canManageUsers: false,
+    });
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/team']}>
+        <App
+          reactQueryClient={createReactQueryClient()}
+          apiClient={fakeClient}
+          boclipsSecurity={stubBoclipsSecurity}
+        />
+      </MemoryRouter>,
+    );
+
+    const editButton = await wrapper.findByRole('button', { name: 'Edit' });
+    expect(editButton).toBeVisible();
+    fireEvent.click(editButton);
+
+    await waitFor(() =>
+      wrapper.getByRole('heading', { level: 1, name: 'Edit user' }),
+    );
+
+    const modal = wrapper.getByRole('dialog');
+
+    expect(within(modal).getByText('First name')).toBeVisible();
+    expect(within(modal).getByText('Joe')).toBeVisible();
+    expect(within(modal).getByText('Last name')).toBeVisible();
+    expect(within(modal).getByText('Biden')).toBeVisible();
+    expect(within(modal).getByText('Email address')).toBeVisible();
+    expect(within(modal).getByText('joey@boclips.com')).toBeVisible();
+
+    expect(within(modal).getByLabelText('Can manage users? No')).toBeVisible();
+    expect(within(modal).getByLabelText('Can order? Yes')).toBeVisible();
+    expect(within(modal).getByRole('button', { name: 'Save' })).toBeVisible();
+    expect(within(modal).getByRole('button', { name: 'Cancel' })).toBeVisible();
+  });
+
+  it('can edit user permissions', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'account-1' }),
+    );
+    const joe = await fakeClient.users.createUser({
+      firstName: 'Joe',
+      lastName: 'Biden',
+      email: 'joey@boclips.com',
+      accountId: 'account-1',
+      type: UserType.b2bUser,
+    });
+
+    fakeClient.users.setPermissionsOfUser(joe.id, {
+      canOrder: false,
+      canManageUsers: true,
+    });
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/team']}>
+        <App
+          reactQueryClient={createReactQueryClient()}
+          apiClient={fakeClient}
+          boclipsSecurity={stubBoclipsSecurity}
+        />
+      </MemoryRouter>,
+    );
+
+    const originalOrderingPermission = await wrapper.findByTestId(
+      'user-info-field-Can order',
+    );
+    const originalManagingPermission = await wrapper.findByTestId(
+      'user-info-field-Can add users',
+    );
+    expect(within(originalOrderingPermission).getByText('No')).toBeVisible();
+    expect(within(originalManagingPermission).getByText('Yes')).toBeVisible();
+
+    const editButton = wrapper.getByRole('button', { name: 'Edit' });
+    expect(editButton).toBeVisible();
+    fireEvent.click(editButton);
+
+    await waitFor(() =>
+      wrapper.getByRole('heading', { level: 1, name: 'Edit user' }),
+    );
+
+    await userEvent.click(wrapper.getByLabelText('Can order? Yes'));
+    await userEvent.click(wrapper.getByLabelText('Can manage users? No'));
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'Save' }));
+
+    await waitForElementToBeRemoved(() =>
+      wrapper.getByRole('heading', { level: 1, name: 'Edit user' }),
+    );
+
+    const newPermissions = fakeClient.users.getPermissionsOfUser(joe.id);
+    expect(newPermissions.canOrder).toEqual(true);
+    expect(newPermissions.canManageUsers).toEqual(false);
+
+    const newOrderPermission = await wrapper.findByTestId(
+      'user-info-field-Can order',
+    );
+    const newManagingPermission = await wrapper.findByTestId(
+      'user-info-field-Can add users',
+    );
+    expect(within(newOrderPermission).getByText('Yes')).toBeVisible();
+    expect(within(newManagingPermission).getByText('No')).toBeVisible();
   });
 });
