@@ -16,6 +16,7 @@ context('Search page', () => {
       expect(videoCard.length).to.equal(2);
     });
 
+    cy.get('[id="date-from"]').should('be.visible');
     cy.percySnapshot('Search before filtering');
 
     cy.findByLabelText('Discipline').click();
