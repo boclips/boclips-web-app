@@ -5,6 +5,8 @@ import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/Us
 import { CreateUserRequest } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
+import { UpdateUserRequest } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
+import { EditUserRequest } from 'src/components/teamModal/EditTeamMemberModal';
 
 export const doGetUser = (client: BoclipsClient): Promise<User> => {
   return client.users.getCurrentUser();
@@ -36,6 +38,31 @@ export const useAddNewUser = () => {
       },
     },
   );
+};
+
+export const useUpdateUser = () => {
+  const client = useBoclipsClient();
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    ({ user, request }: EditUserRequest) =>
+      doUpdateUser(user.id, request, client),
+    {
+      onSuccess: (_isSuccess, _request) => {
+        // do not wait until query cache is invalidated!
+        // noinspection JSIgnoredPromiseFromCall
+        queryClient.invalidateQueries(['accountUsers']);
+      },
+    },
+  );
+};
+
+const doUpdateUser = (
+  userId: string,
+  updateRequest: UpdateUserRequest,
+  client: BoclipsClient,
+): Promise<boolean> => {
+  return client.users.updateUser(userId, updateRequest);
 };
 
 const doFindAccountUsers = (

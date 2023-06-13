@@ -16,7 +16,7 @@ describe('UsersListRow', () => {
       },
     };
 
-    const component = render(<UsersListItem user={user} />);
+    const component = render(<UsersListItem user={user} onEdit={jest.fn} />);
 
     expect(
       within(component.getByTestId('user-info-field-Can order')).getByText(
@@ -37,7 +37,7 @@ describe('UsersListRow', () => {
       },
     };
 
-    const component = render(<UsersListItem user={user} />);
+    const component = render(<UsersListItem user={user} onEdit={jest.fn} />);
 
     expect(
       within(component.getByTestId('user-info-field-Can order')).getByText(
@@ -58,7 +58,9 @@ describe('UsersListRow', () => {
       },
     };
 
-    const wrapper = render(<UsersListItem user={user} isLoading />);
+    const wrapper = render(
+      <UsersListItem user={user} isLoading onEdit={jest.fn} />,
+    );
 
     expect(wrapper.getByTestId('skeleton')).toBeVisible();
   });

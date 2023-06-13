@@ -11,7 +11,11 @@ import s from 'src/components/common/pagination/pagination.module.less';
 const SKELETON_LIST_ITEMS = new Array(3).fill('');
 const PAGE_SIZE = 25;
 
-export const UsersList = () => {
+interface Props {
+  onEditUser: (user: AccountUser) => void;
+}
+
+export const UsersList = ({ onEditUser }: Props) => {
   const [currentPageNumber, setCurrentPageNumber] = React.useState(0);
 
   const { data: user, isLoading: isLoadingUser } = useGetUserQuery();
@@ -48,7 +52,11 @@ export const UsersList = () => {
       size="large"
       dataSource={isSkeletonLoading ? SKELETON_LIST_ITEMS : accountUsers}
       renderItem={(accountUser: AccountUser) => (
-        <UsersListItem user={accountUser} isLoading={isSkeletonLoading} />
+        <UsersListItem
+          user={accountUser}
+          isLoading={isSkeletonLoading}
+          onEdit={() => onEditUser(accountUser)}
+        />
       )}
       pagination={{
         total: accountUsersPage?.pageSpec.totalElements,

@@ -35,4 +35,20 @@ describe('YesNo', () => {
     await userEvent.click(wrapper.getByLabelText('No'));
     expect(valueChangeHandler).toHaveBeenLastCalledWith(false);
   });
+
+  it('uses default value if provided', () => {
+    const wrapper = render(
+      <form>
+        <YesNo
+          id="the-question"
+          label="Should I eat a donut?"
+          onValueChange={jest.fn()}
+          defaultValue
+        />
+      </form>,
+    );
+
+    expect(wrapper.getByLabelText('Yes')).toBeChecked();
+    expect(wrapper.getByLabelText('No')).not.toBeChecked();
+  });
 });
