@@ -1115,9 +1115,6 @@ describe('SearchResultsFiltering', () => {
 
   describe('video subtype filters', () => {
     it('displays video subtype filters with facet counts', async () => {
-      fakeClient.users.setCurrentUserFeatures({
-        BO_WEB_APP_SUBTYPE_FILTER: true,
-      });
       const facets = FacetsFactory.sample({
         videoSubtypes: [
           {
@@ -1165,10 +1162,6 @@ describe('SearchResultsFiltering', () => {
     });
 
     it('can filter by video subtype and selects checkbox', async () => {
-      fakeClient.users.setCurrentUserFeatures({
-        BO_WEB_APP_SUBTYPE_FILTER: true,
-      });
-
       fakeClient.videos.insertVideo(
         VideoFactory.sample({
           id: '1',

@@ -100,12 +100,10 @@ export const FilterPanel = ({
             options={options.videoTypes}
             handleChange={handleChange}
           />
-          <FeatureGate feature="BO_WEB_APP_SUBTYPE_FILTER">
-            <VideoSubtypeFilter
-              options={options.videoSubtypes}
-              handleChange={handleChange}
-            />
-          </FeatureGate>
+          <VideoSubtypeFilter
+            options={options.videoSubtypes}
+            handleChange={handleChange}
+          />
           <ChannelFilter
             options={options.channels}
             handleChange={handleChange}
