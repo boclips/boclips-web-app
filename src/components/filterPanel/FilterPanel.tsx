@@ -13,7 +13,6 @@ import { TextButton } from 'src/components/common/textButton/TextButton';
 import { LanguageFilter } from 'src/components/filterPanel/LanguageFilter';
 import { CefrLevelFilter } from 'src/components/filterPanel/CefrLevelFilter';
 import { DisciplineSubjectFilter } from 'src/components/filterPanel/DisciplineSubjectFilter';
-import { FeatureGate } from 'src/components/common/FeatureGate';
 import { VideoSubtypeFilter } from 'src/components/filterPanel/VideoSubtypeFilter';
 import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
 import { SelectedFilters } from './SelectedFilters';
@@ -100,12 +99,10 @@ export const FilterPanel = ({
             options={options.videoTypes}
             handleChange={handleChange}
           />
-          <FeatureGate feature="BO_WEB_APP_SUBTYPE_FILTER">
-            <VideoSubtypeFilter
-              options={options.videoSubtypes}
-              handleChange={handleChange}
-            />
-          </FeatureGate>
+          <VideoSubtypeFilter
+            options={options.videoSubtypes}
+            handleChange={handleChange}
+          />
           <ChannelFilter
             options={options.channels}
             handleChange={handleChange}
