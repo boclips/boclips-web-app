@@ -4,7 +4,6 @@ import { CartItemOrderPreview } from 'src/components/cart/CartItemOrderPreview/C
 import { usePlaceOrderQuery } from 'src/hooks/api/orderQuery';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { useNavigate } from 'react-router-dom';
-import { getTotalPriceDisplayValue } from 'src/services/getTotalPriceDisplayValue';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { Cart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
@@ -12,6 +11,8 @@ import { Typography } from '@boclips-ui/typography';
 import { AdditionalServicesPricingMessage } from 'src/components/cart/AdditionalServices/AdditionalServicesPricingMessage';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import { FeatureGate } from 'src/components/common/FeatureGate';
+import { PriceBadge } from 'src/components/common/price/PriceBadge';
+import { getTotalPrice } from 'src/services/getTotalPrice';
 import s from './style.module.less';
 import { trackOrderConfirmed } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
@@ -89,7 +90,9 @@ export const OrderModal = ({ setModalOpen, videos, cart }: Props) => {
         <FeatureGate feature="BO_WEB_APP_PRICES">
           <Typography.Title1 as="div" className={s.modalTotalPrice}>
             <div>Total</div>
-            <div>{getTotalPriceDisplayValue(videos)}</div>
+            <div>
+              <PriceBadge price={getTotalPrice(videos)} />
+            </div>
           </Typography.Title1>
         </FeatureGate>
         {additionalServicesRequested && <AdditionalServicesPricingMessage />}

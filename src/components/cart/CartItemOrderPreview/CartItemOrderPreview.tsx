@@ -4,9 +4,8 @@ import { Video } from 'boclips-api-client/dist/types';
 import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
 import { AdditionalServicesSummaryPreview } from 'src/components/cart/AdditionalServices/AdditionalServicesSummaryPreview';
 import c from 'classnames';
-import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
-import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import { Typography } from '@boclips-ui/typography';
+import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import s from './style.module.less';
 
 interface Props {
@@ -59,12 +58,7 @@ export const CartItemOrderPreview = ({ videos }: Props) => {
               className="text-gray-900 flex justify-between"
             >
               <span>{video.title}</span>
-              {video.price &&
-                createPriceDisplayValue(
-                  video.price.amount,
-                  video.price.currency,
-                  getBrowserLocale(),
-                )}
+              {video.price && <PriceBadge price={video.price} />}
             </Typography.Title2>
             <Typography.Body
               as="div"

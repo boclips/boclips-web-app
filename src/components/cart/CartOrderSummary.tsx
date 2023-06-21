@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import Button from '@boclips-ui/button';
-import { getTotalPriceDisplayValue } from 'src/services/getTotalPriceDisplayValue';
+import { getTotalPrice } from 'src/services/getTotalPrice';
 import { useCartValidation } from 'src/components/common/providers/CartValidationProvider';
 import { OrderModal } from 'src/components/orderModal/OrderModal';
 import { Cart as ApiCart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
@@ -8,6 +8,7 @@ import { useGetVideos } from 'src/hooks/api/videoQuery';
 import { Typography } from '@boclips-ui/typography';
 import { AdditionalServicesPricingMessage } from 'src/components/cart/AdditionalServices/AdditionalServicesPricingMessage';
 import { FeatureGate } from 'src/components/common/FeatureGate';
+import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import { trackOrderConfirmationModalOpened } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 import s from './style.module.less';
@@ -73,7 +74,7 @@ export const CartOrderSummary = ({ cart }: Props) => {
             <div className={s.cartInfoWrapper}>
               <CartSummaryItem
                 label={<Typography.Body>Video(s) total</Typography.Body>}
-                value={getTotalPriceDisplayValue(videos)}
+                value={<PriceBadge price={getTotalPrice(videos)} />}
               />
               {captionsAndTranscriptsRequested && (
                 <CartSummaryItem label="Captions and transcripts" />
@@ -88,7 +89,7 @@ export const CartOrderSummary = ({ cart }: Props) => {
             >
               <span>Total</span>
               <span data-qa="total-price">
-                {`${getTotalPriceDisplayValue(videos)}`}
+                <PriceBadge price={getTotalPrice(videos)} />
               </span>
             </Typography.H1>
           </FeatureGate>
