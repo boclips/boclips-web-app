@@ -23,13 +23,17 @@ export const VideoDescription = ({ video }: Props) => {
         ))}
       </div>
 
-      <Typography.Body size="small" className="lg:mt-4 text-gray-800">
-        {video?.description}
-      </Typography.Body>
+      <div className="mt-4">
+        <Typography.Body weight="medium">Video Description:</Typography.Body>
+        <br />
+        <Typography.Body size="small" className="lg:mt-4 text-gray-800">
+          {video?.description}
+        </Typography.Body>
 
-      <Typography.Body className="lg:mt-4 text-gray-800">
-        {video?.additionalDescription}
-      </Typography.Body>
+        <Typography.Body className="lg:mt-4 text-gray-800">
+          {video?.additionalDescription}
+        </Typography.Body>
+      </div>
     </>
   );
 };

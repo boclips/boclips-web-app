@@ -101,6 +101,27 @@ describe('Video View', () => {
     expect(await wrapper.findByLabelText('Copy video link')).toBeVisible();
   });
 
+  it('renders learning outcome if user has BO_WEB_APP_DEV flag', async () => {
+    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
+    fakeClient.videos.insertVideo(exampleVideo);
+
+    const wrapper = renderView(['/videos/video-id']);
+
+    expect(await wrapper.findByText('video-id')).toBeVisible();
+    expect(await wrapper.findByText('Learning Outcomes:')).toBeVisible();
+    expect(wrapper.getByText('outcome for video-id')).toBeVisible();
+  });
+
+  it('does not render learning outcome if user does not have BO_WEB_APP_DEV flag', async () => {
+    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: false });
+    fakeClient.videos.insertVideo(exampleVideo);
+
+    const wrapper = renderView(['/videos/video-id']);
+
+    expect(await wrapper.findByText('video-id')).toBeVisible();
+    expect(await wrapper.queryByText('Learning Outcomes:')).toBeNull();
+  });
+
   it('on video page education level badges are rendered', async () => {
     fakeClient.videos.insertVideo(exampleVideo);
 
