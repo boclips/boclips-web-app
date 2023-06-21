@@ -22,6 +22,20 @@ describe('PriceBadgeWrapper', () => {
     expect(await wrapper.findByText('$1')).toBeVisible();
   });
 
+  it('shows a credit icon when price is in credits', async () => {
+    const video = VideoFactory.sample({
+      price: {
+        amount: 1,
+        currency: 'CREDITS',
+      },
+    });
+
+    const wrapper = renderBadge(new FakeBoclipsClient(), video.price);
+
+    expect(await wrapper.findByTestId('credit-price')).toBeVisible();
+    expect(await wrapper.findByText('1')).toBeVisible();
+  });
+
   it('shows a valid price when the price is 0', async () => {
     const video = VideoFactory.sample({
       price: {
@@ -39,7 +53,7 @@ describe('PriceBadgeWrapper', () => {
     const price = undefined;
     const wrapper = renderBadge(new FakeBoclipsClient(), price);
 
-    expect(await wrapper.findByTestId('price-badge')).toBeEmptyDOMElement();
+    expect(await wrapper.queryByTestId('price-badge')).not.toBeInTheDocument();
   });
 
   it('shows a price unavailable badge when user is from specified org and video is $0', async () => {

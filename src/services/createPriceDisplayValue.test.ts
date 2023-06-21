@@ -6,18 +6,16 @@ describe('get price display value', () => {
   });
   describe('Credits', () => {
     it('converts 0 credits', () => {
-      expect(createPriceDisplayValue(0, 'CREDITS', 'en-US')).toEqual(
-        '0 Credits',
-      );
+      expect(createPriceDisplayValue(0, 'CREDITS', 'en-US')).toEqual('0');
     });
     it('converts 300.5 Credits', () => {
       expect(createPriceDisplayValue(300.5, 'CREDITS', 'en-GB')).toEqual(
-        '300.50 Credits',
+        '300.50',
       );
     });
     it('converts case insensitively', () => {
       expect(createPriceDisplayValue(300.5, 'credits', 'en-US')).toEqual(
-        '300.50 Credits',
+        '300.50',
       );
     });
   });

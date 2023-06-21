@@ -73,7 +73,7 @@ const CartItem = ({ cartItem }: Props) => {
             >
               <Typography.Title1> {videoItem.title}</Typography.Title1>
             </Link>
-            <PriceBadge className="text-gray-900" price={videoItem.price} />
+            <PriceBadge price={videoItem.price} />
           </div>
           <VideoInfo video={videoItem} />
           <AdditionalServices videoItem={videoItem} cartItem={cartItem} />

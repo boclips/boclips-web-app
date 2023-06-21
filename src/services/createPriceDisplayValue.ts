@@ -4,15 +4,15 @@ export const createPriceDisplayValue = (
   amount?: number,
   currency?: any,
   language?: any,
-): string | null => {
+): string => {
   if (!currency) {
     return null;
   }
   const isDecimal = amount % 1 !== 0;
 
   if (currency.toUpperCase() === 'CREDITS') {
-    const formattedAmount = isDecimal ? amount.toFixed(2) : amount;
-    return `${formattedAmount} Credits`;
+    const creditAmount = isDecimal ? amount.toFixed(2) : amount;
+    return creditAmount.toString();
   }
 
   try {
