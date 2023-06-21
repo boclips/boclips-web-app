@@ -18,18 +18,22 @@ const DisplayPrice = ({ price }: Props) => {
   );
 
   return (
-    <Typography.Title1 className="flex items-center" data-qa="price-badge">
+    <Typography.Body
+      weight="medium"
+      className="flex items-center"
+      data-qa="price-badge"
+    >
       {isCredits ? (
         <>
           <CreditsSVG />
-          <span data-qa="credit-price" className="ml-1">
+          <span data-qa="credit-price" className="mt-0.5 ml-1">
             {calculatedPrice}
           </span>
         </>
       ) : (
         <>{calculatedPrice}</>
       )}
-    </Typography.Title1>
+    </Typography.Body>
   );
 };
 

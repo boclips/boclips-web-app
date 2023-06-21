@@ -11,7 +11,7 @@
     minmax(min-content, max-content) minmax(min-content, max-content)
     auto auto;
   align-content: stretch;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
 
   &:hover {
     .playerBadge {
@@ -25,7 +25,7 @@
   top: 0.25rem;
   right: 0.25rem;
   border-radius: 0.25rem;
-  background-color: @blue-800;
+  background-color: @white;
   padding: 0 0.25rem;
 }
 
@@ -55,7 +55,7 @@
   align-items: center;
   overflow: hidden;
 
-  button {
+  >button {
     position: relative;
     flex: 1;
     text-align: left;
@@ -90,7 +90,7 @@
     }
   }
 
-  span {
+  >span {
     --bo-ui-badge-margin: 0;
     --bo-ui-badge-padding: 2px 4px 2px 4px;
     position: relative;
@@ -100,14 +100,17 @@
     align-items: center;
 
     &:nth-child(n + 2) {
+      margin-left: 8px;
+
       &:before {
         height: 24px;
         content: '•';
         color: @blue-800;
-        padding-right: 4px;
         line-height: 1.5rem;
         font-size: 1rem;
         z-index: 1;
+        position: absolute;
+        left: -10px;
       }
     }
   }

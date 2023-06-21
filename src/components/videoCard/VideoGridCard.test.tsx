@@ -86,6 +86,34 @@ describe(`VideoGridCard`, () => {
     expect(wrapper.getByText('1:00:36')).toBeInTheDocument();
   });
 
+  it('displays price in credits', () => {
+    const video = VideoFactory.sample({
+      createdBy: 'Channel-1',
+      channelId: 'channel-1-id',
+      bestFor: [{ label: 'Review' }, { label: 'Synthesis' }],
+      price: {
+        amount: 100,
+        currency: 'CREDITS',
+      },
+    });
+
+    const wrapper = render(
+      <MemoryRouter>
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <QueryClientProvider client={new QueryClient()}>
+            <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+              <VideoGridCard video={video} buttonsRow={<div />} />
+            </BoclipsSecurityProvider>
+          </QueryClientProvider>
+        </BoclipsClientProvider>
+      </MemoryRouter>,
+    );
+
+    const credits = wrapper.getByTestId('credit-price');
+
+    expect(within(credits).getByText('100')).toBeInTheDocument();
+  });
+
   it('should display best for tag description when hovered', async () => {
     const video = VideoFactory.sample({
       createdBy: 'Channel-1',

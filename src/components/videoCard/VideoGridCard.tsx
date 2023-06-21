@@ -6,6 +6,7 @@ import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { FilterKey } from 'src/types/search/FilterKey';
 import GridCardSubHeader from 'src/components/videoCard/GridCardSubHeader';
+import DisplayPrice from 'src/components/common/price/DisplayPrice';
 
 interface Props {
   video: Video;
@@ -28,15 +29,7 @@ const VideoGridCard = ({
     key={video.id}
     name={video.title}
     header={<CoverWithVideo video={video} onSegmentPlayed={onSegmentPlayed} />}
-    playerBadge={
-      video.playback.duration && (
-        <div className="text-white">
-          {video.playback.duration.asMinutes() > 60
-            ? video.playback.duration.format('H:mm:ss')
-            : video.playback.duration.format('mm:ss')}
-        </div>
-      )
-    }
+    playerBadge={video?.price && <DisplayPrice price={video.price} />}
     subheader={
       <GridCardSubHeader
         onClick={() =>

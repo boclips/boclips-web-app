@@ -1,8 +1,6 @@
 import s from 'src/components/common/gridCard/style.module.less';
 import Badge from '@boclips-ui/badge';
 import { Typography } from '@boclips-ui/typography';
-import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
-import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import Tooltip from '@boclips-ui/tooltip';
@@ -28,14 +26,14 @@ const GridCardSubHeader = ({
           </Tooltip>
         </span>
       )}
-      {video.price && (
-        <Typography.Body as="span" size="small">
-          {createPriceDisplayValue(
-            video.price?.amount,
-            video.price?.currency,
-            getBrowserLocale(),
-          )}
-        </Typography.Body>
+      {video.playback.duration && (
+        <Badge
+          value={
+            video.playback.duration.asMinutes() > 60
+              ? video.playback.duration.format('H:mm:ss')
+              : video.playback.duration.format('mm:ss')
+          }
+        />
       )}
       <button onClick={onClick} type="button">
         <Typography.Body as="div" size="small" className={s.createdBy}>
