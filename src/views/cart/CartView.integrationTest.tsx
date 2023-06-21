@@ -225,9 +225,11 @@ describe('CartView', () => {
       expect(
         await wrapper.findByText(' total', { exact: false }),
       ).toBeVisible();
-      expect((await wrapper.findByTestId('total-price')).innerHTML).toEqual(
-        '$900',
-      );
+      expect(
+        await within(await wrapper.findByTestId('total-price')).findByText(
+          '$900',
+        ),
+      ).toBeVisible();
     });
 
     expect(await wrapper.findByText('Captions and transcripts')).toBeVisible();

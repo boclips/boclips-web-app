@@ -8,6 +8,7 @@ import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
 import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
+import { PriceBadge } from 'src/components/common/price/PriceBadge';
 
 interface Props {
   videos: Video[];
@@ -59,12 +60,7 @@ export const CartItemOrderPreview = ({ videos }: Props) => {
               className="text-gray-900 flex justify-between"
             >
               <span>{video.title}</span>
-              {video.price &&
-                createPriceDisplayValue(
-                  video.price.amount,
-                  video.price.currency,
-                  getBrowserLocale(),
-                )}
+              {video.price && <PriceBadge price={video.price} />}
             </Typography.Title2>
             <Typography.Body
               as="div"
