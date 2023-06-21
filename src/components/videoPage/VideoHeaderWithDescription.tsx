@@ -1,9 +1,7 @@
-import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import { Typography } from '@boclips-ui/typography';
@@ -12,6 +10,7 @@ import { VideoDescription } from 'src/components/videoPage/VideoDescription';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { EmbedButton } from 'src/components/embedButton/EmbedButton';
 import { DownloadTranscriptButton } from 'src/components/downloadTranscriptButton/DownloadTranscriptButton';
+import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
 
@@ -33,23 +32,13 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
     mixpanel.track('video_details_url_copied');
   };
 
-  const priceDisplay = createPriceDisplayValue(
-    video?.price?.amount,
-    video?.price?.currency,
-    getBrowserLocale(),
-  );
-
   return (
     <>
       <div className={s.sticky}>
         <Typography.H1 size="md" className="text-gray-900" id="video-title">
           {video?.title}
         </Typography.H1>
-        {priceDisplay && (
-          <Typography.H2 size="sm" className="text-gray-900 my-1">
-            {priceDisplay}
-          </Typography.H2>
-        )}
+        {video?.price && <PriceBadge price={video.price} />}
         <FeatureGate feature="BO_WEB_APP_PRICES">
           <div className="mb-4">
             <Typography.Body size="small" className="text-gray-700">
