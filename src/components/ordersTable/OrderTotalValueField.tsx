@@ -1,8 +1,7 @@
 import React from 'react';
-import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
 import { OrderPrice } from 'boclips-api-client/dist/sub-clients/orders/model/OrderPrice';
-import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import { Typography } from '@boclips-ui/typography';
+import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import { OrderInformationField } from './OrderInformationField';
 
 interface Props {
@@ -16,10 +15,10 @@ export const OrderTotalValueField = ({ totalPrice, highlighted }: Props) => (
       weight={highlighted ? 'medium' : null}
       className="text-gray-900"
     >
-      {createPriceDisplayValue(
-        totalPrice?.value,
-        totalPrice?.currency,
-        getBrowserLocale(),
+      {totalPrice && (
+        <PriceBadge
+          price={{ amount: totalPrice.value, currency: totalPrice.currency }}
+        />
       )}
     </Typography.Body>
   </OrderInformationField>

@@ -1,10 +1,9 @@
 import { OrderItem } from 'boclips-api-client/dist/sub-clients/orders/model/OrderItem';
 import React from 'react';
 import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
-import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
 import { AdditionalServicesSummaryPreview } from 'src/components/cart/AdditionalServices/AdditionalServicesSummaryPreview';
-import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import { Typography } from '@boclips-ui/typography';
+import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import s from './style.module.less';
 import { Link } from '../common/Link';
 
@@ -38,10 +37,13 @@ export const OrderItemCard = ({ item }: Props) => {
 
       <div className="flex flex-col w-full relative pl-8">
         <Typography.Title1 className="absolute right-0 text-gray-800">
-          {createPriceDisplayValue(
-            item?.price?.value,
-            item?.price?.currency,
-            getBrowserLocale(),
+          {item?.price && (
+            <PriceBadge
+              price={{
+                amount: item.price.value,
+                currency: item.price.currency,
+              }}
+            />
           )}
         </Typography.Title1>
 
