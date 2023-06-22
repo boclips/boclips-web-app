@@ -4,12 +4,14 @@ import { Price } from 'boclips-api-client/dist/sub-clients/videos/model/Price';
 import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
 import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import CreditsSVG from 'src/resources/icons/credits.svg';
+import c from 'classnames';
 
 interface Props {
   price: Price;
+  isBold?: boolean;
 }
 
-const DisplayPrice = ({ price }: Props) => {
+const DisplayPrice = ({ price, isBold = true }: Props) => {
   const isCredits = price.currency === 'CREDITS';
   const calculatedPrice = useMemo(
     () =>
@@ -19,8 +21,7 @@ const DisplayPrice = ({ price }: Props) => {
 
   return (
     <Typography.Body
-      weight="medium"
-      className="flex items-center"
+      className={c('flex items-center', { '!font-bold !text-lg': isBold })}
       data-qa="price-badge"
     >
       {isCredits ? (

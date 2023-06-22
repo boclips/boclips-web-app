@@ -8,7 +8,7 @@ import { useGetVideos } from 'src/hooks/api/videoQuery';
 import { Typography } from '@boclips-ui/typography';
 import { AdditionalServicesPricingMessage } from 'src/components/cart/AdditionalServices/AdditionalServicesPricingMessage';
 import { FeatureGate } from 'src/components/common/FeatureGate';
-import { PriceBadge } from 'src/components/common/price/PriceBadge';
+import DisplayPrice from 'src/components/common/price/DisplayPrice';
 import { trackOrderConfirmationModalOpened } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 import s from './style.module.less';
@@ -74,7 +74,14 @@ export const CartOrderSummary = ({ cart }: Props) => {
             <div className={s.cartInfoWrapper}>
               <CartSummaryItem
                 label={<Typography.Body>Video(s) total</Typography.Body>}
-                value={<PriceBadge price={getTotalPrice(videos)} />}
+                value={
+                  getTotalPrice(videos) && (
+                    <DisplayPrice
+                      price={getTotalPrice(videos)}
+                      isBold={false}
+                    />
+                  )
+                }
               />
               {captionsAndTranscriptsRequested && (
                 <CartSummaryItem label="Captions and transcripts" />
@@ -89,7 +96,9 @@ export const CartOrderSummary = ({ cart }: Props) => {
             >
               <span>Total</span>
               <span data-qa="total-price">
-                <PriceBadge price={getTotalPrice(videos)} />
+                {getTotalPrice(videos) && (
+                  <DisplayPrice price={getTotalPrice(videos)} isBold={false} />
+                )}
               </span>
             </Typography.H1>
           </FeatureGate>
