@@ -35,7 +35,7 @@ describe(`embed button`, () => {
     await waitFor(() => {
       // This is hardcoded in the api client, a bit coupled
       expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
-        "<iframe src='https://api.staging-boclips.com/v1/embed-codes/embed-id'/>",
+        "<iframe src='https://api.staging-boclips.com/v1/embeds/embed-id/view'/>",
       );
     });
     const notification = await wrapper.findByRole('alert');

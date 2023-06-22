@@ -60,15 +60,14 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
 
           <FeatureGate feature="BO_WEB_APP_DEV">
             {!isLoading && learningOutcomes && (
-              <div className={s.learningOutcomesWrapper}>
-                <Typography.Body weight="medium">
-                  Learning Outcomes:
-                </Typography.Body>
-                <br />
-                <Typography.Body className={s.learningOutcomes}>
-                  {learningOutcomes}
-                </Typography.Body>
-              </div>
+              <section className={s.learningOutcomesWrapper}>
+                <Typography.Title1>Learning Outcomes:</Typography.Title1>
+                <ul className={s.outcomeList}>
+                  {learningOutcomes.map((outcome: string) => (
+                    <li>{outcome}</li>
+                  ))}
+                </ul>
+              </section>
             )}
           </FeatureGate>
         </div>
