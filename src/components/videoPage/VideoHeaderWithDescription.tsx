@@ -1,7 +1,6 @@
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import React from 'react';
-import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import { Typography } from '@boclips-ui/typography';
@@ -11,6 +10,8 @@ import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { EmbedButton } from 'src/components/embedButton/EmbedButton';
 import { DownloadTranscriptButton } from 'src/components/downloadTranscriptButton/DownloadTranscriptButton';
 import { PriceBadge } from 'src/components/common/price/PriceBadge';
+import { useGetLearningOutcomes } from 'src/hooks/api/learningOutcomesQuery';
+import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
 
@@ -19,6 +20,10 @@ interface Props {
 }
 
 export const VideoHeaderWithDescription = ({ video }: Props) => {
+  const { data: learningOutcomes, isLoading } = useGetLearningOutcomes(
+    video?.id,
+  );
+
   if (!video) {
     return null;
   }
@@ -52,6 +57,19 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
       <div className={s.descriptionAndButtons}>
         <div className={s.scrollableDescription}>
           <VideoDescription video={video} />
+
+          <FeatureGate feature="BO_WEB_APP_DEV">
+            {!isLoading && learningOutcomes && (
+              <section className={s.learningOutcomesWrapper}>
+                <Typography.Title1>Learning Outcomes:</Typography.Title1>
+                <ul className={s.outcomeList}>
+                  {learningOutcomes.map((outcome: string) => (
+                    <li>{outcome}</li>
+                  ))}
+                </ul>
+              </section>
+            )}
+          </FeatureGate>
         </div>
         <div className={(s.sticky, s.buttons)}>
           <div className={s.iconButtons}>

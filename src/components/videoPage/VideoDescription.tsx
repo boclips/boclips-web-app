@@ -13,7 +13,7 @@ interface Props {
 export const VideoDescription = ({ video }: Props) => {
   return (
     <>
-      <div className={s.badges}>
+      <section className={s.badges}>
         {video?.subjects?.map((subject) => (
           <SubjectBadge key={subject.id} subject={subject} />
         ))}
@@ -21,15 +21,18 @@ export const VideoDescription = ({ video }: Props) => {
         {video?.educationLevels?.map((level) => (
           <EducationLevelBadge key={level.code} educationLevel={level} />
         ))}
-      </div>
+      </section>
 
-      <Typography.Body size="small" className="lg:mt-4 text-gray-800">
-        {video?.description}
-      </Typography.Body>
+      <section className="mt-4">
+        <Typography.Title1>Video Description:</Typography.Title1>
+        <Typography.Body as="p" size="small" className="text-gray-800">
+          {video?.description}
+        </Typography.Body>
 
-      <Typography.Body className="lg:mt-4 text-gray-800">
-        {video?.additionalDescription}
-      </Typography.Body>
+        <Typography.Body className="lg:mt-4 text-gray-800">
+          {video?.additionalDescription}
+        </Typography.Body>
+      </section>
     </>
   );
 };
