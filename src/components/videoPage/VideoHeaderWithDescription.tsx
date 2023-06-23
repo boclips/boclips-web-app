@@ -64,7 +64,13 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
                 <Typography.Title1>Learning Outcomes:</Typography.Title1>
                 <ul className={s.outcomeList}>
                   {learningOutcomes.map((outcome: string) => (
-                    <li>{outcome}</li>
+                    <Typography.Body
+                      as="li"
+                      size="small"
+                      className="text-gray-800"
+                    >
+                      {outcome}
+                    </Typography.Body>
                   ))}
                 </ul>
               </section>
