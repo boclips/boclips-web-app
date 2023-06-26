@@ -30,7 +30,7 @@ const GridCard = ({
     <div className={s.gridCard} data-qa={`grid-card-for-${name}`}>
       {overlay}
       {header}
-      <div className={s.playerBadge}>{playerBadge}</div>
+      {playerBadge && <div className={s.playerBadge}>{playerBadge}</div>}
       <div className={s.header}>
         <Link
           to={{
