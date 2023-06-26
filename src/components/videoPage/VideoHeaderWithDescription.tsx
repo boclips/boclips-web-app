@@ -40,10 +40,16 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
   return (
     <>
       <div className={s.sticky}>
-        <Typography.H1 size="md" className="text-gray-900" id="video-title">
-          {video?.title}
-        </Typography.H1>
-        {video?.price && <PriceBadge price={video.price} />}
+        <div className="flex justify-between">
+          <Typography.H1 size="md" className="text-gray-900 " id="video-title">
+            {video?.title}
+          </Typography.H1>
+          {video?.price && (
+            <span className="border-primary border self-start rounded px-2 ml-3">
+              <PriceBadge price={video.price} />
+            </span>
+          )}
+        </div>
         <FeatureGate feature="BO_WEB_APP_PRICES">
           <div className="mb-4">
             <Typography.Body size="small" className="text-gray-700">
