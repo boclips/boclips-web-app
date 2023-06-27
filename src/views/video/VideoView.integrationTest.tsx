@@ -182,6 +182,32 @@ describe('Video View', () => {
     ).toBeNull();
   });
 
+  it('renders license duration information', async () => {
+    fakeClient.videos.insertVideo({
+      ...exampleVideo,
+      maxLicenseDurationYears: 5,
+    });
+
+    const wrapper = renderView(['/videos/video-id']);
+
+    expect(await wrapper.findByText('video-id')).toBeVisible();
+    expect(
+      await wrapper.findByText('Can be licensed for a maximum of 5 years'),
+    ).toBeVisible();
+  });
+
+  it('does not render license duration information when it is not configured', async () => {
+    fakeClient.videos.insertVideo({
+      ...exampleVideo,
+      maxLicenseDurationYears: undefined,
+    });
+
+    const wrapper = renderView(['/videos/video-id']);
+
+    expect(await wrapper.findByText('video-id')).toBeVisible();
+    expect(await wrapper.queryByText(/Can be licensed for/)).toBeNull();
+  });
+
   describe('video page navigated from explore view', () => {
     it(`will display embed video as primary button`, async () => {
       const theme = getThemeWithVideo(exampleVideo);
