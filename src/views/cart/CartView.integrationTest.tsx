@@ -34,6 +34,7 @@ describe('CartView', () => {
       currency: 'USD',
     },
     types: [{ name: 'NEWS', id: 2 }],
+    maxLicenseDurationYears: 5,
   });
   const instructionalVideo = VideoFactory.sample({
     id: 'instructional-video-id',
@@ -78,6 +79,9 @@ describe('CartView', () => {
         expect(await wrapper.findByText('(1 item)')).toBeInTheDocument();
         expect(await wrapper.findByText('news video')).toBeInTheDocument();
         expect(await wrapper.findByText('video-id')).toBeInTheDocument();
+        expect(
+          await wrapper.findByText('Can be licensed for a maximum of 5 years'),
+        ).toBeInTheDocument();
         expect(
           await wrapper.findByText('Additional services'),
         ).toBeInTheDocument();
