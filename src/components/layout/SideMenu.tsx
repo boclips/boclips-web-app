@@ -5,15 +5,17 @@ import ExternalLinkIcon from 'src/resources/icons/external-link-icon.svg';
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
+import c from 'classnames';
 
 interface Props {
   user: User;
   logOut: () => void;
+  hasSearchInNavbar?: boolean;
 }
 
-const SideMenu = ({ user, logOut }: Props) => {
+const SideMenu = ({ user, logOut, hasSearchInNavbar = true }: Props) => {
   return (
-    <div className={s.slideMenu}>
+    <div className={c(s.slideMenu, { [s.oneLineNavbar]: !hasSearchInNavbar })}>
       <div className={s.userInfo}>
         <span>
           {user.firstName} {user.lastName}

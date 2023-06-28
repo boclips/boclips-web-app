@@ -92,7 +92,9 @@ const NavbarResponsive = ({ showSearch = true }: Props): ReactElement => {
         )}
       </nav>
 
-      {showSideMenu && <SideMenu user={user} logOut={logOut} />}
+      {showSideMenu && mobileView && (
+        <SideMenu user={user} logOut={logOut} hasSearchInNavbar={false} />
+      )}
     </>
   );
 };
