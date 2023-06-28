@@ -46,7 +46,7 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
             {video?.title}
           </Typography.H1>
           {video?.price && (
-            <span className="border-primary border self-start rounded px-2 ml-3">
+            <span className="border-1 border-primary self-start rounded px-2 ml-3">
               <PriceBadge price={video.price} />
             </span>
           )}
