@@ -14,6 +14,8 @@ import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import userEvent from '@testing-library/user-event';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
+import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
+import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('My Team view', () => {
   it('renders my team page', () => {
@@ -107,7 +109,7 @@ describe('My Team view', () => {
     expect(await wrapper.findByText('No')).toBeVisible();
   });
 
-  it('list of users is only available only if `accountUsers` link is present', async () => {
+  it('doesnt display the edit button only if `getAccount` link is absent', async () => {
     const fakeClient = new FakeBoclipsClient();
 
     fakeClient.accounts.insertAccount(
@@ -124,10 +126,10 @@ describe('My Team view', () => {
 
     fakeClient.users.setPermissionsOfUser(joe.id, {
       canOrder: true,
-      canManageUsers: false,
+      canManageUsers: true,
     });
 
-    delete fakeClient.links.accountUsers;
+    delete fakeClient.links.getAccount;
 
     const wrapper = render(
       <MemoryRouter initialEntries={['/team']}>
@@ -139,16 +141,9 @@ describe('My Team view', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.queryByText('User')).not.toBeInTheDocument();
-    expect(await wrapper.queryByText('Joe Biden')).not.toBeInTheDocument();
-    expect(await wrapper.queryByText('User email')).not.toBeInTheDocument();
     expect(
-      await wrapper.queryByText('joebiden@gmail.com'),
+      await wrapper.queryByRole('button', { name: 'Edit' }),
     ).not.toBeInTheDocument();
-    expect(await wrapper.queryByText('Can order')).not.toBeInTheDocument();
-    expect(await wrapper.queryByText('Yes')).not.toBeInTheDocument();
-    expect(await wrapper.queryByText('Can add users')).not.toBeInTheDocument();
-    expect(await wrapper.queryByText('No')).not.toBeInTheDocument();
   });
 
   it('only lists the first 25 users and shows pagination at the bottom', async () => {
@@ -204,30 +199,38 @@ describe('My Team view', () => {
     expect(wrapper.queryByText('Joe24 Biden')).toBeNull();
   });
 
-  it('can see an edit button for each user, clicking opens up the edit modal', async () => {
+  it('user opens the edit modal when has permissions', async () => {
     const fakeClient = new FakeBoclipsClient();
+
     fakeClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'account-1' }),
+      AccountsFactory.sample({ id: 'account-1', status: AccountStatus.ACTIVE }),
     );
+
     const joe = await fakeClient.users.createUser({
       firstName: 'Joe',
       lastName: 'Biden',
       email: 'joey@boclips.com',
       accountId: 'account-1',
       type: UserType.b2bUser,
+      permissions: {
+        canOrder: false,
+        canManageUsers: true,
+      },
     });
 
-    fakeClient.users.setPermissionsOfUser(joe.id, {
-      canOrder: true,
-      canManageUsers: false,
-    });
+    await fakeClient.users.insertCurrentUser(joe);
+
+    const security: BoclipsSecurity = {
+      ...stubBoclipsSecurity,
+      hasRole: (_role) => true,
+    };
 
     const wrapper = render(
       <MemoryRouter initialEntries={['/team']}>
         <App
           reactQueryClient={createReactQueryClient()}
           apiClient={fakeClient}
-          boclipsSecurity={stubBoclipsSecurity}
+          boclipsSecurity={security}
         />
       </MemoryRouter>,
     );
@@ -267,6 +270,8 @@ describe('My Team view', () => {
       accountId: 'account-1',
       type: UserType.b2bUser,
     });
+
+    await fakeClient.users.insertCurrentUser(joe);
 
     fakeClient.users.setPermissionsOfUser(joe.id, {
       canOrder: false,

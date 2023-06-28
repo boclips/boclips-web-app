@@ -11,8 +11,6 @@ import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
 import { Typography } from '@boclips-ui/typography';
 import Button from '@boclips-ui/button';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
-import { WithValidRoles } from 'src/components/common/errors/WithValidRoles';
-import { ROLES } from 'src/types/Roles';
 import { Link } from '../common/Link';
 import s from './newstyle.module.less';
 
@@ -69,6 +67,7 @@ export const AccountButton = () => {
 
   return (
     <div
+      data-qa="account-button"
       onMouseEnter={onMouseEnterAction}
       onMouseLeave={onMouseLeaveAction}
       className={c(s.accountMenu, { [s.active]: displayModal || onMouseEnter })}
@@ -114,15 +113,13 @@ export const AccountButton = () => {
                 </Link>
               </div>
             </FeatureGate>
-            <WithValidRoles roles={[ROLES.ROLE_BOCLIPS_WEB_APP_MANAGE_USERS]}>
-              <div className="pt-2">
-                <Link onClick={myTeamOpened} to="/team" tabIndex={-1}>
-                  <Typography.Body size="small" as="button">
-                    My team
-                  </Typography.Body>
-                </Link>
-              </div>
-            </WithValidRoles>
+            <div className="pt-2">
+              <Link onClick={myTeamOpened} to="/team" tabIndex={-1}>
+                <Typography.Body size="small" as="button">
+                  My team
+                </Typography.Body>
+              </Link>
+            </div>
             <div className="pt-2">
               <Link to="/playlists" tabIndex={-1}>
                 <Typography.Body size="small" as="button">

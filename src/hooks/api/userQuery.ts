@@ -7,6 +7,7 @@ import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable'
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
 import { UpdateUserRequest } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
 import { EditUserRequest } from 'src/components/teamModal/EditTeamMemberModal';
+import { Account } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 export const doGetUser = (client: BoclipsClient): Promise<User> => {
   return client.users.getCurrentUser();
@@ -22,6 +23,18 @@ export const doCreateNewUser = (
   client: BoclipsClient,
 ): Promise<User> => {
   return client.users.createUser(request);
+};
+
+export const useGetAccount = (accountId: string) => {
+  const client = useBoclipsClient();
+
+  return useQuery(
+    ['account', accountId],
+    () => doGetAccount(client, accountId),
+    {
+      enabled: !!accountId,
+    },
+  );
 };
 
 export const useAddNewUser = () => {
@@ -72,6 +85,13 @@ const doFindAccountUsers = (
   size: number,
 ): Promise<Pageable<AccountUser>> => {
   return client.accounts.getAccountUsers({ id: accountId, page, size });
+};
+
+const doGetAccount = (
+  client: BoclipsClient,
+  accountId: string,
+): Promise<Account> => {
+  return client.accounts.getAccount(accountId);
 };
 
 export const useFindAccountUsers = (

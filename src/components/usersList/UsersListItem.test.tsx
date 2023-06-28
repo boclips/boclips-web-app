@@ -2,6 +2,12 @@ import React from 'react';
 import { render, within } from '@testing-library/react';
 import { UsersListItem } from 'src/components/usersList/UsersListItem';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
+import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
+import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
+import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 
 describe('UsersListRow', () => {
   it('says the user can place orders if the permissions allow that', () => {
@@ -16,12 +22,10 @@ describe('UsersListRow', () => {
       },
     };
 
-    const component = render(<UsersListItem user={user} onEdit={jest.fn} />);
+    const wrapper = renderWrapper(user, jest.fn, false);
 
     expect(
-      within(component.getByTestId('user-info-field-Can order')).getByText(
-        'Yes',
-      ),
+      within(wrapper.getByTestId('user-info-field-Can order')).getByText('Yes'),
     ).toBeVisible();
   });
 
@@ -37,12 +41,10 @@ describe('UsersListRow', () => {
       },
     };
 
-    const component = render(<UsersListItem user={user} onEdit={jest.fn} />);
+    const wrapper = renderWrapper(user, jest.fn, false);
 
     expect(
-      within(component.getByTestId('user-info-field-Can order')).getByText(
-        'No',
-      ),
+      within(wrapper.getByTestId('user-info-field-Can order')).getByText('No'),
     ).toBeVisible();
   });
 
@@ -58,10 +60,54 @@ describe('UsersListRow', () => {
       },
     };
 
-    const wrapper = render(
-      <UsersListItem user={user} isLoading onEdit={jest.fn} />,
-    );
+    const wrapper = renderWrapper(user, jest.fn, false);
 
     expect(wrapper.getByTestId('skeleton')).toBeVisible();
   });
+
+  it('displays edit button when can manage users and has roles', () => {
+    const security: BoclipsSecurity = {
+      ...stubBoclipsSecurity,
+      hasRole: (_role) => true,
+    };
+
+    const user: AccountUser = {
+      id: 'id-1',
+      email: 'joebiden@gmail.com',
+      firstName: 'Joe',
+      lastName: 'Biden',
+      permissions: {
+        canOrder: false,
+        canManageUsers: true,
+      },
+    };
+
+    const wrapper = renderWrapper(user, jest.fn(), true, security);
+
+    expect(wrapper.getByText('Edit')).toBeVisible();
+  });
+
+  const renderWrapper = (
+    user,
+    onEdit,
+    canEdit,
+    security: BoclipsSecurity = stubBoclipsSecurity,
+  ) => {
+    const client = new FakeBoclipsClient();
+
+    return render(
+      <BoclipsSecurityProvider boclipsSecurity={security}>
+        <BoclipsClientProvider client={client}>
+          <QueryClientProvider client={new QueryClient()}>
+            <UsersListItem
+              user={user}
+              isLoading
+              onEdit={onEdit}
+              canEdit={canEdit}
+            />
+          </QueryClientProvider>
+        </BoclipsClientProvider>
+      </BoclipsSecurityProvider>,
+    );
+  };
 });

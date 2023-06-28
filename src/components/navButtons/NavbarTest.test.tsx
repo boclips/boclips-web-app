@@ -10,7 +10,7 @@ import NavbarResponsive from 'src/components/layout/Navbar';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-describe(`account button`, () => {
+describe(`Navbar test`, () => {
   beforeEach(() => {
     window.resizeTo(1680, 1024);
 
