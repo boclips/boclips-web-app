@@ -4,7 +4,7 @@ import { BoclipsClient } from 'boclips-api-client';
 
 export const useGetLearningOutcomes = (videoId: string) => {
   const client = useBoclipsClient();
-  return useQuery(['learningOutcomes'], () =>
+  return useQuery(['learningOutcomes', videoId], () =>
     doGetLearningOutcomes(client, videoId),
   );
 };
