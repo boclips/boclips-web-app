@@ -12,7 +12,7 @@ import { DownloadTranscriptButton } from 'src/components/downloadTranscriptButto
 import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import { useGetLearningOutcomes } from 'src/hooks/api/learningOutcomesQuery';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import VideoLicenseDuration from 'src/components/videoPage/VideoLicenseDuration';
+import VideoLicenseDuration from 'src/components/common/videoLicenseDuration/VideoLicenseDuration';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
 

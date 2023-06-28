@@ -8,9 +8,11 @@ interface Props {
 }
 
 const licenseDurationInfo = (maxDuration: number) => {
-  return maxDuration < 10
-    ? `Can be licensed for a maximum of ${maxDuration} years`
-    : 'Can be licensed for 10+ years';
+  if (maxDuration >= 10) return 'Can be licensed for 10+ years';
+
+  return maxDuration === 1
+    ? `Can be licensed for a maximum of 1 year`
+    : `Can be licensed for a maximum of ${maxDuration} years`;
 };
 
 const VideoLicenseDuration = ({ video }: Props) => {
