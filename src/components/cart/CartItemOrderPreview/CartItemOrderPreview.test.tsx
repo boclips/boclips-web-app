@@ -75,6 +75,7 @@ describe('Cart Item Preview', () => {
         amount: 1000,
         currency: 'USD',
       },
+      maxLicenseDurationYears: 6,
     });
 
     const wrapper = render(
@@ -93,5 +94,6 @@ describe('Cart Item Preview', () => {
       wrapper.getByText('Other type of editing: bla bla'),
     ).toBeInTheDocument();
     expect(wrapper.getByText('$1,000')).toBeInTheDocument();
+    expect(wrapper.getByText('Can be licensed for a maximum of 6 years'));
   });
 });

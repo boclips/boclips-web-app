@@ -6,6 +6,7 @@ import { AdditionalServicesSummaryPreview } from 'src/components/cart/Additional
 import c from 'classnames';
 import { Typography } from '@boclips-ui/typography';
 import { PriceBadge } from 'src/components/common/price/PriceBadge';
+import VideoLicenseDuration from 'src/components/common/videoLicenseDuration/VideoLicenseDuration';
 import s from './style.module.less';
 
 interface Props {
@@ -60,6 +61,7 @@ export const CartItemOrderPreview = ({ videos }: Props) => {
               <span>{video.title}</span>
               {video.price && <PriceBadge price={video.price} />}
             </Typography.Title2>
+            <VideoLicenseDuration video={video} />
             <Typography.Body
               as="div"
               size="small"
