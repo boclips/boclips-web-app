@@ -92,7 +92,7 @@
     "@babel/core": "^7.12.3",
     "@babel/plugin-syntax-jsx": "^7.12.1",
     "@babel/plugin-transform-react-jsx": "^7.12.1",
-    "@babel/plugin-transform-typescript": "^7.12.1",
+    "@babel/plugin-transform-typescript": "^7.22.5",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
     "@boclips-ui/age-range": "2.0.2",
