@@ -371,3 +371,37 @@ describe('Video card', () => {
     });
   });
 });
+
+describe(`PriceBadge`, () => {
+  it(`renders a price badge when price is defined`, () => {
+    const video = VideoFactory.sample({
+      price: { amount: 100, currency: 'USD' },
+    });
+
+    const wrapper = render(
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <VideoCardWrapper video={video} handleFilterChange={jest.fn()} />
+        </BoclipsClientProvider>
+      </BoclipsSecurityProvider>,
+    );
+
+    expect(wrapper.getByText('$100')).toBeVisible();
+  });
+
+  it(`does not render a price badge container when price is not defined`, () => {
+    const video = VideoFactory.sample({
+      price: undefined,
+    });
+
+    const wrapper = render(
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <VideoCardWrapper video={video} handleFilterChange={jest.fn()} />
+        </BoclipsClientProvider>
+      </BoclipsSecurityProvider>,
+    );
+
+    expect(wrapper.queryByTestId('price-badge-container')).toBeNull();
+  });
+});
