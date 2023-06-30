@@ -24,7 +24,7 @@ export const VideoDescription = ({ video }: Props) => {
       </section>
 
       <section className="mt-4">
-        <Typography.Title1>Video Description:</Typography.Title1>
+        <Typography.Title1>Video Description</Typography.Title1>
         <Typography.Body as="p" size="small" className="text-gray-800">
           {video?.description}
         </Typography.Body>

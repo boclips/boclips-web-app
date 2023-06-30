@@ -10,9 +10,9 @@ import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { EmbedButton } from 'src/components/embedButton/EmbedButton';
 import { DownloadTranscriptButton } from 'src/components/downloadTranscriptButton/DownloadTranscriptButton';
 import { PriceBadge } from 'src/components/common/price/PriceBadge';
-import { useGetLearningOutcomes } from 'src/hooks/api/learningOutcomesQuery';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import VideoLicenseDuration from 'src/components/common/videoLicenseDuration/VideoLicenseDuration';
+import { VideoLearningOutcomes } from 'src/components/videoPage/VideoLearningOutcomes';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
 
@@ -21,10 +21,6 @@ interface Props {
 }
 
 export const VideoHeaderWithDescription = ({ video }: Props) => {
-  const { data: learningOutcomes, isLoading } = useGetLearningOutcomes(
-    video?.id,
-  );
-
   if (!video) {
     return null;
   }
@@ -67,22 +63,7 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
           <VideoDescription video={video} />
 
           <FeatureGate feature="BO_WEB_APP_DEV">
-            {!isLoading && learningOutcomes && (
-              <section className={s.learningOutcomesWrapper}>
-                <Typography.Title1>Learning Outcomes:</Typography.Title1>
-                <ul className={s.outcomeList}>
-                  {learningOutcomes.map((outcome: string) => (
-                    <Typography.Body
-                      as="li"
-                      size="small"
-                      className="text-gray-800"
-                    >
-                      {outcome}
-                    </Typography.Body>
-                  ))}
-                </ul>
-              </section>
-            )}
+            <VideoLearningOutcomes videoId={video?.id} />
           </FeatureGate>
         </div>
         <div className={(s.sticky, s.buttons)}>

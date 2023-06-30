@@ -108,7 +108,7 @@ describe('Video View', () => {
     const wrapper = renderView(['/videos/video-id']);
 
     expect(await wrapper.findByText('video-id')).toBeVisible();
-    expect(await wrapper.findByText('Learning Outcomes:')).toBeVisible();
+    expect(await wrapper.findByText('Learning Outcomes')).toBeVisible();
     expect(wrapper.getByText('outcome for video-id')).toBeVisible();
   });
 
