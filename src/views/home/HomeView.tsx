@@ -6,7 +6,7 @@ import Button from '@boclips-ui/button';
 import HomeSearchHero from 'src/resources/icons/home-illustration.svg';
 import { useNavigate } from 'react-router-dom';
 import NewNavbar from 'src/components/layout/Navbar';
-import { FeaturedPlaylists } from 'src/components/playlists/PromotedPlaylists';
+import { FeaturedPlaylists } from 'src/components/featuredPlaylists/FeaturedPlaylists';
 import { FeaturedVideos } from 'src/components/carousel/FeaturedVideos';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import FilmIcon from '../../resources/icons/film-icon.svg';
