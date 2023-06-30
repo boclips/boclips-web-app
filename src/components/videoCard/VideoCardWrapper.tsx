@@ -59,9 +59,11 @@ export const VideoCardWrapper = ({ video, handleFilterChange }: Props) => {
         videoPlayer={<VideoPlayer video={video} showDurationBadge />}
         createdBy={createdByLink()}
         topBadge={
-          <div className="absolute top-3 right-4 border-1 border-primary rounded px-2 py-1">
-            <PriceBadge price={video.price} />
-          </div>
+          video.price && (
+            <div className="absolute top-3 right-4 border-1 border-primary rounded px-2 py-1">
+              <PriceBadge price={video.price} />
+            </div>
+          )
         }
         title={<VideoCardTitle video={video} />}
         actions={
