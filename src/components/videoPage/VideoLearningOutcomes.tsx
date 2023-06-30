@@ -3,6 +3,7 @@ import { Typography } from '@boclips-ui/typography';
 import React from 'react';
 import Badge from '@boclips-ui/badge';
 import s from './style.module.less';
+import { LoadingOutlined } from '@ant-design/icons';
 
 interface Props {
   videoId: string;
@@ -11,25 +12,40 @@ interface Props {
 export const VideoLearningOutcomes = ({ videoId }: Props) => {
   const { data: learningOutcomes, isLoading } = useGetLearningOutcomes(videoId);
 
+  const getAIBadge = () =>
+    isLoading ? (
+      <LoadingOutlined className="ml-2" />
+    ) : (
+      <Badge value="AI generated" />
+    );
+
+  const showLearningOutcomesList = () => (
+    <ul className={s.outcomeList}>
+      {learningOutcomes.map((outcome: string) => (
+        <Typography.Body as="li" size="small" className="text-gray-800">
+          {outcome}
+        </Typography.Body>
+      ))}
+    </ul>
+  );
+
+  const showErrorMessage = () => (
+    <Typography.Body as="p" size="small" className="text-gray-800">
+      No learning outcome found based on the video transcript
+    </Typography.Body>
+  );
+
   return (
-    <>
-      {!isLoading && learningOutcomes && (
-        <section className={s.learningOutcomesWrapper}>
-          <div className="flex flex-row items-center">
-            <Typography.Title1 className="mr-2">
-              Learning Outcomes
-            </Typography.Title1>
-            <Badge value="AI generated" />
-          </div>
-          <ul className={s.outcomeList}>
-            {learningOutcomes.map((outcome: string) => (
-              <Typography.Body as="li" size="small" className="text-gray-800">
-                {outcome}
-              </Typography.Body>
-            ))}
-          </ul>
-        </section>
-      )}
-    </>
+    <section className={s.learningOutcomesWrapper}>
+      <div className="flex flex-row items-center">
+        <Typography.Title1 className="mr-2">
+          Learning Outcomes
+        </Typography.Title1>
+        {getAIBadge()}
+      </div>
+      {!isLoading && learningOutcomes
+        ? showLearningOutcomesList()
+        : showErrorMessage()}
+    </section>
   );
 };

@@ -119,7 +119,12 @@ describe('Video View', () => {
     const wrapper = renderView(['/videos/video-id']);
 
     expect(await wrapper.findByText('video-id')).toBeVisible();
-    expect(await wrapper.queryByText('Learning Outcomes:')).toBeNull();
+    expect(wrapper.getByText('Learning Outcomes')).toBeVisible();
+    expect(
+      wrapper.getByText(
+        'No learning outcome found based on the video transcript',
+      ),
+    ).toBeVisible();
   });
 
   it('does not render learning outcomes if we get an error from the api', async () => {
