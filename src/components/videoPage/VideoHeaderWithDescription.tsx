@@ -62,7 +62,9 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
         <div className={s.scrollableDescription}>
           <VideoDescription video={video} />
 
+          <FeatureGate feature="BO_WEB_APP_DEV">
             <VideoLearningOutcomes videoId={video?.id} />
+          </FeatureGate>
         </div>
         <div className={(s.sticky, s.buttons)}>
           <div className={s.iconButtons}>

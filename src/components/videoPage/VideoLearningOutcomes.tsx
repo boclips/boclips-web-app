@@ -2,8 +2,8 @@ import { useGetLearningOutcomes } from 'src/hooks/api/learningOutcomesQuery';
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
 import Badge from '@boclips-ui/badge';
-import s from './style.module.less';
 import { LoadingOutlined } from '@ant-design/icons';
+import s from './style.module.less';
 
 interface Props {
   videoId: string;
@@ -14,7 +14,7 @@ export const VideoLearningOutcomes = ({ videoId }: Props) => {
 
   const getAIBadge = () =>
     isLoading ? (
-      <LoadingOutlined className="ml-2" />
+      <LoadingOutlined className={s.spinner} />
     ) : (
       <Badge value="AI generated" />
     );
