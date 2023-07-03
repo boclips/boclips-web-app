@@ -1,5 +1,5 @@
 import React from 'react';
-import { FeaturedVideos } from 'src/components/carousel/FeaturedVideos';
+import FeaturedVideos from 'src/components/carousel/FeaturedVideos';
 import { render, screen } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
