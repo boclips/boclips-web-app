@@ -43,9 +43,11 @@ export const VideoLearningOutcomes = ({ videoId }: Props) => {
         </Typography.Title1>
         {getAIBadge()}
       </div>
-      {!isLoading && learningOutcomes
-        ? showLearningOutcomesList()
-        : showErrorMessage()}
+      {!isLoading
+        ? learningOutcomes
+          ? showLearningOutcomesList()
+          : showErrorMessage()
+        : null}
     </section>
   );
 };
