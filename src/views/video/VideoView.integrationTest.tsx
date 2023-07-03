@@ -109,7 +109,7 @@ describe('Video View', () => {
 
     expect(await wrapper.findByText('video-id')).toBeVisible();
     expect(await wrapper.findByText('Learning Outcomes')).toBeVisible();
-    expect(wrapper.getByText('outcome for video-id')).toBeVisible();
+    expect(await wrapper.findByText('outcome for video-id')).toBeVisible();
   });
 
   it('does not render learning outcomes if user does not have BO_WEB_APP_DEV flag', async () => {
@@ -119,7 +119,7 @@ describe('Video View', () => {
     const wrapper = renderView(['/videos/video-id']);
 
     expect(await wrapper.findByText('video-id')).toBeVisible();
-    expect(await wrapper.queryByText('Learning Outcomes:')).toBeNull();
+    expect(wrapper.queryByText('Learning Outcomes')).toBeNull();
   });
 
   it('does not render learning outcomes if we get an error from the api', async () => {
