@@ -73,26 +73,17 @@ describe('CartView', () => {
 
     const wrapper = await renderCartView(fakeClient);
 
-    await waitFor(
-      async () => {
-        expect(await wrapper.findByText('Shopping cart')).toBeInTheDocument();
-        expect(await wrapper.findByText('(1 item)')).toBeInTheDocument();
-        expect(await wrapper.findByText('news video')).toBeInTheDocument();
-        expect(await wrapper.findByText('video-id')).toBeInTheDocument();
-        expect(
-          await wrapper.findByText('Can be licensed for a maximum of 5 years'),
-        ).toBeInTheDocument();
-        expect(
-          await wrapper.findByText('Additional services'),
-        ).toBeInTheDocument();
-        expect(await wrapper.findByText('Trim video')).toBeInTheDocument();
-        expect((await wrapper.findByTestId('price-badge')).innerHTML).toEqual(
-          '$600',
-        );
-      },
-      {
-        timeout: 5000,
-      },
+    expect(await wrapper.findByText('Shopping cart')).toBeInTheDocument();
+    expect(await wrapper.findByText('(1 item)')).toBeInTheDocument();
+    expect(await wrapper.findByText('news video')).toBeInTheDocument();
+    expect(await wrapper.findByText('video-id')).toBeInTheDocument();
+    expect(
+      await wrapper.findByText('Can be licensed for a maximum of 5 years'),
+    ).toBeInTheDocument();
+    expect(await wrapper.findByText('Additional services')).toBeInTheDocument();
+    expect(await wrapper.findByText('Trim video')).toBeInTheDocument();
+    (await wrapper.findAllByTestId('price-badge')).map((badge) =>
+      expect(badge.innerHTML).toEqual('$600'),
     );
   });
 

@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import Button from '@boclips-ui/button';
 import { getTotalPrice } from 'src/services/getTotalPrice';
 import { useCartValidation } from 'src/components/common/providers/CartValidationProvider';
@@ -7,29 +7,13 @@ import { Cart as ApiCart } from 'boclips-api-client/dist/sub-clients/carts/model
 import { useGetVideos } from 'src/hooks/api/videoQuery';
 import { Typography } from '@boclips-ui/typography';
 import { AdditionalServicesPricingMessage } from 'src/components/cart/AdditionalServices/AdditionalServicesPricingMessage';
-import { FeatureGate } from 'src/components/common/FeatureGate';
-import DisplayPrice from 'src/components/common/price/DisplayPrice';
+import { CartOrderItemsSummary } from 'src/components/cart/CartOrderItemsSummary';
 import { trackOrderConfirmationModalOpened } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
-import s from './style.module.less';
 
 interface Props {
   cart: ApiCart;
 }
-
-interface CartSummaryItemProps {
-  label: string | ReactElement;
-  value?: string | ReactElement;
-}
-
-const CartSummaryItem = ({ label, value }: CartSummaryItemProps) => {
-  return (
-    <Typography.Body as="div" className="flex justify-between my-3">
-      <span>{label}</span>
-      <span>{value}</span>
-    </Typography.Body>
-  );
-};
 
 export const CartOrderSummary = ({ cart }: Props) => {
   const { isCartValid } = useCartValidation();
@@ -70,38 +54,7 @@ export const CartOrderSummary = ({ cart }: Props) => {
     <>
       <div className="col-start-19 col-end-26">
         <div className="flex flex-col rounded p-5 shadow">
-          <FeatureGate feature="BO_WEB_APP_PRICES">
-            <div className={s.cartInfoWrapper}>
-              <CartSummaryItem
-                label={<Typography.Body>Video(s) total</Typography.Body>}
-                value={
-                  getTotalPrice(videos) && (
-                    <DisplayPrice
-                      price={getTotalPrice(videos)}
-                      isBold={false}
-                    />
-                  )
-                }
-              />
-              {captionsAndTranscriptsRequested && (
-                <CartSummaryItem label="Captions and transcripts" />
-              )}
-              {editingRequested && <CartSummaryItem label="Editing" />}
-              {trimRequested && <CartSummaryItem label="Trimming" />}
-            </div>
-            <Typography.H1
-              size="xs"
-              weight="regular"
-              className="flex text-gray-900 justify-between mb-6"
-            >
-              <span>Total</span>
-              <span data-qa="total-price">
-                {getTotalPrice(videos) && (
-                  <DisplayPrice price={getTotalPrice(videos)} isBold={false} />
-                )}
-              </span>
-            </Typography.H1>
-          </FeatureGate>
+          {getTotalPrice(videos) && <CartOrderItemsSummary cart={cart} />}
 
           {additionalServicesRequested && <AdditionalServicesPricingMessage />}
           <Button
