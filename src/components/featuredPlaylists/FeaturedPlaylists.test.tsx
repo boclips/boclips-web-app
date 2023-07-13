@@ -2,7 +2,7 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { render } from '@testing-library/react';
 import React from 'react';
-import { FeaturedPlaylists } from 'src/components/playlists/PromotedPlaylists';
+import FeaturedPlaylists from 'src/components/featuredPlaylists/FeaturedPlaylists';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
