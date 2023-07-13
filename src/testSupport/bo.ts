@@ -30,6 +30,7 @@ export interface Bo {
     cartWithVideos: () => void;
     emptyPlaylist: () => void;
     playlistWithVideos: () => void;
+    featuredPlaylists: () => void;
   };
   inspect: () => FakeBoclipsClient;
   set: {
@@ -150,6 +151,30 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
       video: boCreateVideo,
       subject: boCreateSubject,
 
+      featuredPlaylists: async () => {
+        apiClient.videos.insertVideo(
+          VideoFactory.sample({
+            id: '5f75b73f22a6495bdf2c2d14',
+            releasedOn: new Date(2011, 11, 1),
+            title:
+              'TED-Ed: No one can figure out how eels have sex | Lucy Cooke',
+            promoted: true,
+          }),
+        );
+
+        const collectionId = await apiClient.collections.create({
+          title: 'My featured playlist',
+          description: 'My playlist description',
+          videos: [
+            '5f75b73f22a6495bdf2c2d14',
+            '5f75b73f22a6495bdf2c2d14',
+            '5f75b73f22a6495bdf2c2d14',
+          ],
+        });
+
+        apiClient.collections.update(collectionId, { promoted: true });
+      },
+
       cartWithVideos: () => {
         apiClient.videos.insertVideo(
           VideoFactory.sample({
@@ -157,6 +182,10 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
             releasedOn: new Date(2011, 11, 1),
             title:
               'TED-Ed: No one can figure out how eels have sex | Lucy Cooke',
+            price: {
+              currency: 'EUR',
+              amount: 123,
+            },
           }),
         );
 
@@ -166,6 +195,10 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
             releasedOn: new Date(2011, 11, 1),
             title:
               'Jason & The Argonauts - The Epic Quest for the Golden Fleece (Greek Mythology)',
+            price: {
+              currency: 'EUR',
+              amount: 123,
+            },
           }),
         );
 
