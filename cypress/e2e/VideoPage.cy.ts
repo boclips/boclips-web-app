@@ -18,6 +18,10 @@ context('VideoPage -- feature flags off', () => {
       .should('be.visible')
       .click();
 
+    cy.findByText(
+      'TED-Ed: No one can figure out how eels have sex | Lucy Cooke',
+    ).should('be.visible');
+
     cy.findByText('$1,000').should('not.exist');
     cy.percySnapshot('video page -- without feature flags');
   });
@@ -38,6 +42,10 @@ context('VideoPage -- feature flags on', () => {
     )
       .should('be.visible')
       .click();
+
+    cy.findByText(
+      'TED-Ed: No one can figure out how eels have sex | Lucy Cooke',
+    ).should('be.visible');
 
     cy.findByText('$1,000').should('exist');
     cy.percySnapshot('video page -- with feature flags');
