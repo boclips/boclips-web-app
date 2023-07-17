@@ -159,6 +159,10 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
             title:
               'TED-Ed: No one can figure out how eels have sex | Lucy Cooke',
             promoted: true,
+            price: {
+              currency: 'USD',
+              amount: 1000,
+            },
           }),
         );
 
@@ -246,6 +250,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
           boCreateDiscipline(discipline);
 
           boCreateVideo({
+            id: '63b13799900058706766b222',
             title:
               'TED-Ed: No one can figure out how eels have sex | Lucy Cooke',
             description:
@@ -260,6 +265,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
           });
 
           boCreateVideo({
+            id: '321',
             title: 'Eel with DOUBLE JAWS has one Nasty Bite!',
             description:
               `On this episode, Mark and the crew are back in Queensland, Australia for another epic Tide Pool adventure!` +
