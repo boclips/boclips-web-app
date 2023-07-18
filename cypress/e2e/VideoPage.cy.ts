@@ -10,11 +10,14 @@ context('VideoPage -- feature flags off', () => {
       bo.set.features({
         BO_WEB_APP_PRICES: false,
       });
-      bo.create.featuredPlaylists();
+      bo.create.video({
+        title: 'test title',
+        price: { currency: 'USD', amount: 200 },
+      });
     });
 
-    cy.findByText('My featured playlist').should('be.visible').click();
-    cy.findAllByText('video title').should('be.visible').first().click();
+    cy.findByText('All videos').should('be.visible').click();
+    cy.get('[data-qa="video-card"] a').should('be.visible').first().click();
 
     cy.findByText('$1,000').should('not.exist');
     cy.percySnapshot('video page -- without feature flags');
@@ -28,13 +31,16 @@ context('VideoPage -- feature flags on', () => {
       bo.set.features({
         BO_WEB_APP_PRICES: true,
       });
-      bo.create.featuredPlaylists();
+      bo.create.video({
+        title: 'test title',
+        price: { currency: 'USD', amount: 200 },
+      });
     });
 
-    cy.findByText('My featured playlist').should('be.visible').click();
-    cy.findAllByText('video title').should('be.visible').first().click();
+    cy.findByText('All videos').should('be.visible').click();
+    cy.get('[data-qa="video-card"] a').should('be.visible').first().click();
 
-    cy.findByText('$1,000').should('exist');
+    cy.findByText('$200').should('exist');
     cy.percySnapshot('video page -- with feature flags');
   });
 });

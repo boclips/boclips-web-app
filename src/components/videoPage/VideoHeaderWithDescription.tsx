@@ -41,13 +41,15 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
           <Typography.H1 size="md" className="text-gray-900 " id="video-title">
             {video?.title}
           </Typography.H1>
-          {video?.price && (
-            <span className="border-1 border-primary self-start rounded px-2 ml-3">
-              <PriceBadge price={video.price} />
-            </span>
-          )}
+          <FeatureGate feature="BO_WEB_APP_PRICES" fallback={null}>
+            {video?.price && (
+              <span className="border-1 border-primary self-start rounded px-2 ml-3">
+                <PriceBadge price={video.price} />
+              </span>
+            )}
+          </FeatureGate>
         </div>
-        <FeatureGate feature="BO_WEB_APP_PRICES">
+        <FeatureGate feature="BO_WEB_APP_PRICES" fallback={null}>
           <div className="mb-4">
             <Typography.Body size="small" className="text-gray-700">
               This is an agreed price for your organization
