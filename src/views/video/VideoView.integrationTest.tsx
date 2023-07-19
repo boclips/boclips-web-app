@@ -101,50 +101,83 @@ describe('Video View', () => {
     expect(await wrapper.findByLabelText('Copy video link')).toBeVisible();
   });
 
-  it('renders learning outcome if user has BO_WEB_APP_DEV flag', async () => {
-    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
-    fakeClient.videos.insertVideo(exampleVideo);
+  describe('Video AI Metadata', () => {
+    it('renders learning outcomes if user has BO_WEB_APP_DEV flag', async () => {
+      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
+      fakeClient.videos.insertVideo(exampleVideo);
 
-    const wrapper = renderView(['/videos/video-id']);
+      const wrapper = renderView(['/videos/video-id']);
 
-    expect(await wrapper.findByText('video-id')).toBeVisible();
-    expect(await wrapper.findByText('Learning Outcomes')).toBeVisible();
-    expect(await wrapper.findByText('outcome for video-id')).toBeVisible();
-  });
+      expect(await wrapper.findByText('video-id')).toBeVisible();
+      expect(await wrapper.findByText('Learning Outcomes')).toBeVisible();
+      expect(await wrapper.findByText('outcome for video-id')).toBeVisible();
+    });
 
-  it('does not render learning outcomes if user does not have BO_WEB_APP_DEV flag', async () => {
-    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: false });
-    fakeClient.videos.insertVideo(exampleVideo);
+    it('does not render learning outcomes if user does not have BO_WEB_APP_DEV flag', async () => {
+      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: false });
+      fakeClient.videos.insertVideo(exampleVideo);
 
-    const wrapper = renderView(['/videos/video-id']);
+      const wrapper = renderView(['/videos/video-id']);
 
-    expect(await wrapper.findByText('video-id')).toBeVisible();
-    expect(wrapper.queryByText('Learning Outcomes')).toBeNull();
-  });
+      expect(await wrapper.findByText('video-id')).toBeVisible();
+      expect(wrapper.queryByText('Learning Outcomes')).toBeNull();
+    });
 
-  it('does not render learning outcomes if we get an error from the api', async () => {
-    jest
-      .spyOn(fakeClient.learningOutcomes, 'getByVideoId')
-      .mockImplementation(() => null);
+    it('displays an error message if we get an error from the api while getting learning outcomes', async () => {
+      jest
+        .spyOn(fakeClient.videoAIMetadata, 'getLearningOutcomes')
+        .mockImplementation(() => Promise.reject());
 
-    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
-    fakeClient.videos.insertVideo(exampleVideo);
+      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
+      fakeClient.videos.insertVideo(exampleVideo);
 
-    const wrapper = renderView(['/videos/video-id']);
+      const wrapper = renderView(['/videos/video-id']);
 
-    expect(await wrapper.findByText('video-id')).toBeVisible();
-    expect(await wrapper.queryByText('Learning Outcomes:')).toBeNull();
-    expect(wrapper.queryByText('outcome for video-id')).toBeNull();
-  });
+      expect(await wrapper.findByText('video-id')).toBeVisible();
+      expect(await wrapper.findByText('Learning Outcomes')).toBeVisible();
 
-  it('does not render learning outcomes if user does not have BO_WEB_APP_DEV flag', async () => {
-    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: false });
-    fakeClient.videos.insertVideo(exampleVideo);
+      expect(
+        await wrapper.findByText('No Learning Outcomes found.'),
+      ).toBeVisible();
+    });
 
-    const wrapper = renderView(['/videos/video-id']);
+    it('renders assessment questions if user has BO_WEB_APP_DEV flag', async () => {
+      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
+      fakeClient.videos.insertVideo(exampleVideo);
 
-    expect(await wrapper.findByText('video-id')).toBeVisible();
-    expect(await wrapper.queryByText('Learning Outcomes:')).toBeNull();
+      const wrapper = renderView(['/videos/video-id']);
+
+      expect(await wrapper.findByText('video-id')).toBeVisible();
+      expect(await wrapper.findByText('Assessment Questions')).toBeVisible();
+      expect(await wrapper.findByText('questions for video-id')).toBeVisible();
+    });
+
+    it('does not render assessment questions if user does not have BO_WEB_APP_DEV flag', async () => {
+      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: false });
+      fakeClient.videos.insertVideo(exampleVideo);
+
+      const wrapper = renderView(['/videos/video-id']);
+
+      expect(await wrapper.findByText('video-id')).toBeVisible();
+      expect(wrapper.queryByText('Assessment Questions')).toBeNull();
+    });
+
+    it('displays an error message if we get an error from the api while getting assessment questions', async () => {
+      jest
+        .spyOn(fakeClient.videoAIMetadata, 'getAssessmentQuestions')
+        .mockImplementation(() => Promise.reject());
+
+      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
+      fakeClient.videos.insertVideo(exampleVideo);
+
+      const wrapper = renderView(['/videos/video-id']);
+
+      expect(await wrapper.findByText('video-id')).toBeVisible();
+      expect(await wrapper.findByText('Assessment Questions')).toBeVisible();
+      expect(
+        await wrapper.findByText('No Assessment Questions found.'),
+      ).toBeVisible();
+    });
   });
 
   it('on video page education level badges are rendered', async () => {
