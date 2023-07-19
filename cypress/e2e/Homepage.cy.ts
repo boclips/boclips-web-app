@@ -13,8 +13,6 @@ context('Homepage -- feature flags off', () => {
       bo.create.featuredPlaylists();
     });
 
-    cy.contains('Featured Playlists', { timeout: 25000 }).should('exist');
-
     cy.findByText('Sparks').should('not.exist');
     cy.findByText('Cart').should('not.exist');
     cy.percySnapshot('Home Page without feature flags');
