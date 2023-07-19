@@ -7,7 +7,7 @@ snapshot:
     - 1440
     - 1680
   minHeight: 1480
-  percyCSS: ".plyr__video-wrapper, section button img, duet-date__input { display: none !important }"
+  percyCSS: '.plyr__video-wrapper, section button img, duet-date__input, [data-qa="player"] { display: none !important }'
 discovery:
   allowedHostnames: []
   disallowedHostnames: []

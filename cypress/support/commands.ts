@@ -32,3 +32,20 @@ Cypress.Commands.add('bo', (callback) => {
     callback(bo);
   });
 });
+
+// turn off waiting for the api calls (like logo, appcues, pendo etc), we have all necessary data in fake api client
+Cypress.Commands.overwrite('intercept', (originalFn, ...args) => {
+  const [options] = args;
+
+  if (typeof options === 'string') {
+    // @ts-ignore
+    return originalFn(args[0], { forceNetworkError: true });
+  }
+  const modifiedOptions = {
+    ...options,
+    forceNetworkError: true,
+  };
+
+  // @ts-ignore
+  return originalFn(...args, modifiedOptions);
+});
