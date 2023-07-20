@@ -119,7 +119,7 @@
     "@radix-ui/react-radio-group": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.0.3",
     "@sentry/integrations": "^7.15.0",
-    "@sentry/react": "^7.15.0",
+    "@sentry/react": "^7.59.3",
     "@sentry/tracing": "^7.15.0",
     "@tailwindcss/forms": "^0.4.0",
     "@tanstack/react-query": "^4.10.3",
