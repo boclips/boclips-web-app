@@ -1,7 +1,8 @@
 import { useGetVideoAIMetadata } from 'src/hooks/api/videoAIMetadataQuery';
 import React from 'react';
-import { VideoAIMetadataContent } from 'src/components/videoPage/VideoAIMetadataContent';
-import s from './style.module.less';
+import { VideoAIMetadata } from 'src/components/videoPage/videoAIMetadata/VideoAIMetadata';
+import { VideoAIMetadataType } from 'src/components/videoPage/videoAIMetadata/VideoAIMetadataType';
+import s from './videoAIMetadata.module.less';
 
 interface Props {
   videoId: string;
@@ -18,15 +19,15 @@ export const VideoAIMetadataWrapper = ({ videoId }: Props) => {
 
   return (
     <div className={s.videoAIMetadata}>
-      <VideoAIMetadataContent
+      <VideoAIMetadata
         isLoading={isLearningOutcomesLoading}
         metadata={learningOutcomes}
-        type="Learning Outcomes"
+        type={VideoAIMetadataType.LEARNING_OUTCOMES}
       />
-      <VideoAIMetadataContent
+      <VideoAIMetadata
         isLoading={isAssessmentQuestionsLoading}
         metadata={assessmentQuestions}
-        type="Assessment Questions"
+        type={VideoAIMetadataType.ASSESSMENT_QUESTIONS}
       />
     </div>
   );
