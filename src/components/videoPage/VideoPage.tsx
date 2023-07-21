@@ -6,6 +6,8 @@ import BackArrow from 'resources/icons/back-arrow.svg';
 import { TextButton } from 'src/components/common/textButton/TextButton';
 import VideoRecommendations from 'src/components/videoPage/VideoRecommendations';
 import { VideoHeaderWithDescription } from 'src/components/videoPage/VideoHeaderWithDescription';
+import { FeatureGate } from 'src/components/common/FeatureGate';
+import { VideoAIMetadataWrapper } from 'src/components/videoPage/videoAIMetadata/VideoAIMetadataWrapper';
 import s from './videoPage.module.less';
 
 interface Props {
@@ -37,6 +39,11 @@ export const VideoPage = ({ video }: Props) => {
       <section className={s.headerSection} aria-labelledby="video-title">
         <VideoHeaderWithDescription video={video} />
       </section>
+      <FeatureGate feature="BO_WEB_APP_DEV">
+        {video && video.type === 'INSTRUCTIONAL' && (
+          <VideoAIMetadataWrapper videoId={video.id} />
+        )}
+      </FeatureGate>
       <VideoRecommendations video={video} />
     </>
   );

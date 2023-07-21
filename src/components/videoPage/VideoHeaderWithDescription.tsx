@@ -12,7 +12,6 @@ import { DownloadTranscriptButton } from 'src/components/downloadTranscriptButto
 import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import VideoLicenseDuration from 'src/components/common/videoLicenseDuration/VideoLicenseDuration';
-import { VideoLearningOutcomes } from 'src/components/videoPage/VideoLearningOutcomes';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
 
@@ -63,10 +62,6 @@ export const VideoHeaderWithDescription = ({ video }: Props) => {
       <div className={s.descriptionAndButtons}>
         <div className={s.scrollableDescription}>
           <VideoDescription video={video} />
-
-          <FeatureGate feature="BO_WEB_APP_DEV">
-            <VideoLearningOutcomes videoId={video?.id} />
-          </FeatureGate>
         </div>
         <div className={(s.sticky, s.buttons)}>
           <div className={s.iconButtons}>
