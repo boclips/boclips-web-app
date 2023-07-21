@@ -14,9 +14,21 @@ interface Props {
 export const VideoAIMetadata = ({ isLoading, metadata, type }: Props) => {
   const getAIBadge = () =>
     isLoading ? (
-      <LoadingOutlined className={s.spinner} />
+      <LoadingOutlined
+        data-qa="video-ai-metadata-loading-spinner"
+        className={s.spinner}
+      />
     ) : (
       <Badge value="AI generated" />
+    );
+
+  const showContent = () =>
+    metadata ? (
+      <VideoAIMetadataContent metadata={metadata} type={type} />
+    ) : (
+      <Typography.Body as="p" size="small" className="text-gray-800">
+        There are no {type} available for this video yet.
+      </Typography.Body>
     );
 
   return (
@@ -25,9 +37,7 @@ export const VideoAIMetadata = ({ isLoading, metadata, type }: Props) => {
         <Typography.Title1 className="mr-2">{type}</Typography.Title1>
         {getAIBadge()}
       </div>
-      {!isLoading && metadata && (
-        <VideoAIMetadataContent metadata={metadata} type={type} />
-      )}
+      {!isLoading && showContent()}
     </div>
   );
 };

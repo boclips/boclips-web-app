@@ -10,15 +10,12 @@ interface Props {
 
 export const VideoAIMetadataWrapper = ({ videoId }: Props) => {
   const [
-    { data: learningOutcomes = null, isLoading: isLearningOutcomesLoading },
-    {
-      data: assessmentQuestions = null,
-      isLoading: isAssessmentQuestionsLoading,
-    },
+    { data: learningOutcomes, isLoading: isLearningOutcomesLoading },
+    { data: assessmentQuestions, isLoading: isAssessmentQuestionsLoading },
   ] = useGetVideoAIMetadata(videoId);
 
   return (
-    <div className={s.videoAIMetadata}>
+    <div data-qa="video-ai-metadata-wrapper" className={s.videoAIMetadata}>
       <VideoAIMetadata
         isLoading={isLearningOutcomesLoading}
         metadata={learningOutcomes}
