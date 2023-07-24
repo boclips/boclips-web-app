@@ -192,6 +192,6 @@ describe('playlistsQuery', () => {
     });
 
     await playlistHook.waitFor(() => playlistHook.result.current.isSuccess);
-    expect(collectionsSpy).toBeCalled();
+    expect(collectionsSpy).toBeCalledWith({ origin: 'BO_WEB_APP' });
   });
 });

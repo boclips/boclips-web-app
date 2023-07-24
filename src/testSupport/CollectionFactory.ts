@@ -13,6 +13,7 @@ export class CollectionFactory {
       updatedAt: new Date(),
       discoverable: true,
       mine: true,
+      origin: 'BO_WEB_APP',
       createdBy: 'user',
       subjects: [],
       ageRange: null,

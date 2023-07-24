@@ -262,7 +262,7 @@ const doGetOwnAndSharedPlaylists = (
 
 const doGetPromotedPlaylists = (client: BoclipsClient) => {
   return client.collections
-    .getPromotedCollections()
+    .getPromotedCollections({ origin: 'BO_WEB_APP' })
     .then((playlists) => playlists);
 };
 
