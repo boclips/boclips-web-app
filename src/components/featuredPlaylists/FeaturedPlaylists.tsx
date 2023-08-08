@@ -26,7 +26,7 @@ const FeaturedPlaylists = () => {
     return null;
   }
 
-  if (nonEmptyPlaylists.length === 0) {
+  if (nonEmptyPlaylists?.length === 0) {
     return null;
   }
 
