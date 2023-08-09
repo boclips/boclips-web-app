@@ -24,7 +24,7 @@ describe('My Team modal', () => {
       </BoclipsClientProvider>,
     );
 
-    expect(wrapper.getByText('Add new user')).toBeInTheDocument();
+    expect(wrapper.getByText('Add member')).toBeInTheDocument();
     expect(wrapper.getByText('First name')).toBeInTheDocument();
     expect(wrapper.getByText('Last name')).toBeInTheDocument();
     expect(wrapper.getByText('Email address')).toBeInTheDocument();

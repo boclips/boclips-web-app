@@ -25,7 +25,9 @@ describe('UsersListRow', () => {
     const wrapper = renderWrapper(user, jest.fn, false);
 
     expect(
-      within(wrapper.getByTestId('user-info-field-Can order')).getByText('Yes'),
+      within(wrapper.getByTestId('user-info-field-Can order videos')).getByText(
+        'Yes',
+      ),
     ).toBeVisible();
   });
 
@@ -44,7 +46,9 @@ describe('UsersListRow', () => {
     const wrapper = renderWrapper(user, jest.fn, false);
 
     expect(
-      within(wrapper.getByTestId('user-info-field-Can order')).getByText('No'),
+      within(wrapper.getByTestId('user-info-field-Can order videos')).getByText(
+        'No',
+      ),
     ).toBeVisible();
   });
 
