@@ -144,7 +144,7 @@
     "core-js": "^3.25.5",
     "dateformat": "^4.4.1",
     "dayjs": "^1.9.7",
-    "focus-trap-react": "^10.0.0",
+    "focus-trap-react": "^10.2.1",
     "get-user-locale": "^1.4.0",
     "history": "^5.0.0",
     "jsdom": "^19.0.0",
