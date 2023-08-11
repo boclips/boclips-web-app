@@ -45,22 +45,22 @@ export const UsersListItem = ({ user, isLoading, onEdit, canEdit }: Props) => {
       data-qa={isLoading ? 'skeleton' : ''}
       className={c({ [s.skeleton]: isLoading }, s.listItemWrapper)}
     >
-      <UserInformationField fieldName="User">
+      <UserInformationField fieldName="Name">
         <Typography.Body size="small" as="span">
           {user.firstName} {user.lastName}
         </Typography.Body>
       </UserInformationField>
-      <UserInformationField fieldName="User email">
+      <UserInformationField fieldName="Email address">
         <Typography.Body size="small" as="span">
           {user.email}
         </Typography.Body>
       </UserInformationField>
-      <UserInformationField fieldName="Can order">
+      <UserInformationField fieldName="Can order videos">
         <Typography.Body size="small" as="span">
           {user.permissions?.canOrder ? 'Yes' : 'No'}{' '}
         </Typography.Body>
       </UserInformationField>
-      <UserInformationField fieldName="Can add users">
+      <UserInformationField fieldName="Can manage team">
         <Typography.Body size="small" as="span">
           {user.permissions?.canManageUsers ? 'Yes' : 'No'}{' '}
         </Typography.Body>

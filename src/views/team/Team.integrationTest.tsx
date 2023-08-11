@@ -31,7 +31,7 @@ describe('My Team view', () => {
 
     expect(wrapper.getByText('My team')).toBeInTheDocument();
     expect(
-      wrapper.getByRole('button', { name: 'Add new user' }),
+      wrapper.getByRole('button', { name: 'Add member' }),
     ).toBeInTheDocument();
   });
 
@@ -46,12 +46,10 @@ describe('My Team view', () => {
       </MemoryRouter>,
     );
 
-    await userEvent.click(
-      wrapper.getByRole('button', { name: 'Add new user' }),
-    );
+    await userEvent.click(wrapper.getByRole('button', { name: 'Add member' }));
 
     await waitFor(() =>
-      wrapper.getByRole('heading', { level: 1, name: 'Add new user' }),
+      wrapper.getByRole('heading', { level: 1, name: 'Add member' }),
     );
 
     await userEvent.type(wrapper.getByPlaceholderText('John'), 'Andrzej');
@@ -99,13 +97,13 @@ describe('My Team view', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByText('User')).toBeVisible();
+    expect(await wrapper.findByText('Name')).toBeVisible();
     expect(await wrapper.findByText('Joe Biden')).toBeVisible();
-    expect(await wrapper.findByText('User email')).toBeVisible();
+    expect(await wrapper.findByText('Email address')).toBeVisible();
     expect(await wrapper.findByText('joebiden@gmail.com')).toBeVisible();
-    expect(await wrapper.findByText('Can order')).toBeVisible();
+    expect(await wrapper.findByText('Can order videos')).toBeVisible();
     expect(await wrapper.findByText('Yes')).toBeVisible();
-    expect(await wrapper.findByText('Can add users')).toBeVisible();
+    expect(await wrapper.findByText('Can manage team')).toBeVisible();
     expect(await wrapper.findByText('No')).toBeVisible();
   });
 
@@ -289,10 +287,10 @@ describe('My Team view', () => {
     );
 
     const originalOrderingPermission = await wrapper.findByTestId(
-      'user-info-field-Can order',
+      'user-info-field-Can order videos',
     );
     const originalManagingPermission = await wrapper.findByTestId(
-      'user-info-field-Can add users',
+      'user-info-field-Can manage team',
     );
     expect(within(originalOrderingPermission).getByText('No')).toBeVisible();
     expect(within(originalManagingPermission).getByText('Yes')).toBeVisible();
@@ -319,10 +317,10 @@ describe('My Team view', () => {
     expect(newPermissions.canManageUsers).toEqual(false);
 
     const newOrderPermission = await wrapper.findByTestId(
-      'user-info-field-Can order',
+      'user-info-field-Can order videos',
     );
     const newManagingPermission = await wrapper.findByTestId(
-      'user-info-field-Can add users',
+      'user-info-field-Can manage team',
     );
     expect(within(newOrderPermission).getByText('Yes')).toBeVisible();
     expect(within(newManagingPermission).getByText('No')).toBeVisible();

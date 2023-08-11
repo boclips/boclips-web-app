@@ -107,7 +107,7 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
   return (
     <Bodal
       closeOnClickOutside
-      title="Add new user"
+      title="Add member"
       onConfirm={handleConfirm}
       onCancel={closeModal}
       confirmButtonText="Create"

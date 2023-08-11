@@ -27,7 +27,7 @@ const MyTeamView = () => {
           >
             <Button
               height="48px"
-              text="Add new user"
+              text="Add member"
               icon={<PlusSign />}
               onClick={() => setIsNewUserModalOpen(true)}
             />
