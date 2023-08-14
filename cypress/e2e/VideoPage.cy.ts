@@ -14,6 +14,7 @@ context('VideoPage -- feature flags off', () => {
         id: '123',
         title: 'test title',
         price: { currency: 'USD', amount: 200 },
+        releasedOn: new Date(2011, 11, 1),
       });
     });
 
@@ -38,6 +39,7 @@ context('VideoPage -- feature flags on', () => {
         id: '123',
         title: 'test title',
         price: { currency: 'USD', amount: 200 },
+        releasedOn: new Date(2011, 11, 1),
       });
     });
 
