@@ -24,9 +24,9 @@ context('Homepage -- feature flags off', () => {
       bo.set.features({
         BO_WEB_APP_SPARKS: false,
       });
-      bo.create.featuredPlaylists();
       delete bo.inspect().links.cart;
       delete bo.inspect().links.userOrders;
+      bo.create.featuredPlaylists();
     });
     cy.get('[data-qa="account-menu"]').click();
     cy.findByText('My orders').should('not.exist');
