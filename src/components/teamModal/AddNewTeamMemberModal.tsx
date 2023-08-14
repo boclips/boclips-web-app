@@ -153,12 +153,12 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
       />
       <div className="mb-4">
         <Typography.Body className="text-gray-800">
-          User permissions
+          Team member actions
         </Typography.Body>
       </div>
       <YesNo
         id="user-management-permission"
-        label="Can manage users?"
+        label="Can manage team?"
         onValueChange={(value) => {
           setForm({ ...form, canManageUsers: value });
         }}
@@ -166,7 +166,7 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
       <WithValidRoles roles={[ROLES.BOCLIPS_WEB_APP_ORDER]}>
         <YesNo
           id="ordering-permission"
-          label="Can order?"
+          label="Can order videos?"
           onValueChange={(value) => {
             setForm({ ...form, canOrder: value });
           }}

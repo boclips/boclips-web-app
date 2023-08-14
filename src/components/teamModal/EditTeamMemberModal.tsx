@@ -119,12 +119,12 @@ const EditTeamMemberModal = ({ userToUpdate, closeModal }: Props) => {
       <ReadOnlyUserInfo label="Email address" value={userToUpdate.email} />
       <div className="my-4">
         <Typography.Body className="text-gray-800">
-          User permissions
+          Team member actions
         </Typography.Body>
       </div>
       <YesNo
         id="user-management-permission"
-        label="Can manage users?"
+        label="Can manage team?"
         defaultValue={userToUpdate.permissions?.canManageUsers}
         onValueChange={(value) => {
           setForm({ ...form, canManageUsers: value });
@@ -133,7 +133,7 @@ const EditTeamMemberModal = ({ userToUpdate, closeModal }: Props) => {
       <WithValidRoles roles={[ROLES.BOCLIPS_WEB_APP_ORDER]}>
         <YesNo
           id="ordering-permission"
-          label="Can order?"
+          label="Can order videos?"
           defaultValue={userToUpdate.permissions?.canOrder}
           onValueChange={(value) => {
             setForm({ ...form, canOrder: value });

@@ -60,8 +60,8 @@ describe('My Team modal', () => {
       wrapper.getByPlaceholderText('example@email.com'),
       'dudu@wp.pl',
     );
-    await userEvent.click(wrapper.getByLabelText('Can manage users? No'));
-    await userEvent.click(wrapper.getByLabelText('Can order? Yes'));
+    await userEvent.click(wrapper.getByLabelText('Can manage team? No'));
+    await userEvent.click(wrapper.getByLabelText('Can order videos? Yes'));
 
     await userEvent.click(wrapper.getByRole('button', { name: 'Create' }));
 
@@ -115,7 +115,7 @@ describe('My Team modal', () => {
     ).toBeInTheDocument();
   });
 
-  describe('user permissions', () => {
+  describe('Team member actions', () => {
     it(`shows the user permission section`, async () => {
       const client = new FakeBoclipsClient();
       const security: BoclipsSecurity = {
@@ -133,7 +133,9 @@ describe('My Team modal', () => {
         </BoclipsClientProvider>,
       );
 
-      expect(await wrapper.queryByText('User permissions')).toBeInTheDocument();
+      expect(
+        await wrapper.queryByText('Team member actions'),
+      ).toBeInTheDocument();
     });
 
     it(`shows can manager users input`, async () => {
@@ -149,9 +151,7 @@ describe('My Team modal', () => {
         </BoclipsClientProvider>,
       );
 
-      expect(
-        await wrapper.queryByText('Can manage users?'),
-      ).toBeInTheDocument();
+      expect(await wrapper.queryByText('Can manage team?')).toBeInTheDocument();
     });
 
     it(`doesn't show the can order field if user doesn't have ordering permission`, async () => {
@@ -171,7 +171,9 @@ describe('My Team modal', () => {
         </BoclipsClientProvider>,
       );
 
-      expect(await wrapper.queryByText('Can order?')).not.toBeInTheDocument();
+      expect(
+        await wrapper.queryByText('Can order videos?'),
+      ).not.toBeInTheDocument();
     });
 
     it(`shows the can order field if user has ordering permission`, async () => {
@@ -191,7 +193,7 @@ describe('My Team modal', () => {
         </BoclipsClientProvider>,
       );
 
-      expect(await wrapper.queryByText('Can order?')).toBeVisible();
+      expect(await wrapper.queryByText('Can order videos?')).toBeVisible();
     });
   });
 });

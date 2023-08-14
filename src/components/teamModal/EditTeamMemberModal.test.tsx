@@ -47,14 +47,14 @@ describe('Edit Team member modal', () => {
     expect(wrapper.getByText('Email address')).toBeVisible();
     expect(wrapper.getByText('johny@boclips.com')).toBeVisible();
 
-    const orderYes = wrapper.getByLabelText('Can order? Yes');
+    const orderYes = wrapper.getByLabelText('Can order videos? Yes');
     expect(orderYes).toBeChecked();
-    const orderNo = wrapper.getByLabelText('Can order? No');
+    const orderNo = wrapper.getByLabelText('Can order videos? No');
     expect(orderNo).not.toBeChecked();
 
-    const manageUsersYes = wrapper.getByLabelText('Can manage users? Yes');
+    const manageUsersYes = wrapper.getByLabelText('Can manage team? Yes');
     expect(manageUsersYes).not.toBeChecked();
-    const manageUsersNo = wrapper.getByLabelText('Can manage users? No');
+    const manageUsersNo = wrapper.getByLabelText('Can manage team? No');
     expect(manageUsersNo).toBeChecked();
   });
 
@@ -77,9 +77,9 @@ describe('Edit Team member modal', () => {
       </BoclipsClientProvider>,
     );
 
-    expect(await wrapper.findByText('User permissions')).toBeVisible();
-    expect(wrapper.queryByText('Can order?')).toBeNull();
-    expect(wrapper.getByText('Can manage users?')).toBeVisible();
+    expect(await wrapper.findByText('Team member actions')).toBeVisible();
+    expect(wrapper.queryByText('Can order videos?')).toBeNull();
+    expect(wrapper.getByText('Can manage team?')).toBeVisible();
   });
 
   it('updates a user', async () => {
@@ -109,8 +109,8 @@ describe('Edit Team member modal', () => {
       </BoclipsClientProvider>,
     );
 
-    await userEvent.click(wrapper.getByLabelText('Can manage users? Yes'));
-    await userEvent.click(wrapper.getByLabelText('Can order? No'));
+    await userEvent.click(wrapper.getByLabelText('Can manage team? Yes'));
+    await userEvent.click(wrapper.getByLabelText('Can order videos? No'));
 
     await userEvent.click(wrapper.getByRole('button', { name: 'Save' }));
 

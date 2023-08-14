@@ -250,13 +250,13 @@ describe('My Team view', () => {
     expect(within(modal).getByText('Email address')).toBeVisible();
     expect(within(modal).getByText('joey@boclips.com')).toBeVisible();
 
-    expect(within(modal).getByLabelText('Can manage users? No')).toBeVisible();
-    expect(within(modal).getByLabelText('Can order? Yes')).toBeVisible();
+    expect(within(modal).getByLabelText('Can manage team? No')).toBeVisible();
+    expect(within(modal).getByLabelText('Can order videos? Yes')).toBeVisible();
     expect(within(modal).getByRole('button', { name: 'Save' })).toBeVisible();
     expect(within(modal).getByRole('button', { name: 'Cancel' })).toBeVisible();
   });
 
-  it('can edit user permissions', async () => {
+  it('can edit Team member actions', async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.accounts.insertAccount(
       AccountsFactory.sample({ id: 'account-1' }),
@@ -303,8 +303,8 @@ describe('My Team view', () => {
       wrapper.getByRole('heading', { level: 1, name: 'Edit user' }),
     );
 
-    await userEvent.click(wrapper.getByLabelText('Can order? Yes'));
-    await userEvent.click(wrapper.getByLabelText('Can manage users? No'));
+    await userEvent.click(wrapper.getByLabelText('Can order videos? Yes'));
+    await userEvent.click(wrapper.getByLabelText('Can manage team? No'));
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Save' }));
 
