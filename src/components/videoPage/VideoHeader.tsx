@@ -1,22 +1,30 @@
-import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
 import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import React from 'react';
-import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import { getBrowserLocale } from 'src/services/getBrowserLocale';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import { Typography } from '@boclips-ui/typography';
 import { VideoInfo } from 'src/components/common/videoInfo/VideoInfo';
+import { VideoDescription } from 'src/components/videoPage/VideoDescription';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { EmbedButton } from 'src/components/embedButton/EmbedButton';
+import { DownloadTranscriptButton } from 'src/components/downloadTranscriptButton/DownloadTranscriptButton';
+import { PriceBadge } from 'src/components/common/price/PriceBadge';
+import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
+import VideoLicenseDuration from 'src/components/common/videoLicenseDuration/VideoLicenseDuration';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
 
 interface Props {
-  video: Video;
+  video?: Video;
 }
 
 export const VideoHeader = ({ video }: Props) => {
+  if (!video) {
+    return null;
+  }
+  const videoHasTranscript = video?.links?.transcript;
+
   const mixpanel = AnalyticsFactory.mixpanel();
   const trackVideoCopy = () => {
     AnalyticsFactory.appcues().sendEvent(
@@ -24,51 +32,65 @@ export const VideoHeader = ({ video }: Props) => {
     );
     mixpanel.track('video_details_url_copied');
   };
+
   return (
     <>
-      <Typography.H1 size="md" className="text-gray-900 lg:mb-2">
-        {video?.title}
-      </Typography.H1>
-      <VideoInfo video={video} />
-      <Typography.H2 size="sm" className="text-gray-900">
-        {createPriceDisplayValue(
-          video?.price?.amount,
-          video?.price?.currency,
-          getBrowserLocale(),
-        )}
-      </Typography.H2>
-      <FeatureGate feature="BO_WEB_APP_PRICES">
-        <div className="mb-4">
-          <Typography.Body size="small" className="text-gray-700">
-            This is an agreed price for your organization
-          </Typography.Body>
+      <div className={s.sticky}>
+        <div className="flex justify-between">
+          <Typography.H1 size="md" className="text-gray-900 " id="video-title">
+            {video?.title}
+          </Typography.H1>
+          <FeatureGate feature="BO_WEB_APP_PRICES" fallback={null}>
+            {video?.price && (
+              <span className="border-1 border-primary self-start rounded px-2 ml-3">
+                <PriceBadge price={video.price} />
+              </span>
+            )}
+          </FeatureGate>
         </div>
-      </FeatureGate>
-
-      <div className={s.buttons}>
-        <div className={s.iconButtons}>
-          <AddToPlaylistButton
-            videoId={video.id}
-            onClick={() => {
-              mixpanel.track('video_details_playlist_add');
-            }}
-          />
-
-          <CopyVideoLinkButton video={video} onClick={trackVideoCopy} />
-        </div>
-
-        <FeatureGate linkName="cart">
-          <AddToCartButton
-            video={video}
-            width="200px"
-            onClick={() => {
-              AnalyticsFactory.appcues().sendEvent(
-                AppcuesEvent.ADD_TO_CART_FROM_VIDEO_PAGE,
-              );
-              mixpanel.track('video_details_cart_add');
-            }}
-          />
+        <FeatureGate feature="BO_WEB_APP_PRICES" fallback={null}>
+          <div className="mb-4">
+            <Typography.Body size="small" className="text-gray-700">
+              This is an agreed price for your organization
+            </Typography.Body>
+          </div>
         </FeatureGate>
+        <VideoLicenseDuration video={video} />
+        <VideoInfo video={video} />
+      </div>
+
+      <div className={s.descriptionAndButtons}>
+        <div>
+          <VideoDescription video={video} />
+        </div>
+        <div className={(s.sticky, s.buttons)}>
+          <div className={s.iconButtons}>
+            <AddToPlaylistButton
+              videoId={video?.id}
+              onClick={() => {
+                mixpanel.track('video_details_playlist_add');
+              }}
+            />
+            <CopyVideoLinkButton video={video} onClick={trackVideoCopy} />
+            {videoHasTranscript && <DownloadTranscriptButton video={video} />}
+          </div>
+          {video?.links?.createEmbedCode ? (
+            <EmbedButton video={video} iconOnly={false} />
+          ) : (
+            <FeatureGate linkName="cart">
+              <AddToCartButton
+                video={video}
+                width="200px"
+                onClick={() => {
+                  AnalyticsFactory.appcues().sendEvent(
+                    AppcuesEvent.ADD_TO_CART_FROM_VIDEO_PAGE,
+                  );
+                  mixpanel.track('video_details_cart_add');
+                }}
+              />
+            </FeatureGate>
+          )}
+        </div>
       </div>
     </>
   );

@@ -22,16 +22,10 @@
   height: 100%;
   display: flex;
   flex-direction: column-reverse;
+  justify-content: space-between;
 }
 
 @media screen and (min-width: @screen-lg) {
-  .scrollableDescription {
-    flex-grow: 1;
-    flex-basis: 0;
-    overflow-y: auto;
-    margin-bottom: 1rem;
-  }
-
   .sticky {
     flex-shrink: 0;
   }

@@ -23,6 +23,7 @@ import {
   TopicFactory,
 } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
+import { VideoAIMetadataType } from 'src/components/videoPage/videoAIMetadata/VideoAIMetadataType';
 
 describe('Video View', () => {
   let fakeClient;
@@ -549,7 +550,10 @@ describe('Video View', () => {
 
       expect(await wrapper.findByText(video.id)).toBeVisible();
       expect(
-        await wrapper.queryByTestId('video-ai-metadata-wrapper'),
+        await wrapper.queryByText(VideoAIMetadataType.LEARNING_OUTCOMES),
+      ).toBeNull();
+      expect(
+        await wrapper.queryByText(VideoAIMetadataType.ASSESSMENT_QUESTIONS),
       ).toBeNull();
     });
 
@@ -569,7 +573,10 @@ describe('Video View', () => {
 
       expect(await wrapper.findByText(video.id)).toBeVisible();
       expect(
-        await wrapper.queryByTestId('video-ai-metadata-wrapper'),
+        await wrapper.queryByText(VideoAIMetadataType.LEARNING_OUTCOMES),
+      ).toBeNull();
+      expect(
+        await wrapper.queryByText(VideoAIMetadataType.ASSESSMENT_QUESTIONS),
       ).toBeNull();
     });
 
