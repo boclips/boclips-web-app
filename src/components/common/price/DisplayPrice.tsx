@@ -21,7 +21,9 @@ const DisplayPrice = ({ price, isBold = true }: Props) => {
 
   return (
     <Typography.Body
-      className={c('flex items-center', { '!font-bold !text-lg': isBold })}
+      className={c('flex items-center text-gray-900', {
+        '!font-bold !text-lg': isBold,
+      })}
       data-qa="price-badge"
     >
       {isCredits ? (
