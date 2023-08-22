@@ -21,7 +21,9 @@ export const VideoDescriptionAndAIMetadataWrapper = ({ video }: Props) => {
     <div data-qa="video-ai-metadata-wrapper" className={s.videoAIMetadata}>
       {video.description.trim() && (
         <section className={s.scrollableDescription}>
-          <Typography.Title1>Video Description</Typography.Title1>
+          <Typography.H1 size="xs" weight="medium">
+            Video Description
+          </Typography.H1>
           <Typography.Body as="p" size="small" className="text-gray-800">
             {video.description}
           </Typography.Body>
