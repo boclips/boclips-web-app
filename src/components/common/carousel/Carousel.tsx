@@ -20,7 +20,7 @@ export const Carousel = ({ slides, title }: Props) => {
   const isMobileView =
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
 
-  if (slides?.length === 0) {
+  if (!slides || slides.length === 0) {
     return null;
   }
 
