@@ -33,8 +33,6 @@
 .recommendedVideosSection {
   grid-column-start: 2;
   grid-column-end: 26;
-  grid-row-start: 6;
-  grid-row-end: 6;
 }
 
 .recommendedVideosSectionTitle {
@@ -52,6 +50,7 @@
 @media screen and (min-width: @screen-lg) {
 
   .playerSection {
+    grid-row-start: 3;
     grid-column-start: 2;
     grid-column-end: 18;
   }
@@ -60,6 +59,11 @@
     grid-row-start: 3;
     grid-column-start: 18;
     grid-column-end: 26;
+  }
+
+  .recommendedVideosSection {
+    grid-row-start: 5;
+    grid-row-end: 5;
   }
 
   .recommendedVideosGrid {
