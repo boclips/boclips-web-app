@@ -32,12 +32,14 @@ export const VideoAIMetadata = ({ isLoading, metadata, type }: Props) => {
     );
 
   return (
-    <div className={s.videoAIContent}>
+    <>
       <div className="flex flex-row items-center">
-        <Typography.Title1 className="mr-2">{type}</Typography.Title1>
+        <Typography.H1 size="xs" weight="medium" className="text-gray-900 mr-2">
+          {type}
+        </Typography.H1>
         {getAIBadge()}
       </div>
       {!isLoading && showContent()}
-    </div>
+    </>
   );
 };

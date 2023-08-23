@@ -596,7 +596,7 @@ describe('Video View', () => {
 
       expect(await wrapper.findByText(video.id)).toBeVisible();
       expect(
-        await wrapper.findByTestId('video-ai-metadata-wrapper'),
+        await wrapper.findByText(VideoAIMetadataType.LEARNING_OUTCOMES),
       ).toBeInTheDocument();
     });
   });

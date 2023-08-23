@@ -5,6 +5,7 @@ import { VideoAIMetadataType } from 'src/components/videoPage/videoAIMetadata/Vi
 import { Typography } from '@boclips-ui/typography';
 import { Video } from 'boclips-api-client/dist/types';
 import { FeatureGate } from 'src/components/common/FeatureGate';
+import c from 'classnames';
 import s from './videoAIMetadata.module.less';
 
 interface Props {
@@ -18,10 +19,12 @@ export const VideoDescriptionAndAIMetadataWrapper = ({ video }: Props) => {
   ] = useGetVideoAIMetadata(video?.id);
 
   return (
-    <div data-qa="video-ai-metadata-wrapper" className={s.videoAIMetadata}>
+    <>
       {video.description.trim() && (
-        <section className={s.scrollableDescription}>
-          <Typography.Title1>Video Description</Typography.Title1>
+        <section className={c(s.scrollableDescription, s.descriptionSection)}>
+          <Typography.H1 size="xs" weight="medium" className="text-gray-900">
+            Video Description
+          </Typography.H1>
           <Typography.Body as="p" size="small" className="text-gray-800">
             {video.description}
           </Typography.Body>
@@ -35,19 +38,25 @@ export const VideoDescriptionAndAIMetadataWrapper = ({ video }: Props) => {
       <FeatureGate feature="BO_WEB_APP_DEV">
         {video && video.type === 'INSTRUCTIONAL' && (
           <>
-            <VideoAIMetadata
-              isLoading={isLearningOutcomesLoading}
-              metadata={learningOutcomes}
-              type={VideoAIMetadataType.LEARNING_OUTCOMES}
-            />
-            <VideoAIMetadata
-              isLoading={isAssessmentQuestionsLoading}
-              metadata={assessmentQuestions}
-              type={VideoAIMetadataType.ASSESSMENT_QUESTIONS}
-            />
+            <section className={c(s.videoAIContent, s.learningOutcomesSection)}>
+              <VideoAIMetadata
+                isLoading={isLearningOutcomesLoading}
+                metadata={learningOutcomes}
+                type={VideoAIMetadataType.LEARNING_OUTCOMES}
+              />
+            </section>
+            <section
+              className={c(s.videoAIContent, s.assessmentQuestionsSection)}
+            >
+              <VideoAIMetadata
+                isLoading={isAssessmentQuestionsLoading}
+                metadata={assessmentQuestions}
+                type={VideoAIMetadataType.ASSESSMENT_QUESTIONS}
+              />
+            </section>
           </>
         )}
       </FeatureGate>
-    </div>
+    </>
   );
 };

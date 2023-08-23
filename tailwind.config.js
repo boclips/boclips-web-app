@@ -43,7 +43,9 @@ module.exports = {
           'minmax(74px, auto) min-content min-content 1fr auto',
         'my-team-view': 'minmax(74px, auto) min-content 1fr auto',
         'order-view': 'minmax(74px, auto) 21px min-content 1fr auto',
-        'video-view': 'minmax(74px, auto) minmax(0, auto) repeat(7,auto)',
+        'large-screen-video-view':
+          'minmax(74px, auto) minmax(0, auto) repeat(3, auto)',
+        'video-view': 'minmax(74px, auto) minmax(0, auto) repeat(6, auto)',
       },
       gridTemplateColumns: {
         container:

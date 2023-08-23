@@ -22,7 +22,7 @@ const VideoView = () => {
   return (
     <Layout
       dataQa="video-page"
-      rowsSetup="grid-rows-video-view auto-rows-min"
+      rowsSetup="lg:grid-rows-large-screen-video-view grid-rows-video-view auto-rows-min"
       responsiveLayout
     >
       {video?.title && <Helmet title={video.title} />}
@@ -30,7 +30,7 @@ const VideoView = () => {
       <ErrorBoundary fallback={<Fallback isVideoNotFound={isVideoNotFound} />}>
         <VideoPage video={video} />
       </ErrorBoundary>
-      <Footer className="row-start-7 row-end-7" />
+      <Footer className="row-start-last row-end-last" />
     </Layout>
   );
 };

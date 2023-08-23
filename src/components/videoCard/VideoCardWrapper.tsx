@@ -29,7 +29,7 @@ const VideoCardTitle = ({ video }: Partial<Props>) => {
       className="inline-flex"
       onClick={onClick}
       to={`/videos/${video.id}`}
-      state={{ userNavigation: true }}
+      state={{ userNavigated: true }}
     >
       <Typography.Link className="truncate">{video?.title}</Typography.Link>
     </Link>
