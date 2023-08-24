@@ -48,7 +48,7 @@
     "@types/jest-axe": "^3.5.4",
     "audit-ci": "^5.1.2",
     "autoprefixer": "10.4.5",
-    "boclips-api-client": "65.4.0",
+    "boclips-api-client": "66.5.2",
     "boclips-percy-baseline": "0.3.0",
     "css-loader": "^6.8.1",
     "css-minimizer-webpack-plugin": "^5.0.1",
