@@ -68,7 +68,7 @@
     "html-webpack-plugin": "^5.5.0",
     "i": "^0.3.6",
     "identity-obj-proxy": "^3.0.0",
-    "jest-axe": "^6.0.0",
+    "jest-axe": "^8.0.0",
     "jest-environment-jsdom": "^29.6.3",
     "less": "^4.2.0",
     "mini-css-extract-plugin": "^2.6.1",
