@@ -13,7 +13,7 @@ import {
 } from 'boclips-api-client/dist/test-support';
 import { VideoFacets } from 'boclips-api-client/dist/sub-clients/videos/model/VideoFacets';
 import { Subject } from 'boclips-api-client/dist/sub-clients/subjects/model/Subject';
-import { UserFeatureKey } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
+import { FeatureKey } from 'boclips-api-client/dist/sub-clients/common/model/FeatureKey';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
@@ -35,7 +35,7 @@ export interface Bo {
   inspect: () => FakeBoclipsClient;
   set: {
     facets: (facet: Partial<VideoFacets>) => void;
-    features: (features: { [key in UserFeatureKey]?: boolean }) => void;
+    features: (features: { [key in FeatureKey]?: boolean }) => void;
   };
 
   interact(callback: (apiClient: FakeBoclipsClient) => void): void;
@@ -76,7 +76,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
   };
 
   const boSetFeatures = (features: {
-    [key in UserFeatureKey]?: boolean;
+    [key in FeatureKey]?: boolean;
   }) => {
     apiClient.users.setCurrentUserFeatures(features);
   };
