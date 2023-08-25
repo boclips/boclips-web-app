@@ -1,8 +1,8 @@
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
-import { UserFeatureKey } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
+import { FeatureKey } from 'boclips-api-client/dist/sub-clients/common/model/FeatureKey';
 
 type UserFeatures = {
-  [key in UserFeatureKey]?: boolean;
+  [key in FeatureKey]?: boolean;
 };
 
 type FeatureFlags = {

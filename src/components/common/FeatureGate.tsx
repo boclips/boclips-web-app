@@ -1,9 +1,9 @@
 import React from 'react';
-import { UserFeatureKey } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import useFeatureFlags from 'src/hooks/useFeatureFlags';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { AdminLinks } from 'boclips-api-client/dist/types';
 import { Loading } from 'src/components/common/Loading';
+import { FeatureKey } from 'boclips-api-client/dist/sub-clients/common/model/FeatureKey';
 
 interface FeatureGateProps {
   children: React.ReactElement | React.ReactElement[];
@@ -13,7 +13,7 @@ interface FeatureGateProps {
 
 type OptionalProps =
   | { linkName: keyof AdminLinks; feature?: never }
-  | { feature: UserFeatureKey; linkName?: never };
+  | { feature: FeatureKey; linkName?: never };
 
 export const FeatureGate = (props: FeatureGateProps & OptionalProps) => {
   const { feature, children, linkName, fallback, isView } = props;
