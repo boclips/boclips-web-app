@@ -70,7 +70,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest-axe": "^6.0.0",
     "jest-environment-jsdom": "^29.6.3",
-    "less": "^3.12.2",
+    "less": "^4.2.0",
     "mini-css-extract-plugin": "^2.6.1",
     "postcss": "^8.4.5",
     "postcss-loader": "^7.3.3",
