@@ -1,5 +1,5 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
 import { QueryClient } from '@tanstack/react-query';
 import { useFindAccountUsers, useUpdateUser } from 'src/hooks/api/userQuery';
@@ -13,14 +13,14 @@ describe('userQuery', () => {
     const accountsSpy = jest.spyOn(fakeClient.accounts, 'getAccountUsers');
     // @ts-ignore
     fakeClient.accounts.getAccountUsers = accountsSpy;
-    const { result, waitFor } = renderHook(
+    const { result } = renderHook(
       () => useFindAccountUsers('account-1', 2, 10),
       {
         wrapper: wrapperWithClients(fakeClient, new QueryClient()),
       },
     );
 
-    await waitFor(() => result.current.isSuccess);
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(accountsSpy).toBeCalledWith({
       id: 'account-1',
       page: 2,
@@ -41,7 +41,7 @@ describe('userQuery', () => {
         canManageUsers: true,
       },
     };
-    const { result, waitFor } = renderHook(() => useUpdateUser(), {
+    const { result } = renderHook(() => useUpdateUser(), {
       wrapper: wrapperWithClients(fakeClient, new QueryClient()),
     });
 
@@ -56,14 +56,14 @@ describe('userQuery', () => {
       },
     };
 
-    await act(() =>
+    act(() =>
       result.current.mutate({
         user: accountUser,
         request,
       }),
     );
 
-    await waitFor(() => result.current.isSuccess);
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(usersSpy).toBeCalledWith('user-1', request);
   });
 });

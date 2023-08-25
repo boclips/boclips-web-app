@@ -4,7 +4,7 @@ import {
   useGetThemeByProviderAndId,
   useGetThemesByProviderQuery,
 } from 'src/hooks/api/alignmentsQuery';
-import { renderHook } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
 import { QueryClient } from '@tanstack/react-query';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
@@ -31,7 +31,9 @@ describe('AlignmentsQuery', () => {
       },
     );
 
-    await themeHook.waitFor(() => themeHook.result.current.isSuccess);
+    await waitFor(() =>
+      expect(themeHook.result.current.isSuccess).toBeTruthy(),
+    );
 
     expect(themeHook.result.current.data.id).toEqual('art-history-id');
     expect(themeHook.result.current.data.title).toEqual('The history of art');
@@ -53,7 +55,9 @@ describe('AlignmentsQuery', () => {
       },
     );
 
-    await getThemesHook.waitFor(() => getThemesHook.result.current.isSuccess);
+    await waitFor(() =>
+      expect(getThemesHook.result.current.isSuccess).toBeTruthy(),
+    );
     const result = getThemesHook.result.current.data;
 
     expect(result).toHaveLength(1);
@@ -86,7 +90,7 @@ describe('AlignmentsQuery', () => {
       wrapper: wrapperWithClients(fakeClient, new QueryClient()),
     });
 
-    await hook.waitFor(() => hook.result.current.isFetched);
+    await waitFor(() => expect(hook.result.current.isFetched).toBeTruthy());
     const result = hook.result.current.data;
 
     expect(result).toHaveLength(2);
