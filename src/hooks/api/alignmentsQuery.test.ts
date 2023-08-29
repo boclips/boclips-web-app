@@ -4,7 +4,7 @@ import {
   useGetThemeByProviderAndId,
   useGetThemesByProviderQuery,
 } from 'src/hooks/api/alignmentsQuery';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
 import { QueryClient } from '@tanstack/react-query';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';

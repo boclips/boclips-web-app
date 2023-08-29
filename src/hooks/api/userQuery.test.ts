@@ -1,5 +1,5 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
 import { QueryClient } from '@tanstack/react-query';
 import { useFindAccountUsers, useUpdateUser } from 'src/hooks/api/userQuery';
