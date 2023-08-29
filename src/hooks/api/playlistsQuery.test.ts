@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
 import {
   useEditPlaylistMutation,
@@ -26,14 +26,14 @@ describe('playlistsQuery', () => {
     );
     // @ts-ignore
     apiClient.collections.getMySavedCollectionsWithoutDetails = collectionsSpy;
-    const { result, waitFor } = renderHook(
+    const { result } = renderHook(
       () => useOwnAndSharedPlaylistsQuery(1, 'bla'),
       {
         wrapper: wrapperWithClients(apiClient, new QueryClient()),
       },
     );
 
-    await waitFor(() => result.current.isSuccess);
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(collectionsSpy).toBeCalledWith({
       page: 0,
       size: 20,
@@ -53,15 +53,13 @@ describe('playlistsQuery', () => {
     const collectionsSpy = jest.spyOn(apiClient.collections, 'safeUpdate');
     // @ts-ignore
     apiClient.collections.safeUpdate = collectionsSpy;
-    const { result, waitFor } = renderHook(
-      () => useReorderPlaylist(collection),
-      {
-        wrapper: wrapperWithClients(apiClient, new QueryClient()),
-      },
-    );
+    const { result } = renderHook(() => useReorderPlaylist(collection), {
+      wrapper: wrapperWithClients(apiClient, new QueryClient()),
+    });
 
-    await act(() => result.current.mutate([video2, video1]));
-    await waitFor(() => result.current.isSuccess);
+    act(() => result.current.mutate([video2, video1]));
+
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(collectionsSpy).toBeCalledWith(collection, {
       videos: [video2.id, video1.id],
     });
@@ -73,20 +71,18 @@ describe('playlistsQuery', () => {
     const collectionsSpy = jest.spyOn(apiClient.collections, 'safeUpdate');
     // @ts-ignore
     apiClient.collections.safeUpdate = collectionsSpy;
-    const { result, waitFor } = renderHook(
-      () => useEditPlaylistMutation(collection),
-      {
-        wrapper: wrapperWithClients(apiClient, new QueryClient()),
-      },
-    );
+    const { result } = renderHook(() => useEditPlaylistMutation(collection), {
+      wrapper: wrapperWithClients(apiClient, new QueryClient()),
+    });
 
-    await act(() =>
+    act(() =>
       result.current.mutate({
         title: 'That is great',
         description: 'This is too',
       }),
     );
-    await waitFor(() => result.current.isSuccess);
+
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(collectionsSpy).toBeCalledWith(collection, {
       title: 'That is great',
       description: 'This is too',
@@ -110,7 +106,9 @@ describe('playlistsQuery', () => {
       },
     );
 
-    await playlistHook.waitFor(() => playlistHook.result.current.isSuccess);
+    await waitFor(() =>
+      expect(playlistHook.result.current.isSuccess).toBeTruthy(),
+    );
     expect(collectionsSpy).toBeCalledWith({
       origin: 'BO_WEB_APP',
       size: 100,
@@ -191,7 +189,9 @@ describe('playlistsQuery', () => {
       wrapper: wrapperWithClients(apiClient, new QueryClient()),
     });
 
-    await playlistHook.waitFor(() => playlistHook.result.current.isSuccess);
+    await waitFor(() =>
+      expect(playlistHook.result.current.isSuccess).toBeTruthy(),
+    );
     expect(collectionsSpy).toBeCalledWith({ origin: 'BO_WEB_APP' });
   });
 });

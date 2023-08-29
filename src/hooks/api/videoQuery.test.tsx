@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { QueryClient } from '@tanstack/react-query';
@@ -35,19 +35,13 @@ describe('VideoQuery', () => {
         wrapper: wrapperWithClients(boclipsClient, queryClient),
       });
 
-    await act(async () => {
-      const { result, waitFor } = renderHookForFindOrGetVideo();
+    const { result: result1 } = renderHookForFindOrGetVideo();
+    await waitFor(() => expect(result1.current.isSuccess).toBeTruthy());
+    expect(result1.current.data.title).toEqual('Cached video from search');
 
-      await waitFor(() => result.current !== undefined);
-      expect(result.current.data.title).toEqual('Cached video from search');
-    });
-
-    await act(async () => {
-      const { result, waitFor } = renderHookForFindOrGetVideo();
-
-      await waitFor(() => result.current.isSuccess);
-      expect(result.current.data.title).toEqual('Updated video');
-    });
+    const { result: result2 } = renderHookForFindOrGetVideo();
+    await waitFor(() => expect(result2.current.isSuccess).toBeTruthy());
+    expect(result2.current.data.title).toEqual('Updated video');
   });
 
   const cacheVideoSearchResults = (

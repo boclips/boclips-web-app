@@ -1,5 +1,5 @@
 import { QueryClient } from '@tanstack/react-query';
-import { renderHook } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
@@ -84,10 +84,10 @@ const renderWithDisciplines = async ({
     boclipsClient.disciplines.insertMyDiscipline(discipline),
   );
 
-  const { result, waitFor } = renderHook(() => useGetDisciplinesQuery(), {
+  const { result } = renderHook(() => useGetDisciplinesQuery(), {
     wrapper: wrapperWithClients(boclipsClient, queryClient),
   });
 
-  await waitFor(() => result.current.isSuccess);
+  await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
   return result.current.data;
 };
