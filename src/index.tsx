@@ -9,7 +9,7 @@ import { ApiBoclipsClient } from 'boclips-api-client';
 import axios from 'axios';
 import { ExtraErrorData } from '@sentry/integrations';
 import * as Sentry from '@sentry/react';
-import { Integrations } from '@sentry/tracing';
+import { BrowserTracing } from '@sentry/react';
 import App from './App';
 import { Constants } from './AppConstants';
 import { FallbackApp } from './FallbackApp';
@@ -36,10 +36,7 @@ const initializeSentry = () => {
   Sentry.init({
     release: sentryRelease,
     dsn: 'https://50de7aa7ec43491d9c7140376d0bf128@o236297.ingest.sentry.io/5633299',
-    integrations: [
-      new Integrations.BrowserTracing() as Integration,
-      new ExtraErrorData(),
-    ],
+    integrations: [new BrowserTracing() as Integration, new ExtraErrorData()],
     tracesSampleRate: 1.0,
     denyUrls: [
       // Chrome extensions
