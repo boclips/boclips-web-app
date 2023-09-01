@@ -151,7 +151,7 @@ describe('Video View', () => {
     ).toBeVisible();
   });
 
-  it('does not render license duration information when it is not configured', async () => {
+  it('displays 10+ years license duration information when it is not configured', async () => {
     fakeClient.videos.insertVideo({
       ...exampleVideo,
       maxLicenseDurationYears: undefined,
@@ -160,7 +160,9 @@ describe('Video View', () => {
     const wrapper = renderView(['/videos/video-id']);
 
     expect(await wrapper.findByText('video-id')).toBeVisible();
-    expect(await wrapper.queryByText(/Can be licensed for/)).toBeNull();
+    expect(
+      await wrapper.findByText('Can be licensed for 10+ years'),
+    ).toBeVisible();
   });
 
   describe('video page navigated from explore view', () => {

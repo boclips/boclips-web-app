@@ -4,11 +4,18 @@ import { render } from 'src/testSupport/render';
 import VideoLicenseDuration from 'src/components/common/videoLicenseDuration/VideoLicenseDuration';
 
 describe('video license duration', () => {
-  it('displays nothing when license duration is not set', async () => {
+  it('displays 10+ years when license duration is undefined', async () => {
     const video = VideoFactory.sample({ maxLicenseDurationYears: undefined });
     const wrapper = render(<VideoLicenseDuration video={video} />);
 
-    expect(wrapper.container.firstChild).toBeNull();
+    expect(wrapper.getByText('Can be licensed for 10+ years')).toBeVisible();
+  });
+
+  it('displays 10+ years when license duration is null', async () => {
+    const video = VideoFactory.sample({ maxLicenseDurationYears: null });
+    const wrapper = render(<VideoLicenseDuration video={video} />);
+
+    expect(wrapper.getByText('Can be licensed for 10+ years')).toBeVisible();
   });
 
   it('displays information about license duration under 10 years', async () => {
