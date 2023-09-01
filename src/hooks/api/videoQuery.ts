@@ -32,8 +32,9 @@ export const useGetVideos = (videoIds: string[]) => {
 
 export const useGetVideoRecommendations = (video: Video) => {
   const apiClient = useBoclipsClient();
-  return useQuery([`getVideoRecommendations-${video.id}`], () =>
-    doGetVideoRecommendations(video, apiClient),
+  return useQuery(
+    [`getVideoRecommendations-${video ? video.id : 'undefined'}`],
+    () => doGetVideoRecommendations(video, apiClient),
   );
 };
 
