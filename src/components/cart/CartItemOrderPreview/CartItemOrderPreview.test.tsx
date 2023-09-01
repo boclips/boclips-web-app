@@ -96,4 +96,43 @@ describe('Cart Item Preview', () => {
     expect(wrapper.getByText('$1,000')).toBeInTheDocument();
     expect(wrapper.getByText('Can be licensed for a maximum of 6 years'));
   });
+
+  it(`displays '10+ years' license duration when maxLicenseDurationYears is null`, async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const client = new QueryClient();
+
+    const cart = {
+      items: [
+        {
+          id: 'cart-item-id',
+          videoId: 'video-id',
+        },
+      ],
+    };
+
+    await fakeClient.carts.addItemToCart(cart, 'video-id');
+
+    client.setQueryData(['cart'], cart);
+
+    const video = VideoFactory.sample({
+      id: 'video-id',
+      title: 'this is cart item test',
+      price: {
+        amount: 1000,
+        currency: 'USD',
+      },
+      maxLicenseDurationYears: null,
+    });
+
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeClient}>
+        <QueryClientProvider client={client}>
+          <CartItemOrderPreview videos={[video]} />
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
+    );
+
+    expect(wrapper.getByText('$1,000')).toBeInTheDocument();
+    expect(wrapper.getByText('Can be licensed for 10+ years'));
+  });
 });

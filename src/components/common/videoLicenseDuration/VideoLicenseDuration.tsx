@@ -7,8 +7,8 @@ interface Props {
   video: Video;
 }
 
-const licenseDurationInfo = (maxDuration: number) => {
-  if (maxDuration >= 10) return 'Can be licensed for 10+ years';
+const licenseDurationInfo = (maxDuration?: number) => {
+  if (!maxDuration || maxDuration >= 10) return 'Can be licensed for 10+ years';
 
   return maxDuration === 1
     ? `Can be licensed for a maximum of 1 year`
@@ -16,12 +16,12 @@ const licenseDurationInfo = (maxDuration: number) => {
 };
 
 const VideoLicenseDuration = ({ video }: Props) => {
-  return video.maxLicenseDurationYears ? (
+  return (
     <Badge
       customClassName={s.licenseDuration}
       label={licenseDurationInfo(video.maxLicenseDurationYears)}
     />
-  ) : null;
+  );
 };
 
 export default VideoLicenseDuration;
