@@ -5,8 +5,7 @@ image_resource:
   type: docker-image
   source:
     repository: cypress/browsers
-    tag: 'node16.13.2-chrome100-ff98'
-
+    tag: 'node16.16.0-chrome107-ff107'
 
 inputs:
 - name: source
