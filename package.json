@@ -147,7 +147,7 @@
     "focus-trap-react": "^10.2.1",
     "get-user-locale": "^2.3.0",
     "history": "^5.0.0",
-    "jsdom": "^22.1.0",
+    "jsdom": "^19.0.0",
     "less-loader": "^11.1.0",
     "mixpanel-browser": "^2.45.0",
     "npm-audit-resolver": "^3.0.0-0",
