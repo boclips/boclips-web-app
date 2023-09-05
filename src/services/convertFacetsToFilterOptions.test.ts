@@ -84,6 +84,7 @@ describe('convertFacets', () => {
         FacetFactory.sample({ name: 'NEWS' }),
         FacetFactory.sample({ name: 'INSTRUCTIONAL' }),
         FacetFactory.sample({ name: 'STOCK' }),
+        FacetFactory.sample({ name: 'PODCAST' }),
       ],
     });
 
@@ -91,6 +92,7 @@ describe('convertFacets', () => {
     expect(filterOptions.videoTypes[0].name).toEqual('News');
     expect(filterOptions.videoTypes[1].name).toEqual('Instructional');
     expect(filterOptions.videoTypes[2].name).toEqual('Stock Footage');
+    expect(filterOptions.videoTypes[3].name).toEqual('Podcast');
   });
 
   it('converts duration facet name to display name', () => {
