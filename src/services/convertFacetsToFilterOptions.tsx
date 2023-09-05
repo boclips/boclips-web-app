@@ -158,6 +158,8 @@ const getVideoTypeLabel = (name: string): string => {
       return 'Stock Footage';
     case 'NEWS':
       return 'News';
+    case 'PODCAST':
+      return 'Podcast';
     default:
       return name;
   }
