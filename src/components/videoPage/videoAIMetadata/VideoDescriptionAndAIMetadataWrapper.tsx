@@ -4,7 +4,6 @@ import { VideoAIMetadata } from 'src/components/videoPage/videoAIMetadata/VideoA
 import { VideoAIMetadataType } from 'src/components/videoPage/videoAIMetadata/VideoAIMetadataType';
 import { Typography } from '@boclips-ui/typography';
 import { Video } from 'boclips-api-client/dist/types';
-import { FeatureGate } from 'src/components/common/FeatureGate';
 import c from 'classnames';
 import s from './videoAIMetadata.module.less';
 
@@ -35,28 +34,26 @@ export const VideoDescriptionAndAIMetadataWrapper = ({ video }: Props) => {
         </section>
       )}
 
-      <FeatureGate feature="BO_WEB_APP_DEV">
-        {video && video.type === 'INSTRUCTIONAL' && (
-          <>
-            <section className={c(s.videoAIContent, s.learningOutcomesSection)}>
-              <VideoAIMetadata
-                isLoading={isLearningOutcomesLoading}
-                metadata={learningOutcomes}
-                type={VideoAIMetadataType.LEARNING_OUTCOMES}
-              />
-            </section>
-            <section
-              className={c(s.videoAIContent, s.assessmentQuestionsSection)}
-            >
-              <VideoAIMetadata
-                isLoading={isAssessmentQuestionsLoading}
-                metadata={assessmentQuestions}
-                type={VideoAIMetadataType.ASSESSMENT_QUESTIONS}
-              />
-            </section>
-          </>
-        )}
-      </FeatureGate>
+      {video && video.type === 'INSTRUCTIONAL' && (
+        <>
+          <section className={c(s.videoAIContent, s.learningOutcomesSection)}>
+            <VideoAIMetadata
+              isLoading={isLearningOutcomesLoading}
+              metadata={learningOutcomes}
+              type={VideoAIMetadataType.LEARNING_OUTCOMES}
+            />
+          </section>
+          <section
+            className={c(s.videoAIContent, s.assessmentQuestionsSection)}
+          >
+            <VideoAIMetadata
+              isLoading={isAssessmentQuestionsLoading}
+              metadata={assessmentQuestions}
+              type={VideoAIMetadataType.ASSESSMENT_QUESTIONS}
+            />
+          </section>
+        </>
+      )}
     </>
   );
 };
