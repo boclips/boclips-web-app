@@ -79,6 +79,10 @@ const ThemeView = lazyWithRetry(
   () => import('src/views/alignments/theme/ThemeView'),
 );
 
+const RegistrationView = lazyWithRetry(
+  () => import('src/views/registration/RegistrationView'),
+);
+
 interface Props {
   apiClient: BoclipsClient;
   boclipsSecurity: BoclipsSecurity;
@@ -236,6 +240,18 @@ const App = ({
                       element={<RedirectFromExploreToSparks />}
                     />
                     <Route path="/team" element={<MyTeamView />} />
+                    <Route
+                      path="/register"
+                      element={
+                        <FeatureGate
+                          feature="BO_WEB_APP_DEV"
+                          fallback={<NotFound />}
+                          isView
+                        >
+                          <RegistrationView />
+                        </FeatureGate>
+                      }
+                    />
                     <Route
                       path="*"
                       element={
