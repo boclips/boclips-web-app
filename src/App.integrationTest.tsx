@@ -149,7 +149,7 @@ describe('App', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByText('Register now!')).toBeVisible();
+    expect(await wrapper.findByText('Create new account')).toBeVisible();
     expect(wrapper.getByText('Copyright ©', { exact: false })).toBeVisible();
   });
 
