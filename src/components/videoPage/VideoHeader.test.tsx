@@ -35,4 +35,51 @@ describe('VideoHeader', () => {
 
     expect(wrapper).not.toThrow();
   });
+
+  it('should render video licensing details if user has the feature flag', async () => {
+    const client = new FakeBoclipsClient();
+    client.users.setCurrentUserFeatures({ BO_WEB_APP_LICENSING_DETAILS: true });
+
+    const wrapper = render(
+      <BoclipsClientProvider client={client}>
+        <QueryClientProvider client={new QueryClient()}>
+          <VideoHeader video={VideoFactory.sample({})} />
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
+    );
+
+    expect(await wrapper.findByText('Licensing Details')).toBeVisible();
+  });
+
+  it('should not render video licensing details if user does not have the feature flag', async () => {
+    const client = new FakeBoclipsClient();
+    client.users.setCurrentUserFeatures({
+      BO_WEB_APP_LICENSING_DETAILS: false,
+    });
+
+    const wrapper = render(
+      <BoclipsClientProvider client={client}>
+        <QueryClientProvider client={new QueryClient()}>
+          <VideoHeader video={VideoFactory.sample({})} />
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
+    );
+
+    expect(wrapper.queryByText('Licensing Details')).toBeNull();
+  });
+
+  it('should not render video license duration badge if user has BO_WEB_APP_LICENSING_DETAILS flag', () => {
+    const client = new FakeBoclipsClient();
+    client.users.setCurrentUserFeatures({ BO_WEB_APP_LICENSING_DETAILS: true });
+
+    const wrapper = render(
+      <BoclipsClientProvider client={client}>
+        <QueryClientProvider client={new QueryClient()}>
+          <VideoHeader video={VideoFactory.sample({})} />
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
+    );
+
+    expect(wrapper.queryByText('Can be licensed', { exact: false })).toBeNull();
+  });
 });

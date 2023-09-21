@@ -5,13 +5,15 @@ import { FeatureGate } from 'src/components/common/FeatureGate';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import { Typography } from '@boclips-ui/typography';
 import { VideoInfo } from 'src/components/common/videoInfo/VideoInfo';
-import { VideoDescription } from 'src/components/videoPage/VideoDescription';
+import { VideoBadges } from 'src/components/videoPage/VideoBadges';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { EmbedButton } from 'src/components/embedButton/EmbedButton';
 import { DownloadTranscriptButton } from 'src/components/downloadTranscriptButton/DownloadTranscriptButton';
 import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
+import { VideoLicensingDetails } from 'src/components/videoPage/videoLicensingDetails/VideoLicensingDetails';
 import VideoLicenseDuration from 'src/components/common/videoLicenseDuration/VideoLicenseDuration';
+import useFeatureFlags from 'src/hooks/useFeatureFlags';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
 
@@ -20,9 +22,15 @@ interface Props {
 }
 
 export const VideoHeader = ({ video }: Props) => {
+  const { features, isLoading: featuresAreLoading } = useFeatureFlags();
+
+  const renderLicenseDurationBadge =
+    !featuresAreLoading && !features.BO_WEB_APP_LICENSING_DETAILS;
+
   if (!video) {
     return null;
   }
+
   const videoHasTranscript = video?.links?.transcript;
 
   const mixpanel = AnalyticsFactory.mixpanel();
@@ -55,13 +63,16 @@ export const VideoHeader = ({ video }: Props) => {
             </Typography.Body>
           </div>
         </FeatureGate>
-        <VideoLicenseDuration video={video} />
+        {renderLicenseDurationBadge && <VideoLicenseDuration video={video} />}
         <VideoInfo video={video} />
       </div>
 
       <div className={s.descriptionAndButtons}>
         <div>
-          <VideoDescription video={video} />
+          <VideoBadges video={video} />
+          <FeatureGate feature="BO_WEB_APP_LICENSING_DETAILS">
+            <VideoLicensingDetails video={video} />
+          </FeatureGate>
         </div>
         <div className={(s.sticky, s.buttons)}>
           <div className={s.iconButtons}>

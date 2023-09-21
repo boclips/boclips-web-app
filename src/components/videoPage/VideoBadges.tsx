@@ -8,7 +8,7 @@ interface Props {
   video: Video;
 }
 
-export const VideoDescription = ({ video }: Props) => {
+export const VideoBadges = ({ video }: Props) => {
   return (
     <section className={s.badges}>
       {video?.subjects?.map((subject) => (
