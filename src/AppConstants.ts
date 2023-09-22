@@ -37,10 +37,6 @@ export class AppConstants {
     return this.window.Environment.API_PREFIX;
   }
 
-  public get MIXPANEL_TOKEN(): string | null {
-    return this.window.Environment.MIXPANEL_TOKEN ?? null;
-  }
-
   public get PEARSON_ORGANISATION_ID(): string {
     return this.window.Environment.PEARSON_ORGANISATION_ID;
   }

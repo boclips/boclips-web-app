@@ -10,6 +10,7 @@ import { act, fireEvent, waitFor } from '@testing-library/react';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
 
@@ -294,12 +295,12 @@ describe('Video card', () => {
       );
     });
 
-    it('sends a mixpanel addToCart event', async () => {
+    it('sends a hotjar addToCart event', async () => {
       const apiClient = new FakeBoclipsClient();
 
-      const mixpanelEventAddedToCart = jest.spyOn(
-        AnalyticsFactory.mixpanel(),
-        'track',
+      const hotjarEventAddedToCart = jest.spyOn(
+        AnalyticsFactory.hotjar(),
+        'event',
       );
 
       const wrapper = render(
@@ -315,8 +316,8 @@ describe('Video card', () => {
       fireEvent.click(addToCartButton);
 
       await waitFor(() =>
-        expect(mixpanelEventAddedToCart).toHaveBeenCalledWith(
-          'video_details_cart_add',
+        expect(hotjarEventAddedToCart).toHaveBeenCalledWith(
+          HotjarEvents.AddToCartFromVideoCard,
         ),
       );
     });

@@ -33,10 +33,8 @@ export const VideoHeader = ({ video }: Props) => {
 
   const videoHasTranscript = video?.links?.transcript;
 
-  const mixpanel = AnalyticsFactory.mixpanel();
   const trackVideoCopy = () => {
     AnalyticsFactory.hotjar().event(HotjarEvents.CopyLinkFromVideoPage);
-    mixpanel.track('video_details_url_copied');
   };
 
   return (
@@ -74,12 +72,7 @@ export const VideoHeader = ({ video }: Props) => {
         </div>
         <div className={(s.sticky, s.buttons)}>
           <div className={s.iconButtons}>
-            <AddToPlaylistButton
-              videoId={video?.id}
-              onClick={() => {
-                mixpanel.track('video_details_playlist_add');
-              }}
-            />
+            <AddToPlaylistButton videoId={video?.id} />
             <CopyVideoLinkButton video={video} onClick={trackVideoCopy} />
             {videoHasTranscript && <DownloadTranscriptButton video={video} />}
           </div>
@@ -94,7 +87,6 @@ export const VideoHeader = ({ video }: Props) => {
                   AnalyticsFactory.hotjar().event(
                     HotjarEvents.AddToCartFromVideoPage,
                   );
-                  mixpanel.track('video_details_cart_add');
                 }}
               />
             </FeatureGate>

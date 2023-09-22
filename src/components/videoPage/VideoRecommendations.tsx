@@ -18,12 +18,10 @@ const VideoRecommendations = ({ video }: Props) => {
   const { data: recommendedVideos } = useGetVideoRecommendations(video);
   const [searchLocation, setSearchLocation] = useSearchQueryLocationParams();
   const { filters: filtersFromURL } = searchLocation;
-  const mixpanel = AnalyticsFactory.mixpanel();
   const trackAddToCart = () => {
     AnalyticsFactory.hotjar().event(
       HotjarEvents.AddToCartFromRecommendedVideos,
     );
-    mixpanel.track('video_recommendation_cart_add');
   };
 
   const handleFilterChange = (key: FilterKey, values: string[]) => {
@@ -57,26 +55,10 @@ const VideoRecommendations = ({ video }: Props) => {
             key={recommendedVideo.id}
             video={recommendedVideo}
             handleFilterChange={handleFilterChange}
-            onLinkClicked={() => {
-              mixpanel.track('video_recommendation_clicked');
-            }}
-            onSegmentPlayed={(start: number, end: number) => {
-              mixpanel.track('video_recommendation_played', {
-                start,
-                end,
-                videoId: recommendedVideo.id,
-              });
-            }}
             buttonsRow={
               <VideoCardButtons
                 video={recommendedVideo}
                 onAddToCart={trackAddToCart}
-                onAddToPlaylist={() => {
-                  mixpanel.track('video_recommendation_playlist_add');
-                }}
-                onUrlCopied={() => {
-                  mixpanel.track('video_recommendation_url_copied');
-                }}
                 iconOnly
               />
             }

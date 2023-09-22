@@ -10,6 +10,7 @@ export const enum HotjarEvents {
   AddToCartFromRecommendedVideos = 'add_to_cart_from_recommended_videos',
   AddToCartFromPlaylistPage = 'add_to_cart_from_playlist_page',
   AddToCartFromVideoPage = 'add_to_cart_from_video_page',
+  AddToCartFromVideoCard = 'add_to_cart_from_video_card',
   VideoRemovedFromCart = 'video_removed_from_cart',
   CartOpened = 'cart_opened',
   OrderConfirmed = 'order_placed',

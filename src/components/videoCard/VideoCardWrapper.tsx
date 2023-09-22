@@ -74,7 +74,9 @@ export const VideoCardWrapper = ({ video, handleFilterChange }: Props) => {
             video={video}
             key={`video-cart-buttons-${video.id}`}
             onAddToCart={() => {
-              AnalyticsFactory.mixpanel().track('video_details_cart_add');
+              AnalyticsFactory.hotjar().event(
+                HotjarEvents.AddToCartFromVideoCard,
+              );
             }}
           />
         }
