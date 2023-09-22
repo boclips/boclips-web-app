@@ -20,6 +20,7 @@ describe('HotjarService', () => {
 
     expect(hotjar.event).toHaveBeenCalledWith(
       HotjarEvents.VideoAddedToCart.toString(),
+      undefined,
     );
   });
 

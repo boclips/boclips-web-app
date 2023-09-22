@@ -4,7 +4,7 @@ import React from 'react';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import Pagination from '@boclips-ui/pagination';
 import c from 'classnames';
-import { AppcuesEvent } from 'src/types/AppcuesEvent';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import List from 'antd/lib/list';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { FilterKey } from 'src/types/search/FilterKey';
@@ -74,8 +74,8 @@ export const VideosGridView = ({
                 video={video}
                 iconOnly
                 onAddToCart={() => {
-                  AnalyticsFactory.appcues().sendEvent(
-                    AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE,
+                  AnalyticsFactory.hotjar().event(
+                    HotjarEvents.AddToCartFromPlaylistPage,
                   );
                 }}
               />

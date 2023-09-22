@@ -2,12 +2,12 @@ import { Typography } from '@boclips-ui/typography';
 import s from 'src/components/videoPage/videoPage.module.less';
 import React from 'react';
 import { useGetVideoRecommendations } from 'src/hooks/api/videoQuery';
-import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import VideoGridCard from 'src/components/videoCard/VideoGridCard';
 import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
 import { FilterKey } from 'src/types/search/FilterKey';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import { VideoCardButtons } from '../videoCard/buttons/VideoCardButtons';
 
 interface Props {
@@ -20,8 +20,8 @@ const VideoRecommendations = ({ video }: Props) => {
   const { filters: filtersFromURL } = searchLocation;
   const mixpanel = AnalyticsFactory.mixpanel();
   const trackAddToCart = () => {
-    AnalyticsFactory.appcues().sendEvent(
-      AppcuesEvent.ADD_TO_CART_FROM_RECOMMENDED_VIDEOS,
+    AnalyticsFactory.hotjar().event(
+      HotjarEvents.AddToCartFromRecommendedVideos,
     );
     mixpanel.track('video_recommendation_cart_add');
   };

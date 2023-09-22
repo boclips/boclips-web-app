@@ -2,7 +2,6 @@ import React from 'react';
 import c from 'classnames';
 import PlaylistAddIcon from 'src/resources/icons/playlist-add.svg';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import { Typography } from '@boclips-ui/typography';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
@@ -10,6 +9,7 @@ import VideoGridCard from 'src/components/videoCard/VideoGridCard';
 import { FilterKey } from 'src/types/search/FilterKey';
 import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
 import CommentButton from 'src/components/playlists/comments/CommentButton';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import s from './style.module.less';
 import { VideoCardButtons } from '../videoCard/buttons/VideoCardButtons';
 
@@ -86,8 +86,8 @@ const PlaylistBody = ({ playlist }: Props) => {
                   video={video}
                   iconOnly
                   onAddToCart={() => {
-                    AnalyticsFactory.appcues().sendEvent(
-                      AppcuesEvent.ADD_TO_CART_FROM_PLAYLIST_PAGE,
+                    AnalyticsFactory.hotjar().event(
+                      HotjarEvents.AddToCartFromPlaylistPage,
                     );
                   }}
                   onCleanupAddToPlaylist={shouldRemoveVideoCardFromView}

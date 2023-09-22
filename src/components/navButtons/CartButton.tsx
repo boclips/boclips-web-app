@@ -1,7 +1,7 @@
 import React from 'react';
 import { useCartQuery } from 'src/hooks/api/cartQuery';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { AppcuesEvent } from 'src/types/AppcuesEvent';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import c from 'classnames';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import s from './style.module.less';
@@ -15,7 +15,7 @@ const CartButton = () => {
   const isOnCartPage = location.pathname.includes('cart');
 
   const cartOpenedEvent = () => {
-    AnalyticsFactory.appcues().sendEvent(AppcuesEvent.CART_OPENED);
+    AnalyticsFactory.hotjar().event(HotjarEvents.CartOpened);
     navigate({
       pathname: '/cart',
     });

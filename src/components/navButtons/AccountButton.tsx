@@ -4,13 +4,13 @@ import React, { useRef, useState } from 'react';
 import c from 'classnames';
 import { useBoclipsSecurity } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { Constants } from 'src/AppConstants';
-import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
 import { Typography } from '@boclips-ui/typography';
 import Button from '@boclips-ui/button';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import { Link } from '../common/Link';
 import s from './newstyle.module.less';
 
@@ -35,10 +35,10 @@ export const AccountButton = () => {
   };
 
   const ordersOpenedEvent = () => {
-    AnalyticsFactory.appcues().sendEvent(AppcuesEvent.YOUR_ORDERS_OPENED);
+    AnalyticsFactory.hotjar().event(HotjarEvents.YourOrdersOpened);
   };
   const myTeamOpened = () => {
-    AnalyticsFactory.appcues().sendEvent(AppcuesEvent.MY_TEAM_OPENED);
+    AnalyticsFactory.hotjar().event(HotjarEvents.MyTeamOpened);
   };
 
   const closeDialog = () => {

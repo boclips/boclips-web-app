@@ -23,8 +23,8 @@ export default class Hotjar {
     }
   }
 
-  public event(event: string) {
-    this.hj('event', event);
+  public event(event: string, payload?: object) {
+    this.hj('event', event, payload);
   }
 
   public identify(id: string, payload: object) {

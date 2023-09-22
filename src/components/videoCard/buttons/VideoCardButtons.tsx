@@ -1,11 +1,11 @@
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { EmbedButton } from 'src/components/embedButton/EmbedButton';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import s from './style.module.less';
 import { CopyVideoLinkButton } from './CopyVideoLinkButton';
 import { CopyVideoIdButton } from './CopyVideoIdButton';
@@ -33,9 +33,7 @@ export const VideoCardButtons = ({
     if (onUrlCopied) {
       onUrlCopied();
     }
-    AnalyticsFactory.appcues().sendEvent(
-      AppcuesEvent.COPY_LINK_FROM_SEARCH_RESULTS,
-    );
+    AnalyticsFactory.hotjar().event(HotjarEvents.CopyLinkFromSearchResults);
   };
 
   return (

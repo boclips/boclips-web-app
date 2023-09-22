@@ -4,11 +4,11 @@ import { VideoCard } from '@boclips-ui/video-card';
 import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import { Link } from 'react-router-dom';
-import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import { trackNavigateToVideoDetails } from 'src/components/common/analytics/Analytics';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { Typography } from '@boclips-ui/typography';
 import { FilterKey } from 'src/types/search/FilterKey';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import s from './VideoCardWrapper.module.less';
 import { VideoCardButtons } from './buttons/VideoCardButtons';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
@@ -21,7 +21,7 @@ interface Props {
 const VideoCardTitle = ({ video }: Partial<Props>) => {
   const boclipsClient = useBoclipsClient();
   const onClick = () => {
-    AnalyticsFactory.appcues().sendEvent(AppcuesEvent.VIDEO_PAGE_OPENED);
+    AnalyticsFactory.hotjar().event(HotjarEvents.VideoPageOpened);
     trackNavigateToVideoDetails(video, boclipsClient);
   };
   return (

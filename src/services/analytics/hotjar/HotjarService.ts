@@ -9,8 +9,8 @@ export default class HotjarService {
     this.hotjar = hotjar;
   }
 
-  public event(event: HotjarEvents) {
-    this.hotjar.event(event);
+  public event(event: HotjarEvents, payload?: Record<string, any>) {
+    this.hotjar.event(event, payload);
   }
 
   public userAttributes(user: UserAttributes) {

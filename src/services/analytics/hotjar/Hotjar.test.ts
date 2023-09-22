@@ -48,6 +48,10 @@ describe('Hotjar', () => {
   it('sends event', () => {
     hotjar.event('SomethingOccurred');
 
-    expect(mockHotjar).toHaveBeenCalledWith('event', 'SomethingOccurred');
+    expect(mockHotjar).toHaveBeenCalledWith(
+      'event',
+      'SomethingOccurred',
+      undefined,
+    );
   });
 });

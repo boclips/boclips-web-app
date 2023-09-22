@@ -4,7 +4,6 @@ import { CartItemOrderPreview } from 'src/components/cart/CartItemOrderPreview/C
 import { usePlaceOrderQuery } from 'src/hooks/api/orderQuery';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { useNavigate } from 'react-router-dom';
-import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { Cart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
 import { Typography } from '@boclips-ui/typography';
@@ -56,7 +55,6 @@ export const OrderModal = ({ setModalOpen, videos, cart }: Props) => {
 
   const handleConfirm = () => {
     trackOrderConfirmed(boclipsClient);
-    AnalyticsFactory.appcues().sendEvent(AppcuesEvent.ORDER_CONFIRMED);
     AnalyticsFactory.hotjar().event(HotjarEvents.OrderConfirmed);
     placeOrder({ cart, user });
   };

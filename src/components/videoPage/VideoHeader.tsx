@@ -1,4 +1,4 @@
-import { AppcuesEvent } from 'src/types/AppcuesEvent';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import React from 'react';
 import { FeatureGate } from 'src/components/common/FeatureGate';
@@ -35,9 +35,7 @@ export const VideoHeader = ({ video }: Props) => {
 
   const mixpanel = AnalyticsFactory.mixpanel();
   const trackVideoCopy = () => {
-    AnalyticsFactory.appcues().sendEvent(
-      AppcuesEvent.COPY_LINK_FROM_VIDEO_PAGE,
-    );
+    AnalyticsFactory.hotjar().event(HotjarEvents.CopyLinkFromVideoPage);
     mixpanel.track('video_details_url_copied');
   };
 
@@ -93,8 +91,8 @@ export const VideoHeader = ({ video }: Props) => {
                 video={video}
                 width="200px"
                 onClick={() => {
-                  AnalyticsFactory.appcues().sendEvent(
-                    AppcuesEvent.ADD_TO_CART_FROM_VIDEO_PAGE,
+                  AnalyticsFactory.hotjar().event(
+                    HotjarEvents.AddToCartFromVideoPage,
                   );
                   mixpanel.track('video_details_cart_add');
                 }}

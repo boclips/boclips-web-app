@@ -33,7 +33,7 @@ Cypress.Commands.add('bo', (callback) => {
   });
 });
 
-// turn off waiting for the api calls (like logo, appcues, pendo etc), we have all necessary data in fake api client
+// turn off waiting for the api calls (like logo, pendo etc), we have all necessary data in fake api client
 Cypress.Commands.overwrite('intercept', (originalFn, ...args) => {
   const [options] = args;
 

@@ -32,12 +32,6 @@ window.matchMedia =
     };
   };
 
-window.Appcues = {
-  page: jest.fn(),
-  identify: jest.fn(),
-  track: jest.fn(),
-};
-
 window.ResizeObserver =
     window.ResizeObserver ||
     jest.fn().mockImplementation(() => ({

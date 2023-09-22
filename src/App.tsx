@@ -8,7 +8,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
 import { trackPageRendered } from 'src/components/common/analytics/Analytics';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import ScrollToTop from 'src/hooks/scrollToTop';
 import { Helmet } from 'react-helmet';
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
@@ -22,7 +21,6 @@ import FallbackView from 'src/views/fallback/FallbackView';
 import { RedirectFromExploreToSparks } from 'src/components/sparks/RedirectFromExploreToSparks';
 import { BoclipsClientProvider } from './components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSecurityProvider';
-import Appcues from './services/analytics/appcues/Appcues';
 import { GlobalQueryErrorProvider } from './components/common/providers/GlobalQueryErrorProvider';
 import { JSErrorBoundary } from './components/common/errors/JSErrorBoundary';
 import Pendo = pendo.Pendo;
@@ -30,7 +28,6 @@ import Pendo = pendo.Pendo;
 declare global {
   interface Window {
     pendo: Pendo;
-    Appcues: Appcues;
     hj: (command: string, id?: string, payload?: object) => void;
   }
 }
@@ -99,26 +96,15 @@ const App = ({
   const currentLocation = useLocation();
 
   useEffect(() => {
-    apiClient.users
-      .getCurrentUser()
-      .then((user) => {
-        AnalyticsFactory.pendo().identify(user);
-        AnalyticsFactory.appcues().identify({
-          email: user.email,
-          firstName: user.firstName,
-          id: user.id,
-        });
-        AnalyticsFactory.hotjar().userAttributes(new UserAttributes(user));
-      })
-      .then(() => {
-        AnalyticsFactory.appcues().sendEvent(AppcuesEvent.LOGGED_IN);
-      });
+    apiClient.users.getCurrentUser().then((user) => {
+      AnalyticsFactory.pendo().identify(user);
+      AnalyticsFactory.hotjar().userAttributes(new UserAttributes(user));
+    });
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     trackPageRendered(currentLocation, apiClient);
-    AnalyticsFactory.appcues().pageChanged();
   }, [currentLocation, apiClient]);
 
   return (

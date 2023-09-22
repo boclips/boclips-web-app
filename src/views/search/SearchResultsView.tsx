@@ -18,12 +18,12 @@ import { NoSearchResults } from 'src/components/noResults/NoSearchResults';
 import { Loading } from 'src/components/common/Loading';
 import { useDebounce } from 'src/hooks/useDebounce';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { AppcuesEvent } from 'src/types/AppcuesEvent';
 import { ErrorBoundary } from 'src/components/common/errors/ErrorBoundary';
 import RefreshPageError from 'src/components/common/errors/refreshPageError/RefreshPageError';
 import { Layout } from 'src/components/layout/Layout';
 import { ContentPackagePreviewBanner } from 'src/components/contentPackagePreviewBanner/ContentPackagePreviewBanner';
 import { useGetDisciplinesQuery } from 'src/hooks/api/disciplinesQuery';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 
 export const PAGE_SIZE = 30;
 
@@ -111,7 +111,7 @@ const SearchResultsView = () => {
         setFiltersToDebounce(newFilters);
       }
 
-      AnalyticsFactory.appcues().sendEvent(AppcuesEvent.FILTERS_APPLIED, {
+      AnalyticsFactory.hotjar().event(HotjarEvents.FiltersApplied, {
         filters: newFilters,
       });
     },

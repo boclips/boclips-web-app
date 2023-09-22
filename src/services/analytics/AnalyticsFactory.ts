@@ -1,4 +1,3 @@
-import { AnalyticsService } from 'src/services/analytics/appcues/AnalyticsService';
 import HotjarService from 'src/services/analytics/hotjar/HotjarService';
 import Hotjar from 'src/services/analytics/hotjar/Hotjar';
 import mixpanel from 'mixpanel-browser';
@@ -7,20 +6,11 @@ import { PendoService } from 'src/services/analytics/pendo/PendoService';
 import MixpanelService from './mixpanel/MixpanelService';
 
 export default class AnalyticsFactory {
-  private static appcuesService: AnalyticsService;
-
   private static pendoService: PendoService;
 
   private static hotjarService: HotjarService;
 
   private static mixpanelService: MixpanelService;
-
-  public static appcues(): AnalyticsService {
-    if (!this.appcuesService) {
-      this.appcuesService = new AnalyticsService(window.Appcues);
-    }
-    return this.appcuesService;
-  }
 
   public static pendo(): PendoService {
     if (!this.pendoService) {
