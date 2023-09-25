@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom/extend-expect';
 import { configure } from '@testing-library/react';
 import resizeTo from 'src/testSupport/resizeTo';
 import '@testing-library/jest-dom';
