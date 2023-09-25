@@ -24,8 +24,12 @@ interface Props {
 export const VideoHeader = ({ video }: Props) => {
   const { features, isLoading: featuresAreLoading } = useFeatureFlags();
 
+  const showLicensingDuration =
+    !featuresAreLoading &&
+    !features.LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED;
+
   const renderLicenseDurationBadge =
-    !featuresAreLoading && !features.BO_WEB_APP_LICENSING_DETAILS;
+    showLicensingDuration && !features.BO_WEB_APP_LICENSING_DETAILS;
 
   if (!video) {
     return null;
@@ -66,9 +70,11 @@ export const VideoHeader = ({ video }: Props) => {
       <div className={s.descriptionAndButtons}>
         <div>
           <VideoBadges video={video} />
-          <FeatureGate feature="BO_WEB_APP_LICENSING_DETAILS">
-            <VideoLicensingDetails video={video} />
-          </FeatureGate>
+          {showLicensingDuration && (
+            <FeatureGate feature="BO_WEB_APP_LICENSING_DETAILS">
+              <VideoLicensingDetails video={video} />
+            </FeatureGate>
+          )}
         </div>
         <div className={(s.sticky, s.buttons)}>
           <div className={s.iconButtons}>
