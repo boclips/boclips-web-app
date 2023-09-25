@@ -8,7 +8,7 @@ import { BoclipsSecurityProvider } from 'src/components/common/providers/Boclips
 
 jest.mock('boclips-player');
 
-const mockedPlayer = jest.mocked(PlayerFactory, true);
+const mockedPlayer = jest.mocked(PlayerFactory);
 
 describe('VideoPlayer', () => {
   it('provides a token factory to the player that returns a valid token', async () => {
