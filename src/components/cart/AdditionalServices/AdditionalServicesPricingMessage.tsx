@@ -21,7 +21,7 @@ export const AdditionalServicesPricingMessage = ({
     {captionsOrTranscriptsRequested && (
       <p className="mt-2">
         <Typography.Body>
-          Note: human-generated captions can take approx. 4 days to be ready for
+          Note: human-generated captions can take approx. 3 days to be ready for
           use.
         </Typography.Body>
       </p>

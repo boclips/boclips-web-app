@@ -91,7 +91,7 @@ describe('CartView', () => {
     expect(wrapper.getByTestId('additional-services-summary')).toBeVisible();
     expect(
       wrapper.getByText(
-        'Note: human-generated captions can take approx. 4 days to be ready for use.',
+        'Note: human-generated captions can take approx. 3 days to be ready for use.',
       ),
     ).toBeVisible();
   });
@@ -138,7 +138,7 @@ describe('CartView', () => {
       ).toBeVisible();
       expect(
         within(it).getByText(
-          'Note: human-generated captions can take approx. 4 days to be ready for use.',
+          'Note: human-generated captions can take approx. 3 days to be ready for use.',
         ),
       ).toBeVisible();
     });
