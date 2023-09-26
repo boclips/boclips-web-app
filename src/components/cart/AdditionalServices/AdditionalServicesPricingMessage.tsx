@@ -1,7 +1,12 @@
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
 
-export const AdditionalServicesPricingMessage = () => (
+interface Props {
+  captionsOrTranscriptsRequested: boolean;
+}
+export const AdditionalServicesPricingMessage = ({
+  captionsOrTranscriptsRequested,
+}: Props) => (
   <div
     className="bg-blue-100 p-4 mb-4 rounded"
     data-qa="additional-services-summary"
@@ -13,5 +18,13 @@ export const AdditionalServicesPricingMessage = () => (
       </Typography.Link>{' '}
       for details on potential fees for additional services.
     </Typography.Body>
+    {captionsOrTranscriptsRequested && (
+      <p className="mt-2">
+        <Typography.Body>
+          Note: human-generated captions can take approx. 4 days to be ready for
+          use.
+        </Typography.Body>
+      </p>
+    )}
   </div>
 );

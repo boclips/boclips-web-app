@@ -35,7 +35,7 @@ export const CartOrderSummary = ({ cart }: Props) => {
     }
   }, [isCartValid]);
 
-  const captionsAndTranscriptsRequested = cart.items?.find(
+  const captionsOrTranscriptsRequested = !!cart.items?.find(
     (item) =>
       item?.additionalServices?.captionsRequested ||
       item?.additionalServices?.transcriptRequested,
@@ -48,7 +48,7 @@ export const CartOrderSummary = ({ cart }: Props) => {
   );
 
   const additionalServicesRequested =
-    captionsAndTranscriptsRequested || editingRequested || trimRequested;
+    captionsOrTranscriptsRequested || editingRequested || trimRequested;
 
   return (
     <>
@@ -56,7 +56,11 @@ export const CartOrderSummary = ({ cart }: Props) => {
         <div className="flex flex-col rounded p-5 shadow">
           {getTotalPrice(videos) && <CartOrderItemsSummary cart={cart} />}
 
-          {additionalServicesRequested && <AdditionalServicesPricingMessage />}
+          {additionalServicesRequested && (
+            <AdditionalServicesPricingMessage
+              captionsOrTranscriptsRequested={captionsOrTranscriptsRequested}
+            />
+          )}
           <Button
             onClick={() => {
               setDisplayErrorMessage(!isCartValid);

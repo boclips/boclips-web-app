@@ -67,6 +67,13 @@ export const OrderModal = ({ setModalOpen, videos, cart }: Props) => {
         item.additionalServices?.editRequest !== null,
     ).length > 0;
 
+  const captionsOrTranscriptsRequested =
+    cart.items.filter(
+      (item) =>
+        item.additionalServices?.transcriptRequested === true ||
+        item.additionalServices?.captionsRequested === true,
+    ).length > 0;
+
   return (
     <Bodal
       title="Order summary"
@@ -93,7 +100,11 @@ export const OrderModal = ({ setModalOpen, videos, cart }: Props) => {
             </div>
           </Typography.Title1>
         </FeatureGate>
-        {additionalServicesRequested && <AdditionalServicesPricingMessage />}
+        {additionalServicesRequested && (
+          <AdditionalServicesPricingMessage
+            captionsOrTranscriptsRequested={captionsOrTranscriptsRequested}
+          />
+        )}
       </div>
     </Bodal>
   );

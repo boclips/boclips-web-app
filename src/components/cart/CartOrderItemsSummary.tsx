@@ -3,7 +3,6 @@ import { getTotalPrice } from 'src/services/getTotalPrice';
 import { Cart as ApiCart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
 import { useGetVideos } from 'src/hooks/api/videoQuery';
 import { Typography } from '@boclips-ui/typography';
-import { AdditionalServicesPricingMessage } from 'src/components/cart/AdditionalServices/AdditionalServicesPricingMessage';
 import DisplayPrice from 'src/components/common/price/DisplayPrice';
 import s from './style.module.less';
 
@@ -40,9 +39,6 @@ export const CartOrderItemsSummary = ({ cart }: Props) => {
     (item) => item?.additionalServices?.editRequest,
   );
 
-  const additionalServicesRequested =
-    captionsAndTranscriptsRequested || editingRequested || trimRequested;
-
   return (
     <>
       <div className={s.cartInfoWrapper}>
@@ -66,7 +62,6 @@ export const CartOrderItemsSummary = ({ cart }: Props) => {
           <DisplayPrice price={getTotalPrice(videos)} isBold={false} />
         </span>
       </Typography.H1>
-      {additionalServicesRequested && <AdditionalServicesPricingMessage />}
     </>
   );
 };

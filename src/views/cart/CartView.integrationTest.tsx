@@ -69,7 +69,10 @@ describe('CartView', () => {
     });
 
     fakeClient.videos.insertVideo(video);
-    fakeClient.carts.insertCartItem({ videoId: 'video-id' });
+    fakeClient.carts.insertCartItem({
+      videoId: 'video-id',
+      additionalServices: { captionsRequested: true },
+    });
 
     const wrapper = await renderCartView(fakeClient);
 
@@ -85,6 +88,12 @@ describe('CartView', () => {
     (await wrapper.findAllByTestId('price-badge')).map((badge) =>
       expect(badge.innerHTML).toEqual('$600'),
     );
+    expect(wrapper.getByTestId('additional-services-summary')).toBeVisible();
+    expect(
+      wrapper.getByText(
+        'Note: human-generated captions can take approx. 4 days to be ready for use.',
+      ),
+    ).toBeVisible();
   });
 
   it('displays order confirmation modal when place order button clicked', async () => {
@@ -95,7 +104,10 @@ describe('CartView', () => {
     fakeClient.carts.insertCartItem({
       videoId: 'video-id',
     });
-    fakeClient.carts.insertCartItem({ videoId: 'instructional-video-id' });
+    fakeClient.carts.insertCartItem({
+      videoId: 'instructional-video-id',
+      additionalServices: { captionsRequested: true },
+    });
     fakeClient.users.setCurrentUserFeatures({
       BO_WEB_APP_REQUEST_TRIMMING: true,
       BO_WEB_APP_PRICES: true,
@@ -123,6 +135,11 @@ describe('CartView', () => {
       expect(within(it).getByText('Go back to cart')).toBeVisible();
       expect(
         within(it).getByTestId('additional-services-summary'),
+      ).toBeVisible();
+      expect(
+        within(it).getByText(
+          'Note: human-generated captions can take approx. 4 days to be ready for use.',
+        ),
       ).toBeVisible();
     });
 
