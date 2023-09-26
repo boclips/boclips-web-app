@@ -97,6 +97,7 @@ export const EditRequest = ({ label, cartItem, price }: Props) => {
             onUpdate={updateEditRequest}
             placeholder="eg. Remove front and end credits"
             isValid={isEditRequestValid}
+            isRequired
             onUpdateWithoutDebounce={setEditRequestWithoutDebounce}
           />
           {!isEditRequestValid && (

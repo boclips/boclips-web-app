@@ -617,9 +617,7 @@ describe('CartView', () => {
       const wrapper = await renderCartView(fakeClient);
 
       expect(
-        await wrapper.findByPlaceholderText(
-          'Add a note about this order (optional)',
-        ),
+        await wrapper.findByPlaceholderText('Add a note about this order'),
       ).toBeVisible();
     });
 
@@ -630,7 +628,7 @@ describe('CartView', () => {
       const wrapper = await renderCartView(fakeClient);
 
       const input = await wrapper.findByPlaceholderText(
-        'Add a note about this order (optional)',
+        'Add a note about this order',
       );
 
       fireEvent.change(input, { target: { value: 'i am a note' } });

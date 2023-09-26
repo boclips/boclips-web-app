@@ -7,6 +7,7 @@ interface Props {
   onUpdate: (note: string) => void;
   placeholder: string;
   isValid?: boolean;
+  isRequired?: boolean;
   enableValidation?: (enabled: boolean) => void;
   onUpdateWithoutDebounce?: (note: string) => void;
 }
@@ -16,6 +17,7 @@ export const TextAreaWithDebounce = ({
   onUpdate,
   placeholder,
   isValid = true,
+  isRequired = false,
   enableValidation = () => {},
   onUpdateWithoutDebounce = (_) => {},
 }: Props) => {
@@ -43,7 +45,7 @@ export const TextAreaWithDebounce = ({
       inputType="textarea"
       isError={!isValid}
       placeholder={placeholder}
-      constraints={{ required: false, minLength: 0 }}
+      constraints={{ required: isRequired, minLength: 0 }}
       defaultValue={value}
       labelText="Note"
     />
