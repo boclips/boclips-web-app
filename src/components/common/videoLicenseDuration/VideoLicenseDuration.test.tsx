@@ -8,7 +8,7 @@ describe('video license duration', () => {
     const video = VideoFactory.sample({ maxLicenseDurationYears: undefined });
     const wrapper = render(<VideoLicenseDuration video={video} />);
 
-    expect(wrapper.getByText('Can be licensed for 10+ years')).toBeVisible();
+    expect(wrapper.getByText('License duration unavailable')).toBeVisible();
   });
 
   it('displays 10+ years when license duration is null', async () => {

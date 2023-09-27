@@ -20,9 +20,9 @@ describe('Get video license duration label', () => {
       expect(label).toEqual('Can be licensed for 10+ years');
     });
 
-    it('displays 10+ years if maxDuration is undefined', () => {
+    it('displays license duration unavailable if maxDuration is undefined', () => {
       const label = getVideoOrderLicenseDurationLabel(undefined);
-      expect(label).toEqual('Can be licensed for 10+ years');
+      expect(label).toEqual('License duration unavailable');
     });
 
     it('displays 3 years', () => {
@@ -47,9 +47,9 @@ describe('Get video license duration label', () => {
       expect(label).toEqual('10+ years');
     });
 
-    it('displays 10+ years if maxDuration is undefined', () => {
+    it('displays unavailable if maxDuration is undefined', () => {
       const label = getVideoPageLicenseDurationLabel(undefined);
-      expect(label).toEqual('10+ years');
+      expect(label).toEqual('Unavailable');
     });
 
     it('displays 3 years', () => {
