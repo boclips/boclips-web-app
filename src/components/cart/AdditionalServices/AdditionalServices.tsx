@@ -26,7 +26,7 @@ const AdditionalServices = ({ videoItem, cartItem }: Props) => {
 
       <AdditionalServiceCheckbox
         cartItem={cartItem}
-        label="Request English Caption and Transcript file"
+        label="Request human-generated caption and transcript files (in English)"
       />
 
       <FeatureGate feature="BO_WEB_APP_REQUEST_ADDITIONAL_EDITING">
