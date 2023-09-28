@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { ReactElement, useRef, useState } from 'react';
 import { Typography } from '@boclips-ui/typography';
 import { InputText } from '@boclips-ui/input';
 import Button from '@boclips-ui/button';
@@ -6,6 +6,7 @@ import { useAddNewTrialUser } from 'src/hooks/api/userQuery';
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
+import { LoadingOutlined } from '@ant-design/icons';
 
 interface RegistrationData {
   firstName: string;
@@ -16,7 +17,8 @@ interface RegistrationData {
 }
 
 const RegistrationForm = () => {
-  const { mutate: createTrialUser } = useAddNewTrialUser();
+  const { mutate: createTrialUser, isLoading: isTrialUserCreating } =
+    useAddNewTrialUser();
 
   const [registrationData, setRegistrationData] = useState<RegistrationData>({
     firstName: '',
@@ -72,6 +74,12 @@ const RegistrationForm = () => {
     confirmPasswordRef.current.value = '';
   };
 
+  const getSpinner = (): ReactElement =>
+    isTrialUserCreating ? (
+      <span data-qa="spinner" className="pb-2">
+        <LoadingOutlined />
+      </span>
+    ) : null;
   return (
     <main tabIndex={-1} className="col-start-2 col-end-26">
       <section className="flex flex-col items-center">
@@ -119,7 +127,12 @@ const RegistrationForm = () => {
           By clicking Create Account, you agree to the Boclips User Agreement,
           Privacy Policy, and Cookie Policy.
         </Typography.Body>
-        <Button onClick={handleUserCreation} text="Create Account" />
+        <Button
+          onClick={handleUserCreation}
+          text="Create Account"
+          disabled={isTrialUserCreating}
+          icon={getSpinner()}
+        />
       </section>
     </main>
   );
