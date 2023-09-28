@@ -11,7 +11,7 @@ const RegistrationView = () => {
       <Helmet title="Register" />
       <Layout rowsSetup="grid-rows-registration-view" responsiveLayout>
         <Navbar />
-        <RegistrationForm onSubmit={() => {}} />
+        <RegistrationForm />
         <Footer className="col-start-2 col-end-26" />
       </Layout>
     </>
