@@ -34,7 +34,7 @@ const RegistrationForm = () => {
   const lastNameRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-  const confirmPasswordRef = useRef(null);
+  const confirmPassRef = useRef(null);
 
   const handleChange = (fieldName, value) => {
     if (!value) return;
@@ -73,7 +73,7 @@ const RegistrationForm = () => {
     lastNameRef.current.value = '';
     emailRef.current.value = '';
     passwordRef.current.value = '';
-    confirmPasswordRef.current.value = '';
+    confirmPassRef.current.value = '';
   };
 
   const getSpinner = (): ReactElement =>
@@ -97,6 +97,13 @@ const RegistrationForm = () => {
     additionalStyles?: string,
   ) => input(name, ref, placeholder, 'email', additionalStyles);
 
+  const passwordInput = (
+    name: string,
+    ref: React.MutableRefObject<HTMLInputElement>,
+    placeholder: string,
+    additionalStyles?: string,
+  ) => input(name, ref, placeholder, 'password', additionalStyles);
+
   const input = (
     name: string,
     ref: React.MutableRefObject<HTMLInputElement>,
@@ -107,12 +114,23 @@ const RegistrationForm = () => {
     <InputText
       id={`input-${name}`}
       onChange={(value) => handleChange(name, value)}
-      inputType={type === 'email' ? 'email' : 'text'}
+      inputType={resolveInputType(type)}
       placeholder={placeholder}
       ref={ref}
       className={c(s.input, additionalStyles)}
     />
   );
+
+  const resolveInputType = (type: string): 'text' | 'email' | 'password' => {
+    switch (type) {
+      case 'email':
+        return 'email';
+      case 'password':
+        return 'password';
+      default:
+        return 'text';
+    }
+  };
 
   return (
     <>
@@ -131,8 +149,8 @@ const RegistrationForm = () => {
           {textInput('lastName', lastNameRef, 'Your Last name*', 'flex-1 ml-3')}
         </div>
         {emailInput('email', emailRef, 'Your Professional Email*')}
-        {textInput('password', passwordRef, 'Password*')}
-        {textInput('confirmPassword', confirmPasswordRef, 'Confirm Password*')}
+        {passwordInput('password', passwordRef, 'Password*')}
+        {passwordInput('confirmPassword', confirmPassRef, 'Confirm Password*')}
 
         <Typography.Body size="small" className={c(s.blueText, 'mt-1')}>
           By clicking Create Account, you agree to the Boclips User Agreement,
