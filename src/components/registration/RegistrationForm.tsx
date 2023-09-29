@@ -82,61 +82,59 @@ const RegistrationForm = () => {
         <LoadingOutlined />
       </span>
     ) : null;
+
+  const textInput = (
+    name: string,
+    ref: React.MutableRefObject<HTMLInputElement>,
+    placeholder: string,
+    additionalStyles?: string,
+  ) => input(name, ref, placeholder, 'text', additionalStyles);
+
+  const emailInput = (
+    name: string,
+    ref: React.MutableRefObject<HTMLInputElement>,
+    placeholder: string,
+    additionalStyles?: string,
+  ) => input(name, ref, placeholder, 'email', additionalStyles);
+
+  const input = (
+    name: string,
+    ref: React.MutableRefObject<HTMLInputElement>,
+    placeholder: string,
+    type: string,
+    additionalStyles?: string,
+  ) => (
+    <InputText
+      id={`input-${name}`}
+      onChange={(value) => handleChange(name, value)}
+      inputType={type === 'email' ? 'email' : 'text'}
+      placeholder={placeholder}
+      ref={ref}
+      className={c(s.input, additionalStyles)}
+    />
+  );
+
   return (
     <>
       <section className={s.formHeader}>
         <Typography.H1>CourseSpark</Typography.H1>
-        <Typography.Body weight="medium" className="text-blue-700">
+        <Typography.Body weight="medium" className={s.blueText}>
           Create new account
         </Typography.Body>
-        <Typography.Body size="small" className="text-blue-700">
+        <Typography.Body size="small" className={s.blueText}>
           30 day trial
         </Typography.Body>
       </section>
       <main tabIndex={-1} className={s.formInputsWrapper}>
         <div className="flex flex-row">
-          <InputText
-            id="input-first-name"
-            onChange={(value) => handleChange('firstName', value)}
-            inputType="text"
-            placeholder="Your First name*"
-            ref={firstNameRef}
-            className={c(s.input, 'flex-1')}
-          />
-          <InputText
-            id="input-last-name"
-            onChange={(value) => handleChange('lastName', value)}
-            inputType="text"
-            placeholder="Your Last name*"
-            ref={lastNameRef}
-            className={c(s.input, 'flex-1', 'ml-3')}
-          />
+          {textInput('firstName', firstNameRef, 'Your First name*', 'flex-1')}
+          {textInput('lastName', lastNameRef, 'Your Last name*', 'flex-1 ml-3')}
         </div>
-        <InputText
-          id="input-email"
-          onChange={(value) => handleChange('email', value)}
-          inputType="email"
-          placeholder="Your Professional Email*"
-          ref={emailRef}
-          className={s.input}
-        />
-        <InputText
-          id="input-password"
-          onChange={(value) => handleChange('password', value)}
-          inputType="text"
-          placeholder="Password*"
-          ref={passwordRef}
-          className={s.input}
-        />
-        <InputText
-          id="input-confirm-password"
-          onChange={(value) => handleChange('confirmPassword', value)}
-          inputType="text"
-          placeholder="Confirm Password*"
-          ref={confirmPasswordRef}
-          className={s.input}
-        />
-        <Typography.Body size="small" className="mt-1 text-blue-700">
+        {emailInput('email', emailRef, 'Your Professional Email*')}
+        {textInput('password', passwordRef, 'Password*')}
+        {textInput('confirmPassword', confirmPasswordRef, 'Confirm Password*')}
+
+        <Typography.Body size="small" className={c(s.blueText, 'mt-1')}>
           By clicking Create Account, you agree to the Boclips User Agreement,
           Privacy Policy, and Cookie Policy.
         </Typography.Body>
