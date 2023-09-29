@@ -7,6 +7,8 @@ import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/Create
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import { LoadingOutlined } from '@ant-design/icons';
+import c from 'classnames';
+import s from './style.module.less';
 
 interface RegistrationData {
   firstName: string;
@@ -76,16 +78,22 @@ const RegistrationForm = () => {
 
   const getSpinner = (): ReactElement =>
     isTrialUserCreating ? (
-      <span data-qa="spinner" className="pb-2">
+      <span data-qa="spinner" className={s.spinner}>
         <LoadingOutlined />
       </span>
     ) : null;
   return (
-    <main tabIndex={-1} className="col-start-2 col-end-26">
-      <section className="flex flex-col items-center">
+    <>
+      <section className={s.formHeader}>
         <Typography.H1>CourseSpark</Typography.H1>
-        <Typography.Body>Create new account</Typography.Body>
-        <Typography.Body size="small">30 day trial</Typography.Body>
+        <Typography.Body weight="medium" className="text-blue-700">
+          Create new account
+        </Typography.Body>
+        <Typography.Body size="small" className="text-blue-700">
+          30 day trial
+        </Typography.Body>
+      </section>
+      <main tabIndex={-1} className={s.formInputsWrapper}>
         <div className="flex flex-row">
           <InputText
             id="input-first-name"
@@ -93,6 +101,7 @@ const RegistrationForm = () => {
             inputType="text"
             placeholder="Your First name*"
             ref={firstNameRef}
+            className={c(s.input, 'flex-1')}
           />
           <InputText
             id="input-last-name"
@@ -100,6 +109,7 @@ const RegistrationForm = () => {
             inputType="text"
             placeholder="Your Last name*"
             ref={lastNameRef}
+            className={c(s.input, 'flex-1', 'ml-3')}
           />
         </div>
         <InputText
@@ -108,6 +118,7 @@ const RegistrationForm = () => {
           inputType="email"
           placeholder="Your Professional Email*"
           ref={emailRef}
+          className={s.input}
         />
         <InputText
           id="input-password"
@@ -115,6 +126,7 @@ const RegistrationForm = () => {
           inputType="text"
           placeholder="Password*"
           ref={passwordRef}
+          className={s.input}
         />
         <InputText
           id="input-confirm-password"
@@ -122,19 +134,23 @@ const RegistrationForm = () => {
           inputType="text"
           placeholder="Confirm Password*"
           ref={confirmPasswordRef}
+          className={s.input}
         />
-        <Typography.Body size="small">
+        <Typography.Body size="small" className="mt-1 text-blue-700">
           By clicking Create Account, you agree to the Boclips User Agreement,
           Privacy Policy, and Cookie Policy.
         </Typography.Body>
+      </main>
+      <section className={s.createAccountButtonWrapper}>
         <Button
           onClick={handleUserCreation}
           text="Create Account"
           disabled={isTrialUserCreating}
           icon={getSpinner()}
+          className={s.createAccountButton}
         />
       </section>
-    </main>
+    </>
   );
 };
 
