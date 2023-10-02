@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import { useUpdateUser } from 'src/hooks/api/userQuery';
-import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
+import {
+  UserType,
+  UpdateUserRequest,
+} from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import YesNo from 'src/components/common/yesNo/YesNo';
 import { ROLES } from 'src/types/Roles';
 import { WithValidRoles } from 'src/components/common/errors/WithValidRoles';
 import { Typography } from '@boclips-ui/typography';
-import { UpdateUserRequest } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
 
 type Props = {

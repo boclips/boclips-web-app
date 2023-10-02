@@ -2,7 +2,10 @@ import { BoclipsClient } from 'boclips-api-client';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
-import { CreateUserRequest } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
+import {
+  CreateTrialUserRequest,
+  CreateUserRequest,
+} from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
 import { UpdateUserRequest } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
@@ -51,6 +54,21 @@ export const useAddNewUser = () => {
       },
     },
   );
+};
+
+export const useAddNewTrialUser = () => {
+  const client = useBoclipsClient();
+
+  return useMutation((userRequest: CreateTrialUserRequest) =>
+    doCreateNewTrialUser(userRequest, client),
+  );
+};
+
+const doCreateNewTrialUser = (
+  request: CreateTrialUserRequest,
+  client: BoclipsClient,
+): Promise<User> => {
+  return client.users.createTrialUser(request);
 };
 
 export const useUpdateUser = () => {

@@ -76,8 +76,8 @@ const ThemeView = lazyWithRetry(
   () => import('src/views/alignments/theme/ThemeView'),
 );
 
-const RegistrationView = lazyWithRetry(
-  () => import('src/views/registration/RegistrationView'),
+const RegisterView = lazyWithRetry(
+  () => import('src/views/register/RegisterView'),
 );
 
 interface Props {
@@ -234,7 +234,7 @@ const App = ({
                           fallback={<NotFound />}
                           isView
                         >
-                          <RegistrationView />
+                          <RegisterView />
                         </FeatureGate>
                       }
                     />
