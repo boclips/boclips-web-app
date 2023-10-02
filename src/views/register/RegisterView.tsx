@@ -5,7 +5,7 @@ import { Layout } from 'src/components/layout/Layout';
 import { Helmet } from 'react-helmet';
 import RegistrationForm from 'src/components/registration/RegistrationForm';
 
-const RegistrationView = () => {
+const RegisterView = () => {
   return (
     <>
       <Helmet title="Register" />
@@ -18,4 +18,4 @@ const RegistrationView = () => {
   );
 };
 
-export default RegistrationView;
+export default RegisterView;
