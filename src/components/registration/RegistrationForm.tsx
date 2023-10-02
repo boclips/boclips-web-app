@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef, useState } from 'react';
+import React, { ReactElement, useCallback, useState } from 'react';
 import { Typography } from '@boclips-ui/typography';
 import { InputText } from '@boclips-ui/input';
 import Button from '@boclips-ui/button';
@@ -8,6 +8,7 @@ import { displayNotification } from 'src/components/common/notification/displayN
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import { LoadingOutlined } from '@ant-design/icons';
 import c from 'classnames';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import s from './style.module.less';
 
 interface RegistrationData {
@@ -21,6 +22,17 @@ interface RegistrationData {
 const RegistrationForm = () => {
   const { mutate: createTrialUser, isLoading: isTrialUserCreating } =
     useAddNewTrialUser();
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
+  const handleReCaptchaVerify = useCallback(async () => {
+    if (!executeRecaptcha) {
+      console.log('Execute recaptcha not yet available');
+      return null;
+    }
+
+    const token = await executeRecaptcha('register');
+    return token;
+  }, [executeRecaptcha]);
 
   const [registrationData, setRegistrationData] = useState<RegistrationData>({
     firstName: '',
@@ -29,12 +41,6 @@ const RegistrationForm = () => {
     password: '',
     confirmPassword: '',
   });
-
-  const firstNameRef = useRef(null);
-  const lastNameRef = useRef(null);
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-  const confirmPassRef = useRef(null);
 
   const handleChange = (fieldName, value) => {
     if (!value) return;
@@ -46,21 +52,15 @@ const RegistrationForm = () => {
     });
   };
 
-  const clear = () => {
-    firstNameRef.current.value = '';
-    lastNameRef.current.value = '';
-    emailRef.current.value = '';
-    passwordRef.current.value = '';
-    confirmPassRef.current.value = '';
-  };
-
-  const handleUserCreation = () => {
+  const handleUserCreation = async () => {
+    const token = await handleReCaptchaVerify();
     createTrialUser(
       {
         email: registrationData.email,
         firstName: registrationData.firstName,
         lastName: registrationData.lastName,
         password: registrationData.password,
+        recaptchaToken: token,
         type: UserType.trialB2bUser,
       },
       {
@@ -69,7 +69,6 @@ const RegistrationForm = () => {
             'success',
             `User ${user.email} successfully created`,
           );
-          clear();
         },
         onError: () => {
           displayNotification('error', 'User creation failed');
@@ -104,7 +103,6 @@ const RegistrationForm = () => {
             inputType="text"
             placeholder="John"
             defaultValue={registrationData.firstName}
-            ref={firstNameRef}
             className={c(s.input, 'flex-1 mr-4')}
             labelText="First name"
           />
@@ -113,7 +111,6 @@ const RegistrationForm = () => {
             onChange={(value) => handleChange('lastName', value)}
             inputType="text"
             placeholder="Smith"
-            ref={lastNameRef}
             className={c(s.input, 'flex-1')}
             labelText="Last name"
           />
@@ -123,7 +120,6 @@ const RegistrationForm = () => {
           onChange={(value) => handleChange('email', value)}
           inputType="text"
           placeholder="smith@gmail.com"
-          ref={emailRef}
           className={c(s.input)}
           labelText="Email"
         />
@@ -132,7 +128,6 @@ const RegistrationForm = () => {
           onChange={(value) => handleChange('password', value)}
           inputType="password"
           placeholder="*********"
-          ref={passwordRef}
           className={c(s.input)}
           labelText="Password"
         />
@@ -141,7 +136,6 @@ const RegistrationForm = () => {
           onChange={(value) => handleChange('confirmPassword', value)}
           inputType="password"
           placeholder="*********"
-          ref={confirmPassRef}
           className={c(s.input)}
           labelText="Confirm password"
         />

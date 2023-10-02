@@ -12,13 +12,29 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
 import { ToastContainer } from 'react-toastify';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 
+const mockExecuteRecaptcha = jest.fn((_?: string) =>
+  Promise.resolve('token_baby'),
+);
+jest.mock('react-google-recaptcha-v3', () => {
+  return {
+    GoogleReCaptchaProvider: ({ children }: any): React.JSX.Element => {
+      return <>{children}</>;
+    },
+    useGoogleReCaptcha: () => ({
+      executeRecaptcha: mockExecuteRecaptcha,
+    }),
+  };
+});
 describe('Registration Form', () => {
   it('renders the form', async () => {
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <RegistrationForm />
+          <GoogleReCaptchaProvider reCaptchaKey="123">
+            <RegistrationForm />
+          </GoogleReCaptchaProvider>
         </BoclipsClientProvider>
       </QueryClientProvider>,
     );
@@ -50,7 +66,9 @@ describe('Registration Form', () => {
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={fakeClient}>
-          <RegistrationForm />
+          <GoogleReCaptchaProvider reCaptchaKey="123">
+            <RegistrationForm />
+          </GoogleReCaptchaProvider>
         </BoclipsClientProvider>
       </QueryClientProvider>,
     );
@@ -72,6 +90,7 @@ describe('Registration Form', () => {
         lastName: 'James',
         email: 'lj@nba.com',
         password: 'p@ss',
+        recaptchaToken: 'token_baby',
         type: UserType.trialB2bUser,
       });
     });
@@ -87,7 +106,9 @@ describe('Registration Form', () => {
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={fakeClient}>
           <ToastContainer />
-          <RegistrationForm />
+          <GoogleReCaptchaProvider reCaptchaKey="123">
+            <RegistrationForm />
+          </GoogleReCaptchaProvider>
         </BoclipsClientProvider>
       </QueryClientProvider>,
     );
@@ -111,7 +132,7 @@ describe('Registration Form', () => {
     expect(wrapper.getAllByDisplayValue('p@ss')).toHaveLength(2);
   });
 
-  it('success notification is displayed when trial user creation passes, inputs are cleared', async () => {
+  it('success notification is displayed when trial user creation passes', async () => {
     const fakeClient = new FakeBoclipsClient();
     jest
       .spyOn(fakeClient.users, 'createTrialUser')
@@ -123,7 +144,9 @@ describe('Registration Form', () => {
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={fakeClient}>
           <ToastContainer />
-          <RegistrationForm />
+          <GoogleReCaptchaProvider reCaptchaKey="123">
+            <RegistrationForm />
+          </GoogleReCaptchaProvider>
         </BoclipsClientProvider>
       </QueryClientProvider>,
     );
@@ -142,11 +165,6 @@ describe('Registration Form', () => {
     expect(
       await wrapper.findByText('User test@boclips.com successfully created'),
     ).toBeVisible();
-
-    expect(wrapper.queryByDisplayValue('LeBron')).toBeNull();
-    expect(wrapper.queryByDisplayValue('James')).toBeNull();
-    expect(wrapper.queryByDisplayValue('lj@nba.com')).toBeNull();
-    expect(wrapper.queryAllByDisplayValue('p@ss')).toHaveLength(0);
   });
 
   function fillRegistrationForm(

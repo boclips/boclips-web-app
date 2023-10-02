@@ -46,6 +46,10 @@ export class AppConstants {
       this.window.location.port ? `:${this.window.location.port}` : ''
     }`;
   }
+
+  public get CAPTCHA_TOKEN(): string {
+    return this.window.Environment.CAPTCHA_TOKEN ?? null;
+  }
 }
 
 export const Constants = new AppConstants(window);
