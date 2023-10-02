@@ -82,7 +82,9 @@ describe('CartItem', () => {
     expect(await wrapper.findByText('Additional services')).toBeInTheDocument();
     expect(await wrapper.findByText('Trim video')).toBeInTheDocument();
     expect(
-      await wrapper.findByText('Request English Caption and Transcript file'),
+      await wrapper.findByText(
+        'Request human-generated caption and transcript files (in English)',
+      ),
     ).toBeInTheDocument();
     expect(
       await wrapper.findByText('Request other type of editing'),
@@ -248,7 +250,9 @@ describe('CartItem', () => {
     );
 
     fireEvent.click(
-      await wrapper.findByText('Request English Caption and Transcript file'),
+      await wrapper.findByText(
+        'Request human-generated caption and transcript files (in English)',
+      ),
     );
 
     let cart = await fakeClient.carts.getCart();
@@ -261,7 +265,9 @@ describe('CartItem', () => {
     });
 
     fireEvent.click(
-      await wrapper.findByText('Request English Caption and Transcript file'),
+      await wrapper.findByText(
+        'Request human-generated caption and transcript files (in English)',
+      ),
     );
 
     cart = await fakeClient.carts.getCart();

@@ -53,14 +53,14 @@ export const CartOrderSummary = ({ cart }: Props) => {
   return (
     <>
       <div className="col-start-19 col-end-26">
+        {additionalServicesRequested && (
+          <AdditionalServicesPricingMessage
+            captionsOrTranscriptsRequested={captionsOrTranscriptsRequested}
+          />
+        )}
         <div className="flex flex-col rounded p-5 shadow">
           {getTotalPrice(videos) && <CartOrderItemsSummary cart={cart} />}
 
-          {additionalServicesRequested && (
-            <AdditionalServicesPricingMessage
-              captionsOrTranscriptsRequested={captionsOrTranscriptsRequested}
-            />
-          )}
           <Button
             onClick={() => {
               setDisplayErrorMessage(!isCartValid);

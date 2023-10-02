@@ -62,7 +62,9 @@ describe('AdditionalServices component', () => {
     );
 
     expect(
-      await wrapper.findByText('Request English Caption and Transcript file'),
+      await wrapper.findByText(
+        'Request human-generated caption and transcript files (in English)',
+      ),
     ).toBeVisible();
     expect(await wrapper.queryByText('Trim video')).toBeNull();
     expect(
@@ -103,7 +105,9 @@ describe('AdditionalServices component', () => {
     );
 
     expect(
-      await wrapper.findByText('Request English Caption and Transcript file'),
+      await wrapper.findByText(
+        'Request human-generated caption and transcript files (in English)',
+      ),
     ).toBeVisible();
     expect(await wrapper.findByText('Trim video')).toBeVisible();
     expect(

@@ -55,7 +55,7 @@ export const CartOrderItemsSummary = ({ cart }: Props) => {
       <Typography.H1
         size="xs"
         weight="regular"
-        className="flex text-gray-900 justify-between mb-6"
+        className="flex text-gray-900 justify-between mb-2"
       >
         <span>Total</span>
         <span data-qa="total-price">

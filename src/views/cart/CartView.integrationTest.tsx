@@ -91,7 +91,7 @@ describe('CartView', () => {
     expect(wrapper.getByTestId('additional-services-summary')).toBeVisible();
     expect(
       wrapper.getByText(
-        'Note: human-generated captions can take approx. 3 days to be ready for use.',
+        'Please note that requests for human-generated captions can take between 1-3 business days to be provided.',
       ),
     ).toBeVisible();
   });
@@ -138,7 +138,7 @@ describe('CartView', () => {
       ).toBeVisible();
       expect(
         within(it).getByText(
-          'Note: human-generated captions can take approx. 3 days to be ready for use.',
+          'Please note that requests for human-generated captions can take between 1-3 business days to be provided.',
         ),
       ).toBeVisible();
     });
@@ -339,7 +339,9 @@ describe('CartView', () => {
       });
 
       fireEvent.click(
-        await wrapper.findByText('Request English Caption and Transcript file'),
+        await wrapper.findByText(
+          'Request human-generated caption and transcript files (in English)',
+        ),
       );
       fireEvent.click(await wrapper.findByText('Trim video'));
 
@@ -656,7 +658,9 @@ describe('CartView', () => {
       const wrapper = await renderCartView(fakeClient);
 
       expect(
-        await wrapper.findByText('Request English Caption and Transcript file'),
+        await wrapper.findByText(
+          'Request human-generated caption and transcript files (in English)',
+        ),
       ).toBeVisible();
       expect(await wrapper.queryByText('Trim video')).toBeNull();
       expect(
