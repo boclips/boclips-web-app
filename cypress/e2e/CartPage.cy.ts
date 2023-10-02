@@ -19,9 +19,9 @@ context('Cart page -- feature flags off', () => {
     cy.findByText('Shopping cart');
     cy.findAllByRole('button', { name: 'Remove Remove' }); // SVG + text leads to this title
 
-    cy.findByText('Request human-generated caption and transcript files (in English)').should(
-      'not.exist',
-    );
+    cy.findByText(
+      'Request human-generated caption and transcript files (in English)',
+    ).should('not.exist');
     cy.findByText('Request other type of editing').should('not.exist');
 
     cy.percySnapshot('Cart view -- without feature flags');
@@ -65,9 +65,9 @@ context('Cart page -- feature flags on', () => {
     cy.findByText('Shopping cart');
     cy.findAllByRole('button', { name: 'Remove Remove' }); // SVG + text leads to this title
 
-    cy.findAllByText('Request human-generated caption and transcript files (in English)').should(
-      'exist',
-    );
+    cy.findAllByText(
+      'Request human-generated caption and transcript files (in English)',
+    ).should('exist');
     cy.findAllByText('Request other type of editing').should('exist');
 
     cy.percySnapshot('Cart view -- with feature flags');
