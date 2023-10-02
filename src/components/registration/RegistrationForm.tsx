@@ -46,6 +46,14 @@ const RegistrationForm = () => {
     });
   };
 
+  const clear = () => {
+    firstNameRef.current.value = '';
+    lastNameRef.current.value = '';
+    emailRef.current.value = '';
+    passwordRef.current.value = '';
+    confirmPassRef.current.value = '';
+  };
+
   const handleUserCreation = () => {
     createTrialUser(
       {
@@ -61,76 +69,21 @@ const RegistrationForm = () => {
             'success',
             `User ${user.email} successfully created`,
           );
-          clearInputs();
+          clear();
         },
-        onError: () => displayNotification('error', 'User creation failed'),
+        onError: () => {
+          displayNotification('error', 'User creation failed');
+        },
       },
     );
   };
 
-  const clearInputs = () => {
-    firstNameRef.current.value = '';
-    lastNameRef.current.value = '';
-    emailRef.current.value = '';
-    passwordRef.current.value = '';
-    confirmPassRef.current.value = '';
-  };
-
-  const getSpinner = (): ReactElement =>
+  const getButtonSpinner = (): ReactElement =>
     isTrialUserCreating ? (
       <span data-qa="spinner" className={s.spinner}>
         <LoadingOutlined />
       </span>
     ) : null;
-
-  const textInput = (
-    name: string,
-    ref: React.MutableRefObject<HTMLInputElement>,
-    placeholder: string,
-    additionalStyles?: string,
-  ) => input(name, ref, placeholder, 'text', additionalStyles);
-
-  const emailInput = (
-    name: string,
-    ref: React.MutableRefObject<HTMLInputElement>,
-    placeholder: string,
-    additionalStyles?: string,
-  ) => input(name, ref, placeholder, 'email', additionalStyles);
-
-  const passwordInput = (
-    name: string,
-    ref: React.MutableRefObject<HTMLInputElement>,
-    placeholder: string,
-    additionalStyles?: string,
-  ) => input(name, ref, placeholder, 'password', additionalStyles);
-
-  const input = (
-    name: string,
-    ref: React.MutableRefObject<HTMLInputElement>,
-    placeholder: string,
-    type: string,
-    additionalStyles?: string,
-  ) => (
-    <InputText
-      id={`input-${name}`}
-      onChange={(value) => handleChange(name, value)}
-      inputType={resolveInputType(type)}
-      placeholder={placeholder}
-      ref={ref}
-      className={c(s.input, additionalStyles)}
-    />
-  );
-
-  const resolveInputType = (type: string): 'text' | 'email' | 'password' => {
-    switch (type) {
-      case 'email':
-        return 'email';
-      case 'password':
-        return 'password';
-      default:
-        return 'text';
-    }
-  };
 
   return (
     <>
@@ -145,12 +98,53 @@ const RegistrationForm = () => {
       </section>
       <main tabIndex={-1} className={s.formInputsWrapper}>
         <div className="flex flex-row">
-          {textInput('firstName', firstNameRef, 'Your First name*', 'flex-1')}
-          {textInput('lastName', lastNameRef, 'Your Last name*', 'flex-1 ml-3')}
+          <InputText
+            id="input-firstName"
+            onChange={(value) => handleChange('firstName', value)}
+            inputType="text"
+            placeholder="John"
+            defaultValue={registrationData.firstName}
+            ref={firstNameRef}
+            className={c(s.input, 'flex-1 mr-4')}
+            labelText="First name"
+          />
+          <InputText
+            id="input-lastName"
+            onChange={(value) => handleChange('lastName', value)}
+            inputType="text"
+            placeholder="Smith"
+            ref={lastNameRef}
+            className={c(s.input, 'flex-1')}
+            labelText="Last name"
+          />
         </div>
-        {emailInput('email', emailRef, 'Your Professional Email*')}
-        {passwordInput('password', passwordRef, 'Password*')}
-        {passwordInput('confirmPassword', confirmPassRef, 'Confirm Password*')}
+        <InputText
+          id="input-email"
+          onChange={(value) => handleChange('email', value)}
+          inputType="text"
+          placeholder="smith@gmail.com"
+          ref={emailRef}
+          className={c(s.input)}
+          labelText="Email"
+        />
+        <InputText
+          id="input-password"
+          onChange={(value) => handleChange('password', value)}
+          inputType="password"
+          placeholder="*********"
+          ref={passwordRef}
+          className={c(s.input)}
+          labelText="Password"
+        />
+        <InputText
+          id="input-confirmPassword"
+          onChange={(value) => handleChange('confirmPassword', value)}
+          inputType="password"
+          placeholder="*********"
+          ref={confirmPassRef}
+          className={c(s.input)}
+          labelText="Confirm password"
+        />
 
         <Typography.Body size="small" className={c(s.blueText, 'mt-1')}>
           By clicking Create Account, you agree to the Boclips User Agreement,
@@ -162,7 +156,7 @@ const RegistrationForm = () => {
           onClick={handleUserCreation}
           text="Create Account"
           disabled={isTrialUserCreating}
-          icon={getSpinner()}
+          icon={getButtonSpinner()}
           className={s.createAccountButton}
         />
       </section>

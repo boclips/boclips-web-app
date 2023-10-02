@@ -26,13 +26,12 @@ describe('Registration Form', () => {
     expect(wrapper.getByText('CourseSpark')).toBeVisible();
     expect(wrapper.getByText('Create new account')).toBeVisible();
     expect(wrapper.getByText('30 day trial')).toBeVisible();
-    expect(wrapper.getByPlaceholderText('Your First name*')).toBeVisible();
-    expect(wrapper.getByPlaceholderText('Your Last name*')).toBeVisible();
-    expect(
-      wrapper.getByPlaceholderText('Your Professional Email*'),
-    ).toBeVisible();
-    expect(wrapper.getByPlaceholderText('Password*')).toBeVisible();
-    expect(wrapper.getByPlaceholderText('Confirm Password*')).toBeVisible();
+    expect(wrapper.getByLabelText('First name')).toBeVisible();
+    expect(wrapper.getByLabelText('Last name')).toBeVisible();
+    expect(wrapper.getByLabelText('Email')).toBeVisible();
+    expect(wrapper.getByLabelText('Password')).toBeVisible();
+    expect(wrapper.getByLabelText('Confirm password')).toBeVisible();
+
     expect(
       wrapper.getByText(
         'By clicking Create Account, you agree to the Boclips User Agreement, Privacy Policy, and Cookie Policy.',
@@ -158,19 +157,19 @@ describe('Registration Form', () => {
     password: string,
     confirmPassword: string,
   ) {
-    fireEvent.change(wrapper.getByPlaceholderText('Your First name*'), {
+    fireEvent.change(wrapper.getByLabelText('First name'), {
       target: { value: firstName },
     });
-    fireEvent.change(wrapper.getByPlaceholderText('Your Last name*'), {
+    fireEvent.change(wrapper.getByLabelText('Last name'), {
       target: { value: lastName },
     });
-    fireEvent.change(wrapper.getByPlaceholderText('Your Professional Email*'), {
+    fireEvent.change(wrapper.getByLabelText('Email'), {
       target: { value: email },
     });
-    fireEvent.change(wrapper.getByPlaceholderText('Password*'), {
+    fireEvent.change(wrapper.getByLabelText('Password'), {
       target: { value: password },
     });
-    fireEvent.change(wrapper.getByPlaceholderText('Confirm Password*'), {
+    fireEvent.change(wrapper.getByLabelText('Confirm password'), {
       target: { value: confirmPassword },
     });
   }
