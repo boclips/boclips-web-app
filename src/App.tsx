@@ -19,6 +19,7 @@ import UserAttributes from 'src/services/analytics/hotjar/UserAttributes';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import FallbackView from 'src/views/fallback/FallbackView';
 import { RedirectFromExploreToSparks } from 'src/components/sparks/RedirectFromExploreToSparks';
+import * as Sentry from '@sentry/browser';
 import { BoclipsClientProvider } from './components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSecurityProvider';
 import { GlobalQueryErrorProvider } from './components/common/providers/GlobalQueryErrorProvider';
@@ -101,11 +102,28 @@ const App = ({
       AnalyticsFactory.hotjar().userAttributes(new UserAttributes(user));
     });
     // eslint-disable-next-line
-  }, []);
+    }, []);
 
   useEffect(() => {
     trackPageRendered(currentLocation, apiClient);
   }, [currentLocation, apiClient]);
+
+  function handleCustomEvent(event: CustomEvent) {
+    if (event.type === 'error') {
+      Sentry.captureException(new Error('Custom event exception'), {
+        tags: {
+          content: `${JSON.stringify(event)}`,
+        },
+        contexts: {
+          extra: {
+            description: `${JSON.stringify(event)}`,
+          },
+        },
+      });
+    }
+  }
+
+  document.addEventListener('customEvent', handleCustomEvent);
 
   return (
     <QueryClientProvider client={reactQueryClient}>
