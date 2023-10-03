@@ -17,6 +17,7 @@ interface RegistrationData {
   email: string;
   password: string;
   confirmPassword: string;
+  accountName: string;
 }
 
 const RegistrationForm = () => {
@@ -40,6 +41,7 @@ const RegistrationForm = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    accountName: '',
   });
 
   const handleChange = (fieldName, value) => {
@@ -62,6 +64,7 @@ const RegistrationForm = () => {
         password: registrationData.password,
         recaptchaToken: token,
         type: UserType.trialB2bUser,
+        accountName: registrationData.accountName,
       },
       {
         onSuccess: (user: User) => {
@@ -96,6 +99,15 @@ const RegistrationForm = () => {
         </Typography.Body>
       </section>
       <main tabIndex={-1} className={s.formInputsWrapper}>
+        <InputText
+          id="input-accountName"
+          onChange={(value) => handleChange('accountName', value)}
+          inputType="text"
+          placeholder="Your account name"
+          defaultValue={registrationData.firstName}
+          className={s.input}
+          labelText="Account name"
+        />
         <div className="flex flex-row">
           <InputText
             id="input-firstName"
@@ -123,22 +135,24 @@ const RegistrationForm = () => {
           className={c(s.input)}
           labelText="Email"
         />
-        <InputText
-          id="input-password"
-          onChange={(value) => handleChange('password', value)}
-          inputType="password"
-          placeholder="*********"
-          className={c(s.input)}
-          labelText="Password"
-        />
-        <InputText
-          id="input-confirmPassword"
-          onChange={(value) => handleChange('confirmPassword', value)}
-          inputType="password"
-          placeholder="*********"
-          className={c(s.input)}
-          labelText="Confirm password"
-        />
+        <div className="flex flex-row">
+          <InputText
+            id="input-password"
+            onChange={(value) => handleChange('password', value)}
+            inputType="password"
+            placeholder="*********"
+            className={c(s.input, 'flex-1 mr-4')}
+            labelText="Password"
+          />
+          <InputText
+            id="input-confirmPassword"
+            onChange={(value) => handleChange('confirmPassword', value)}
+            inputType="password"
+            placeholder="*********"
+            className={c(s.input, 'flex-1')}
+            labelText="Confirm password"
+          />
+        </div>
 
         <Typography.Body size="small" className={c(s.blueText, 'mt-1')}>
           By clicking Create Account, you agree to the Boclips User Agreement,

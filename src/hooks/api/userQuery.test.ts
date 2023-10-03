@@ -53,6 +53,7 @@ describe('userQuery', () => {
       email: 'lj@nba.com',
       password: 'p@ss',
       type: CreationUserType.trialB2bUser,
+      accountName: 'Los Angeles Lakers',
     };
 
     act(() => result.current.mutate(request));

@@ -47,6 +47,7 @@ describe('Registration Form', () => {
     expect(wrapper.getByLabelText('Email')).toBeVisible();
     expect(wrapper.getByLabelText('Password')).toBeVisible();
     expect(wrapper.getByLabelText('Confirm password')).toBeVisible();
+    expect(wrapper.getByLabelText('Account name')).toBeVisible();
 
     expect(
       wrapper.getByText(
@@ -80,6 +81,7 @@ describe('Registration Form', () => {
       'lj@nba.com',
       'p@ss',
       'p@ss',
+      'Los Angeles Lakers',
     );
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -92,6 +94,7 @@ describe('Registration Form', () => {
         password: 'p@ss',
         recaptchaToken: 'token_baby',
         type: UserType.trialB2bUser,
+        accountName: 'Los Angeles Lakers',
       });
     });
   });
@@ -120,6 +123,7 @@ describe('Registration Form', () => {
       'lj@nba.com',
       'p@ss',
       'p@ss',
+      'Los Angeles Lakers',
     );
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -158,6 +162,7 @@ describe('Registration Form', () => {
       'lj@nba.com',
       'p@ss',
       'p@ss',
+      'Los Angeles Lakers',
     );
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -174,6 +179,7 @@ describe('Registration Form', () => {
     email: string,
     password: string,
     confirmPassword: string,
+    accountName: string,
   ) {
     fireEvent.change(wrapper.getByLabelText('First name'), {
       target: { value: firstName },
@@ -189,6 +195,9 @@ describe('Registration Form', () => {
     });
     fireEvent.change(wrapper.getByLabelText('Confirm password'), {
       target: { value: confirmPassword },
+    });
+    fireEvent.change(wrapper.getByLabelText('Account name'), {
+      target: { value: accountName },
     });
   }
 });
