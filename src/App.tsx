@@ -108,9 +108,11 @@ const App = ({
     trackPageRendered(currentLocation, apiClient);
   }, [currentLocation, apiClient]);
 
-  function handleCustomEvent(event: CustomEvent) {
-    if (event.type === 'error') {
-      Sentry.captureException(new Error('Custom event exception'), {
+  const handleErrorCustomEvent = (event) => {
+    console.error('error event occurred:', event);
+    const error = event.error;
+    if (error instanceof CustomEvent) {
+      Sentry.captureException(new Error('error custom event exception'), {
         tags: {
           content: `${JSON.stringify(event)}`,
         },
@@ -121,9 +123,9 @@ const App = ({
         },
       });
     }
-  }
+  };
 
-  document.addEventListener('customEvent', handleCustomEvent);
+  document.addEventListener('customEvent', handleErrorCustomEvent);
 
   return (
     <QueryClientProvider client={reactQueryClient}>
