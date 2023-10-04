@@ -125,7 +125,7 @@ const App = ({
     }
   };
 
-  document.addEventListener('customEvent', handleErrorCustomEvent);
+  document.addEventListener('error', handleErrorCustomEvent);
 
   return (
     <QueryClientProvider client={reactQueryClient}>
