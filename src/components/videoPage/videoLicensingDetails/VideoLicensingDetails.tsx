@@ -4,6 +4,7 @@ import c from 'classnames';
 import { Typography } from '@boclips-ui/typography';
 import { VideoLicensingDetail } from 'src/components/videoPage/videoLicensingDetails/VideoLicensingDetail';
 import { getVideoPageLicenseDurationLabel } from 'src/services/getVideoLicenseDurationLabel';
+import { getEditingRestrictionsLabel } from 'src/components/videoPage/videoLicensingDetails/getEditingRestrictionsLabel';
 import s from './videoLicensingDetails.module.less';
 
 interface Props {
@@ -24,6 +25,15 @@ export const VideoLicensingDetails = ({ video }: Props) => {
             video.maxLicenseDurationYears,
           )}
         />
+
+        {video.restrictions?.editing?.permission && (
+          <VideoLicensingDetail
+            title="Editing restrictions"
+            value={getEditingRestrictionsLabel(
+              video.restrictions.editing.permission,
+            )}
+          />
+        )}
       </div>
     </section>
   );

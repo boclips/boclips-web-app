@@ -1,10 +1,10 @@
 import { Typography } from '@boclips-ui/typography';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import s from './videoLicensingDetails.module.less';
 
 interface Props {
   title: string;
-  value: string;
+  value: string | ReactElement;
 }
 
 export const VideoLicensingDetail = ({ title, value }: Props) => {
