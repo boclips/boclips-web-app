@@ -14,17 +14,10 @@ export const TerritoryRestrictionsLabel = ({ territories }: Props) => {
     return `${territories.length} countries`;
   };
 
-  const getCountriesList = () => {
-    if (territories.length === 1) {
-      return territories[0];
-    }
-    return territories.join(', ');
-  };
-
   return (
     <p className="flex flex-row items-center gap-1">
       <span>{getLabel()}</span>
-      <Tooltip text={getCountriesList()}>
+      <Tooltip text={territories.join(', ')}>
         <button type="button" data-qa="territories-details">
           <InfoSVG onClick={null} />
         </button>
