@@ -3,6 +3,7 @@ import {
   render,
   RenderResult,
   waitFor,
+  within,
 } from '@testing-library/react';
 import React from 'react';
 import RegistrationForm from 'src/components/registration/RegistrationForm';
@@ -48,6 +49,13 @@ describe('Registration Form', () => {
     expect(wrapper.getByLabelText('Password')).toBeVisible();
     expect(wrapper.getByLabelText('Confirm password')).toBeVisible();
     expect(wrapper.getByLabelText('Account name')).toBeVisible();
+    expect(wrapper.getByTestId('input-dropdown-job-title')).toBeVisible();
+    expect(wrapper.getByTestId('input-dropdown-country')).toBeVisible();
+    expect(wrapper.getByTestId('input-dropdown-audience')).toBeVisible();
+    expect(wrapper.getByTestId('input-dropdown-type-of-org')).toBeVisible();
+    expect(
+      wrapper.getByLabelText('What content are you looking for?'),
+    ).toBeVisible();
 
     expect(
       wrapper.getByText(
@@ -82,6 +90,12 @@ describe('Registration Form', () => {
       'p@ss',
       'p@ss',
       'Los Angeles Lakers',
+      'Teacher',
+      'Poland',
+      'EdTech',
+      'K12',
+      'Teacher',
+      'Maths',
     );
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -95,6 +109,13 @@ describe('Registration Form', () => {
         recaptchaToken: 'token_baby',
         type: UserType.trialB2bUser,
         accountName: 'Los Angeles Lakers',
+        marketingInformation: {
+          country: 'POL',
+          organisationType: 'EdTech',
+          audience: 'K12',
+          discoveryMethod: 'Teacher',
+          desiredContent: 'Maths',
+        },
       });
     });
   });
@@ -124,6 +145,12 @@ describe('Registration Form', () => {
       'p@ss',
       'p@ss',
       'Los Angeles Lakers',
+      'Teacher',
+      'Poland',
+      'EdTech',
+      'K12',
+      'Teacher',
+      'Maths',
     );
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -163,6 +190,12 @@ describe('Registration Form', () => {
       'p@ss',
       'p@ss',
       'Los Angeles Lakers',
+      'Teacher',
+      'Poland',
+      'EdTech',
+      'K12',
+      'Teacher',
+      'Maths',
     );
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -180,6 +213,12 @@ describe('Registration Form', () => {
     password: string,
     confirmPassword: string,
     accountName: string,
+    jobTitle: string,
+    country: string,
+    typeOfOrg: string,
+    audience: string,
+    discoveryMethod: string,
+    desiredContent: string,
   ) {
     fireEvent.change(wrapper.getByLabelText('First name'), {
       target: { value: firstName },
@@ -199,5 +238,35 @@ describe('Registration Form', () => {
     fireEvent.change(wrapper.getByLabelText('Account name'), {
       target: { value: accountName },
     });
+
+    const jobTitleDropdown = wrapper.getByTestId('input-dropdown-job-title');
+    fireEvent.click(within(jobTitleDropdown).getByTestId('select'));
+    fireEvent.click(within(jobTitleDropdown).getByText(jobTitle));
+
+    const countryDropdown = wrapper.getByTestId('input-dropdown-country');
+    fireEvent.click(within(countryDropdown).getByTestId('select'));
+    fireEvent.click(within(countryDropdown).getByText(country));
+
+    const typeOfOrgDropdown = wrapper.getByTestId('input-dropdown-type-of-org');
+    fireEvent.click(within(typeOfOrgDropdown).getByTestId('select'));
+    fireEvent.click(within(typeOfOrgDropdown).getByText(typeOfOrg));
+
+    const audienceDropdown = wrapper.getByTestId('input-dropdown-audience');
+    fireEvent.click(within(audienceDropdown).getByTestId('select'));
+    fireEvent.click(within(audienceDropdown).getByText(audience));
+
+    fireEvent.change(
+      wrapper.getByLabelText('How did you hear about Boclips?'),
+      {
+        target: { value: discoveryMethod },
+      },
+    );
+
+    fireEvent.change(
+      wrapper.getByLabelText('What content are you looking for?'),
+      {
+        target: { value: desiredContent },
+      },
+    );
   }
 });
