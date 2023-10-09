@@ -4,7 +4,8 @@ import c from 'classnames';
 import { Typography } from '@boclips-ui/typography';
 import { VideoLicensingDetail } from 'src/components/videoPage/videoLicensingDetails/VideoLicensingDetail';
 import { getVideoPageLicenseDurationLabel } from 'src/services/getVideoLicenseDurationLabel';
-import { getEditingRestrictionsLabel } from 'src/components/videoPage/videoLicensingDetails/getEditingRestrictionsLabel';
+import { EditingRestrictionsLabel } from 'src/components/videoPage/videoLicensingDetails/EditingRestrictionsLabel';
+import { TerritoryRestrictionsLabel } from 'src/components/videoPage/videoLicensingDetails/TerritoryRestrictionsLabel';
 import s from './videoLicensingDetails.module.less';
 
 interface Props {
@@ -12,6 +13,11 @@ interface Props {
 }
 
 export const VideoLicensingDetails = ({ video }: Props) => {
+  const showTerritoryRestrictions =
+    video.restrictions?.territory?.type === 'RESTRICTED' &&
+    video.restrictions?.territory?.territories &&
+    video.restrictions?.territory?.territories.length > 0;
+
   return (
     <section className={c(s.scrollableLicensingDetails)}>
       <Typography.H1 size="xs" weight="medium" className="text-gray-900">
@@ -26,12 +32,25 @@ export const VideoLicensingDetails = ({ video }: Props) => {
           )}
         />
 
+        {showTerritoryRestrictions && (
+          <VideoLicensingDetail
+            title="Territory restrictions"
+            value={
+              <TerritoryRestrictionsLabel
+                territories={video.restrictions.territory.territories}
+              />
+            }
+          />
+        )}
+
         {video.restrictions?.editing?.permission && (
           <VideoLicensingDetail
             title="Editing restrictions"
-            value={getEditingRestrictionsLabel(
-              video.restrictions.editing.permission,
-            )}
+            value={
+              <EditingRestrictionsLabel
+                permission={video.restrictions.editing.permission}
+              />
+            }
           />
         )}
       </div>
