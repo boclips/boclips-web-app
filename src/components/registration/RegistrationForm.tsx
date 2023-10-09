@@ -77,6 +77,7 @@ const RegistrationForm = () => {
         recaptchaToken: token,
         type: UserType.trialB2bUser,
         accountName: registrationData.accountName,
+        jobTitle: registrationData.jobTitle,
         marketingInformation: {
           country: registrationData.country,
           organisationType: registrationData.typeOfOrg,
@@ -145,7 +146,7 @@ const RegistrationForm = () => {
           inputType="text"
           placeholder="smith@gmail.com"
           className={c(s.input)}
-          labelText="Email"
+          labelText="Professional email"
           height="48px"
         />
         <div className="flex flex-row">
@@ -211,11 +212,11 @@ const RegistrationForm = () => {
           <div className="flex flex-1 items-end mb-2 mr-4">
             <Dropdown
               mode="single"
-              placeholder="Type of organisation"
+              placeholder="Type of organization"
               onUpdate={(value) => handleChange('typeOfOrg', value)}
               options={TYPE_OF_ORG}
               dataQa="input-dropdown-type-of-org"
-              labelText="Type of organisation"
+              labelText="Type of organization"
               showLabel
               fitWidth
             />

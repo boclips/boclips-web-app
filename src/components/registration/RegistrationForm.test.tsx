@@ -45,7 +45,7 @@ describe('Registration Form', () => {
     expect(wrapper.getByText('30 day trial')).toBeVisible();
     expect(wrapper.getByLabelText('First name')).toBeVisible();
     expect(wrapper.getByLabelText('Last name')).toBeVisible();
-    expect(wrapper.getByLabelText('Email')).toBeVisible();
+    expect(wrapper.getByLabelText('Professional email')).toBeVisible();
     expect(wrapper.getByLabelText('Password')).toBeVisible();
     expect(wrapper.getByLabelText('Confirm password')).toBeVisible();
     expect(wrapper.getByLabelText('Account name')).toBeVisible();
@@ -109,6 +109,7 @@ describe('Registration Form', () => {
         recaptchaToken: 'token_baby',
         type: UserType.trialB2bUser,
         accountName: 'Los Angeles Lakers',
+        jobTitle: 'Teacher',
         marketingInformation: {
           country: 'POL',
           organisationType: 'EdTech',
@@ -226,7 +227,7 @@ describe('Registration Form', () => {
     fireEvent.change(wrapper.getByLabelText('Last name'), {
       target: { value: lastName },
     });
-    fireEvent.change(wrapper.getByLabelText('Email'), {
+    fireEvent.change(wrapper.getByLabelText('Professional email'), {
       target: { value: email },
     });
     fireEvent.change(wrapper.getByLabelText('Password'), {

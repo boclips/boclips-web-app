@@ -54,6 +54,7 @@ describe('userQuery', () => {
       password: 'p@ss',
       type: CreationUserType.trialB2bUser,
       accountName: 'Los Angeles Lakers',
+      jobTitle: 'Teacher',
       marketingInformation: {
         country: 'country',
         organisationType: 'typeOfOrg',
