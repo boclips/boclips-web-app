@@ -1,11 +1,12 @@
 @import '~@boclips-ui/styles/src/colors';
+@import '~@boclips-ui/styles/src/breakpoints';
 
 .formHeader {
   display: flex;
   flex-direction: column;
   align-items: center;
-  grid-column-start: 9;
-  grid-column-end: 19;
+  grid-column-start: 2;
+  grid-column-end: 26;
   grid-row-start: 2;
   grid-row-end: 3;
 }
@@ -13,8 +14,6 @@
 .formInputsWrapper {
   display: flex;
   flex-direction: column;
-  grid-column-start: 9;
-  grid-column-end: 19;
   grid-row-start: 3;
   grid-row-end: 4;
 }
@@ -43,4 +42,49 @@
 
 .blueText {
   color: @blue-700;
+}
+
+@media screen and (min-width: @screen-sm) {
+  .formInputsWrapper {
+    grid-column-start: 2;
+    grid-column-end: 26;
+
+    input, textarea {
+      &::placeholder {
+        font-size: 0.75rem !important;
+      }
+    }
+
+    button {
+      span {
+        font-size: 0.75rem !important;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: @screen-md) {
+  .formInputsWrapper {
+    grid-column-start: 4;
+    grid-column-end: 24;
+
+    input, textarea {
+      &::placeholder {
+        font-size: 1rem !important;
+      }
+    }
+
+    button {
+      span {
+        font-size: 1rem !important;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: @screen-lg) {
+  .formInputsWrapper {
+    grid-column-start: 9;
+    grid-column-end: 19;
+  }
 }
