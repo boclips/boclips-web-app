@@ -90,10 +90,10 @@ describe('CartView', () => {
     );
     expect(wrapper.getByTestId('additional-services-summary')).toBeVisible();
     expect(
-      wrapper.getByText(
-        'Please note that requests for human-generated captions can take between 1-3 business days to be provided.',
-      ),
-    ).toBeVisible();
+      wrapper.getByTestId('additional-services-summary'),
+    ).toHaveTextContent(
+      'Please contact your Account Manager or support@boclips.com for details on potential fees for additional services.',
+    );
   });
 
   it('displays order confirmation modal when place order button clicked', async () => {
@@ -137,10 +137,10 @@ describe('CartView', () => {
         within(it).getByTestId('additional-services-summary'),
       ).toBeVisible();
       expect(
-        within(it).getByText(
-          'Please note that requests for human-generated captions can take between 1-3 business days to be provided.',
-        ),
-      ).toBeVisible();
+        within(it).getByTestId('additional-services-summary'),
+      ).toHaveTextContent(
+        'Please contact your Account Manager or support@boclips.com for details on potential fees for additional services.',
+      );
     });
 
     expect(lastEvent(fakeClient)).toEqual({

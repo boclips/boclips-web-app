@@ -9,11 +9,62 @@ import {
   CartsFactory,
 } from 'boclips-api-client/dist/test-support/CartsFactory';
 import { CartValidationProvider } from 'src/components/common/providers/CartValidationProvider';
+import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 
 describe('Cart Order Summary', () => {
-  it('displays copy describing pricing for additional services if selected', async () => {
+  it('displays new copy describing pricing for additional services if selected and user has feature flag', async () => {
     const apiClient = new FakeBoclipsClient();
+    apiClient.videos.insertVideo(
+      VideoFactory.sample({
+        price: { amount: 300, currency: 'USD' },
+        id: 'video-id-1',
+      }),
+    );
+    apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
+    apiClient.users.insertCurrentUser(
+      UserFactory.sample({ features: { BO_WEB_APP_DEV: true } }),
+    );
+    const cart = CartsFactory.sample({
+      items: [
+        CartItemFactory.sample({
+          videoId: 'video-id-1',
+          additionalServices: {
+            transcriptRequested: true,
+            captionsRequested: true,
+          },
+        }),
+      ],
+    });
+
+    const wrapper = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={apiClient}>
+          <CartValidationProvider>
+            <CartOrderSummary cart={cart} />
+          </CartValidationProvider>
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
+
+    expect(await wrapper.queryByText('Free')).toBeNull();
+    expect(
+      await wrapper.findByText(
+        'Information regarding your additional services request',
+      ),
+    ).toBeVisible();
+    expect(
+      wrapper.getByTestId('additional-services-summary'),
+    ).toHaveTextContent(
+      'Information regarding your additional services requestPlease note that requests for human-generated captions can take between 1-3 business days to be provided.For queries surrounding additional services please contact your Account Manager or contact us on support@boclips.com',
+    );
+  });
+
+  it('displays old copy describing pricing for additional services if selected and user does not have feature flag', async () => {
+    const apiClient = new FakeBoclipsClient();
+
+    apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: false });
+
     apiClient.videos.insertVideo(
       VideoFactory.sample({
         price: { amount: 300, currency: 'USD' },
@@ -47,7 +98,7 @@ describe('Cart Order Summary', () => {
     expect(
       wrapper.getByTestId('additional-services-summary'),
     ).toHaveTextContent(
-      'Information regarding your additional services requestPlease note that requests for human-generated captions can take between 1-3 business days to be provided.For queries surrounding additional services please contact your Account Manager or contact us on support@boclips.com',
+      'Please contact your Account Manager or support@boclips.com for details on potential fees for additional services.',
     );
   });
 
