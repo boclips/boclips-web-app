@@ -88,7 +88,7 @@
     "webpack-merge": "^5.9.0"
   },
   "dependencies": {
-    "@babel/core": "^7.22.10",
+    "@babel/core": "^7.23.2",
     "@babel/plugin-syntax-jsx": "^7.12.1",
     "@babel/plugin-transform-react-jsx": "^7.22.5",
     "@babel/plugin-transform-typescript": "^7.22.9",
