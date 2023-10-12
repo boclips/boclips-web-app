@@ -88,12 +88,11 @@ describe('CartView', () => {
     (await wrapper.findAllByTestId('price-badge')).map((badge) =>
       expect(badge.innerHTML).toEqual('$600'),
     );
-    expect(wrapper.getByTestId('additional-services-summary')).toBeVisible();
     expect(
-      wrapper.getByText(
-        'Please note that requests for human-generated captions can take between 1-3 business days to be provided.',
-      ),
-    ).toBeVisible();
+      wrapper.getByTestId('additional-services-summary'),
+    ).toHaveTextContent(
+      'Please contact your Account Manager or support@boclips.com for details on potential fees for additional services.',
+    );
   });
 
   it('displays order confirmation modal when place order button clicked', async () => {
@@ -127,21 +126,23 @@ describe('CartView', () => {
       fireEvent.click(it);
     });
 
-    await waitFor(() => wrapper.getByTestId('order-modal')).then((it) => {
-      expect(within(it).getByText('news video')).toBeVisible();
-      expect(within(it).getByText('Confirm order')).toBeVisible();
-      expect(within(it).getByText('$600')).toBeVisible();
-      expect(within(it).getByText('$400')).toBeVisible();
-      expect(within(it).getByText('Go back to cart')).toBeVisible();
-      expect(
-        within(it).getByTestId('additional-services-summary'),
-      ).toBeVisible();
-      expect(
-        within(it).getByText(
-          'Please note that requests for human-generated captions can take between 1-3 business days to be provided.',
-        ),
-      ).toBeVisible();
-    });
+    await waitFor(async () => wrapper.getByTestId('order-modal')).then(
+      async (it) => {
+        expect(within(it).getByText('news video')).toBeVisible();
+        expect(within(it).getByText('Confirm order')).toBeVisible();
+        expect(within(it).getByText('$600')).toBeVisible();
+        expect(within(it).getByText('$400')).toBeVisible();
+        expect(within(it).getByText('Go back to cart')).toBeVisible();
+        expect(
+          await within(it).findByTestId('additional-services-summary'),
+        ).toBeVisible();
+        expect(
+          within(it).getByTestId('additional-services-summary'),
+        ).toHaveTextContent(
+          'Please contact your Account Manager or support@boclips.com for details on potential fees for additional services.',
+        );
+      },
+    );
 
     expect(lastEvent(fakeClient)).toEqual({
       type: 'PLATFORM_INTERACTED_WITH',
