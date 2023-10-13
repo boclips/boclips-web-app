@@ -18,6 +18,7 @@ import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 const mockExecuteRecaptcha = jest.fn((_?: string) =>
   Promise.resolve('token_baby'),
 );
+
 jest.mock('react-google-recaptcha-v3', () => {
   return {
     GoogleReCaptchaProvider: ({ children }: any): React.JSX.Element => {
@@ -28,6 +29,7 @@ jest.mock('react-google-recaptcha-v3', () => {
     }),
   };
 });
+
 describe('Registration Form', () => {
   it('renders the form', async () => {
     const wrapper = render(
@@ -203,6 +205,47 @@ describe('Registration Form', () => {
 
     expect(
       await wrapper.findByText('User test@boclips.com successfully created'),
+    ).toBeVisible();
+  });
+
+  it('displays error notification if captcha fails', async () => {
+    mockExecuteRecaptcha.mockImplementationOnce((_?: string) =>
+      Promise.reject(new Error('Recaptcha error')),
+    );
+
+    const wrapper = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <ToastContainer />
+          <GoogleReCaptchaProvider reCaptchaKey="123">
+            <RegistrationForm />
+          </GoogleReCaptchaProvider>
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
+
+    fillRegistrationForm(
+      wrapper,
+      'LeBron',
+      'James',
+      'lj@nba.com',
+      'p@ss',
+      'p@ss',
+      'Los Angeles Lakers',
+      'Teacher',
+      'Poland',
+      'EdTech',
+      'K12',
+      'Teacher',
+      'Maths',
+    );
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+
+    expect(
+      await wrapper.findByText(
+        'There was an error with our security verification. Please try again later.',
+      ),
     ).toBeVisible();
   });
 
