@@ -40,8 +40,7 @@ const RegistrationForm = () => {
 
   const handleReCaptchaVerify = useCallback(async () => {
     if (!executeRecaptcha) {
-      console.log('Execute recaptcha not yet available');
-      return null;
+      throw new Error('Execute recaptcha not yet available');
     }
     return executeRecaptcha('register');
   }, [executeRecaptcha]);
@@ -66,8 +65,22 @@ const RegistrationForm = () => {
     setRegistrationData((prevState) => ({ ...prevState, [fieldName]: value }));
   };
 
+  async function tryHandleReCaptchaVerify() {
+    try {
+      return await handleReCaptchaVerify();
+    } catch (e) {
+      displayNotification(
+        'error',
+        'There was an error with our security verification. Please try again later.',
+      );
+      console.error(e);
+      return null;
+    }
+  }
+
   const handleUserCreation = async () => {
-    const token = await handleReCaptchaVerify();
+    const token = await tryHandleReCaptchaVerify();
+
     createTrialUser(
       {
         email: registrationData.email,
