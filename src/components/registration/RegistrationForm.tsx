@@ -81,36 +81,38 @@ const RegistrationForm = () => {
   const handleUserCreation = async () => {
     const token = await tryHandleReCaptchaVerify();
 
-    createTrialUser(
-      {
-        email: registrationData.email,
-        firstName: registrationData.firstName,
-        lastName: registrationData.lastName,
-        password: registrationData.password,
-        recaptchaToken: token,
-        type: UserType.trialB2bUser,
-        accountName: registrationData.accountName,
-        jobTitle: registrationData.jobTitle,
-        marketingInformation: {
-          country: registrationData.country,
-          organisationType: registrationData.typeOfOrg,
-          audience: registrationData.audience,
-          discoveryMethod: registrationData.discoveryMethod,
-          desiredContent: registrationData.desiredContent,
+    if (token) {
+      createTrialUser(
+        {
+          email: registrationData.email,
+          firstName: registrationData.firstName,
+          lastName: registrationData.lastName,
+          password: registrationData.password,
+          recaptchaToken: token,
+          type: UserType.trialB2bUser,
+          accountName: registrationData.accountName,
+          jobTitle: registrationData.jobTitle,
+          marketingInformation: {
+            country: registrationData.country,
+            organisationType: registrationData.typeOfOrg,
+            audience: registrationData.audience,
+            discoveryMethod: registrationData.discoveryMethod,
+            desiredContent: registrationData.desiredContent,
+          },
         },
-      },
-      {
-        onSuccess: (user: User) => {
-          displayNotification(
-            'success',
-            `User ${user.email} successfully created`,
-          );
+        {
+          onSuccess: (user: User) => {
+            displayNotification(
+              'success',
+              `User ${user.email} successfully created`,
+            );
+          },
+          onError: () => {
+            displayNotification('error', 'User creation failed');
+          },
         },
-        onError: () => {
-          displayNotification('error', 'User creation failed');
-        },
-      },
-    );
+      );
+    }
   };
 
   const getButtonSpinner = (): ReactElement =>
