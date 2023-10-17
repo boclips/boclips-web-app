@@ -1,10 +1,4 @@
-import {
-  fireEvent,
-  render,
-  RenderResult,
-  waitFor,
-  within,
-} from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import RegistrationForm from 'src/components/registration/RegistrationForm';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
@@ -14,6 +8,7 @@ import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/Create
 import { ToastContainer } from 'react-toastify';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
+import { fillRegistrationForm } from 'src/components/registration/registrationFormTestHelpers';
 
 const mockExecuteRecaptcha = jest.fn((_?: string) =>
   Promise.resolve('token_baby'),
@@ -89,8 +84,8 @@ describe('Registration Form', () => {
       'LeBron',
       'James',
       'lj@nba.com',
-      'p@ss',
-      'p@ss',
+      'p@ss1234',
+      'p@ss1234',
       'Los Angeles Lakers',
       'Teacher',
       'Poland',
@@ -107,7 +102,7 @@ describe('Registration Form', () => {
         firstName: 'LeBron',
         lastName: 'James',
         email: 'lj@nba.com',
-        password: 'p@ss',
+        password: 'p@ss1234',
         recaptchaToken: 'token_baby',
         type: UserType.trialB2bUser,
         accountName: 'Los Angeles Lakers',
@@ -145,8 +140,8 @@ describe('Registration Form', () => {
       'LeBron',
       'James',
       'lj@nba.com',
-      'p@ss',
-      'p@ss',
+      'p@ss1234',
+      'p@ss1234',
       'Los Angeles Lakers',
       'Teacher',
       'Poland',
@@ -163,7 +158,7 @@ describe('Registration Form', () => {
     expect(wrapper.getByDisplayValue('LeBron')).toBeVisible();
     expect(wrapper.getByDisplayValue('James')).toBeVisible();
     expect(wrapper.getByDisplayValue('lj@nba.com')).toBeVisible();
-    expect(wrapper.getAllByDisplayValue('p@ss')).toHaveLength(2);
+    expect(wrapper.getAllByDisplayValue('p@ss1234')).toHaveLength(2);
   });
 
   it('success notification is displayed when trial user creation passes', async () => {
@@ -190,8 +185,8 @@ describe('Registration Form', () => {
       'LeBron',
       'James',
       'lj@nba.com',
-      'p@ss',
-      'p@ss',
+      'p@ss1234',
+      'p@ss1234',
       'Los Angeles Lakers',
       'Teacher',
       'Poland',
@@ -229,8 +224,8 @@ describe('Registration Form', () => {
       'LeBron',
       'James',
       'lj@nba.com',
-      'p@ss',
-      'p@ss',
+      'p@ss1234',
+      'p@ss1234',
       'Los Angeles Lakers',
       'Teacher',
       'Poland',
@@ -248,69 +243,4 @@ describe('Registration Form', () => {
       ),
     ).toBeVisible();
   });
-
-  function fillRegistrationForm(
-    wrapper: RenderResult,
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string,
-    confirmPassword: string,
-    accountName: string,
-    jobTitle: string,
-    country: string,
-    typeOfOrg: string,
-    audience: string,
-    discoveryMethod: string,
-    desiredContent: string,
-  ) {
-    fireEvent.change(wrapper.getByLabelText('First name'), {
-      target: { value: firstName },
-    });
-    fireEvent.change(wrapper.getByLabelText('Last name'), {
-      target: { value: lastName },
-    });
-    fireEvent.change(wrapper.getByLabelText('Professional email'), {
-      target: { value: email },
-    });
-    fireEvent.change(wrapper.getByLabelText('Password'), {
-      target: { value: password },
-    });
-    fireEvent.change(wrapper.getByLabelText('Confirm password'), {
-      target: { value: confirmPassword },
-    });
-    fireEvent.change(wrapper.getByLabelText('Account name'), {
-      target: { value: accountName },
-    });
-
-    const jobTitleDropdown = wrapper.getByTestId('input-dropdown-job-title');
-    fireEvent.click(within(jobTitleDropdown).getByTestId('select'));
-    fireEvent.click(within(jobTitleDropdown).getByText(jobTitle));
-
-    const countryDropdown = wrapper.getByTestId('input-dropdown-country');
-    fireEvent.click(within(countryDropdown).getByTestId('select'));
-    fireEvent.click(within(countryDropdown).getByText(country));
-
-    const typeOfOrgDropdown = wrapper.getByTestId('input-dropdown-type-of-org');
-    fireEvent.click(within(typeOfOrgDropdown).getByTestId('select'));
-    fireEvent.click(within(typeOfOrgDropdown).getByText(typeOfOrg));
-
-    const audienceDropdown = wrapper.getByTestId('input-dropdown-audience');
-    fireEvent.click(within(audienceDropdown).getByTestId('select'));
-    fireEvent.click(within(audienceDropdown).getByText(audience));
-
-    fireEvent.change(
-      wrapper.getByLabelText('How did you hear about Boclips?'),
-      {
-        target: { value: discoveryMethod },
-      },
-    );
-
-    fireEvent.change(
-      wrapper.getByLabelText('What content are you looking for?'),
-      {
-        target: { value: desiredContent },
-      },
-    );
-  }
 });

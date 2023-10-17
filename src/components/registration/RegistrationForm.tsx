@@ -18,7 +18,7 @@ import {
 } from 'src/components/registration/dropdownValues';
 import s from './style.module.less';
 
-interface RegistrationData {
+export interface RegistrationData {
   firstName: string;
   lastName: string;
   email: string;
@@ -33,19 +33,8 @@ interface RegistrationData {
   jobTitle: string;
 }
 
-const RegistrationForm = () => {
-  const { mutate: createTrialUser, isLoading: isTrialUserCreating } =
-    useAddNewTrialUser();
-  const { executeRecaptcha } = useGoogleReCaptcha();
-
-  const handleReCaptchaVerify = useCallback(async () => {
-    if (!executeRecaptcha) {
-      throw new Error('Execute recaptcha not yet available');
-    }
-    return executeRecaptcha('register');
-  }, [executeRecaptcha]);
-
-  const [registrationData, setRegistrationData] = useState<RegistrationData>({
+const emptyRegistrationData = (): RegistrationData => {
+  return {
     firstName: '',
     lastName: '',
     email: '',
@@ -58,11 +47,34 @@ const RegistrationForm = () => {
     discoveryMethod: '',
     desiredContent: '',
     jobTitle: '',
-  });
+  };
+};
+
+const RegistrationForm = () => {
+  const { mutate: createTrialUser, isLoading: isTrialUserCreating } =
+    useAddNewTrialUser();
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
+  const handleReCaptchaVerify = useCallback(async () => {
+    if (!executeRecaptcha) {
+      throw new Error('Execute recaptcha not yet available');
+    }
+    return executeRecaptcha('register');
+  }, [executeRecaptcha]);
+
+  const [registrationData, setRegistrationData] = useState<RegistrationData>(
+    emptyRegistrationData(),
+  );
+
+  const [validationErrors, setValidationErrors] = useState<RegistrationData>(
+    emptyRegistrationData(),
+  );
 
   const handleChange = (fieldName, value) => {
-    if (!value) return;
-    setRegistrationData((prevState) => ({ ...prevState, [fieldName]: value }));
+    setRegistrationData((prevState) => ({
+      ...prevState,
+      [fieldName]: value.trim(),
+    }));
   };
 
   async function tryHandleReCaptchaVerify() {
@@ -78,10 +90,77 @@ const RegistrationForm = () => {
     }
   }
 
+  function isFormDataValid(): boolean {
+    const checks = [
+      checkIsNotEmpty('firstName', 'First name is required'),
+      checkIsNotEmpty('lastName', 'Last name is required'),
+      checkIsNotEmpty('email', 'Email is required') &&
+        checkHasEmailFormat('email', 'Please enter a valid email address'),
+      checkIsNotEmpty('accountName', 'Account name is required'),
+      checkIsNotEmpty('password', 'Password is required') &&
+        checkPasswordIsStrong(
+          'Password must be at least 8 characters long and contain a combination of letters, numbers, and special characters',
+        ) &&
+        checkPasswordConfirmed('Passwords do not match'),
+    ];
+
+    return !checks.includes(false);
+  }
+
+  function checkIsNotEmpty(fieldName: string, errorMessage: string): boolean {
+    if (!registrationData[fieldName]) {
+      setError(fieldName, errorMessage);
+      return false;
+    }
+
+    setError(fieldName, '');
+    return true;
+  }
+
+  function checkHasEmailFormat(
+    fieldName: string,
+    errorMessage: string,
+  ): boolean {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!emailPattern.test(registrationData[fieldName])) {
+      setError(fieldName, errorMessage);
+      return false;
+    }
+
+    setError(fieldName, '');
+    return true;
+  }
+
+  function checkPasswordIsStrong(errorMessage: string): boolean {
+    const strongPasswordPattern =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+    if (!strongPasswordPattern.test(registrationData.password)) {
+      setError('password', errorMessage);
+      return false;
+    }
+
+    setError('password', '');
+    return true;
+  }
+
+  function checkPasswordConfirmed(errorMessage: string): boolean {
+    if (registrationData.password !== registrationData.confirmPassword) {
+      setError('confirmPassword', errorMessage);
+      return false;
+    }
+
+    setError('confirmPassword', '');
+    return true;
+  }
+
+  const setError = (fieldName, value) => {
+    setValidationErrors((prevState) => ({ ...prevState, [fieldName]: value }));
+  };
+
   const handleUserCreation = async () => {
     const token = await tryHandleReCaptchaVerify();
 
-    if (token) {
+    if (isFormDataValid() && token) {
       createTrialUser(
         {
           email: registrationData.email,
@@ -144,6 +223,8 @@ const RegistrationForm = () => {
             className={c(s.input, 'flex-1 mr-4')}
             labelText="First name"
             height="48px"
+            isError={!!validationErrors.firstName}
+            errorMessage={validationErrors.firstName}
           />
           <InputText
             id="input-lastName"
@@ -153,6 +234,8 @@ const RegistrationForm = () => {
             className={c(s.input, 'flex-1')}
             labelText="Last name"
             height="48px"
+            isError={!!validationErrors.lastName}
+            errorMessage={validationErrors.lastName}
           />
         </div>
         <InputText
@@ -163,6 +246,8 @@ const RegistrationForm = () => {
           className={c(s.input)}
           labelText="Professional email"
           height="48px"
+          isError={!!validationErrors.email}
+          errorMessage={validationErrors.email}
         />
         <div className="flex flex-row">
           <InputText
@@ -173,6 +258,8 @@ const RegistrationForm = () => {
             className={c(s.input, 'flex-1 mr-4')}
             labelText="Password"
             height="48px"
+            isError={!!validationErrors.password}
+            errorMessage={validationErrors.password}
           />
           <InputText
             id="input-confirmPassword"
@@ -182,6 +269,8 @@ const RegistrationForm = () => {
             className={c(s.input, 'flex-1')}
             labelText="Confirm password"
             height="48px"
+            isError={!!validationErrors.confirmPassword}
+            errorMessage={validationErrors.confirmPassword}
           />
         </div>
 
@@ -194,6 +283,8 @@ const RegistrationForm = () => {
           className={s.input}
           labelText="Account name"
           height="48px"
+          isError={!!validationErrors.accountName}
+          errorMessage={validationErrors.accountName}
         />
 
         <div className="flex flex-row mb-2">
