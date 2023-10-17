@@ -44,7 +44,7 @@ describe('Registration Form', () => {
 
     expect(wrapper.getByText('CourseSpark')).toBeVisible();
     expect(wrapper.getByText('Create new account')).toBeVisible();
-    expect(wrapper.getByText('30 day trial')).toBeVisible();
+    expect(wrapper.getByText('7 day trial')).toBeVisible();
     expect(wrapper.getByLabelText('First name')).toBeVisible();
     expect(wrapper.getByLabelText('Last name')).toBeVisible();
     expect(wrapper.getByLabelText('Professional email')).toBeVisible();

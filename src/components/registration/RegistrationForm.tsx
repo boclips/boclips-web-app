@@ -130,7 +130,7 @@ const RegistrationForm = () => {
           Create new account
         </Typography.Body>
         <Typography.Body size="small" className={s.blueText}>
-          30 day trial
+          7 day trial
         </Typography.Body>
       </section>
       <main tabIndex={-1} className={s.formInputsWrapper}>
