@@ -37,30 +37,24 @@ export function fillRegistrationForm(
   discoveryMethod: string,
   desiredContent: string,
 ) {
-  fireEvent.change(wrapper.container.querySelector('[id="input-firstName"]'), {
+  fireEvent.change(wrapper.getByLabelText('First name'), {
     target: { value: firstName },
   });
-  fireEvent.change(wrapper.container.querySelector('[id="input-lastName"]'), {
+  fireEvent.change(wrapper.getByLabelText('Last name'), {
     target: { value: lastName },
   });
-  fireEvent.change(wrapper.container.querySelector('[id="input-email"]'), {
+  fireEvent.change(wrapper.getByLabelText('Professional email'), {
     target: { value: email },
   });
-  fireEvent.change(wrapper.container.querySelector('[id="input-password"]'), {
+  fireEvent.change(wrapper.getByLabelText('Password'), {
     target: { value: password },
   });
-  fireEvent.change(
-    wrapper.container.querySelector('[id="input-confirmPassword"]'),
-    {
-      target: { value: confirmPassword },
-    },
-  );
-  fireEvent.change(
-    wrapper.container.querySelector('[id="input-accountName"]'),
-    {
-      target: { value: accountName },
-    },
-  );
+  fireEvent.change(wrapper.getByLabelText('Confirm password'), {
+    target: { value: confirmPassword },
+  });
+  fireEvent.change(wrapper.getByLabelText('Account name'), {
+    target: { value: accountName },
+  });
 
   const jobTitleDropdown = wrapper.getByTestId('input-dropdown-job-title');
   fireEvent.click(within(jobTitleDropdown).getByTestId('select'));

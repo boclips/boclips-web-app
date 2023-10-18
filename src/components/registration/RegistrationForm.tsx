@@ -234,10 +234,8 @@ const RegistrationForm = () => {
             onChange={(value) => handleChange('firstName', value)}
             inputType="text"
             placeholder="John"
-            defaultValue={registrationData.firstName}
             className={c(s.input, 'flex-1 mr-4')}
             labelText="First name"
-            showLabelText={!validationErrors.firstName}
             height="48px"
             isError={!!validationErrors.firstName}
             errorMessage={validationErrors.firstName}
@@ -249,7 +247,6 @@ const RegistrationForm = () => {
             placeholder="Smith"
             className={c(s.input, 'flex-1')}
             labelText="Last name"
-            showLabelText={!validationErrors.lastName}
             height="48px"
             isError={!!validationErrors.lastName}
             errorMessage={validationErrors.lastName}
@@ -262,7 +259,6 @@ const RegistrationForm = () => {
           placeholder="smith@gmail.com"
           className={c(s.input)}
           labelText="Professional email"
-          showLabelText={!validationErrors.email}
           height="48px"
           isError={!!validationErrors.email}
           errorMessage={validationErrors.email}
@@ -275,7 +271,6 @@ const RegistrationForm = () => {
             placeholder="*********"
             className={c(s.input, 'flex-1 mr-4')}
             labelText="Password"
-            showLabelText={!validationErrors.password}
             height="48px"
             isError={!!validationErrors.password}
             errorMessage={validationErrors.password}
@@ -287,7 +282,6 @@ const RegistrationForm = () => {
             placeholder="*********"
             className={c(s.input, 'flex-1')}
             labelText="Confirm password"
-            showLabelText={!validationErrors.confirmPassword}
             height="48px"
             isError={!!validationErrors.confirmPassword}
             errorMessage={validationErrors.confirmPassword}
@@ -299,10 +293,8 @@ const RegistrationForm = () => {
           onChange={(value) => handleChange('accountName', value)}
           inputType="text"
           placeholder="Your account name"
-          defaultValue={registrationData.firstName} // todo: check if that's right
           className={s.input}
           labelText="Account name"
-          showLabelText={!validationErrors.accountName}
           height="48px"
           isError={!!validationErrors.accountName}
           errorMessage={validationErrors.accountName}
@@ -317,7 +309,7 @@ const RegistrationForm = () => {
               options={JOB_TITLE}
               dataQa="input-dropdown-job-title"
               labelText="Job title"
-              showLabel={!validationErrors.jobTitle}
+              showLabel
               fitWidth
               isError={!!validationErrors.jobTitle}
               errorMessage={validationErrors.jobTitle}
@@ -331,7 +323,7 @@ const RegistrationForm = () => {
               options={LIST_OF_COUNTRIES}
               dataQa="input-dropdown-country"
               labelText="Country"
-              showLabel={!validationErrors.country}
+              showLabel
               fitWidth
               isError={!!validationErrors.country}
               errorMessage={validationErrors.country}
@@ -348,7 +340,7 @@ const RegistrationForm = () => {
               options={TYPE_OF_ORG}
               dataQa="input-dropdown-type-of-org"
               labelText="Type of organization"
-              showLabel={!validationErrors.typeOfOrg}
+              showLabel
               fitWidth
               isError={!!validationErrors.typeOfOrg}
               errorMessage={validationErrors.typeOfOrg}
@@ -362,7 +354,7 @@ const RegistrationForm = () => {
               options={AUDIENCE}
               dataQa="input-dropdown-audience"
               labelText="Select audience"
-              showLabel={!validationErrors.audience}
+              showLabel
               fitWidth
               isError={!!validationErrors.audience}
               errorMessage={validationErrors.audience}

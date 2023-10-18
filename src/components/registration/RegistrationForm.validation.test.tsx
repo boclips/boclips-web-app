@@ -230,6 +230,7 @@ describe('Registration Form Validation', () => {
     );
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+
     await checkErrorIsVisible(wrapper, 'First name is required');
     await checkErrorIsVisible(wrapper, 'Last name is required');
     await checkErrorIsVisible(wrapper, 'Email is required');
@@ -240,10 +241,9 @@ describe('Registration Form Validation', () => {
     await checkErrorIsVisible(wrapper, 'Please select a type of organisation');
     await checkErrorIsVisible(wrapper, 'Please select an audience');
 
-    fillTheForm(wrapper);
-    await fireEvent.click(
-      wrapper.getByRole('button', { name: 'Create Account' }),
-    );
+    fillTheForm(wrapper, {});
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+
     await checkErrorIsNotVisible(wrapper, 'First name is required');
     await checkErrorIsNotVisible(wrapper, 'Last name is required');
     await checkErrorIsNotVisible(wrapper, 'Email is required');
@@ -282,8 +282,8 @@ describe('Registration Form Validation', () => {
       firstName: 'Lebron',
       lastName: 'James',
       email: 'lj@nba.com',
-      password: 'p@ss',
-      confirmPassword: 'p@ss',
+      password: 'p@ssw0rd',
+      confirmPassword: 'p@ssw0rd',
       accountName: 'Los Angeles Lakers',
       jobTitle: 'Teacher',
       country: 'Poland',
@@ -293,11 +293,7 @@ describe('Registration Form Validation', () => {
       desiredContent: 'Maths',
     };
 
-    if (change) {
-      fillRegistrationFormData(wrapper, { ...defaults, ...change });
-    } else {
-      fillRegistrationFormData(wrapper, defaults);
-    }
+    fillRegistrationFormData(wrapper, { ...defaults, ...change });
   }
 
   async function checkErrorIsNotVisible(
