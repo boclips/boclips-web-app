@@ -16,6 +16,8 @@ import {
   LIST_OF_COUNTRIES,
   TYPE_OF_ORG,
 } from 'src/components/registration/dropdownValues';
+import BoCheckbox from 'src/components/common/input/BoCheckbox';
+import { EducationalUseCheckbox } from 'src/components/registration/EducationalUseCheckbox';
 import s from './style.module.less';
 
 interface RegistrationData {
@@ -60,6 +62,14 @@ const RegistrationForm = () => {
     jobTitle: '',
   });
 
+  const [
+    isEducationalUseAgreementChecked,
+    setIsEducationalUseAgreementChecked,
+  ] = useState(false);
+
+  const [isEducationalUseAgreementValid, setIsEducationalUseAgreementValid] =
+    useState(true);
+
   const handleChange = (fieldName, value) => {
     if (!value) return;
     setRegistrationData((prevState) => ({ ...prevState, [fieldName]: value }));
@@ -80,6 +90,10 @@ const RegistrationForm = () => {
 
   const handleUserCreation = async () => {
     const token = await tryHandleReCaptchaVerify();
+    if (!isEducationalUseAgreementChecked) {
+      setIsEducationalUseAgreementValid(false)
+      return;
+    }
 
     if (token) {
       createTrialUser(
@@ -267,7 +281,13 @@ const RegistrationForm = () => {
           className={`${s.input} flex-1`}
           labelText="What content are you looking for?"
         />
-
+        <div>
+          <EducationalUseCheckbox
+            isValid={isEducationalUseAgreementValid}
+            checked={isEducationalUseAgreementChecked}
+            setChecked={setIsEducationalUseAgreementChecked}
+          />
+        </div>
         <Typography.Body size="small" className={c(s.blueText, 'mt-1')}>
           By clicking Create Account, you agree to the Boclips User Agreement,
           Privacy Policy, and Cookie Policy.

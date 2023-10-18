@@ -51,10 +51,20 @@ describe('Registration Form', () => {
     expect(wrapper.getByLabelText('Password')).toBeVisible();
     expect(wrapper.getByLabelText('Confirm password')).toBeVisible();
     expect(wrapper.getByLabelText('Account name')).toBeVisible();
+    expect(
+      wrapper.getByLabelText(
+        'I certify that I am accessing this service solely for Educational Use. ' +
+          '"Educational Use" is defined as to copy, communicate, edit, and/or ' +
+          'incorporate into a publication or digital product for a learning outcome',
+      ),
+    ).toBeVisible();
     expect(wrapper.getByTestId('input-dropdown-job-title')).toBeVisible();
     expect(wrapper.getByTestId('input-dropdown-country')).toBeVisible();
     expect(wrapper.getByTestId('input-dropdown-audience')).toBeVisible();
     expect(wrapper.getByTestId('input-dropdown-type-of-org')).toBeVisible();
+    expect(
+      wrapper.getByTestId('input-checkbox-educational-use-agreement'),
+    ).toBeVisible();
     expect(
       wrapper.getByLabelText('What content are you looking for?'),
     ).toBeVisible();
@@ -84,21 +94,8 @@ describe('Registration Form', () => {
       </QueryClientProvider>,
     );
 
-    fillRegistrationForm(
-      wrapper,
-      'LeBron',
-      'James',
-      'lj@nba.com',
-      'p@ss',
-      'p@ss',
-      'Los Angeles Lakers',
-      'Teacher',
-      'Poland',
-      'EdTech',
-      'K12',
-      'Teacher',
-      'Maths',
-    );
+    fillRegistrationForm(wrapper);
+    checkEducationalUseAgreement(wrapper);
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
@@ -140,21 +137,8 @@ describe('Registration Form', () => {
       </QueryClientProvider>,
     );
 
-    fillRegistrationForm(
-      wrapper,
-      'LeBron',
-      'James',
-      'lj@nba.com',
-      'p@ss',
-      'p@ss',
-      'Los Angeles Lakers',
-      'Teacher',
-      'Poland',
-      'EdTech',
-      'K12',
-      'Teacher',
-      'Maths',
-    );
+    fillRegistrationForm(wrapper);
+    checkEducationalUseAgreement(wrapper);
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
@@ -185,21 +169,8 @@ describe('Registration Form', () => {
       </QueryClientProvider>,
     );
 
-    fillRegistrationForm(
-      wrapper,
-      'LeBron',
-      'James',
-      'lj@nba.com',
-      'p@ss',
-      'p@ss',
-      'Los Angeles Lakers',
-      'Teacher',
-      'Poland',
-      'EdTech',
-      'K12',
-      'Teacher',
-      'Maths',
-    );
+    fillRegistrationForm(wrapper);
+    checkEducationalUseAgreement(wrapper);
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
@@ -224,21 +195,8 @@ describe('Registration Form', () => {
       </QueryClientProvider>,
     );
 
-    fillRegistrationForm(
-      wrapper,
-      'LeBron',
-      'James',
-      'lj@nba.com',
-      'p@ss',
-      'p@ss',
-      'Los Angeles Lakers',
-      'Teacher',
-      'Poland',
-      'EdTech',
-      'K12',
-      'Teacher',
-      'Maths',
-    );
+    fillRegistrationForm(wrapper);
+    checkEducationalUseAgreement(wrapper);
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
@@ -249,20 +207,48 @@ describe('Registration Form', () => {
     ).toBeVisible();
   });
 
+  it('prompts user to check educational use checkbox if not checked and user clicks submit', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const createTrialUserSpy = jest.spyOn(fakeClient.users, 'createTrialUser');
+
+    const wrapper = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={fakeClient}>
+          <ToastContainer />
+          <GoogleReCaptchaProvider reCaptchaKey="123">
+            <RegistrationForm />
+          </GoogleReCaptchaProvider>
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
+
+    fillRegistrationForm(wrapper);
+    expect(
+      wrapper.queryByText('Educational use agreement is mandatory'),
+    ).toBeNull();
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+
+    expect(
+      await wrapper.findByText('Educational use agreement is mandatory'),
+    ).toBeVisible();
+    expect(createTrialUserSpy).not.toBeCalled();
+  });
+
   function fillRegistrationForm(
     wrapper: RenderResult,
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string,
-    confirmPassword: string,
-    accountName: string,
-    jobTitle: string,
-    country: string,
-    typeOfOrg: string,
-    audience: string,
-    discoveryMethod: string,
-    desiredContent: string,
+    firstName = 'LeBron',
+    lastName = 'James',
+    email = 'lj@nba.com',
+    password = 'p@ss',
+    confirmPassword = 'p@ss',
+    accountName = 'Los Angeles Lakers',
+    jobTitle = 'Teacher',
+    country = 'Poland',
+    typeOfOrg = 'EdTech',
+    audience = 'K12',
+    discoveryMethod = 'Teacher',
+    desiredContent = 'Maths',
   ) {
     fireEvent.change(wrapper.getByLabelText('First name'), {
       target: { value: firstName },
@@ -313,4 +299,13 @@ describe('Registration Form', () => {
       },
     );
   }
+  const checkEducationalUseAgreement = (wrapper: RenderResult) => {
+    fireEvent.click(
+      wrapper.getByLabelText(
+        'I certify that I am accessing this service solely for Educational Use. ' +
+          '"Educational Use" is defined as to copy, communicate, edit, and/or ' +
+          'incorporate into a publication or digital product for a learning outcome',
+      ),
+    );
+  };
 });

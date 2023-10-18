@@ -8,25 +8,39 @@ interface Props {
   id: string;
   checked: boolean;
   label?: React.ReactElement | string;
+  errorMessage?: string;
   dataQa?: string;
 }
 
-const BoCheckbox = ({ dataQa, onChange, name, id, checked, label }: Props) => {
+const BoCheckbox = ({
+  dataQa,
+  onChange,
+  name,
+  id,
+  checked,
+  label,
+  errorMessage,
+}: Props) => {
   return (
-    <label className={s.checkboxWrapper} htmlFor={id}>
-      <input
-        onChange={onChange}
-        type="checkbox"
-        className={s.checkbox}
-        name={name}
-        id={id}
-        checked={checked}
-        data-qa={dataQa}
-      />
-      <Typography.Body size="small" weight={checked ? 'medium' : null}>
-        {label || name}
-      </Typography.Body>
-    </label>
+    <>
+      <label className={s.checkboxWrapper} htmlFor={id}>
+        <input
+          onChange={onChange}
+          type="checkbox"
+          className={s.checkbox}
+          name={name}
+          id={id}
+          checked={checked}
+          data-qa={dataQa}
+        />
+        <Typography.Body size="small" weight={checked ? 'medium' : null}>
+          {label || name}
+        </Typography.Body>
+      </label>
+      {errorMessage && (
+        <Typography.Body size="small">{errorMessage}</Typography.Body>
+      )}
+    </>
   );
 };
 
