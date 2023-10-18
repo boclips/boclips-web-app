@@ -16,6 +16,8 @@ import {
   LIST_OF_COUNTRIES,
   TYPE_OF_ORG,
 } from 'src/components/registration/dropdownValues';
+import * as EmailValidator from 'email-validator';
+import PasswordValidator from 'password-validator';
 import s from './style.module.less';
 
 export interface RegistrationData {
@@ -102,6 +104,10 @@ const RegistrationForm = () => {
           'Password must be at least 8 characters long and contain a combination of letters, numbers, and special characters',
         ) &&
         checkPasswordConfirmed('Passwords do not match'),
+      checkIsNotEmpty('jobTitle', 'Please select a job title'),
+      checkIsNotEmpty('country', 'Please select a country'),
+      checkIsNotEmpty('typeOfOrg', 'Please select a type of organisation'),
+      checkIsNotEmpty('audience', 'Please select an audience'),
     ];
 
     return !checks.includes(false);
@@ -121,8 +127,7 @@ const RegistrationForm = () => {
     fieldName: string,
     errorMessage: string,
   ): boolean {
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (!emailPattern.test(registrationData[fieldName])) {
+    if (!EmailValidator.validate(registrationData[fieldName])) {
       setError(fieldName, errorMessage);
       return false;
     }
@@ -132,9 +137,18 @@ const RegistrationForm = () => {
   }
 
   function checkPasswordIsStrong(errorMessage: string): boolean {
-    const strongPasswordPattern =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
-    if (!strongPasswordPattern.test(registrationData.password)) {
+    const schema = new PasswordValidator();
+
+    /* eslint-disable */
+    schema
+      .is().min(8)
+      .has().digits()
+      .has().letters()
+      .has().symbols()
+      .has().not().spaces();
+    /* eslint-enable  */
+
+    if (!schema.validate(registrationData.password)) {
       setError('password', errorMessage);
       return false;
     }
@@ -213,15 +227,17 @@ const RegistrationForm = () => {
         </Typography.Body>
       </section>
       <main tabIndex={-1} className={s.formInputsWrapper}>
-        <div className="flex flex-row">
+        <div className="flex flex-row items-end">
           <InputText
             id="input-firstName"
+            aria-label="input-firstName"
             onChange={(value) => handleChange('firstName', value)}
             inputType="text"
             placeholder="John"
             defaultValue={registrationData.firstName}
             className={c(s.input, 'flex-1 mr-4')}
             labelText="First name"
+            showLabelText={!validationErrors.firstName}
             height="48px"
             isError={!!validationErrors.firstName}
             errorMessage={validationErrors.firstName}
@@ -233,6 +249,7 @@ const RegistrationForm = () => {
             placeholder="Smith"
             className={c(s.input, 'flex-1')}
             labelText="Last name"
+            showLabelText={!validationErrors.lastName}
             height="48px"
             isError={!!validationErrors.lastName}
             errorMessage={validationErrors.lastName}
@@ -245,11 +262,12 @@ const RegistrationForm = () => {
           placeholder="smith@gmail.com"
           className={c(s.input)}
           labelText="Professional email"
+          showLabelText={!validationErrors.email}
           height="48px"
           isError={!!validationErrors.email}
           errorMessage={validationErrors.email}
         />
-        <div className="flex flex-row">
+        <div className="flex flex-row items-end">
           <InputText
             id="input-password"
             onChange={(value) => handleChange('password', value)}
@@ -257,6 +275,7 @@ const RegistrationForm = () => {
             placeholder="*********"
             className={c(s.input, 'flex-1 mr-4')}
             labelText="Password"
+            showLabelText={!validationErrors.password}
             height="48px"
             isError={!!validationErrors.password}
             errorMessage={validationErrors.password}
@@ -268,6 +287,7 @@ const RegistrationForm = () => {
             placeholder="*********"
             className={c(s.input, 'flex-1')}
             labelText="Confirm password"
+            showLabelText={!validationErrors.confirmPassword}
             height="48px"
             isError={!!validationErrors.confirmPassword}
             errorMessage={validationErrors.confirmPassword}
@@ -279,15 +299,16 @@ const RegistrationForm = () => {
           onChange={(value) => handleChange('accountName', value)}
           inputType="text"
           placeholder="Your account name"
-          defaultValue={registrationData.firstName}
+          defaultValue={registrationData.firstName} // todo: check if that's right
           className={s.input}
           labelText="Account name"
+          showLabelText={!validationErrors.accountName}
           height="48px"
           isError={!!validationErrors.accountName}
           errorMessage={validationErrors.accountName}
         />
 
-        <div className="flex flex-row mb-2">
+        <div className="flex flex-row items-end	mb-2">
           <div className="flex-1 mr-4">
             <Dropdown
               mode="single"
@@ -296,8 +317,10 @@ const RegistrationForm = () => {
               options={JOB_TITLE}
               dataQa="input-dropdown-job-title"
               labelText="Job title"
-              showLabel
+              showLabel={!validationErrors.jobTitle}
               fitWidth
+              isError={!!validationErrors.jobTitle}
+              errorMessage={validationErrors.jobTitle}
             />
           </div>
           <div className="flex-1">
@@ -308,13 +331,15 @@ const RegistrationForm = () => {
               options={LIST_OF_COUNTRIES}
               dataQa="input-dropdown-country"
               labelText="Country"
-              showLabel
+              showLabel={!validationErrors.country}
               fitWidth
+              isError={!!validationErrors.country}
+              errorMessage={validationErrors.country}
             />
           </div>
         </div>
 
-        <div className="flex flex-row">
+        <div className="flex flex-row items-end">
           <div className="flex flex-1 items-end mb-2 mr-4">
             <Dropdown
               mode="single"
@@ -323,8 +348,10 @@ const RegistrationForm = () => {
               options={TYPE_OF_ORG}
               dataQa="input-dropdown-type-of-org"
               labelText="Type of organization"
-              showLabel
+              showLabel={!validationErrors.typeOfOrg}
               fitWidth
+              isError={!!validationErrors.typeOfOrg}
+              errorMessage={validationErrors.typeOfOrg}
             />
           </div>
           <div className="flex flex-1 items-end mb-2">
@@ -335,8 +362,10 @@ const RegistrationForm = () => {
               options={AUDIENCE}
               dataQa="input-dropdown-audience"
               labelText="Select audience"
-              showLabel
+              showLabel={!validationErrors.audience}
               fitWidth
+              isError={!!validationErrors.audience}
+              errorMessage={validationErrors.audience}
             />
           </div>
         </div>

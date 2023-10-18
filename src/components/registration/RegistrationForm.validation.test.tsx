@@ -12,7 +12,10 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
-import { fillRegistrationFormData } from 'src/components/registration/registrationFormTestHelpers';
+import {
+  fillRegistrationForm,
+  fillRegistrationFormData,
+} from 'src/components/registration/registrationFormTestHelpers';
 
 const mockExecuteRecaptcha = jest.fn((_?: string) =>
   Promise.resolve('token_baby'),
@@ -148,7 +151,116 @@ describe('Registration Form Validation', () => {
     });
   });
 
-  // todo: all errors not visible again when filled and submited again
+  it('job title cannot be empty', async () => {
+    const wrapper = renderRegistrationForm();
+
+    fillTheForm(wrapper, { jobTitle: '' });
+
+    await checkErrorIsNotVisible(wrapper, 'Please select a job title');
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await checkErrorIsVisible(wrapper, 'Please select a job title');
+
+    await waitFor(() => {
+      expect(createTrialUserSpy).not.toBeCalled();
+    });
+  });
+
+  it('country cannot be empty', async () => {
+    const wrapper = renderRegistrationForm();
+
+    fillTheForm(wrapper, { country: '' });
+
+    await checkErrorIsNotVisible(wrapper, 'Please select a country');
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await checkErrorIsVisible(wrapper, 'Please select a country');
+
+    await waitFor(() => {
+      expect(createTrialUserSpy).not.toBeCalled();
+    });
+  });
+
+  it('type of organisation cannot be empty', async () => {
+    const wrapper = renderRegistrationForm();
+
+    fillTheForm(wrapper, { typeOfOrg: '' });
+
+    await checkErrorIsNotVisible(
+      wrapper,
+      'Please select a type of organisation',
+    );
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await checkErrorIsVisible(wrapper, 'Please select a type of organisation');
+
+    await waitFor(() => {
+      expect(createTrialUserSpy).not.toBeCalled();
+    });
+  });
+
+  it('audience cannot be empty', async () => {
+    const wrapper = renderRegistrationForm();
+
+    fillTheForm(wrapper, { audience: '' });
+
+    await checkErrorIsNotVisible(wrapper, 'Please select an audience');
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await checkErrorIsVisible(wrapper, 'Please select an audience');
+
+    await waitFor(() => {
+      expect(createTrialUserSpy).not.toBeCalled();
+    });
+  });
+
+  it('errors disappear when form is fixed', async () => {
+    const wrapper = renderRegistrationForm();
+
+    fillRegistrationForm(
+      wrapper,
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+    );
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await checkErrorIsVisible(wrapper, 'First name is required');
+    await checkErrorIsVisible(wrapper, 'Last name is required');
+    await checkErrorIsVisible(wrapper, 'Email is required');
+    await checkErrorIsVisible(wrapper, 'Account name is required');
+    await checkErrorIsVisible(wrapper, 'Password is required');
+    await checkErrorIsVisible(wrapper, 'Please select a job title');
+    await checkErrorIsVisible(wrapper, 'Please select a country');
+    await checkErrorIsVisible(wrapper, 'Please select a type of organisation');
+    await checkErrorIsVisible(wrapper, 'Please select an audience');
+
+    fillTheForm(wrapper);
+    await fireEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
+    await checkErrorIsNotVisible(wrapper, 'First name is required');
+    await checkErrorIsNotVisible(wrapper, 'Last name is required');
+    await checkErrorIsNotVisible(wrapper, 'Email is required');
+    await checkErrorIsNotVisible(wrapper, 'Account name is required');
+    await checkErrorIsNotVisible(wrapper, 'Password is required');
+    await checkErrorIsNotVisible(wrapper, 'Please select a job title');
+    await checkErrorIsNotVisible(wrapper, 'Please select a country');
+    await checkErrorIsNotVisible(
+      wrapper,
+      'Please select a type of organisation',
+    );
+    await checkErrorIsNotVisible(wrapper, 'Please select an audience');
+
+    await waitFor(() => {
+      expect(createTrialUserSpy).toBeCalled();
+    });
+  });
 
   function renderRegistrationForm(): RenderResult {
     return render(
@@ -164,7 +276,7 @@ describe('Registration Form Validation', () => {
 
   function fillTheForm(
     wrapper: RenderResult,
-    change: Partial<RegistrationData>,
+    change?: Partial<RegistrationData>,
   ) {
     const defaults: RegistrationData = {
       firstName: 'Lebron',
@@ -181,7 +293,11 @@ describe('Registration Form Validation', () => {
       desiredContent: 'Maths',
     };
 
-    fillRegistrationFormData(wrapper, { ...defaults, ...change });
+    if (change) {
+      fillRegistrationFormData(wrapper, { ...defaults, ...change });
+    } else {
+      fillRegistrationFormData(wrapper, defaults);
+    }
   }
 
   async function checkErrorIsNotVisible(

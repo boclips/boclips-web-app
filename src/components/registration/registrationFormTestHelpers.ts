@@ -37,40 +37,54 @@ export function fillRegistrationForm(
   discoveryMethod: string,
   desiredContent: string,
 ) {
-  fireEvent.change(wrapper.getByLabelText('First name'), {
+  fireEvent.change(wrapper.container.querySelector('[id="input-firstName"]'), {
     target: { value: firstName },
   });
-  fireEvent.change(wrapper.getByLabelText('Last name'), {
+  fireEvent.change(wrapper.container.querySelector('[id="input-lastName"]'), {
     target: { value: lastName },
   });
-  fireEvent.change(wrapper.getByLabelText('Professional email'), {
+  fireEvent.change(wrapper.container.querySelector('[id="input-email"]'), {
     target: { value: email },
   });
-  fireEvent.change(wrapper.getByLabelText('Password'), {
+  fireEvent.change(wrapper.container.querySelector('[id="input-password"]'), {
     target: { value: password },
   });
-  fireEvent.change(wrapper.getByLabelText('Confirm password'), {
-    target: { value: confirmPassword },
-  });
-  fireEvent.change(wrapper.getByLabelText('Account name'), {
-    target: { value: accountName },
-  });
+  fireEvent.change(
+    wrapper.container.querySelector('[id="input-confirmPassword"]'),
+    {
+      target: { value: confirmPassword },
+    },
+  );
+  fireEvent.change(
+    wrapper.container.querySelector('[id="input-accountName"]'),
+    {
+      target: { value: accountName },
+    },
+  );
 
   const jobTitleDropdown = wrapper.getByTestId('input-dropdown-job-title');
   fireEvent.click(within(jobTitleDropdown).getByTestId('select'));
-  fireEvent.click(within(jobTitleDropdown).getByText(jobTitle));
+  within(jobTitleDropdown)
+    .findByText(jobTitle)
+    .then((option) => fireEvent.click(option));
 
   const countryDropdown = wrapper.getByTestId('input-dropdown-country');
   fireEvent.click(within(countryDropdown).getByTestId('select'));
-  fireEvent.click(within(countryDropdown).getByText(country));
+  within(countryDropdown)
+    .findByText(country)
+    .then((option) => fireEvent.click(option));
 
   const typeOfOrgDropdown = wrapper.getByTestId('input-dropdown-type-of-org');
   fireEvent.click(within(typeOfOrgDropdown).getByTestId('select'));
-  fireEvent.click(within(typeOfOrgDropdown).getByText(typeOfOrg));
+  within(typeOfOrgDropdown)
+    .findByText(typeOfOrg)
+    .then((option) => fireEvent.click(option));
 
   const audienceDropdown = wrapper.getByTestId('input-dropdown-audience');
   fireEvent.click(within(audienceDropdown).getByTestId('select'));
-  fireEvent.click(within(audienceDropdown).getByText(audience));
+  within(audienceDropdown)
+    .findByText(audience)
+    .then((option) => fireEvent.click(option));
 
   fireEvent.change(wrapper.getByLabelText('How did you hear about Boclips?'), {
     target: { value: discoveryMethod },
