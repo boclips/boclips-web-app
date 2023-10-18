@@ -1,5 +1,5 @@
 import BoCheckbox from 'src/components/common/input/BoCheckbox';
-import React, { useState } from 'react';
+import React from 'react';
 
 interface Props {
   isValid: boolean;

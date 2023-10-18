@@ -1,5 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { Typography } from '@boclips-ui/typography';
+import ErrorIcon from 'src/resources/icons/error-icon.svg';
+import c from 'classnames';
 import s from './style.module.less';
 
 interface Props {
@@ -22,12 +24,18 @@ const BoCheckbox = ({
   errorMessage,
 }: Props) => {
   return (
-    <>
+    <span className={s.wrapper}>
+      {errorMessage && (
+        <span className={s.errorMessage}>
+          <ErrorIcon />
+          <Typography.Body size="small">{errorMessage}</Typography.Body>
+        </span>
+      )}
       <label className={s.checkboxWrapper} htmlFor={id}>
         <input
           onChange={onChange}
           type="checkbox"
-          className={s.checkbox}
+          className={c(s.checkbox, { [s.error]: errorMessage })}
           name={name}
           id={id}
           checked={checked}
@@ -37,10 +45,7 @@ const BoCheckbox = ({
           {label || name}
         </Typography.Body>
       </label>
-      {errorMessage && (
-        <Typography.Body size="small">{errorMessage}</Typography.Body>
-      )}
-    </>
+    </span>
   );
 };
 

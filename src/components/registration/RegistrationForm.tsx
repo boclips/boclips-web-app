@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { Typography } from '@boclips-ui/typography';
 import { InputText } from '@boclips-ui/input';
 import Button from '@boclips-ui/button';
@@ -16,7 +16,6 @@ import {
   LIST_OF_COUNTRIES,
   TYPE_OF_ORG,
 } from 'src/components/registration/dropdownValues';
-import BoCheckbox from 'src/components/common/input/BoCheckbox';
 import { EducationalUseCheckbox } from 'src/components/registration/EducationalUseCheckbox';
 import s from './style.module.less';
 
@@ -66,9 +65,14 @@ const RegistrationForm = () => {
     isEducationalUseAgreementChecked,
     setIsEducationalUseAgreementChecked,
   ] = useState(false);
-
   const [isEducationalUseAgreementValid, setIsEducationalUseAgreementValid] =
     useState(true);
+
+  useEffect(() => {
+    if (isEducationalUseAgreementChecked) {
+      setIsEducationalUseAgreementValid(true);
+    }
+  }, [isEducationalUseAgreementChecked, setIsEducationalUseAgreementValid]);
 
   const handleChange = (fieldName, value) => {
     if (!value) return;
@@ -91,7 +95,7 @@ const RegistrationForm = () => {
   const handleUserCreation = async () => {
     const token = await tryHandleReCaptchaVerify();
     if (!isEducationalUseAgreementChecked) {
-      setIsEducationalUseAgreementValid(false)
+      setIsEducationalUseAgreementValid(false);
       return;
     }
 
