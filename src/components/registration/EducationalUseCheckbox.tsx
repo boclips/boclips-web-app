@@ -2,13 +2,13 @@ import BoCheckbox from 'src/components/common/input/BoCheckbox';
 import React from 'react';
 
 interface Props {
-  isValid: boolean;
+  isError: boolean;
   checked: boolean;
   setChecked: (value: boolean) => void;
 }
 
 export const EducationalUseCheckbox = ({
-  isValid,
+  isError,
   checked,
   setChecked,
 }: Props) => {
@@ -20,7 +20,7 @@ export const EducationalUseCheckbox = ({
         'incorporate into a publication or digital product for a learning outcome'
       }
       onChange={(value) => setChecked(value.target.checked)}
-      errorMessage={isValid ? null : 'Educational use agreement is mandatory'}
+      errorMessage={isError ? 'Educational use agreement is mandatory' : null}
       name="educational-use-agreement"
       id="educational-use-agreement"
       checked={checked}

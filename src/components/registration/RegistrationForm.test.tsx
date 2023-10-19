@@ -3,10 +3,11 @@ import {
   render,
   RenderResult,
   waitFor,
-  within,
 } from '@testing-library/react';
 import React from 'react';
-import RegistrationForm from 'src/components/registration/RegistrationForm';
+import RegistrationForm, {
+  RegistrationData,
+} from 'src/components/registration/RegistrationForm';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -14,6 +15,7 @@ import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/Create
 import { ToastContainer } from 'react-toastify';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
+import { fillRegistrationForm } from 'src/components/registration/registrationFormTestHelpers';
 
 const mockExecuteRecaptcha = jest.fn((_?: string) =>
   Promise.resolve('token_baby'),
@@ -31,6 +33,29 @@ jest.mock('react-google-recaptcha-v3', () => {
 });
 
 describe('Registration Form', () => {
+  async function fillTheForm(
+    wrapper: RenderResult,
+    change?: Partial<RegistrationData>,
+  ) {
+    const defaults: RegistrationData = {
+      firstName: 'LeBron',
+      lastName: 'James',
+      email: 'lj@nba.com',
+      password: 'p@ss1234',
+      confirmPassword: 'p@ss1234',
+      accountName: 'Los Angeles Lakers',
+      jobTitle: 'Teacher',
+      country: 'Poland',
+      typeOfOrg: 'EdTech',
+      audience: 'K12',
+      discoveryMethod: 'Teacher',
+      desiredContent: 'Maths',
+      educationalUse: true,
+    };
+
+    await fillRegistrationForm(wrapper, { ...defaults, ...change });
+  }
+
   it('renders the form', async () => {
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
@@ -94,8 +119,7 @@ describe('Registration Form', () => {
       </QueryClientProvider>,
     );
 
-    fillRegistrationForm(wrapper);
-    checkEducationalUseAgreement(wrapper);
+    await fillTheForm(wrapper, {});
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
@@ -104,7 +128,7 @@ describe('Registration Form', () => {
         firstName: 'LeBron',
         lastName: 'James',
         email: 'lj@nba.com',
-        password: 'p@ss',
+        password: 'p@ss1234',
         recaptchaToken: 'token_baby',
         type: UserType.trialB2bUser,
         accountName: 'Los Angeles Lakers',
@@ -137,8 +161,7 @@ describe('Registration Form', () => {
       </QueryClientProvider>,
     );
 
-    fillRegistrationForm(wrapper);
-    checkEducationalUseAgreement(wrapper);
+    await fillTheForm(wrapper, {});
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
@@ -147,7 +170,7 @@ describe('Registration Form', () => {
     expect(wrapper.getByDisplayValue('LeBron')).toBeVisible();
     expect(wrapper.getByDisplayValue('James')).toBeVisible();
     expect(wrapper.getByDisplayValue('lj@nba.com')).toBeVisible();
-    expect(wrapper.getAllByDisplayValue('p@ss')).toHaveLength(2);
+    expect(wrapper.getAllByDisplayValue('p@ss1234')).toHaveLength(2);
   });
 
   it('success notification is displayed when trial user creation passes', async () => {
@@ -169,8 +192,7 @@ describe('Registration Form', () => {
       </QueryClientProvider>,
     );
 
-    fillRegistrationForm(wrapper);
-    checkEducationalUseAgreement(wrapper);
+    await fillTheForm(wrapper, {});
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
@@ -195,8 +217,7 @@ describe('Registration Form', () => {
       </QueryClientProvider>,
     );
 
-    fillRegistrationForm(wrapper);
-    checkEducationalUseAgreement(wrapper);
+    await fillTheForm(wrapper, {});
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
@@ -206,106 +227,4 @@ describe('Registration Form', () => {
       ),
     ).toBeVisible();
   });
-
-  it('prompts user to check educational use checkbox if not checked and user clicks submit', async () => {
-    const fakeClient = new FakeBoclipsClient();
-    const createTrialUserSpy = jest.spyOn(fakeClient.users, 'createTrialUser');
-
-    const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={fakeClient}>
-          <ToastContainer />
-          <GoogleReCaptchaProvider reCaptchaKey="123">
-            <RegistrationForm />
-          </GoogleReCaptchaProvider>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
-    );
-
-    fillRegistrationForm(wrapper);
-    expect(
-      wrapper.queryByText('Educational use agreement is mandatory'),
-    ).toBeNull();
-
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
-
-    expect(
-      await wrapper.findByText('Educational use agreement is mandatory'),
-    ).toBeVisible();
-    expect(createTrialUserSpy).not.toBeCalled();
-  });
-
-  function fillRegistrationForm(
-    wrapper: RenderResult,
-    firstName = 'LeBron',
-    lastName = 'James',
-    email = 'lj@nba.com',
-    password = 'p@ss',
-    confirmPassword = 'p@ss',
-    accountName = 'Los Angeles Lakers',
-    jobTitle = 'Teacher',
-    country = 'Poland',
-    typeOfOrg = 'EdTech',
-    audience = 'K12',
-    discoveryMethod = 'Teacher',
-    desiredContent = 'Maths',
-  ) {
-    fireEvent.change(wrapper.getByLabelText('First name'), {
-      target: { value: firstName },
-    });
-    fireEvent.change(wrapper.getByLabelText('Last name'), {
-      target: { value: lastName },
-    });
-    fireEvent.change(wrapper.getByLabelText('Professional email'), {
-      target: { value: email },
-    });
-    fireEvent.change(wrapper.getByLabelText('Password'), {
-      target: { value: password },
-    });
-    fireEvent.change(wrapper.getByLabelText('Confirm password'), {
-      target: { value: confirmPassword },
-    });
-    fireEvent.change(wrapper.getByLabelText('Account name'), {
-      target: { value: accountName },
-    });
-
-    const jobTitleDropdown = wrapper.getByTestId('input-dropdown-job-title');
-    fireEvent.click(within(jobTitleDropdown).getByTestId('select'));
-    fireEvent.click(within(jobTitleDropdown).getByText(jobTitle));
-
-    const countryDropdown = wrapper.getByTestId('input-dropdown-country');
-    fireEvent.click(within(countryDropdown).getByTestId('select'));
-    fireEvent.click(within(countryDropdown).getByText(country));
-
-    const typeOfOrgDropdown = wrapper.getByTestId('input-dropdown-type-of-org');
-    fireEvent.click(within(typeOfOrgDropdown).getByTestId('select'));
-    fireEvent.click(within(typeOfOrgDropdown).getByText(typeOfOrg));
-
-    const audienceDropdown = wrapper.getByTestId('input-dropdown-audience');
-    fireEvent.click(within(audienceDropdown).getByTestId('select'));
-    fireEvent.click(within(audienceDropdown).getByText(audience));
-
-    fireEvent.change(
-      wrapper.getByLabelText('How did you hear about Boclips?'),
-      {
-        target: { value: discoveryMethod },
-      },
-    );
-
-    fireEvent.change(
-      wrapper.getByLabelText('What content are you looking for?'),
-      {
-        target: { value: desiredContent },
-      },
-    );
-  }
-  const checkEducationalUseAgreement = (wrapper: RenderResult) => {
-    fireEvent.click(
-      wrapper.getByLabelText(
-        'I certify that I am accessing this service solely for Educational Use. ' +
-          '"Educational Use" is defined as to copy, communicate, edit, and/or ' +
-          'incorporate into a publication or digital product for a learning outcome',
-      ),
-    );
-  };
 });

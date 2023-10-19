@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { ReactElement, useCallback, useState } from 'react';
 import { Typography } from '@boclips-ui/typography';
 import { InputText } from '@boclips-ui/input';
 import Button from '@boclips-ui/button';
@@ -17,9 +17,11 @@ import {
   TYPE_OF_ORG,
 } from 'src/components/registration/dropdownValues';
 import { EducationalUseCheckbox } from 'src/components/registration/EducationalUseCheckbox';
+import * as EmailValidator from 'email-validator';
+import PasswordValidator from 'password-validator';
 import s from './style.module.less';
 
-interface RegistrationData {
+export interface RegistrationData {
   firstName: string;
   lastName: string;
   email: string;
@@ -32,7 +34,26 @@ interface RegistrationData {
   discoveryMethod: string;
   desiredContent: string;
   jobTitle: string;
+  educationalUse: boolean;
 }
+
+const emptyRegistrationData = (): RegistrationData => {
+  return {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    accountName: '',
+    country: '',
+    typeOfOrg: '',
+    audience: '',
+    discoveryMethod: '',
+    desiredContent: '',
+    jobTitle: '',
+    educationalUse: false,
+  };
+};
 
 const RegistrationForm = () => {
   const { mutate: createTrialUser, isLoading: isTrialUserCreating } =
@@ -46,37 +67,19 @@ const RegistrationForm = () => {
     return executeRecaptcha('register');
   }, [executeRecaptcha]);
 
-  const [registrationData, setRegistrationData] = useState<RegistrationData>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    accountName: '',
-    country: '',
-    typeOfOrg: '',
-    audience: '',
-    discoveryMethod: '',
-    desiredContent: '',
-    jobTitle: '',
-  });
+  const [registrationData, setRegistrationData] = useState<RegistrationData>(
+    emptyRegistrationData(),
+  );
 
-  const [
-    isEducationalUseAgreementChecked,
-    setIsEducationalUseAgreementChecked,
-  ] = useState(false);
-  const [isEducationalUseAgreementValid, setIsEducationalUseAgreementValid] =
-    useState(true);
-
-  useEffect(() => {
-    if (isEducationalUseAgreementChecked) {
-      setIsEducationalUseAgreementValid(true);
-    }
-  }, [isEducationalUseAgreementChecked, setIsEducationalUseAgreementValid]);
+  const [validationErrors, setValidationErrors] = useState<RegistrationData>(
+    emptyRegistrationData(),
+  );
 
   const handleChange = (fieldName, value) => {
-    if (!value) return;
-    setRegistrationData((prevState) => ({ ...prevState, [fieldName]: value }));
+    setRegistrationData((prevState) => ({
+      ...prevState,
+      [fieldName]: value instanceof String ? value.trim() : value,
+    }));
   };
 
   async function tryHandleReCaptchaVerify() {
@@ -92,14 +95,99 @@ const RegistrationForm = () => {
     }
   }
 
-  const handleUserCreation = async () => {
-    const token = await tryHandleReCaptchaVerify();
-    if (!isEducationalUseAgreementChecked) {
-      setIsEducationalUseAgreementValid(false);
-      return;
+  function isFormDataValid(): boolean {
+    const checks = [
+      checkIsNotEmpty('firstName', 'First name is required'),
+      checkIsNotEmpty('lastName', 'Last name is required'),
+      checkIsNotEmpty('email', 'Email is required') &&
+        checkHasEmailFormat('email', 'Please enter a valid email address'),
+      checkIsNotEmpty('accountName', 'Account name is required'),
+      checkIsNotEmpty('password', 'Password is required') &&
+        checkPasswordIsStrong(
+          'Password must be at least 8 characters long and contain a combination of letters, numbers, and special characters',
+        ) &&
+        checkPasswordConfirmed('Passwords do not match'),
+      checkIsNotEmpty('jobTitle', 'Please select a job title'),
+      checkIsNotEmpty('country', 'Please select a country'),
+      checkIsNotEmpty('typeOfOrg', 'Please select a type of organisation'),
+      checkIsNotEmpty('audience', 'Please select an audience'),
+      checkEducationalUseAgreementValid(),
+    ];
+
+    return !checks.includes(false);
+  }
+
+  function checkIsNotEmpty(fieldName: string, errorMessage: string): boolean {
+    if (!registrationData[fieldName]) {
+      setError(fieldName, errorMessage);
+      return false;
     }
 
-    if (token) {
+    setError(fieldName, '');
+    return true;
+  }
+
+  function checkHasEmailFormat(
+    fieldName: string,
+    errorMessage: string,
+  ): boolean {
+    if (!EmailValidator.validate(registrationData[fieldName])) {
+      setError(fieldName, errorMessage);
+      return false;
+    }
+
+    setError(fieldName, '');
+    return true;
+  }
+
+  function checkPasswordIsStrong(errorMessage: string): boolean {
+    const schema = new PasswordValidator();
+
+    /* eslint-disable */
+    schema
+      .is().min(8)
+      .has().digits()
+      .has().letters()
+      .has().symbols()
+      .has().not().spaces();
+    /* eslint-enable  */
+
+    if (!schema.validate(registrationData.password)) {
+      setError('password', errorMessage);
+      return false;
+    }
+
+    setError('password', '');
+    return true;
+  }
+
+  function checkPasswordConfirmed(errorMessage: string): boolean {
+    if (registrationData.password !== registrationData.confirmPassword) {
+      setError('confirmPassword', errorMessage);
+      return false;
+    }
+
+    setError('confirmPassword', '');
+    return true;
+  }
+
+  function checkEducationalUseAgreementValid(): boolean {
+    if (!registrationData.educationalUse) {
+      setError('educationalUse', true);
+      return false;
+    }
+    setError('educationalUse', false);
+    return true;
+  }
+
+  const setError = (fieldName, value) => {
+    setValidationErrors((prevState) => ({ ...prevState, [fieldName]: value }));
+  };
+
+  const handleUserCreation = async () => {
+    const token = await tryHandleReCaptchaVerify();
+
+    if (isFormDataValid() && token) {
       createTrialUser(
         {
           email: registrationData.email,
@@ -152,16 +240,18 @@ const RegistrationForm = () => {
         </Typography.Body>
       </section>
       <main tabIndex={-1} className={s.formInputsWrapper}>
-        <div className="flex flex-row">
+        <div className="flex flex-row items-end">
           <InputText
             id="input-firstName"
+            aria-label="input-firstName"
             onChange={(value) => handleChange('firstName', value)}
             inputType="text"
             placeholder="John"
-            defaultValue={registrationData.firstName}
             className={c(s.input, 'flex-1 mr-4')}
             labelText="First name"
             height="48px"
+            isError={!!validationErrors.firstName}
+            errorMessage={validationErrors.firstName}
           />
           <InputText
             id="input-lastName"
@@ -171,6 +261,8 @@ const RegistrationForm = () => {
             className={c(s.input, 'flex-1')}
             labelText="Last name"
             height="48px"
+            isError={!!validationErrors.lastName}
+            errorMessage={validationErrors.lastName}
           />
         </div>
         <InputText
@@ -181,8 +273,10 @@ const RegistrationForm = () => {
           className={c(s.input)}
           labelText="Professional email"
           height="48px"
+          isError={!!validationErrors.email}
+          errorMessage={validationErrors.email}
         />
-        <div className="flex flex-row">
+        <div className="flex flex-row items-end">
           <InputText
             id="input-password"
             onChange={(value) => handleChange('password', value)}
@@ -191,6 +285,8 @@ const RegistrationForm = () => {
             className={c(s.input, 'flex-1 mr-4')}
             labelText="Password"
             height="48px"
+            isError={!!validationErrors.password}
+            errorMessage={validationErrors.password}
           />
           <InputText
             id="input-confirmPassword"
@@ -200,6 +296,8 @@ const RegistrationForm = () => {
             className={c(s.input, 'flex-1')}
             labelText="Confirm password"
             height="48px"
+            isError={!!validationErrors.confirmPassword}
+            errorMessage={validationErrors.confirmPassword}
           />
         </div>
 
@@ -208,13 +306,14 @@ const RegistrationForm = () => {
           onChange={(value) => handleChange('accountName', value)}
           inputType="text"
           placeholder="Your account name"
-          defaultValue={registrationData.firstName}
           className={s.input}
           labelText="Account name"
           height="48px"
+          isError={!!validationErrors.accountName}
+          errorMessage={validationErrors.accountName}
         />
 
-        <div className="flex flex-row mb-2">
+        <div className="flex flex-row items-end	mb-2">
           <div className="flex-1 mr-4">
             <Dropdown
               mode="single"
@@ -225,6 +324,8 @@ const RegistrationForm = () => {
               labelText="Job title"
               showLabel
               fitWidth
+              isError={!!validationErrors.jobTitle}
+              errorMessage={validationErrors.jobTitle}
             />
           </div>
           <div className="flex-1">
@@ -237,11 +338,13 @@ const RegistrationForm = () => {
               labelText="Country"
               showLabel
               fitWidth
+              isError={!!validationErrors.country}
+              errorMessage={validationErrors.country}
             />
           </div>
         </div>
 
-        <div className="flex flex-row">
+        <div className="flex flex-row items-end">
           <div className="flex flex-1 items-end mb-2 mr-4">
             <Dropdown
               mode="single"
@@ -252,6 +355,8 @@ const RegistrationForm = () => {
               labelText="Type of organization"
               showLabel
               fitWidth
+              isError={!!validationErrors.typeOfOrg}
+              errorMessage={validationErrors.typeOfOrg}
             />
           </div>
           <div className="flex flex-1 items-end mb-2">
@@ -264,6 +369,8 @@ const RegistrationForm = () => {
               labelText="Select audience"
               showLabel
               fitWidth
+              isError={!!validationErrors.audience}
+              errorMessage={validationErrors.audience}
             />
           </div>
         </div>
@@ -287,9 +394,9 @@ const RegistrationForm = () => {
         />
         <div>
           <EducationalUseCheckbox
-            isValid={isEducationalUseAgreementValid}
-            checked={isEducationalUseAgreementChecked}
-            setChecked={setIsEducationalUseAgreementChecked}
+            isError={validationErrors.educationalUse}
+            checked={registrationData.educationalUse}
+            setChecked={(value) => handleChange('educationalUse', value)}
           />
         </div>
         <Typography.Body size="small" className={c(s.blueText, 'mt-1')}>
