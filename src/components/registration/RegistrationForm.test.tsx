@@ -1,6 +1,13 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import {
+  fireEvent,
+  render,
+  RenderResult,
+  waitFor,
+} from '@testing-library/react';
 import React from 'react';
-import RegistrationForm from 'src/components/registration/RegistrationForm';
+import RegistrationForm, {
+  RegistrationData,
+} from 'src/components/registration/RegistrationForm';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -26,6 +33,28 @@ jest.mock('react-google-recaptcha-v3', () => {
 });
 
 describe('Registration Form', () => {
+  async function fillTheForm(
+    wrapper: RenderResult,
+    change?: Partial<RegistrationData>,
+  ) {
+    const defaults: RegistrationData = {
+      firstName: 'LeBron',
+      lastName: 'James',
+      email: 'lj@nba.com',
+      password: 'p@ss1234',
+      confirmPassword: 'p@ss1234',
+      accountName: 'Los Angeles Lakers',
+      jobTitle: 'Teacher',
+      country: 'Poland',
+      typeOfOrg: 'EdTech',
+      audience: 'K12',
+      discoveryMethod: 'Teacher',
+      desiredContent: 'Maths',
+    };
+
+    await fillRegistrationForm(wrapper, { ...defaults, ...change });
+  }
+
   it('renders the form', async () => {
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
@@ -79,21 +108,7 @@ describe('Registration Form', () => {
       </QueryClientProvider>,
     );
 
-    await fillRegistrationForm(
-      wrapper,
-      'LeBron',
-      'James',
-      'lj@nba.com',
-      'p@ss1234',
-      'p@ss1234',
-      'Los Angeles Lakers',
-      'Teacher',
-      'Poland',
-      'EdTech',
-      'K12',
-      'Teacher',
-      'Maths',
-    );
+    await fillTheForm(wrapper, {});
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
@@ -135,21 +150,7 @@ describe('Registration Form', () => {
       </QueryClientProvider>,
     );
 
-    await fillRegistrationForm(
-      wrapper,
-      'LeBron',
-      'James',
-      'lj@nba.com',
-      'p@ss1234',
-      'p@ss1234',
-      'Los Angeles Lakers',
-      'Teacher',
-      'Poland',
-      'EdTech',
-      'K12',
-      'Teacher',
-      'Maths',
-    );
+    await fillTheForm(wrapper, {});
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
@@ -180,21 +181,7 @@ describe('Registration Form', () => {
       </QueryClientProvider>,
     );
 
-    await fillRegistrationForm(
-      wrapper,
-      'LeBron',
-      'James',
-      'lj@nba.com',
-      'p@ss1234',
-      'p@ss1234',
-      'Los Angeles Lakers',
-      'Teacher',
-      'Poland',
-      'EdTech',
-      'K12',
-      'Teacher',
-      'Maths',
-    );
+    await fillTheForm(wrapper, {});
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
@@ -219,21 +206,7 @@ describe('Registration Form', () => {
       </QueryClientProvider>,
     );
 
-    await fillRegistrationForm(
-      wrapper,
-      'LeBron',
-      'James',
-      'lj@nba.com',
-      'p@ss1234',
-      'p@ss1234',
-      'Los Angeles Lakers',
-      'Teacher',
-      'Poland',
-      'EdTech',
-      'K12',
-      'Teacher',
-      'Maths',
-    );
+    await fillTheForm(wrapper, {});
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 

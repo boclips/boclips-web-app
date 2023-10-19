@@ -6,81 +6,49 @@ import {
 } from '@testing-library/react';
 import { RegistrationData } from 'src/components/registration/RegistrationForm';
 
-export async function fillRegistrationFormData(
+export async function fillRegistrationForm(
   wrapper: RenderResult,
   data: RegistrationData,
 ) {
-  await fillRegistrationForm(
-    wrapper,
-    data.firstName,
-    data.lastName,
-    data.email,
-    data.password,
-    data.confirmPassword,
-    data.accountName,
-    data.jobTitle,
-    data.country,
-    data.typeOfOrg,
-    data.audience,
-    data.discoveryMethod,
-    data.desiredContent,
-  );
-}
-
-export async function fillRegistrationForm(
-  wrapper: RenderResult,
-  firstName: string,
-  lastName: string,
-  email: string,
-  password: string,
-  confirmPassword: string,
-  accountName: string,
-  jobTitle: string,
-  country: string,
-  typeOfOrg: string,
-  audience: string,
-  discoveryMethod: string,
-  desiredContent: string,
-) {
   fireEvent.change(wrapper.container.querySelector('[id="input-firstName"]'), {
-    target: { value: firstName },
+    target: { value: data.firstName },
   });
 
   fireEvent.change(wrapper.container.querySelector('[id="input-lastName"]'), {
-    target: { value: lastName },
+    target: { value: data.lastName },
   });
   fireEvent.change(wrapper.container.querySelector('[id="input-email"]'), {
-    target: { value: email },
+    target: { value: data.email },
   });
   fireEvent.change(wrapper.container.querySelector('[id="input-password"]'), {
-    target: { value: password },
+    target: { value: data.password },
   });
   fireEvent.change(
     wrapper.container.querySelector('[id="input-confirmPassword"]'),
     {
-      target: { value: confirmPassword },
+      target: { value: data.confirmPassword },
     },
   );
   fireEvent.change(
     wrapper.container.querySelector('[id="input-accountName"]'),
     {
-      target: { value: accountName },
+      target: { value: data.accountName },
     },
   );
 
-  await setDropdownValue(wrapper, 'input-dropdown-job-title', jobTitle);
-  await setDropdownValue(wrapper, 'input-dropdown-type-of-org', typeOfOrg);
-  await setDropdownValue(wrapper, 'input-dropdown-country', country);
-  await setDropdownValue(wrapper, 'input-dropdown-audience', audience);
+  await setDropdownValue(wrapper, 'input-dropdown-job-title', data.jobTitle);
+  await setDropdownValue(wrapper, 'input-dropdown-type-of-org', data.typeOfOrg);
+  await setDropdownValue(wrapper, 'input-dropdown-country', data.country);
+  await setDropdownValue(wrapper, 'input-dropdown-audience', data.audience);
 
   fireEvent.change(wrapper.getByLabelText('How did you hear about Boclips?'), {
-    target: { value: discoveryMethod },
+    target: { value: data.discoveryMethod },
   });
 
   fireEvent.change(
     wrapper.getByLabelText('What content are you looking for?'),
     {
-      target: { value: desiredContent },
+      target: { value: data.desiredContent },
     },
   );
 }

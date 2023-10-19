@@ -12,10 +12,7 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
-import {
-  fillRegistrationForm,
-  fillRegistrationFormData,
-} from 'src/components/registration/registrationFormTestHelpers';
+import { fillRegistrationForm } from 'src/components/registration/registrationFormTestHelpers';
 
 const mockExecuteRecaptcha = jest.fn((_?: string) =>
   Promise.resolve('token_baby'),
@@ -216,21 +213,20 @@ describe('Registration Form Validation', () => {
   it('errors disappear when form is fixed', async () => {
     const wrapper = renderRegistrationForm();
 
-    await fillRegistrationForm(
-      wrapper,
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-    );
+    await fillTheForm(wrapper, {
+      firstName: '',
+      lastName: '',
+      password: '',
+      confirmPassword: '',
+      accountName: '',
+      country: '',
+      jobTitle: '',
+      typeOfOrg: '',
+      desiredContent: '',
+      discoveryMethod: '',
+      email: '',
+      audience: '',
+    });
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
@@ -296,7 +292,7 @@ describe('Registration Form Validation', () => {
       desiredContent: 'Maths',
     };
 
-    await fillRegistrationFormData(wrapper, { ...defaults, ...change });
+    await fillRegistrationForm(wrapper, { ...defaults, ...change });
   }
 
   async function checkErrorIsNotVisible(
