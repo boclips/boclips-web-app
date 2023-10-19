@@ -79,7 +79,7 @@ describe('Registration Form', () => {
       </QueryClientProvider>,
     );
 
-    fillRegistrationForm(
+    await fillRegistrationForm(
       wrapper,
       'LeBron',
       'James',
@@ -135,7 +135,7 @@ describe('Registration Form', () => {
       </QueryClientProvider>,
     );
 
-    fillRegistrationForm(
+    await fillRegistrationForm(
       wrapper,
       'LeBron',
       'James',
@@ -180,7 +180,7 @@ describe('Registration Form', () => {
       </QueryClientProvider>,
     );
 
-    fillRegistrationForm(
+    await fillRegistrationForm(
       wrapper,
       'LeBron',
       'James',
@@ -219,7 +219,7 @@ describe('Registration Form', () => {
       </QueryClientProvider>,
     );
 
-    fillRegistrationForm(
+    await fillRegistrationForm(
       wrapper,
       'LeBron',
       'James',

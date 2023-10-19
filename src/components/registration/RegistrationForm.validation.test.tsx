@@ -213,7 +213,7 @@ describe('Registration Form Validation', () => {
   it('errors disappear when form is fixed', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillRegistrationForm(
+    await fillRegistrationForm(
       wrapper,
       '',
       '',
@@ -300,13 +300,17 @@ describe('Registration Form Validation', () => {
     wrapper: RenderResult,
     errorMessage: string,
   ) {
-    expect(await wrapper.queryByText(errorMessage)).toBeNull();
+    await waitFor(async () => {
+      expect(await wrapper.queryByText(errorMessage)).not.toBeInTheDocument();
+    });
   }
 
   async function checkErrorIsVisible(
     wrapper: RenderResult,
     errorMessage: string,
   ) {
-    expect(await wrapper.findByText(errorMessage)).toBeVisible();
+    await waitFor(async () => {
+      expect(await wrapper.findByText(errorMessage)).toBeVisible();
+    });
   }
 });

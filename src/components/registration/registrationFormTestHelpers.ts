@@ -1,4 +1,9 @@
-import { fireEvent, RenderResult, within } from '@testing-library/react';
+import {
+  fireEvent,
+  RenderResult,
+  waitFor,
+  within,
+} from '@testing-library/react';
 import { RegistrationData } from 'src/components/registration/RegistrationForm';
 
 export function fillRegistrationFormData(
@@ -22,7 +27,7 @@ export function fillRegistrationFormData(
   );
 }
 
-export function fillRegistrationForm(
+export async function fillRegistrationForm(
   wrapper: RenderResult,
   firstName: string,
   lastName: string,
@@ -37,48 +42,36 @@ export function fillRegistrationForm(
   discoveryMethod: string,
   desiredContent: string,
 ) {
-  fireEvent.change(wrapper.getByLabelText('First name'), {
+  fireEvent.change(wrapper.container.querySelector('[id="input-firstName"]'), {
     target: { value: firstName },
   });
-  fireEvent.change(wrapper.getByLabelText('Last name'), {
+
+  fireEvent.change(wrapper.container.querySelector('[id="input-lastName"]'), {
     target: { value: lastName },
   });
-  fireEvent.change(wrapper.getByLabelText('Professional email'), {
+  fireEvent.change(wrapper.container.querySelector('[id="input-email"]'), {
     target: { value: email },
   });
-  fireEvent.change(wrapper.getByLabelText('Password'), {
+  fireEvent.change(wrapper.container.querySelector('[id="input-password"]'), {
     target: { value: password },
   });
-  fireEvent.change(wrapper.getByLabelText('Confirm password'), {
-    target: { value: confirmPassword },
-  });
-  fireEvent.change(wrapper.getByLabelText('Account name'), {
-    target: { value: accountName },
-  });
+  fireEvent.change(
+    wrapper.container.querySelector('[id="input-confirmPassword"]'),
+    {
+      target: { value: confirmPassword },
+    },
+  );
+  fireEvent.change(
+    wrapper.container.querySelector('[id="input-accountName"]'),
+    {
+      target: { value: accountName },
+    },
+  );
 
-  const jobTitleDropdown = wrapper.getByTestId('input-dropdown-job-title');
-  fireEvent.click(within(jobTitleDropdown).getByTestId('select'));
-  within(jobTitleDropdown)
-    .findByText(jobTitle)
-    .then((option) => fireEvent.click(option));
-
-  const countryDropdown = wrapper.getByTestId('input-dropdown-country');
-  fireEvent.click(within(countryDropdown).getByTestId('select'));
-  within(countryDropdown)
-    .findByText(country)
-    .then((option) => fireEvent.click(option));
-
-  const typeOfOrgDropdown = wrapper.getByTestId('input-dropdown-type-of-org');
-  fireEvent.click(within(typeOfOrgDropdown).getByTestId('select'));
-  within(typeOfOrgDropdown)
-    .findByText(typeOfOrg)
-    .then((option) => fireEvent.click(option));
-
-  const audienceDropdown = wrapper.getByTestId('input-dropdown-audience');
-  fireEvent.click(within(audienceDropdown).getByTestId('select'));
-  within(audienceDropdown)
-    .findByText(audience)
-    .then((option) => fireEvent.click(option));
+  await setDropdownValue(wrapper, 'input-dropdown-job-title', jobTitle);
+  await setDropdownValue(wrapper, 'input-dropdown-type-of-org', typeOfOrg);
+  await setDropdownValue(wrapper, 'input-dropdown-country', country);
+  await setDropdownValue(wrapper, 'input-dropdown-audience', audience);
 
   fireEvent.change(wrapper.getByLabelText('How did you hear about Boclips?'), {
     target: { value: discoveryMethod },
@@ -90,4 +83,20 @@ export function fillRegistrationForm(
       target: { value: desiredContent },
     },
   );
+}
+
+async function setDropdownValue(
+  wrapper: RenderResult,
+  dropdownId: string,
+  value: string,
+) {
+  if (value) {
+    const dropdown = wrapper.getByTestId(dropdownId);
+    fireEvent.click(within(dropdown).getByTestId('select'));
+    await waitFor(() => {
+      const option = within(dropdown).getByText(value);
+      fireEvent.click(option);
+      expect(option).toBeVisible();
+    });
+  }
 }
