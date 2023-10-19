@@ -6,11 +6,11 @@ import {
 } from '@testing-library/react';
 import { RegistrationData } from 'src/components/registration/RegistrationForm';
 
-export function fillRegistrationFormData(
+export async function fillRegistrationFormData(
   wrapper: RenderResult,
   data: RegistrationData,
 ) {
-  return fillRegistrationForm(
+  await fillRegistrationForm(
     wrapper,
     data.firstName,
     data.lastName,

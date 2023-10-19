@@ -39,7 +39,7 @@ describe('Registration Form Validation', () => {
   it('first name cannot be empty', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { firstName: '' });
+    await fillTheForm(wrapper, { firstName: '' });
 
     await checkErrorIsNotVisible(wrapper, 'First name is required');
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -53,7 +53,7 @@ describe('Registration Form Validation', () => {
   it('last name cannot be empty', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { lastName: '' });
+    await fillTheForm(wrapper, { lastName: '' });
 
     await checkErrorIsNotVisible(wrapper, 'Last name is required');
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -67,7 +67,7 @@ describe('Registration Form Validation', () => {
   it('email cannot be empty', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { email: '' });
+    await fillTheForm(wrapper, { email: '' });
 
     await checkErrorIsNotVisible(wrapper, 'Email is required');
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -81,7 +81,7 @@ describe('Registration Form Validation', () => {
   it('email must have correct format', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { email: 'wrong@' });
+    await fillTheForm(wrapper, { email: 'wrong@' });
 
     await checkErrorIsNotVisible(wrapper, 'Please enter a valid email address');
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -95,7 +95,7 @@ describe('Registration Form Validation', () => {
   it('account name cannot be empty', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { accountName: '' });
+    await fillTheForm(wrapper, { accountName: '' });
 
     await checkErrorIsNotVisible(wrapper, 'Account name is required');
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -109,7 +109,7 @@ describe('Registration Form Validation', () => {
   it('password cannot be empty', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { password: '' });
+    await fillTheForm(wrapper, { password: '' });
 
     await checkErrorIsNotVisible(wrapper, 'Password is required');
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -123,7 +123,7 @@ describe('Registration Form Validation', () => {
   it('password must be strong', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { password: 'pass' });
+    await fillTheForm(wrapper, { password: 'pass' });
 
     const errorMessage =
       'Password must be at least 8 characters long and contain a combination of letters, numbers, and special characters';
@@ -140,7 +140,10 @@ describe('Registration Form Validation', () => {
   it('passwords must match ', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { password: 'abc@5678', confirmPassword: 'def' });
+    await fillTheForm(wrapper, {
+      password: 'abc@5678',
+      confirmPassword: 'def',
+    });
 
     await checkErrorIsNotVisible(wrapper, 'Passwords do not match');
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -154,7 +157,7 @@ describe('Registration Form Validation', () => {
   it('job title cannot be empty', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { jobTitle: '' });
+    await fillTheForm(wrapper, { jobTitle: '' });
 
     await checkErrorIsNotVisible(wrapper, 'Please select a job title');
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -168,7 +171,7 @@ describe('Registration Form Validation', () => {
   it('country cannot be empty', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { country: '' });
+    await fillTheForm(wrapper, { country: '' });
 
     await checkErrorIsNotVisible(wrapper, 'Please select a country');
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -182,7 +185,7 @@ describe('Registration Form Validation', () => {
   it('type of organisation cannot be empty', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { typeOfOrg: '' });
+    await fillTheForm(wrapper, { typeOfOrg: '' });
 
     await checkErrorIsNotVisible(
       wrapper,
@@ -199,7 +202,7 @@ describe('Registration Form Validation', () => {
   it('audience cannot be empty', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { audience: '' });
+    await fillTheForm(wrapper, { audience: '' });
 
     await checkErrorIsNotVisible(wrapper, 'Please select an audience');
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -241,7 +244,7 @@ describe('Registration Form Validation', () => {
     await checkErrorIsVisible(wrapper, 'Please select a type of organisation');
     await checkErrorIsVisible(wrapper, 'Please select an audience');
 
-    fillTheForm(wrapper, {});
+    await fillTheForm(wrapper, {});
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
     await checkErrorIsNotVisible(wrapper, 'First name is required');
@@ -274,7 +277,7 @@ describe('Registration Form Validation', () => {
     );
   }
 
-  function fillTheForm(
+  async function fillTheForm(
     wrapper: RenderResult,
     change?: Partial<RegistrationData>,
   ) {
@@ -293,7 +296,7 @@ describe('Registration Form Validation', () => {
       desiredContent: 'Maths',
     };
 
-    fillRegistrationFormData(wrapper, { ...defaults, ...change });
+    await fillRegistrationFormData(wrapper, { ...defaults, ...change });
   }
 
   async function checkErrorIsNotVisible(
