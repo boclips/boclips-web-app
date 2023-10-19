@@ -301,7 +301,7 @@ describe('Registration Form Validation', () => {
     errorMessage: string,
   ) {
     await waitFor(async () => {
-      expect(await wrapper.queryByText(errorMessage)).not.toBeInTheDocument();
+      expect(wrapper.queryByText(errorMessage)).not.toBeInTheDocument();
     });
   }
 
@@ -310,7 +310,7 @@ describe('Registration Form Validation', () => {
     errorMessage: string,
   ) {
     await waitFor(async () => {
-      expect(await wrapper.findByText(errorMessage)).toBeVisible();
+      expect(wrapper.getByText(errorMessage)).toBeVisible();
     });
   }
 });
