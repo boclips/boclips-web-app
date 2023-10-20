@@ -1,12 +1,7 @@
-import {
-  fireEvent,
-  RenderResult,
-  waitFor,
-  within,
-} from '@testing-library/react';
+import { fireEvent, RenderResult, within } from '@testing-library/react';
 import { RegistrationData } from 'src/components/registration/RegistrationForm';
 
-export async function fillRegistrationForm(
+export function fillRegistrationForm(
   wrapper: RenderResult,
   data: RegistrationData,
 ) {
@@ -36,10 +31,10 @@ export async function fillRegistrationForm(
     },
   );
 
-  await setDropdownValue(wrapper, 'input-dropdown-job-title', data.jobTitle);
-  await setDropdownValue(wrapper, 'input-dropdown-type-of-org', data.typeOfOrg);
-  await setDropdownValue(wrapper, 'input-dropdown-country', data.country);
-  await setDropdownValue(wrapper, 'input-dropdown-audience', data.audience);
+  setDropdownValue(wrapper, 'input-dropdown-job-title', data.jobTitle);
+  setDropdownValue(wrapper, 'input-dropdown-type-of-org', data.typeOfOrg);
+  setDropdownValue(wrapper, 'input-dropdown-country', data.country);
+  setDropdownValue(wrapper, 'input-dropdown-audience', data.audience);
 
   fireEvent.change(wrapper.getByLabelText('How did you hear about Boclips?'), {
     target: { value: data.discoveryMethod },
@@ -57,7 +52,7 @@ export async function fillRegistrationForm(
   }
 }
 
-async function setDropdownValue(
+function setDropdownValue(
   wrapper: RenderResult,
   dropdownId: string,
   value: string,
@@ -65,11 +60,9 @@ async function setDropdownValue(
   if (value) {
     const dropdown = wrapper.getByTestId(dropdownId);
     fireEvent.click(within(dropdown).getByTestId('select'));
-    await waitFor(() => {
-      const option = within(dropdown).getByText(value);
-      fireEvent.click(option);
-      expect(option).toBeVisible();
-    });
+    const option = within(dropdown).getByText(value);
+    expect(option).toBeVisible();
+    fireEvent.click(option);
   }
 }
 
