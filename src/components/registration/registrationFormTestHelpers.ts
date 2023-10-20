@@ -47,7 +47,7 @@ export function fillRegistrationForm(
     },
   );
 
-  if (data.educationalUse) {
+  if (data.hasAcceptedEducationalUseTerms) {
     checkEducationalUseAgreement(wrapper);
   }
 }

@@ -34,7 +34,7 @@ export interface RegistrationData {
   discoveryMethod: string;
   desiredContent: string;
   jobTitle: string;
-  educationalUse: boolean;
+  hasAcceptedEducationalUseTerms: boolean;
 }
 
 const emptyRegistrationData = (): RegistrationData => {
@@ -51,7 +51,7 @@ const emptyRegistrationData = (): RegistrationData => {
     discoveryMethod: '',
     desiredContent: '',
     jobTitle: '',
-    educationalUse: false,
+    hasAcceptedEducationalUseTerms: false,
   };
 };
 
@@ -172,11 +172,11 @@ const RegistrationForm = () => {
   }
 
   function checkEducationalUseAgreementValid(): boolean {
-    if (!registrationData.educationalUse) {
-      setError('educationalUse', true);
+    if (!registrationData.hasAcceptedEducationalUseTerms) {
+      setError('hasAcceptedEducationalUseTerms', true);
       return false;
     }
-    setError('educationalUse', false);
+    setError('hasAcceptedEducationalUseTerms', false);
     return true;
   }
 
@@ -205,6 +205,8 @@ const RegistrationForm = () => {
             discoveryMethod: registrationData.discoveryMethod,
             desiredContent: registrationData.desiredContent,
           },
+          hasAcceptedEducationalUseTerms:
+            registrationData.hasAcceptedEducationalUseTerms,
         },
         {
           onSuccess: (user: User) => {
@@ -394,9 +396,11 @@ const RegistrationForm = () => {
         />
         <div>
           <EducationalUseCheckbox
-            isError={validationErrors.educationalUse}
-            checked={registrationData.educationalUse}
-            setChecked={(value) => handleChange('educationalUse', value)}
+            isError={validationErrors.hasAcceptedEducationalUseTerms}
+            checked={registrationData.hasAcceptedEducationalUseTerms}
+            setChecked={(value) =>
+              handleChange('hasAcceptedEducationalUseTerms', value)
+            }
           />
         </div>
         <Typography.Body size="small" className={c(s.blueText, 'mt-1')}>

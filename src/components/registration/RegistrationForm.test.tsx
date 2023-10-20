@@ -50,7 +50,7 @@ describe('Registration Form', () => {
       audience: 'K12',
       discoveryMethod: 'Teacher',
       desiredContent: 'Maths',
-      educationalUse: true,
+      hasAcceptedEducationalUseTerms: true,
     };
 
     await fillRegistrationForm(wrapper, { ...defaults, ...change });
@@ -105,7 +105,7 @@ describe('Registration Form', () => {
     ).toBeVisible();
   });
 
-  it('Typed values are submitted when clicked Create Account button ', async () => {
+  it('typed values and educational use agreement are submitted when Create Account button is clicked', async () => {
     const fakeClient = new FakeBoclipsClient();
     const createTrialUserSpy = jest.spyOn(fakeClient.users, 'createTrialUser');
 
@@ -140,6 +140,7 @@ describe('Registration Form', () => {
           discoveryMethod: 'Teacher',
           desiredContent: 'Maths',
         },
+        hasAcceptedEducationalUseTerms: true,
       });
     });
   });

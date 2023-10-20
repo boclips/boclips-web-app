@@ -213,7 +213,7 @@ describe('Registration Form Validation', () => {
   it('prompts user to check educational use checkbox if not checked and user clicks submit', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { educationalUse: false });
+    fillTheForm(wrapper, { hasAcceptedEducationalUseTerms: false });
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
@@ -240,7 +240,7 @@ describe('Registration Form Validation', () => {
       discoveryMethod: '',
       email: '',
       audience: '',
-      educationalUse: false,
+      hasAcceptedEducationalUseTerms: false,
     });
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -313,7 +313,7 @@ describe('Registration Form Validation', () => {
       audience: 'K12',
       discoveryMethod: 'Teacher',
       desiredContent: 'Maths',
-      educationalUse: true,
+      hasAcceptedEducationalUseTerms: true,
     };
 
     fillRegistrationForm(wrapper, { ...defaults, ...change });

@@ -55,6 +55,7 @@ describe('userQuery', () => {
       type: CreationUserType.trialB2bUser,
       accountName: 'Los Angeles Lakers',
       jobTitle: 'Teacher',
+      hasAcceptedEducationalUseTerms: true,
       marketingInformation: {
         country: 'country',
         organisationType: 'typeOfOrg',
