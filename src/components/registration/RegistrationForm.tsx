@@ -215,8 +215,23 @@ const RegistrationForm = () => {
               `User ${user.email} successfully created`,
             );
           },
-          onError: () => {
-            displayNotification('error', 'User creation failed');
+          onError: (error?: Error) => {
+            const errorOrigin = error?.message?.split(' ')[0]?.toUpperCase();
+
+            switch (errorOrigin) {
+              case 'USER':
+                setError('email', 'Email already exists');
+                break;
+              case 'ACCOUNT':
+                setError('accountName', 'Account name already exists');
+                break;
+              default:
+                displayNotification(
+                  'error',
+                  'User creation failed',
+                  error?.message,
+                );
+            }
           },
         },
       );

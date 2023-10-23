@@ -224,6 +224,38 @@ describe('Registration Form Validation', () => {
     expect(createTrialUserSpy).not.toBeCalled();
   });
 
+  it('displays error message if email already exists', async () => {
+    jest
+      .spyOn(fakeClient.users, 'createTrialUser')
+      .mockImplementation(() =>
+        Promise.reject(new Error('User already exists for account: Boclips')),
+      );
+
+    const wrapper = renderRegistrationForm();
+    fillTheForm(wrapper, { email: 'existing@email.com' });
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+
+    expect(await wrapper.findByText('Email already exists')).toBeVisible();
+  });
+
+  it('displays error message if account name already exists', async () => {
+    jest
+      .spyOn(fakeClient.users, 'createTrialUser')
+      .mockImplementation(() =>
+        Promise.reject(new Error('Account Boclips already exists')),
+      );
+
+    const wrapper = renderRegistrationForm();
+    fillTheForm(wrapper, { accountName: 'Boclips' });
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+
+    expect(
+      await wrapper.findByText('Account name already exists'),
+    ).toBeVisible();
+  });
+
   it('errors disappear when form is fixed', async () => {
     const wrapper = renderRegistrationForm();
 
