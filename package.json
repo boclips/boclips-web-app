@@ -170,7 +170,7 @@
     "simple-currency-format": "^2.4.0",
     "ts-import-plugin": "^3.0.0",
     "ts-jest": "^29.1.1",
-    "ts-loader": "^9.4.1",
+    "ts-loader": "^9.5.0",
     "typescript": "^5.2.2",
     "urijs": "^1.19.11"
   }
