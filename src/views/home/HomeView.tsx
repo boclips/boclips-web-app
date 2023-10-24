@@ -9,6 +9,7 @@ import NewNavbar from 'src/components/layout/Navbar';
 import FeaturedPlaylists from 'src/components/featuredPlaylists/FeaturedPlaylists';
 import FeaturedVideos from 'src/components/carousel/FeaturedVideos';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import { useEmailVerified } from 'src/hooks/useEmailVerified';
 import FilmIcon from '../../resources/icons/film-icon.svg';
 import YourLibraryIcon from '../../resources/icons/your-library.svg';
 import s from './style.module.less';
@@ -18,6 +19,8 @@ const HomeView = () => {
   const breakpoints = useMediaBreakPoint();
   const isMobileView =
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
+
+  useEmailVerified();
 
   return (
     <Layout rowsSetup="grid-rows-newHomepage" responsiveLayout>
