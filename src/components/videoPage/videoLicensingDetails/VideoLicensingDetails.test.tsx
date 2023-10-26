@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { render, waitFor, within } from '@testing-library/react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import React from 'react';
 import { VideoLicensingDetails } from 'src/components/videoPage/videoLicensingDetails/VideoLicensingDetails';
@@ -139,6 +139,45 @@ describe('Video licensing details in video page', () => {
       await waitFor(() => {
         expect(wrapper.getByRole('tooltip')).toBeInTheDocument();
         expect(wrapper.getAllByText('FRANCE, SPAIN, ITALY')).toHaveLength(2);
+      });
+    });
+  });
+  describe('video restrictions', () => {
+    it('does not display video restrictions row if there are none', () => {
+      const video = VideoFactory.sample({
+        restrictions: { video: undefined },
+      });
+      const wrapper = render(<VideoLicensingDetails video={video} />);
+
+      expect(wrapper.queryByText('Video restrictions')).toBeNull();
+    });
+
+    it('displays long video restrictions with ellipsis and tooltip containing full restriction', async () => {
+      const video = VideoFactory.sample({
+        restrictions: {
+          video: 'A really really really stupid long restriction',
+        },
+      });
+      const wrapper = render(<VideoLicensingDetails video={video} />);
+
+      expect(await wrapper.findByText('Video restrictions')).toBeVisible();
+      expect(wrapper.getByTestId('video-restriction-details')).toHaveClass(
+        'truncate',
+      );
+
+      await userEvent.hover(wrapper.getByTestId('video-restriction-tooltip'));
+
+      expect(
+        wrapper.getByText('A really really really stupid long restriction'),
+      ).toBeVisible();
+
+      await waitFor(() => {
+        expect(wrapper.getByRole('tooltip')).toBeInTheDocument();
+        expect(
+          within(wrapper.getByRole('tooltip')).getByText(
+            'A really really really stupid long restriction',
+          ),
+        ).toBeVisible();
       });
     });
   });
