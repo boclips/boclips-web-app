@@ -6,6 +6,7 @@ import { VideoLicensingDetail } from 'src/components/videoPage/videoLicensingDet
 import { getVideoPageLicenseDurationLabel } from 'src/services/getVideoLicenseDurationLabel';
 import { EditingRestrictionsLabel } from 'src/components/videoPage/videoLicensingDetails/EditingRestrictionsLabel';
 import { TerritoryRestrictionsLabel } from 'src/components/videoPage/videoLicensingDetails/TerritoryRestrictionsLabel';
+import { VideoRestrictionsLabel } from 'src/components/videoPage/videoLicensingDetails/VideoRestrictionsLabel';
 import s from './videoLicensingDetails.module.less';
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export const VideoLicensingDetails = ({ video }: Props) => {
+  const showVideoRestrictions = video.restrictions?.video;
   const showTerritoryRestrictions =
     video.restrictions?.territory?.type === 'RESTRICTED' &&
     video.restrictions?.territory?.territories &&
@@ -50,6 +52,14 @@ export const VideoLicensingDetails = ({ video }: Props) => {
               <EditingRestrictionsLabel
                 permission={video.restrictions.editing.permission}
               />
+            }
+          />
+        )}
+        {showVideoRestrictions && (
+          <VideoLicensingDetail
+            title="Video restrictions"
+            value={
+              <VideoRestrictionsLabel restrictions={video.restrictions.video} />
             }
           />
         )}
