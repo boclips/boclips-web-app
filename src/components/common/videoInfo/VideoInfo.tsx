@@ -17,6 +17,14 @@ export const VideoInfo = ({ video }: Props) => {
         {video?.id}
       </Typography.Body>
 
+      {video.playback.duration && (
+        <Typography.Body as="div" size="small" data-qa="duration">
+          {video.playback.duration.asMinutes() > 60
+            ? video.playback.duration.format('H:mm:ss')
+            : video.playback.duration.format('mm:ss')}
+        </Typography.Body>
+      )}
+
       <Typography.Body as="div" className={s.createdBy} size="small">
         {video?.createdBy}
       </Typography.Body>
