@@ -9,7 +9,8 @@ export const loadHotjar = () =>
     h._hjSettings = { hjid: 1450145, hjsv: 6 };
     a = o.getElementsByTagName('head')[0];
     r = o.createElement('script');
-    r.async = 1;
+    r.type = 'text/plain';
+    r.setAttribute('data-usercentrics', 'Hotjar');
     r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
     a.appendChild(r);
   })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
