@@ -21,13 +21,26 @@ export const EditingRestrictionsLabel = ({
     </a>
   );
 
+  const editingFormLink = (
+    <a rel="noopener noreferrer" href="https://wkf.ms/3PUYqhP" target="_blank">
+      <Typography.Body size="small">
+        <Typography.Link type="inline-blue">here</Typography.Link>
+      </Typography.Body>
+    </a>
+  );
+
   switch (permission) {
     case 'ALLOWED_WITH_RESTRICTIONS':
-      return <>Additional restrictions apply as well as {editingPolicyLink}</>;
+      return (
+        <>
+          <p>Additional restrictions apply as well as {editingPolicyLink}</p>
+          <p className="my-2">Submit an editing request {editingFormLink}.</p>
+        </>
+      );
     case 'NOT_ALLOWED':
       return 'Full Restrictions in place. No editing allowed';
     case 'ALLOWED':
-      return <>Follow {editingPolicyLink}</>;
+      return <>Follow {editingPolicyLink} </>;
     default:
       throw Error(`Editing permission ${permission} not supported`);
   }
