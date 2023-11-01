@@ -10,6 +10,7 @@ import EmptyOrdersSVG from 'src/resources/icons/empty-order-history.svg';
 import { Layout } from 'src/components/layout/Layout';
 import { Hero as OrdersEmptyState } from 'src/components/hero/Hero';
 import PageHeader from 'src/components/pageTitle/PageHeader';
+import { Helmet } from 'react-helmet';
 
 export const PAGE_SIZE = 10;
 

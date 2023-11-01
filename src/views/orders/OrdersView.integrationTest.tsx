@@ -256,7 +256,7 @@ describe('OrderView', () => {
   });
 
   describe('window titles', () => {
-    it('displays Orders as window title', async () => {
+    it('displays My Orders as window title', async () => {
       render(
         <MemoryRouter initialEntries={['/orders']}>
           <App
@@ -269,7 +269,7 @@ describe('OrderView', () => {
       const helmet = Helmet.peek();
 
       await waitFor(() => {
-        expect(helmet.title).toEqual('Orders');
+        expect(helmet.title).toEqual('My Orders');
       });
     });
   });

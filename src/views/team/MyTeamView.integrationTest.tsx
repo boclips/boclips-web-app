@@ -16,6 +16,7 @@ import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFa
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
 import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { Helmet } from 'react-helmet';
 
 describe('My Team view', () => {
   it('renders my team page', () => {
@@ -324,5 +325,22 @@ describe('My Team view', () => {
     );
     expect(within(newOrderPermission).getByText('Yes')).toBeVisible();
     expect(within(newManagingPermission).getByText('No')).toBeVisible();
+  });
+
+  it('displays My Team as window title', async () => {
+    render(
+      <MemoryRouter initialEntries={['/team']}>
+        <App
+          apiClient={new FakeBoclipsClient()}
+          boclipsSecurity={stubBoclipsSecurity}
+        />
+      </MemoryRouter>,
+    );
+
+    const helmet = Helmet.peek();
+
+    await waitFor(() => {
+      expect(helmet.title).toEqual('My Team');
+    });
   });
 });

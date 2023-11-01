@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter, Router } from 'react-router-dom';
 import App from 'src/App';
@@ -11,6 +11,9 @@ import { resizeToDesktop } from 'src/testSupport/resizeTo';
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
+import HomeView from 'src/views/home/HomeView';
+import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 
 describe('HomeView', () => {
   beforeEach(() => {
@@ -33,7 +36,7 @@ describe('HomeView', () => {
     expect(await wrapper.findByText('View My Playlists')).toBeInTheDocument();
   });
 
-  it('displays Coursespark as window title', async () => {
+  it('displays Home as window title', async () => {
     render(
       <MemoryRouter initialEntries={['/']}>
         <App
@@ -46,7 +49,7 @@ describe('HomeView', () => {
 
     const helmet = Helmet.peek();
 
-    expect(helmet.title).toEqual('CourseSpark');
+    expect(helmet.title).toEqual('Home');
   });
 
   it('redirects to empty search (video) page with no filters or query', async () => {
