@@ -8,7 +8,7 @@ export const AdditionalServicesPricingMessage = ({
   captionsOrTranscriptsRequested,
 }: Props) => {
   return (
-    <div className="bg-blue-100 p-4 mb-4 rounded">
+    <div className="p-4 mb-4 rounded">
       <div data-qa="additional-services-summary">
         <Typography.H1 size="xs" className="mb-2">
           Information regarding your additional services request

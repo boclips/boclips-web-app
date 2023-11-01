@@ -58,7 +58,7 @@ export const CartOrderSummary = ({ cart }: Props) => {
             captionsOrTranscriptsRequested={captionsOrTranscriptsRequested}
           />
         )}
-        <div className="flex flex-col rounded p-5 shadow">
+        <div className="flex flex-col rounded p-5 shadow bg-blue-100">
           {getTotalPrice(videos) && <CartOrderItemsSummary cart={cart} />}
 
           <Button

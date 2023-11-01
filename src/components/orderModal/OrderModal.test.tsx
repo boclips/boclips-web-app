@@ -13,26 +13,27 @@ import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
 
 describe('Order Modal', () => {
+  const video = VideoFactory.sample({
+    price: { amount: 300, currency: 'USD' },
+    id: 'video-id-1',
+  });
+
+  const cart = CartsFactory.sample({
+    items: [
+      CartItemFactory.sample({
+        videoId: 'video-id-1',
+        additionalServices: {
+          transcriptRequested: true,
+          captionsRequested: true,
+        },
+      }),
+    ],
+  });
+
   it('does not show total when pricing is disabled', () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.users.setCurrentUserFeatures({
       BO_WEB_APP_PRICES: false,
-    });
-    const video = VideoFactory.sample({
-      price: { amount: 300, currency: 'USD' },
-      id: 'video-id-1',
-    });
-
-    const cart = CartsFactory.sample({
-      items: [
-        CartItemFactory.sample({
-          videoId: 'video-id-1',
-          additionalServices: {
-            transcriptRequested: true,
-            captionsRequested: true,
-          },
-        }),
-      ],
     });
 
     const history = createBrowserHistory();
@@ -55,21 +56,25 @@ describe('Order Modal', () => {
     apiClient.users.setCurrentUserFeatures({
       BO_WEB_APP_PRICES: true,
     });
-    const video = VideoFactory.sample({
-      price: { amount: 300, currency: 'USD' },
-      id: 'video-id-1',
-    });
+    const history = createBrowserHistory();
 
-    const cart = CartsFactory.sample({
-      items: [
-        CartItemFactory.sample({
-          videoId: 'video-id-1',
-          additionalServices: {
-            transcriptRequested: true,
-            captionsRequested: true,
-          },
-        }),
-      ],
+    const wrapper = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={apiClient}>
+          <Router location={history.location} navigator={history}>
+            <OrderModal setModalOpen={jest.fn} videos={[video]} cart={cart} />
+          </Router>
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
+
+    expect(await wrapper.findByText('Total')).toBeVisible();
+  });
+
+  it(`displays license restrictions info when without CTA`, async () => {
+    const apiClient = new FakeBoclipsClient();
+    apiClient.users.setCurrentUserFeatures({
+      BO_WEB_APP_LICENSING_DETAILS: true,
     });
 
     const history = createBrowserHistory();
@@ -84,6 +89,15 @@ describe('Order Modal', () => {
       </QueryClientProvider>,
     );
 
-    expect(await wrapper.findByText('Total')).toBeVisible();
+    expect(
+      await wrapper.findByText(
+        'Videos have restrictions associated with their license.',
+      ),
+    ).toBeInTheDocument();
+    expect(
+      wrapper.queryByText(
+        'Click on the video title you want to review before checking out.',
+      ),
+    ).not.toBeInTheDocument();
   });
 });

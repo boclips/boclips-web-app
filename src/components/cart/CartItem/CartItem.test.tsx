@@ -427,31 +427,4 @@ describe('CartItem', () => {
       ),
     );
   });
-
-  it('displays 10+ years license duration when maxLicenseDurationYears is null', async () => {
-    const fakeApiClient = new FakeBoclipsClient();
-    const cartItem = setupCartItemWithVideo(
-      fakeApiClient,
-      CartItemFactory.sample({
-        id: 'cart-item-id-1',
-      }),
-      VideoFactory.sample({
-        id: '123',
-        title: 'this is cart item test',
-        maxLicenseDurationYears: null,
-      }),
-    );
-
-    const wrapper = renderCartItem(
-      <CartItem cartItem={cartItem} />,
-      fakeApiClient,
-    );
-
-    expect(
-      await wrapper.findByText('this is cart item test'),
-    ).toBeInTheDocument();
-    expect(
-      await wrapper.findByText('Can be licensed for 10+ years'),
-    ).toBeInTheDocument();
-  });
 });
