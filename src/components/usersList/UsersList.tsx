@@ -70,6 +70,7 @@ export const UsersList = ({ onEditUser }: Props) => {
           isLoading={isSkeletonLoading}
           onEdit={() => onEditUser(accountUser)}
           canEdit={canEditUser}
+          accountStatus={account?.status}
         />
       )}
       pagination={{

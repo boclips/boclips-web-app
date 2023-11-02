@@ -8,6 +8,7 @@ import { BoclipsSecurityProvider } from 'src/components/common/providers/Boclips
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('UsersListRow', () => {
   it('says the user can place orders if the permissions allow that', () => {
@@ -91,11 +92,42 @@ describe('UsersListRow', () => {
     expect(wrapper.getByText('Edit')).toBeVisible();
   });
 
+  it('doesnt display `Can order videos` column when account status is TRIAL', async () => {
+    const security: BoclipsSecurity = {
+      ...stubBoclipsSecurity,
+      hasRole: (_role) => true,
+    };
+
+    const user: AccountUser = {
+      id: 'id-1',
+      email: 'joebiden@gmail.com',
+      firstName: 'Joe',
+      lastName: 'Biden',
+      permissions: {
+        canOrder: false,
+        canManageUsers: true,
+      },
+    };
+
+    const wrapper = renderWrapper(
+      user,
+      jest.fn(),
+      true,
+      security,
+      AccountStatus.TRIAL,
+    );
+
+    expect(
+      await wrapper.queryByText('Can order videos'),
+    ).not.toBeInTheDocument();
+  });
+
   const renderWrapper = (
     user,
     onEdit,
     canEdit,
     security: BoclipsSecurity = stubBoclipsSecurity,
+    accountStatus = AccountStatus.ACTIVE,
   ) => {
     const client = new FakeBoclipsClient();
 
@@ -108,6 +140,7 @@ describe('UsersListRow', () => {
               isLoading
               onEdit={onEdit}
               canEdit={canEdit}
+              accountStatus={accountStatus}
             />
           </QueryClientProvider>
         </BoclipsClientProvider>
