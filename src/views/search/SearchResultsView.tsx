@@ -24,7 +24,6 @@ import { Layout } from 'src/components/layout/Layout';
 import { ContentPackagePreviewBanner } from 'src/components/contentPackagePreviewBanner/ContentPackagePreviewBanner';
 import { useGetDisciplinesQuery } from 'src/hooks/api/disciplinesQuery';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
-import { Helmet } from 'react-helmet';
 
 export const PAGE_SIZE = 30;
 

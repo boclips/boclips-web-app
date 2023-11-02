@@ -169,7 +169,6 @@ const App = ({
                           roles={[ROLES.BOCLIPS_WEB_APP_ORDER]}
                         >
                           <Helmet title="Cart" />
-
                           <CartView />
                         </WithValidRoles>
                       }
@@ -281,7 +280,15 @@ const App = ({
                         </FeatureGate>
                       }
                     />
-                    <Route path="*" element={<NotFound />} />
+                    <Route
+                      path="*"
+                      element={
+                        <>
+                          <Helmet title="Page not found" />
+                          <NotFound />
+                        </>
+                      }
+                    />
                   </Routes>
                 </Suspense>
                 <ReactQueryDevtools initialIsOpen={false} />

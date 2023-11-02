@@ -10,7 +10,6 @@ import FeaturedPlaylists from 'src/components/featuredPlaylists/FeaturedPlaylist
 import FeaturedVideos from 'src/components/carousel/FeaturedVideos';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import { useEmailVerified } from 'src/hooks/useEmailVerified';
-import { Helmet } from 'react-helmet';
 import FilmIcon from '../../resources/icons/film-icon.svg';
 import YourLibraryIcon from '../../resources/icons/your-library.svg';
 import s from './style.module.less';
@@ -25,7 +24,6 @@ const HomeView = () => {
 
   return (
     <Layout rowsSetup="grid-rows-newHomepage" responsiveLayout>
-      <Helmet title="Home" />
       <NewNavbar showSearch={false} />
       <div
         data-qa="header-text"

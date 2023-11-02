@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter, Router } from 'react-router-dom';
 import App from 'src/App';
@@ -11,9 +11,6 @@ import { resizeToDesktop } from 'src/testSupport/resizeTo';
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import HomeView from 'src/views/home/HomeView';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 
 describe('HomeView', () => {
   beforeEach(() => {

@@ -1,5 +1,4 @@
 import {
-  findByText,
   fireEvent,
   render,
   waitFor,
@@ -24,7 +23,6 @@ import { BoclipsSecurityProvider } from 'src/components/common/providers/Boclips
 import { Helmet } from 'react-helmet';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { Link } from 'boclips-api-client/dist/types';
-import SearchResultsView from 'src/views/search/SearchResultsView';
 
 describe('SearchResults', () => {
   beforeEach(() => {
