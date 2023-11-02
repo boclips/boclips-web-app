@@ -33,7 +33,7 @@ describe('HomeView', () => {
     expect(await wrapper.findByText('View My Playlists')).toBeInTheDocument();
   });
 
-  it('displays Coursespark as window title', async () => {
+  it('displays Home as window title', async () => {
     render(
       <MemoryRouter initialEntries={['/']}>
         <App
@@ -46,7 +46,7 @@ describe('HomeView', () => {
 
     const helmet = Helmet.peek();
 
-    expect(helmet.title).toEqual('CourseSpark');
+    expect(helmet.title).toEqual('Home');
   });
 
   it('redirects to empty search (video) page with no filters or query', async () => {

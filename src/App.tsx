@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import MyTeamView from 'src/views/team/Team';
+import MyTeamView from 'src/views/team/MyTeamView';
 import { BoclipsClient } from 'boclips-api-client';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Loading } from 'src/components/common/Loading';
@@ -142,35 +142,47 @@ const App = ({
 
                 <Suspense fallback={<Loading />}>
                   <Routes>
-                    <Route path="/" element={<HomeView />} />
-                    <Route path="/videos" element={<SearchResultsView />} />
+                    <Route
+                      path="/"
+                      element={
+                        <>
+                          <Helmet title="Home" />
+                          <HomeView />
+                        </>
+                      }
+                    />
+                    <Route
+                      path="/videos"
+                      element={
+                        <>
+                          <Helmet title="All Videos" />
+                          <SearchResultsView />
+                        </>
+                      }
+                    />
                     <Route path="/videos/:id" element={<VideoView />} />
                     <Route
                       path="/cart"
                       element={
-                        <>
+                        <WithValidRoles
+                          fallback={<AccessDeniedView />}
+                          roles={[ROLES.BOCLIPS_WEB_APP_ORDER]}
+                        >
                           <Helmet title="Cart" />
-                          <WithValidRoles
-                            fallback={<AccessDeniedView />}
-                            roles={[ROLES.BOCLIPS_WEB_APP_ORDER]}
-                          >
-                            <CartView />
-                          </WithValidRoles>
-                        </>
+                          <CartView />
+                        </WithValidRoles>
                       }
                     />
                     <Route
                       path="/orders"
                       element={
-                        <>
-                          <Helmet title="Orders" />
-                          <WithValidRoles
-                            fallback={<AccessDeniedView />}
-                            roles={[ROLES.BOCLIPS_WEB_APP_ORDER]}
-                          >
-                            <OrdersView />
-                          </WithValidRoles>
-                        </>
+                        <WithValidRoles
+                          fallback={<AccessDeniedView />}
+                          roles={[ROLES.BOCLIPS_WEB_APP_ORDER]}
+                        >
+                          <Helmet title="My Orders" />
+                          <OrdersView />
+                        </WithValidRoles>
                       }
                     />
                     <Route

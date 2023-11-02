@@ -419,7 +419,7 @@ describe('SearchResults', () => {
       const helmet = Helmet.peek();
 
       await waitFor(() => {
-        expect(helmet.title).toEqual('CourseSpark');
+        expect(helmet.title).toEqual('All Videos');
       });
     });
   });
