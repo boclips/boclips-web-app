@@ -57,9 +57,9 @@ export const CartOrderItemsSummary = ({ cart }: Props) => {
         weight="regular"
         className="flex text-gray-900 justify-between mb-2"
       >
-        <span>Total</span>
+        <span className="font-bold">Total</span>
         <span data-qa="total-price">
-          <DisplayPrice price={getTotalPrice(videos)} isBold={false} />
+          <DisplayPrice price={getTotalPrice(videos)} isBold />
         </span>
       </Typography.H1>
     </>

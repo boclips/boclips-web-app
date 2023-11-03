@@ -14,7 +14,6 @@ import { VideoInfo } from 'src/components/common/videoInfo/VideoInfo';
 import { Link } from 'src/components/common/Link';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import VideoLicenseDuration from 'src/components/common/videoLicenseDuration/VideoLicenseDuration';
 import s from './style.module.less';
 
 interface Props {
@@ -76,7 +75,6 @@ const CartItem = ({ cartItem }: Props) => {
             </Link>
             <PriceBadge price={videoItem.price} />
           </div>
-          <VideoLicenseDuration video={videoItem} />
           <VideoInfo video={videoItem} />
           <AdditionalServices videoItem={videoItem} cartItem={cartItem} />
           <TextButton

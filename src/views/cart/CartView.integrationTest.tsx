@@ -66,6 +66,7 @@ describe('CartView', () => {
     fakeClient.users.setCurrentUserFeatures({
       BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
       BO_WEB_APP_REQUEST_TRIMMING: true,
+      BO_WEB_APP_LICENSING_DETAILS: true,
     });
 
     fakeClient.videos.insertVideo(video);
@@ -78,11 +79,18 @@ describe('CartView', () => {
 
     expect(await wrapper.findByText('Shopping cart')).toBeInTheDocument();
     expect(await wrapper.findByText('(1 item)')).toBeInTheDocument();
+    expect(
+      await wrapper.findByText(
+        /Videos have restrictions associated with their license./,
+      ),
+    ).toBeVisible();
+    expect(
+      await wrapper.findByText(
+        /Click on the video title you want to review before checking out./,
+      ),
+    ).toBeVisible();
     expect(await wrapper.findByText('news video')).toBeInTheDocument();
     expect(await wrapper.findByText('video-id')).toBeInTheDocument();
-    expect(
-      await wrapper.findByText('Can be licensed for a maximum of 5 years'),
-    ).toBeInTheDocument();
     expect(await wrapper.findByText('Additional services')).toBeInTheDocument();
     expect(await wrapper.findByText('Trim video')).toBeInTheDocument();
     (await wrapper.findAllByTestId('price-badge')).map((badge) =>
