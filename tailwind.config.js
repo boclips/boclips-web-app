@@ -37,6 +37,8 @@ module.exports = {
         'orders-view': 'minmax(74px, auto) minmax(50px, auto) 1fr auto',
         'library-view': 'minmax(74px, auto) minmax(50px, auto) 1fr auto',
         'registration-view': '1fr repeat(3,auto) 1fr 150px',
+        'welcome-view':
+          'minmax(74px, auto) minmax(50px, auto) min-content 1fr auto',
         'playlist-view':
           'minmax(74px, auto) minmax(50px, auto) min-content 1fr auto',
         'explore-view': 'minmax(74px, auto) min-content min-content 1fr auto',

@@ -21,9 +21,13 @@ import { Search } from '../searchBar/SearchBar';
 
 interface Props {
   showSearch?: boolean;
+  showOptions?: boolean;
 }
 
-const NavbarResponsive = ({ showSearch = true }: Props): ReactElement => {
+const NavbarResponsive = ({
+  showSearch = true,
+  showOptions = true,
+}: Props): ReactElement => {
   const [showSideMenu, setShowSideMenu] = useState(false);
   const { data: user, isLoading: isUserLoading } = useGetUserQuery();
   const boclipsSecurity = useBoclipsSecurity();
@@ -68,28 +72,29 @@ const NavbarResponsive = ({ showSearch = true }: Props): ReactElement => {
             <Search showIconOnly />
           </div>
         )}
-        {mobileView ? (
-          <div className={s.buttons}>
-            <button type="button" onClick={openSideMenu} aria-label="Menu">
-              {showSideMenu ? <CrossIconSVG /> : <MenuIconSVG />}
-            </button>
-          </div>
-        ) : (
-          <div className="col-start-15 col-end-26 row-start-1 row-end-1 flex h-full justify-end ">
-            <div className="flex mr-6">
-              <HomeButton />
-              <LibraryButton />
-              <FeatureGate feature="BO_WEB_APP_SPARKS">
-                <SparksButton />
-              </FeatureGate>
-              <PlaylistsButton />
-              <FeatureGate linkName="cart">
-                <CartButton />
-              </FeatureGate>
+        {showOptions &&
+          (mobileView ? (
+            <div className={s.buttons}>
+              <button type="button" onClick={openSideMenu} aria-label="Menu">
+                {showSideMenu ? <CrossIconSVG /> : <MenuIconSVG />}
+              </button>
             </div>
-            {!isUserLoading && <AccountButton />}
-          </div>
-        )}
+          ) : (
+            <div className="col-start-15 col-end-26 row-start-1 row-end-1 flex h-full justify-end ">
+              <div className="flex mr-6">
+                <HomeButton />
+                <LibraryButton />
+                <FeatureGate feature="BO_WEB_APP_SPARKS">
+                  <SparksButton />
+                </FeatureGate>
+                <PlaylistsButton />
+                <FeatureGate linkName="cart">
+                  <CartButton />
+                </FeatureGate>
+              </div>
+              {!isUserLoading && <AccountButton />}
+            </div>
+          ))}
       </nav>
 
       {showSideMenu && mobileView && (

@@ -257,4 +257,50 @@ describe(`Navbar`, () => {
       );
     });
   });
+
+  describe('Show Options', () => {
+    it('should hide options if requested', () => {
+      resizeToDesktop();
+
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <NavbarResponsive showOptions={false} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      expect(wrapper.queryByRole('button', { name: 'Home Home' })).toBeNull();
+      expect(wrapper.queryByRole('button', { name: 'All videos' })).toBeNull();
+    });
+
+    it('shows options by default', () => {
+      resizeToDesktop();
+
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <NavbarResponsive />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      expect(wrapper.getByRole('button', { name: 'Home Home' })).toBeVisible();
+      expect(wrapper.getByRole('button', { name: 'All videos' })).toBeVisible();
+    });
+
+    it('does not show hamburger menu if options should be hidden on mobile', () => {
+      resizeToMobile();
+
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <NavbarResponsive showOptions={false} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      expect(wrapper.queryByLabelText('Menu')).toBeNull();
+    });
+  });
 });

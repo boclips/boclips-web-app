@@ -162,6 +162,7 @@ const App = ({
                           feature="BO_WEB_APP_DEV"
                           fallback={<NotFound />}
                         >
+                          <Helmet title="Welcome" />
                           <TrialWelcomeView />
                         </FeatureGate>
                       }
