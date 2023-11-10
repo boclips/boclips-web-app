@@ -82,7 +82,7 @@ const RegisterView = lazyWithRetry(
 );
 
 const TrialWelcomeView = lazyWithRetry(
-  () => import('src/views/register/TrialWelcomeView'),
+  () => import('src/views/welcome/TrialWelcomeView'),
 );
 
 interface Props {

@@ -1,0 +1,67 @@
+@import '~@boclips-ui/styles/src/colors';
+@import '~@boclips-ui/styles/src/breakpoints';
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-column-start: 8;
+  grid-column-end: 18;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  color: @gray-900;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  grid-column-start: 8;
+  grid-column-end: 18;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  color: @gray-900;
+  background-color: #F7FaFC;
+  border-color: @gray-400;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 4px;
+  padding: 2rem;
+  gap: 1.5rem;
+}
+
+@media screen and (min-width: @screen-sm) {
+  .header {
+    grid-column-start: 2;
+    grid-column-end: 26;
+  }
+
+  .userInfo {
+    grid-column-start: 2;
+    grid-column-end: 26;
+  }
+}
+
+@media screen and (min-width: @screen-md) {
+  .header {
+    grid-column-start: 5;
+    grid-column-end: 23;
+  }
+
+  .userInfo {
+    grid-column-start: 5;
+    grid-column-end: 23;
+  }
+}
+
+@media screen and (min-width: @screen-lg) {
+  .header {
+    grid-column-start: 8;
+    grid-column-end: 18;
+  }
+
+  .userInfo {
+    grid-column-start: 8;
+    grid-column-end: 18;
+  }
+}
