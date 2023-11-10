@@ -81,6 +81,10 @@ const RegisterView = lazyWithRetry(
   () => import('src/views/register/RegisterView'),
 );
 
+const TrialWelcomeView = lazyWithRetry(
+  () => import('src/views/register/TrialWelcomeView'),
+);
+
 interface Props {
   apiClient: BoclipsClient;
   boclipsSecurity: BoclipsSecurity;
@@ -149,6 +153,17 @@ const App = ({
                           <Helmet title="Home" />
                           <HomeView />
                         </>
+                      }
+                    />
+                    <Route
+                      path="/welcome"
+                      element={
+                        <FeatureGate
+                          feature="BO_WEB_APP_DEV"
+                          fallback={<NotFound />}
+                        >
+                          <TrialWelcomeView />
+                        </FeatureGate>
                       }
                     />
                     <Route

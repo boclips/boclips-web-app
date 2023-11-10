@@ -166,4 +166,36 @@ describe('App', () => {
 
     expect(await wrapper.findByText('Page not found!')).toBeVisible();
   });
+
+  it('renders trial welcome page', async () => {
+    const apiClient = new FakeBoclipsClient();
+
+    apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/welcome']}>
+        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+      </MemoryRouter>,
+    );
+
+    expect(
+      await wrapper.findByText(
+        "You've just been added to Boclips by your colleague",
+      ),
+    ).toBeVisible();
+  });
+
+  it('renders page not found instead of trial welcome for not developer', async () => {
+    const apiClient = new FakeBoclipsClient();
+
+    apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: false });
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/welcome']}>
+        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByText('Page not found!')).toBeVisible();
+  });
 });
