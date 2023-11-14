@@ -4,6 +4,7 @@ import Footer from 'src/components/layout/Footer';
 import Navbar from 'src/components/layout/Navbar';
 import WelcomeHeader from 'src/components/welcome/WelcomeHeader';
 import InvitedUserInfo from 'src/components/welcome/InvitedUserInfo';
+import MarketingInfoForm from 'src/components/welcome/MarketingInfoForm';
 
 const TrialWelcomeView = () => {
   return (
@@ -11,6 +12,7 @@ const TrialWelcomeView = () => {
       <Navbar showOptions={false} showSearch={false} />
       <WelcomeHeader />
       <InvitedUserInfo />
+      <MarketingInfoForm />
       <Footer className="col-start-2 col-end-26 row-start-6" />
     </Layout>
   );

@@ -5,8 +5,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  grid-column-start: 8;
-  grid-column-end: 18;
+  grid-column-start: 9;
+  grid-column-end: 19;
   grid-row-start: 2;
   grid-row-end: 3;
   color: @gray-900;
@@ -16,18 +16,52 @@
   display: flex;
   flex-direction: column;
   align-items: start;
-  grid-column-start: 8;
-  grid-column-end: 18;
+  grid-column-start: 9;
+  grid-column-end: 19;
   grid-row-start: 3;
   grid-row-end: 4;
   color: @gray-900;
-  background-color: #F7FaFC;
+  background-color: #f7fafc;
   border-color: @gray-400;
   border-style: solid;
   border-width: 2px;
   border-radius: 4px;
   padding: 2rem;
   gap: 1.5rem;
+}
+
+.marketingInfoWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  grid-column-start: 9;
+  grid-column-end: 19;
+  grid-row-start: 4;
+  grid-row-end: 5;
+  gap: 1rem;
+}
+
+.input {
+  width: 100%;
+}
+
+.line {
+  border-bottom: 2px solid @blue-400;
+  width: 100%;
+}
+
+.updateMarketingInfoButtonWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-column-start: 9;
+  grid-column-end: 19;
+  grid-row-start: 5;
+  grid-row-end: 6;
+}
+
+.updateMarketingInfoButton {
+  height: 48px
 }
 
 @media screen and (min-width: @screen-sm) {
@@ -37,6 +71,11 @@
   }
 
   .userInfo {
+    grid-column-start: 2;
+    grid-column-end: 26;
+  }
+
+  .marketingInfoWrapper {
     grid-column-start: 2;
     grid-column-end: 26;
   }
@@ -52,16 +91,26 @@
     grid-column-start: 5;
     grid-column-end: 23;
   }
+
+  .marketingInfoWrapper {
+    grid-column-start: 5;
+    grid-column-end: 23;
+  }
 }
 
 @media screen and (min-width: @screen-lg) {
   .header {
-    grid-column-start: 8;
-    grid-column-end: 18;
+    grid-column-start: 9;
+    grid-column-end: 19;
   }
 
   .userInfo {
-    grid-column-start: 8;
-    grid-column-end: 18;
+    grid-column-start: 9;
+    grid-column-end: 19;
+  }
+
+  .marketingInfoWrapper {
+    grid-column-start: 9;
+    grid-column-end: 19;
   }
 }
