@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Typography } from '@boclips-ui/typography';
 import Dropdown from '@boclips-ui/dropdown';
 import { AUDIENCE } from 'src/components/registration/dropdownValues';
@@ -19,12 +19,12 @@ const MarketingInfoForm = () => {
     jobTitle: '',
   });
 
-  const handleChange = (fieldName, value) => {
+  const handleChange = useCallback((fieldName: string, value: string) => {
     setMarketingInfo((prevState) => ({
       ...prevState,
-      [fieldName]: value instanceof String ? value.trim() : value,
+      [fieldName]: value.trim(),
     }));
-  };
+  }, []);
 
   return (
     <>
@@ -46,7 +46,7 @@ const MarketingInfoForm = () => {
         <Dropdown
           mode="single"
           labelText="Your audience type*"
-          onUpdate={(value) => handleChange('audience', value)}
+          onUpdate={(value: string) => handleChange('audience', value)}
           options={AUDIENCE}
           dataQa="input-dropdown-audience"
           placeholder="example: K12"
