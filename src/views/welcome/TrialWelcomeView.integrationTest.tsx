@@ -11,7 +11,14 @@ import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
 describe('TrialWelcome', () => {
   it('displays trial welcome view', async () => {
     const fakeClient = new FakeBoclipsClient();
-    fakeClient.users.insertCurrentUser(UserFactory.sample());
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({
+        firstName: 'Kobe',
+        lastName: 'Bryant',
+        email: 'kobe@la.com',
+        account: { id: 'LAL', name: 'LA Lakers' },
+      }),
+    );
     fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
 
     const wrapper = render(
@@ -28,6 +35,20 @@ describe('TrialWelcome', () => {
       await wrapper.findByText(
         "You've just been added to Boclips by your colleague",
       ),
+    ).toBeVisible();
+
+    expect(wrapper.getByText('Kobe Bryant')).toBeVisible();
+    expect(wrapper.getByText('kobe@la.com')).toBeVisible();
+    expect(wrapper.getByText('LA Lakers')).toBeVisible();
+
+    expect(wrapper.getByLabelText('Job Title*')).toBeVisible();
+    expect(wrapper.getByText('Your audience type*')).toBeVisible();
+    expect(
+      wrapper.getByLabelText('What Content are you interested in*'),
+    ).toBeVisible();
+
+    expect(
+      wrapper.getByRole('button', { name: 'Create Account' }),
     ).toBeVisible();
   });
 });
