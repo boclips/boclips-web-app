@@ -29,6 +29,12 @@ const MarketingInfoForm = () => {
     jobTitle: '',
   });
 
+  const [errors, setErrors] = useState({
+    isAudienceEmpty: false,
+    isDesiredContentEmpty: false,
+    isJobTitleEmpty: false,
+  });
+
   const handleChange = useCallback((fieldName: string, value: string) => {
     setMarketingInfo((prevState) => ({
       ...prevState,
@@ -44,7 +50,7 @@ const MarketingInfoForm = () => {
     );
 
   const handleUserUpdate = () => {
-    if (!user) return;
+    if (!user || !validateForm()) return;
 
     const request: UpdateUserRequest = {
       type: UserType.b2bUser,
@@ -73,6 +79,16 @@ const MarketingInfoForm = () => {
     );
   };
 
+  const validateForm = (): boolean => {
+    const isJobTitleEmpty = !marketingInfo.jobTitle.trim();
+    const isAudienceEmpty = !marketingInfo.audience.trim();
+    const isDesiredContentEmpty = !marketingInfo.desiredContent.trim();
+
+    setErrors({ isJobTitleEmpty, isAudienceEmpty, isDesiredContentEmpty });
+
+    return !isJobTitleEmpty && !isAudienceEmpty && !isDesiredContentEmpty;
+  };
+
   return (
     user && (
       <>
@@ -90,6 +106,8 @@ const MarketingInfoForm = () => {
             className={s.input}
             labelText="Job Title*"
             height="48px"
+            isError={errors.isJobTitleEmpty}
+            errorMessage="Job title is required"
           />
           <Dropdown
             mode="single"
@@ -100,6 +118,8 @@ const MarketingInfoForm = () => {
             placeholder="example: K12"
             showLabel
             fitWidth
+            isError={errors.isAudienceEmpty}
+            errorMessage="Audience type is required"
           />
           <InputText
             id="input-desiredContent"
@@ -110,6 +130,8 @@ const MarketingInfoForm = () => {
             className={s.input}
             labelText="What Content are you interested in*"
             height="48px"
+            isError={errors.isDesiredContentEmpty}
+            errorMessage="Desired content is required"
           />
           <div className={s.line} />
           <Typography.Body size="small">

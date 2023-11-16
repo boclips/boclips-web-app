@@ -144,6 +144,61 @@ describe('Marketing Info Form', () => {
     });
   });
 
+  it('error messages are displayed when marketing information is not filled, user is not updated', async () => {
+    const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+
+    const wrapper = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={fakeClient}>
+          <MarketingInfoForm />
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
+
+    await setJobTitle(wrapper, '');
+    await setDesiredContent(wrapper, ' ');
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+
+    expect(await wrapper.findByText('Job title is required')).toBeVisible();
+    expect(await wrapper.findByText('Audience type is required')).toBeVisible();
+    expect(
+      await wrapper.findByText('Desired content is required'),
+    ).toBeVisible();
+
+    await waitFor(() => {
+      expect(updateUserSpy).not.toBeCalled();
+    });
+  });
+
+  it('user is not updated if one of the marketing info is missing', async () => {
+    const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+
+    const wrapper = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={fakeClient}>
+          <MarketingInfoForm />
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
+
+    await setJobTitle(wrapper, 'Player');
+    await setAudience(wrapper, 'K12');
+    await setDesiredContent(wrapper, '');
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+
+    expect(await wrapper.queryByText('Job title is required')).toBeNull();
+    expect(await wrapper.queryByText('Audience type is required')).toBeNull();
+    expect(
+      await wrapper.findByText('Desired content is required'),
+    ).toBeVisible();
+
+    await waitFor(() => {
+      expect(updateUserSpy).not.toBeCalled();
+    });
+  });
+
   async function setJobTitle(wrapper: RenderResult, value: string) {
     fireEvent.change(await wrapper.findByLabelText(/Job Title/), {
       target: { value },
