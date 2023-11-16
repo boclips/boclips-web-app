@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Bodal } from 'src/components/common/bodal/Bodal';
-import { useUpdateUser } from 'src/hooks/api/userQuery';
+import { EditUserRequest, useUpdateUser } from 'src/hooks/api/userQuery';
 import {
   UserType,
   UpdateUserRequest,
@@ -20,11 +20,6 @@ type Props = {
 type EditUserForm = {
   canOrder?: boolean;
   canManageUsers?: boolean;
-};
-
-export type EditUserRequest = {
-  user: AccountUser;
-  request: UpdateUserRequest;
 };
 
 const successNotification = (request: EditUserRequest) =>
