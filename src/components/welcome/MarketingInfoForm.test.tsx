@@ -1,13 +1,42 @@
-import { render } from '@testing-library/react';
+import {
+  fireEvent,
+  render,
+  RenderResult,
+  waitFor,
+  within,
+} from '@testing-library/react';
 import React from 'react';
 import MarketingInfoForm from 'src/components/welcome/MarketingInfoForm';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import { ToastContainer } from 'react-toastify';
 
 describe('Marketing Info Form', () => {
+  const fakeClient = new FakeBoclipsClient();
+  beforeEach(() => {
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({
+        id: 'kb',
+        firstName: 'Kobe',
+        lastName: 'Bryant',
+        email: 'kobe@la.com',
+      }),
+    );
+  });
+
   it('renders the marketing info', async () => {
-    const wrapper = render(<MarketingInfoForm />);
+    const wrapper = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={fakeClient}>
+          <MarketingInfoForm />
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
 
     expect(
-      wrapper.getByText(
+      await wrapper.findByText(
         'To complete the setup of your account, we require a few additional details (all fields marked * are mandatory).',
       ),
     ).toBeVisible();
@@ -33,4 +62,110 @@ describe('Marketing Info Form', () => {
       wrapper.getByRole('button', { name: 'Create Account' }),
     ).toBeVisible();
   });
+
+  it('user update is performed when clicked button', async () => {
+    const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+
+    const wrapper = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={fakeClient}>
+          <MarketingInfoForm />
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
+
+    await setJobTitle(wrapper, 'Player');
+    await setAudience(wrapper, 'K12');
+    await setDesiredContent(wrapper, 'Basketball');
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+
+    await waitFor(() => {
+      expect(updateUserSpy).toHaveBeenCalledWith('kb', {
+        jobTitle: 'Player',
+        audience: 'K12',
+        desiredContent: 'Basketball',
+        type: 'b2bUser',
+      });
+    });
+  });
+
+  it('notification is displayed when user successfully updated', async () => {
+    jest
+      .spyOn(fakeClient.users, 'updateUser')
+      .mockImplementation(() => Promise.resolve(true));
+
+    const wrapper = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={fakeClient}>
+          <ToastContainer />
+          <MarketingInfoForm />
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
+
+    await setJobTitle(wrapper, 'Player');
+    await setAudience(wrapper, 'K12');
+    await setDesiredContent(wrapper, 'Basketball');
+
+    fireEvent.click(
+      await wrapper.findByRole('button', { name: 'Create Account' }),
+    );
+
+    await waitFor(() => {
+      expect(wrapper.getByText('User kobe@la.com successfully updated'));
+    });
+  });
+
+  it('error notification is displayed when user update fails', async () => {
+    jest
+      .spyOn(fakeClient.users, 'updateUser')
+      .mockImplementation(() => Promise.reject());
+
+    const wrapper = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={fakeClient}>
+          <ToastContainer />
+          <MarketingInfoForm />
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
+
+    await setJobTitle(wrapper, 'Player');
+    await setAudience(wrapper, 'K12');
+    await setDesiredContent(wrapper, 'Basketball');
+
+    fireEvent.click(
+      await wrapper.findByRole('button', { name: 'Create Account' }),
+    );
+
+    await waitFor(() => {
+      expect(wrapper.getByText(/User update failed/));
+    });
+  });
+
+  async function setJobTitle(wrapper: RenderResult, value: string) {
+    fireEvent.change(await wrapper.findByLabelText(/Job Title/), {
+      target: { value },
+    });
+  }
+
+  async function setAudience(wrapper: RenderResult, value: string) {
+    if (value) {
+      const dropdown = await wrapper.findByTestId('input-dropdown-audience');
+      fireEvent.click(within(dropdown).getByTestId('select'));
+      const option = within(dropdown).getByText(value);
+      expect(option).toBeVisible();
+      fireEvent.click(option);
+    }
+  }
+
+  async function setDesiredContent(wrapper: RenderResult, value: string) {
+    fireEvent.change(
+      await wrapper.findByLabelText(/What Content are you interested in/),
+      {
+        target: { value },
+      },
+    );
+  }
 });

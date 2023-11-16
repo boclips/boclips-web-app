@@ -9,7 +9,6 @@ import {
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
 import { UpdateUserRequest } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
-import { EditUserRequest } from 'src/components/teamModal/EditTeamMemberModal';
 import { Account } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 export const doGetUser = (client: BoclipsClient): Promise<User> => {
@@ -69,6 +68,11 @@ const doCreateNewTrialUser = (
   client: BoclipsClient,
 ): Promise<User> => {
   return client.users.createTrialUser(request);
+};
+
+export type EditUserRequest = {
+  user: AccountUser | User;
+  request: UpdateUserRequest;
 };
 
 export const useUpdateUser = () => {
