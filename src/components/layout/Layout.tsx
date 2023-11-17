@@ -1,5 +1,4 @@
 import React from 'react';
-import { ToastContainer } from 'react-toastify';
 import s from './layout.module.less';
 
 interface Props {
@@ -21,6 +20,5 @@ export const Layout = ({
     style={{ minWidth: responsiveLayout ? '320px' : '1160px' }}
   >
     {children}
-    <ToastContainer />
   </div>
 );

@@ -6,14 +6,15 @@ import {
   within,
 } from '@testing-library/react';
 import React from 'react';
-import MarketingInfoForm from 'src/components/welcome/MarketingInfoForm';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
-import { ToastContainer } from 'react-toastify';
+import { QueryClient } from '@tanstack/react-query';
+import { MemoryRouter } from 'react-router-dom';
+import App from 'src/App';
+import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
 
-describe('Marketing Info Form', () => {
+describe('Trial Welcome View', () => {
   const fakeClient = new FakeBoclipsClient();
   beforeEach(() => {
     fakeClient.users.insertCurrentUser(
@@ -22,24 +23,24 @@ describe('Marketing Info Form', () => {
         firstName: 'Kobe',
         lastName: 'Bryant',
         email: 'kobe@la.com',
+        account: { id: 'LAL', name: 'LA Lakers' },
       }),
     );
+    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
   });
 
-  it('renders the marketing info', async () => {
-    const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={fakeClient}>
-          <MarketingInfoForm />
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
-    );
+  it('displays trial welcome view', async () => {
+    const wrapper = renderWelcomeView();
 
     expect(
       await wrapper.findByText(
-        'To complete the setup of your account, we require a few additional details (all fields marked * are mandatory).',
+        "You've just been added to Boclips by your colleague",
       ),
     ).toBeVisible();
+
+    expect(wrapper.getByText('Kobe Bryant')).toBeVisible();
+    expect(wrapper.getByText('kobe@la.com')).toBeVisible();
+    expect(wrapper.getByText('LA Lakers')).toBeVisible();
 
     expect(wrapper.getByLabelText('Job Title*')).toBeVisible();
     expect(wrapper.getByPlaceholderText('example: Designer')).toBeVisible();
@@ -56,7 +57,13 @@ describe('Marketing Info Form', () => {
     expect(
       wrapper.getByRole('link', { name: 'Boclips Terms & Conditions' }),
     ).toBeVisible();
-    expect(wrapper.getByRole('link', { name: 'Privacy Policy' })).toBeVisible();
+
+    const privacyPolicyLinks = wrapper.getAllByRole('link', {
+      name: 'Privacy Policy',
+    });
+    expect(privacyPolicyLinks).toHaveLength(2);
+    expect(privacyPolicyLinks[0]).toBeVisible();
+    expect(privacyPolicyLinks[1]).toBeVisible();
 
     expect(
       wrapper.getByRole('button', { name: 'Create Account' }),
@@ -66,13 +73,7 @@ describe('Marketing Info Form', () => {
   it('user update is performed when clicked button', async () => {
     const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
 
-    const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={fakeClient}>
-          <MarketingInfoForm />
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
-    );
+    const wrapper = renderWelcomeView();
 
     await setJobTitle(wrapper, 'Player');
     await setAudience(wrapper, 'K12');
@@ -90,19 +91,12 @@ describe('Marketing Info Form', () => {
     });
   });
 
-  it('notification is displayed when user successfully updated', async () => {
+  it('redirects to home page and notification is displayed when user successfully updated', async () => {
     jest
       .spyOn(fakeClient.users, 'updateUser')
       .mockImplementation(() => Promise.resolve(true));
 
-    const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={fakeClient}>
-          <ToastContainer />
-          <MarketingInfoForm />
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
-    );
+    const wrapper = renderWelcomeView();
 
     await setJobTitle(wrapper, 'Player');
     await setAudience(wrapper, 'K12');
@@ -113,8 +107,13 @@ describe('Marketing Info Form', () => {
     );
 
     await waitFor(() => {
-      expect(wrapper.getByText('User kobe@la.com successfully updated'));
+      expect(wrapper.getByText(/Welcome to/)).toBeVisible();
+      expect(wrapper.getByText(/CourseSpark!/)).toBeVisible();
     });
+
+    expect(
+      await wrapper.findByText('User kobe@la.com successfully updated'),
+    ).toBeVisible();
   });
 
   it('error notification is displayed when user update fails', async () => {
@@ -122,14 +121,7 @@ describe('Marketing Info Form', () => {
       .spyOn(fakeClient.users, 'updateUser')
       .mockImplementation(() => Promise.reject());
 
-    const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={fakeClient}>
-          <ToastContainer />
-          <MarketingInfoForm />
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
-    );
+    const wrapper = renderWelcomeView();
 
     await setJobTitle(wrapper, 'Player');
     await setAudience(wrapper, 'K12');
@@ -147,13 +139,7 @@ describe('Marketing Info Form', () => {
   it('error messages are displayed when marketing information is not filled, user is not updated', async () => {
     const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
 
-    const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={fakeClient}>
-          <MarketingInfoForm />
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
-    );
+    const wrapper = renderWelcomeView();
 
     await setJobTitle(wrapper, '');
     await setDesiredContent(wrapper, ' ');
@@ -174,13 +160,7 @@ describe('Marketing Info Form', () => {
   it('user is not updated if one of the marketing info is missing', async () => {
     const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
 
-    const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={fakeClient}>
-          <MarketingInfoForm />
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
-    );
+    const wrapper = renderWelcomeView();
 
     await setJobTitle(wrapper, 'Player');
     await setAudience(wrapper, 'K12');
@@ -221,6 +201,18 @@ describe('Marketing Info Form', () => {
       {
         target: { value },
       },
+    );
+  }
+
+  function renderWelcomeView(): RenderResult {
+    return render(
+      <MemoryRouter initialEntries={['/welcome']}>
+        <App
+          apiClient={fakeClient}
+          boclipsSecurity={stubBoclipsSecurity}
+          reactQueryClient={new QueryClient(queryClientConfig)}
+        />
+      </MemoryRouter>,
     );
   }
 });

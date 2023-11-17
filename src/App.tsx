@@ -20,6 +20,7 @@ import { FeatureGate } from 'src/components/common/FeatureGate';
 import FallbackView from 'src/views/fallback/FallbackView';
 import { RedirectFromExploreToSparks } from 'src/components/sparks/RedirectFromExploreToSparks';
 import * as Sentry from '@sentry/browser';
+import { ToastContainer } from 'react-toastify';
 import { BoclipsClientProvider } from './components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSecurityProvider';
 import { GlobalQueryErrorProvider } from './components/common/providers/GlobalQueryErrorProvider';
@@ -135,6 +136,7 @@ const App = ({
     <QueryClientProvider client={reactQueryClient}>
       <GlobalQueryErrorProvider>
         <ScrollToTop />
+        <ToastContainer />
         <BoclipsSecurityProvider boclipsSecurity={boclipsSecurity}>
           <BoclipsClientProvider client={apiClient}>
             <JSErrorBoundary fallback={<FallbackView />}>

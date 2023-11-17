@@ -11,6 +11,7 @@ import {
   UserType,
 } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
+import { useNavigate } from 'react-router-dom';
 import s from './style.module.less';
 
 interface MarketingInfo {
@@ -22,6 +23,7 @@ interface MarketingInfo {
 const MarketingInfoForm = () => {
   const { mutate: updateUser, isLoading: isUserUpdating } = useUpdateUser();
   const { data: user } = useGetUserQuery();
+  const navigate = useNavigate();
 
   const [marketingInfo, setMarketingInfo] = useState<MarketingInfo>({
     audience: '',
@@ -68,6 +70,7 @@ const MarketingInfoForm = () => {
               'success',
               `User ${user.email} successfully updated`,
             );
+            navigate('/');
           } else {
             displayNotification('error', 'User update failed');
           }
