@@ -11,6 +11,9 @@ import { resizeToDesktop } from 'src/testSupport/resizeTo';
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
+import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
+import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('HomeView', () => {
   beforeEach(() => {
@@ -162,5 +165,78 @@ describe('HomeView', () => {
     expect(wrapper.queryByTestId('home-search-hero')).toBeNull();
     // carousel still has this element in dom so can't figure out how to assert it's hidden, but it is
     // expect(wrapper.queryByText('my promoted playlist 2')).not.toBeVisible();
+  });
+
+  it('redirects to welcome view if user does not have marketing info and trial account requires it', async () => {
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    fakeBoclipsClient.users.insertCurrentUser(
+      UserFactory.sample({
+        id: 'kb',
+        firstName: 'Kobe',
+        lastName: 'Bryant',
+        email: 'kobe@la.com',
+        account: { id: 'LAL', name: 'LA Lakers' },
+        audience: null,
+        jobTitle: null,
+        desiredContent: null,
+      }),
+    );
+    fakeBoclipsClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
+    fakeBoclipsClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'LAL', status: AccountStatus.TRIAL }),
+    );
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/']}>
+        <App
+          reactQueryClient={createReactQueryClient()}
+          apiClient={fakeBoclipsClient}
+          boclipsSecurity={stubBoclipsSecurity}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await wrapper.findByText(
+        "You've just been added to Boclips by your colleague",
+      ),
+    ).toBeVisible();
+  });
+
+  it('does not redirect to welcome view if user has no DEV feature flag', async () => {
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    fakeBoclipsClient.users.insertCurrentUser(
+      UserFactory.sample({
+        id: 'kb',
+        firstName: 'Kobe',
+        lastName: 'Bryant',
+        email: 'kobe@la.com',
+        account: { id: 'LAL', name: 'LA Lakers' },
+        audience: null,
+        jobTitle: null,
+        desiredContent: null,
+      }),
+    );
+    fakeBoclipsClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'LAL', status: AccountStatus.TRIAL }),
+    );
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/']}>
+        <App
+          reactQueryClient={createReactQueryClient()}
+          apiClient={fakeBoclipsClient}
+          boclipsSecurity={stubBoclipsSecurity}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await wrapper.queryByText(
+        "You've just been added to Boclips by your colleague",
+      ),
+    ).toBeNull();
+
+    expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
+      'Welcome to CourseSpark!',
+    );
   });
 });

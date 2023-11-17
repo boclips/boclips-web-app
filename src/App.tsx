@@ -26,6 +26,7 @@ import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSe
 import { GlobalQueryErrorProvider } from './components/common/providers/GlobalQueryErrorProvider';
 import { JSErrorBoundary } from './components/common/errors/JSErrorBoundary';
 import Pendo = pendo.Pendo;
+import useRedirectToWelcome from 'src/hooks/useRedirectToWelcome';
 
 declare global {
   interface Window {
@@ -131,7 +132,6 @@ const App = ({
   };
 
   document.addEventListener('error', handleErrorCustomEvent);
-
   return (
     <QueryClientProvider client={reactQueryClient}>
       <GlobalQueryErrorProvider>
