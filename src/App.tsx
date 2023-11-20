@@ -27,6 +27,7 @@ import { GlobalQueryErrorProvider } from './components/common/providers/GlobalQu
 import { JSErrorBoundary } from './components/common/errors/JSErrorBoundary';
 import Pendo = pendo.Pendo;
 import useRedirectToWelcome from 'src/hooks/useRedirectToWelcome';
+import UseRedirectToWelcome from 'src/hooks/useRedirectToWelcome';
 
 declare global {
   interface Window {
@@ -109,7 +110,6 @@ const App = ({
     });
     // eslint-disable-next-line
   }, []);
-
   useEffect(() => {
     trackPageRendered(currentLocation, apiClient);
   }, [currentLocation, apiClient]);
@@ -139,6 +139,7 @@ const App = ({
         <ToastContainer />
         <BoclipsSecurityProvider boclipsSecurity={boclipsSecurity}>
           <BoclipsClientProvider client={apiClient}>
+            <UseRedirectToWelcome />
             <JSErrorBoundary fallback={<FallbackView />}>
               <WithValidRoles
                 fallback={<AccessDeniedView />}
@@ -160,13 +161,10 @@ const App = ({
                     <Route
                       path="/welcome"
                       element={
-                        <FeatureGate
-                          feature="BO_WEB_APP_DEV"
-                          fallback={<NotFound />}
-                        >
+                        <>
                           <Helmet title="Welcome" />
                           <TrialWelcomeView />
-                        </FeatureGate>
+                        </>
                       }
                     />
                     <Route

@@ -21,7 +21,7 @@ const HomeView = () => {
   const isMobileView =
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
 
-  useRedirectToWelcome();
+  // useRedirectToWelcome();
   useEmailVerified();
 
   return (
