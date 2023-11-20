@@ -25,6 +25,23 @@ export const VideoLicensingDetails = ({ video }: Props) => {
       <Typography.H1 size="xs" weight="medium" className="text-gray-900">
         Licensing Details
       </Typography.H1>
+      <div className="mb-4">
+        <Typography.Body size="small" className="text-gray-700">
+          See our{' '}
+          <a
+            rel="noopener noreferrer"
+            href="https://boclips.com/boclips-faq#licensing-and-editing"
+            target="_blank"
+          >
+            <Typography.Body size="small">
+              <Typography.Link type="inline-blue">
+                Licensing Details FAQs
+              </Typography.Link>
+            </Typography.Body>
+          </a>{' '}
+          for more details
+        </Typography.Body>
+      </div>
 
       <div className="flex flex-col mt-2">
         <VideoLicensingDetail

@@ -12,6 +12,18 @@ describe('Video licensing details in video page', () => {
     expect(wrapper.getByText('Licensing Details')).toBeVisible();
   });
 
+  it('displays Licensing FAQs info', () => {
+    const video = VideoFactory.sample({});
+    const wrapper = render(<VideoLicensingDetails video={video} />);
+
+    expect(
+      wrapper.getByRole('link', { name: 'Licensing Details FAQs' }),
+    ).toHaveAttribute(
+      'href',
+      'https://boclips.com/boclips-faq#licensing-and-editing',
+    );
+  });
+
   describe('max license duration', () => {
     it('displays max license duration', () => {
       const video = VideoFactory.sample({ maxLicenseDurationYears: 3 });
