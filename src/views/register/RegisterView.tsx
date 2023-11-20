@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 import RegistrationForm from 'src/components/registration/RegistrationForm';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { Constants } from 'src/AppConstants';
+import EmailVerificationPrompt from 'src/components/registration/EmailVerificationPrompt';
 
 const CAPTCHA_TOKEN = Constants.CAPTCHA_TOKEN;
 
@@ -14,7 +15,8 @@ const RegistrationView = () => {
       <Helmet title="Register" />
       <Layout rowsSetup="grid-rows-registration-view" responsiveLayout>
         <GoogleReCaptchaProvider reCaptchaKey={CAPTCHA_TOKEN}>
-          <RegistrationForm />
+          {/* <RegistrationForm userCreatedSuccessfully={showPrompt}/> */}
+          <EmailVerificationPrompt />
         </GoogleReCaptchaProvider>
         <Footer className="col-start-2 col-end-26 row-start-6" />
       </Layout>

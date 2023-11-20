@@ -44,6 +44,19 @@
   color: @blue-700;
 }
 
+.emailVerificationPromptWrapper {
+  border: 1px solid @blue-600;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  grid-row-start: 2;
+  grid-row-end: 6;
+  grid-column-start: 9;
+  grid-column-end: 19;
+  align-items: center;
+  padding: 2rem;
+}
+
 @media screen and (min-width: @screen-sm) {
   .formInputsWrapper {
     grid-column-start: 2;
@@ -60,6 +73,11 @@
         font-size: 0.75rem !important;
       }
     }
+  }
+
+  .emailVerificationPromptWrapper {
+    grid-column-start: 2;
+    grid-column-end: 26;
   }
 }
 
@@ -80,10 +98,20 @@
       }
     }
   }
+
+  .emailVerificationPromptWrapper {
+    grid-column-start: 4;
+    grid-column-end: 24;
+  }
 }
 
 @media screen and (min-width: @screen-lg) {
   .formInputsWrapper {
+    grid-column-start: 9;
+    grid-column-end: 19;
+  }
+
+  .emailVerificationPromptWrapper {
     grid-column-start: 9;
     grid-column-end: 19;
   }
