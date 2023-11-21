@@ -137,48 +137,6 @@ describe('Video View', () => {
     ).toBeNull();
   });
 
-  it('renders license duration information', async () => {
-    fakeClient.videos.insertVideo({
-      ...exampleVideo,
-      maxLicenseDurationYears: 5,
-    });
-
-    const wrapper = renderView(['/videos/video-id']);
-
-    expect(await wrapper.findByText('video-id')).toBeVisible();
-    expect(
-      await wrapper.findByText('Can be licensed for a maximum of 5 years'),
-    ).toBeVisible();
-  });
-
-  it('displays 10+ years license duration information when it is null', async () => {
-    fakeClient.videos.insertVideo({
-      ...exampleVideo,
-      maxLicenseDurationYears: null,
-    });
-
-    const wrapper = renderView(['/videos/video-id']);
-
-    expect(await wrapper.findByText('video-id')).toBeVisible();
-    expect(
-      await wrapper.findByText('Can be licensed for 10+ years'),
-    ).toBeVisible();
-  });
-
-  it('displays 10+ years license duration information when it is undefined', async () => {
-    fakeClient.videos.insertVideo({
-      ...exampleVideo,
-      maxLicenseDurationYears: undefined,
-    });
-
-    const wrapper = renderView(['/videos/video-id']);
-
-    expect(await wrapper.findByText('video-id')).toBeVisible();
-    expect(
-      await wrapper.findByText('License duration unavailable'),
-    ).toBeVisible();
-  });
-
   describe('video page navigated from explore view', () => {
     it(`will display embed video as primary button`, async () => {
       const theme = getThemeWithVideo(exampleVideo);

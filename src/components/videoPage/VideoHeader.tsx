@@ -12,7 +12,6 @@ import { DownloadTranscriptButton } from 'src/components/downloadTranscriptButto
 import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { VideoLicensingDetails } from 'src/components/videoPage/videoLicensingDetails/VideoLicensingDetails';
-import VideoLicenseDuration from 'src/components/common/videoLicenseDuration/VideoLicenseDuration';
 import useFeatureFlags from 'src/hooks/useFeatureFlags';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
@@ -24,12 +23,9 @@ interface Props {
 export const VideoHeader = ({ video }: Props) => {
   const { features, isLoading: featuresAreLoading } = useFeatureFlags();
 
-  const showLicensingDuration =
+  const showLicensingDetails =
     !featuresAreLoading &&
     !features.LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED;
-
-  const renderLicenseDurationBadge =
-    showLicensingDuration && !features.BO_WEB_APP_LICENSING_DETAILS;
 
   if (!video) {
     return null;
@@ -63,14 +59,13 @@ export const VideoHeader = ({ video }: Props) => {
             </Typography.Body>
           </div>
         </FeatureGate>
-        {renderLicenseDurationBadge && <VideoLicenseDuration video={video} />}
         <VideoInfo video={video} />
       </div>
 
       <div className={s.descriptionAndButtons}>
         <div>
           <VideoBadges video={video} />
-          {showLicensingDuration && (
+          {showLicensingDetails && (
             <FeatureGate feature="BO_WEB_APP_LICENSING_DETAILS">
               <VideoLicensingDetails video={video} />
             </FeatureGate>

@@ -1,36 +1,6 @@
-import {
-  getVideoOrderLicenseDurationLabel,
-  getVideoPageLicenseDurationLabel,
-} from 'src/services/getVideoLicenseDurationLabel';
+import { getVideoPageLicenseDurationLabel } from 'src/services/getVideoLicenseDurationLabel';
 
 describe('Get video license duration label', () => {
-  describe('For order pages', () => {
-    it('displays 1 year', () => {
-      const label = getVideoOrderLicenseDurationLabel(1);
-      expect(label).toEqual('Can be licensed for a maximum of 1 year');
-    });
-
-    it('displays 10+ years', () => {
-      const label = getVideoOrderLicenseDurationLabel(13);
-      expect(label).toEqual('Can be licensed for 10+ years');
-    });
-
-    it('displays 10+ years if maxDuration is null', () => {
-      const label = getVideoOrderLicenseDurationLabel(null);
-      expect(label).toEqual('Can be licensed for 10+ years');
-    });
-
-    it('displays license duration unavailable if maxDuration is undefined', () => {
-      const label = getVideoOrderLicenseDurationLabel(undefined);
-      expect(label).toEqual('License duration unavailable');
-    });
-
-    it('displays 3 years', () => {
-      const label = getVideoOrderLicenseDurationLabel(3);
-      expect(label).toEqual('Can be licensed for a maximum of 3 years');
-    });
-  });
-
   describe('For video page', () => {
     it('displays 1 year', () => {
       const label = getVideoPageLicenseDurationLabel(1);
