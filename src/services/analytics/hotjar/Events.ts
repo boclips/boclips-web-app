@@ -21,4 +21,5 @@ export const enum HotjarEvents {
   VideoPageOpened = 'video_page_opened',
   YourOrdersOpened = 'your_orders_opened',
   MyTeamOpened = 'my_team_opened',
+  MyAccountOpened = 'my_account_opened',
 }

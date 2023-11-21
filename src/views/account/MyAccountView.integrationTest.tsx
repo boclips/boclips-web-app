@@ -42,6 +42,22 @@ describe('My Account view', () => {
     expect(await screen.findByText('My Account')).toBeInTheDocument();
   });
 
+  it('renders delete data info', async () => {
+    wrapper();
+    expect(
+      await screen.findByText(
+        /For information on the account data we collect and for any requests to access or delete your data please refer to our/,
+      ),
+    ).toBeInTheDocument();
+    const privacyPolicyLink = await screen.findByRole('link', {
+      name: 'Privacy Policy.',
+    });
+    expect(privacyPolicyLink).toHaveAttribute(
+      'href',
+      'https://www.boclips.com/privacy-policy',
+    );
+  });
+
   it('displays My Account as window title', async () => {
     wrapper();
 
