@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
@@ -64,13 +64,17 @@ describe('My Account view', () => {
     it('renders my profile section', async () => {
       wrapper();
 
-      expect(await screen.findByText(/Personal Profile/)).toBeInTheDocument();
-      expect(await screen.findByText(/Name:/)).toBeInTheDocument();
-      expect(await screen.findByText(/Bob Wick/)).toBeInTheDocument();
-      expect(await screen.findByText(/Email:/)).toBeInTheDocument();
-      expect(await screen.findByText(/bob@wick.com/)).toBeInTheDocument();
-      expect(await screen.findByText(/Job Title:/)).toBeInTheDocument();
-      expect(await screen.findByText(/Engineer/)).toBeInTheDocument();
+      const userProfile = await screen.findByRole('main');
+
+      expect(
+        within(userProfile).getByText(/Personal Profile/),
+      ).toBeInTheDocument();
+      expect(within(userProfile).getByText(/Name:/)).toBeInTheDocument();
+      expect(within(userProfile).getByText(/Bob Wick/)).toBeInTheDocument();
+      expect(within(userProfile).getByText(/Email:/)).toBeInTheDocument();
+      expect(within(userProfile).getByText(/bob@wick.com/)).toBeInTheDocument();
+      expect(within(userProfile).getByText(/Job Title:/)).toBeInTheDocument();
+      expect(within(userProfile).getByText(/Engineer/)).toBeInTheDocument();
     });
 
     it('does not render values when data is missing', async () => {
@@ -81,8 +85,11 @@ describe('My Account view', () => {
       });
       wrapper(userWithMissingInfo);
 
-      expect(await screen.findByText(/Name:/)).toBeInTheDocument();
-      expect(screen.queryByText(/Job Title:/)).not.toBeInTheDocument();
+      const userProfile = await screen.findByRole('main');
+      expect(within(userProfile).getByText(/Name:/)).toBeInTheDocument();
+      expect(
+        within(userProfile).queryByText(/Job Title:/),
+      ).not.toBeInTheDocument();
     });
   });
 
