@@ -62,6 +62,21 @@ const MyAccountView = () => {
             </section>
           </section>
         )}
+        <section className="col-start-2 col-end-24 row-start-5 row-end-6 flex flex-col">
+          <Typography.Body>
+            For information on the account data we collect and for any requests
+            to access or delete your data please refer to our{' '}
+            <a
+              rel="noopener noreferrer"
+              href="https://www.boclips.com/privacy-policy"
+              target="_blank"
+            >
+              <Typography.Link type="inline-blue">
+                Privacy Policy.
+              </Typography.Link>
+            </a>
+          </Typography.Body>
+        </section>
         <Footer />
       </Layout>
     </>
