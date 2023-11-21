@@ -1,3 +1,4 @@
+import './mockRecaptcha';
 import {
   fireEvent,
   render,
@@ -13,21 +14,6 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { fillRegistrationForm } from 'src/components/registration/registrationFormTestHelpers';
-
-const mockExecuteRecaptcha = jest.fn((_?: string) =>
-  Promise.resolve('token_baby'),
-);
-
-jest.mock('react-google-recaptcha-v3', () => {
-  return {
-    GoogleReCaptchaProvider: ({ children }: any): React.JSX.Element => {
-      return <>{children}</>;
-    },
-    useGoogleReCaptcha: () => ({
-      executeRecaptcha: mockExecuteRecaptcha,
-    }),
-  };
-});
 
 describe('Registration Form Validation', () => {
   const fakeClient = new FakeBoclipsClient();
@@ -321,7 +307,7 @@ describe('Registration Form Validation', () => {
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={fakeClient}>
           <GoogleReCaptchaProvider reCaptchaKey="123">
-            <RegistrationForm />
+            <RegistrationForm onRegistrationFinished={jest.fn()} />
           </GoogleReCaptchaProvider>
         </BoclipsClientProvider>
       </QueryClientProvider>,
