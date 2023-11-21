@@ -39,6 +39,11 @@ export const AccountButton = () => {
   const ordersOpenedEvent = () => {
     AnalyticsFactory.hotjar().event(HotjarEvents.YourOrdersOpened);
   };
+
+  const accountOpenedEvent = () => {
+    AnalyticsFactory.hotjar().event(HotjarEvents.MyAccountOpened);
+  };
+
   const myTeamOpened = () => {
     AnalyticsFactory.hotjar().event(HotjarEvents.MyTeamOpened);
   };
@@ -111,6 +116,15 @@ export const AccountButton = () => {
                 <Link onClick={ordersOpenedEvent} to="/orders" tabIndex={-1}>
                   <Typography.Body size="small" as="button">
                     My orders
+                  </Typography.Body>
+                </Link>
+              </div>
+            </FeatureGate>
+            <FeatureGate feature="BO_WEB_APP_DEV">
+              <div className="pt-2">
+                <Link onClick={accountOpenedEvent} to="/account" tabIndex={-1}>
+                  <Typography.Body size="small" as="button">
+                    My account
                   </Typography.Body>
                 </Link>
               </div>
