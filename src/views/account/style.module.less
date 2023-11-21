@@ -1,0 +1,23 @@
+@import '~@boclips-ui/styles/src/colors';
+
+.infoCard{
+  display:flex;
+  flex-direction: column;
+  padding: 1rem;
+  background: @gray-100;
+  border: 2px solid @gray-400;
+  border-radius: 4px;
+
+  div {
+    padding-bottom: 1rem;
+
+    .info{
+      margin-left: .5rem;
+      font-weight: 500;
+    }
+
+    &:last-child{
+      padding-bottom: 0;
+    }
+  }
+}
