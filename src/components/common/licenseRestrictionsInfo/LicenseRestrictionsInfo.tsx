@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from '@boclips-ui/typography';
-import { FeatureGate } from 'src/components/common/FeatureGate';
+import useFeatureFlags from 'src/hooks/useFeatureFlags';
 import s from './style.module.less';
 
 interface LicenseRestrictionsInfoProps {
@@ -10,8 +10,14 @@ interface LicenseRestrictionsInfoProps {
 const LicenseRestrictionsInfo = ({
   displayCTAText,
 }: LicenseRestrictionsInfoProps) => {
+  const { features, isLoading: featuresAreLoading } = useFeatureFlags();
+
+  const showLicensingDetails =
+    !featuresAreLoading &&
+    !features.LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED;
+
   return (
-    <FeatureGate feature="BO_WEB_APP_LICENSING_DETAILS">
+    showLicensingDetails && (
       <div className={s.licenseRestrictionsInfo}>
         <Typography.Body data-qa="video-restriction-info">
           Videos have restrictions associated with their license.
@@ -23,7 +29,7 @@ const LicenseRestrictionsInfo = ({
           )}
         </Typography.Body>
       </div>
-    </FeatureGate>
+    )
   );
 };
 

@@ -65,11 +65,7 @@ export const VideoHeader = ({ video }: Props) => {
       <div className={s.descriptionAndButtons}>
         <div>
           <VideoBadges video={video} />
-          {showLicensingDetails && (
-            <FeatureGate feature="BO_WEB_APP_LICENSING_DETAILS">
-              <VideoLicensingDetails video={video} />
-            </FeatureGate>
-          )}
+          {showLicensingDetails && <VideoLicensingDetails video={video} />}
         </div>
         <div className={(s.sticky, s.buttons)}>
           <div className={s.iconButtons}>

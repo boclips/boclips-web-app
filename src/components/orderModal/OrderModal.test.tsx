@@ -71,10 +71,10 @@ describe('Order Modal', () => {
     expect(await wrapper.findByText('Total')).toBeVisible();
   });
 
-  it(`displays license restrictions info when without CTA`, async () => {
+  it(`displays license restrictions info when without CTA when LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED is false`, async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.users.setCurrentUserFeatures({
-      BO_WEB_APP_LICENSING_DETAILS: true,
+      LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED: false,
     });
 
     const history = createBrowserHistory();
@@ -94,6 +94,36 @@ describe('Order Modal', () => {
         'Videos have restrictions associated with their license.',
       ),
     ).toBeInTheDocument();
+    expect(
+      wrapper.queryByText(
+        'Click on the video title you want to review before checking out.',
+      ),
+    ).not.toBeInTheDocument();
+  });
+
+  it(`doesn't display license restrictions info when without CTA when LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED is true`, () => {
+    const apiClient = new FakeBoclipsClient();
+    apiClient.users.setCurrentUserFeatures({
+      LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED: true,
+    });
+
+    const history = createBrowserHistory();
+
+    const wrapper = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={apiClient}>
+          <Router location={history.location} navigator={history}>
+            <OrderModal setModalOpen={jest.fn} videos={[video]} cart={cart} />
+          </Router>
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
+
+    expect(
+      wrapper.queryByText(
+        'Videos have restrictions associated with their license.',
+      ),
+    ).not.toBeInTheDocument();
     expect(
       wrapper.queryByText(
         'Click on the video title you want to review before checking out.',

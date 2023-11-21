@@ -66,7 +66,6 @@ describe('CartView', () => {
     fakeClient.users.setCurrentUserFeatures({
       BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
       BO_WEB_APP_REQUEST_TRIMMING: true,
-      BO_WEB_APP_LICENSING_DETAILS: true,
     });
 
     fakeClient.videos.insertVideo(video);

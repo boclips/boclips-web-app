@@ -7,16 +7,10 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 
 describe('video license restrictions', () => {
-  it(`displays license restrictions info when BO_WEB_APP_LICENSING_DETAILS toggle is on without CTA`, async () => {
-    const fakeClient = new FakeBoclipsClient();
-    const client = new QueryClient();
-    fakeClient.users.insertCurrentUser(
-      UserFactory.sample({ features: { BO_WEB_APP_LICENSING_DETAILS: true } }),
-    );
-
+  it(`displays license restrictions info without CTA`, async () => {
     const wrapper = render(
-      <BoclipsClientProvider client={fakeClient}>
-        <QueryClientProvider client={client}>
+      <BoclipsClientProvider client={new FakeBoclipsClient()}>
+        <QueryClientProvider client={new QueryClient()}>
           <LicenseRestrictionsInfo />
         </QueryClientProvider>
       </BoclipsClientProvider>,
@@ -29,16 +23,10 @@ describe('video license restrictions', () => {
     ).toBeVisible();
   });
 
-  it(`displays license restrictions info when BO_WEB_APP_LICENSING_DETAILS toggle is on with CTA`, async () => {
-    const fakeClient = new FakeBoclipsClient();
-    const client = new QueryClient();
-    fakeClient.users.insertCurrentUser(
-      UserFactory.sample({ features: { BO_WEB_APP_LICENSING_DETAILS: true } }),
-    );
-
+  it(`displays license restrictions info with CTA`, async () => {
     const wrapper = render(
-      <BoclipsClientProvider client={fakeClient}>
-        <QueryClientProvider client={client}>
+      <BoclipsClientProvider client={new FakeBoclipsClient()}>
+        <QueryClientProvider client={new QueryClient()}>
           <LicenseRestrictionsInfo displayCTAText />
         </QueryClientProvider>
       </BoclipsClientProvider>,
@@ -56,11 +44,13 @@ describe('video license restrictions', () => {
     ).toBeVisible();
   });
 
-  it(`does not display license restrictions info when BO_WEB_APP_LICENSING_DETAILS toggle is off`, async () => {
+  it(`does not display license restrictions info when LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED toggle is on`, async () => {
     const fakeClient = new FakeBoclipsClient();
     const client = new QueryClient();
     fakeClient.users.insertCurrentUser(
-      UserFactory.sample({ features: { BO_WEB_APP_LICENSING_DETAILS: false } }),
+      UserFactory.sample({
+        features: { LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED: true },
+      }),
     );
 
     const wrapper = render(
