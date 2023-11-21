@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitFor, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
@@ -16,6 +16,10 @@ describe('My Account view', () => {
     email: 'bob@wick.com',
     jobTitle: 'Engineer',
     features: { BO_WEB_APP_DEV: true },
+    account: {
+      id: 'acc-1',
+      name: 'Elephant Academy',
+    },
   });
 
   const wrapper = (currentUser: User = user) => {
@@ -38,17 +42,6 @@ describe('My Account view', () => {
     expect(await screen.findByText('My Account')).toBeInTheDocument();
   });
 
-  it('renders my profile section', async () => {
-    wrapper();
-
-    expect(await screen.findByText(/Name:/)).toBeInTheDocument();
-    expect(await screen.findByText(/Bob Wick/)).toBeInTheDocument();
-    expect(await screen.findByText(/Email:/)).toBeInTheDocument();
-    expect(await screen.findByText(/bob@wick.com/)).toBeInTheDocument();
-    expect(await screen.findByText(/Job Title:/)).toBeInTheDocument();
-    expect(await screen.findByText(/Engineer/)).toBeInTheDocument();
-  });
-
   it('displays My Account as window title', async () => {
     wrapper();
 
@@ -58,18 +51,6 @@ describe('My Account view', () => {
     });
   });
 
-  it('does not render values when data is missing', async () => {
-    const userWithMissingInfo = UserFactory.sample({
-      lastName: 'tooth',
-      email: 'tooth-fairy@boclips.com',
-      features: { BO_WEB_APP_DEV: true },
-    });
-    wrapper(userWithMissingInfo);
-
-    expect(await screen.findByText(/Name:/)).toBeInTheDocument();
-    expect(screen.queryByText(/Job Title:/)).not.toBeInTheDocument();
-  });
-
   it('renders 404 when BO_WEB_APP_DEV is disabled', async () => {
     const userWithoutDevAccess = UserFactory.sample({
       features: { BO_WEB_APP_DEV: false },
@@ -77,5 +58,55 @@ describe('My Account view', () => {
     wrapper(userWithoutDevAccess);
 
     expect(await screen.findByText('Page not found!')).toBeInTheDocument();
+  });
+
+  describe('User Profile', () => {
+    it('renders my profile section', async () => {
+      wrapper();
+
+      expect(await screen.findByText(/Personal Profile/)).toBeInTheDocument();
+      expect(await screen.findByText(/Name:/)).toBeInTheDocument();
+      expect(await screen.findByText(/Bob Wick/)).toBeInTheDocument();
+      expect(await screen.findByText(/Email:/)).toBeInTheDocument();
+      expect(await screen.findByText(/bob@wick.com/)).toBeInTheDocument();
+      expect(await screen.findByText(/Job Title:/)).toBeInTheDocument();
+      expect(await screen.findByText(/Engineer/)).toBeInTheDocument();
+    });
+
+    it('does not render values when data is missing', async () => {
+      const userWithMissingInfo = UserFactory.sample({
+        lastName: 'tooth',
+        email: 'tooth-fairy@boclips.com',
+        features: { BO_WEB_APP_DEV: true },
+      });
+      wrapper(userWithMissingInfo);
+
+      expect(await screen.findByText(/Name:/)).toBeInTheDocument();
+      expect(screen.queryByText(/Job Title:/)).not.toBeInTheDocument();
+    });
+  });
+
+  describe('Organization Profile', () => {
+    it('renders my organization section', async () => {
+      wrapper();
+
+      expect(
+        await screen.findByText(/Organization Profile/),
+      ).toBeInTheDocument();
+      expect(await screen.findByText(/Elephant Academy/)).toBeInTheDocument();
+    });
+
+    it('does not render org profile when data is missing', async () => {
+      const userWithMissingAccount = UserFactory.sample({
+        lastName: 'tooth',
+        email: 'tooth-fairy@boclips.com',
+        features: { BO_WEB_APP_DEV: true },
+      });
+      wrapper(userWithMissingAccount);
+
+      expect(
+        screen.queryByText(/Organization Profile/),
+      ).not.toBeInTheDocument();
+    });
   });
 });

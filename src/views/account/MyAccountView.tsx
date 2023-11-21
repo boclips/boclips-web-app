@@ -47,6 +47,21 @@ const MyAccountView = () => {
             )}
           </section>
         </main>
+        {user.account && (
+          <section className="col-start-2 col-end-13 row-start-4 row-end-5 flex flex-col">
+            <Typography.H2 size="sm" className="mb-4">
+              Organization Profile
+            </Typography.H2>
+            <section className={s.infoCard}>
+              <div>
+                <Typography.Body>Name:</Typography.Body>
+                <Typography.Body
+                  className={s.info}
+                >{`${user?.account.name}`}</Typography.Body>
+              </div>
+            </section>
+          </section>
+        )}
         <Footer />
       </Layout>
     </>
