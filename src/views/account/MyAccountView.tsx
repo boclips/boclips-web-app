@@ -37,12 +37,14 @@ const MyAccountView = () => {
                 className={s.info}
               >{`${user?.email}`}</Typography.Body>
             </div>
-            <div>
-              <Typography.Body>Job Title:</Typography.Body>
-              <Typography.Body
-                className={s.info}
-              >{`${user?.jobTitle}`}</Typography.Body>
-            </div>
+            {user?.jobTitle && (
+              <div>
+                <Typography.Body>Job Title:</Typography.Body>
+                <Typography.Body
+                  className={s.info}
+                >{`${user?.jobTitle}`}</Typography.Body>
+              </div>
+            )}
           </section>
         </main>
         <Footer />
