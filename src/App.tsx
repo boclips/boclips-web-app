@@ -82,6 +82,10 @@ const RegisterView = lazyWithRetry(
   () => import('src/views/register/RegisterView'),
 );
 
+const MyAccountView = lazyWithRetry(
+  () => import('src/views/account/MyAccountView'),
+);
+
 const TrialWelcomeView = lazyWithRetry(
   () => import('src/views/welcome/TrialWelcomeView'),
 );
@@ -284,6 +288,18 @@ const App = ({
                         >
                           <MyTeamView />
                         </WithValidRoles>
+                      }
+                    />
+                    <Route
+                      path="/account"
+                      element={
+                        <FeatureGate
+                          feature="BO_WEB_APP_DEV"
+                          fallback={<NotFound />}
+                          isView
+                        >
+                          <MyAccountView />
+                        </FeatureGate>
                       }
                     />
                     <Route
