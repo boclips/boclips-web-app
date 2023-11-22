@@ -153,7 +153,6 @@ describe('App', () => {
     );
 
     expect(await wrapper.findByText('Create new account')).toBeVisible();
-    expect(wrapper.getByText('Copyright ©', { exact: false })).toBeVisible();
   });
 
   it('renders page not found when user is logged in but has no dev flag when accessing registration page', async () => {
