@@ -249,7 +249,7 @@ const RegistrationForm = ({
     );
 
   return (
-    <>
+    <main tabIndex={-1} className={s.formInputsWrapper}>
       <section className={s.formHeader}>
         <Typography.H1>CourseSpark</Typography.H1>
         <Typography.Body weight="medium" className={s.blueText}>
@@ -259,173 +259,171 @@ const RegistrationForm = ({
           7 day trial
         </Typography.Body>
       </section>
-      <main tabIndex={-1} className={s.formInputsWrapper}>
-        <div className="flex flex-row items-end">
-          <InputText
-            id="input-firstName"
-            aria-label="input-firstName"
-            onChange={(value) => handleChange('firstName', value)}
-            inputType="text"
-            placeholder="John"
-            className={c(s.input, 'flex-1 mr-4')}
-            labelText="First name"
-            height="48px"
-            isError={!!validationErrors.firstName}
-            errorMessage={validationErrors.firstName}
-          />
-          <InputText
-            id="input-lastName"
-            onChange={(value) => handleChange('lastName', value)}
-            inputType="text"
-            placeholder="Smith"
-            className={c(s.input, 'flex-1')}
-            labelText="Last name"
-            height="48px"
-            isError={!!validationErrors.lastName}
-            errorMessage={validationErrors.lastName}
-          />
-        </div>
+      <div className="flex flex-row items-end">
         <InputText
-          id="input-email"
-          onChange={(value) => handleChange('email', value)}
+          id="input-firstName"
+          aria-label="input-firstName"
+          onChange={(value) => handleChange('firstName', value)}
           inputType="text"
-          placeholder="smith@gmail.com"
-          className={c(s.input)}
-          labelText="Professional email"
+          placeholder="John"
+          className={c(s.input, 'flex-1 mr-4')}
+          labelText="First name"
           height="48px"
-          isError={!!validationErrors.email}
-          errorMessage={validationErrors.email}
+          isError={!!validationErrors.firstName}
+          errorMessage={validationErrors.firstName}
         />
-        <div className="flex flex-row items-end">
-          <InputText
-            id="input-password"
-            onChange={(value) => handleChange('password', value)}
-            inputType="password"
-            placeholder="*********"
-            className={c(s.input, 'flex-1 mr-4')}
-            labelText="Password"
-            height="48px"
-            isError={!!validationErrors.password}
-            errorMessage={validationErrors.password}
-          />
-          <InputText
-            id="input-confirmPassword"
-            onChange={(value) => handleChange('confirmPassword', value)}
-            inputType="password"
-            placeholder="*********"
-            className={c(s.input, 'flex-1')}
-            labelText="Confirm password"
-            height="48px"
-            isError={!!validationErrors.confirmPassword}
-            errorMessage={validationErrors.confirmPassword}
-          />
-        </div>
-
         <InputText
-          id="input-accountName"
-          onChange={(value) => handleChange('accountName', value)}
+          id="input-lastName"
+          onChange={(value) => handleChange('lastName', value)}
           inputType="text"
-          placeholder="Your account name"
-          className={s.input}
-          labelText="Account name"
+          placeholder="Smith"
+          className={c(s.input, 'flex-1')}
+          labelText="Last name"
           height="48px"
-          isError={!!validationErrors.accountName}
-          errorMessage={validationErrors.accountName}
+          isError={!!validationErrors.lastName}
+          errorMessage={validationErrors.lastName}
         />
-
-        <div className="flex flex-row items-end	mb-2">
-          <div className="flex-1 mr-4">
-            <Dropdown
-              mode="single"
-              placeholder="Your job title"
-              onUpdate={(value) => handleChange('jobTitle', value)}
-              options={JOB_TITLE}
-              dataQa="input-dropdown-job-title"
-              labelText="Job title"
-              showLabel
-              fitWidth
-              isError={!!validationErrors.jobTitle}
-              errorMessage={validationErrors.jobTitle}
-            />
-          </div>
-          <div className="flex-1">
-            <Dropdown
-              mode="single"
-              placeholder="Select country"
-              onUpdate={(value) => handleChange('country', value)}
-              options={LIST_OF_COUNTRIES}
-              dataQa="input-dropdown-country"
-              labelText="Country"
-              showLabel
-              fitWidth
-              isError={!!validationErrors.country}
-              errorMessage={validationErrors.country}
-            />
-          </div>
-        </div>
-
-        <div className="flex flex-row items-end">
-          <div className="flex flex-1 items-end mb-2 mr-4">
-            <Dropdown
-              mode="single"
-              placeholder="Type of organization"
-              onUpdate={(value) => handleChange('typeOfOrg', value)}
-              options={TYPE_OF_ORG}
-              dataQa="input-dropdown-type-of-org"
-              labelText="Type of organization"
-              showLabel
-              fitWidth
-              isError={!!validationErrors.typeOfOrg}
-              errorMessage={validationErrors.typeOfOrg}
-            />
-          </div>
-          <div className="flex flex-1 items-end mb-2">
-            <Dropdown
-              mode="single"
-              placeholder="Audience"
-              onUpdate={(value) => handleChange('audience', value)}
-              options={AUDIENCE}
-              dataQa="input-dropdown-audience"
-              labelText="Select audience"
-              showLabel
-              fitWidth
-              isError={!!validationErrors.audience}
-              errorMessage={validationErrors.audience}
-            />
-          </div>
-        </div>
-
+      </div>
+      <InputText
+        id="input-email"
+        onChange={(value) => handleChange('email', value)}
+        inputType="text"
+        placeholder="smith@gmail.com"
+        className={c(s.input)}
+        labelText="Professional email"
+        height="48px"
+        isError={!!validationErrors.email}
+        errorMessage={validationErrors.email}
+      />
+      <div className="flex flex-row items-end">
         <InputText
-          id="input-discovery-method"
-          onChange={(value) => handleChange('discoveryMethod', value)}
-          inputType="textarea"
-          placeholder="Enter text here"
-          className={`${s.input} flex-1`}
-          labelText="How did you hear about Boclips?"
+          id="input-password"
+          onChange={(value) => handleChange('password', value)}
+          inputType="password"
+          placeholder="*********"
+          className={c(s.input, 'flex-1 mr-4')}
+          labelText="Password"
+          height="48px"
+          isError={!!validationErrors.password}
+          errorMessage={validationErrors.password}
         />
-
         <InputText
-          id="input-desired-content"
-          onChange={(value) => handleChange('desiredContent', value)}
-          inputType="textarea"
-          placeholder="Enter text here"
-          className={`${s.input} flex-1`}
-          labelText="What content are you looking for?"
+          id="input-confirmPassword"
+          onChange={(value) => handleChange('confirmPassword', value)}
+          inputType="password"
+          placeholder="*********"
+          className={c(s.input, 'flex-1')}
+          labelText="Confirm password"
+          height="48px"
+          isError={!!validationErrors.confirmPassword}
+          errorMessage={validationErrors.confirmPassword}
         />
-        <div>
-          <EducationalUseCheckbox
-            isError={validationErrors.hasAcceptedEducationalUseTerms}
-            checked={registrationData.hasAcceptedEducationalUseTerms}
-            setChecked={(value) =>
-              handleChange('hasAcceptedEducationalUseTerms', value)
-            }
+      </div>
+
+      <InputText
+        id="input-accountName"
+        onChange={(value) => handleChange('accountName', value)}
+        inputType="text"
+        placeholder="Your account name"
+        className={s.input}
+        labelText="Account name"
+        height="48px"
+        isError={!!validationErrors.accountName}
+        errorMessage={validationErrors.accountName}
+      />
+
+      <div className="flex flex-row items-end	mb-2">
+        <div className="flex-1 mr-4">
+          <Dropdown
+            mode="single"
+            placeholder="Your job title"
+            onUpdate={(value) => handleChange('jobTitle', value)}
+            options={JOB_TITLE}
+            dataQa="input-dropdown-job-title"
+            labelText="Job title"
+            showLabel
+            fitWidth
+            isError={!!validationErrors.jobTitle}
+            errorMessage={validationErrors.jobTitle}
           />
         </div>
-        <Typography.Body size="small" className={c(s.blueText, 'mt-1')}>
-          By clicking Create Account, you agree to the Boclips User Agreement,
-          Privacy Policy, and Cookie Policy.
-        </Typography.Body>
-      </main>
+        <div className="flex-1">
+          <Dropdown
+            mode="single"
+            placeholder="Select country"
+            onUpdate={(value) => handleChange('country', value)}
+            options={LIST_OF_COUNTRIES}
+            dataQa="input-dropdown-country"
+            labelText="Country"
+            showLabel
+            fitWidth
+            isError={!!validationErrors.country}
+            errorMessage={validationErrors.country}
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-row items-end">
+        <div className="flex flex-1 items-end mb-2 mr-4">
+          <Dropdown
+            mode="single"
+            placeholder="Type of organization"
+            onUpdate={(value) => handleChange('typeOfOrg', value)}
+            options={TYPE_OF_ORG}
+            dataQa="input-dropdown-type-of-org"
+            labelText="Type of organization"
+            showLabel
+            fitWidth
+            isError={!!validationErrors.typeOfOrg}
+            errorMessage={validationErrors.typeOfOrg}
+          />
+        </div>
+        <div className="flex flex-1 items-end mb-2">
+          <Dropdown
+            mode="single"
+            placeholder="Audience"
+            onUpdate={(value) => handleChange('audience', value)}
+            options={AUDIENCE}
+            dataQa="input-dropdown-audience"
+            labelText="Select audience"
+            showLabel
+            fitWidth
+            isError={!!validationErrors.audience}
+            errorMessage={validationErrors.audience}
+          />
+        </div>
+      </div>
+
+      <InputText
+        id="input-discovery-method"
+        onChange={(value) => handleChange('discoveryMethod', value)}
+        inputType="textarea"
+        placeholder="Enter text here"
+        className={`${s.input} flex-1`}
+        labelText="How did you hear about Boclips?"
+      />
+
+      <InputText
+        id="input-desired-content"
+        onChange={(value) => handleChange('desiredContent', value)}
+        inputType="textarea"
+        placeholder="Enter text here"
+        className={`${s.input} flex-1`}
+        labelText="What content are you looking for?"
+      />
+      <div>
+        <EducationalUseCheckbox
+          isError={validationErrors.hasAcceptedEducationalUseTerms}
+          checked={registrationData.hasAcceptedEducationalUseTerms}
+          setChecked={(value) =>
+            handleChange('hasAcceptedEducationalUseTerms', value)
+          }
+        />
+      </div>
+      <Typography.Body size="small" className={c(s.blueText, 'mt-1')}>
+        By clicking Create Account, you agree to the Boclips User Agreement,
+        Privacy Policy, and Cookie Policy.
+      </Typography.Body>
       <section className={s.createAccountButtonWrapper}>
         <Button
           onClick={handleUserCreation}
@@ -435,7 +433,7 @@ const RegistrationForm = ({
           className={s.createAccountButton}
         />
       </section>
-    </>
+    </main>
   );
 };
 
