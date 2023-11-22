@@ -13,6 +13,8 @@ import { QueryClient } from '@tanstack/react-query';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
 import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
+import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
+import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('Trial Welcome View', () => {
   const fakeClient = new FakeBoclipsClient();
@@ -26,19 +28,20 @@ describe('Trial Welcome View', () => {
         account: { id: 'LAL', name: 'LA Lakers' },
       }),
     );
-    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
+    fakeClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'LAL', status: AccountStatus.TRIAL }),
+    );
   });
 
   it('displays trial welcome view', async () => {
     const wrapper = renderWelcomeView();
-
     expect(
       await wrapper.findByText(
         "You've just been added to Boclips by your colleague",
       ),
     ).toBeVisible();
 
-    expect(wrapper.getByText('Kobe Bryant')).toBeVisible();
+    expect(await wrapper.findByText('Kobe Bryant')).toBeVisible();
     expect(wrapper.getByText('kobe@la.com')).toBeVisible();
     expect(wrapper.getByText('LA Lakers')).toBeVisible();
 
@@ -177,6 +180,27 @@ describe('Trial Welcome View', () => {
     await waitFor(() => {
       expect(updateUserSpy).not.toBeCalled();
     });
+  });
+
+  it(`redirects to home view if user is not in a trial account`, async () => {
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({
+        id: 'jb',
+        firstName: 'Joe',
+        lastName: 'Bloggs',
+        email: 'jbloggs@jo.com',
+        account: { id: 'jo', name: 'jojo' },
+      }),
+    );
+    fakeClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'jo', status: AccountStatus.ACTIVE }),
+    );
+
+    const wrapper = renderWelcomeView();
+
+    expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
+      'Welcome to CourseSpark!',
+    );
   });
 
   async function setJobTitle(wrapper: RenderResult, value: string) {

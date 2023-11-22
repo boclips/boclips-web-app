@@ -8,6 +8,9 @@ import { MemoryRouter, Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
+import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
+import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('App', () => {
   it('renders the not found page on user having incorrect role', async () => {
@@ -167,13 +170,17 @@ describe('App', () => {
     expect(await wrapper.findByText('Page not found!')).toBeVisible();
   });
 
-  it('renders trial welcome page', async () => {
+  it('redirects to trial welcome page for trial users with missing marketing info', async () => {
     const apiClient = new FakeBoclipsClient();
-
-    apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
+    apiClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'trial', status: AccountStatus.TRIAL }),
+    );
+    apiClient.users.insertCurrentUser(
+      UserFactory.sample({ account: { id: 'trial', name: 'trial' } }),
+    );
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/welcome']}>
+      <MemoryRouter initialEntries={['/videos']}>
         <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
       </MemoryRouter>,
     );
@@ -185,10 +192,14 @@ describe('App', () => {
     ).toBeVisible();
   });
 
-  it('renders page not found instead of trial welcome for not developer', async () => {
+  it('renders home view instead of trial welcome for non trial users', async () => {
     const apiClient = new FakeBoclipsClient();
-
-    apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: false });
+    apiClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'not-trial', status: AccountStatus.ACTIVE }),
+    );
+    apiClient.users.insertCurrentUser(
+      UserFactory.sample({ account: { id: 'not-trial', name: 'regular' } }),
+    );
 
     const wrapper = render(
       <MemoryRouter initialEntries={['/welcome']}>
@@ -196,6 +207,100 @@ describe('App', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByText('Page not found!')).toBeVisible();
+    expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
+      'Welcome to CourseSpark!',
+    );
+  });
+
+  it('/welcome renders home view instead of trial welcome for non trial users', async () => {
+    const apiClient = new FakeBoclipsClient();
+    apiClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'not-trial', status: AccountStatus.ACTIVE }),
+    );
+    apiClient.users.insertCurrentUser(
+      UserFactory.sample({ account: { id: 'not-trial', name: 'regular' } }),
+    );
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/welcome']}>
+        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
+      'Welcome to CourseSpark!',
+    );
+  });
+  it('any page should redirect to welcome view if user is in trial and has no marketing info', async () => {
+    const apiClient = new FakeBoclipsClient();
+    apiClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'trial', status: AccountStatus.TRIAL }),
+    );
+    apiClient.users.insertCurrentUser(
+      UserFactory.sample({
+        account: { id: 'trial', name: 'trial' },
+        desiredContent: undefined,
+        audience: undefined,
+      }),
+    );
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/videos']}>
+        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+      </MemoryRouter>,
+    );
+
+    expect(
+      await wrapper.findByText(
+        "You've just been added to Boclips by your colleague",
+      ),
+    ).toBeVisible();
+  });
+  it('/welcome should redirect to home if user is in trial and has marketing info', async () => {
+    const apiClient = new FakeBoclipsClient();
+    apiClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'trial', status: AccountStatus.TRIAL }),
+    );
+    apiClient.users.insertCurrentUser(
+      UserFactory.sample({
+        account: { id: 'trial', name: 'trial' },
+        desiredContent: 'videos',
+        audience: 'everyone',
+        jobTitle: 'CEO',
+      }),
+    );
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/welcome']}>
+        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
+      'Welcome to CourseSpark!',
+    );
+  });
+  it('/welcome should redirect to home if user is not in trial', async () => {
+    const apiClient = new FakeBoclipsClient();
+    apiClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'regular', status: AccountStatus.ACTIVE }),
+    );
+    apiClient.users.insertCurrentUser(
+      UserFactory.sample({
+        account: { id: 'regular', name: 'no trial' },
+        desiredContent: 'videos',
+        audience: 'everyone',
+      }),
+    );
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/welcome']}>
+        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
+      'Welcome to CourseSpark!',
+    );
   });
 });

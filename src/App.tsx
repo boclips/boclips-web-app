@@ -17,6 +17,7 @@ import { lazyWithRetry } from 'src/services/lazyWithRetry';
 import { FollowPlaylist } from 'src/services/followPlaylist';
 import UserAttributes from 'src/services/analytics/hotjar/UserAttributes';
 import { FeatureGate } from 'src/components/common/FeatureGate';
+import UseRedirectToWelcome from 'src/hooks/useRedirectToWelcome';
 import FallbackView from 'src/views/fallback/FallbackView';
 import { RedirectFromExploreToSparks } from 'src/components/sparks/RedirectFromExploreToSparks';
 import * as Sentry from '@sentry/browser';
@@ -143,13 +144,13 @@ const App = ({
         <ToastContainer />
         <BoclipsSecurityProvider boclipsSecurity={boclipsSecurity}>
           <BoclipsClientProvider client={apiClient}>
+            <UseRedirectToWelcome />
             <JSErrorBoundary fallback={<FallbackView />}>
               <WithValidRoles
                 fallback={<AccessDeniedView />}
                 roles={[ROLES.BOCLIPS_WEB_APP_BROWSE]}
               >
                 <Helmet title="CourseSpark" />
-
                 <Suspense fallback={<Loading />}>
                   <Routes>
                     <Route
@@ -164,13 +165,10 @@ const App = ({
                     <Route
                       path="/welcome"
                       element={
-                        <FeatureGate
-                          feature="BO_WEB_APP_DEV"
-                          fallback={<NotFound />}
-                        >
+                        <>
                           <Helmet title="Welcome" />
                           <TrialWelcomeView />
-                        </FeatureGate>
+                        </>
                       }
                     />
                     <Route

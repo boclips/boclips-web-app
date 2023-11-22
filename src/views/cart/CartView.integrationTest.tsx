@@ -67,7 +67,6 @@ describe('CartView', () => {
       BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
       BO_WEB_APP_REQUEST_TRIMMING: true,
     });
-
     fakeClient.videos.insertVideo(video);
     fakeClient.carts.insertCartItem({
       videoId: 'video-id',
