@@ -61,7 +61,7 @@ describe('Registration Form', () => {
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
           <GoogleReCaptchaProvider reCaptchaKey="123">
-            <RegistrationForm />
+            <RegistrationForm onRegistrationFinished={jest.fn()} />
           </GoogleReCaptchaProvider>
         </BoclipsClientProvider>
       </QueryClientProvider>,
@@ -113,7 +113,7 @@ describe('Registration Form', () => {
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={fakeClient}>
           <GoogleReCaptchaProvider reCaptchaKey="123">
-            <RegistrationForm />
+            <RegistrationForm onRegistrationFinished={jest.fn()} />
           </GoogleReCaptchaProvider>
         </BoclipsClientProvider>
       </QueryClientProvider>,
@@ -156,7 +156,7 @@ describe('Registration Form', () => {
         <BoclipsClientProvider client={fakeClient}>
           <ToastContainer />
           <GoogleReCaptchaProvider reCaptchaKey="123">
-            <RegistrationForm />
+            <RegistrationForm onRegistrationFinished={jest.fn()} />
           </GoogleReCaptchaProvider>
         </BoclipsClientProvider>
       </QueryClientProvider>,
@@ -174,20 +174,27 @@ describe('Registration Form', () => {
     expect(wrapper.getAllByDisplayValue('p@ss1234')).toHaveLength(2);
   });
 
-  it('success notification is displayed when trial user creation passes', async () => {
+  it('onRegistrationFinished is called when trial user creation passes', async () => {
     const fakeClient = new FakeBoclipsClient();
-    jest
-      .spyOn(fakeClient.users, 'createTrialUser')
-      .mockImplementation(() =>
-        Promise.resolve(UserFactory.sample({ email: 'test@boclips.com' })),
-      );
+    jest.spyOn(fakeClient.users, 'createTrialUser').mockImplementation(() =>
+      Promise.resolve(
+        UserFactory.sample({
+          email: 'test@boclips.com',
+          account: { name: 'new account', id: '1' },
+        }),
+      ),
+    );
+
+    const onRegistrationFinishedSpy = jest.fn();
 
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={fakeClient}>
           <ToastContainer />
           <GoogleReCaptchaProvider reCaptchaKey="123">
-            <RegistrationForm />
+            <RegistrationForm
+              onRegistrationFinished={onRegistrationFinishedSpy}
+            />
           </GoogleReCaptchaProvider>
         </BoclipsClientProvider>
       </QueryClientProvider>,
@@ -197,9 +204,13 @@ describe('Registration Form', () => {
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
-    expect(
-      await wrapper.findByText('User test@boclips.com successfully created'),
-    ).toBeVisible();
+    await waitFor(() => {
+      expect(onRegistrationFinishedSpy).toBeCalledTimes(1);
+      expect(onRegistrationFinishedSpy).toBeCalledWith(
+        'new account',
+        'test@boclips.com',
+      );
+    });
   });
 
   it('displays error notification if captcha fails', async () => {
@@ -212,7 +223,7 @@ describe('Registration Form', () => {
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
           <ToastContainer />
           <GoogleReCaptchaProvider reCaptchaKey="123">
-            <RegistrationForm />
+            <RegistrationForm onRegistrationFinished={jest.fn()} />
           </GoogleReCaptchaProvider>
         </BoclipsClientProvider>
       </QueryClientProvider>,

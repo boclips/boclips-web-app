@@ -55,7 +55,13 @@ const emptyRegistrationData = (): RegistrationData => {
   };
 };
 
-const RegistrationForm = () => {
+interface RegistrationFormProps {
+  onRegistrationFinished: (accountName: string, userEmail: string) => void;
+}
+
+const RegistrationForm = ({
+  onRegistrationFinished,
+}: RegistrationFormProps) => {
   const { mutate: createTrialUser, isLoading: isTrialUserCreating } =
     useAddNewTrialUser();
   const { executeRecaptcha } = useGoogleReCaptcha();
@@ -210,10 +216,7 @@ const RegistrationForm = () => {
         },
         {
           onSuccess: (user: User) => {
-            displayNotification(
-              'success',
-              `User ${user.email} successfully created`,
-            );
+            onRegistrationFinished(user.account.name, user.email);
           },
           onError: (error?: Error) => {
             const errorOrigin = error?.message?.split(' ')[0]?.toUpperCase();
