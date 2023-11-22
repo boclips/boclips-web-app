@@ -5,11 +5,21 @@ import PageHeader from 'src/components/pageTitle/PageHeader';
 import Footer from 'src/components/layout/Footer';
 import { Helmet } from 'react-helmet';
 import { Typography } from '@boclips-ui/typography';
-import { useGetUserQuery } from 'src/hooks/api/userQuery';
+import { useGetAccount, useGetUserQuery } from 'src/hooks/api/userQuery';
+import dayjs from 'dayjs';
 import s from './style.module.less';
 
 const MyAccountView = () => {
   const { data: user } = useGetUserQuery();
+  const { data: account } = useGetAccount(user.account?.id);
+
+  const formatDate = (date: Date): string => {
+    return new Date(date).toLocaleDateString('en-uk', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
 
   return (
     <>
@@ -58,6 +68,18 @@ const MyAccountView = () => {
                 <Typography.Body
                   className={s.info}
                 >{`${user?.account.name}`}</Typography.Body>
+              </div>
+              <div>
+                <Typography.Body>Signup date:</Typography.Body>
+                <Typography.Body className={s.info}>
+                  {formatDate(account?.createdAt)}
+                </Typography.Body>
+              </div>
+              <div>
+                <Typography.Body>Length of access:</Typography.Body>
+                <Typography.Body className={s.info}>
+                  {`${dayjs.duration(account?.accountDuration).asDays()} days`}
+                </Typography.Body>
               </div>
             </section>
           </section>

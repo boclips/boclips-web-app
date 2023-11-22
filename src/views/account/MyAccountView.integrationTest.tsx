@@ -8,6 +8,7 @@ import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { Helmet } from 'react-helmet';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
+import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 
 describe('My Account view', () => {
   const user = UserFactory.sample({
@@ -22,9 +23,17 @@ describe('My Account view', () => {
     },
   });
 
+  const account = AccountsFactory.sample({
+    id: 'acc-1',
+    name: 'Elephant Academy',
+    createdAt: new Date('2023-09-18T14:19:55.612Z'),
+    accountDuration: 'P7D',
+  });
+
   const wrapper = (currentUser: User = user) => {
     const boclipsClient = new FakeBoclipsClient();
     boclipsClient.users.insertCurrentUser(currentUser);
+    boclipsClient.accounts.insertAccount(account);
 
     render(
       <MemoryRouter initialEntries={['/account']}>
@@ -112,11 +121,14 @@ describe('My Account view', () => {
   describe('Organization Profile', () => {
     it('renders my organization section', async () => {
       wrapper();
-
       expect(
         await screen.findByText(/Organization Profile/),
       ).toBeInTheDocument();
       expect(await screen.findByText(/Elephant Academy/)).toBeInTheDocument();
+      expect(await screen.findByText(/Signup date/)).toBeInTheDocument();
+      expect(await screen.findByText(/18 September 2023/)).toBeInTheDocument();
+      expect(await screen.findByText(/Length of access/)).toBeInTheDocument();
+      expect(await screen.findByText(/7 days/)).toBeInTheDocument();
     });
 
     it('does not render org profile when data is missing', async () => {
