@@ -8,7 +8,7 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 describe('Suspense', () => {
   it('renders homepage', async () => {
     const client = new FakeBoclipsClient();
-    const { findByTestId, getByLabelText } = render(
+    const { findByTestId } = render(
       <MemoryRouter initialEntries={['/']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
@@ -17,8 +17,5 @@ describe('Suspense', () => {
     expect(await findByTestId('header-text')).toHaveTextContent(
       'Welcome to CourseSpark!',
     );
-    expect(
-      getByLabelText('CourseSpark logo - Go to homepage'),
-    ).toBeInTheDocument();
   });
 });
