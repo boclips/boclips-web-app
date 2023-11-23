@@ -9,6 +9,7 @@ import { Helmet } from 'react-helmet';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
+import { Account } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('My Account view', () => {
   const user = UserFactory.sample({
@@ -30,10 +31,13 @@ describe('My Account view', () => {
     accountDuration: 'P7D',
   });
 
-  const wrapper = (currentUser: User = user) => {
+  const wrapper = (
+    currentUser: User = user,
+    accountToInsert: Account = account,
+  ) => {
     const boclipsClient = new FakeBoclipsClient();
     boclipsClient.users.insertCurrentUser(currentUser);
-    boclipsClient.accounts.insertAccount(account);
+    boclipsClient.accounts.insertAccount(accountToInsert);
 
     render(
       <MemoryRouter initialEntries={['/account']}>
@@ -131,7 +135,7 @@ describe('My Account view', () => {
       expect(await screen.findByText(/7 days/)).toBeInTheDocument();
     });
 
-    it('does not render org profile when data is missing', async () => {
+    it('does not render org profile when account data is missing', async () => {
       const userWithMissingAccount = UserFactory.sample({
         lastName: 'tooth',
         email: 'tooth-fairy@boclips.com',
@@ -142,6 +146,35 @@ describe('My Account view', () => {
       expect(
         screen.queryByText(/Organization Profile/),
       ).not.toBeInTheDocument();
+    });
+
+    it('does not render org profile info when data is missing', async () => {
+      const userWithMissingAccount = UserFactory.sample({
+        lastName: 'tooth',
+        email: 'tooth-fairy@boclips.com',
+        features: { BO_WEB_APP_DEV: true },
+        account: {
+          id: 'acc-2',
+          name: 'Ant Academy',
+        },
+      });
+
+      const accountWithMissingInfo = AccountsFactory.sample({
+        id: 'acc-2',
+        name: 'Ant Academy',
+      });
+
+      wrapper(userWithMissingAccount, accountWithMissingInfo);
+
+      expect(await screen.findByText(/Ant Academy/)).toBeInTheDocument();
+      expect(screen.queryByText(/Signup date/)).not.toBeInTheDocument();
+      expect(screen.queryByText(/Length of access/)).not.toBeInTheDocument();
+    });
+
+    it('displays skeleton when loading', async () => {
+      wrapper();
+
+      expect(await screen.findByTestId('skeleton')).toBeInTheDocument();
     });
   });
 });

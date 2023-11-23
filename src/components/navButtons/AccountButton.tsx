@@ -1,4 +1,4 @@
-import MyAccountSVG from 'src/resources/icons/my-account-icon.svg';
+import MyAccountSVG from 'src/resources/icons/user-icon.svg';
 import ExternalLinkIcon from 'src/resources/icons/external-link-icon.svg';
 import React, { useRef, useState } from 'react';
 import c from 'classnames';
