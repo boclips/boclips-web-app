@@ -1,7 +1,17 @@
+import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+
 context('Sparks', () => {
   it('Sparks user journey', () => {
     cy.visit('/');
-    cy.bo((bo) => bo.create.fixtureSet.themes());
+
+    cy.bo((bo) => {
+      bo.create.user();
+      bo.inspect().users.insertCurrentUser(
+        UserFactory.sample({ features: { BO_WEB_APP_SPARKS: true } }),
+      );
+      bo.create.fixtureSet.themes();
+    });
+    cy.get('[data-qa="account-menu"]').click();
 
     cy.findByRole('button', { name: 'Sparks' }).should('be.visible');
     cy.findByRole('button', { name: 'Sparks' }).click();

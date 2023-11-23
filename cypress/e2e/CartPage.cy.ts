@@ -1,18 +1,29 @@
 // cart feature flags
 // featureGate role: BO_WEB_APP_REQUEST_TRIMMING, BO_WEB_APP_REQUEST_ADDITIONAL_EDITING
 
+import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+
 context('Cart page -- feature flags off', () => {
   it('renders the cart and order flow', () => {
     cy.visit('/');
     cy.bo((bo) => {
       bo.create.cartWithVideos();
-
-      bo.set.features({
-        BO_WEB_APP_REQUEST_TRIMMING: false,
-        BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: false,
-        BO_WEB_APP_PRICES: false,
-      });
+      bo.inspect().users.insertCurrentUser(
+        UserFactory.sample({
+          features: {
+            BO_WEB_APP_REQUEST_TRIMMING: false,
+            BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: false,
+            BO_WEB_APP_PRICES: false,
+            BO_WEB_APP_SPARKS: true,
+          },
+        }),
+      );
+      bo.inspect().links.cart = {
+        href: 'https://www.boclips.com',
+        templated: false,
+      };
     });
+    cy.get('[data-qa="account-menu"]').click();
 
     cy.get('[data-qa="cart-button"]').click();
 
@@ -50,15 +61,24 @@ context('Cart page -- feature flags off', () => {
 context('Cart page -- feature flags on', () => {
   it('renders the cart and order flow', () => {
     cy.visit('/');
+
     cy.bo((bo) => {
       bo.create.cartWithVideos();
-
-      bo.set.features({
-        BO_WEB_APP_REQUEST_TRIMMING: true,
-        BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
-        BO_WEB_APP_PRICES: true,
-      });
+      bo.inspect().users.insertCurrentUser(
+        UserFactory.sample({
+          features: {
+            BO_WEB_APP_REQUEST_TRIMMING: true,
+            BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
+            BO_WEB_APP_PRICES: true,
+          },
+        }),
+      );
+      bo.inspect().links.cart = {
+        href: 'https://www.boclips.com',
+        templated: false,
+      };
     });
+    cy.get('[data-qa="account-menu"]').click();
 
     cy.get('[data-qa="cart-button"]').click();
 

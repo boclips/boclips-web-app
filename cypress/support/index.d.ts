@@ -1,7 +1,5 @@
 /// <reference types="cypress" />
 
-// import { Bo } from '../../src/testSupport/bo';
-
 type PathTree<T> = {
   [P in keyof T]: T[P] extends Record<string, unknown>
     ? [P?, ...Path<T[P]>]

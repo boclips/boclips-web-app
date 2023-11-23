@@ -18,6 +18,8 @@ import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory'
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
+import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 
 export interface Bo {
   create: {
@@ -31,17 +33,23 @@ export interface Bo {
     emptyPlaylist: () => void;
     playlistWithVideos: () => void;
     featuredPlaylists: () => void;
+    user: () => void;
   };
   inspect: () => FakeBoclipsClient;
   set: {
     facets: (facet: Partial<VideoFacets>) => void;
     features: (features: { [key in FeatureKey]?: boolean }) => void;
   };
+  remove: {
+    cartLink: () => void;
+  };
 
   interact(callback: (apiClient: FakeBoclipsClient) => void): void;
 }
 
 export function bo(apiClient: FakeBoclipsClient): Bo {
+  delete apiClient.links.cart;
+  delete apiClient.links.userOrders;
   const boSetFacets = (facets: Partial<VideoFacets>) => {
     apiClient.videos.setFacets(
       FacetsFactory.sample({
@@ -75,10 +83,20 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
     });
   };
 
-  const boSetFeatures = (features: {
+  const boSetFeatures = async (features: {
     [key in FeatureKey]?: boolean;
   }) => {
+    console.log(
+      'setting features of user: ',
+      await apiClient.users.getCurrentUser(),
+    );
+    console.log('new features: ', features);
+
     apiClient.users.setCurrentUserFeatures(features);
+    console.log(
+      'set features of user: ',
+      await apiClient.users.getCurrentUser(),
+    );
   };
 
   const boCreateSubject = (subject: Subject) => {
@@ -146,9 +164,22 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
       facets: boSetFacets,
       features: boSetFeatures,
     },
-
+    remove: {
+      cartLink: () => delete apiClient.links.cart,
+    },
     create: {
       video: boCreateVideo,
+      user: async () => {
+        apiClient.users.insertCurrentUser(
+          UserFactory.sample({
+            firstName: 'Percy',
+            account: { id: 'acc-id', name: 'Percy account' },
+          }),
+        );
+        apiClient.accounts.insertAccount(
+          AccountsFactory.sample({ id: 'acc-id' }),
+        );
+      },
       subject: boCreateSubject,
 
       featuredPlaylists: async () => {
