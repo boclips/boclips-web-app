@@ -3,6 +3,8 @@
 // featureGate link: cart
 
 import { QueryClient } from '@tanstack/react-query';
+import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import { AdminLinksFactory } from 'boclips-api-client/dist/test-support/AdminLinksFactory';
 
 context('Homepage -- feature flags off', () => {
   it('has a homepage', () => {
@@ -14,9 +16,9 @@ context('Homepage -- feature flags off', () => {
         BO_WEB_APP_SPARKS: false,
       });
 
-      bo.remove.cartLink();
       bo.create.featuredPlaylists();
     });
+    cy.get('[data-qa="account-menu"]').click();
 
     cy.findByText('Sparks').should('not.exist');
     cy.findByText('Cart').should('not.exist');
@@ -30,11 +32,9 @@ context('Homepage -- feature flags off', () => {
       client.set.features({
         BO_WEB_APP_SPARKS: false,
       });
-      client.remove.cartLink();
-      delete client.inspect().links.cart;
-      delete client.inspect().links.userOrders;
       client.create.featuredPlaylists();
     });
+
     cy.get('[data-qa="account-menu"]').click();
     cy.findByText('My orders').should('not.exist');
 
@@ -46,12 +46,23 @@ context('Homepage -- feature flags on', () => {
   it('has a homepage', () => {
     cy.visit('/');
     cy.bo((client) => {
-      client.create.user();
+      client
+        .inspect()
+        .users.insertCurrentUser(
+          UserFactory.sample({ features: { BO_WEB_APP_SPARKS: true } }),
+        );
+      client.inspect().links.cart = {
+        href: 'https://www.boclips.com',
+        templated: false,
+      };
+
       client.set.features({
         BO_WEB_APP_SPARKS: true,
       });
       client.create.featuredPlaylists();
     });
+    cy.get('[data-qa="account-menu"]').click();
+
     cy.findByText('Sparks').should('exist');
     cy.findByText('Cart').should('exist');
 
@@ -61,11 +72,17 @@ context('Homepage -- feature flags on', () => {
   it('renders account panel', () => {
     cy.visit('/');
     cy.bo((bo) => {
-      bo.create.user();
+      bo.inspect().users.insertCurrentUser(
+        UserFactory.sample({ features: { BO_WEB_APP_SPARKS: true } }),
+      );
       bo.set.features({
         BO_WEB_APP_SPARKS: true,
       });
       bo.create.featuredPlaylists();
+      bo.inspect().links.userOrders = {
+        href: 'https://www.boclips.com',
+        templated: false,
+      };
     });
     cy.get('[data-qa="account-menu"]').click();
     cy.findByText('My orders').should('exist');

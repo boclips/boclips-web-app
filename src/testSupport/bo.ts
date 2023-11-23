@@ -49,7 +49,8 @@ export interface Bo {
 }
 
 export function bo(apiClient: FakeBoclipsClient): Bo {
-  // delete apiClient.links.cart;
+  delete apiClient.links.cart;
+  delete apiClient.links.userOrders;
   const boSetFacets = (facets: Partial<VideoFacets>) => {
     apiClient.videos.setFacets(
       FacetsFactory.sample({
