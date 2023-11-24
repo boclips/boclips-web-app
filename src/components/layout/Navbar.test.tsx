@@ -179,83 +179,40 @@ describe(`Navbar`, () => {
   });
 
   describe('Sparks option in Navbar', () => {
-    describe('When user has BO_WEB_APP_SPARKS feature flag', () => {
-      const client = new FakeBoclipsClient();
-      let wrapper;
+    const client = new FakeBoclipsClient();
+    let wrapper;
 
-      beforeEach(() => {
-        client.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
-
-        wrapper = render(
-          <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-            <BoclipsClientProvider client={client}>
-              <NavbarResponsive />
-            </BoclipsClientProvider>
-          </BoclipsSecurityProvider>,
-        );
-      });
-
-      it(`will show the Sparks menu option on desktop`, async () => {
-        resizeToDesktop();
-
-        expect(
-          await wrapper.findByRole('button', { name: 'Sparks' }),
-        ).toBeVisible();
-      });
-
-      it.each([
-        ['mobile', resizeToMobile],
-        ['tablet', resizeToTablet],
-      ])(
-        'will show the Sparks menu option on %s',
-        async (_screenType: string, resize: () => void) => {
-          resize();
-
-          fireEvent.click(await wrapper.findByLabelText('Menu'));
-
-          expect(wrapper.getByText('Sparks')).toBeVisible();
-        },
+    beforeEach(() => {
+      wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={client}>
+            <NavbarResponsive />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
       );
     });
 
-    describe('When user does not have BO_WEB_APP_SPARKS', () => {
-      const client = new FakeBoclipsClient();
-      let wrapper;
+    it(`will show the Sparks menu option on desktop`, async () => {
+      resizeToDesktop();
 
-      beforeEach(() => {
-        client.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: false });
-
-        wrapper = render(
-          <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-            <BoclipsClientProvider client={client}>
-              <NavbarResponsive />
-            </BoclipsClientProvider>
-          </BoclipsSecurityProvider>,
-        );
-      });
-
-      it(`will not show the Sparks menu option on desktop`, async () => {
-        resizeToDesktop();
-
-        expect(
-          await wrapper.queryByRole('button', { name: 'Sparks' }),
-        ).toBeNull();
-      });
-
-      it.each([
-        ['mobile', resizeToMobile],
-        ['tablet', resizeToTablet],
-      ])(
-        'will not show the Sparks menu option on %s',
-        async (_screenType: string, resize: () => void) => {
-          resize();
-
-          fireEvent.click(await wrapper.findByLabelText('Menu'));
-
-          expect(wrapper.queryByText('Sparks')).toBeNull();
-        },
-      );
+      expect(
+        await wrapper.findByRole('button', { name: 'Sparks' }),
+      ).toBeVisible();
     });
+
+    it.each([
+      ['mobile', resizeToMobile],
+      ['tablet', resizeToTablet],
+    ])(
+      'will show the Sparks menu option on %s',
+      async (_screenType: string, resize: () => void) => {
+        resize();
+
+        fireEvent.click(await wrapper.findByLabelText('Menu'));
+
+        expect(wrapper.getByText('Sparks')).toBeVisible();
+      },
+    );
   });
 
   describe('Show Options', () => {

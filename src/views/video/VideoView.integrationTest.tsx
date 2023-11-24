@@ -149,8 +149,6 @@ describe('Video View', () => {
         ProviderFactory.sample('openstax', { types: [theme.type] }),
       ]);
       fakeClient.videos.insertVideo(exampleVideo);
-      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
-
       const wrapper = renderView([`/sparks/openstax/${theme.id}`]);
 
       await userEvent.click(await wrapper.findByText(exampleVideo.title));
@@ -180,7 +178,6 @@ describe('Video View', () => {
         ProviderFactory.sample('openstax', { types: [theme.type] }),
       ]);
       fakeClient.videos.insertVideo(videoWithoutEmbedOption);
-      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
 
       const wrapper = renderView([`/sparks/openstax/${theme.id}`]);
 
@@ -192,7 +189,7 @@ describe('Video View', () => {
       ).toBeVisible();
 
       expect(
-        await wrapper.queryByRole('button', { name: 'embed' }),
+        wrapper.queryByRole('button', { name: 'embed' }),
       ).not.toBeInTheDocument();
     });
 
@@ -211,7 +208,6 @@ describe('Video View', () => {
         themes: [theme],
       });
       fakeClient.videos.insertVideo(newVideo);
-      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
       fakeClient.alignments.setProviders([
         ProviderFactory.sample('openstax', { types: [theme.type] }),
       ]);
@@ -244,14 +240,13 @@ describe('Video View', () => {
         ProviderFactory.sample('openstax', { types: [theme.type] }),
       ]);
       fakeClient.videos.insertVideo(newVideo);
-      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
 
       const wrapper = renderView([`/sparks/openstax/${theme.id}`]);
 
       await userEvent.click(await wrapper.findByText(newVideo.title));
 
       expect(
-        await wrapper.queryByRole('button', { name: 'download-transcript' }),
+        wrapper.queryByRole('button', { name: 'download-transcript' }),
       ).not.toBeInTheDocument();
     });
 

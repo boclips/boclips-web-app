@@ -11,15 +11,10 @@ context('Homepage -- feature flags off', () => {
     cy.visit('/');
 
     cy.bo((bo) => {
-      bo.set.features({
-        BO_WEB_APP_SPARKS: false,
-      });
-
       bo.create.featuredPlaylists();
     });
     cy.get('[data-qa="account-menu"]').click();
 
-    cy.findByText('Sparks').should('not.exist');
     cy.findByText('Cart').should('not.exist');
     cy.percySnapshot('Home Page without feature flags');
   });
@@ -28,9 +23,6 @@ context('Homepage -- feature flags off', () => {
     cy.visit('/');
     cy.bo((bo) => {
       bo.create.user();
-      bo.set.features({
-        BO_WEB_APP_SPARKS: false,
-      });
       bo.create.featuredPlaylists();
     });
 
@@ -45,9 +37,7 @@ context('Homepage -- feature flags on', () => {
   it('has a homepage', () => {
     cy.visit('/');
     cy.bo((bo) => {
-      bo.inspect().users.insertCurrentUser(
-        UserFactory.sample({ features: { BO_WEB_APP_SPARKS: true } }),
-      );
+      bo.inspect().users.insertCurrentUser(UserFactory.sample());
       bo.inspect().links.cart = {
         href: 'https://www.boclips.com',
         templated: false,
@@ -66,9 +56,7 @@ context('Homepage -- feature flags on', () => {
   it('renders account panel', () => {
     cy.visit('/');
     cy.bo((bo) => {
-      bo.inspect().users.insertCurrentUser(
-        UserFactory.sample({ features: { BO_WEB_APP_SPARKS: true } }),
-      );
+      bo.inspect().users.insertCurrentUser(UserFactory.sample());
       bo.create.featuredPlaylists();
       bo.inspect().links.userOrders = {
         href: 'https://www.boclips.com',

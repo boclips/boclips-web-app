@@ -225,14 +225,10 @@ const App = ({
                     <Route
                       path="/sparks"
                       element={
-                        <FeatureGate
-                          feature="BO_WEB_APP_SPARKS"
-                          fallback={<NotFound />}
-                          isView
-                        >
+                        <>
                           <Helmet title="Sparks" />
                           <SparksView />
-                        </FeatureGate>
+                        </>
                       }
                     />
                     <Route
@@ -249,29 +245,10 @@ const App = ({
                         />
                       }
                     />
-                    <Route
-                      path="/sparks/:provider"
-                      element={
-                        <FeatureGate
-                          feature="BO_WEB_APP_SPARKS"
-                          fallback={<NotFound />}
-                          isView
-                        >
-                          <ExploreView />
-                        </FeatureGate>
-                      }
-                    />
+                    <Route path="/sparks/:provider" element={<ExploreView />} />
                     <Route
                       path="/sparks/:provider/:id"
-                      element={
-                        <FeatureGate
-                          feature="BO_WEB_APP_SPARKS"
-                          fallback={<NotFound />}
-                          isView
-                        >
-                          <ThemeView />
-                        </FeatureGate>
-                      }
+                      element={<ThemeView />}
                     />
                     <Route
                       path="/explore/*"

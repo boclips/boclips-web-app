@@ -84,9 +84,7 @@ const NavbarResponsive = ({
               <div className="flex mr-6">
                 <HomeButton />
                 <LibraryButton />
-                <FeatureGate feature="BO_WEB_APP_SPARKS">
-                  <SparksButton />
-                </FeatureGate>
+                <SparksButton />
                 <PlaylistsButton />
                 <FeatureGate linkName="cart">
                   <CartButton />

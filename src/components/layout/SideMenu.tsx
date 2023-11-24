@@ -23,9 +23,7 @@ const SideMenu = ({ user, logOut, hasSearchInNavbar = true }: Props) => {
         <span>{user.email}</span>
       </div>
       <div className={s.buttons}>
-        <FeatureGate feature="BO_WEB_APP_SPARKS">
-          <Link to="/sparks">Sparks</Link>
-        </FeatureGate>
+        <Link to="/sparks">Sparks</Link>
         <Link to="/playlists">Playlists</Link>
         <Link to="/orders">Your orders</Link>
         <FeatureGate linkName="cart">

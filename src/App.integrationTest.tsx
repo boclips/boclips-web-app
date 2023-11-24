@@ -46,8 +46,6 @@ describe('App', () => {
 
   it('renders the provider page if user has correct role', async () => {
     const apiClient = new FakeBoclipsClient();
-
-    apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
     apiClient.alignments.setProviders([ProviderFactory.sample('openstax')]);
 
     const wrapper = render(
@@ -60,25 +58,8 @@ describe('App', () => {
     expect(await wrapper.findByText('Our OpenStax collection')).toBeVisible();
   });
 
-  it(`renders the not found page if user doesn't have role to view alignments`, async () => {
-    const apiClient = new FakeBoclipsClient();
-
-    apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: false });
-    apiClient.alignments.setTypesForProvider('openstax', []);
-
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/sparks/openstax']}>
-        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
-      </MemoryRouter>,
-    );
-
-    expect(await wrapper.findByText('Page not found!')).toBeVisible();
-  });
-
   it('redirects to playlists page if accessing library', async () => {
     const apiClient = new FakeBoclipsClient();
-
-    apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
 
     const wrapper = render(
       <MemoryRouter initialEntries={['/library']}>
@@ -92,9 +73,6 @@ describe('App', () => {
 
   it('redirects from explore/openstax to sparks/openstax', async () => {
     const fakeBoclipsClient = new FakeBoclipsClient();
-    fakeBoclipsClient.users.setCurrentUserFeatures({
-      BO_WEB_APP_SPARKS: true,
-    });
 
     const history = createBrowserHistory();
     history.push('/explore/openstax');
@@ -115,9 +93,6 @@ describe('App', () => {
 
   it('redirects from specific bookmark in openstax book to sparks URL', async () => {
     const fakeBoclipsClient = new FakeBoclipsClient();
-    fakeBoclipsClient.users.setCurrentUserFeatures({
-      BO_WEB_APP_SPARKS: true,
-    });
 
     const history = createBrowserHistory();
     history.push(

@@ -41,7 +41,6 @@ describe(`Explore view`, () => {
 
   it(`shows 'All' types as a first one and can select other types`, async () => {
     const fakeClient = new FakeBoclipsClient();
-    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
 
     fakeClient.alignments.setProviders([
       ProviderFactory.sample('openstax', {
@@ -92,21 +91,20 @@ describe(`Explore view`, () => {
     fireEvent.click(wrapper.getByLabelText('type Maths'));
 
     expect(await wrapper.findByText('Maths book')).toBeVisible();
-    expect(await wrapper.queryByText('French book')).toBeNull();
-    expect(await wrapper.queryByText('Physics-1')).toBeNull();
-    expect(await wrapper.queryByText('Physics-2')).toBeNull();
+    expect(wrapper.queryByText('French book')).toBeNull();
+    expect(wrapper.queryByText('Physics-1')).toBeNull();
+    expect(wrapper.queryByText('Physics-2')).toBeNull();
 
     fireEvent.click(wrapper.getByLabelText('type French'));
 
-    expect(await wrapper.queryByText('Maths book')).toBeNull();
+    expect(wrapper.queryByText('Maths book')).toBeNull();
     expect(await wrapper.findByText('French book')).toBeVisible();
-    expect(await wrapper.queryByText('Physics-1')).toBeNull();
-    expect(await wrapper.queryByText('Physics-2')).toBeNull();
+    expect(wrapper.queryByText('Physics-1')).toBeNull();
+    expect(wrapper.queryByText('Physics-2')).toBeNull();
   });
 
   it('shows Page not found when used non existing provider', async () => {
     const fakeClient = new FakeBoclipsClient();
-    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
     const wrapper = render(
       <MemoryRouter initialEntries={['/sparks/wrong-provider']}>
         <App
@@ -121,7 +119,6 @@ describe(`Explore view`, () => {
 
   it(`only show types that are supported`, async () => {
     const fakeClient = new FakeBoclipsClient();
-    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
     fakeClient.alignments.setThemesByProvider({
       providerName: 'openstax',
       themes: [
@@ -167,7 +164,6 @@ describe(`Explore view`, () => {
   describe('Type menu focus', () => {
     it('changes the focus when type is selected', async () => {
       const fakeClient = new FakeBoclipsClient();
-      fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
       fakeClient.alignments.setThemesByProvider({
         providerName: 'openstax',
         themes: [
