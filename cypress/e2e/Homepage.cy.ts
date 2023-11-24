@@ -35,7 +35,7 @@ context('Homepage -- feature flags on', () => {
   it('has a homepage', () => {
     cy.visit('/');
     cy.bo((bo) => {
-      bo.inspect().users.insertCurrentUser(UserFactory.sample());
+      bo.create.user();
       bo.inspect().links.cart = {
         href: 'https://www.boclips.com',
         templated: false,
