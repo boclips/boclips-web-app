@@ -19,7 +19,7 @@ import UserAttributes from 'src/services/analytics/hotjar/UserAttributes';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import UseRedirectToWelcome from 'src/hooks/useRedirectToWelcome';
 import FallbackView from 'src/views/fallback/FallbackView';
-import { RedirectFromExploreToSparks } from 'src/components/sparks/RedirectFromExploreToSparks';
+import { RedirectFromExploreToAlignments } from 'src/components/alignments/RedirectFromExploreToAlignments';
 import * as Sentry from '@sentry/browser';
 import { ToastContainer } from 'react-toastify';
 import { BoclipsClientProvider } from './components/common/providers/BoclipsClientProvider';
@@ -73,7 +73,9 @@ const ExploreView = lazyWithRetry(
   () => import('src/views/alignments/explore/ExploreView'),
 );
 
-const SparksView = lazyWithRetry(() => import('src/views/sparks/SparksView'));
+const AlignmentsView = lazyWithRetry(
+  () => import('src/views/alignments/AlignmentsView'),
+);
 
 const ThemeView = lazyWithRetry(
   () => import('src/views/alignments/theme/ThemeView'),
@@ -227,7 +229,7 @@ const App = ({
                       element={
                         <>
                           <Helmet title="Sparks" />
-                          <SparksView />
+                          <AlignmentsView />
                         </>
                       }
                     />
@@ -252,7 +254,7 @@ const App = ({
                     />
                     <Route
                       path="/explore/*"
-                      element={<RedirectFromExploreToSparks />}
+                      element={<RedirectFromExploreToAlignments />}
                     />
                     <Route
                       path="/team"

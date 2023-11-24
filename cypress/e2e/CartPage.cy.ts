@@ -14,7 +14,6 @@ context('Cart page -- feature flags off', () => {
             BO_WEB_APP_REQUEST_TRIMMING: false,
             BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: false,
             BO_WEB_APP_PRICES: false,
-            BO_WEB_APP_SPARKS: true,
           },
         }),
       );

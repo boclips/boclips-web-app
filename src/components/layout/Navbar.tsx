@@ -10,7 +10,7 @@ import { useBoclipsSecurity } from 'src/components/common/providers/BoclipsSecur
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import PlaylistsButton from 'src/components/navButtons/PlaylistsButton';
 import SkipLink from 'src/components/skipLink/SkipLink';
-import SparksButton from 'src/components/navButtons/SparksButton';
+import AlignmentsButton from 'src/components/navButtons/AlignmentsButton';
 import SideMenu from 'src/components/layout/SideMenu';
 import LibraryButton from 'src/components/navButtons/LibraryButton';
 import { HomeButton } from 'src/components/navButtons/HomeButton';
@@ -84,7 +84,7 @@ const NavbarResponsive = ({
               <div className="flex mr-6">
                 <HomeButton />
                 <LibraryButton />
-                <SparksButton />
+                <AlignmentsButton />
                 <PlaylistsButton />
                 <FeatureGate linkName="cart">
                   <CartButton />
