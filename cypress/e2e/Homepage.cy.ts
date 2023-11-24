@@ -2,9 +2,7 @@
 // featureGate role: BO_WEB_APP_SPARKS
 // featureGate link: cart
 
-import { QueryClient } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
-import { AdminLinksFactory } from 'boclips-api-client/dist/test-support/AdminLinksFactory';
 
 context('Homepage -- feature flags off', () => {
   it('has a homepage', () => {
@@ -17,10 +15,10 @@ context('Homepage -- feature flags off', () => {
 
       bo.create.featuredPlaylists();
     });
-    cy.get('[data-qa="account-menu"]').click();
 
     cy.findByText('Sparks').should('not.exist');
     cy.findByText('Cart').should('not.exist');
+
     cy.percySnapshot('Home Page without feature flags');
   });
 
@@ -70,6 +68,10 @@ context('Homepage -- feature flags on', () => {
         UserFactory.sample({ features: { BO_WEB_APP_SPARKS: true } }),
       );
       bo.create.featuredPlaylists();
+      bo.inspect().links.cart = {
+        href: 'https://www.boclips.com',
+        templated: false,
+      };
       bo.inspect().links.userOrders = {
         href: 'https://www.boclips.com',
         templated: false,

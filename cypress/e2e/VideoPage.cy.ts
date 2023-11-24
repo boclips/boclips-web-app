@@ -41,6 +41,10 @@ context('VideoPage -- feature flags on', () => {
         price: { currency: 'USD', amount: 200 },
         releasedOn: new Date(2011, 11, 1),
       });
+      bo.inspect().links.cart = {
+        href: 'https://www.boclips.com',
+        templated: false,
+      };
     });
 
     cy.findByText('All videos').should('be.visible').click();
