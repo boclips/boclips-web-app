@@ -1,5 +1,4 @@
 // homepage feature flags
-// featureGate role: BO_WEB_APP_SPARKS
 // featureGate link: cart
 
 context('VideoPage -- feature flags off', () => {

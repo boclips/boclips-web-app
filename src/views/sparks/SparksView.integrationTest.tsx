@@ -12,7 +12,6 @@ import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 describe('Sparks landing page', () => {
   it('renders loading skeletons before data is loaded', async () => {
     const fakeClient = new FakeBoclipsClient();
-    fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
     fakeClient.alignments.setProviders([ProviderFactory.sample('ngss')]);
 
     const wrapper = render(
@@ -41,7 +40,6 @@ describe('Sparks landing page', () => {
     history.push('/sparks');
 
     const client = new FakeBoclipsClient();
-    client.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
     client.alignments.setProviders([ProviderFactory.sample('ngss')]);
 
     const wrapper = render(
@@ -63,7 +61,6 @@ describe('Sparks landing page', () => {
 
   it('displays Sparks as window title', async () => {
     const client = new FakeBoclipsClient();
-    client.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
 
     const wrapper = render(
       <MemoryRouter initialEntries={['/sparks']}>

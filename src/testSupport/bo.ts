@@ -325,7 +325,6 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
           );
         },
         themes: () => {
-          boSetFeatures({ BO_WEB_APP_SPARKS: true });
           boSetProviderThemes([
             ThemeFactory.sample({
               id: 'theme-1',

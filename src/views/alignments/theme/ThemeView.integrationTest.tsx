@@ -517,14 +517,12 @@ describe('ThemeView', () => {
       });
       fireEvent.click(courseContentButton);
 
-      const tableOfContentPanel = await wrapper.getByTestId(
+      const tableOfContentPanel = wrapper.getByTestId(
         'table of contents panel',
       );
 
       expect(
-        await within(tableOfContentPanel).queryByRole('button', {
-          name: 'Back',
-        }),
+        within(tableOfContentPanel).queryByRole('button', { name: 'Back' }),
       ).toBeNull();
     });
   });
@@ -532,7 +530,6 @@ describe('ThemeView', () => {
 
 const renderThemeView = (theme: Theme): RenderResult => {
   const client = new FakeBoclipsClient();
-  client.users.setCurrentUserFeatures({ BO_WEB_APP_SPARKS: true });
   client.alignments.setThemesByProvider({
     providerName: 'openstax',
     themes: [theme],
