@@ -10,6 +10,10 @@ context('Sparks', () => {
         UserFactory.sample({ features: { BO_WEB_APP_SPARKS: true } }),
       );
       bo.create.fixtureSet.themes();
+      bo.inspect().links.cart = {
+        href: 'https://www.boclips.com',
+        templated: false,
+      };
     });
     cy.get('[data-qa="account-menu"]').click();
 

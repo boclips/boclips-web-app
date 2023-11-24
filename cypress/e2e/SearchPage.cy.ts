@@ -78,6 +78,10 @@ context('Search page -- feature flags on', () => {
       bo.set.features({
         BO_WEB_APP_COPY_VIDEO_ID_BUTTON: true,
       });
+      bo.inspect().links.cart = {
+        href: 'https://www.boclips.com',
+        templated: false,
+      };
     });
 
     cy.findByPlaceholderText('Search for videos');

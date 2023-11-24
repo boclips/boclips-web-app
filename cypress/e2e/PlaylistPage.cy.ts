@@ -18,11 +18,15 @@ context('Playlist page', () => {
 
   it('can update playlist with new videos order (drag n drop)', () => {
     cy.visit('/');
-    cy.bo((bo) =>
+    cy.bo((bo) => {
       bo.set.features({
         BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST: true,
-      }),
-    );
+      });
+      bo.inspect().links.cart = {
+        href: 'https://www.boclips.com',
+        templated: false,
+      };
+    });
     cy.bo((bo) => bo.create.playlistWithVideos());
     cy.get('[data-qa="playlists-button"]').click();
 

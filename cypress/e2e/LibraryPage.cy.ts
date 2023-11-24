@@ -13,7 +13,14 @@ context('Libray page', () => {
 
   it('renders playlist with videos', () => {
     cy.visit('/');
-    cy.bo((bo) => bo.create.playlistWithVideos());
+
+    cy.bo((bo) => {
+      bo.create.playlistWithVideos();
+      bo.inspect().links.cart = {
+        href: 'https://www.boclips.com',
+        templated: false,
+      };
+    });
     cy.get('[data-qa="playlists-button"]').click();
 
     cy.findAllByRole('progressbar').should('not.exist');
