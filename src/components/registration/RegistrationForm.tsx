@@ -56,7 +56,7 @@ const emptyRegistrationData = (): RegistrationData => {
 };
 
 interface RegistrationFormProps {
-  onRegistrationFinished: (accountName: string, userEmail: string) => void;
+  onRegistrationFinished: (userEmail: string) => void;
 }
 
 const RegistrationForm = ({
@@ -216,7 +216,7 @@ const RegistrationForm = ({
         },
         {
           onSuccess: (user: User) => {
-            onRegistrationFinished(user.account.name, user.email);
+            onRegistrationFinished(user.email);
           },
           onError: (error?: Error) => {
             const errorOrigin = error?.message?.split(' ')[0]?.toUpperCase();

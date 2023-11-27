@@ -180,7 +180,6 @@ describe('Registration Form', () => {
       Promise.resolve(
         UserFactory.sample({
           email: 'test@boclips.com',
-          account: { name: 'new account', id: '1' },
         }),
       ),
     );
@@ -206,10 +205,7 @@ describe('Registration Form', () => {
 
     await waitFor(() => {
       expect(onRegistrationFinishedSpy).toBeCalledTimes(1);
-      expect(onRegistrationFinishedSpy).toBeCalledWith(
-        'new account',
-        'test@boclips.com',
-      );
+      expect(onRegistrationFinishedSpy).toBeCalledWith('test@boclips.com');
     });
   });
 

@@ -10,6 +10,8 @@ import { RegistrationData } from 'src/components/registration/RegistrationForm';
 import React from 'react';
 import { fillRegistrationForm } from 'src/components/registration/registrationFormTestHelpers';
 import { RegistrationProcess } from 'src/components/registration/RegistrationProcess';
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 
 describe('registration process', () => {
   async function fillTheForm(
@@ -35,7 +37,7 @@ describe('registration process', () => {
     await fillRegistrationForm(wrapper, { ...defaults, ...change });
   }
 
-  it('displays "verify your email" view after successful registration', async () => {
+  it('displays "check your email" view after successful registration', async () => {
     const fakeClient = new FakeBoclipsClient();
     jest.spyOn(fakeClient.users, 'createTrialUser').mockImplementation(() =>
       Promise.resolve(
@@ -45,14 +47,17 @@ describe('registration process', () => {
         }),
       ),
     );
+    const history = createBrowserHistory();
 
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={fakeClient}>
-          <ToastContainer />
-          <GoogleReCaptchaProvider reCaptchaKey="123">
-            <RegistrationProcess />
-          </GoogleReCaptchaProvider>
+          <Router location={history.location} navigator={history}>
+            <ToastContainer />
+            <GoogleReCaptchaProvider reCaptchaKey="123">
+              <RegistrationProcess />
+            </GoogleReCaptchaProvider>
+          </Router>
         </BoclipsClientProvider>
       </QueryClientProvider>,
     );
@@ -61,14 +66,13 @@ describe('registration process', () => {
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
-    expect(await wrapper.findByText('Verify your Email')).toBeVisible();
+    expect(await wrapper.findByText('Check your email!')).toBeVisible();
 
     expect(
       wrapper.getByText(
-        'We have sent an email to test@boclips.com. Check your email inbox now',
+        'Congratulations! You have successfully created your free Boclips trial account.',
       ),
     ).toBeVisible();
-    expect(wrapper.getByText(': BoAccount')).toBeVisible();
-    expect(wrapper.getByText(': test@boclips.com')).toBeVisible();
+    expect(wrapper.getByText('test@boclips.com.')).toBeVisible();
   });
 });

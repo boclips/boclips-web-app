@@ -7,26 +7,18 @@ import EmailVerificationPrompt from 'src/components/registration/EmailVerificati
 const CAPTCHA_TOKEN = Constants.CAPTCHA_TOKEN;
 
 export const RegistrationProcess = () => {
-  const [trialUserCreated, setTrialUserCreated] = useState<{
-    accountName: string;
-    userEmail: string;
-  }>();
+  const [userEmailCreated, setUserEmailCreated] = useState<string>();
 
-  const isRegistrationFinished = trialUserCreated;
+  const isRegistrationFinished = userEmailCreated;
 
   return (
     <GoogleReCaptchaProvider reCaptchaKey={CAPTCHA_TOKEN}>
       {!isRegistrationFinished ? (
         <RegistrationForm
-          onRegistrationFinished={(accountName, userEmail) =>
-            setTrialUserCreated({ accountName, userEmail })
-          }
+          onRegistrationFinished={(userEmail) => setUserEmailCreated(userEmail)}
         />
       ) : (
-        <EmailVerificationPrompt
-          accountName={trialUserCreated.accountName}
-          userEmail={trialUserCreated.userEmail}
-        />
+        <EmailVerificationPrompt userEmail={userEmailCreated} />
       )}
     </GoogleReCaptchaProvider>
   );
