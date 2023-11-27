@@ -80,7 +80,7 @@ const MyAccountView = () => {
             </div>
             {account?.createdAt && (
               <div>
-                <Typography.Body>Signup date:</Typography.Body>
+                <Typography.Body>Created on:</Typography.Body>
                 <Typography.Body className={s.info}>
                   {formatDate(account?.createdAt)}
                 </Typography.Body>
@@ -101,8 +101,8 @@ const MyAccountView = () => {
             </span>
           </section>
         </section>
-        <section className="col-start-2 col-end-24 row-start-5 row-end-6 flex flex-col">
-          <Typography.Body>
+        <section className="col-start-2 col-end-24 row-start-5 row-end-6 justify-end flex flex-col">
+          <Typography.Body size="small">
             For information on the account data we collect and for any requests
             to access or delete your data please refer to our{' '}
             <a

@@ -129,7 +129,7 @@ describe('My Account view', () => {
         await screen.findByText(/Organization Profile/),
       ).toBeInTheDocument();
       expect(await screen.findByText(/Elephant Academy/)).toBeInTheDocument();
-      expect(await screen.findByText(/Signup date/)).toBeInTheDocument();
+      expect(await screen.findByText(/Created on/)).toBeInTheDocument();
       expect(await screen.findByText(/18 September 2023/)).toBeInTheDocument();
       expect(await screen.findByText(/Length of access/)).toBeInTheDocument();
       expect(await screen.findByText(/7 days/)).toBeInTheDocument();

@@ -111,20 +111,20 @@ export const AccountButton = () => {
             </Typography.Body>
           </span>
           <div role="menu" className={s.menu} aria-label="Account menu">
-            <FeatureGate linkName="userOrders">
-              <div className="pt-2">
-                <Link onClick={ordersOpenedEvent} to="/orders" tabIndex={-1}>
-                  <Typography.Body size="small" as="button">
-                    My orders
-                  </Typography.Body>
-                </Link>
-              </div>
-            </FeatureGate>
             <FeatureGate feature="BO_WEB_APP_DEV">
               <div className="pt-2">
                 <Link onClick={accountOpenedEvent} to="/account" tabIndex={-1}>
                   <Typography.Body size="small" as="button">
                     My account
+                  </Typography.Body>
+                </Link>
+              </div>
+            </FeatureGate>
+            <FeatureGate linkName="userOrders">
+              <div className="pt-2">
+                <Link onClick={ordersOpenedEvent} to="/orders" tabIndex={-1}>
+                  <Typography.Body size="small" as="button">
+                    My orders
                   </Typography.Body>
                 </Link>
               </div>
