@@ -61,14 +61,13 @@ describe('registration process', () => {
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
-    expect(await wrapper.findByText('Verify your Email')).toBeVisible();
+    expect(await wrapper.findByText('Check your email!')).toBeVisible();
 
     expect(
       wrapper.getByText(
-        'We have sent an email to test@boclips.com. Check your email inbox now',
+        'Congratulations! You have successfully created your free Boclips trial account.',
       ),
     ).toBeVisible();
-    expect(wrapper.getByText(': BoAccount')).toBeVisible();
-    expect(wrapper.getByText(': test@boclips.com')).toBeVisible();
+    expect(wrapper.getByText('test@boclips.com.')).toBeVisible();
   });
 });
