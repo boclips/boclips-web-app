@@ -234,6 +234,15 @@ const App = ({
                       }
                     />
                     <Route
+                      path="/alignments"
+                      element={
+                        <>
+                          <Helmet title="Alignments" />
+                          <AlignmentsView />
+                        </>
+                      }
+                    />
+                    <Route
                       path="/library"
                       element={<Navigate to="/playlists" replace />}
                     />
