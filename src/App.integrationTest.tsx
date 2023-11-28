@@ -11,6 +11,7 @@ import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe('App', () => {
   it('renders the not found page on user having incorrect role', async () => {
@@ -89,6 +90,77 @@ describe('App', () => {
     );
 
     expect(history.location.pathname).toEqual('/sparks/openstax');
+  });
+
+  it('alignments routes to alignments view', async () => {
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    fakeBoclipsClient.users.setCurrentUserFeatures({
+      ALIGNMENTS_RENAMING: true,
+    });
+    const history = createBrowserHistory();
+    history.push('/alignments');
+
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeBoclipsClient}>
+        <Router location={history.location} navigator={history}>
+          <App
+            boclipsSecurity={stubBoclipsSecurity}
+            apiClient={fakeBoclipsClient}
+          />
+        </Router>
+      </BoclipsClientProvider>,
+    );
+
+    expect(await wrapper.findByText('aligned')).toBeVisible();
+  });
+
+  it('alignments/provider routes to alignment provider view', async () => {
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    const history = createBrowserHistory();
+    fakeBoclipsClient.alignments.setProviders([
+      ProviderFactory.sample('openstax', { id: 'openstax' }),
+    ]);
+    history.push('/alignments/openstax');
+
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeBoclipsClient}>
+        <Router location={history.location} navigator={history}>
+          <App
+            boclipsSecurity={stubBoclipsSecurity}
+            apiClient={fakeBoclipsClient}
+          />
+        </Router>
+      </BoclipsClientProvider>,
+    );
+
+    expect(await wrapper.findByText('Our OpenStax collection')).toBeVisible();
+  });
+
+  it('alignments/provider/theme routes to theme view', async () => {
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    const history = createBrowserHistory();
+    fakeBoclipsClient.alignments.setProviders([
+      ProviderFactory.sample('openstax', { id: 'openstax' }),
+    ]);
+
+    fakeBoclipsClient.alignments.setThemesByProvider({
+      providerName: 'openstax',
+      themes: [ThemeFactory.sample({ id: 'id-1', title: 'theme-1' })],
+    });
+    history.push('/alignments/openstax/id-1');
+
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeBoclipsClient}>
+        <Router location={history.location} navigator={history}>
+          <App
+            boclipsSecurity={stubBoclipsSecurity}
+            apiClient={fakeBoclipsClient}
+          />
+        </Router>
+      </BoclipsClientProvider>,
+    );
+
+    expect(await wrapper.findByText('theme-1')).toBeVisible();
   });
 
   it('redirects from specific bookmark in openstax book to sparks URL', async () => {

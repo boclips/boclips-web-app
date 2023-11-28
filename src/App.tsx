@@ -234,6 +234,15 @@ const App = ({
                       }
                     />
                     <Route
+                      path="/alignments"
+                      element={
+                        <>
+                          <Helmet title="Alignments" />
+                          <AlignmentsView />
+                        </>
+                      }
+                    />
+                    <Route
                       path="/library"
                       element={<Navigate to="/playlists" replace />}
                     />
@@ -249,7 +258,15 @@ const App = ({
                     />
                     <Route path="/sparks/:provider" element={<ExploreView />} />
                     <Route
+                      path="/alignments/:provider"
+                      element={<ExploreView />}
+                    />
+                    <Route
                       path="/sparks/:provider/:id"
+                      element={<ThemeView />}
+                    />
+                    <Route
+                      path="/alignments/:provider/:id"
                       element={<ThemeView />}
                     />
                     <Route

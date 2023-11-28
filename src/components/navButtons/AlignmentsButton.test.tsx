@@ -12,8 +12,11 @@ describe('sparks button', () => {
     window.resizeTo(1680, 1024);
   });
 
-  it('pushes sparks page to history', async () => {
+  it('pushes sparks page to history when ALIGNMENTS_RENAMING is off', async () => {
     const fakeBoclipsClient = new FakeBoclipsClient();
+    fakeBoclipsClient.users.setCurrentUserFeatures({
+      ALIGNMENTS_RENAMING: false,
+    });
     const history = createBrowserHistory();
 
     const wrapper = render(
@@ -30,5 +33,28 @@ describe('sparks button', () => {
     fireEvent.click(await wrapper.findByRole('button', { name: 'Sparks' }));
 
     expect(history.location.pathname).toEqual('/sparks');
+  });
+
+  it('pushes alignments page to history when ALIGNMENTS_RENAMING is on', async () => {
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    fakeBoclipsClient.users.setCurrentUserFeatures({
+      ALIGNMENTS_RENAMING: true,
+    });
+    const history = createBrowserHistory();
+
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeBoclipsClient}>
+        <Router location={history.location} navigator={history}>
+          <App
+            boclipsSecurity={stubBoclipsSecurity}
+            apiClient={fakeBoclipsClient}
+          />
+        </Router>
+      </BoclipsClientProvider>,
+    );
+
+    fireEvent.click(await wrapper.findByRole('button', { name: 'Alignments' }));
+
+    expect(history.location.pathname).toEqual('/alignments');
   });
 });

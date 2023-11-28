@@ -1,5 +1,5 @@
 import { ThemeCard } from 'src/components/alignments/explore/themeList/ThemeCard';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
@@ -11,9 +11,12 @@ import {
   ThemeFactory,
   TopicFactory,
 } from 'boclips-api-client/dist/test-support/ThemeFactory';
+import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 describe('ThemeCard', () => {
-  it('shows theme title and number of videos', () => {
+  it('shows theme title and number of videos', async () => {
     const theme = ThemeFactory.sample({
       title: 'Olive trees',
       logoUrl: 'svg.com',
@@ -33,17 +36,23 @@ describe('ThemeCard', () => {
     const wrapper = render(
       <Router location={history.location} navigator={history}>
         <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
-          <ThemeCard theme={theme} />
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <QueryClientProvider client={new QueryClient()}>
+              <ThemeCard theme={theme} />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
         </AlignmentContextProvider>
       </Router>,
     );
-    const card = wrapper.getByRole('button', { name: 'theme Olive trees' });
+    const card = await wrapper.findByRole('button', {
+      name: 'theme Olive trees',
+    });
     expect(card).toHaveTextContent('Olive trees');
     expect(card).toHaveTextContent('2 videos');
     expect(wrapper.getByAltText('Olive trees cover')).toBeInTheDocument();
   });
 
-  it('shows theme cover when logo url is present', () => {
+  it('shows theme cover when logo url is present', async () => {
     const theme = ThemeFactory.sample({
       title: 'Olive trees',
       logoUrl: 'svg.com',
@@ -54,14 +63,20 @@ describe('ThemeCard', () => {
     const wrapper = render(
       <Router location={history.location} navigator={history}>
         <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
-          <ThemeCard theme={theme} />
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <QueryClientProvider client={new QueryClient()}>
+              <ThemeCard theme={theme} />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
         </AlignmentContextProvider>
       </Router>,
     );
-    expect(wrapper.getByAltText('Olive trees cover')).toBeInTheDocument();
+    expect(
+      await wrapper.findByAltText('Olive trees cover'),
+    ).toBeInTheDocument();
   });
 
-  it('shows generic theme cover when logo url is not present', () => {
+  it('shows generic theme cover when logo url is not present', async () => {
     const theme = ThemeFactory.sample({
       title: 'Olive trees',
       logoUrl: '',
@@ -72,13 +87,48 @@ describe('ThemeCard', () => {
     const wrapper = render(
       <Router location={history.location} navigator={history}>
         <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
-          <ThemeCard theme={theme} />
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <QueryClientProvider client={new QueryClient()}>
+              <ThemeCard theme={theme} />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
         </AlignmentContextProvider>
       </Router>,
     );
     expect(
-      wrapper.getByAltText('Olive trees generic cover'),
+      await wrapper.findByAltText('Olive trees generic cover'),
     ).toBeInTheDocument();
+  });
+
+  it(`routes to the theme's page under alignments when clicked with rename role`, async () => {
+    const history = createBrowserHistory();
+    history.push('/alignments/openstax');
+
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.users.setCurrentUserFeatures({ ALIGNMENTS_RENAMING: true });
+    const theme = ThemeFactory.sample({ title: 'openstax theme' });
+    fakeClient.alignments.setThemesByProvider({
+      providerName: 'openstax',
+      themes: [theme],
+    });
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeClient}>
+        <QueryClientProvider client={new QueryClient()}>
+          <Router location={history.location} navigator={history}>
+            <AlignmentContextProvider
+              provider={ProviderFactory.sample('openstax')}
+            >
+              <ThemeCard theme={theme} />
+            </AlignmentContextProvider>
+          </Router>
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
+    );
+
+    (await wrapper.findByText('openstax theme')).click();
+    expect(history.location.pathname).toEqual(
+      `/alignments/openstax/${theme.id}`,
+    );
   });
 
   describe('a11y', () => {
@@ -105,14 +155,20 @@ describe('ThemeCard', () => {
           <AlignmentContextProvider
             provider={ProviderFactory.sample('openstax')}
           >
-            <ThemeCard theme={theme} />
+            <BoclipsClientProvider client={new FakeBoclipsClient()}>
+              <QueryClientProvider client={new QueryClient()}>
+                <ThemeCard theme={theme} />
+              </QueryClientProvider>
+            </BoclipsClientProvider>
           </AlignmentContextProvider>
         </Router>,
       );
 
       await userEvent.tab();
 
-      expect(wrapper.getByLabelText(`theme ${theme.title}`)).toHaveFocus();
+      waitFor(() => {
+        expect(wrapper.getByLabelText(`theme ${theme.title}`)).toHaveFocus();
+      });
 
       fireEvent.keyDown(wrapper.getByLabelText(`theme ${theme.title}`), {
         key: 'Escape',
