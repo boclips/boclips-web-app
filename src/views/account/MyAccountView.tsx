@@ -59,7 +59,9 @@ const MyAccountView = () => {
             )}
             <span className={s.profileIcon}>
               <div className={s.circle}>
-                <UserIcon />
+                <span className={s.userIcon}>
+                  <UserIcon />
+                </span>
               </div>
             </span>
           </section>
@@ -95,7 +97,7 @@ const MyAccountView = () => {
               </div>
             )}
             <span className={s.profileIcon}>
-              <div className={s.circle}>
+              <div className={c(s.circle, s.homeIcon)}>
                 <HomeIcon />
               </div>
             </span>
