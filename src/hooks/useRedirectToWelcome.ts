@@ -6,30 +6,39 @@ import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/mode
 
 const UseRedirectToWelcome = () => {
   const navigate = useNavigate();
-  const { data: user } = useGetUserQuery();
-  const { data: account } = useGetAccount(user?.account?.id);
+  const { data: user, isLoading: userLoading } = useGetUserQuery();
+  const { data: account, isLoading: accountLoading } = useGetAccount(
+    user?.account?.id,
+  );
   const location = useLocation();
   useEffect(() => {
-    if (account && account?.status === AccountStatus.TRIAL) {
-      if (user && !marketingInfoSet(user)) {
+    if (userLoading || accountLoading) {
+      return;
+    }
+    const isUserInTrial = account?.status === AccountStatus.TRIAL;
+    const isMarketingInfoSetForUser = user && isMarketingInfoSet(user);
+    const onWelcomeView = location?.pathname === '/welcome';
+
+    if (isUserInTrial) {
+      if (!isMarketingInfoSetForUser) {
         navigate('/welcome');
-      } else {
+      } else if (onWelcomeView) {
         navigate('/');
       }
-    } else if (location?.pathname === '/welcome') {
+    } else if (onWelcomeView) {
       navigate('/');
     }
-  }, [user, marketingInfoSet, account]);
+  }, [user, isMarketingInfoSet, account]);
 
   return null;
 };
 
-const marketingInfoSet = (user: User) => {
+const isMarketingInfoSet = (user: User): boolean => {
   const isJobTitleSet = user.jobTitle?.trim().length > 0;
   const isAudienceSet = user.audience?.trim().length > 0;
   const isDesiredContentSet = user.desiredContent?.trim().length > 0;
 
-  return isJobTitleSet || isAudienceSet || isDesiredContentSet;
+  return isJobTitleSet && isAudienceSet && isDesiredContentSet;
 };
 
 export default UseRedirectToWelcome;
