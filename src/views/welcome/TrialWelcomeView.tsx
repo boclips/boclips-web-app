@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Layout } from 'src/components/layout/Layout';
 import Footer from 'src/components/layout/Footer';
 import Navbar from 'src/components/layout/Navbar';
 import WelcomeHeader from 'src/components/welcome/WelcomeHeader';
 import InvitedUserInfo from 'src/components/welcome/InvitedUserInfo';
 import MarketingInfoForm from 'src/components/welcome/MarketingInfoForm';
+import { useGetAccount, useGetUserQuery } from 'src/hooks/api/userQuery';
+import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { useNavigate } from 'react-router-dom';
+import { useRedirectToHome } from 'src/hooks/useRedirectToHome';
 
 const TrialWelcomeView = () => {
+  useRedirectToHome();
   return (
     <Layout rowsSetup="grid-rows-welcome-view" responsiveLayout>
       <Navbar showOptions={false} showSearch={false} />
