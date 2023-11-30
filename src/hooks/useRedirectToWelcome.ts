@@ -14,7 +14,7 @@ const UseRedirectToWelcome = () => {
       if (user && !marketingInfoSet(user)) {
         navigate('/welcome');
       } else {
-        navigate('/');
+        // navigate('/');
       }
     } else if (location?.pathname === '/welcome') {
       navigate('/');

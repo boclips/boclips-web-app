@@ -277,6 +277,7 @@ describe('App', () => {
       'Welcome to CourseSpark!',
     );
   });
+
   it('any page should redirect to welcome view if user is in trial and has no marketing info', async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.accounts.insertAccount(
@@ -302,6 +303,7 @@ describe('App', () => {
       ),
     ).toBeVisible();
   });
+
   it('/welcome should redirect to home if user is in trial and has marketing info', async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.accounts.insertAccount(
@@ -326,6 +328,7 @@ describe('App', () => {
       'Welcome to CourseSpark!',
     );
   });
+
   it('/welcome should redirect to home if user is not in trial', async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.accounts.insertAccount(
@@ -347,6 +350,30 @@ describe('App', () => {
 
     expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
       'Welcome to CourseSpark!',
+    );
+  });
+
+  it(`users in trial should see a banner informing them of this`, async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.accounts.insertAccount(
+      AccountsFactory.sample({
+        status: AccountStatus.TRIAL,
+        id: 'trial',
+      }),
+    );
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({ account: { id: 'trial', name: 'trial account' } }),
+    );
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/']}>
+        <App boclipsSecurity={stubBoclipsSecurity} apiClient={fakeClient} />
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByTestId('trial-banner')).toBeVisible();
+    expect(await wrapper.findByTestId('trial-banner')).toHaveTextContent(
+      "Welcome to your free preview of Boclips' library. For more information click here or speak to sales",
     );
   });
 });

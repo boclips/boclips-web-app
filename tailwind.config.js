@@ -30,25 +30,25 @@ module.exports = {
         homepage: 'auto 1fr auto',
         newHomepage: 'auto auto auto auto',
         'search-view':
-          'minmax(74px, auto) minmax(30px, min-content) auto 1fr auto',
+          'minmax(158px, auto) minmax(30px, min-content) auto 1fr auto',
         navbar: 'repeat(2, auto)',
-        'cart-view': 'minmax(74px, auto) minmax(50px, auto) 1fr auto',
-        'orders-view': 'minmax(74px, auto) minmax(50px, auto) 1fr auto',
-        'library-view': 'minmax(74px, auto) minmax(50px, auto) 1fr auto',
+        'cart-view': 'minmax(150px, auto) minmax(50px, auto) 1fr auto',
+        'orders-view': 'minmax(150px, auto) minmax(50px, auto) 1fr auto',
+        'library-view': 'minmax(150px, auto) minmax(50px, auto) 1fr auto',
         'registration-view': 'repeat(4,auto) 1fr 150px',
-        'welcome-view': 'minmax(74px, auto) auto auto auto 1fr auto',
+        'welcome-view': 'minmax(150px, auto) auto auto auto 1fr auto',
         'playlist-view':
-          'minmax(74px, auto) minmax(50px, auto) min-content 1fr auto',
-        'explore-view': 'minmax(74px, auto) min-content min-content 1fr auto',
+          'minmax(150px, auto) minmax(50px, auto) min-content 1fr auto',
+        'explore-view': 'minmax(150px, auto) min-content min-content 1fr auto',
         'theme-detailed-view':
-          'minmax(74px, auto) min-content min-content 1fr auto',
-        'my-team-view': 'minmax(74px, auto) min-content 1fr auto',
-        'order-view': 'minmax(74px, auto) 21px min-content 1fr auto',
+          'minmax(150px, auto) min-content min-content 1fr auto',
+        'my-team-view': 'minmax(150px, auto) min-content 1fr auto',
+        'order-view': 'minmax(150px, auto) 21px min-content 1fr auto',
         'large-screen-video-view':
-          'minmax(74px, auto) minmax(0, auto) repeat(3, auto)',
-        'video-view': 'minmax(74px, auto) minmax(0, auto) repeat(6, auto)',
+          'minmax(150px, auto) minmax(0, auto) repeat(3, auto)',
+        'video-view': 'minmax(150px, auto) minmax(0, auto) repeat(6, auto)',
         'my-account-view':
-          'minmax(74px, auto) min-content min-content min-content 1fr auto',
+          'minmax(150px, auto) min-content min-content min-content 1fr auto',
       },
       gridTemplateColumns: {
         container:
@@ -102,6 +102,9 @@ module.exports = {
         6: '6px',
       },
       colors: {
+        green: {
+          success: '#0a855c',
+        },
         blue: {
           100: 'var(--blue-100)',
           200: 'var(--blue-200)',
