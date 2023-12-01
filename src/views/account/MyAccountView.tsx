@@ -6,7 +6,6 @@ import Footer from 'src/components/layout/Footer';
 import { Helmet } from 'react-helmet';
 import { Typography } from '@boclips-ui/typography';
 import { useGetAccount, useGetUserQuery } from 'src/hooks/api/userQuery';
-import dayjs from 'dayjs';
 import UserIcon from 'src/resources/icons/user-icon.svg';
 import HomeIcon from 'src/resources/icons/home-icon.svg';
 import c from 'classnames';
@@ -85,14 +84,6 @@ const MyAccountView = () => {
                 <Typography.Body>Created on:</Typography.Body>
                 <Typography.Body className={s.info}>
                   {formatDate(account?.createdAt)}
-                </Typography.Body>
-              </div>
-            )}
-            {account?.accountDuration && (
-              <div>
-                <Typography.Body>Length of access:</Typography.Body>
-                <Typography.Body className={s.info}>
-                  {`${dayjs.duration(account?.accountDuration).asDays()} days`}
                 </Typography.Body>
               </div>
             )}
