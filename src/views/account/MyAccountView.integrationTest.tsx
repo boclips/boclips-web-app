@@ -28,7 +28,6 @@ describe('My Account view', () => {
     id: 'acc-1',
     name: 'Elephant Academy',
     createdAt: new Date('2023-09-18T14:19:55.612Z'),
-    accountDuration: 'P7D',
   });
 
   const wrapper = (
@@ -131,8 +130,6 @@ describe('My Account view', () => {
       expect(await screen.findByText(/Elephant Academy/)).toBeInTheDocument();
       expect(await screen.findByText(/Created on/)).toBeInTheDocument();
       expect(await screen.findByText(/18 September 2023/)).toBeInTheDocument();
-      expect(await screen.findByText(/Length of access/)).toBeInTheDocument();
-      expect(await screen.findByText(/7 days/)).toBeInTheDocument();
     });
 
     it('does not render org profile when account data is missing', async () => {
