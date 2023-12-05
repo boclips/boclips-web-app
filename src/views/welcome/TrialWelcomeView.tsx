@@ -5,8 +5,10 @@ import Navbar from 'src/components/layout/Navbar';
 import WelcomeHeader from 'src/components/welcome/WelcomeHeader';
 import InvitedUserInfo from 'src/components/welcome/InvitedUserInfo';
 import MarketingInfoForm from 'src/components/welcome/MarketingInfoForm';
+import { useRedirectToHome } from 'src/hooks/useRedirectToHome';
 
 const TrialWelcomeView = () => {
+  useRedirectToHome();
   return (
     <Layout rowsSetup="grid-rows-welcome-view" responsiveLayout>
       <Navbar showOptions={false} showSearch={false} />

@@ -1,36 +1,26 @@
 import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useGetAccount, useGetUserQuery } from 'src/hooks/api/userQuery';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
-const UseRedirectToWelcome = () => {
+const useRedirectToWelcome = () => {
   const navigate = useNavigate();
   const { data: user, isLoading: userLoading } = useGetUserQuery();
   const { data: account, isLoading: accountLoading } = useGetAccount(
     user?.account?.id,
   );
-  const location = useLocation();
   useEffect(() => {
     if (userLoading || accountLoading) {
       return;
     }
     const isUserInTrial = account?.status === AccountStatus.TRIAL;
     const isMarketingInfoSetForUser = user && isMarketingInfoSet(user);
-    const onWelcomeView = location?.pathname === '/welcome';
 
-    if (isUserInTrial) {
-      if (!isMarketingInfoSetForUser) {
-        navigate('/welcome');
-      } else if (onWelcomeView) {
-        navigate('/');
-      }
-    } else if (onWelcomeView) {
-      navigate('/');
+    if (isUserInTrial && !isMarketingInfoSetForUser) {
+      navigate('/welcome');
     }
-  }, [user, isMarketingInfoSet, account]);
-
-  return false;
+  }, [user, account, userLoading, accountLoading, navigate]);
 };
 
 const isMarketingInfoSet = (user: User): boolean => {
@@ -41,4 +31,4 @@ const isMarketingInfoSet = (user: User): boolean => {
   return isJobTitleSet && isAudienceSet && isDesiredContentSet;
 };
 
-export default UseRedirectToWelcome;
+export default useRedirectToWelcome;

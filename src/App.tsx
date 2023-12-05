@@ -17,7 +17,6 @@ import { lazyWithRetry } from 'src/services/lazyWithRetry';
 import { FollowPlaylist } from 'src/services/followPlaylist';
 import UserAttributes from 'src/services/analytics/hotjar/UserAttributes';
 import { FeatureGate } from 'src/components/common/FeatureGate';
-import UseRedirectToWelcome from 'src/hooks/useRedirectToWelcome';
 import FallbackView from 'src/views/fallback/FallbackView';
 import { RedirectFromExploreToAlignments } from 'src/components/alignments/RedirectFromExploreToAlignments';
 import * as Sentry from '@sentry/browser';
@@ -146,7 +145,6 @@ const App = ({
         <ToastContainer />
         <BoclipsSecurityProvider boclipsSecurity={boclipsSecurity}>
           <BoclipsClientProvider client={apiClient}>
-            <UseRedirectToWelcome />
             <JSErrorBoundary fallback={<FallbackView />}>
               <WithValidRoles
                 fallback={<AccessDeniedView />}

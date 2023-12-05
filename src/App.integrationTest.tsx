@@ -226,7 +226,7 @@ describe('App', () => {
     );
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/videos']}>
+      <MemoryRouter initialEntries={['/']}>
         <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
       </MemoryRouter>,
     );
@@ -277,7 +277,7 @@ describe('App', () => {
       'Welcome to CourseSpark!',
     );
   });
-  it('any page should redirect to welcome view if user is in trial and has no marketing info', async () => {
+  it('home should redirect to welcome view if user is in trial and has no marketing info', async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.accounts.insertAccount(
       AccountsFactory.sample({ id: 'trial', status: AccountStatus.TRIAL }),
@@ -291,7 +291,7 @@ describe('App', () => {
     );
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/videos']}>
+      <MemoryRouter initialEntries={['/']}>
         <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
       </MemoryRouter>,
     );
