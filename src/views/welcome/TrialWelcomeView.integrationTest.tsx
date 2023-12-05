@@ -109,13 +109,10 @@ describe('Trial Welcome View', () => {
       await wrapper.findByRole('button', { name: 'Create Account' }),
     );
 
-    await waitFor(
-      () => {
-        expect(wrapper.getByText(/Welcome to/)).toBeVisible();
-        expect(wrapper.getByText(/CourseSpark!/)).toBeVisible();
-      },
-      { timeout: 60000 },
-    );
+    await waitFor(() => {
+      expect(wrapper.getByText(/Welcome to/)).toBeVisible();
+      expect(wrapper.getByText(/CourseSpark!/)).toBeVisible();
+    });
 
     expect(
       await wrapper.findByText('User kobe@la.com successfully updated'),
