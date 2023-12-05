@@ -96,7 +96,6 @@ describe('Trial Welcome View', () => {
 
   it('redirects to home page and notification is displayed when user successfully updated', async () => {
     jest
-      .setTimeout(60000)
       .spyOn(fakeClient.users, 'updateUser')
       .mockImplementation(() => Promise.resolve(true));
 
