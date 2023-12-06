@@ -137,20 +137,6 @@ describe('Registration Form Validation', () => {
     });
   });
 
-  it('job title cannot be empty', async () => {
-    const wrapper = renderRegistrationForm();
-
-    fillTheForm(wrapper, { jobTitle: '' });
-
-    await checkErrorIsNotVisible(wrapper, 'Please select a job title');
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
-    await checkErrorIsVisible(wrapper, 'Please select a job title');
-
-    await waitFor(() => {
-      expect(createTrialUserSpy).not.toBeCalled();
-    });
-  });
-
   it('country cannot be empty', async () => {
     const wrapper = renderRegistrationForm();
 
@@ -159,37 +145,6 @@ describe('Registration Form Validation', () => {
     await checkErrorIsNotVisible(wrapper, 'Please select a country');
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
     await checkErrorIsVisible(wrapper, 'Please select a country');
-
-    await waitFor(() => {
-      expect(createTrialUserSpy).not.toBeCalled();
-    });
-  });
-
-  it('type of organisation cannot be empty', async () => {
-    const wrapper = renderRegistrationForm();
-
-    fillTheForm(wrapper, { typeOfOrg: '' });
-
-    await checkErrorIsNotVisible(
-      wrapper,
-      'Please select a type of organisation',
-    );
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
-    await checkErrorIsVisible(wrapper, 'Please select a type of organisation');
-
-    await waitFor(() => {
-      expect(createTrialUserSpy).not.toBeCalled();
-    });
-  });
-
-  it('audience cannot be empty', async () => {
-    const wrapper = renderRegistrationForm();
-
-    fillTheForm(wrapper, { audience: '' });
-
-    await checkErrorIsNotVisible(wrapper, 'Please select an audience');
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
-    await checkErrorIsVisible(wrapper, 'Please select an audience');
 
     await waitFor(() => {
       expect(createTrialUserSpy).not.toBeCalled();
@@ -252,12 +207,7 @@ describe('Registration Form Validation', () => {
       confirmPassword: '',
       accountName: '',
       country: '',
-      jobTitle: '',
-      typeOfOrg: '',
-      desiredContent: '',
-      discoveryMethod: '',
       email: '',
-      audience: '',
       hasAcceptedEducationalUseTerms: false,
     });
 
@@ -268,10 +218,7 @@ describe('Registration Form Validation', () => {
     await checkErrorIsVisible(wrapper, 'Email is required');
     await checkErrorIsVisible(wrapper, 'Account name is required');
     await checkErrorIsVisible(wrapper, 'Password is required');
-    await checkErrorIsVisible(wrapper, 'Please select a job title');
     await checkErrorIsVisible(wrapper, 'Please select a country');
-    await checkErrorIsVisible(wrapper, 'Please select a type of organisation');
-    await checkErrorIsVisible(wrapper, 'Please select an audience');
     await checkErrorIsVisible(
       wrapper,
       'Educational use agreement is mandatory',
@@ -285,13 +232,11 @@ describe('Registration Form Validation', () => {
     await checkErrorIsNotVisible(wrapper, 'Email is required');
     await checkErrorIsNotVisible(wrapper, 'Account name is required');
     await checkErrorIsNotVisible(wrapper, 'Password is required');
-    await checkErrorIsNotVisible(wrapper, 'Please select a job title');
     await checkErrorIsNotVisible(wrapper, 'Please select a country');
     await checkErrorIsNotVisible(
       wrapper,
       'Please select a type of organisation',
     );
-    await checkErrorIsNotVisible(wrapper, 'Please select an audience');
     await checkErrorIsNotVisible(
       wrapper,
       'Educational use agreement is mandatory',
@@ -325,12 +270,7 @@ describe('Registration Form Validation', () => {
       password: 'p@ssw0rd',
       confirmPassword: 'p@ssw0rd',
       accountName: 'Los Angeles Lakers',
-      jobTitle: 'Teacher',
       country: 'Poland',
-      typeOfOrg: 'EdTech',
-      audience: 'K12',
-      discoveryMethod: 'Teacher',
-      desiredContent: 'Maths',
       hasAcceptedEducationalUseTerms: true,
     };
 

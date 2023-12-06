@@ -25,12 +25,7 @@ describe('registration process', () => {
       password: 'p@ss1234',
       confirmPassword: 'p@ss1234',
       accountName: 'Los Angeles Lakers',
-      jobTitle: 'Teacher',
       country: 'Poland',
-      typeOfOrg: 'EdTech',
-      audience: 'K12',
-      discoveryMethod: 'Teacher',
-      desiredContent: 'Maths',
       hasAcceptedEducationalUseTerms: true,
     };
 

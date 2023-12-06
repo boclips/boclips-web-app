@@ -48,7 +48,7 @@ const TrialInfo = () => {
           </section>
         );
       })}
-      <TrailBackground />
+      <TrailBackground className={s.illustration} />
     </div>
   );
 };

@@ -24,11 +24,6 @@ export interface RegistrationData {
   confirmPassword: string;
   accountName: string;
   country: string;
-  typeOfOrg: string;
-  audience: string;
-  discoveryMethod: string;
-  desiredContent: string;
-  jobTitle: string;
   hasAcceptedEducationalUseTerms: boolean;
 }
 
@@ -41,11 +36,6 @@ const emptyRegistrationData = (): RegistrationData => {
     confirmPassword: '',
     accountName: '',
     country: '',
-    typeOfOrg: '',
-    audience: '',
-    discoveryMethod: '',
-    desiredContent: '',
-    jobTitle: '',
     hasAcceptedEducationalUseTerms: false,
   };
 };
@@ -111,6 +101,7 @@ const RegistrationForm = ({
           'Password must be at least 8 characters long and contain a combination of letters, numbers, and special characters',
         ) &&
         checkPasswordConfirmed('Passwords do not match'),
+      checkIsNotEmpty('country', 'Please select a country'),
       checkEducationalUseAgreementValid(),
     ];
 
@@ -197,6 +188,7 @@ const RegistrationForm = ({
           recaptchaToken: token,
           type: UserType.trialB2bUser,
           accountName: registrationData.accountName,
+          country: registrationData.country,
           hasAcceptedEducationalUseTerms:
             registrationData.hasAcceptedEducationalUseTerms,
         },
@@ -297,6 +289,7 @@ const RegistrationForm = ({
         options={LIST_OF_COUNTRIES}
         dataQa="input-dropdown-country"
         labelText="Country"
+        showSearch
         showLabel
         fitWidth
         isError={!!validationErrors.country}

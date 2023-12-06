@@ -2,7 +2,6 @@ import React from 'react';
 import { Layout } from 'src/components/layout/Layout';
 import { Helmet } from 'react-helmet';
 import { RegistrationProcess } from 'src/components/registration/RegistrationProcess';
-import TrialInfo from 'src/components/registration/trialInfo/TrialInfo';
 
 const RegistrationView = () => {
   return (
@@ -13,7 +12,6 @@ const RegistrationView = () => {
         responsiveLayout
         backgroundColor="#F9FBFF"
       >
-        <TrialInfo />
         <RegistrationProcess />
       </Layout>
     </>
