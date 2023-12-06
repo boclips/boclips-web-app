@@ -2,6 +2,7 @@ import { Typography } from '@boclips-ui/typography';
 import Checkmark from 'src/resources/icons/checkmark.svg';
 import React from 'react';
 import TrailBackground from 'src/resources/icons/trial-bg.svg';
+import BlobSVG from 'src/resources/icons/blob.svg';
 import s from './style.module.less';
 
 const features = [
@@ -28,28 +29,35 @@ const features = [
 
 const TrialInfo = () => {
   return (
-    <div className={s.trialInfo}>
-      <Typography.H1>
-        Get a taste of the Boclips Library with our{' '}
-        <span className={s.green}>free preview</span>!
-      </Typography.H1>
-      {features.map(({ title, description }) => {
-        return (
-          <section className={s.featureInfo}>
-            <Checkmark />
-            <section>
-              <Typography.Body as="div" weight="medium">
-                {title}
-              </Typography.Body>
-              <Typography.Body as="div" size="small">
-                {description}
-              </Typography.Body>
+    <>
+      <div className={s.trialInfo}>
+        <Typography.H1 size="lg">
+          Get a taste of the Boclips Library with our{' '}
+          <span className={s.green}>free preview</span>!
+        </Typography.H1>
+        {features.map(({ title, description }) => {
+          return (
+            <section className={s.featureInfo}>
+              <Checkmark />
+              <section>
+                <Typography.Body as="div" weight="medium">
+                  {title}
+                </Typography.Body>
+                <Typography.Body as="div" size="small">
+                  {description}
+                </Typography.Body>
+              </section>
             </section>
-          </section>
-        );
-      })}
-      <TrailBackground className={s.illustration} />
-    </div>
+          );
+        })}
+        <div className={s.illustrationWrapper}>
+          <TrailBackground className={s.illustration} />
+        </div>
+      </div>
+      <div className={s.blobWrapper}>
+        <BlobSVG className={s.blob} />
+      </div>
+    </>
   );
 };
 

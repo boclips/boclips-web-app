@@ -1,20 +1,23 @@
-import React, { ReactElement, useCallback, useState } from 'react';
+import React, {
+  KeyboardEvent,
+  ReactElement,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Typography } from '@boclips-ui/typography';
-import { InputText } from '@boclips-ui/input';
 import Button from '@boclips-ui/button';
 import { useAddNewTrialUser } from 'src/hooks/api/userQuery';
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import { LoadingOutlined } from '@ant-design/icons';
-import c from 'classnames';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
-import Dropdown from '@boclips-ui/dropdown';
-import { LIST_OF_COUNTRIES } from 'src/components/registration/dropdownValues';
 import * as EmailValidator from 'email-validator';
 import PasswordValidator from 'password-validator';
-import RegistrationPageCheckbox from 'src/components/common/input/RegistrationPageCheckbox';
-import s from './style.module.less';
+import RegistrationFormFields from 'src/components/registration/registrationForm/registrationFormFields/RegistrationFormFields';
+import AcceptedAgreement from 'src/components/registration/registrationForm/AcceptedAgreement';
+import s from '../style.module.less';
 
 export interface RegistrationData {
   firstName: string;
@@ -51,12 +54,12 @@ const RegistrationForm = ({
     useAddNewTrialUser();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
-  const handleReCaptchaVerify = useCallback(async () => {
+  const handleReCaptchaVerify = async () => {
     if (!executeRecaptcha) {
       throw new Error('Execute recaptcha not yet available');
     }
     return executeRecaptcha('register');
-  }, [executeRecaptcha]);
+  };
 
   const [registrationData, setRegistrationData] = useState<RegistrationData>(
     emptyRegistrationData(),
@@ -105,7 +108,7 @@ const RegistrationForm = ({
       checkEducationalUseAgreementValid(),
     ];
 
-    return !checks.includes(false);
+    return !checks.some((it) => it === false);
   }
 
   function checkIsNotEmpty(fieldName: string, errorMessage: string): boolean {
@@ -219,6 +222,26 @@ const RegistrationForm = ({
     }
   };
 
+  const mainRef = useRef<HTMLDivElement>(null);
+  const callbackRef = useRef<() => void>();
+  callbackRef.current = handleUserCreation;
+
+  useEffect(() => {
+    const handleEvent = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        callbackRef.current?.();
+      }
+    };
+
+    if (mainRef?.current) {
+      // @ts-ignore
+      mainRef.current.addEventListener('keydown', handleEvent);
+    }
+
+    // @ts-ignore
+    return () => mainRef.current.addEventListener('keydown', handleEvent);
+  }, [mainRef.current]);
+
   const getButtonSpinner = (): ReactElement =>
     isTrialUserCreating && (
       <span data-qa="spinner" className={s.spinner}>
@@ -227,116 +250,16 @@ const RegistrationForm = ({
     );
 
   return (
-    <main tabIndex={-1} className={s.formInputsWrapper}>
+    <main ref={mainRef} tabIndex={-1} className={s.formInputsWrapper}>
       <section className={s.formHeader}>
         <Typography.H2>Create your free account</Typography.H2>
       </section>
 
-      <InputText
-        id="input-accountName"
-        onChange={(value) => handleChange('accountName', value)}
-        inputType="text"
-        placeholder="Your organization name"
-        className={s.input}
-        labelText="Organization name"
-        height="48px"
-        isError={!!validationErrors.accountName}
-        errorMessage={validationErrors.accountName}
+      <RegistrationFormFields
+        handleChange={handleChange}
+        validationErrors={validationErrors}
+        registrationData={registrationData}
       />
-
-      <div className="flex flex-row items-end">
-        <InputText
-          id="input-firstName"
-          aria-label="input-firstName"
-          onChange={(value) => handleChange('firstName', value)}
-          inputType="text"
-          placeholder="John"
-          className={c(s.input, 'flex-1 mr-4')}
-          labelText="First name"
-          height="48px"
-          isError={!!validationErrors.firstName}
-          errorMessage={validationErrors.firstName}
-        />
-        <InputText
-          id="input-lastName"
-          onChange={(value) => handleChange('lastName', value)}
-          inputType="text"
-          placeholder="Smith"
-          className={c(s.input, 'flex-1')}
-          labelText="Last name"
-          height="48px"
-          isError={!!validationErrors.lastName}
-          errorMessage={validationErrors.lastName}
-        />
-      </div>
-
-      <InputText
-        id="input-email"
-        onChange={(value) => handleChange('email', value)}
-        inputType="text"
-        placeholder="your@email.com"
-        className={c(s.input)}
-        labelText="Email Address"
-        height="48px"
-        isError={!!validationErrors.email}
-        errorMessage={validationErrors.email}
-      />
-
-      <Dropdown
-        mode="single"
-        placeholder="Select country"
-        onUpdate={(value) => handleChange('country', value)}
-        options={LIST_OF_COUNTRIES}
-        dataQa="input-dropdown-country"
-        labelText="Country"
-        showSearch
-        showLabel
-        fitWidth
-        isError={!!validationErrors.country}
-        errorMessage={validationErrors.country}
-      />
-
-      <div className="flex flex-row items-end mt-4">
-        <InputText
-          id="input-password"
-          onChange={(value) => handleChange('password', value)}
-          inputType="password"
-          placeholder="*********"
-          className={c(s.input, 'flex-1 mr-4')}
-          labelText="Password"
-          height="48px"
-          isError={!!validationErrors.password}
-          errorMessage={validationErrors.password}
-        />
-
-        <InputText
-          id="input-confirmPassword"
-          onChange={(value) => handleChange('confirmPassword', value)}
-          inputType="password"
-          placeholder="*********"
-          className={c(s.input, 'flex-1')}
-          labelText="Confirm password"
-          height="48px"
-          isError={!!validationErrors.confirmPassword}
-          errorMessage={validationErrors.confirmPassword}
-        />
-      </div>
-      <div>
-        <RegistrationPageCheckbox
-          onChange={(value) =>
-            handleChange('hasAcceptedEducationalUseTerms', value.target.checked)
-          }
-          errorMessage={
-            validationErrors.hasAcceptedEducationalUseTerms
-              ? 'Educational use agreement is mandatory'
-              : null
-          }
-          name="educational-use-agreement"
-          id="educational-use-agreement"
-          checked={registrationData.hasAcceptedEducationalUseTerms}
-          dataQa="input-checkbox-educational-use-agreement"
-        />
-      </div>
 
       <section className={s.createAccountButtonWrapper}>
         <Button
@@ -349,10 +272,7 @@ const RegistrationForm = ({
         />
       </section>
 
-      <Typography.Body size="small" className={c(s.blueText, 'mt-8')}>
-        By clicking Create Account, you agree to the Boclips User Agreement,
-        Privacy Policy, and Cookie Policy.
-      </Typography.Body>
+      <AcceptedAgreement />
     </main>
   );
 };

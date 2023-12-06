@@ -2,24 +2,44 @@
 @import '~@boclips-ui/styles/src/breakpoints';
 
 
+.blobWrapper {
+  grid-column-start: 1;
+  grid-column-end: 14;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  display: flex;
+  align-self: center;
+  justify-self: flex-end;
+
+  .blob {
+    width: 100%;
+    //height: 800px;
+  }
+}
+
 .trialInfo {
   grid-column-start: 3;
-  grid-column-end: 13;
-  height: 869px;
+  grid-column-end: 12;
+  grid-row-start: 1;
+  grid-row-end: 3;
   display: flex;
   flex-direction: column;
   align-self: center;
-  background-image: url('data:image/svg+xml,%3Csvg width="820" height="883" viewBox="0 0 820 883" fill="none" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M811.766 414.306C802.515 359.562 786.272 306.12 766.956 256.993C733.658 172.239 679.102 101.86 609.309 60.0805C438.05 -42.4449 314.46 0.274033 247.369 83.5759C180.278 166.878 199.699 309.986 127.311 371.929C54.9226 433.871 3.72127 461.638 0.190144 574.844C-3.34098 688.049 42.5637 773.487 116.717 801.254C190.871 829.021 302.101 918.731 524.562 867.468C747.023 816.206 801.756 673.097 815.88 570.572C822.942 518.989 820.506 466.06 811.766 414.306Z" fill="white"/%3E%3C/svg%3E');
-  background-position: bottom;
-  background-repeat: no-repeat;
-  background-size: contain;
   position: relative;
 
-  .illustration {
-    max-width: 100%;
+  .illustrationWrapper {
+    display: flex;
 
+    .illustration {
+      width: 100%;
+      height: auto;
+      z-index: 2;
+    }
   }
 
+  h1 {
+    z-index: 3;
+  }
 
   & > section:nth-child(2) {
     margin-top: 2rem;
@@ -30,7 +50,7 @@
   }
 
   .featureInfo {
-    z-index: 2;
+    z-index: 3;
     display: flex;
     flex-direction: row;
     margin-bottom: 1rem;

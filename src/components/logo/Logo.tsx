@@ -4,7 +4,7 @@ import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import s from './style.module.less';
 
-const Logo = (): ReactElement => {
+const Logo = ({}): ReactElement => {
   const { data: user } = useGetUserQuery();
 
   const logoTitle = user?.organisation?.logoUrl

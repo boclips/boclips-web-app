@@ -1,5 +1,5 @@
 import { fireEvent, RenderResult, within } from '@testing-library/react';
-import { RegistrationData } from 'src/components/registration/RegistrationForm';
+import { RegistrationData } from 'src/components/registration/registrationForm/RegistrationForm';
 
 export function fillRegistrationForm(
   wrapper: RenderResult,

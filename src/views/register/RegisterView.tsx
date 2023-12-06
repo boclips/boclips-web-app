@@ -1,7 +1,8 @@
 import React from 'react';
 import { Layout } from 'src/components/layout/Layout';
 import { Helmet } from 'react-helmet';
-import { RegistrationProcess } from 'src/components/registration/RegistrationProcess';
+import { Registration } from 'src/components/registration/Registration';
+import InvisibleNavbar from 'src/components/registration/invisibleNavbar/InvisibleNavbar';
 
 const RegistrationView = () => {
   return (
@@ -12,7 +13,8 @@ const RegistrationView = () => {
         responsiveLayout
         backgroundColor="#F9FBFF"
       >
-        <RegistrationProcess />
+        <InvisibleNavbar />
+        <Registration />
       </Layout>
     </>
   );

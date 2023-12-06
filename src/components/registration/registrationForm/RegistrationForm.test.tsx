@@ -7,7 +7,7 @@ import {
 import React from 'react';
 import RegistrationForm, {
   RegistrationData,
-} from 'src/components/registration/RegistrationForm';
+} from 'src/components/registration/registrationForm/RegistrationForm';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -89,7 +89,7 @@ describe('Registration Form', () => {
 
     expect(
       wrapper.getByText(
-        'By clicking Create Account, you agree to the Boclips User Agreement, Privacy Policy, and Cookie Policy.',
+        /By clicking Create Account, you agree to the Boclips Terms & Conditions and Boclips Privacy Policy/,
       ),
     ).toBeVisible();
 
