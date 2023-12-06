@@ -216,48 +216,6 @@ describe('App', () => {
     expect(await wrapper.findByText('Page not found!')).toBeVisible();
   });
 
-  it('redirects to trial welcome page for trial users with missing marketing info', async () => {
-    const apiClient = new FakeBoclipsClient();
-    apiClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'trial', status: AccountStatus.TRIAL }),
-    );
-    apiClient.users.insertCurrentUser(
-      UserFactory.sample({ account: { id: 'trial', name: 'trial' } }),
-    );
-
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/']}>
-        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
-      </MemoryRouter>,
-    );
-
-    expect(
-      await wrapper.findByText(
-        "You've just been added to Boclips by your colleague",
-      ),
-    ).toBeVisible();
-  });
-
-  it('renders home view instead of trial welcome for non trial users', async () => {
-    const apiClient = new FakeBoclipsClient();
-    apiClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'not-trial', status: AccountStatus.ACTIVE }),
-    );
-    apiClient.users.insertCurrentUser(
-      UserFactory.sample({ account: { id: 'not-trial', name: 'regular' } }),
-    );
-
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/welcome']}>
-        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
-      </MemoryRouter>,
-    );
-
-    expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
-      'Welcome to CourseSpark!',
-    );
-  });
-
   it('/welcome renders home view instead of trial welcome for non trial users', async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.accounts.insertAccount(
@@ -277,6 +235,32 @@ describe('App', () => {
       'Welcome to CourseSpark!',
     );
   });
+
+  it('/welcome renders home view instead of trial welcome if user has marketing info', async () => {
+    const apiClient = new FakeBoclipsClient();
+    apiClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'a-trial', status: AccountStatus.TRIAL }),
+    );
+    apiClient.users.insertCurrentUser(
+      UserFactory.sample({
+        account: { id: 'a-trial', name: 'regular' },
+        desiredContent: 'dfds',
+        audience: 'sadfd',
+        jobTitle: 'asdh',
+      }),
+    );
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/welcome']}>
+        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
+      'Welcome to CourseSpark!',
+    );
+  });
+
   it('home should redirect to welcome view if user is in trial and has no marketing info', async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.accounts.insertAccount(
@@ -301,52 +285,5 @@ describe('App', () => {
         "You've just been added to Boclips by your colleague",
       ),
     ).toBeVisible();
-  });
-  it('/welcome should redirect to home if user is in trial and has marketing info', async () => {
-    const apiClient = new FakeBoclipsClient();
-    apiClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'trial', status: AccountStatus.TRIAL }),
-    );
-    apiClient.users.insertCurrentUser(
-      UserFactory.sample({
-        account: { id: 'trial', name: 'trial' },
-        desiredContent: 'videos',
-        audience: 'everyone',
-        jobTitle: 'CEO',
-      }),
-    );
-
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/welcome']}>
-        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
-      </MemoryRouter>,
-    );
-
-    expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
-      'Welcome to CourseSpark!',
-    );
-  });
-  it('/welcome should redirect to home if user is not in trial', async () => {
-    const apiClient = new FakeBoclipsClient();
-    apiClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'regular', status: AccountStatus.ACTIVE }),
-    );
-    apiClient.users.insertCurrentUser(
-      UserFactory.sample({
-        account: { id: 'regular', name: 'no trial' },
-        desiredContent: 'videos',
-        audience: 'everyone',
-      }),
-    );
-
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/welcome']}>
-        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
-      </MemoryRouter>,
-    );
-
-    expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
-      'Welcome to CourseSpark!',
-    );
   });
 });
