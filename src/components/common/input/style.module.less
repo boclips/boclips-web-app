@@ -74,10 +74,19 @@
 }
 
 .checkboxWrapper {
+  margin-bottom: 2.5rem;
   display: flex;
   flex-direction: row;
-  align-items: center;
   cursor: pointer;
+
+  .checkboxCopy{
+    display:flex;
+    flex-direction: column;
+  }
+
+  .checkboxCopyColor{
+    color: @gray-600;
+  }
 
   span {
     color: @gray-800;

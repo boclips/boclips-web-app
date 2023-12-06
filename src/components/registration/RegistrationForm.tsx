@@ -10,15 +10,10 @@ import { LoadingOutlined } from '@ant-design/icons';
 import c from 'classnames';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import Dropdown from '@boclips-ui/dropdown';
-import {
-  AUDIENCE,
-  JOB_TITLE,
-  LIST_OF_COUNTRIES,
-  TYPE_OF_ORG,
-} from 'src/components/registration/dropdownValues';
-import { EducationalUseCheckbox } from 'src/components/registration/EducationalUseCheckbox';
+import { LIST_OF_COUNTRIES } from 'src/components/registration/dropdownValues';
 import * as EmailValidator from 'email-validator';
 import PasswordValidator from 'password-validator';
+import RegistrationPageCheckbox from 'src/components/common/input/RegistrationPageCheckbox';
 import s from './style.module.less';
 
 export interface RegistrationData {
@@ -81,10 +76,13 @@ const RegistrationForm = ({
     emptyRegistrationData(),
   );
 
-  const handleChange = (fieldName, value) => {
+  const handleChange = (
+    fieldName: string,
+    value: string | boolean | string[],
+  ) => {
     setRegistrationData((prevState) => ({
       ...prevState,
-      [fieldName]: value instanceof String ? value.trim() : value,
+      [fieldName]: value,
     }));
   };
 
@@ -113,10 +111,6 @@ const RegistrationForm = ({
           'Password must be at least 8 characters long and contain a combination of letters, numbers, and special characters',
         ) &&
         checkPasswordConfirmed('Passwords do not match'),
-      checkIsNotEmpty('jobTitle', 'Please select a job title'),
-      checkIsNotEmpty('country', 'Please select a country'),
-      checkIsNotEmpty('typeOfOrg', 'Please select a type of organisation'),
-      checkIsNotEmpty('audience', 'Please select an audience'),
       checkEducationalUseAgreementValid(),
     ];
 
@@ -150,13 +144,13 @@ const RegistrationForm = ({
     const schema = new PasswordValidator();
 
     /* eslint-disable */
-    schema
-      .is().min(8)
-      .has().digits()
-      .has().letters()
-      .has().symbols()
-      .has().not().spaces();
-    /* eslint-enable  */
+        schema
+            .is().min(8)
+            .has().digits()
+            .has().letters()
+            .has().symbols()
+            .has().not().spaces();
+        /* eslint-enable  */
 
     if (!schema.validate(registrationData.password)) {
       setError('password', errorMessage);
@@ -186,7 +180,7 @@ const RegistrationForm = ({
     return true;
   }
 
-  const setError = (fieldName, value) => {
+  const setError = (fieldName: string, value: boolean | string) => {
     setValidationErrors((prevState) => ({ ...prevState, [fieldName]: value }));
   };
 
@@ -203,14 +197,6 @@ const RegistrationForm = ({
           recaptchaToken: token,
           type: UserType.trialB2bUser,
           accountName: registrationData.accountName,
-          jobTitle: registrationData.jobTitle,
-          marketingInformation: {
-            country: registrationData.country,
-            organisationType: registrationData.typeOfOrg,
-            audience: registrationData.audience,
-            discoveryMethod: registrationData.discoveryMethod,
-            desiredContent: registrationData.desiredContent,
-          },
           hasAcceptedEducationalUseTerms:
             registrationData.hasAcceptedEducationalUseTerms,
         },
@@ -251,14 +237,21 @@ const RegistrationForm = ({
   return (
     <main tabIndex={-1} className={s.formInputsWrapper}>
       <section className={s.formHeader}>
-        <Typography.H1>CourseSpark</Typography.H1>
-        <Typography.Body weight="medium" className={s.blueText}>
-          Create new account
-        </Typography.Body>
-        <Typography.Body size="small" className={s.blueText}>
-          7 day trial
-        </Typography.Body>
+        <Typography.H2>Create your free account</Typography.H2>
       </section>
+
+      <InputText
+        id="input-accountName"
+        onChange={(value) => handleChange('accountName', value)}
+        inputType="text"
+        placeholder="Your organization name"
+        className={s.input}
+        labelText="Organization name"
+        height="48px"
+        isError={!!validationErrors.accountName}
+        errorMessage={validationErrors.accountName}
+      />
+
       <div className="flex flex-row items-end">
         <InputText
           id="input-firstName"
@@ -284,18 +277,33 @@ const RegistrationForm = ({
           errorMessage={validationErrors.lastName}
         />
       </div>
+
       <InputText
         id="input-email"
         onChange={(value) => handleChange('email', value)}
         inputType="text"
-        placeholder="smith@gmail.com"
+        placeholder="your@email.com"
         className={c(s.input)}
-        labelText="Professional email"
+        labelText="Email Address"
         height="48px"
         isError={!!validationErrors.email}
         errorMessage={validationErrors.email}
       />
-      <div className="flex flex-row items-end">
+
+      <Dropdown
+        mode="single"
+        placeholder="Select country"
+        onUpdate={(value) => handleChange('country', value)}
+        options={LIST_OF_COUNTRIES}
+        dataQa="input-dropdown-country"
+        labelText="Country"
+        showLabel
+        fitWidth
+        isError={!!validationErrors.country}
+        errorMessage={validationErrors.country}
+      />
+
+      <div className="flex flex-row items-end mt-4">
         <InputText
           id="input-password"
           onChange={(value) => handleChange('password', value)}
@@ -307,6 +315,7 @@ const RegistrationForm = ({
           isError={!!validationErrors.password}
           errorMessage={validationErrors.password}
         />
+
         <InputText
           id="input-confirmPassword"
           onChange={(value) => handleChange('confirmPassword', value)}
@@ -319,111 +328,23 @@ const RegistrationForm = ({
           errorMessage={validationErrors.confirmPassword}
         />
       </div>
-
-      <InputText
-        id="input-accountName"
-        onChange={(value) => handleChange('accountName', value)}
-        inputType="text"
-        placeholder="Your account name"
-        className={s.input}
-        labelText="Account name"
-        height="48px"
-        isError={!!validationErrors.accountName}
-        errorMessage={validationErrors.accountName}
-      />
-
-      <div className="flex flex-row items-end	mb-2">
-        <div className="flex-1 mr-4">
-          <Dropdown
-            mode="single"
-            placeholder="Your job title"
-            onUpdate={(value) => handleChange('jobTitle', value)}
-            options={JOB_TITLE}
-            dataQa="input-dropdown-job-title"
-            labelText="Job title"
-            showLabel
-            fitWidth
-            isError={!!validationErrors.jobTitle}
-            errorMessage={validationErrors.jobTitle}
-          />
-        </div>
-        <div className="flex-1">
-          <Dropdown
-            mode="single"
-            placeholder="Select country"
-            onUpdate={(value) => handleChange('country', value)}
-            options={LIST_OF_COUNTRIES}
-            dataQa="input-dropdown-country"
-            labelText="Country"
-            showLabel
-            fitWidth
-            isError={!!validationErrors.country}
-            errorMessage={validationErrors.country}
-          />
-        </div>
-      </div>
-
-      <div className="flex flex-row items-end">
-        <div className="flex flex-1 items-end mb-2 mr-4">
-          <Dropdown
-            mode="single"
-            placeholder="Type of organization"
-            onUpdate={(value) => handleChange('typeOfOrg', value)}
-            options={TYPE_OF_ORG}
-            dataQa="input-dropdown-type-of-org"
-            labelText="Type of organization"
-            showLabel
-            fitWidth
-            isError={!!validationErrors.typeOfOrg}
-            errorMessage={validationErrors.typeOfOrg}
-          />
-        </div>
-        <div className="flex flex-1 items-end mb-2">
-          <Dropdown
-            mode="single"
-            placeholder="Audience"
-            onUpdate={(value) => handleChange('audience', value)}
-            options={AUDIENCE}
-            dataQa="input-dropdown-audience"
-            labelText="Select audience"
-            showLabel
-            fitWidth
-            isError={!!validationErrors.audience}
-            errorMessage={validationErrors.audience}
-          />
-        </div>
-      </div>
-
-      <InputText
-        id="input-discovery-method"
-        onChange={(value) => handleChange('discoveryMethod', value)}
-        inputType="textarea"
-        placeholder="Enter text here"
-        className={`${s.input} flex-1`}
-        labelText="How did you hear about Boclips?"
-      />
-
-      <InputText
-        id="input-desired-content"
-        onChange={(value) => handleChange('desiredContent', value)}
-        inputType="textarea"
-        placeholder="Enter text here"
-        className={`${s.input} flex-1`}
-        labelText="What content are you looking for?"
-      />
       <div>
-        <EducationalUseCheckbox
-          isError={validationErrors.hasAcceptedEducationalUseTerms}
-          checked={registrationData.hasAcceptedEducationalUseTerms}
-          setChecked={(value) =>
-            handleChange('hasAcceptedEducationalUseTerms', value)
+        <RegistrationPageCheckbox
+          onChange={(value) =>
+            handleChange('hasAcceptedEducationalUseTerms', value.target.checked)
           }
+          errorMessage={
+            validationErrors.hasAcceptedEducationalUseTerms
+              ? 'Educational use agreement is mandatory'
+              : null
+          }
+          name="educational-use-agreement"
+          id="educational-use-agreement"
+          checked={registrationData.hasAcceptedEducationalUseTerms}
+          dataQa="input-checkbox-educational-use-agreement"
         />
       </div>
-      <Typography.Body size="small" className={c(s.blueText, 'mt-1')}>
-        By clicking Create Account, you agree to the Boclips User Agreement,
-        Privacy Policy, and Cookie Policy.
-      </Typography.Body>
+
       <section className={s.createAccountButtonWrapper}>
         <Button
           onClick={handleUserCreation}
@@ -431,8 +352,14 @@ const RegistrationForm = ({
           disabled={isTrialUserCreating}
           icon={getButtonSpinner()}
           className={s.createAccountButton}
+          width="208px"
         />
       </section>
+
+      <Typography.Body size="small" className={c(s.blueText, 'mt-8')}>
+        By clicking Create Account, you agree to the Boclips User Agreement,
+        Privacy Policy, and Cookie Policy.
+      </Typography.Body>
     </main>
   );
 };
