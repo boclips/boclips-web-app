@@ -1,7 +1,7 @@
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 
 context('Alignments', () => {
-  it('Sparks user journey', () => {
+  it('Alignments user journey', () => {
     cy.visit('/');
 
     cy.bo((bo) => {
@@ -15,8 +15,8 @@ context('Alignments', () => {
     });
     cy.get('[data-qa="account-menu"]').click();
 
-    cy.findByRole('button', { name: 'Sparks' }).should('be.visible');
-    cy.findByRole('button', { name: 'Sparks' }).click();
+    cy.findByRole('button', { name: 'Alignments' }).should('be.visible');
+    cy.findByRole('button', { name: 'Alignments' }).click();
 
     cy.findByRole('button', { name: 'Provider OpenStax' }).should('be.visible');
     cy.findByRole('button', { name: 'Provider NGSS' }).should('be.visible');

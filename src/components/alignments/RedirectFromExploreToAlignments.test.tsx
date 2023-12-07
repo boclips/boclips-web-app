@@ -22,7 +22,7 @@ describe('RedirectFromExploreToAlignments', () => {
     expect(history.location.pathname).toEqual('/something/nice');
   });
 
-  it(`redirects from /explore to /sparks`, () => {
+  it(`redirects from /explore to /alignments`, () => {
     const history = createBrowserHistory();
     history.push('/explore');
 
@@ -34,10 +34,10 @@ describe('RedirectFromExploreToAlignments', () => {
       </BoclipsClientProvider>,
     );
 
-    expect(history.location.pathname).toEqual('/sparks');
+    expect(history.location.pathname).toEqual('/alignments');
   });
 
-  it(`redirects from /explore/ngss to /sparks/ngss`, () => {
+  it(`redirects from /explore/ngss to /alignments/ngss`, () => {
     const history = createBrowserHistory();
     history.push('/explore/ngss');
 
@@ -49,10 +49,10 @@ describe('RedirectFromExploreToAlignments', () => {
       </BoclipsClientProvider>,
     );
 
-    expect(history.location.pathname).toEqual('/sparks/ngss');
+    expect(history.location.pathname).toEqual('/alignments/ngss');
   });
 
-  it(`redirects from /explore/openstax/6334620ec2250a8569f696c3 to /sparks/openstax/6334620ec2250a8569f696c3`, () => {
+  it(`redirects from /explore/openstax/6334620ec2250a8569f696c3 to /alignments/openstax/6334620ec2250a8569f696c3`, () => {
     const history = createBrowserHistory();
     history.push('/explore/openstax/6334620ec2250a8569f696c3');
 
@@ -65,11 +65,11 @@ describe('RedirectFromExploreToAlignments', () => {
     );
 
     expect(history.location.pathname).toEqual(
-      '/sparks/openstax/6334620ec2250a8569f696c3',
+      '/alignments/openstax/6334620ec2250a8569f696c3',
     );
   });
 
-  it(`redirects from /explore/openstax/6334620ec2250a8569f696c3#topic-0-target-2 to /sparks/openstax/6334620ec2250a8569f696c3#topic-0-target-2`, () => {
+  it(`redirects from /explore/openstax/6334620ec2250a8569f696c3#topic-0-target-2 to /alignments/openstax/6334620ec2250a8569f696c3#topic-0-target-2`, () => {
     const history = createBrowserHistory();
     history.push('/explore/openstax/6334620ec2250a8569f696c3#topic-0-target-2');
 
@@ -82,7 +82,7 @@ describe('RedirectFromExploreToAlignments', () => {
     );
 
     expect(history.location.pathname).toEqual(
-      '/sparks/openstax/6334620ec2250a8569f696c3',
+      '/alignments/openstax/6334620ec2250a8569f696c3',
     );
     expect(history.location.hash).toEqual('#topic-0-target-2');
   });

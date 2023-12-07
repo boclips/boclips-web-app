@@ -38,7 +38,7 @@ describe('ThemeView', () => {
 
     const client = setUpClientWithTheme(theme);
     const wrapper = render(
-      <MemoryRouter initialEntries={[`/sparks/openstax/${theme.id}`]}>
+      <MemoryRouter initialEntries={[`/alignments/openstax/${theme.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -63,7 +63,7 @@ describe('ThemeView', () => {
     const client = setUpClientWithTheme(theme);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={[`/sparks/wrong-provider/${theme.id}`]}>
+      <MemoryRouter initialEntries={[`/alignments/wrong-provider/${theme.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -82,7 +82,7 @@ describe('ThemeView', () => {
 
     const wrapper = render(
       <MemoryRouter
-        initialEntries={[`/sparks/common-core-math/${openstaxTheme.id}`]}
+        initialEntries={[`/alignments/common-core-math/${openstaxTheme.id}`]}
       >
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
@@ -97,7 +97,7 @@ describe('ThemeView', () => {
     const client = setUpClientWithTheme(theme);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={[`/sparks/openstax/${theme.id}`]}>
+      <MemoryRouter initialEntries={[`/alignments/openstax/${theme.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -146,7 +146,7 @@ describe('ThemeView', () => {
     const client = setUpClientWithTheme(book);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={[`/sparks/openstax/${book.id}`]}>
+      <MemoryRouter initialEntries={[`/alignments/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -190,7 +190,7 @@ describe('ThemeView', () => {
     const client = setUpClientWithTheme(book);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={[`/sparks/openstax/${book.id}`]}>
+      <MemoryRouter initialEntries={[`/alignments/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -248,7 +248,7 @@ describe('ThemeView', () => {
     const client = setUpClientWithTheme(theme);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={[`/sparks/openstax/${theme.id}`]}>
+      <MemoryRouter initialEntries={[`/alignments/openstax/${theme.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -272,7 +272,7 @@ describe('ThemeView', () => {
     const client = setUpClientWithTheme(book);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={[`/sparks/openstax/${book.id}`]}>
+      <MemoryRouter initialEntries={[`/alignments/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -302,7 +302,7 @@ describe('ThemeView', () => {
     const client = setUpClientWithTheme(book);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={[`/sparks/openstax/${book.id}`]}>
+      <MemoryRouter initialEntries={[`/alignments/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -324,7 +324,7 @@ describe('ThemeView', () => {
     );
 
     expect(
-      await wrapper.container.querySelector(
+      wrapper.container.querySelector(
         `#${chapter1DiscussionPromptNavigationLabel}`,
       ),
     ).not.toBeNull();
@@ -337,7 +337,7 @@ describe('ThemeView', () => {
     const client = setUpClientWithTheme(book);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={[`/sparks/openstax/${book.id}`]}>
+      <MemoryRouter initialEntries={[`/alignments/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -371,7 +371,7 @@ describe('ThemeView', () => {
     const client = setUpClientWithTheme(book);
 
     render(
-      <MemoryRouter initialEntries={[`/sparks/openstax/${book.id}`]}>
+      <MemoryRouter initialEntries={[`/alignments/openstax/${book.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
@@ -384,7 +384,7 @@ describe('ThemeView', () => {
 
     const wrapper = render(
       <MemoryRouter
-        initialEntries={[`/sparks/openstax/${book.id}#topic-blabla`]}
+        initialEntries={[`/alignments/openstax/${book.id}#topic-blabla`]}
       >
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
@@ -419,7 +419,7 @@ describe('ThemeView', () => {
         const client = setUpClientWithTheme(theme);
 
         const wrapper = render(
-          <MemoryRouter initialEntries={[`/sparks/openstax/${theme.id}`]}>
+          <MemoryRouter initialEntries={[`/alignments/openstax/${theme.id}`]}>
             <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
           </MemoryRouter>,
         );
@@ -434,7 +434,7 @@ describe('ThemeView', () => {
         const client = setUpClientWithTheme(theme);
 
         const history = createBrowserHistory();
-        history.replace(`/sparks/openstax/${theme.id}`);
+        history.replace(`/alignments/openstax/${theme.id}`);
 
         const wrapper = render(
           <Router location={history.location} navigator={history}>
@@ -450,7 +450,7 @@ describe('ThemeView', () => {
 
         fireEvent.click(backButton);
 
-        expect(history.location.pathname).toEqual('/sparks/openstax');
+        expect(history.location.pathname).toEqual('/alignments/openstax');
       });
     },
   );
@@ -540,7 +540,7 @@ const renderThemeView = (theme: Theme): RenderResult => {
     }),
   ]);
   return render(
-    <MemoryRouter initialEntries={[`/sparks/openstax/${theme.id}`]}>
+    <MemoryRouter initialEntries={[`/alignments/openstax/${theme.id}`]}>
       <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
     </MemoryRouter>,
   );

@@ -11,7 +11,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 describe('Alignment card', () => {
   it('displays the provider name', async () => {
     const wrapper = render(
-      <MemoryRouter initialEntries={['/sparks']}>
+      <MemoryRouter initialEntries={['/alignments']}>
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
           <QueryClientProvider client={new QueryClient()}>
             <AlignmentCard provider={ProviderFactory.sample('openstax')} />
@@ -25,7 +25,7 @@ describe('Alignment card', () => {
 
   it('displays the provider description', async () => {
     const wrapper = render(
-      <MemoryRouter initialEntries={['/sparks']}>
+      <MemoryRouter initialEntries={['/alignments']}>
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
           <QueryClientProvider client={new QueryClient()}>
             <AlignmentCard provider={ProviderFactory.sample('openstax')} />,
@@ -43,7 +43,7 @@ describe('Alignment card', () => {
 
   it('displays the provider logo', async () => {
     const wrapper = render(
-      <MemoryRouter initialEntries={['/sparks']}>
+      <MemoryRouter initialEntries={['/alignments']}>
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
           <QueryClientProvider client={new QueryClient()}>
             <AlignmentCard provider={ProviderFactory.sample('openstax')} />
@@ -59,7 +59,6 @@ describe('Alignment card', () => {
     const history = createBrowserHistory();
     history.push('/alignments');
     const fakeClient = new FakeBoclipsClient();
-    fakeClient.users.setCurrentUserFeatures({ ALIGNMENTS_RENAMING: true });
 
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>

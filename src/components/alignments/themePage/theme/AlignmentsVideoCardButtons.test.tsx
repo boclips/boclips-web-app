@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { AlignmentVideoCardButtons } from './AlignmentVideoCardButtons';
 
-describe('SparksVideoCardButtons', () => {
+describe('AlignmentsVideoCardButtons', () => {
   describe('add to cart button', () => {
     it('displays icon only for add to cart button', () => {
       const wrapper = render(

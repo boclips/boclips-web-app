@@ -21,6 +21,7 @@ import FallbackView from 'src/views/fallback/FallbackView';
 import { RedirectFromExploreToAlignments } from 'src/components/alignments/RedirectFromExploreToAlignments';
 import * as Sentry from '@sentry/browser';
 import { ToastContainer } from 'react-toastify';
+import { RedirectFromSparksToAlignments } from 'src/components/alignments/RedirectFromSparksToAlignments';
 import { BoclipsClientProvider } from './components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSecurityProvider';
 import { GlobalQueryErrorProvider } from './components/common/providers/GlobalQueryErrorProvider';
@@ -223,24 +224,6 @@ const App = ({
                     />
                     <Route path="/playlists" element={<PlaylistsView />} />
                     <Route
-                      path="/sparks"
-                      element={
-                        <>
-                          <Helmet title="Sparks" />
-                          <AlignmentsView />
-                        </>
-                      }
-                    />
-                    <Route
-                      path="/alignments"
-                      element={
-                        <>
-                          <Helmet title="Alignments" />
-                          <AlignmentsView />
-                        </>
-                      }
-                    />
-                    <Route
                       path="/library"
                       element={<Navigate to="/playlists" replace />}
                     />
@@ -254,18 +237,18 @@ const App = ({
                         />
                       }
                     />
-                    <Route path="/sparks/:provider" element={<ExploreView />} />
+                    <Route path="/alignments" element={<AlignmentsView />} />
                     <Route
                       path="/alignments/:provider"
                       element={<ExploreView />}
                     />
                     <Route
-                      path="/sparks/:provider/:id"
+                      path="/alignments/:provider/:id"
                       element={<ThemeView />}
                     />
                     <Route
-                      path="/alignments/:provider/:id"
-                      element={<ThemeView />}
+                      path="/sparks/*"
+                      element={<RedirectFromSparksToAlignments />}
                     />
                     <Route
                       path="/explore/*"

@@ -10,8 +10,8 @@ const ProviderPageHeader = () => {
   const navigate = useNavigate();
   const provider = useAlignmentProvider();
 
-  const goToSparks = () => {
-    navigate('/sparks');
+  const goToAlignments = () => {
+    navigate('/alignments');
   };
 
   return (
@@ -19,7 +19,7 @@ const ProviderPageHeader = () => {
       className="col-start-2 col-end-26 grid-row-start-2 grid-row-end-2 mt-2 flex flex-col"
       aria-labelledby="page-header"
     >
-      <TextButton onClick={goToSparks} text="Back" icon={<BackArrow />} />
+      <TextButton onClick={goToAlignments} text="Back" icon={<BackArrow />} />
       <div className="flex flex-col md:flex-row">
         <div className="flex grow flex-col space-y-2 md:space-y-4 mb-4">
           <Typography.H1 size="lg" id="page-header">

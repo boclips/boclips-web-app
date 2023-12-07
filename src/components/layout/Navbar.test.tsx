@@ -178,7 +178,7 @@ describe(`Navbar`, () => {
     });
   });
 
-  describe('Sparks option in Navbar', () => {
+  describe('Alignments option in Navbar', () => {
     const client = new FakeBoclipsClient();
     let wrapper;
 
@@ -192,11 +192,11 @@ describe(`Navbar`, () => {
       );
     });
 
-    it(`will show the Sparks menu option on desktop`, async () => {
+    it(`will show the Alignments menu option on desktop`, async () => {
       resizeToDesktop();
 
       expect(
-        await wrapper.findByRole('button', { name: 'Sparks' }),
+        await wrapper.findByRole('button', { name: 'Alignments' }),
       ).toBeVisible();
     });
 
@@ -204,13 +204,13 @@ describe(`Navbar`, () => {
       ['mobile', resizeToMobile],
       ['tablet', resizeToTablet],
     ])(
-      'will show the Sparks menu option on %s',
+      'will show the Alignments menu option on %s',
       async (_screenType: string, resize: () => void) => {
         resize();
 
         fireEvent.click(await wrapper.findByLabelText('Menu'));
 
-        expect(wrapper.getByText('Sparks')).toBeVisible();
+        expect(wrapper.getByText('Alignments')).toBeVisible();
       },
     );
   });

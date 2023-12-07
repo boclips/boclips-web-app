@@ -7,39 +7,13 @@ import { Router } from 'react-router-dom';
 import { fireEvent, render } from '@testing-library/react';
 import App from 'src/App';
 
-describe('sparks button', () => {
+describe('alignments button', () => {
   beforeEach(() => {
     window.resizeTo(1680, 1024);
   });
 
-  it('pushes sparks page to history when ALIGNMENTS_RENAMING is off', async () => {
+  it('pushes alignments page to history', async () => {
     const fakeBoclipsClient = new FakeBoclipsClient();
-    fakeBoclipsClient.users.setCurrentUserFeatures({
-      ALIGNMENTS_RENAMING: false,
-    });
-    const history = createBrowserHistory();
-
-    const wrapper = render(
-      <BoclipsClientProvider client={fakeBoclipsClient}>
-        <Router location={history.location} navigator={history}>
-          <App
-            boclipsSecurity={stubBoclipsSecurity}
-            apiClient={fakeBoclipsClient}
-          />
-        </Router>
-      </BoclipsClientProvider>,
-    );
-
-    fireEvent.click(await wrapper.findByRole('button', { name: 'Sparks' }));
-
-    expect(history.location.pathname).toEqual('/sparks');
-  });
-
-  it('pushes alignments page to history when ALIGNMENTS_RENAMING is on', async () => {
-    const fakeBoclipsClient = new FakeBoclipsClient();
-    fakeBoclipsClient.users.setCurrentUserFeatures({
-      ALIGNMENTS_RENAMING: true,
-    });
     const history = createBrowserHistory();
 
     const wrapper = render(

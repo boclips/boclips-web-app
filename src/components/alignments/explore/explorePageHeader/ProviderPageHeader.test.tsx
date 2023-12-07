@@ -28,7 +28,7 @@ describe('Provider Page page Header', () => {
     expect(header.getByAltText('OpenStax logo')).toBeVisible();
   });
 
-  it('shows a Back button which redirects to Sparks page', () => {
+  it('shows a Back button which redirects to Alignments page', () => {
     const header = render(
       <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
         <ProviderPageHeader />
@@ -36,6 +36,6 @@ describe('Provider Page page Header', () => {
     );
 
     fireEvent.click(header.getByRole('button', { name: 'Back' }));
-    expect(navigate).toHaveBeenCalledWith('/sparks');
+    expect(navigate).toHaveBeenCalledWith('/alignments');
   });
 });

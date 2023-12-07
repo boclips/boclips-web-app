@@ -15,7 +15,7 @@ describe('Alignments landing page', () => {
     fakeClient.alignments.setProviders([ProviderFactory.sample('ngss')]);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/sparks']}>
+      <MemoryRouter initialEntries={['/alignments']}>
         <App
           apiClient={fakeClient}
           boclipsSecurity={stubBoclipsSecurity}
@@ -37,7 +37,7 @@ describe('Alignments landing page', () => {
 
   it('redirects to the chosen provider explore page', async () => {
     const history = createBrowserHistory();
-    history.push('/sparks');
+    history.push('/alignments');
 
     const client = new FakeBoclipsClient();
     client.alignments.setProviders([ProviderFactory.sample('ngss')]);
@@ -52,18 +52,18 @@ describe('Alignments landing page', () => {
       </Router>,
     );
 
-    expect(await wrapper.findByText('Spark')).toBeVisible();
+    expect(await wrapper.findByText('aligned')).toBeVisible();
 
     fireEvent.click(await wrapper.findByText('NGSS'));
 
-    expect(history.location.pathname).toEqual('/sparks/ngss');
+    expect(history.location.pathname).toEqual('/alignments/ngss');
   });
 
-  it('displays Sparks as window title', async () => {
+  it('displays Alignments as window title', async () => {
     const client = new FakeBoclipsClient();
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/sparks']}>
+      <MemoryRouter initialEntries={['/alignments']}>
         <App
           apiClient={client}
           boclipsSecurity={stubBoclipsSecurity}
@@ -72,58 +72,10 @@ describe('Alignments landing page', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByText('Spark')).toBeVisible();
+    expect(await wrapper.findByText('aligned')).toBeVisible();
 
     const helmet = Helmet.peek();
 
-    expect(helmet.title).toEqual('Sparks');
-  });
-
-  describe(`alignments rename flag`, () => {
-    it('redirects to the chosen provider explore page', async () => {
-      const history = createBrowserHistory();
-      history.push('/alignments');
-
-      const client = new FakeBoclipsClient();
-      client.users.setCurrentUserFeatures({ ALIGNMENTS_RENAMING: true });
-      client.alignments.setProviders([ProviderFactory.sample('ngss')]);
-
-      const wrapper = render(
-        <Router location={history.location} navigator={history}>
-          <App
-            apiClient={client}
-            boclipsSecurity={stubBoclipsSecurity}
-            reactQueryClient={new QueryClient()}
-          />
-        </Router>,
-      );
-
-      expect(await wrapper.findByText('aligned')).toBeVisible();
-
-      fireEvent.click(await wrapper.findByText('NGSS'));
-
-      expect(history.location.pathname).toEqual('/alignments/ngss');
-    });
-
-    it('displays Alignments as window title', async () => {
-      const client = new FakeBoclipsClient();
-      client.users.setCurrentUserFeatures({ ALIGNMENTS_RENAMING: true });
-
-      const wrapper = render(
-        <MemoryRouter initialEntries={['/alignments']}>
-          <App
-            apiClient={client}
-            boclipsSecurity={stubBoclipsSecurity}
-            reactQueryClient={new QueryClient()}
-          />
-        </MemoryRouter>,
-      );
-
-      expect(await wrapper.findByText('aligned')).toBeVisible();
-
-      const helmet = Helmet.peek();
-
-      expect(helmet.title).toEqual('Alignments');
-    });
+    expect(helmet.title).toEqual('Alignments');
   });
 });

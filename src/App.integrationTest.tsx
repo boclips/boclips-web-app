@@ -50,7 +50,7 @@ describe('App', () => {
     apiClient.alignments.setProviders([ProviderFactory.sample('openstax')]);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/sparks/openstax']}>
+      <MemoryRouter initialEntries={['/alignments/openstax']}>
         <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
       </MemoryRouter>,
     );
@@ -72,7 +72,7 @@ describe('App', () => {
     expect(await wrapper.findByText('Playlists')).toBeVisible();
   });
 
-  it('redirects from explore/openstax to sparks/openstax', async () => {
+  it('redirects from explore/openstax to alignments/openstax', async () => {
     const fakeBoclipsClient = new FakeBoclipsClient();
 
     const history = createBrowserHistory();
@@ -89,14 +89,11 @@ describe('App', () => {
       </BoclipsClientProvider>,
     );
 
-    expect(history.location.pathname).toEqual('/sparks/openstax');
+    expect(history.location.pathname).toEqual('/alignments/openstax');
   });
 
   it('alignments routes to alignments view', async () => {
     const fakeBoclipsClient = new FakeBoclipsClient();
-    fakeBoclipsClient.users.setCurrentUserFeatures({
-      ALIGNMENTS_RENAMING: true,
-    });
     const history = createBrowserHistory();
     history.push('/alignments');
 
@@ -163,7 +160,7 @@ describe('App', () => {
     expect(await wrapper.findByText('theme-1')).toBeVisible();
   });
 
-  it('redirects from specific bookmark in openstax book to sparks URL', async () => {
+  it('redirects from specific bookmark in openstax book to alignments URL', async () => {
     const fakeBoclipsClient = new FakeBoclipsClient();
 
     const history = createBrowserHistory();
@@ -183,7 +180,7 @@ describe('App', () => {
     );
 
     expect(history.location.pathname).toEqual(
-      '/sparks/openstax/6334620ec2250a8569f696c3',
+      '/alignments/openstax/6334620ec2250a8569f696c3',
     );
     expect(history.location.hash).toEqual('#topic-0-target-2');
   });

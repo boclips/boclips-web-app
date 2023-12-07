@@ -83,7 +83,7 @@ describe('ThemeView - accessibility', () => {
     const client = setUpClientWithTheme(theme);
 
     const history = createBrowserHistory();
-    history.push('/sparks/openstax/ducklings');
+    history.push('/alignments/openstax/ducklings');
 
     const wrapper = render(
       <Router location={history.location} navigator={history}>

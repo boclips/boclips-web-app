@@ -149,7 +149,7 @@ describe('Video View', () => {
         ProviderFactory.sample('openstax', { types: [theme.type] }),
       ]);
       fakeClient.videos.insertVideo(exampleVideo);
-      const wrapper = renderView([`/sparks/openstax/${theme.id}`]);
+      const wrapper = renderView([`/alignments/openstax/${theme.id}`]);
 
       await userEvent.click(await wrapper.findByText(exampleVideo.title));
 
@@ -179,7 +179,7 @@ describe('Video View', () => {
       ]);
       fakeClient.videos.insertVideo(videoWithoutEmbedOption);
 
-      const wrapper = renderView([`/sparks/openstax/${theme.id}`]);
+      const wrapper = renderView([`/alignments/openstax/${theme.id}`]);
 
       await userEvent.click(await wrapper.findByText(exampleVideo.title));
 
@@ -212,7 +212,7 @@ describe('Video View', () => {
         ProviderFactory.sample('openstax', { types: [theme.type] }),
       ]);
 
-      const wrapper = renderView([`/sparks/openstax/${theme.id}`]);
+      const wrapper = renderView([`/alignments/openstax/${theme.id}`]);
 
       await userEvent.click(await wrapper.findByText(newVideo.title));
 
@@ -241,7 +241,7 @@ describe('Video View', () => {
       ]);
       fakeClient.videos.insertVideo(newVideo);
 
-      const wrapper = renderView([`/sparks/openstax/${theme.id}`]);
+      const wrapper = renderView([`/alignments/openstax/${theme.id}`]);
 
       await userEvent.click(await wrapper.findByText(newVideo.title));
 

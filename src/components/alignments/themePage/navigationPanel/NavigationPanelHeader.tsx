@@ -24,7 +24,7 @@ const NavigationPanelHeader = ({ theme }: Props) => {
   const { setIsOpen } = useThemeMobileMenuContext();
 
   const goToExplorePage = () => {
-    navigate(`/sparks/${provider.navigationPath}`);
+    navigate(`/alignments/${provider.navigationPath}`);
   };
 
   return (
