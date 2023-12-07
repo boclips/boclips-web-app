@@ -21,7 +21,7 @@ const AlignmentsButton = () => {
       })}
     >
       <button type="button" onClick={onClick} className={s.headerButton}>
-        <AlignmentsIcon />
+        <AlignmentsIcon className={s.navbarIcon} />
         <span>Alignments</span>
       </button>
     </div>
