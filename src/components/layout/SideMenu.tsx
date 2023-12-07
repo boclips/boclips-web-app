@@ -23,7 +23,7 @@ const SideMenu = ({ user, logOut, hasSearchInNavbar = true }: Props) => {
         <span>{user.email}</span>
       </div>
       <div className={s.buttons}>
-        <Link to="/sparks">Sparks</Link>
+        <Link to="/alignments">Alignments</Link>
         <Link to="/playlists">Playlists</Link>
         <Link to="/orders">Your orders</Link>
         <FeatureGate linkName="cart">

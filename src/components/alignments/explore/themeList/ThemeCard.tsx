@@ -7,7 +7,6 @@ import { ThemeLogo } from 'src/components/alignments/themePage/themeLogo/ThemeLo
 import { handleEscapeKeyEvent } from 'src/services/handleKeyEvent';
 import { useAlignmentProvider } from 'src/components/common/providers/AlignmentContextProvider';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
-import useFeatureFlags from 'src/hooks/useFeatureFlags';
 import s from './style.module.less';
 
 interface Props {
@@ -17,21 +16,14 @@ interface Props {
 export const ThemeCard = ({ theme }: Props) => {
   const navigate = useNavigate();
   const provider = useAlignmentProvider();
-  const { features, isLoading } = useFeatureFlags();
 
   const onKeyDown = () => {
     document.querySelector('main').focus();
   };
 
-  const onCardClick = (themeId) => {
-    if (features?.ALIGNMENTS_RENAMING) {
-      navigate({
-        pathname: `/alignments/${provider.navigationPath}/${themeId}`,
-      });
-      return;
-    }
+  const onCardClick = (themeId: string) => {
     navigate({
-      pathname: `/sparks/${provider.navigationPath}/${themeId}`,
+      pathname: `/alignments/${provider.navigationPath}/${themeId}`,
     });
   };
 
@@ -42,27 +34,25 @@ export const ThemeCard = ({ theme }: Props) => {
   };
 
   return (
-    !isLoading && (
-      <button
-        onClick={() => onCardClick(theme.id)}
-        type="button"
-        aria-label={`theme ${theme.title}`}
-        className={s.themeCard}
-        onKeyDown={(e) => handleEscapeKeyEvent(e, onKeyDown)}
-      >
-        <ThemeLogo theme={theme} />
-        <div className={s.themeTitle}>
-          <Typography.H2 size="xs" className="!text-base truncate">
-            {theme.title}
-          </Typography.H2>
-          <span className="text-gray-700 text-sm">
-            {getVideoCountLabel(getTotalVideoCount())}
-          </span>
-        </div>
-        <div className={s.arrow}>
-          <ArrowIconSVG aria-hidden className={s.arrowIcon} />
-        </div>
-      </button>
-    )
+    <button
+      onClick={() => onCardClick(theme.id)}
+      type="button"
+      aria-label={`theme ${theme.title}`}
+      className={s.themeCard}
+      onKeyDown={(e) => handleEscapeKeyEvent(e, onKeyDown)}
+    >
+      <ThemeLogo theme={theme} />
+      <div className={s.themeTitle}>
+        <Typography.H2 size="xs" className="!text-base truncate">
+          {theme.title}
+        </Typography.H2>
+        <span className="text-gray-700 text-sm">
+          {getVideoCountLabel(getTotalVideoCount())}
+        </span>
+      </div>
+      <div className={s.arrow}>
+        <ArrowIconSVG aria-hidden className={s.arrowIcon} />
+      </div>
+    </button>
   );
 };

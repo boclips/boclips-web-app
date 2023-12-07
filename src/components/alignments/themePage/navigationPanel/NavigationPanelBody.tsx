@@ -61,7 +61,7 @@ const NavigationPanelBody = ({ theme }: Props) => {
         window.scrollTo({ top: 0 });
       }}
       to={{
-        pathname: `/sparks/${provider.navigationPath}/${theme.id}`,
+        pathname: `/alignments/${provider.navigationPath}/${theme.id}`,
         hash: targetLink,
       }}
     >

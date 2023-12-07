@@ -19,7 +19,7 @@ describe(`Explore view`, () => {
 
     const fakeClient = setUpClientWithTheme(theme);
     const wrapper = render(
-      <MemoryRouter initialEntries={['/sparks/openstax']}>
+      <MemoryRouter initialEntries={['/alignments/openstax']}>
         <App
           apiClient={fakeClient}
           boclipsSecurity={stubBoclipsSecurity}
@@ -74,7 +74,7 @@ describe(`Explore view`, () => {
     });
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/sparks/openstax']}>
+      <MemoryRouter initialEntries={['/alignments/openstax']}>
         <App
           apiClient={fakeClient}
           boclipsSecurity={stubBoclipsSecurity}
@@ -106,7 +106,7 @@ describe(`Explore view`, () => {
   it('shows Page not found when used non existing provider', async () => {
     const fakeClient = new FakeBoclipsClient();
     const wrapper = render(
-      <MemoryRouter initialEntries={['/sparks/wrong-provider']}>
+      <MemoryRouter initialEntries={['/alignments/wrong-provider']}>
         <App
           apiClient={fakeClient}
           boclipsSecurity={stubBoclipsSecurity}
@@ -140,7 +140,7 @@ describe(`Explore view`, () => {
     ]);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/sparks/openstax']}>
+      <MemoryRouter initialEntries={['/alignments/openstax']}>
         <App
           apiClient={fakeClient}
           boclipsSecurity={stubBoclipsSecurity}
@@ -186,7 +186,7 @@ describe(`Explore view`, () => {
       ]);
 
       const wrapper = render(
-        <MemoryRouter initialEntries={['/sparks/openstax']}>
+        <MemoryRouter initialEntries={['/alignments/openstax']}>
           <App
             apiClient={fakeClient}
             boclipsSecurity={stubBoclipsSecurity}

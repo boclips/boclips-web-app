@@ -5,7 +5,7 @@ export const RedirectFromExploreToAlignments = () => {
   const { pathname, hash } = useLocation();
 
   const isExplorePath = pathname.startsWith('/explore');
-  const updatedPath = pathname.replace('explore', 'sparks');
+  const updatedPath = pathname.replace('explore', 'alignments');
   const updatedHash = hash
     .replace('chapter', 'topic')
     .replace('section', 'target');

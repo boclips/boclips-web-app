@@ -45,7 +45,7 @@ context('Homepage -- feature flags on', () => {
     });
     cy.get('[data-qa="account-menu"]').click();
 
-    cy.findByText('Sparks').should('exist');
+    cy.findByText('Alignments').should('exist');
     cy.findByText('Cart').should('exist');
 
     cy.percySnapshot('Home Page with feature flags');
