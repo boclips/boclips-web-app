@@ -23,12 +23,6 @@ const RegistrationPageCheckbox = ({
 }: Props) => {
   return (
     <span className={s.wrapper}>
-      {errorMessage && (
-        <span className={s.errorMessage}>
-          <ErrorIcon />
-          <Typography.Body size="small">{errorMessage}</Typography.Body>
-        </span>
-      )}
       <label className={s.checkboxWrapper} htmlFor={id}>
         <input
           onChange={onChange}
@@ -51,6 +45,12 @@ const RegistrationPageCheckbox = ({
           </Typography.Body>
         </div>
       </label>
+      {errorMessage && (
+        <span className={s.errorMessage}>
+          <ErrorIcon />
+          <Typography.Body size="small">{errorMessage}</Typography.Body>
+        </span>
+      )}
     </span>
   );
 };

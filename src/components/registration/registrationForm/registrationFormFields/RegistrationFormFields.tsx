@@ -30,6 +30,7 @@ const RegistrationFormFields = ({
         height="48px"
         isError={!!validationErrors.accountName}
         errorMessage={validationErrors.accountName}
+        errorMessagePlacement="bottom"
       />
 
       <div className="flex flex-row items-end">
@@ -44,6 +45,7 @@ const RegistrationFormFields = ({
           height="48px"
           isError={!!validationErrors.firstName}
           errorMessage={validationErrors.firstName}
+          errorMessagePlacement="bottom"
         />
         <InputText
           id="input-lastName"
@@ -55,6 +57,7 @@ const RegistrationFormFields = ({
           height="48px"
           isError={!!validationErrors.lastName}
           errorMessage={validationErrors.lastName}
+          errorMessagePlacement="bottom"
         />
       </div>
 
@@ -68,6 +71,7 @@ const RegistrationFormFields = ({
         height="48px"
         isError={!!validationErrors.email}
         errorMessage={validationErrors.email}
+        errorMessagePlacement="bottom"
       />
 
       <Dropdown
@@ -82,6 +86,7 @@ const RegistrationFormFields = ({
         fitWidth
         isError={!!validationErrors.country}
         errorMessage={validationErrors.country}
+        errorMessagePlacement="bottom"
       />
 
       <div className="flex flex-row items-end mt-4">
@@ -95,6 +100,7 @@ const RegistrationFormFields = ({
           height="48px"
           isError={!!validationErrors.password}
           errorMessage={validationErrors.password}
+          errorMessagePlacement="bottom"
         />
 
         <InputText
@@ -107,6 +113,7 @@ const RegistrationFormFields = ({
           height="48px"
           isError={!!validationErrors.confirmPassword}
           errorMessage={validationErrors.confirmPassword}
+          errorMessagePlacement="bottom"
         />
       </div>
       <div>
