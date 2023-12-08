@@ -101,8 +101,8 @@ const NavbarResponsive = ({
           className="flex z-0 lg:row-start-2 lg:row-end-2 md:row-start-3 md:row-end-3 col-start-1 col-end-27 h-16 bg-green-success justify-center items-center text-center text-white"
         >
           <p>
-            Welcome to your free preview of Boclips&apos; Library. For more
-            information click{' '}
+            Welcome! You&apos;re currently exploring a free preview of Boclips
+            Library. Need more info? Click{' '}
             <a
               rel="noopener noreferrer"
               href="https://boclips.com/boclips-faq"
