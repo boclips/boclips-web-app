@@ -110,8 +110,8 @@ describe('Trial Welcome View', () => {
     );
 
     await waitFor(() => {
-      expect(wrapper.getByText(/Welcome to/)).toBeVisible();
-      expect(wrapper.getByText(/CourseSpark!/)).toBeVisible();
+      expect(wrapper.getByText('Welcome to')).toBeVisible();
+      expect(wrapper.getByText('CourseSpark!')).toBeVisible();
     });
 
     expect(
