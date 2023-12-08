@@ -102,6 +102,9 @@ module.exports = {
         6: '6px',
       },
       colors: {
+        green: {
+          success: '#0a855c',
+        },
         blue: {
           100: 'var(--blue-100)',
           200: 'var(--blue-200)',

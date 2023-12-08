@@ -10,6 +10,8 @@ import {
   resizeToMobile,
   resizeToTablet,
 } from 'src/testSupport/resizeTo';
+import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
+import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
 
@@ -258,6 +260,59 @@ describe(`Navbar`, () => {
       );
 
       expect(wrapper.queryByLabelText('Menu')).toBeNull();
+    });
+  });
+
+  describe(`trial banner`, () => {
+    it(`renders the trial banner of trial users`, async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.accounts.insertAccount(
+        AccountsFactory.sample({
+          status: AccountStatus.TRIAL,
+          id: 'trial',
+        }),
+      );
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({ account: { id: 'trial', name: 'trial account' } }),
+      );
+
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={fakeClient}>
+            <NavbarResponsive showOptions={false} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      expect(await wrapper.findByTestId('trial-banner')).toBeVisible();
+      expect(await wrapper.findByTestId('trial-banner')).toHaveTextContent(
+        "Welcome! You're currently exploring a free preview of Boclips Library. Need more info? Click here or connect with our sales team",
+      );
+    });
+
+    it(`does not renders the trial banner for non trial users`, async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.accounts.insertAccount(
+        AccountsFactory.sample({
+          status: AccountStatus.ACTIVE,
+          id: 'non-trial',
+        }),
+      );
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          account: { id: 'non-trial', name: 'regular account' },
+        }),
+      );
+
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={fakeClient}>
+            <NavbarResponsive showOptions={false} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      expect(wrapper.queryByTestId('trial-banner')).toBeNull();
     });
   });
 });
