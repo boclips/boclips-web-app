@@ -7,7 +7,7 @@ import {
 import React from 'react';
 import RegistrationForm, {
   RegistrationData,
-} from 'src/components/registration/RegistrationForm';
+} from 'src/components/registration/registrationForm/RegistrationForm';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -44,12 +44,7 @@ describe('Registration Form', () => {
       password: 'p@ss1234',
       confirmPassword: 'p@ss1234',
       accountName: 'Los Angeles Lakers',
-      jobTitle: 'Teacher',
       country: 'Poland',
-      typeOfOrg: 'EdTech',
-      audience: 'K12',
-      discoveryMethod: 'Teacher',
-      desiredContent: 'Maths',
       hasAcceptedEducationalUseTerms: true,
     };
 
@@ -67,38 +62,34 @@ describe('Registration Form', () => {
       </QueryClientProvider>,
     );
 
-    expect(wrapper.getByText('CourseSpark')).toBeVisible();
-    expect(wrapper.getByText('Create new account')).toBeVisible();
-    expect(wrapper.getByText('7 day trial')).toBeVisible();
+    expect(wrapper.getByText('Create your free account')).toBeVisible();
     expect(wrapper.getByLabelText('First name')).toBeVisible();
     expect(wrapper.getByLabelText('Last name')).toBeVisible();
-    expect(wrapper.getByLabelText('Professional email')).toBeVisible();
+    expect(wrapper.getByLabelText('Email Address')).toBeVisible();
     expect(wrapper.getByLabelText('Password')).toBeVisible();
     expect(wrapper.getByLabelText('Confirm password')).toBeVisible();
-    expect(wrapper.getByLabelText('Account name')).toBeVisible();
+    expect(wrapper.getByLabelText('Organization name')).toBeVisible();
     expect(
       wrapper.getByLabelText(
-        'I certify that I am accessing this service solely for Educational Use. ' +
-          '"Educational Use" is defined as to copy, communicate, edit, and/or ' +
-          'incorporate into a publication or digital product for a learning outcome',
+        /I certify that I am accessing this service solely for Educational Use./,
       ),
-    ).toBeVisible();
-    expect(wrapper.getByTestId('input-dropdown-job-title')).toBeVisible();
-    expect(wrapper.getByTestId('input-dropdown-country')).toBeVisible();
-    expect(wrapper.getByTestId('input-dropdown-audience')).toBeVisible();
-    expect(wrapper.getByTestId('input-dropdown-type-of-org')).toBeVisible();
-    expect(
-      wrapper.getByTestId('input-checkbox-educational-use-agreement'),
-    ).toBeVisible();
-    expect(
-      wrapper.getByLabelText('What content are you looking for?'),
     ).toBeVisible();
 
     expect(
-      wrapper.getByText(
-        'By clicking Create Account, you agree to the Boclips User Agreement, Privacy Policy, and Cookie Policy.',
+      wrapper.getByLabelText(
+        /"Educational Use" is defined as to copy, communicate, edit, and\/or incorporate into a publication or digital product for a learning outcome./,
       ),
     ).toBeVisible();
+
+    expect(wrapper.getByTestId('input-dropdown-country')).toBeVisible();
+
+    expect(
+      wrapper.getByTestId('input-checkbox-educational-use-agreement'),
+    ).toBeVisible();
+
+    expect(wrapper.getByTestId('accepted-agreement')).toHaveTextContent(
+      'By clicking Create Account, you agree to the Boclips Terms & Conditions and Boclips Privacy Policy',
+    );
 
     expect(
       wrapper.getByRole('button', { name: 'Create Account' }),
@@ -132,14 +123,7 @@ describe('Registration Form', () => {
         recaptchaToken: 'token_baby',
         type: UserType.trialB2bUser,
         accountName: 'Los Angeles Lakers',
-        jobTitle: 'Teacher',
-        marketingInformation: {
-          country: 'POL',
-          organisationType: 'EdTech',
-          audience: 'K12',
-          discoveryMethod: 'Teacher',
-          desiredContent: 'Maths',
-        },
+        country: 'POL',
         hasAcceptedEducationalUseTerms: true,
       });
     });

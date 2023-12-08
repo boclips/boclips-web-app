@@ -6,10 +6,10 @@ import { fireEvent, render, RenderResult } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { ToastContainer } from 'react-toastify';
-import { RegistrationData } from 'src/components/registration/RegistrationForm';
+import { RegistrationData } from 'src/components/registration/registrationForm/RegistrationForm';
 import React from 'react';
 import { fillRegistrationForm } from 'src/components/registration/registrationFormTestHelpers';
-import { RegistrationProcess } from 'src/components/registration/RegistrationProcess';
+import { Registration } from 'src/components/registration/Registration';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
@@ -25,12 +25,7 @@ describe('registration process', () => {
       password: 'p@ss1234',
       confirmPassword: 'p@ss1234',
       accountName: 'Los Angeles Lakers',
-      jobTitle: 'Teacher',
       country: 'Poland',
-      typeOfOrg: 'EdTech',
-      audience: 'K12',
-      discoveryMethod: 'Teacher',
-      desiredContent: 'Maths',
       hasAcceptedEducationalUseTerms: true,
     };
 
@@ -55,7 +50,7 @@ describe('registration process', () => {
           <Router location={history.location} navigator={history}>
             <ToastContainer />
             <GoogleReCaptchaProvider reCaptchaKey="123">
-              <RegistrationProcess />
+              <Registration />
             </GoogleReCaptchaProvider>
           </Router>
         </BoclipsClientProvider>

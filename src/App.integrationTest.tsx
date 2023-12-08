@@ -196,7 +196,7 @@ describe('App', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByText('Create new account')).toBeVisible();
+    expect(await wrapper.findByText('Create your free account')).toBeVisible();
   });
 
   it('renders page not found when user is logged in but has no dev flag when accessing registration page', async () => {

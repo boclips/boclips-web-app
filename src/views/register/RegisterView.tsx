@@ -1,8 +1,8 @@
 import React from 'react';
 import { Layout } from 'src/components/layout/Layout';
 import { Helmet } from 'react-helmet';
-import { RegistrationProcess } from 'src/components/registration/RegistrationProcess';
-import Navbar from 'src/components/layout/Navbar';
+import { Registration } from 'src/components/registration/Registration';
+import InvisibleNavbar from 'src/components/registration/invisibleNavbar/InvisibleNavbar';
 
 const RegistrationView = () => {
   return (
@@ -11,10 +11,10 @@ const RegistrationView = () => {
       <Layout
         rowsSetup="grid-rows-registration-view"
         responsiveLayout
-        backgroundColor="#F5F5F5"
+        backgroundColor="#F9FBFF"
       >
-        <Navbar showSearch={false} showOptions={false} />
-        <RegistrationProcess />
+        <InvisibleNavbar />
+        <Registration />
       </Layout>
     </>
   );

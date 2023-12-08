@@ -1,5 +1,5 @@
 import { fireEvent, RenderResult, within } from '@testing-library/react';
-import { RegistrationData } from 'src/components/registration/RegistrationForm';
+import { RegistrationData } from 'src/components/registration/registrationForm/RegistrationForm';
 
 export function fillRegistrationForm(
   wrapper: RenderResult,
@@ -31,21 +31,7 @@ export function fillRegistrationForm(
     },
   );
 
-  setDropdownValue(wrapper, 'input-dropdown-job-title', data.jobTitle);
-  setDropdownValue(wrapper, 'input-dropdown-type-of-org', data.typeOfOrg);
   setDropdownValue(wrapper, 'input-dropdown-country', data.country);
-  setDropdownValue(wrapper, 'input-dropdown-audience', data.audience);
-
-  fireEvent.change(wrapper.getByLabelText('How did you hear about Boclips?'), {
-    target: { value: data.discoveryMethod },
-  });
-
-  fireEvent.change(
-    wrapper.getByLabelText('What content are you looking for?'),
-    {
-      target: { value: data.desiredContent },
-    },
-  );
 
   if (data.hasAcceptedEducationalUseTerms) {
     checkEducationalUseAgreement(wrapper);
@@ -69,9 +55,7 @@ function setDropdownValue(
 const checkEducationalUseAgreement = (wrapper: RenderResult) => {
   fireEvent.click(
     wrapper.getByLabelText(
-      'I certify that I am accessing this service solely for Educational Use. ' +
-        '"Educational Use" is defined as to copy, communicate, edit, and/or ' +
-        'incorporate into a publication or digital product for a learning outcome',
+      /I certify that I am accessing this service solely for Educational Use./,
     ),
   );
 };

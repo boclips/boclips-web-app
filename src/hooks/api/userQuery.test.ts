@@ -54,15 +54,8 @@ describe('userQuery', () => {
       password: 'p@ss',
       type: CreationUserType.trialB2bUser,
       accountName: 'Los Angeles Lakers',
-      jobTitle: 'Teacher',
       hasAcceptedEducationalUseTerms: true,
-      marketingInformation: {
-        country: 'country',
-        organisationType: 'typeOfOrg',
-        audience: 'audience',
-        discoveryMethod: 'discoveryMethod',
-        desiredContent: 'desiredContent',
-      },
+      country: 'country',
     };
 
     act(() => result.current.mutate(request));
