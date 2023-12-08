@@ -111,14 +111,14 @@ const NavbarResponsive = ({
             >
               here
             </a>{' '}
-            or speak to{' '}
+            or connect with our{' '}
             <a
               rel="noopener noreferrer"
               href="https://www.boclips.com/contact"
               target="_blank"
               className="underline"
             >
-              sales
+              sales team
             </a>
           </p>
         </div>

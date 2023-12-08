@@ -286,7 +286,7 @@ describe(`Navbar`, () => {
 
       expect(await wrapper.findByTestId('trial-banner')).toBeVisible();
       expect(await wrapper.findByTestId('trial-banner')).toHaveTextContent(
-        "Welcome! You're currently exploring a free preview of Boclips Library. Need more info? Click",
+        "Welcome! You're currently exploring a free preview of Boclips Library. Need more info? Click here or connect with our sales team",
       );
     });
 
