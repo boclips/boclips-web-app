@@ -30,6 +30,17 @@
   flex-direction: row;
   justify-content: flex-start;
 
+  .listItem{
+    overflow: hidden;
+    padding-right: 1rem;
+
+    span{
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
   &:last-child {
     border-bottom: 0;
   }
