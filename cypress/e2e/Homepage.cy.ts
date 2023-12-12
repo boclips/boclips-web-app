@@ -1,5 +1,4 @@
 // homepage feature flags
-// featureGate role: BO_WEB_APP_SPARKS
 // featureGate link: cart
 
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
