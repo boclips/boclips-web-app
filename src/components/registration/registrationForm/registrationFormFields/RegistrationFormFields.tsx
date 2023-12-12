@@ -171,7 +171,7 @@ const RegistrationFormFields = ({
           }
           errorMessage={
             validationErrors.hasAcceptedEducationalUseTerms
-              ? 'Educational use agreement is mandatory'
+              ? 'Educational use agreement is required'
               : null
           }
           name="educational-use-agreement"

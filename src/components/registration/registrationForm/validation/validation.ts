@@ -101,7 +101,7 @@ const FormValidator: FormValidatorClass = class
       this.checkIsNotEmpty('lastName', 'Last name is required'),
       this.checkIsNotEmpty('email', 'Email is required') &&
         this.checkHasEmailFormat('email', 'Please enter a valid email address'),
-      this.checkIsNotEmpty('accountName', 'Account name is required'),
+      this.checkIsNotEmpty('accountName', 'Organization name is required'),
       this.checkIsNotEmpty('password', 'Password is required') &&
         this.checkPasswordIsStrong() &&
         this.checkPasswordConfirmed(),
