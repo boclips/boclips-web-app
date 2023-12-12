@@ -80,9 +80,9 @@ describe('Registration Form Validation', () => {
 
     fillTheForm(wrapper, { accountName: '' });
 
-    await checkErrorIsNotVisible(wrapper, 'Account name is required');
+    await checkErrorIsNotVisible(wrapper, 'Organization name is required');
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
-    await checkErrorIsVisible(wrapper, 'Account name is required');
+    await checkErrorIsVisible(wrapper, 'Organization name is required');
 
     await waitFor(() => {
       expect(createTrialUserSpy).not.toBeCalled();
@@ -158,7 +158,7 @@ describe('Registration Form Validation', () => {
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
     expect(
-      await wrapper.findByText('Educational use agreement is mandatory'),
+      await wrapper.findByText('Educational use agreement is required'),
     ).toBeVisible();
 
     expect(createTrialUserSpy).not.toBeCalled();
@@ -215,17 +215,14 @@ describe('Registration Form Validation', () => {
     await checkErrorIsVisible(wrapper, 'First name is required');
     await checkErrorIsVisible(wrapper, 'Last name is required');
     await checkErrorIsVisible(wrapper, 'Email is required');
-    await checkErrorIsVisible(wrapper, 'Account name is required');
+    await checkErrorIsVisible(wrapper, 'Organization name is required');
     await checkErrorIsVisible(wrapper, '8 characters');
     await checkErrorIsVisible(wrapper, '1 capital letter');
     await checkErrorIsVisible(wrapper, "Password doesn't match");
     await checkErrorIsVisible(wrapper, '1 special character');
     await checkErrorIsVisible(wrapper, '1 number');
     await checkErrorIsVisible(wrapper, 'Please select a country');
-    await checkErrorIsVisible(
-      wrapper,
-      'Educational use agreement is mandatory',
-    );
+    await checkErrorIsVisible(wrapper, 'Educational use agreement is required');
 
     fillTheForm(wrapper, {});
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -233,7 +230,7 @@ describe('Registration Form Validation', () => {
     await checkErrorIsNotVisible(wrapper, 'First name is required');
     await checkErrorIsNotVisible(wrapper, 'Last name is required');
     await checkErrorIsNotVisible(wrapper, 'Email is required');
-    await checkErrorIsNotVisible(wrapper, 'Account name is required');
+    await checkErrorIsNotVisible(wrapper, 'Organization name is required');
     await checkErrorIsNotVisible(wrapper, 'Password is required');
     await checkErrorIsNotVisible(wrapper, 'Please select a country');
     await checkErrorIsNotVisible(
@@ -242,7 +239,7 @@ describe('Registration Form Validation', () => {
     );
     await checkErrorIsNotVisible(
       wrapper,
-      'Educational use agreement is mandatory',
+      'Educational use agreement is required',
     );
 
     await waitFor(() => {
