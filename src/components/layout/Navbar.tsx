@@ -96,31 +96,26 @@ const NavbarResponsive = ({
           </div>
         ))}
       {isTrial && (
-        <div
-          data-qa="trial-banner"
-          className="flex z-0 lg:row-start-2 lg:row-end-2 md:row-start-3 md:row-end-3 col-start-1 col-end-27 h-16 bg-green-success justify-center items-center text-center text-white"
-        >
-          <p>
-            Welcome! You&apos;re currently exploring a free preview of Boclips
-            Library. Need more info? Click{' '}
-            <a
-              rel="noopener noreferrer"
-              href="https://boclips.com/boclips-faq"
-              target="_blank"
-              className="underline"
-            >
-              here
-            </a>{' '}
-            or connect with our{' '}
-            <a
-              rel="noopener noreferrer"
-              href="https://www.boclips.com/contact"
-              target="_blank"
-              className="underline"
-            >
-              sales team
-            </a>
-          </p>
+        <div data-qa="trial-banner" className={s.trialBanner}>
+          Welcome! You&apos;re currently exploring a free preview of Boclips
+          Library. Need more info? Click{' '}
+          <a
+            rel="noopener noreferrer"
+            href="https://boclips.com/boclips-faq"
+            target="_blank"
+            className="underline"
+          >
+            here
+          </a>{' '}
+          or connect with our{' '}
+          <a
+            rel="noopener noreferrer"
+            href="https://www.boclips.com/contact"
+            target="_blank"
+            className="underline"
+          >
+            sales team
+          </a>
         </div>
       )}
       {showSideMenu && mobileView && (

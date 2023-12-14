@@ -2,26 +2,36 @@
 @import '~@boclips-ui/styles/src/colors';
 
 .navbarResponsive {
-  @apply items-center h-full bg-white;
+@apply items-center h-full bg-white;
   position: sticky;
   top: 0px;
   z-index: 101;
   background: @white;
   box-shadow: 0 2px 8px -2px rgba(0, 21, 80, 0.15);
 
+  .trialBanner {
+    grid-column: 1/-1;
+    grid-row: 2/2;
+    z-index: 0;
+    background: @success;
+    text-align: center;
+    padding: 1rem;
+    color: @white;
+  }
+
   .logo {
-    @apply col-start-2 col-end-5 row-start-1 row-end-1;
+  @apply col-start-2 col-end-5 row-start-1 row-end-1;
     display: inline-flex;
     z-index: 2;
   }
 
   .buttons {
-    @apply col-start-24 col-end-26 row-start-1 row-end-1 flex justify-end items-center;
+  @apply col-start-24 col-end-26 row-start-1 row-end-1 flex justify-end items-center;
     height: 48px;
   }
 
   .buttonsDesktop {
-    @apply col-start-20 col-end-26 row-start-1 row-end-1 flex h-full justify-end;
+  @apply col-start-20 col-end-26 row-start-1 row-end-1 flex h-full justify-end;
     height: 74px;
   }
 }
@@ -111,15 +121,24 @@
 @media (min-width: @screen-sm) {
   .navbarResponsive {
     z-index: 50;
+
+    .trialBanner {
+      grid-row: 3/3;
+    }
   }
+
   .logo {
-    @apply pt-2;
+  @apply pt-2;
   }
 }
 
 @media (min-width: @screen-lg) {
   .navbarResponsive {
-    height: 74px;
+    height: 100%;
+
+    .trialBanner {
+      grid-row: 2/2;
+    }
 
     .logo {
       padding: 0;
