@@ -6,6 +6,10 @@
     color: transparent;
   }
 
+  button {
+    display: none;
+  }
+
   > div {
     margin-right: 1rem;
     border-radius: 4px;
@@ -30,14 +34,16 @@
   flex-direction: row;
   justify-content: flex-start;
 
-  .listItem{
+  .editButton {
+    align-self: flex-start;
+  }
+
+  .listItem {
     overflow: hidden;
     padding-right: 1rem;
 
-    span{
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    span, div {
+      word-break: break-word;
     }
   }
 
