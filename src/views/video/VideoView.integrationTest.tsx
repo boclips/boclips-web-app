@@ -75,7 +75,6 @@ describe('Video View', () => {
       UserFactory.sample({
         features: {
           BO_WEB_APP_PRICES: true,
-          BO_WEB_APP_VIDEO_RECOMMENDATIONS: false,
         },
       }),
     );
