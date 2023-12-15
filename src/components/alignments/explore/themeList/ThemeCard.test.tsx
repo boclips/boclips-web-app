@@ -100,12 +100,11 @@ describe('ThemeCard', () => {
     ).toBeInTheDocument();
   });
 
-  it(`routes to the theme's page under alignments when clicked with rename role`, async () => {
+  it(`routes to the theme's page under alignments when clicked`, async () => {
     const history = createBrowserHistory();
     history.push('/alignments/openstax');
 
     const fakeClient = new FakeBoclipsClient();
-    fakeClient.users.setCurrentUserFeatures({ ALIGNMENTS_RENAMING: true });
     const theme = ThemeFactory.sample({ title: 'openstax theme' });
     fakeClient.alignments.setThemesByProvider({
       providerName: 'openstax',
