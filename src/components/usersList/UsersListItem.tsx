@@ -7,6 +7,7 @@ import PencilSVG from 'src/resources/icons/pencil.svg';
 import { ROLES } from 'src/types/Roles';
 import { WithValidRoles } from 'src/components/common/errors/WithValidRoles';
 import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import BinSVG from 'src/resources/icons/bin.svg';
 import s from './style.module.less';
 
 interface UserInformationFieldProps {
@@ -36,6 +37,8 @@ export interface Props {
   isLoading?: boolean;
   onEdit: (user: AccountUser) => void;
   canEdit: boolean;
+  onRemove: (user: AccountUser) => void;
+  canRemove: boolean;
 }
 
 export const UsersListItem = ({
@@ -44,6 +47,8 @@ export const UsersListItem = ({
   onEdit,
   canEdit,
   accountStatus,
+  onRemove,
+  canRemove,
 }: Props) => {
   const isNotTrial = accountStatus !== AccountStatus.TRIAL;
 
@@ -82,6 +87,22 @@ export const UsersListItem = ({
             icon={<PencilSVG aria-hidden />}
             type="outline"
             height="42px"
+          />
+        </WithValidRoles>
+      )}
+
+      {canRemove && (
+        <WithValidRoles
+          fallback={null}
+          roles={[ROLES.ROLE_BOCLIPS_WEB_APP_MANAGE_USERS]}
+        >
+          <Button
+            onClick={() => onRemove(user)}
+            className={s.editButton}
+            text="Remove"
+            icon={<BinSVG aria-hidden />}
+            height="42px"
+            type="label"
           />
         </WithValidRoles>
       )}
