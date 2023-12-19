@@ -92,6 +92,50 @@ describe('UsersListRow', () => {
     expect(wrapper.getByText('Edit')).toBeVisible();
   });
 
+  it('displays remove button when can manage users and has roles', () => {
+    const security: BoclipsSecurity = {
+      ...stubBoclipsSecurity,
+      hasRole: (_role) => true,
+    };
+
+    const user: AccountUser = {
+      id: 'id-1',
+      email: 'joebiden@gmail.com',
+      firstName: 'Joe',
+      lastName: 'Biden',
+      permissions: {
+        canOrder: false,
+        canManageUsers: true,
+      },
+    };
+
+    const wrapper = renderWrapper(user, jest.fn(), true, security);
+
+    expect(wrapper.getByText('Remove')).toBeVisible();
+  });
+
+  it(`doesn't display remove button when can't manage users and has roles`, () => {
+    const security: BoclipsSecurity = {
+      ...stubBoclipsSecurity,
+      hasRole: (_role) => false,
+    };
+
+    const user: AccountUser = {
+      id: 'id-1',
+      email: 'joebiden@gmail.com',
+      firstName: 'Joe',
+      lastName: 'Biden',
+      permissions: {
+        canOrder: false,
+        canManageUsers: true,
+      },
+    };
+
+    const wrapper = renderWrapper(user, jest.fn(), true, security);
+
+    expect(wrapper.queryByText('Remove')).toBeNull();
+  });
+
   it('doesnt display `Can order videos` column when account status is TRIAL', async () => {
     const security: BoclipsSecurity = {
       ...stubBoclipsSecurity,
@@ -140,6 +184,8 @@ describe('UsersListRow', () => {
               isLoading
               onEdit={onEdit}
               canEdit={canEdit}
+              onRemove={() => {}}
+              canRemove
               accountStatus={accountStatus}
             />
           </QueryClientProvider>

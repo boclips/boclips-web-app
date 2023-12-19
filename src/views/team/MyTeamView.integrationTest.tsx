@@ -327,6 +327,173 @@ describe('My Team view', () => {
     expect(within(newManagingPermission).getByText('No')).toBeVisible();
   });
 
+  it('opens the remove user modal when user has permissions', async () => {
+    const fakeClient = new FakeBoclipsClient();
+
+    fakeClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'account-1', status: AccountStatus.ACTIVE }),
+    );
+
+    const joe = await fakeClient.users.createUser({
+      firstName: 'Joe',
+      lastName: 'Biden',
+      email: 'joey@boclips.com',
+      accountId: 'account-1',
+      type: UserType.b2bUser,
+      permissions: {
+        canOrder: false,
+        canManageUsers: true,
+      },
+    });
+
+    fakeClient.users.insertCurrentUser(joe);
+
+    const security: BoclipsSecurity = {
+      ...stubBoclipsSecurity,
+      hasRole: (_role) => true,
+    };
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/team']}>
+        <App
+          reactQueryClient={createReactQueryClient()}
+          apiClient={fakeClient}
+          boclipsSecurity={security}
+        />
+      </MemoryRouter>,
+    );
+
+    const removeButton = await wrapper.findByRole('button', { name: 'Remove' });
+    expect(removeButton).toBeVisible();
+    fireEvent.click(removeButton);
+
+    await waitFor(() =>
+      wrapper.getByRole('heading', {
+        level: 1,
+        name: 'Remove user from Team Accounts',
+      }),
+    );
+
+    const modal = wrapper.getByRole('dialog');
+
+    expect(
+      within(modal).getByText('You are about to remove', { exact: false }),
+    ).toBeVisible();
+    expect(within(modal).getByText('Joe Biden')).toBeVisible();
+    expect(within(modal).getByText('using', { exact: false })).toBeVisible();
+    expect(within(modal).getByText('joey@boclips.com')).toBeVisible();
+  });
+
+  it('successfully removes a user', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'account-1' }),
+    );
+    const joe = await fakeClient.users.createUser({
+      firstName: 'Joe',
+      lastName: 'Biden',
+      email: 'joey@boclips.com',
+      accountId: 'account-1',
+      type: UserType.b2bUser,
+    });
+
+    fakeClient.users.insertCurrentUser(joe);
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/team']}>
+        <App
+          reactQueryClient={createReactQueryClient()}
+          apiClient={fakeClient}
+          boclipsSecurity={stubBoclipsSecurity}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByText('Joe Biden')).toBeVisible();
+
+    const removeButton = wrapper.getByRole('button', { name: 'Remove' });
+    expect(removeButton).toBeVisible();
+    fireEvent.click(removeButton);
+
+    await waitFor(() =>
+      wrapper.getByRole('heading', {
+        level: 1,
+        name: 'Remove user from Team Accounts',
+      }),
+    );
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'Yes, I confirm' }));
+
+    await waitForElementToBeRemoved(() =>
+      wrapper.getByRole('heading', {
+        level: 1,
+        name: 'Remove user from Team Accounts',
+      }),
+    );
+
+    expect(
+      await wrapper.findByTestId('user-removed-joey@boclips.com'),
+    ).toBeVisible();
+    expect(wrapper.queryByText('Joe Biden')).toBeNull();
+  });
+
+  it('fails to remove a user', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    jest
+      .spyOn(fakeClient.users, 'updateUser')
+      .mockImplementation(() => Promise.reject(new Error('')));
+
+    fakeClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'account-1' }),
+    );
+    const joe = await fakeClient.users.createUser({
+      firstName: 'Joe',
+      lastName: 'Biden',
+      email: 'joey@boclips.com',
+      accountId: 'account-1',
+      type: UserType.b2bUser,
+    });
+
+    fakeClient.users.insertCurrentUser(joe);
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/team']}>
+        <App
+          reactQueryClient={createReactQueryClient()}
+          apiClient={fakeClient}
+          boclipsSecurity={stubBoclipsSecurity}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByText('Joe Biden')).toBeVisible();
+
+    const removeButton = wrapper.getByRole('button', { name: 'Remove' });
+    expect(removeButton).toBeVisible();
+    fireEvent.click(removeButton);
+
+    await waitFor(() =>
+      wrapper.getByRole('heading', {
+        level: 1,
+        name: 'Remove user from Team Accounts',
+      }),
+    );
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'Yes, I confirm' }));
+
+    expect(
+      await wrapper.findByTestId('user-removal-failed-joey@boclips.com'),
+    ).toBeVisible();
+
+    fireEvent.click(
+      wrapper.getByRole('button', {
+        name: 'Close Remove user from Team Accounts modal',
+      }),
+    );
+
+    expect(await wrapper.findByText('Joe Biden')).toBeVisible();
+  });
+
   it('displays My Team as window title', async () => {
     render(
       <MemoryRouter initialEntries={['/team']}>

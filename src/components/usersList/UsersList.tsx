@@ -18,9 +18,10 @@ const PAGE_SIZE = 25;
 
 interface Props {
   onEditUser: (user: AccountUser) => void;
+  onRemoveUser: (user: AccountUser) => void;
 }
 
-export const UsersList = ({ onEditUser }: Props) => {
+export const UsersList = ({ onEditUser, onRemoveUser }: Props) => {
   const [currentPageNumber, setCurrentPageNumber] = React.useState(0);
 
   const { data: user, isLoading: isLoadingUser } = useGetUserQuery();
@@ -34,6 +35,8 @@ export const UsersList = ({ onEditUser }: Props) => {
     !isLoadingAccount &&
     !isLoadingUser &&
     account?.status === AccountStatus.ACTIVE;
+
+  const canRemoveUser = !isLoadingAccount && !isLoadingUser;
 
   const accountUsers = accountUsersPage?.page || [];
   const pageSpec = accountUsersPage?.pageSpec;
@@ -70,6 +73,8 @@ export const UsersList = ({ onEditUser }: Props) => {
           isLoading={isSkeletonLoading}
           onEdit={() => onEditUser(accountUser)}
           canEdit={canEditUser}
+          onRemove={() => onRemoveUser(accountUser)}
+          canRemove={canRemoveUser}
           accountStatus={account?.status}
         />
       )}

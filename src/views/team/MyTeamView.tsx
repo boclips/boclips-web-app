@@ -11,10 +11,13 @@ import EditTeamMemberModal from 'src/components/teamModal/EditTeamMemberModal';
 import { ROLES } from 'src/types/Roles';
 import { WithValidRoles } from 'src/components/common/errors/WithValidRoles';
 import { Helmet } from 'react-helmet';
+import { RemoveTeamMemberModal } from 'src/components/teamModal/RemoveTeamMemberModal';
 
 const MyTeamView = () => {
   const [isNewUserModalOpen, setIsNewUserModalOpen] = React.useState(false);
   const [accountUserToEdit, setAccountUserToEdit] = React.useState(undefined);
+  const [accountUserToRemove, setAccountUserToRemove] =
+    React.useState(undefined);
 
   return (
     <>
@@ -43,6 +46,7 @@ const MyTeamView = () => {
         >
           <UsersList
             onEditUser={(accountUser) => setAccountUserToEdit(accountUser)}
+            onRemoveUser={(accountUser) => setAccountUserToRemove(accountUser)}
           />
         </main>
         {isNewUserModalOpen && (
@@ -54,6 +58,12 @@ const MyTeamView = () => {
           <EditTeamMemberModal
             userToUpdate={accountUserToEdit}
             closeModal={() => setAccountUserToEdit(undefined)}
+          />
+        )}
+        {accountUserToRemove && (
+          <RemoveTeamMemberModal
+            user={accountUserToRemove}
+            closeModal={() => setAccountUserToRemove(undefined)}
           />
         )}
         <Footer />
