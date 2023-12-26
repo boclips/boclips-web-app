@@ -87,6 +87,7 @@ export const useUpdateUser = () => {
         // do not wait until query cache is invalidated!
         // noinspection JSIgnoredPromiseFromCall
         queryClient.invalidateQueries(['accountUsers']);
+        queryClient.invalidateQueries(['user']);
       },
     },
   );

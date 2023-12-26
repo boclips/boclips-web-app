@@ -1,6 +1,6 @@
 import { Layout } from 'src/components/layout/Layout';
 import Navbar from 'src/components/layout/Navbar';
-import React from 'react';
+import React, { useState } from 'react';
 import PageHeader from 'src/components/pageTitle/PageHeader';
 import Footer from 'src/components/layout/Footer';
 import { Helmet } from 'react-helmet';
@@ -9,10 +9,16 @@ import { useGetAccount, useGetUserQuery } from 'src/hooks/api/userQuery';
 import UserIcon from 'src/resources/icons/user-icon.svg';
 import HomeIcon from 'src/resources/icons/home-icon.svg';
 import c from 'classnames';
+import Button from '@boclips-ui/button';
+import PencilSVG from 'src/resources/icons/pencil.svg';
+import EditPersonalProfileModal from 'src/views/account/EditPersonalProfileModal';
 import s from './style.module.less';
 
 const MyAccountView = () => {
   const { data: user, isLoading: userIsLoading } = useGetUserQuery();
+  const [openEditProfileModal, setOpenEditProfileModal] =
+    useState<boolean>(false);
+
   const { data: account, isLoading: accountIsLoading } = useGetAccount(
     user.account?.id,
   );
@@ -41,6 +47,15 @@ const MyAccountView = () => {
               <Typography.Body
                 className={s.info}
               >{`${user?.firstName} ${user?.lastName}`}</Typography.Body>
+              <Button
+                onClick={() => {
+                  setOpenEditProfileModal(true);
+                }}
+                className={s.editButton}
+                text="Edit"
+                icon={<PencilSVG aria-hidden />}
+                type="label"
+              />
             </div>
             <div>
               <Typography.Body>Email:</Typography.Body>
@@ -111,6 +126,12 @@ const MyAccountView = () => {
         </section>
         <Footer className="row-start-6" />
       </Layout>
+      {openEditProfileModal && (
+        <EditPersonalProfileModal
+          userToUpdate={user}
+          closeModal={() => setOpenEditProfileModal(false)}
+        />
+      )}
     </>
   );
 };
