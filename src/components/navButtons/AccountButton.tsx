@@ -102,14 +102,6 @@ export const AccountButton = () => {
           className={s.tooltip}
           onBlur={handleDialogBlur}
         >
-          <span className={s.userDetails}>
-            <div className="font-medium">
-              {user.firstName} {user.lastName}
-            </div>
-            <Typography.Body as="div" size="small" className="text-gray-800">
-              {user.email}
-            </Typography.Body>
-          </span>
           <div role="menu" className={s.menu} aria-label="Account menu">
             <FeatureGate feature="BO_WEB_APP_DEV">
               <div className="pt-2">

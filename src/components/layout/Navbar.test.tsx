@@ -73,8 +73,6 @@ describe(`Navbar`, () => {
 
         fireEvent.click(await wrapper.findByLabelText('Menu'));
 
-        expect(wrapper.getByText('Ricky Julian')).toBeInTheDocument();
-        expect(wrapper.getByText('sunnyvale@swearnet.com')).toBeInTheDocument();
         expect(wrapper.getByText('Your orders')).toBeInTheDocument();
         expect(wrapper.getByText('Cart')).toBeInTheDocument();
         expect(wrapper.getByText('Platform guide')).toBeInTheDocument();
