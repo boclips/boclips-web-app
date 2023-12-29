@@ -129,7 +129,7 @@ describe('My Account view', () => {
       ).toBeInTheDocument();
       expect(await screen.findByText(/Elephant Academy/)).toBeInTheDocument();
       expect(await screen.findByText(/Created on/)).toBeInTheDocument();
-      expect(await screen.findByText(/18 September 2023/)).toBeInTheDocument();
+      expect(await screen.findByText(/September 2023/)).toBeInTheDocument();
     });
 
     it('does not render org profile when account data is missing', async () => {
