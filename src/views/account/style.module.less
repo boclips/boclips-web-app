@@ -111,7 +111,29 @@
       height: 18px;
     }
   }
+}
 
+.editButton {
+  height: 1.5rem;
+  margin-left: 1.5rem;
+
+  &:hover {
+    background: transparent !important;
+
+    svg {
+      path {
+        fill: transparent !important;
+      }
+    }
+  }
+
+  svg {
+    stroke: @blue-800;
+    stroke-width: 2;
+    path {
+      fill: transparent !important;
+    }
+  }
 }
 
 

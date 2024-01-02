@@ -1,5 +1,12 @@
 import React from 'react';
-import { render, screen, waitFor, within } from '@testing-library/react';
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved,
+  within,
+} from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
@@ -10,8 +17,11 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 import { Account } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import userEvent from '@testing-library/user-event';
 
 describe('My Account view', () => {
+  const boclipsClient = new FakeBoclipsClient();
+
   const user = UserFactory.sample({
     firstName: 'Bob',
     lastName: 'Wick',
@@ -34,7 +44,6 @@ describe('My Account view', () => {
     currentUser: User = user,
     accountToInsert: Account = account,
   ) => {
-    const boclipsClient = new FakeBoclipsClient();
     boclipsClient.users.insertCurrentUser(currentUser);
     boclipsClient.accounts.insertAccount(accountToInsert);
 
@@ -48,6 +57,10 @@ describe('My Account view', () => {
       </MemoryRouter>,
     );
   };
+
+  beforeEach(() => {
+    boclipsClient.users.clear();
+  });
 
   it('renders my account page', async () => {
     wrapper();
@@ -103,6 +116,40 @@ describe('My Account view', () => {
       expect(within(userProfile).getByText(/bob@wick.com/)).toBeInTheDocument();
       expect(within(userProfile).getByText(/Job Title:/)).toBeInTheDocument();
       expect(within(userProfile).getByText(/Engineer/)).toBeInTheDocument();
+    });
+
+    it('edit my profile section', async () => {
+      wrapper();
+
+      const userProfile = await screen.findByRole('main');
+      expect(within(userProfile).getByText(/Bob Wick/)).toBeInTheDocument();
+
+      fireEvent.click(await screen.findByRole('button', { name: 'Edit' }));
+
+      await waitFor(() =>
+        screen.getByRole('heading', {
+          level: 1,
+          name: 'Edit Personal Profile',
+        }),
+      );
+
+      const firstNameInput = screen.getByDisplayValue('Bob');
+      await userEvent.clear(firstNameInput);
+      await userEvent.type(firstNameInput, 'Andy');
+
+      await userEvent.click(screen.getByRole('button', { name: 'Save' }));
+      await waitForElementToBeRemoved(() =>
+        screen.getByRole('heading', {
+          level: 1,
+          name: 'Edit Personal Profile',
+        }),
+      );
+
+      await waitFor(() =>
+        expect(
+          screen.getByText(/User edited successfully/),
+        ).toBeInTheDocument(),
+      );
     });
 
     it('does not render values when data is missing', async () => {
