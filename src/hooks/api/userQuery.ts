@@ -59,15 +59,8 @@ export const useAddNewTrialUser = () => {
   const client = useBoclipsClient();
 
   return useMutation((userRequest: CreateTrialUserRequest) =>
-    doCreateNewTrialUser(userRequest, client),
+    client.users.createTrialUser(userRequest),
   );
-};
-
-const doCreateNewTrialUser = (
-  request: CreateTrialUserRequest,
-  client: BoclipsClient,
-): Promise<User> => {
-  return client.users.createTrialUser(request);
 };
 
 export type EditUserRequest = {

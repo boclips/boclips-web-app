@@ -27,7 +27,6 @@ const MyAccountView = () => {
     return new Date(date).toLocaleDateString('en-uk', {
       year: 'numeric',
       month: 'long',
-      day: 'numeric',
     });
   };
 
