@@ -22,16 +22,15 @@ type EditPersonalProfileForm = {
 const successNotification = (user: User) =>
   displayNotification(
     'success',
-    `User edited successfully`,
-    `Edited user — ${user.firstName} ${user.lastName}`,
+    `Your profile has been changed successfully`,
     `user-edited-${user.firstName}`,
   );
 
 const errorNotification = (errorMessage: string, user: User) => {
   return displayNotification(
     'error',
-    `User editing failed`,
-    `Failed to edit user — ${user.firstName} ${user.lastName} ${errorMessage}`,
+    `Your profile could not be edited`,
+    `${errorMessage}`,
     `user-editing-failed-${user.firstName}`,
   );
 };

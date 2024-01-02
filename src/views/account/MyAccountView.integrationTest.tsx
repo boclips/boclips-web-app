@@ -147,7 +147,7 @@ describe('My Account view', () => {
 
       await waitFor(() =>
         expect(
-          screen.getByText(/User edited successfully/),
+          screen.getByText(/Your profile has been changed successfully/),
         ).toBeInTheDocument(),
       );
     });
