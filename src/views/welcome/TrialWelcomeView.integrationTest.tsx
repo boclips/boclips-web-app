@@ -14,7 +14,7 @@ import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
 import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
-import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('Trial Welcome View', () => {
   const fakeClient = new FakeBoclipsClient();
@@ -29,7 +29,7 @@ describe('Trial Welcome View', () => {
       }),
     );
     fakeClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'LAL', status: AccountStatus.TRIAL }),
+      AccountsFactory.sample({ id: 'LAL', type: AccountType.TRIAL }),
     );
   });
 
@@ -193,7 +193,7 @@ describe('Trial Welcome View', () => {
       }),
     );
     fakeClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'jo', status: AccountStatus.ACTIVE }),
+      AccountsFactory.sample({ id: 'jo', type: AccountType.STANDARD }),
     );
 
     const wrapper = renderWelcomeView();

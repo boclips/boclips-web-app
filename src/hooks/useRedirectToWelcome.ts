@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetAccount, useGetUserQuery } from 'src/hooks/api/userQuery';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
-import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 const useRedirectToWelcome = () => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const useRedirectToWelcome = () => {
     if (userLoading || accountLoading) {
       return;
     }
-    const isUserInTrial = account?.status === AccountStatus.TRIAL;
+    const isUserInTrial = account?.type === AccountType.TRIAL;
     const isMarketingInfoSetForUser = user && isMarketingInfoSet(user);
 
     if (isUserInTrial && !isMarketingInfoSetForUser) {

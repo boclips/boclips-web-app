@@ -1,7 +1,7 @@
 import { useGetAccount, useGetUserQuery } from 'src/hooks/api/userQuery';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 
 export const useRedirectToHome = () => {
@@ -15,7 +15,7 @@ export const useRedirectToHome = () => {
       return;
     }
 
-    if (account.status !== AccountStatus.TRIAL) {
+    if (account.type !== AccountType.TRIAL) {
       navigate('/');
     } else if (isMarketingInfoSet(user)) {
       navigate('/');

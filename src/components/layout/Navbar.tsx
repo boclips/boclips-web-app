@@ -16,7 +16,7 @@ import LibraryButton from 'src/components/navButtons/LibraryButton';
 import { HomeButton } from 'src/components/navButtons/HomeButton';
 import { AccountButton } from 'src/components/navButtons/AccountButton';
 import Logo from 'src/components/logo/Logo';
-import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import s from './navbar.module.less';
 import { Search } from '../searchBar/SearchBar';
 
@@ -32,7 +32,7 @@ const NavbarResponsive = ({
   const [showSideMenu, setShowSideMenu] = useState(false);
   const { data: user, isLoading: isUserLoading } = useGetUserQuery();
   const { data: account } = useGetAccount(user?.account.id);
-  const isTrial = account?.status === AccountStatus.TRIAL;
+  const isTrial = account?.type === AccountType.TRIAL;
   const boclipsSecurity = useBoclipsSecurity();
   const breakpoints = useMediaBreakPoint();
   const mobileView =

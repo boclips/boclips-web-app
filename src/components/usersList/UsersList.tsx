@@ -75,7 +75,7 @@ export const UsersList = ({ onEditUser, onRemoveUser }: Props) => {
           canEdit={canEditUser}
           onRemove={() => onRemoveUser(accountUser)}
           canRemove={canRemoveUser}
-          accountStatus={account?.status}
+          accountType={account?.type}
         />
       )}
       pagination={{

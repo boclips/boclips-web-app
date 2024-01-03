@@ -8,7 +8,7 @@ import { BoclipsSecurityProvider } from 'src/components/common/providers/Boclips
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('UsersListRow', () => {
   it('says the user can place orders if the permissions allow that', () => {
@@ -158,7 +158,7 @@ describe('UsersListRow', () => {
       jest.fn(),
       true,
       security,
-      AccountStatus.TRIAL,
+      AccountType.TRIAL,
     );
 
     expect(
@@ -171,7 +171,7 @@ describe('UsersListRow', () => {
     onEdit,
     canEdit,
     security: BoclipsSecurity = stubBoclipsSecurity,
-    accountStatus = AccountStatus.ACTIVE,
+    accountType = AccountType.STANDARD,
   ) => {
     const client = new FakeBoclipsClient();
 
@@ -186,7 +186,7 @@ describe('UsersListRow', () => {
               canEdit={canEdit}
               onRemove={() => {}}
               canRemove
-              accountStatus={accountStatus}
+              accountType={accountType}
             />
           </QueryClientProvider>
         </BoclipsClientProvider>

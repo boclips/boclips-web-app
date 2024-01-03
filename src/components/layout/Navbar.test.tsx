@@ -11,7 +11,10 @@ import {
   resizeToTablet,
 } from 'src/testSupport/resizeTo';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
-import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import {
+  AccountStatus,
+  AccountType,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
 
@@ -268,7 +271,8 @@ describe(`Navbar`, () => {
       const fakeClient = new FakeBoclipsClient();
       fakeClient.accounts.insertAccount(
         AccountsFactory.sample({
-          status: AccountStatus.TRIAL,
+          type: AccountType.TRIAL,
+          status: AccountStatus.ACTIVE,
           id: 'trial',
         }),
       );
@@ -290,10 +294,11 @@ describe(`Navbar`, () => {
       );
     });
 
-    it(`does not renders the trial banner for non trial users`, async () => {
+    it(`does not render the trial banner for non trial users`, async () => {
       const fakeClient = new FakeBoclipsClient();
       fakeClient.accounts.insertAccount(
         AccountsFactory.sample({
+          type: AccountType.STANDARD,
           status: AccountStatus.ACTIVE,
           id: 'non-trial',
         }),

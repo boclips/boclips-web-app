@@ -10,7 +10,7 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
-import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe('App', () => {
@@ -216,7 +216,7 @@ describe('App', () => {
   it('/welcome renders home view instead of trial welcome for non trial users', async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'not-trial', status: AccountStatus.ACTIVE }),
+      AccountsFactory.sample({ id: 'not-trial', type: AccountType.STANDARD }),
     );
     apiClient.users.insertCurrentUser(
       UserFactory.sample({ account: { id: 'not-trial', name: 'regular' } }),
@@ -236,7 +236,7 @@ describe('App', () => {
   it('/welcome renders home view instead of trial welcome if user has marketing info', async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'a-trial', status: AccountStatus.TRIAL }),
+      AccountsFactory.sample({ id: 'a-trial', type: AccountType.TRIAL }),
     );
     apiClient.users.insertCurrentUser(
       UserFactory.sample({
@@ -261,7 +261,7 @@ describe('App', () => {
   it('home should redirect to welcome view if user is in trial and has no marketing info', async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'trial', status: AccountStatus.TRIAL }),
+      AccountsFactory.sample({ id: 'trial', type: AccountType.TRIAL }),
     );
     apiClient.users.insertCurrentUser(
       UserFactory.sample({

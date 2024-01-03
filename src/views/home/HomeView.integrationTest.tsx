@@ -13,7 +13,10 @@ import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
-import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import {
+  AccountStatus,
+  AccountType,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('HomeView', () => {
   beforeEach(() => {
@@ -183,7 +186,11 @@ describe('HomeView', () => {
     );
     fakeBoclipsClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
     fakeBoclipsClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'LAL', status: AccountStatus.TRIAL }),
+      AccountsFactory.sample({
+        id: 'LAL',
+        type: AccountType.TRIAL,
+        status: AccountStatus.ACTIVE,
+      }),
     );
     const wrapper = render(
       <MemoryRouter initialEntries={['/']}>
@@ -202,6 +209,49 @@ describe('HomeView', () => {
     ).toBeVisible();
   });
 
+  it('does not redirect to welcome view if user does not have marketing info but have account type different than trial', async () => {
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    fakeBoclipsClient.users.insertCurrentUser(
+      UserFactory.sample({
+        id: 'kb',
+        firstName: 'Kobe',
+        lastName: 'Bryant',
+        email: 'kobe@la.com',
+        account: { id: 'LAL', name: 'LA Lakers' },
+        audience: null,
+        jobTitle: null,
+        desiredContent: null,
+      }),
+    );
+    fakeBoclipsClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
+    fakeBoclipsClient.accounts.insertAccount(
+      AccountsFactory.sample({
+        id: 'LAL',
+        type: AccountType.STANDARD,
+        status: AccountStatus.DEMO,
+      }),
+    );
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/']}>
+        <App
+          reactQueryClient={createReactQueryClient()}
+          apiClient={fakeBoclipsClient}
+          boclipsSecurity={stubBoclipsSecurity}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await wrapper.queryByText(
+        "You've just been added to Boclips by your colleague",
+      ),
+    ).toBeNull();
+
+    expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
+      'Welcome to CourseSpark!',
+    );
+  });
+
   it('does not redirect to welcome view if user has no DEV feature flag', async () => {
     const fakeBoclipsClient = new FakeBoclipsClient();
     fakeBoclipsClient.users.insertCurrentUser(
@@ -217,7 +267,7 @@ describe('HomeView', () => {
       }),
     );
     fakeBoclipsClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'LAL', status: AccountStatus.TRIAL }),
+      AccountsFactory.sample({ id: 'LAL', type: AccountType.TRIAL }),
     );
     const wrapper = render(
       <MemoryRouter initialEntries={['/']}>

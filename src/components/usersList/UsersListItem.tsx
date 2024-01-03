@@ -6,7 +6,7 @@ import Button from '@boclips-ui/button';
 import PencilSVG from 'src/resources/icons/pencil.svg';
 import { ROLES } from 'src/types/Roles';
 import { WithValidRoles } from 'src/components/common/errors/WithValidRoles';
-import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import BinSVG from 'src/resources/icons/bin.svg';
 import s from './style.module.less';
 
@@ -33,7 +33,7 @@ const UserInformationField = ({ name, value }: UserInformationFieldProps) => (
 
 export interface Props {
   user: AccountUser;
-  accountStatus: AccountStatus;
+  accountType: AccountType;
   isLoading?: boolean;
   onEdit: (user: AccountUser) => void;
   canEdit: boolean;
@@ -46,11 +46,11 @@ export const UsersListItem = ({
   isLoading,
   onEdit,
   canEdit,
-  accountStatus,
+  accountType,
   onRemove,
   canRemove,
 }: Props) => {
-  const isNotTrial = accountStatus !== AccountStatus.TRIAL;
+  const isNotTrial = accountType !== AccountType.TRIAL;
 
   const renderPermission = (permission: boolean) => (permission ? 'Yes' : 'No');
 
