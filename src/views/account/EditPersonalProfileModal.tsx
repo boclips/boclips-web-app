@@ -23,6 +23,7 @@ const successNotification = (user: User) =>
   displayNotification(
     'success',
     `Your profile has been changed successfully`,
+    '',
     `user-edited-${user.firstName}`,
   );
 
