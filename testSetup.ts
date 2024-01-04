@@ -52,3 +52,6 @@ beforeEach(() => {
     return e;
   });
 });
+
+jest.mock('src/components/confetti/Confetti');
+
