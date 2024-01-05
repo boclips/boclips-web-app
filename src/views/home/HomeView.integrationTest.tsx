@@ -228,7 +228,7 @@ describe('HomeView', () => {
       AccountsFactory.sample({
         id: 'LAL',
         type: AccountType.STANDARD,
-        status: AccountStatus.DEMO,
+        status: AccountStatus.ACTIVE,
       }),
     );
     const wrapper = render(

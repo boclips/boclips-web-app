@@ -136,7 +136,7 @@ describe('UsersListRow', () => {
     expect(wrapper.queryByText('Remove')).toBeNull();
   });
 
-  it('doesnt display `Can order videos` column when account status is TRIAL', async () => {
+  it('doesnt display `Can order videos` column when account type is TRIAL', async () => {
     const security: BoclipsSecurity = {
       ...stubBoclipsSecurity,
       hasRole: (_role) => true,
