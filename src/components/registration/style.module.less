@@ -104,10 +104,18 @@
   padding: 2.75rem;
   grid-row-start: 2;
   grid-row-end: 6;
-  grid-column-start: 9;
-  grid-column-end: 19;
+  grid-column-start: 2;
+  grid-column-end: 26;
   margin-bottom: 2rem;
 }
+
+@media (min-width: @screen-lg) {
+  .emailVerificationPromptWrapper {
+    grid-column-start: 9;
+    grid-column-end: 19;
+  }
+}
+
 
 .message {
   margin-top: 2rem;
