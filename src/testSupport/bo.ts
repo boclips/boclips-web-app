@@ -90,12 +90,12 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
       'setting features of user: ',
       await apiClient.users.getCurrentUser(),
     );
-    console.log('new features: ', features);
+    console.log('new features: ', JSON.stringify(features));
 
     apiClient.users.setCurrentUserFeatures(features);
     console.log(
       'set features of user: ',
-      await apiClient.users.getCurrentUser(),
+      JSON.stringify(await apiClient.users.getCurrentUser()),
     );
   };
 
