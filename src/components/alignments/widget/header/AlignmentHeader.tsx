@@ -26,7 +26,7 @@ export const AlignmentHeader = () => {
         as="p"
         className={c('text-center', s.alignmentDescription)}
       >
-        {`Fulfil essential educational standards and curriculum objectives with
+        {`Fulfill essential educational standards and curriculum objectives with
           our curated Alignments. Video selection is tailored to state standards
           and curriculum criteria, providing content that aligns with and
           underpins your educational requirements.`}

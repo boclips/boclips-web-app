@@ -28,7 +28,7 @@ describe('Alignment page header', () => {
     });
     expect(
       await wrapper.findByText(
-        'Fulfil essential educational standards and curriculum objectives with our curated Alignments. Video selection is tailored to state standards and curriculum criteria, providing content that aligns with and underpins your educational requirements.',
+        'Fulfill essential educational standards and curriculum objectives with our curated Alignments. Video selection is tailored to state standards and curriculum criteria, providing content that aligns with and underpins your educational requirements.',
       ),
     ).toBeVisible();
   });
