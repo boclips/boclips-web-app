@@ -265,18 +265,7 @@ const App = ({
                         </WithValidRoles>
                       }
                     />
-                    <Route
-                      path="/account"
-                      element={
-                        <FeatureGate
-                          feature="BO_WEB_APP_DEV"
-                          fallback={<NotFound />}
-                          isView
-                        >
-                          <MyAccountView />
-                        </FeatureGate>
-                      }
-                    />
+                    <Route path="/account" element={<MyAccountView />} />
                     <Route
                       path="/register"
                       element={

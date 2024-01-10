@@ -20,7 +20,7 @@ const MyAccountView = () => {
     useState<boolean>(false);
 
   const { data: account, isLoading: accountIsLoading } = useGetAccount(
-    user.account?.id,
+    user?.account?.id,
   );
 
   const formatDate = (date: Date): string => {

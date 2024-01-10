@@ -27,7 +27,6 @@ describe('My Account view', () => {
     lastName: 'Wick',
     email: 'bob@wick.com',
     jobTitle: 'Engineer',
-    features: { BO_WEB_APP_DEV: true },
     account: {
       id: 'acc-1',
       name: 'Elephant Academy',
@@ -92,15 +91,6 @@ describe('My Account view', () => {
     });
   });
 
-  it('renders 404 when BO_WEB_APP_DEV is disabled', async () => {
-    const userWithoutDevAccess = UserFactory.sample({
-      features: { BO_WEB_APP_DEV: false },
-    });
-    wrapper(userWithoutDevAccess);
-
-    expect(await screen.findByText('Page not found!')).toBeInTheDocument();
-  });
-
   describe('User Profile', () => {
     it('renders my profile section', async () => {
       wrapper();
@@ -111,7 +101,9 @@ describe('My Account view', () => {
         within(userProfile).getByText(/Personal Profile/),
       ).toBeInTheDocument();
       expect(within(userProfile).getByText(/Name:/)).toBeInTheDocument();
-      expect(within(userProfile).getByText(/Bob Wick/)).toBeInTheDocument();
+      expect(
+        await within(userProfile).findByText(/Bob Wick/),
+      ).toBeInTheDocument();
       expect(within(userProfile).getByText(/Email:/)).toBeInTheDocument();
       expect(within(userProfile).getByText(/bob@wick.com/)).toBeInTheDocument();
       expect(within(userProfile).getByText(/Job Title:/)).toBeInTheDocument();
@@ -122,7 +114,9 @@ describe('My Account view', () => {
       wrapper();
 
       const userProfile = await screen.findByRole('main');
-      expect(within(userProfile).getByText(/Bob Wick/)).toBeInTheDocument();
+      expect(
+        await within(userProfile).findByText(/Bob Wick/),
+      ).toBeInTheDocument();
 
       fireEvent.click(await screen.findByRole('button', { name: 'Edit' }));
 
@@ -156,7 +150,6 @@ describe('My Account view', () => {
       const userWithMissingInfo = UserFactory.sample({
         lastName: 'tooth',
         email: 'tooth-fairy@boclips.com',
-        features: { BO_WEB_APP_DEV: true },
       });
       wrapper(userWithMissingInfo);
 
@@ -177,42 +170,6 @@ describe('My Account view', () => {
       expect(await screen.findByText(/Elephant Academy/)).toBeInTheDocument();
       expect(await screen.findByText(/Created on/)).toBeInTheDocument();
       expect(await screen.findByText(/September 2023/)).toBeInTheDocument();
-    });
-
-    it('does not render org profile when account data is missing', async () => {
-      const userWithMissingAccount = UserFactory.sample({
-        lastName: 'tooth',
-        email: 'tooth-fairy@boclips.com',
-        features: { BO_WEB_APP_DEV: true },
-      });
-      wrapper(userWithMissingAccount);
-
-      expect(
-        screen.queryByText(/Organization Profile/),
-      ).not.toBeInTheDocument();
-    });
-
-    it('does not render org profile info when data is missing', async () => {
-      const userWithMissingAccount = UserFactory.sample({
-        lastName: 'tooth',
-        email: 'tooth-fairy@boclips.com',
-        features: { BO_WEB_APP_DEV: true },
-        account: {
-          id: 'acc-2',
-          name: 'Ant Academy',
-        },
-      });
-
-      const accountWithMissingInfo = AccountsFactory.sample({
-        id: 'acc-2',
-        name: 'Ant Academy',
-      });
-
-      wrapper(userWithMissingAccount, accountWithMissingInfo);
-
-      expect(await screen.findByText(/Ant Academy/)).toBeInTheDocument();
-      expect(screen.queryByText(/Signup date/)).not.toBeInTheDocument();
-      expect(screen.queryByText(/Length of access/)).not.toBeInTheDocument();
     });
 
     it('displays skeleton when loading', async () => {

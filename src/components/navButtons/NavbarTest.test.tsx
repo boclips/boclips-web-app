@@ -65,26 +65,6 @@ describe(`Navbar test`, () => {
     });
   });
 
-  it('does not show My account page link when BO_WEB_APP_DEV disabled', async () => {
-    fakeClient.users.insertCurrentUser(
-      UserFactory.sample({
-        firstName: 'Eddie',
-        lastName: 'Bravo',
-        email: 'eddie@10thplanetjj.com',
-        features: { BO_WEB_APP_DEV: false },
-      }),
-    );
-    const navbar = renderAccountButton();
-
-    fireEvent.click(await navbar.findByText('Eddie'));
-
-    await waitFor(() => navbar.getByTestId('account-modal'));
-
-    await waitFor(() => {
-      expect(navbar.queryByText('My account')).not.toBeInTheDocument();
-    });
-  });
-
   it('does not contain your orders link in tooltip when user does not have userOrders link', async () => {
     const user = UserFactory.sample({
       id: '123',
