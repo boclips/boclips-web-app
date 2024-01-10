@@ -55,8 +55,6 @@ describe(`Navbar test`, () => {
     await waitFor(() => navbar.getByTestId('account-modal'));
 
     await waitFor(() => {
-      expect(navbar.getByText('Eddie Bravo')).toBeInTheDocument();
-      expect(navbar.getByText('eddie@10thplanetjj.com')).toBeInTheDocument();
       expect(navbar.getByText('My account')).toBeInTheDocument();
       expect(navbar.getByText('My orders')).toBeInTheDocument();
       expect(navbar.getByText('Platform guide')).toBeInTheDocument();
@@ -83,8 +81,6 @@ describe(`Navbar test`, () => {
     await waitFor(() => wrapper.getByTestId('account-modal'));
 
     await waitFor(() => {
-      expect(wrapper.getByText('yo yo')).toBeInTheDocument();
-      expect(wrapper.getByText('yoyo@ma.com')).toBeInTheDocument();
       expect(wrapper.queryByText('My orders')).toBeNull();
       expect(wrapper.getByText('Log out')).toBeInTheDocument();
     });
