@@ -19,6 +19,9 @@ export class PendoService {
           id: user.id,
           email: user.email,
           full_name: `${user.firstName} ${user.lastName}`,
+          role: user.jobTitle || '',
+          content: user.desiredContent || '',
+          audience: user.audience || '',
         },
         account: {
           id: user.account?.id || 'n/a',

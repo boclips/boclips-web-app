@@ -8,6 +8,9 @@ describe('Pendo Service', () => {
       email: 'user@monday.com',
       firstName: 'M',
       lastName: 'J',
+      jobTitle: 'barista',
+      audience: 'caffeine addicts',
+      desiredContent: 'books&coffee',
       account: {
         id: 'account-id',
         name: 'account name',
@@ -27,6 +30,9 @@ describe('Pendo Service', () => {
         id: 'user-id',
         email: 'user@monday.com',
         full_name: 'M J',
+        role: 'barista',
+        content: 'books&coffee',
+        audience: 'caffeine addicts',
       },
       account: {
         id: 'account-id',
@@ -34,12 +40,16 @@ describe('Pendo Service', () => {
       },
     });
   });
+
   it('uses n/a when there is no account id defined', () => {
     let user = UserFactory.sample({
       id: 'user-id',
       email: 'user@monday.com',
       firstName: 'M',
       lastName: 'J',
+      jobTitle: undefined,
+      audience: undefined,
+      desiredContent: undefined,
     });
     user = { ...user, account: null };
 
@@ -56,6 +66,9 @@ describe('Pendo Service', () => {
         id: 'user-id',
         email: 'user@monday.com',
         full_name: 'M J',
+        role: '',
+        content: '',
+        audience: '',
       },
       account: {
         id: 'n/a',
