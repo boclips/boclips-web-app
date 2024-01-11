@@ -22,6 +22,7 @@ import userEvent from '@testing-library/user-event';
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
 import { lastEvent } from 'src/testSupport/lastEvent';
+import { AdminLinksFactory } from 'boclips-api-client/dist/test-support/AdminLinksFactory';
 
 afterEach(cleanup);
 
@@ -678,7 +679,7 @@ describe('CartView', () => {
 
   describe('window titles', () => {
     it('displays Cart as window title', async () => {
-      render(
+      const view = render(
         <MemoryRouter initialEntries={['/cart']}>
           <App
             boclipsSecurity={stubBoclipsSecurity}
@@ -686,6 +687,7 @@ describe('CartView', () => {
           />
         </MemoryRouter>,
       );
+      expect(await view.findByText('Shopping cart')).toBeVisible();
 
       const helmet = Helmet.peek();
 
