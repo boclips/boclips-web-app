@@ -678,7 +678,7 @@ describe('CartView', () => {
 
   describe('window titles', () => {
     it('displays Cart as window title', async () => {
-      render(
+      const view = render(
         <MemoryRouter initialEntries={['/cart']}>
           <App
             boclipsSecurity={stubBoclipsSecurity}
@@ -686,6 +686,7 @@ describe('CartView', () => {
           />
         </MemoryRouter>,
       );
+      expect(await view.findByText('Shopping cart')).toBeVisible();
 
       const helmet = Helmet.peek();
 

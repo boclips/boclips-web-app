@@ -12,6 +12,7 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
+import { AdminLinksFactory } from 'boclips-api-client/dist/test-support/AdminLinksFactory';
 
 describe('App', () => {
   it('renders the not found page on user having incorrect role', async () => {
@@ -22,6 +23,42 @@ describe('App', () => {
     const wrapper = render(
       <MemoryRouter>
         <App boclipsSecurity={security} apiClient={new FakeBoclipsClient()} />,
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByText('Page not found!')).toBeVisible();
+  });
+
+  it('renders the not found page on user accessing cart but not having cart link', async () => {
+    const apiClient = new FakeBoclipsClient();
+    apiClient.links = AdminLinksFactory.sample({ cart: null });
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/cart']}>
+        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByText('Page not found!')).toBeVisible();
+  });
+
+  it('renders the not found page on user accessing orders but not having userOrders link', async () => {
+    const apiClient = new FakeBoclipsClient();
+    apiClient.links = AdminLinksFactory.sample({ userOrders: null });
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/orders']}>
+        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByText('Page not found!')).toBeVisible();
+  });
+
+  it('renders the not found page on user accessing order details but not having order link', async () => {
+    const apiClient = new FakeBoclipsClient();
+    apiClient.links = AdminLinksFactory.sample({ order: null });
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/orders/123']}>
+        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
       </MemoryRouter>,
     );
 

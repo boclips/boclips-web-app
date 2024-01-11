@@ -172,36 +172,36 @@ const App = ({
                     <Route
                       path="/cart"
                       element={
-                        <WithValidRoles
+                        <FeatureGate
+                          linkName="cart"
                           fallback={<AccessDeniedView />}
-                          roles={[ROLES.BOCLIPS_WEB_APP_ORDER]}
                         >
                           <Helmet title="Cart" />
                           <CartView />
-                        </WithValidRoles>
+                        </FeatureGate>
                       }
                     />
                     <Route
                       path="/orders"
                       element={
-                        <WithValidRoles
+                        <FeatureGate
+                          linkName="userOrders"
                           fallback={<AccessDeniedView />}
-                          roles={[ROLES.BOCLIPS_WEB_APP_ORDER]}
                         >
                           <Helmet title="My Orders" />
                           <OrdersView />
-                        </WithValidRoles>
+                        </FeatureGate>
                       }
                     />
                     <Route
                       path="/orders/:id"
                       element={
-                        <WithValidRoles
+                        <FeatureGate
+                          linkName="order"
                           fallback={<AccessDeniedView />}
-                          roles={[ROLES.BOCLIPS_WEB_APP_ORDER]}
                         >
                           <OrderView />
-                        </WithValidRoles>
+                        </FeatureGate>
                       }
                     />
                     <Route path="/error" element={<ErrorView />} />
