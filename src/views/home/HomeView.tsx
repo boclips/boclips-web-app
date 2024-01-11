@@ -21,7 +21,7 @@ const HomeView = () => {
   const breakpoints = useMediaBreakPoint();
   const isMobileView =
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
-  const [showTrialPopUp, setShowTrialPopUp] = useState<boolean>();
+  const [showTrialPopUp, setShowTrialPopUp] = useState<boolean>(false);
 
   useShowTrialWelcomeModal({ showPopup: setShowTrialPopUp });
   useEmailVerified();
@@ -29,7 +29,7 @@ const HomeView = () => {
   return (
     <Layout rowsSetup="grid-rows-newHomepage" responsiveLayout>
       <NewNavbar showSearch={false} />
-      {showTrialPopUp && <WelcomeModal />}
+      {showTrialPopUp && <WelcomeModal showPopup={setShowTrialPopUp} />}
       <div
         data-qa="header-text"
         className="row-start-2 row-end-2 col-start-2 col-end-26 pb-3 lg:pb-0 lg:pt-0 lg:col-start-4 lg:col-end-13"

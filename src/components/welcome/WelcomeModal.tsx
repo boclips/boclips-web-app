@@ -17,7 +17,11 @@ export interface MarketingInfo {
   jobTitle: string;
 }
 
-const WelcomeModal = () => {
+interface Props {
+  showPopup: (arg: boolean) => void;
+}
+
+const WelcomeModal = ({ showPopup }: Props) => {
   const { mutate: updateUser, isLoading: isUserUpdating } = useUpdateUser();
   const { data: user } = useGetUserQuery();
 
@@ -52,6 +56,7 @@ const WelcomeModal = () => {
               'success',
               `User ${user.email} successfully updated`,
             );
+            showPopup(false);
           } else {
             displayNotification('error', 'User update failed');
           }
