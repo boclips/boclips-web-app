@@ -9,19 +9,11 @@ context('Registration Page', () => {
       bo.set.features({
         BO_WEB_APP_DEV: true,
       });
-      cy.window().then((window) => {
-        window.Environment.CAPTCHA_TOKEN =
-          '6Ldi6JwUAAAAACMgLoshiwBEZNDmnllXrAEIMN_y';
-      });
+    });
 
-      cy.intercept('POST', 'https://www.google.com/recaptcha/api2/reload**', {
-        statusCode: 200,
-        body: { success: true },
-      });
-
-      cy.window().then((win) => {
-        cy.stub(win.crypto, 'randomUUID').returns('123-123');
-      });
+    cy.intercept('POST', 'https://www.google.com/recaptcha/api2/reload**', {
+      statusCode: 200,
+      body: { success: true },
     });
 
     cy.findByText('Create your free account').should('be.visible');
