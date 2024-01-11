@@ -203,9 +203,7 @@ describe('HomeView', () => {
     );
 
     expect(
-      await wrapper.findByText(
-        "You've just been added to Boclips by your colleague",
-      ),
+      await wrapper.findByText('Tell us a bit more about you'),
     ).toBeVisible();
   });
 

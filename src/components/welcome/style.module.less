@@ -5,10 +5,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  grid-column-start: 9;
-  grid-column-end: 19;
-  grid-row-start: 2;
-  grid-row-end: 3;
   color: @gray-900;
 }
 
@@ -16,28 +12,31 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  grid-column-start: 9;
-  grid-column-end: 19;
-  grid-row-start: 3;
-  grid-row-end: 4;
   color: @gray-900;
-  background-color: #f7fafc;
+  background-color: @gray-100;
   border-color: @gray-400;
   border-style: solid;
   border-width: 2px;
   border-radius: 4px;
-  padding: 2rem;
+  padding: 2rem 1rem;
   gap: 1.5rem;
+  margin: 2rem 0;
+
+  div {
+    width: 100%;
+
+    span {
+      &:first-child {
+        width: 120px;
+      }
+    }
+  }
 }
 
 .marketingInfoWrapper {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  grid-column-start: 9;
-  grid-column-end: 19;
-  grid-row-start: 4;
-  grid-row-end: 5;
   gap: 1rem;
 }
 
@@ -51,66 +50,17 @@
 }
 
 .updateMarketingInfoButtonWrapper {
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  grid-column-start: 9;
-  grid-column-end: 19;
-  grid-row-start: 5;
-  grid-row-end: 6;
 }
 
 .updateMarketingInfoButton {
   height: 48px
 }
 
-@media screen and (min-width: @screen-sm) {
-  .header {
-    grid-column-start: 2;
-    grid-column-end: 26;
-  }
-
-  .userInfo {
-    grid-column-start: 2;
-    grid-column-end: 26;
-  }
-
-  .marketingInfoWrapper {
-    grid-column-start: 2;
-    grid-column-end: 26;
-  }
-}
-
-@media screen and (min-width: @screen-md) {
-  .header {
-    grid-column-start: 5;
-    grid-column-end: 23;
-  }
-
-  .userInfo {
-    grid-column-start: 5;
-    grid-column-end: 23;
-  }
-
-  .marketingInfoWrapper {
-    grid-column-start: 5;
-    grid-column-end: 23;
-  }
-}
-
-@media screen and (min-width: @screen-lg) {
-  .header {
-    grid-column-start: 9;
-    grid-column-end: 19;
-  }
-
-  .userInfo {
-    grid-column-start: 9;
-    grid-column-end: 19;
-  }
-
-  .marketingInfoWrapper {
-    grid-column-start: 9;
-    grid-column-end: 19;
-  }
+.footer{
+  justify-content: center!important;
 }

@@ -8,7 +8,7 @@ const InvitedUserInfo = () => {
 
   return (
     user && (
-      <section className={s.userInfo}>
+      <section id="one" className={s.userInfo}>
         <div className="flex flex-row">
           <Typography.Body className="mr-2">Name:</Typography.Body>
           <Typography.Body weight="medium">

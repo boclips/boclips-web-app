@@ -89,10 +89,6 @@ const MyAccountView = lazyWithRetry(
   () => import('src/views/account/MyAccountView'),
 );
 
-const TrialWelcomeView = lazyWithRetry(
-  () => import('src/views/welcome/TrialWelcomeView'),
-);
-
 interface Props {
   apiClient: BoclipsClient;
   boclipsSecurity: BoclipsSecurity;
@@ -114,7 +110,7 @@ const App = ({
       AnalyticsFactory.hotjar().userAttributes(new UserAttributes(user));
     });
     // eslint-disable-next-line
-  }, []);
+    }, []);
 
   useEffect(() => {
     trackPageRendered(currentLocation, apiClient);
@@ -141,9 +137,9 @@ const App = ({
 
   return (
     <QueryClientProvider client={reactQueryClient}>
+      <ScrollToTop />
+      <ToastContainer />
       <GlobalQueryErrorProvider>
-        <ScrollToTop />
-        <ToastContainer />
         <BoclipsSecurityProvider boclipsSecurity={boclipsSecurity}>
           <BoclipsClientProvider client={apiClient}>
             <JSErrorBoundary fallback={<FallbackView />}>
@@ -160,15 +156,6 @@ const App = ({
                         <>
                           <Helmet title="Home" />
                           <HomeView />
-                        </>
-                      }
-                    />
-                    <Route
-                      path="/welcome"
-                      element={
-                        <>
-                          <Helmet title="Welcome" />
-                          <TrialWelcomeView />
                         </>
                       }
                     />

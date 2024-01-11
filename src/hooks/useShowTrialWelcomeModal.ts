@@ -4,7 +4,11 @@ import { useGetAccount, useGetUserQuery } from 'src/hooks/api/userQuery';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
-const useRedirectToWelcome = () => {
+interface Props {
+  showPopup: (arg: boolean) => void;
+}
+
+const useShowTrialWelcomeModal = ({ showPopup }: Props) => {
   const navigate = useNavigate();
   const { data: user, isLoading: userLoading } = useGetUserQuery();
   const { data: account, isLoading: accountLoading } = useGetAccount(
@@ -18,7 +22,7 @@ const useRedirectToWelcome = () => {
     const isMarketingInfoSetForUser = user && isMarketingInfoSet(user);
 
     if (isUserInTrial && !isMarketingInfoSetForUser) {
-      navigate('/welcome');
+      showPopup(true);
     }
   }, [user, account, userLoading, accountLoading, navigate]);
 };
@@ -31,4 +35,4 @@ const isMarketingInfoSet = (user: User): boolean => {
   return isJobTitleSet && isAudienceSet && isDesiredContentSet;
 };
 
-export default useRedirectToWelcome;
+export default useShowTrialWelcomeModal;
