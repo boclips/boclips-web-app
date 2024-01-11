@@ -30,6 +30,10 @@ export interface Props {
   confirmButtonIcon?: React.ReactElement;
   displayCancelButton?: boolean;
   smallSize?: boolean;
+  showFooter?: boolean;
+  showCloseIcon?: boolean;
+  footerClass?: string;
+  footerText?: ReactElement | string;
 }
 
 export const Bodal: React.FC<Props> = ({
@@ -46,6 +50,10 @@ export const Bodal: React.FC<Props> = ({
   confirmButtonIcon,
   displayCancelButton = true,
   smallSize = true,
+  showFooter = true,
+  showCloseIcon = true,
+  footerClass,
+  footerText,
 }: PropsWithChildren<Props>) => {
   const breakpoints = useMediaBreakPoint();
   const mobileView = breakpoints.type === 'mobile';
@@ -58,35 +66,6 @@ export const Bodal: React.FC<Props> = ({
     ) : (
       confirmButtonIcon
     );
-  const header = (
-    <>
-      {mobileView && <span />}
-      <Typography.H1 size="sm" className="text-gray-900" id="bodal-title">
-        {title}
-      </Typography.H1>
-      <button
-        type="button"
-        aria-label={`Close ${title} modal`}
-        onClick={onCancel}
-      >
-        <CloseIconSVG className="stroke-current stroke-2" />
-      </button>
-    </>
-  );
-
-  const footer = (
-    <>
-      {displayCancelButton && (
-        <TextButton onClick={onCancel} text={cancelButtonText} />
-      )}
-      <Button
-        onClick={onConfirm}
-        text={confirmButtonText}
-        disabled={isLoading}
-        icon={getSpinner()}
-      />
-    </>
-  );
 
   const ref = useRef(null);
 
@@ -126,17 +105,47 @@ export const Bodal: React.FC<Props> = ({
         </div>
         <div className={c(s.modal, { [s.small]: smallSize })} ref={ref}>
           <div className={s.modalContent}>
-            <div className={s.modalHeader}>{header}</div>
+            <div className={s.modalHeader}>
+              {mobileView && <span />}
+              <Typography.H1
+                size="sm"
+                className="text-gray-900"
+                id="bodal-title"
+              >
+                {title}
+              </Typography.H1>
+              {showCloseIcon && (
+                <button
+                  type="button"
+                  aria-label={`Close ${title} modal`}
+                  onClick={onCancel}
+                >
+                  <CloseIconSVG className="stroke-current stroke-2" />
+                </button>
+              )}
+            </div>
             {children}
           </div>
-          <div
-            className={c(
-              s.modalFooter,
-              displayCancelButton ? [s.twoButtonFooter] : [s.oneButtonFooter],
-            )}
-          >
-            {footer}
-          </div>
+          {showFooter && (
+            <div
+              className={c(
+                s.modalFooter,
+                displayCancelButton ? [s.twoButtonFooter] : [s.oneButtonFooter],
+                footerClass,
+              )}
+            >
+              {displayCancelButton && (
+                <TextButton onClick={onCancel} text={cancelButtonText} />
+              )}
+              <Button
+                onClick={onConfirm}
+                text={confirmButtonText}
+                disabled={isLoading}
+                icon={getSpinner()}
+              />
+            </div>
+          )}
+          {footerText}
         </div>
       </div>
     </FocusTrap>

@@ -3,14 +3,18 @@ import c from 'classnames';
 import s from 'src/components/registration/style.module.less';
 import React from 'react';
 
-const AcceptedAgreement = () => {
+interface Props {
+  buttonText?: string;
+}
+
+const AcceptedAgreement = ({ buttonText = 'Create Account' }: Props) => {
   return (
     <Typography.Body
       data-qa="accepted-agreement"
       size="small"
       className={c(s.grayText, 'mt-8')}
     >
-      By clicking Create Account, you agree to the{' '}
+      By clicking {buttonText}, you agree to the{' '}
       <a
         rel="noopener noreferrer"
         className={s.link}

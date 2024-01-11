@@ -213,52 +213,7 @@ describe('App', () => {
     expect(await wrapper.findByText('Page not found!')).toBeVisible();
   });
 
-  it('/welcome renders home view instead of trial welcome for non trial users', async () => {
-    const apiClient = new FakeBoclipsClient();
-    apiClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'not-trial', type: AccountType.STANDARD }),
-    );
-    apiClient.users.insertCurrentUser(
-      UserFactory.sample({ account: { id: 'not-trial', name: 'regular' } }),
-    );
-
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/welcome']}>
-        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
-      </MemoryRouter>,
-    );
-
-    expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
-      'Welcome to CourseSpark!',
-    );
-  });
-
-  it('/welcome renders home view instead of trial welcome if user has marketing info', async () => {
-    const apiClient = new FakeBoclipsClient();
-    apiClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'a-trial', type: AccountType.TRIAL }),
-    );
-    apiClient.users.insertCurrentUser(
-      UserFactory.sample({
-        account: { id: 'a-trial', name: 'regular' },
-        desiredContent: 'dfds',
-        audience: 'sadfd',
-        jobTitle: 'asdh',
-      }),
-    );
-
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/welcome']}>
-        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
-      </MemoryRouter>,
-    );
-
-    expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
-      'Welcome to CourseSpark!',
-    );
-  });
-
-  it('home should redirect to welcome view if user is in trial and has no marketing info', async () => {
+  it('home should display welcome popup if user is in trial and has no marketing info', async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.accounts.insertAccount(
       AccountsFactory.sample({ id: 'trial', type: AccountType.TRIAL }),
@@ -278,9 +233,7 @@ describe('App', () => {
     );
 
     expect(
-      await wrapper.findByText(
-        "You've just been added to Boclips by your colleague",
-      ),
+      await wrapper.findByText('Tell us a bit more about you'),
     ).toBeVisible();
   });
 });
