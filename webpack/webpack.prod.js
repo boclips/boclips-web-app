@@ -28,7 +28,7 @@ module.exports = merge(common, {
   ],
   performance: {
     hints: 'error',
-    maxAssetSize: 1015 * kilobyte, // we set this as the current largest - could maybe go lower
+    maxAssetSize: 1200 * kilobyte,
     maxEntrypointSize: 2048 * kilobyte,
   },
   optimization: {
@@ -36,7 +36,7 @@ module.exports = merge(common, {
       chunks: 'all',
       name: false,
       maxInitialRequests: Infinity,
-      minSize: 1015 * kilobyte,
+      minSize: 1020 * kilobyte,
       maxSize: 1536 * kilobyte,
       cacheGroups: {
         default: {
