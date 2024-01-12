@@ -1,6 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import MyTeamView from 'src/views/team/MyTeamView';
 import { BoclipsClient } from 'boclips-api-client';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Loading } from 'src/components/common/Loading';
@@ -89,6 +88,8 @@ const MyAccountView = lazyWithRetry(
   () => import('src/views/account/MyAccountView'),
 );
 
+const MyTeamView = lazyWithRetry(() => import('src/views/team/MyTeamView'));
+
 interface Props {
   apiClient: BoclipsClient;
   boclipsSecurity: BoclipsSecurity;
@@ -109,8 +110,7 @@ const App = ({
       AnalyticsFactory.pendo().identify(user);
       AnalyticsFactory.hotjar().userAttributes(new UserAttributes(user));
     });
-    // eslint-disable-next-line
-    }, []);
+  }, []);
 
   useEffect(() => {
     trackPageRendered(currentLocation, apiClient);
@@ -244,12 +244,9 @@ const App = ({
                     <Route
                       path="/team"
                       element={
-                        <WithValidRoles
-                          fallback={<NotFound />}
-                          roles={[ROLES.ROLE_BOCLIPS_WEB_APP_MANAGE_USERS]}
-                        >
+                        <FeatureGate linkName="accountUsers">
                           <MyTeamView />
-                        </WithValidRoles>
+                        </FeatureGate>
                       }
                     />
                     <Route path="/account" element={<MyAccountView />} />

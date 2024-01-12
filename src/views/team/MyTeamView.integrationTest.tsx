@@ -19,7 +19,7 @@ import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/mode
 import { Helmet } from 'react-helmet';
 
 describe('My Team view', () => {
-  it('renders my team page', () => {
+  it('renders my team page', async () => {
     const wrapper = render(
       <MemoryRouter initialEntries={['/team']}>
         <App
@@ -30,7 +30,7 @@ describe('My Team view', () => {
       </MemoryRouter>,
     );
 
-    expect(wrapper.getByText('My team')).toBeInTheDocument();
+    expect(await wrapper.findByText('My team')).toBeInTheDocument();
     expect(
       wrapper.getByRole('button', { name: 'Add member' }),
     ).toBeInTheDocument();
@@ -47,7 +47,9 @@ describe('My Team view', () => {
       </MemoryRouter>,
     );
 
-    await userEvent.click(wrapper.getByRole('button', { name: 'Add member' }));
+    await userEvent.click(
+      await wrapper.findByRole('button', { name: 'Add member' }),
+    );
 
     await waitFor(() =>
       wrapper.getByRole('heading', { level: 1, name: 'Add member' }),
@@ -504,9 +506,8 @@ describe('My Team view', () => {
       </MemoryRouter>,
     );
 
-    const helmet = Helmet.peek();
-
     await waitFor(() => {
+      const helmet = Helmet.peek();
       expect(helmet.title).toEqual('My Team');
     });
   });
