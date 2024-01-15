@@ -44,7 +44,7 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
           mode="multiple"
           labelText="Organization type"
           onUpdate={(values: string[]) => {
-            console.log(values);
+            handleChange('organizationTypes', values);
           }}
           options={ORGANIZATION_TYPE}
           dataQa="input-dropdown-organization-type"

@@ -6,7 +6,7 @@
   "scripts": {
     "audit": "check-audit",
     "resolve-audit": "resolve-audit",
-    "test": "jest --maxWorkers=50%",
+    "test": "DEBUG_PRINT_LIMIT=10000 jest --maxWorkers=50%",
     "test:coverage": "jest --maxWorkers=50% --coverage --collectCoverageFrom='src/**/*.ts*'",
     "test-visual": "percy exec -- ./node_modules/.bin/cypress run",
     "test-visual:open": "start-server-and-test fake http://localhost:9000/ 'percy exec -- ./node_modules/.bin/cypress open'",
@@ -67,6 +67,7 @@
     "html-webpack-plugin": "^5.5.0",
     "i": "^0.3.6",
     "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.7.0",
     "jest-axe": "^8.0.0",
     "jest-environment-jsdom": "^29.6.3",
     "less": "^4.2.0",

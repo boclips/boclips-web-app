@@ -15,6 +15,7 @@ import App from 'src/App';
 import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import userEvent from '@testing-library/user-event';
 
 describe('Trial Welcome View', () => {
   const fakeClient = new FakeBoclipsClient();
@@ -29,7 +30,11 @@ describe('Trial Welcome View', () => {
       }),
     );
     fakeClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'LAL', type: AccountType.TRIAL }),
+      AccountsFactory.sample({
+        id: 'LAL',
+        type: AccountType.TRIAL,
+        marketingInformation: { companySegments: ['Edtech'] },
+      }),
     );
   });
 
@@ -69,7 +74,7 @@ describe('Trial Welcome View', () => {
     expect(wrapper.getByRole('button', { name: "Let's Go!" })).toBeVisible();
   });
 
-  it('user update is performed when clicked button', async () => {
+  it('regular user update is performed when clicked button', async () => {
     const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
 
     const wrapper = renderWelcomeView();
@@ -85,6 +90,7 @@ describe('Trial Welcome View', () => {
         jobTitle: 'Player',
         audience: 'K12',
         desiredContent: 'Basketball',
+        discoveryMethods: [],
         type: 'b2bUser',
       });
     });
@@ -163,8 +169,8 @@ describe('Trial Welcome View', () => {
 
     fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
-    expect(await wrapper.queryByText('Job title is required')).toBeNull();
-    expect(await wrapper.queryByText('Audience type is required')).toBeNull();
+    expect(wrapper.queryByText('Job title is required')).toBeNull();
+    expect(wrapper.queryByText('Audience type is required')).toBeNull();
     expect(
       await wrapper.findByText('Desired content is required'),
     ).toBeVisible();
@@ -195,6 +201,50 @@ describe('Trial Welcome View', () => {
     );
   });
 
+  it('admin user update is performed when clicked button', async () => {
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({
+        id: 'sk',
+        firstName: 'Saku',
+        lastName: 'Saku Koivu',
+        email: 'saku@koivu.com',
+        account: { id: 'AND', name: 'Anaheim Ducks' },
+      }),
+    );
+    fakeClient.accounts.insertAccount(
+      AccountsFactory.sample({
+        id: 'AND',
+        type: AccountType.TRIAL,
+        marketingInformation: {},
+      }),
+    );
+
+    const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+
+    const wrapper = renderWelcomeView();
+
+    await setJobTitle(wrapper, 'Player');
+    await setAudience(wrapper, 'K12');
+    await setDesiredContent(wrapper, 'Hockey');
+    await setOrganizationTypes(wrapper, ['Edtech', 'Government']);
+    await setDiscoveryMethods(wrapper, [
+      'Contacted by Boclips',
+      'Social Media',
+    ]);
+
+    fireEvent.click(await wrapper.findByRole('button', { name: "Let's Go!" }));
+
+    await waitFor(() => {
+      expect(updateUserSpy).toHaveBeenCalledWith('sk', {
+        jobTitle: 'Player',
+        audience: 'K12',
+        desiredContent: 'Hockey',
+        discoverMethods: ['Contacted by Boclips', 'Social Media'],
+        type: 'b2bUser',
+      });
+    });
+  });
+
   async function setJobTitle(wrapper: RenderResult, value: string) {
     fireEvent.change(await wrapper.findByLabelText(/Job Title/), {
       target: { value },
@@ -217,6 +267,20 @@ describe('Trial Welcome View', () => {
       {
         target: { value },
       },
+    );
+  }
+
+  async function setOrganizationTypes(wrapper: RenderResult, values: string[]) {
+    await userEvent.selectOptions(
+      wrapper.getByTestId('input-dropdown-organization-type'),
+      values,
+    );
+  }
+
+  async function setDiscoveryMethods(wrapper: RenderResult, values: string[]) {
+    await userEvent.selectOptions(
+      wrapper.getByTestId('input-dropdown-discovery-method'),
+      values,
     );
   }
 

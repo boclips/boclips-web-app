@@ -16,13 +16,15 @@ export interface MarketingInfo {
   desiredContent: string;
   jobTitle: string;
   discoveryMethods: string[];
+  organizationTypes: string[];
 }
 
 interface Props {
   showPopup: (arg: boolean) => void;
+  isAdmin: boolean;
 }
 
-const WelcomeModal = ({ showPopup }: Props) => {
+const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
   const { mutate: updateUser, isLoading: isUserUpdating } = useUpdateUser();
   const { data: user } = useGetUserQuery();
 
@@ -31,14 +33,15 @@ const WelcomeModal = ({ showPopup }: Props) => {
     desiredContent: '',
     jobTitle: '',
     discoveryMethods: [],
+    organizationTypes: [],
   });
 
   const [errors, setErrors] = useState({
     isAudienceEmpty: false,
     isDesiredContentEmpty: false,
     isJobTitleEmpty: false,
-    isDiscoveryMethodEmpty: false,
-    isOrganizationTypeEmpty: false,
+    isDiscoveryMethodsEmpty: false,
+    isOrganizationTypesEmpty: false,
   });
 
   const handleUserUpdate = () => {
@@ -49,6 +52,7 @@ const WelcomeModal = ({ showPopup }: Props) => {
       jobTitle: marketingInfo.jobTitle,
       audience: marketingInfo.audience,
       desiredContent: marketingInfo.desiredContent,
+      discoveryMethods: marketingInfo.discoveryMethods,
     };
 
     updateUser(
@@ -76,16 +80,27 @@ const WelcomeModal = ({ showPopup }: Props) => {
     const isJobTitleEmpty = !marketingInfo.jobTitle.trim();
     const isAudienceEmpty = !marketingInfo.audience.trim();
     const isDesiredContentEmpty = !marketingInfo.desiredContent.trim();
+    const isDiscoveryMethodsEmpty =
+      marketingInfo.discoveryMethods == null ||
+      marketingInfo.discoveryMethods.length === 0;
+    const isOrganizationTypesEmpty =
+      marketingInfo.organizationTypes == null ||
+      marketingInfo.organizationTypes.length === 0;
 
     setErrors({
       isJobTitleEmpty,
       isAudienceEmpty,
       isDesiredContentEmpty,
-      isDiscoveryMethodEmpty: false,
-      isOrganizationTypeEmpty: false,
+      isDiscoveryMethodsEmpty,
+      isOrganizationTypesEmpty,
     });
 
-    return !isJobTitleEmpty && !isAudienceEmpty && !isDesiredContentEmpty;
+    const validRegularFields =
+      !isJobTitleEmpty && !isAudienceEmpty && !isDesiredContentEmpty;
+    const validAdminFields =
+      !isDiscoveryMethodsEmpty && !isOrganizationTypesEmpty;
+
+    return validRegularFields && (!isAdmin || validAdminFields);
   };
 
   return (
@@ -104,7 +119,7 @@ const WelcomeModal = ({ showPopup }: Props) => {
       <MarketingInfoForm
         errors={errors}
         setMarketingInfo={setMarketingInfo}
-        isAdmin // todo: recognize admin
+        isAdmin={isAdmin}
       />
     </Bodal>
   );
