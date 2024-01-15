@@ -102,4 +102,40 @@ describe('userQuery', () => {
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(usersSpy).toBeCalledWith('user-1', request);
   });
+
+  it('updates _self user', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const usersSpy = jest.spyOn(fakeClient.users, 'updateUser');
+    // @ts-ignore
+    fakeClient.users.updateSelf = usersSpy;
+
+    const request: UpdateUserRequest = {
+      type: UserType.b2bUser,
+      jobTitle: 'test',
+    };
+    const { result } = renderHook(() => useUpdateUser(), {
+      wrapper: wrapperWithClients(fakeClient, new QueryClient()),
+    });
+
+    const accountUser: AccountUser = {
+      id: 'user-1',
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'bla@boclips.com',
+      permissions: {
+        canOrder: false,
+        canManageUsers: false,
+      },
+    };
+
+    act(() =>
+      result.current.mutate({
+        user: accountUser,
+        request,
+      }),
+    );
+
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
+    expect(usersSpy).toBeCalledWith('user-1', request);
+  });
 });

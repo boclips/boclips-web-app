@@ -94,6 +94,32 @@ const doUpdateUser = (
   return client.users.updateUser(userId, updateRequest);
 };
 
+const doUpdateSelfUser = (
+  user: Partial<User>,
+  updateRequest: UpdateUserRequest,
+  client: BoclipsClient,
+): Promise<User> => {
+  return client.users.updateSelf(user, updateRequest);
+};
+
+export const useUpdateSelfUser = () => {
+  const client = useBoclipsClient();
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    ({ user, request }: EditUserRequest) =>
+      doUpdateSelfUser(user, request, client),
+    {
+      onSuccess: (_isSuccess, _request) => {
+        // do not wait until query cache is invalidated!
+        // noinspection JSIgnoredPromiseFromCall
+        queryClient.invalidateQueries(['accountUsers']);
+        queryClient.invalidateQueries(['user']);
+      },
+    },
+  );
+};
+
 const doFindAccountUsers = (
   client: BoclipsClient,
   accountId: string,

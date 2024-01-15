@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import MarketingInfoForm from 'src/components/welcome/MarketingInfoForm';
 import InvitedUserInfo from 'src/components/welcome/InvitedUserInfo';
-import { useGetUserQuery, useUpdateUser } from 'src/hooks/api/userQuery';
+import { useGetUserQuery, useUpdateSelfUser } from 'src/hooks/api/userQuery';
 import {
   UpdateUserRequest,
   UserType,
@@ -22,7 +22,7 @@ interface Props {
 }
 
 const WelcomeModal = ({ showPopup }: Props) => {
-  const { mutate: updateUser, isLoading: isUserUpdating } = useUpdateUser();
+  const { mutate: updateUser, isLoading: isUserUpdating } = useUpdateSelfUser();
   const { data: user } = useGetUserQuery();
 
   const [marketingInfo, setMarketingInfo] = useState<MarketingInfo>({
@@ -50,16 +50,12 @@ const WelcomeModal = ({ showPopup }: Props) => {
     updateUser(
       { user, request },
       {
-        onSuccess: (isSuccess: boolean) => {
-          if (isSuccess) {
-            displayNotification(
-              'success',
-              `User ${user.email} successfully updated`,
-            );
-            showPopup(false);
-          } else {
-            displayNotification('error', 'User update failed');
-          }
+        onSuccess: () => {
+          displayNotification(
+            'success',
+            `User ${user.email} successfully updated`,
+          );
+          showPopup(false);
         },
         onError: (error: Error) => {
           displayNotification('error', 'User update failed', error?.message);
