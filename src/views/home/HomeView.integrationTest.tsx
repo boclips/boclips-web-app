@@ -250,6 +250,7 @@ describe('HomeView', () => {
     );
   });
 
+  // todo: change naming - we have no redirects anumore
   it('does not redirect to welcome view if user has no DEV feature flag', async () => {
     const fakeBoclipsClient = new FakeBoclipsClient();
     fakeBoclipsClient.users.insertCurrentUser(

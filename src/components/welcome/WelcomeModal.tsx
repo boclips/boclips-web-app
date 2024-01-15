@@ -15,6 +15,7 @@ export interface MarketingInfo {
   audience: string;
   desiredContent: string;
   jobTitle: string;
+  discoveryMethods: string[];
 }
 
 interface Props {
@@ -29,12 +30,15 @@ const WelcomeModal = ({ showPopup }: Props) => {
     audience: '',
     desiredContent: '',
     jobTitle: '',
+    discoveryMethods: [],
   });
 
   const [errors, setErrors] = useState({
     isAudienceEmpty: false,
     isDesiredContentEmpty: false,
     isJobTitleEmpty: false,
+    isDiscoveryMethodEmpty: false,
+    isOrganizationTypeEmpty: false,
   });
 
   const handleUserUpdate = () => {
@@ -73,7 +77,13 @@ const WelcomeModal = ({ showPopup }: Props) => {
     const isAudienceEmpty = !marketingInfo.audience.trim();
     const isDesiredContentEmpty = !marketingInfo.desiredContent.trim();
 
-    setErrors({ isJobTitleEmpty, isAudienceEmpty, isDesiredContentEmpty });
+    setErrors({
+      isJobTitleEmpty,
+      isAudienceEmpty,
+      isDesiredContentEmpty,
+      isDiscoveryMethodEmpty: false,
+      isOrganizationTypeEmpty: false,
+    });
 
     return !isJobTitleEmpty && !isAudienceEmpty && !isDesiredContentEmpty;
   };
@@ -91,7 +101,11 @@ const WelcomeModal = ({ showPopup }: Props) => {
       confirmButtonText={"Let's Go!"}
     >
       <InvitedUserInfo />
-      <MarketingInfoForm errors={errors} setMarketingInfo={setMarketingInfo} />
+      <MarketingInfoForm
+        errors={errors}
+        setMarketingInfo={setMarketingInfo}
+        isAdmin // todo: recognize admin
+      />
     </Bodal>
   );
 };

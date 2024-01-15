@@ -2,12 +2,18 @@ import React from 'react';
 import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 
-const WelcomeHeader = () => {
+interface Props {
+  isAdmin: boolean;
+}
+
+const WelcomeHeader = ({ isAdmin }: Props) => {
+  const headerText = isAdmin
+    ? 'Tell us a bit more about you'
+    : 'Your colleague has invited you to a Boclips Library preview!';
+
   return (
     <section className={s.header}>
-      <Typography.H3>
-        You&apos;ve just been added to Boclips by your colleague
-      </Typography.H3>
+      <Typography.H3>{headerText}</Typography.H3>
     </section>
   );
 };
