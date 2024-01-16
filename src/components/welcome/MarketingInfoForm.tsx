@@ -48,7 +48,7 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
           }}
           options={ORGANIZATION_TYPE}
           dataQa="input-dropdown-organization-type"
-          placeholder="Example"
+          placeholder="Select your organization type"
           showLabel
           fitWidth
           isError={errors.isOrganizationTypesEmpty}
@@ -76,7 +76,7 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
           }
           options={DISCOVERY_METHOD}
           dataQa="input-dropdown-discovery-method"
-          placeholder="Via: Online"
+          placeholder="How did you hear about us"
           showLabel
           fitWidth
           isError={errors.isDiscoveryMethodsEmpty}

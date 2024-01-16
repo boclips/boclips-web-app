@@ -9,7 +9,7 @@ describe('MarketingInfoForm', () => {
     );
 
     expect(await wrapper.findByText('I heard about Boclips')).toBeVisible();
-    expect(await wrapper.findByText('Via: Online')).toBeVisible();
+    expect(await wrapper.findByText('How did you hear about us')).toBeVisible();
   });
 
   it('discovery method is not visible for regular user', async () => {
@@ -30,7 +30,7 @@ describe('MarketingInfoForm', () => {
     );
 
     expect(await wrapper.findByText('I heard about Boclips')).toBeVisible();
-    const dropdown = await wrapper.findByText('Via: Online');
+    const dropdown = await wrapper.findByText('How did you hear about us');
 
     fireEvent.click(dropdown);
 
@@ -53,7 +53,9 @@ describe('MarketingInfoForm', () => {
     );
 
     expect(await wrapper.findByText('Organization type')).toBeVisible();
-    expect(await wrapper.findByText('Example')).toBeVisible();
+    expect(
+      await wrapper.findByText('Select your organization type'),
+    ).toBeVisible();
   });
 
   it('organization type is not visible for regular user', async () => {
@@ -74,7 +76,7 @@ describe('MarketingInfoForm', () => {
     );
 
     expect(await wrapper.findByText('Organization type')).toBeVisible();
-    const dropdown = await wrapper.findByText('Example');
+    const dropdown = await wrapper.findByText('Select your organization type');
 
     fireEvent.click(dropdown);
 
