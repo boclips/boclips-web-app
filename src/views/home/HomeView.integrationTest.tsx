@@ -170,7 +170,7 @@ describe('HomeView', () => {
     // expect(wrapper.queryByText('my promoted playlist 2')).not.toBeVisible();
   });
 
-  it('shows welcome modal if user does not have marketing info and trial account requires it', async () => {
+  it('shows regular welcome modal if user does not have marketing info and trial account requires it', async () => {
     const fakeBoclipsClient = new FakeBoclipsClient();
     fakeBoclipsClient.users.insertCurrentUser(
       UserFactory.sample({
@@ -182,6 +182,87 @@ describe('HomeView', () => {
         audience: null,
         jobTitle: null,
         desiredContent: null,
+        discoveryMethods: [],
+      }),
+    );
+    fakeBoclipsClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
+    fakeBoclipsClient.accounts.insertAccount(
+      AccountsFactory.sample({
+        id: 'LAL',
+        type: AccountType.TRIAL,
+        status: AccountStatus.ACTIVE,
+        marketingInformation: { companySegments: ['Edtech'] }, // regular user has this field filled
+      }),
+    );
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/']}>
+        <App
+          reactQueryClient={createReactQueryClient()}
+          apiClient={fakeBoclipsClient}
+          boclipsSecurity={stubBoclipsSecurity}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await wrapper.findByText(
+        'Your colleague has invited you to a Boclips Library preview!',
+      ),
+    ).toBeVisible();
+  });
+
+  it('shows admin welcome modal if user does not have marketing info and trial account requires it', async () => {
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    fakeBoclipsClient.users.insertCurrentUser(
+      UserFactory.sample({
+        id: 'kb',
+        firstName: 'Kobe',
+        lastName: 'Bryant',
+        email: 'kobe@la.com',
+        account: { id: 'LAL', name: 'LA Lakers' },
+        audience: null,
+        jobTitle: null,
+        desiredContent: null,
+        discoveryMethods: [],
+      }),
+    );
+    fakeBoclipsClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
+    fakeBoclipsClient.accounts.insertAccount(
+      AccountsFactory.sample({
+        id: 'LAL',
+        type: AccountType.TRIAL,
+        status: AccountStatus.ACTIVE,
+        marketingInformation: { companySegments: [] }, // admin has no company segments set
+      }),
+    );
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/']}>
+        <App
+          reactQueryClient={createReactQueryClient()}
+          apiClient={fakeBoclipsClient}
+          boclipsSecurity={stubBoclipsSecurity}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await wrapper.findByText('Tell us a bit more about you'),
+    ).toBeVisible();
+  });
+
+  it('does not show welcome modal if user has marketing info filled and is under trial account', async () => {
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    fakeBoclipsClient.users.insertCurrentUser(
+      UserFactory.sample({
+        id: 'kb',
+        firstName: 'Kobe',
+        lastName: 'Bryant',
+        email: 'kobe@la.com',
+        account: { id: 'LAL', name: 'LA Lakers' },
+        audience: 'K12',
+        jobTitle: 'Designer',
+        desiredContent: 'Designes',
+        discoveryMethods: ['tiktok'],
       }),
     );
     fakeBoclipsClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
@@ -203,8 +284,14 @@ describe('HomeView', () => {
     );
 
     expect(
-      await wrapper.findByText('Tell us a bit more about you'),
-    ).toBeVisible();
+      await wrapper.queryByText(
+        'Your colleague has invited you to a Boclips Library preview!',
+      ),
+    ).toBeNull();
+
+    expect(
+      await wrapper.queryByText('Tell us a bit more about you'),
+    ).toBeNull();
   });
 
   it('does not show welcome modal if user does not have marketing info but have account type different than trial', async () => {
@@ -241,8 +328,12 @@ describe('HomeView', () => {
 
     expect(
       await wrapper.queryByText(
-        "You've just been added to Boclips by your colleague",
+        'Your colleague has invited you to a Boclips Library preview!',
       ),
+    ).toBeNull();
+
+    expect(
+      await wrapper.queryByText('Tell us a bit more about you'),
     ).toBeNull();
 
     expect(await wrapper.findByTestId('header-text')).toHaveTextContent(

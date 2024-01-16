@@ -25,13 +25,11 @@ const useShowTrialWelcomeModal = ({ showPopup, setIsAdmin }: Props) => {
     const isUserInTrial = account?.type === AccountType.TRIAL;
     const isMarketingInfoSetForUser = user && isMarketingInfoSet(user);
     const isMarketingInfoSetForAccount =
-      account && !isAccountMarketingInfoSet(account);
+      account && isAccountMarketingInfoSet(account);
 
     if (isUserInTrial && !isMarketingInfoSetForUser) {
       showPopup(true);
-      if (isMarketingInfoSetForAccount) {
-        setIsAdmin(true);
-      }
+      setIsAdmin(!isMarketingInfoSetForAccount);
     }
   }, [
     user,
@@ -48,8 +46,14 @@ const isMarketingInfoSet = (user: User): boolean => {
   const isJobTitleSet = user.jobTitle?.trim().length > 0;
   const isAudienceSet = user.audience?.trim().length > 0;
   const isDesiredContentSet = user.desiredContent?.trim().length > 0;
+  const isDiscoveryMethodSet = user.discoveryMethods?.length > 0;
 
-  return isJobTitleSet && isAudienceSet && isDesiredContentSet;
+  return (
+    isJobTitleSet &&
+    isAudienceSet &&
+    isDesiredContentSet &&
+    isDiscoveryMethodSet
+  );
 };
 
 const isAccountMarketingInfoSet = (account: Account): boolean => {
