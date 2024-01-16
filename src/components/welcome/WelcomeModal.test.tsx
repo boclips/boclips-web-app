@@ -81,7 +81,7 @@ describe('Trial Welcome Modal', () => {
       expect(wrapper.getByRole('button', { name: "Let's Go!" })).toBeVisible();
     });
 
-    it('regular user update is performed when clicked button', async () => {
+    it('updates user but not account when button clicked and form filled out', async () => {
       const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
 
       const wrapper = renderWelcomeView();
@@ -103,7 +103,7 @@ describe('Trial Welcome Modal', () => {
       });
     });
 
-    it('Notification is displayed when user successfully updated and the modal is closed', async () => {
+    it('displays notification when user successfully updated and the modal is closed', async () => {
       jest
         .spyOn(fakeClient.users, 'updateUser')
         .mockImplementation(() => Promise.resolve(true));
@@ -132,7 +132,7 @@ describe('Trial Welcome Modal', () => {
       ).toBeNull();
     });
 
-    it('error notification is displayed when user update fails', async () => {
+    it('displays error notification when user update fails', async () => {
       jest
         .spyOn(fakeClient.users, 'updateUser')
         .mockImplementation(() => Promise.reject());
@@ -150,7 +150,7 @@ describe('Trial Welcome Modal', () => {
       });
     });
 
-    it('error messages are displayed when marketing information is not filled, user is not updated', async () => {
+    it('displays error messages when marketing information is not filled, user is not updated', async () => {
       const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
 
       const wrapper = renderWelcomeView();
@@ -173,7 +173,7 @@ describe('Trial Welcome Modal', () => {
       });
     });
 
-    it('user is not updated if one of the marketing info is missing', async () => {
+    it('does not update user if one of the marketing info is missing', async () => {
       const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
 
       const wrapper = renderWelcomeView();
@@ -216,7 +216,7 @@ describe('Trial Welcome Modal', () => {
       );
     });
 
-    it('admin user update is performed when clicked button', async () => {
+    it('updates user when button clicked after full form filled out', async () => {
       const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
 
       const wrapper = renderWelcomeView();
@@ -248,7 +248,7 @@ describe('Trial Welcome Modal', () => {
       });
     });
 
-    it('admin user is not updated if the marketing info is missing', async () => {
+    it('does not update user if the admin marketing info is missing', async () => {
       const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
 
       const wrapper = renderWelcomeView();
