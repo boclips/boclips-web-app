@@ -12,6 +12,7 @@ import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import c from 'classnames';
 import s from 'src/components/common/pagination/pagination.module.less';
 import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { FeatureGate } from 'src/components/common/FeatureGate';
 
 const SKELETON_LIST_ITEMS = new Array(3).fill('');
 const PAGE_SIZE = 25;
@@ -62,36 +63,38 @@ export const UsersList = ({ onEditUser, onRemoveUser }: Props) => {
   );
 
   return (
-    <List
-      className="w-full"
-      itemLayout="vertical"
-      size="large"
-      dataSource={isSkeletonLoading ? SKELETON_LIST_ITEMS : accountUsers}
-      renderItem={(accountUser: AccountUser) => (
-        <UsersListItem
-          user={accountUser}
-          isLoading={isSkeletonLoading}
-          onEdit={() => onEditUser(accountUser)}
-          canEdit={canEditUser}
-          onRemove={() => onRemoveUser(accountUser)}
-          canRemove={canRemoveUser}
-          accountType={account?.type}
-        />
-      )}
-      pagination={{
-        total: accountUsersPage?.pageSpec.totalElements,
-        className: c(s.pagination, {
-          [s.paginationEmpty]: accountUsers.length === 0,
-        }),
-        hideOnSinglePage: true,
-        pageSize: PAGE_SIZE,
-        showSizeChanger: false,
-        onChange: (page) => setCurrentPageNumber(page - 1),
-        current: currentPageNumber + 1,
-        showLessItems: mobileView,
-        prefixCls: 'bo-pagination',
-        itemRender,
-      }}
-    />
+    <FeatureGate fallback={null} linkName="accountUsers">
+      <List
+        className="w-full"
+        itemLayout="vertical"
+        size="large"
+        dataSource={isSkeletonLoading ? SKELETON_LIST_ITEMS : accountUsers}
+        renderItem={(accountUser: AccountUser) => (
+          <UsersListItem
+            user={accountUser}
+            isLoading={isSkeletonLoading}
+            onEdit={() => onEditUser(accountUser)}
+            canEdit={canEditUser}
+            onRemove={() => onRemoveUser(accountUser)}
+            canRemove={canRemoveUser}
+            accountType={account?.type}
+          />
+        )}
+        pagination={{
+          total: accountUsersPage?.pageSpec.totalElements,
+          className: c(s.pagination, {
+            [s.paginationEmpty]: accountUsers.length === 0,
+          }),
+          hideOnSinglePage: true,
+          pageSize: PAGE_SIZE,
+          showSizeChanger: false,
+          onChange: (page) => setCurrentPageNumber(page - 1),
+          current: currentPageNumber + 1,
+          showLessItems: mobileView,
+          prefixCls: 'bo-pagination',
+          itemRender,
+        }}
+      />
+    </FeatureGate>
   );
 };

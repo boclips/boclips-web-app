@@ -244,7 +244,10 @@ const App = ({
                     <Route
                       path="/team"
                       element={
-                        <FeatureGate linkName="accountUsers">
+                        <FeatureGate
+                          linkName="createUser"
+                          fallback={<NotFound />}
+                        >
                           <MyTeamView />
                         </FeatureGate>
                       }

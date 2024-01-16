@@ -2,11 +2,8 @@ import React from 'react';
 import { render, within } from '@testing-library/react';
 import { UsersListItem } from 'src/components/usersList/UsersListItem';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
@@ -70,12 +67,7 @@ describe('UsersListRow', () => {
     expect(wrapper.getByTestId('skeleton')).toBeVisible();
   });
 
-  it('displays edit button when can manage users and has roles', () => {
-    const security: BoclipsSecurity = {
-      ...stubBoclipsSecurity,
-      hasRole: (_role) => true,
-    };
-
+  it('displays edit button when "updateUser" link is present', async () => {
     const user: AccountUser = {
       id: 'id-1',
       email: 'joebiden@gmail.com',
@@ -87,17 +79,15 @@ describe('UsersListRow', () => {
       },
     };
 
-    const wrapper = renderWrapper(user, jest.fn(), true, security);
+    const client = new FakeBoclipsClient();
+    expect(client.links.updateUser).not.toBeNull();
 
-    expect(wrapper.getByText('Edit')).toBeVisible();
+    const wrapper = renderWrapper(user, jest.fn(), true);
+
+    expect(await wrapper.findByText('Edit')).toBeVisible();
   });
 
-  it('displays remove button when can manage users and has roles', () => {
-    const security: BoclipsSecurity = {
-      ...stubBoclipsSecurity,
-      hasRole: (_role) => true,
-    };
-
+  it('displays remove button when "deleteUser" links is present', async () => {
     const user: AccountUser = {
       id: 'id-1',
       email: 'joebiden@gmail.com',
@@ -109,39 +99,15 @@ describe('UsersListRow', () => {
       },
     };
 
-    const wrapper = renderWrapper(user, jest.fn(), true, security);
+    const client = new FakeBoclipsClient();
+    expect(client.links.deleteUser).not.toBeNull();
 
-    expect(wrapper.getByText('Remove')).toBeVisible();
-  });
+    const wrapper = renderWrapper(user, jest.fn(), true);
 
-  it(`doesn't display remove button when can't manage users and has roles`, () => {
-    const security: BoclipsSecurity = {
-      ...stubBoclipsSecurity,
-      hasRole: (_role) => false,
-    };
-
-    const user: AccountUser = {
-      id: 'id-1',
-      email: 'joebiden@gmail.com',
-      firstName: 'Joe',
-      lastName: 'Biden',
-      permissions: {
-        canOrder: false,
-        canManageUsers: true,
-      },
-    };
-
-    const wrapper = renderWrapper(user, jest.fn(), true, security);
-
-    expect(wrapper.queryByText('Remove')).toBeNull();
+    expect(await wrapper.findByText('Remove')).toBeVisible();
   });
 
   it('doesnt display `Can order videos` column when account type is TRIAL', async () => {
-    const security: BoclipsSecurity = {
-      ...stubBoclipsSecurity,
-      hasRole: (_role) => true,
-    };
-
     const user: AccountUser = {
       id: 'id-1',
       email: 'joebiden@gmail.com',
@@ -153,44 +119,62 @@ describe('UsersListRow', () => {
       },
     };
 
-    const wrapper = renderWrapper(
-      user,
-      jest.fn(),
-      true,
-      security,
-      AccountType.TRIAL,
-    );
+    const wrapper = renderWrapper(user, jest.fn(), true, AccountType.TRIAL);
 
     expect(
       await wrapper.queryByText('Can order videos'),
     ).not.toBeInTheDocument();
   });
 
+  it('doesnt display ui elements if user doesnt have necessary links', () => {
+    const user: AccountUser = {
+      id: 'id-1',
+      email: 'joebiden@gmail.com',
+      firstName: 'Joe',
+      lastName: 'Biden',
+      permissions: {
+        canOrder: false,
+        canManageUsers: true,
+      },
+    };
+
+    const client = new FakeBoclipsClient();
+    delete client.links.deleteUser;
+    delete client.links.updateUser;
+
+    const wrapper = renderWrapper(
+      user,
+      jest.fn(),
+      true,
+      AccountType.TRIAL,
+      client,
+    );
+
+    expect(wrapper.queryByText('Remove')).toBeNull();
+    expect(wrapper.queryByText('Edit')).toBeNull();
+  });
+
   const renderWrapper = (
     user,
     onEdit,
     canEdit,
-    security: BoclipsSecurity = stubBoclipsSecurity,
     accountType = AccountType.STANDARD,
+    client = new FakeBoclipsClient(),
   ) => {
-    const client = new FakeBoclipsClient();
-
     return render(
-      <BoclipsSecurityProvider boclipsSecurity={security}>
-        <BoclipsClientProvider client={client}>
-          <QueryClientProvider client={new QueryClient()}>
-            <UsersListItem
-              user={user}
-              isLoading
-              onEdit={onEdit}
-              canEdit={canEdit}
-              onRemove={() => {}}
-              canRemove
-              accountType={accountType}
-            />
-          </QueryClientProvider>
-        </BoclipsClientProvider>
-      </BoclipsSecurityProvider>,
+      <BoclipsClientProvider client={client}>
+        <QueryClientProvider client={new QueryClient()}>
+          <UsersListItem
+            user={user}
+            isLoading
+            onEdit={onEdit}
+            canEdit={canEdit}
+            onRemove={() => {}}
+            canRemove
+            accountType={accountType}
+          />
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
     );
   };
 });
