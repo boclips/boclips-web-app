@@ -10,6 +10,8 @@ import {
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import AcceptedAgreement from 'src/components/registration/registrationForm/AcceptedAgreement';
 import s from './style.module.less';
+import { useUpdateAccount } from 'src/hooks/api/accountQuery';
+import { UpdateAccountRequest } from 'boclips-api-client/dist/sub-clients/accounts/model/UpdateAccountRequest';
 
 export interface MarketingInfo {
   audience: string;
@@ -26,6 +28,7 @@ interface Props {
 
 const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
   const { mutate: updateUser, isLoading: isUserUpdating } = useUpdateUser();
+  const { mutate: updateAccount } = useUpdateAccount();
   const { data: user } = useGetUserQuery();
 
   const [marketingInfo, setMarketingInfo] = useState<MarketingInfo>({
@@ -47,7 +50,7 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
   const handleUserUpdate = () => {
     if (!user || !validateForm()) return;
 
-    const request: UpdateUserRequest = {
+    const userRequest: UpdateUserRequest = {
       type: UserType.b2bUser,
       jobTitle: marketingInfo.jobTitle,
       audience: marketingInfo.audience,
@@ -55,8 +58,27 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
       discoveryMethods: marketingInfo.discoveryMethods,
     };
 
+    if (isAdmin) {
+      const accountRequest: UpdateAccountRequest = {
+        companySegments: marketingInfo.organizationTypes,
+      };
+
+      updateAccount(
+        { accountId: user.account.id, request: accountRequest },
+        {
+          onError: (error: Error) => {
+            displayNotification(
+              'error',
+              'Account update failed',
+              error?.message,
+            );
+          },
+        },
+      );
+    }
+
     updateUser(
-      { user, request },
+      { user, request: userRequest },
       {
         onSuccess: (isSuccess: boolean) => {
           if (isSuccess) {

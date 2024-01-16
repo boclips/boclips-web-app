@@ -19,6 +19,10 @@ import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/
 describe('Trial Welcome Modal', () => {
   const fakeClient = new FakeBoclipsClient();
 
+  afterEach(() => {
+    fakeClient.clear();
+  });
+
   describe('Regular user', () => {
     beforeEach(() => {
       fakeClient.users.insertCurrentUser(
@@ -83,6 +87,7 @@ describe('Trial Welcome Modal', () => {
 
     it('updates user but not account when button clicked and form filled out', async () => {
       const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+      const updateAccountSpy = jest.spyOn(fakeClient.accounts, 'updateAccount');
 
       const wrapper = renderWelcomeView();
 
@@ -100,6 +105,7 @@ describe('Trial Welcome Modal', () => {
           discoveryMethods: [],
           type: 'b2bUser',
         });
+        expect(updateAccountSpy).not.toHaveBeenCalled();
       });
     });
 
@@ -126,7 +132,7 @@ describe('Trial Welcome Modal', () => {
       ).toBeVisible();
 
       expect(
-        await wrapper.queryByText(
+        wrapper.queryByText(
           'Your colleague has invited you to a Boclips Library preview!',
         ),
       ).toBeNull();
@@ -216,8 +222,9 @@ describe('Trial Welcome Modal', () => {
       );
     });
 
-    it('updates user when button clicked after full form filled out', async () => {
+    it('updates user and account when button clicked after full form filled out', async () => {
       const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+      const updateAccountSpy = jest.spyOn(fakeClient.accounts, 'updateAccount');
 
       const wrapper = renderWelcomeView();
 
@@ -246,10 +253,17 @@ describe('Trial Welcome Modal', () => {
           type: 'b2bUser',
         });
       });
+
+      await waitFor(() => {
+        expect(updateAccountSpy).toHaveBeenCalledWith('AND', {
+          companySegments: ['Publisher', 'Edtech'],
+        });
+      });
     });
 
-    it('does not update user if the admin marketing info is missing', async () => {
+    it('does not update user or account if the admin marketing info is missing', async () => {
       const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+      const updateAccountSpy = jest.spyOn(fakeClient.accounts, 'updateAccount');
 
       const wrapper = renderWelcomeView();
 
@@ -268,6 +282,7 @@ describe('Trial Welcome Modal', () => {
 
       await waitFor(() => {
         expect(updateUserSpy).not.toBeCalled();
+        expect(updateAccountSpy).not.toHaveBeenCalled();
       });
     });
   });
