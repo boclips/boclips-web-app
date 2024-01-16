@@ -94,13 +94,18 @@ describe('MarketingInfoForm', () => {
     expect(
       await wrapper.queryByText('Organization type is required'),
     ).toBeNull();
-    expect(await wrapper.queryByText('This is required')).toBeNull();
+    expect(
+      await wrapper.queryByText('Discovery method is required'),
+    ).toBeNull();
   });
 
   it('error messages visible for admin related fields', async () => {
     const wrapper = render(
       <MarketingInfoForm
-        errors={{ isDiscoveryMethodEmpty: true, isOrganizationTypeEmpty: true }}
+        errors={{
+          isDiscoveryMethodsEmpty: true,
+          isOrganizationTypesEmpty: true,
+        }}
         setMarketingInfo={jest.fn()}
         isAdmin
       />,
@@ -109,6 +114,8 @@ describe('MarketingInfoForm', () => {
     expect(
       await wrapper.findByText('Organization type is required'),
     ).toBeVisible();
-    expect(await wrapper.findByText('This is required')).toBeVisible();
+    expect(
+      await wrapper.findByText('Discovery method is required'),
+    ).toBeVisible();
   });
 });

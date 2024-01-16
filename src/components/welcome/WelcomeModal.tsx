@@ -81,10 +81,10 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
     const isAudienceEmpty = !marketingInfo.audience.trim();
     const isDesiredContentEmpty = !marketingInfo.desiredContent.trim();
     const isDiscoveryMethodsEmpty =
-      marketingInfo.discoveryMethods == null ||
+      !marketingInfo.discoveryMethods ||
       marketingInfo.discoveryMethods.length === 0;
     const isOrganizationTypesEmpty =
-      marketingInfo.organizationTypes == null ||
+      !marketingInfo.organizationTypes ||
       marketingInfo.organizationTypes.length === 0;
 
     setErrors({
@@ -111,7 +111,11 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
       onConfirm={handleUserUpdate}
       isLoading={isUserUpdating}
       footerClass={s.footer}
-      title="Tell us a bit more about you"
+      title={
+        isAdmin
+          ? 'Tell us a bit more about you'
+          : 'Your colleague has invited you to a Boclips Library preview!'
+      }
       footerText={<FooterText />}
       confirmButtonText={"Let's Go!"}
     >

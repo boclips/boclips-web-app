@@ -170,7 +170,7 @@ describe('HomeView', () => {
     // expect(wrapper.queryByText('my promoted playlist 2')).not.toBeVisible();
   });
 
-  it('redirects to welcome view if user does not have marketing info and trial account requires it', async () => {
+  it('shows welcome modal if user does not have marketing info and trial account requires it', async () => {
     const fakeBoclipsClient = new FakeBoclipsClient();
     fakeBoclipsClient.users.insertCurrentUser(
       UserFactory.sample({
@@ -207,7 +207,7 @@ describe('HomeView', () => {
     ).toBeVisible();
   });
 
-  it('does not redirect to welcome view if user does not have marketing info but have account type different than trial', async () => {
+  it('does not show welcome modal if user does not have marketing info but have account type different than trial', async () => {
     const fakeBoclipsClient = new FakeBoclipsClient();
     fakeBoclipsClient.users.insertCurrentUser(
       UserFactory.sample({
@@ -250,8 +250,7 @@ describe('HomeView', () => {
     );
   });
 
-  // todo: change naming - we have no redirects anumore
-  it('does not redirect to welcome view if user has no DEV feature flag', async () => {
+  it('does not show welcome modal if user has no DEV feature flag', async () => {
     const fakeBoclipsClient = new FakeBoclipsClient();
     fakeBoclipsClient.users.insertCurrentUser(
       UserFactory.sample({

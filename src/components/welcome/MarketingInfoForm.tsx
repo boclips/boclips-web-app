@@ -51,7 +51,7 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
           placeholder="Example"
           showLabel
           fitWidth
-          isError={errors.isOrganizationTypeEmpty}
+          isError={errors.isOrganizationTypesEmpty}
           errorMessage="Organization type is required"
         />
       )}
@@ -79,8 +79,8 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
           placeholder="Via: Online"
           showLabel
           fitWidth
-          isError={errors.isDiscoveryMethodEmpty}
-          errorMessage="This is required"
+          isError={errors.isDiscoveryMethodsEmpty}
+          errorMessage="Discovery method is required"
         />
       )}
       <InputText
