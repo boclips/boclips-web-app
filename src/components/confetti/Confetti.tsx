@@ -1,26 +1,17 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import Particles, { initParticlesEngine } from '@tsparticles/react';
-import { type ISourceOptions } from '@tsparticles/engine';
-import { loadFull } from 'tsparticles';
+import React, { useCallback, useMemo } from 'react';
+import Particles from 'react-particles';
+import type { Engine, ISourceOptions } from 'tsparticles-engine';
+import { loadConfettiPreset } from 'tsparticles-preset-confetti';
 import confettiSettings from './confetti-settings.json';
 
-// heavily inspired by https://github.com/tsparticles/react
 const Confetti = () => {
-  const [init, setInit] = useState(false);
-
-  useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      await loadFull(engine);
-    }).then(() => {
-      setInit(true);
-    });
+  const customInit = useCallback(async (engine: Engine) => {
+    await loadConfettiPreset(engine);
   }, []);
 
   // @ts-ignore
-  const confettiOptions: ISourceOptions = useMemo(() => confettiSettings, []);
+  const options: ISourceOptions = useMemo(() => confettiSettings, []);
 
-  return (
-    <>{init && <Particles id="tsparticles" options={confettiOptions} />}</>
-  );
+  return <Particles id="tsparticles" options={options} init={customInit} />;
 };
 export default Confetti;
