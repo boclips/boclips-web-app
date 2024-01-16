@@ -11,8 +11,6 @@ import { Typography } from '@boclips-ui/typography';
 import Button from '@boclips-ui/button';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
-import { WithValidRoles } from 'src/components/common/errors/WithValidRoles';
-import { ROLES } from 'src/types/Roles';
 import { Link } from '../common/Link';
 import s from './newstyle.module.less';
 
@@ -119,7 +117,7 @@ export const AccountButton = () => {
                 </Link>
               </div>
             </FeatureGate>
-            <WithValidRoles roles={[ROLES.ROLE_BOCLIPS_WEB_APP_MANAGE_USERS]}>
+            <FeatureGate linkName="updateUser">
               <div className="pt-2">
                 <Link onClick={myTeamOpened} to="/team" tabIndex={-1}>
                   <Typography.Body size="small" as="button">
@@ -127,7 +125,7 @@ export const AccountButton = () => {
                   </Typography.Body>
                 </Link>
               </div>
-            </WithValidRoles>
+            </FeatureGate>
             <div className="pt-2">
               <Link to="/playlists" tabIndex={-1}>
                 <Typography.Body size="small" as="button">

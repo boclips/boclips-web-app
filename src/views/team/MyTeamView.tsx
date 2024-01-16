@@ -8,10 +8,9 @@ import Footer from 'src/components/layout/Footer';
 import PlusSign from 'resources/icons/plus-sign.svg';
 import { UsersList } from 'src/components/usersList/UsersList';
 import EditTeamMemberModal from 'src/components/teamModal/EditTeamMemberModal';
-import { ROLES } from 'src/types/Roles';
-import { WithValidRoles } from 'src/components/common/errors/WithValidRoles';
 import { Helmet } from 'react-helmet';
 import { RemoveTeamMemberModal } from 'src/components/teamModal/RemoveTeamMemberModal';
+import { FeatureGate } from 'src/components/common/FeatureGate';
 
 const MyTeamView = () => {
   const [isNewUserModalOpen, setIsNewUserModalOpen] = React.useState(false);
@@ -27,17 +26,14 @@ const MyTeamView = () => {
         <PageHeader
           title="My team"
           button={
-            <WithValidRoles
-              fallback={null}
-              roles={[ROLES.ROLE_BOCLIPS_WEB_APP_MANAGE_USERS]}
-            >
+            <FeatureGate fallback={null} linkName="createUser">
               <Button
                 height="48px"
                 text="Add member"
                 icon={<PlusSign />}
                 onClick={() => setIsNewUserModalOpen(true)}
               />
-            </WithValidRoles>
+            </FeatureGate>
           }
         />
         <main

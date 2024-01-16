@@ -4,32 +4,15 @@ import { Typography } from '@boclips-ui/typography';
 import c from 'classnames';
 import Button from '@boclips-ui/button';
 import PencilSVG from 'src/resources/icons/pencil.svg';
-import { ROLES } from 'src/types/Roles';
-import { WithValidRoles } from 'src/components/common/errors/WithValidRoles';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import BinSVG from 'src/resources/icons/bin.svg';
+import { FeatureGate } from 'src/components/common/FeatureGate';
 import s from './style.module.less';
 
 interface UserInformationFieldProps {
   name: string;
   value: ReactElement | string;
 }
-
-const UserInformationField = ({ name, value }: UserInformationFieldProps) => (
-  <div className={s.listItem} data-qa={`user-info-field-${name}`}>
-    <Typography.Body
-      as="div"
-      size="small"
-      weight="medium"
-      className="text-gray-700"
-    >
-      {name}
-    </Typography.Body>
-    <Typography.Body size="small" as="span">
-      {value}
-    </Typography.Body>
-  </div>
-);
 
 export interface Props {
   user: AccountUser;
@@ -74,12 +57,44 @@ export const UsersListItem = ({
         name="Can manage team"
         value={renderPermission(user.permissions?.canManageUsers)}
       />
+      <ActionButtons
+        user={user}
+        onRemove={onRemove}
+        canRemove={canRemove}
+        canEdit={canEdit}
+        onEdit={onEdit}
+      />
+    </li>
+  );
+};
 
+const UserInformationField = ({ name, value }: UserInformationFieldProps) => (
+  <div className={s.listItem} data-qa={`user-info-field-${name}`}>
+    <Typography.Body
+      as="div"
+      size="small"
+      weight="medium"
+      className="text-gray-700"
+    >
+      {name}
+    </Typography.Body>
+    <Typography.Body size="small" as="span">
+      {value}
+    </Typography.Body>
+  </div>
+);
+
+const ActionButtons = ({
+  canEdit,
+  onEdit,
+  user,
+  canRemove,
+  onRemove,
+}: Partial<Props>) => {
+  return (
+    <div className={s.listItem}>
       {canEdit && (
-        <WithValidRoles
-          fallback={null}
-          roles={[ROLES.ROLE_BOCLIPS_WEB_APP_MANAGE_USERS]}
-        >
+        <FeatureGate fallback={null} linkName="updateUser">
           <Button
             onClick={() => onEdit(user)}
             className={s.editButton}
@@ -88,14 +103,11 @@ export const UsersListItem = ({
             type="outline"
             height="42px"
           />
-        </WithValidRoles>
+        </FeatureGate>
       )}
 
       {canRemove && (
-        <WithValidRoles
-          fallback={null}
-          roles={[ROLES.ROLE_BOCLIPS_WEB_APP_MANAGE_USERS]}
-        >
+        <FeatureGate fallback={null} linkName="deleteUser">
           <Button
             onClick={() => onRemove(user)}
             className={s.editButton}
@@ -104,8 +116,8 @@ export const UsersListItem = ({
             height="42px"
             type="label"
           />
-        </WithValidRoles>
+        </FeatureGate>
       )}
-    </li>
+    </div>
   );
 };
