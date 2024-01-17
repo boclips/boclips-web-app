@@ -57,6 +57,12 @@
   flex-direction: column;
   flex-basis: 25%;
   padding-right: 1rem;
+  line-break: anywhere;
+
+  &.buttons {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
 
   &:first-child {
     flex-basis: 15%;
@@ -80,20 +86,6 @@
   }
   100% {
     background-position: 100% 50%;
-  }
-}
-
-@media screen and (max-width: @screen-lg) {
-  .listItem {
-    display: flex;
-    flex-direction: column;
-    flex-basis: 25%;
-    padding-right: 1rem;
-    line-break: anywhere;
-
-    &:first-child {
-      flex-basis: 25%;
-    }
   }
 }
 

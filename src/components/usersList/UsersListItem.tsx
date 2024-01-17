@@ -92,7 +92,7 @@ const ActionButtons = ({
   onRemove,
 }: Partial<Props>) => {
   return (
-    <div className={s.listItem}>
+    <div className={c(s.listItem, s.buttons)}>
       {canEdit && (
         <FeatureGate fallback={null} linkName="updateUser">
           <Button
