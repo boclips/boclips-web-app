@@ -9,46 +9,65 @@ import {
 } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import AcceptedAgreement from 'src/components/registration/registrationForm/AcceptedAgreement';
+import { useUpdateAccount } from 'src/hooks/api/accountQuery';
+import { UpdateAccountRequest } from 'boclips-api-client/dist/sub-clients/accounts/model/UpdateAccountRequest';
 import s from './style.module.less';
 
 export interface MarketingInfo {
   audience: string;
   desiredContent: string;
   jobTitle: string;
+  discoveryMethods: string[];
+  organizationTypes: string[];
 }
 
 interface Props {
   showPopup: (arg: boolean) => void;
+  isAdmin: boolean;
 }
 
-const WelcomeModal = ({ showPopup }: Props) => {
-  const { mutate: updateUser, isLoading: isUserUpdating } = useUpdateSelfUser();
+const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
+  const { mutate: updateSelfUser, isLoading: isUserUpdating } =
+    useUpdateSelfUser();
   const { data: user } = useGetUserQuery();
+  const { mutate: updateSelfAccount, isLoading: isAccountUpdating } =
+    useUpdateAccount();
 
   const [marketingInfo, setMarketingInfo] = useState<MarketingInfo>({
     audience: '',
     desiredContent: '',
     jobTitle: '',
+    discoveryMethods: [],
+    organizationTypes: [],
   });
 
   const [errors, setErrors] = useState({
     isAudienceEmpty: false,
     isDesiredContentEmpty: false,
     isJobTitleEmpty: false,
+    isDiscoveryMethodsEmpty: false,
+    isOrganizationTypesEmpty: false,
   });
 
-  const handleUserUpdate = () => {
-    if (!user || !validateForm()) return;
-
-    const request: UpdateUserRequest = {
-      type: UserType.b2bUser,
-      jobTitle: marketingInfo.jobTitle,
-      audience: marketingInfo.audience,
-      desiredContent: marketingInfo.desiredContent,
+  const updateAccount = (userRequest: UpdateUserRequest) => {
+    const accountRequest: UpdateAccountRequest = {
+      companySegments: marketingInfo.organizationTypes,
     };
 
-    updateUser(
-      { user, request },
+    updateSelfAccount(
+      { accountId: user.account.id, request: accountRequest },
+      {
+        onSuccess: () => updateUser(userRequest),
+        onError: (error: Error) => {
+          displayNotification('error', 'Account update failed', error?.message);
+        },
+      },
+    );
+  };
+
+  const updateUser = (userRequest: UpdateUserRequest) => {
+    updateSelfUser(
+      { user, request: userRequest },
       {
         onSuccess: () => {
           displayNotification(
@@ -64,14 +83,49 @@ const WelcomeModal = ({ showPopup }: Props) => {
     );
   };
 
+  const handleUserUpdate = () => {
+    if (!user || !validateForm()) return;
+
+    const userRequest: UpdateUserRequest = {
+      type: UserType.b2bUser,
+      jobTitle: marketingInfo.jobTitle,
+      audience: marketingInfo.audience,
+      desiredContent: marketingInfo.desiredContent,
+      discoveryMethods: marketingInfo.discoveryMethods,
+    };
+
+    if (isAdmin) {
+      updateAccount(userRequest);
+    } else {
+      updateUser(userRequest);
+    }
+  };
+
   const validateForm = (): boolean => {
     const isJobTitleEmpty = !marketingInfo.jobTitle.trim();
     const isAudienceEmpty = !marketingInfo.audience.trim();
     const isDesiredContentEmpty = !marketingInfo.desiredContent.trim();
+    const isDiscoveryMethodsEmpty =
+      !marketingInfo.discoveryMethods ||
+      marketingInfo.discoveryMethods.length === 0;
+    const isOrganizationTypesEmpty =
+      !marketingInfo.organizationTypes ||
+      marketingInfo.organizationTypes.length === 0;
 
-    setErrors({ isJobTitleEmpty, isAudienceEmpty, isDesiredContentEmpty });
+    setErrors({
+      isJobTitleEmpty,
+      isAudienceEmpty,
+      isDesiredContentEmpty,
+      isDiscoveryMethodsEmpty,
+      isOrganizationTypesEmpty,
+    });
 
-    return !isJobTitleEmpty && !isAudienceEmpty && !isDesiredContentEmpty;
+    const validRegularFields =
+      !isJobTitleEmpty && !isAudienceEmpty && !isDesiredContentEmpty;
+    const validAdminFields =
+      !isDiscoveryMethodsEmpty && !isOrganizationTypesEmpty;
+
+    return validRegularFields && (!isAdmin || validAdminFields);
   };
 
   return (
@@ -79,15 +133,24 @@ const WelcomeModal = ({ showPopup }: Props) => {
       closeOnClickOutside={false}
       displayCancelButton={false}
       showCloseIcon={false}
+      onCancel={() => null}
       onConfirm={handleUserUpdate}
-      isLoading={isUserUpdating}
+      isLoading={isUserUpdating || isAccountUpdating}
       footerClass={s.footer}
-      title="Tell us a bit more about you"
+      title={
+        isAdmin
+          ? 'Tell us a bit more about you'
+          : 'Your colleague has invited you to a Boclips Library preview!'
+      }
       footerText={<FooterText />}
       confirmButtonText={"Let's Go!"}
     >
       <InvitedUserInfo />
-      <MarketingInfoForm errors={errors} setMarketingInfo={setMarketingInfo} />
+      <MarketingInfoForm
+        errors={errors}
+        setMarketingInfo={setMarketingInfo}
+        isAdmin={isAdmin}
+      />
     </Bodal>
   );
 };

@@ -1,21 +1,29 @@
 import React, { useCallback } from 'react';
 import Dropdown from '@boclips-ui/dropdown';
-import { AUDIENCE } from 'src/components/registration/dropdownValues';
+import {
+  AUDIENCE,
+  DISCOVERY_METHOD,
+  ORGANIZATION_TYPE,
+} from 'src/components/registration/dropdownValues';
 import { InputText } from '@boclips-ui/input';
 import s from './style.module.less';
 
 interface Props {
   errors: { [key: string]: boolean };
   setMarketingInfo: (prevState) => void;
+  isAdmin: boolean;
 }
 
-const MarketingInfoForm = ({ errors, setMarketingInfo }: Props) => {
-  const handleChange = useCallback((fieldName: string, value: string) => {
-    setMarketingInfo((prevState) => ({
-      ...prevState,
-      [fieldName]: value.trim(),
-    }));
-  }, []);
+const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
+  const handleChange = useCallback(
+    (fieldName: string, value: string | string[]) => {
+      setMarketingInfo((prevState) => ({
+        ...prevState,
+        [fieldName]: value,
+      }));
+    },
+    [],
+  );
 
   return (
     <main tabIndex={-1} className={s.marketingInfoWrapper}>
@@ -31,6 +39,22 @@ const MarketingInfoForm = ({ errors, setMarketingInfo }: Props) => {
         isError={errors.isJobTitleEmpty}
         errorMessage="Job title is required"
       />
+      {isAdmin && (
+        <Dropdown
+          mode="multiple"
+          labelText="Organization type"
+          onUpdate={(values: string[]) => {
+            handleChange('organizationTypes', values);
+          }}
+          options={ORGANIZATION_TYPE}
+          dataQa="input-dropdown-organization-type"
+          placeholder="Select your organization type"
+          showLabel
+          fitWidth
+          isError={errors.isOrganizationTypesEmpty}
+          errorMessage="Organization type is required"
+        />
+      )}
       <Dropdown
         mode="single"
         labelText="Your audience type*"
@@ -43,6 +67,22 @@ const MarketingInfoForm = ({ errors, setMarketingInfo }: Props) => {
         isError={errors.isAudienceEmpty}
         errorMessage="Audience type is required"
       />
+      {isAdmin && (
+        <Dropdown
+          mode="multiple"
+          labelText="I heard about Boclips"
+          onUpdate={(values: string[]) =>
+            handleChange('discoveryMethods', values)
+          }
+          options={DISCOVERY_METHOD}
+          dataQa="input-dropdown-discovery-method"
+          placeholder="How did you hear about us"
+          showLabel
+          fitWidth
+          isError={errors.isDiscoveryMethodsEmpty}
+          errorMessage="Discovery method is required"
+        />
+      )}
       <InputText
         id="input-desiredContent"
         aria-label="input-desiredContent"

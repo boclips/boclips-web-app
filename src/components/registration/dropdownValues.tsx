@@ -40,6 +40,27 @@ const JOB_TITLE = createDropdownOptions([
   'Other',
 ]);
 
+const DISCOVERY_METHOD = createDropdownOptions([
+  'Search Engine (Google, Bing etc)',
+  'Industry newsletter',
+  'Blog or Publication',
+  'Employer',
+  'Recommended by Friend or Colleague',
+  'Contacted by Boclips',
+  'School ad board/website',
+  'Social Media',
+  'Other',
+]);
+
+const ORGANIZATION_TYPE = createDropdownOptions([
+  'Publisher',
+  'Edtech',
+  'Virtual/Charter Schools',
+  'Government',
+  'College/University',
+  'Other',
+]);
+
 const LIST_OF_COUNTRIES = iso.all().map((country) => ({
   id: country.alpha3,
   name: country.country,
@@ -51,4 +72,11 @@ const LIST_OF_COUNTRIES = iso.all().map((country) => ({
   value: country.alpha3,
 }));
 
-export { TYPE_OF_ORG, AUDIENCE, JOB_TITLE, LIST_OF_COUNTRIES };
+export {
+  TYPE_OF_ORG,
+  AUDIENCE,
+  JOB_TITLE,
+  LIST_OF_COUNTRIES,
+  DISCOVERY_METHOD,
+  ORGANIZATION_TYPE,
+};

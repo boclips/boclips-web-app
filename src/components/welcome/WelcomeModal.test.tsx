@@ -16,183 +16,275 @@ import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
-describe('Trial Welcome View', () => {
+describe('Trial Welcome Modal', () => {
   const fakeClient = new FakeBoclipsClient();
-  beforeEach(() => {
-    fakeClient.users.insertCurrentUser(
-      UserFactory.sample({
-        id: 'kb',
-        firstName: 'Kobe',
-        lastName: 'Bryant',
-        email: 'kobe@la.com',
-        account: { id: 'LAL', name: 'LA Lakers' },
-      }),
-    );
-    fakeClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'LAL', type: AccountType.TRIAL }),
-    );
+
+  afterEach(() => {
+    fakeClient.clear();
   });
 
-  it('displays trial welcome modal', async () => {
-    const wrapper = renderWelcomeView();
-    expect(
-      await wrapper.findByText('Tell us a bit more about you'),
-    ).toBeVisible();
+  describe('Regular user', () => {
+    beforeEach(() => {
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          id: 'kb',
+          firstName: 'Kobe',
+          lastName: 'Bryant',
+          email: 'kobe@la.com',
+          account: { id: 'LAL', name: 'LA Lakers' },
+        }),
+      );
+      fakeClient.accounts.insertAccount(
+        AccountsFactory.sample({
+          id: 'LAL',
+          type: AccountType.TRIAL,
+          marketingInformation: { companySegments: ['Edtech'] },
+        }),
+      );
+    });
 
-    expect(await wrapper.findByText('Kobe Bryant')).toBeVisible();
-    expect(wrapper.getByText('kobe@la.com')).toBeVisible();
-    expect(wrapper.getByText('LA Lakers')).toBeVisible();
+    it('displays regular trial welcome modal', async () => {
+      const wrapper = renderWelcomeView();
+      expect(
+        await wrapper.findByText(
+          'Your colleague has invited you to a Boclips Library preview!',
+        ),
+      ).toBeVisible();
 
-    expect(wrapper.getByLabelText('Job Title*')).toBeVisible();
-    expect(wrapper.getByPlaceholderText('example: Designer')).toBeVisible();
+      expect(await wrapper.findByText('Kobe Bryant')).toBeVisible();
+      expect(wrapper.getByText('kobe@la.com')).toBeVisible();
+      expect(wrapper.getByText('LA Lakers')).toBeVisible();
 
-    expect(wrapper.getByText('Your audience type*')).toBeVisible();
-    expect(wrapper.getByText('example: K12')).toBeVisible();
+      expect(wrapper.getByLabelText('Job Title*')).toBeVisible();
+      expect(wrapper.getByPlaceholderText('example: Designer')).toBeVisible();
 
-    expect(
-      wrapper.getByLabelText('What Content are you interested in*'),
-    ).toBeVisible();
-    expect(wrapper.getByPlaceholderText('Design')).toBeVisible();
+      expect(wrapper.queryByText('Organization type')).toBeNull();
 
-    expect(wrapper.getByText(/By clicking Let's Go!, you agree to the/));
+      expect(wrapper.getByText('Your audience type*')).toBeVisible();
+      expect(wrapper.getByText('example: K12')).toBeVisible();
 
-    expect(
-      wrapper.getByRole('link', { name: 'Boclips Terms & Conditions' }),
-    ).toBeVisible();
+      expect(wrapper.queryByText('I heard about Boclips')).toBeNull();
 
-    expect(
-      wrapper.getByRole('link', {
-        name: 'Boclips Privacy Policy',
-      }),
-    ).toBeVisible();
+      expect(
+        wrapper.getByLabelText('What Content are you interested in*'),
+      ).toBeVisible();
+      expect(wrapper.getByPlaceholderText('Design')).toBeVisible();
 
-    expect(wrapper.getByRole('button', { name: "Let's Go!" })).toBeVisible();
-  });
+      expect(wrapper.getByText(/By clicking Let's Go!, you agree to the/));
 
-  it('user update is performed when clicked button', async () => {
-    const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+      expect(
+        wrapper.getByRole('link', { name: 'Boclips Terms & Conditions' }),
+      ).toBeVisible();
 
-    const wrapper = renderWelcomeView();
+      expect(
+        wrapper.getByRole('link', {
+          name: 'Boclips Privacy Policy',
+        }),
+      ).toBeVisible();
 
-    await setJobTitle(wrapper, 'Player');
-    await setAudience(wrapper, 'K12');
-    await setDesiredContent(wrapper, 'Basketball');
+      expect(wrapper.getByRole('button', { name: "Let's Go!" })).toBeVisible();
+    });
 
-    fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+    it('updates user but not account when button clicked and form filled out', async () => {
+      const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+      const updateAccountSpy = jest.spyOn(fakeClient.accounts, 'updateAccount');
 
-    await waitFor(() => {
-      expect(updateUserSpy).toHaveBeenCalledWith('kb', {
-        jobTitle: 'Player',
-        audience: 'K12',
-        desiredContent: 'Basketball',
-        type: 'b2bUser',
+      const wrapper = renderWelcomeView();
+
+      await setJobTitle(wrapper, 'Player');
+      await setAudience(wrapper, 'K12');
+      await setDesiredContent(wrapper, 'Basketball');
+
+      fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+
+      await waitFor(() => {
+        expect(updateUserSpy).toHaveBeenCalledWith('kb', {
+          jobTitle: 'Player',
+          audience: 'K12',
+          desiredContent: 'Basketball',
+          discoveryMethods: [],
+          type: 'b2bUser',
+        });
+        expect(updateAccountSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    it('displays notification when user successfully updated and the modal is closed', async () => {
+      jest
+        .spyOn(fakeClient.users, 'updateUser')
+        .mockImplementation(() => Promise.resolve(true));
+
+      const wrapper = renderWelcomeView();
+
+      await setJobTitle(wrapper, 'Player');
+      await setAudience(wrapper, 'K12');
+      await setDesiredContent(wrapper, 'Basketball');
+
+      fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+
+      await waitFor(() => {
+        expect(wrapper.getByText('Welcome to')).toBeVisible();
+        expect(wrapper.getByText('CourseSpark!')).toBeVisible();
+      });
+
+      expect(
+        await wrapper.findByText('User kobe@la.com successfully updated'),
+      ).toBeVisible();
+
+      expect(
+        wrapper.queryByText(
+          'Your colleague has invited you to a Boclips Library preview!',
+        ),
+      ).toBeNull();
+    });
+
+    it('displays error notification when user update fails', async () => {
+      jest
+        .spyOn(fakeClient.users, 'updateUser')
+        .mockImplementation(() => Promise.reject());
+
+      const wrapper = renderWelcomeView();
+
+      await setJobTitle(wrapper, 'Player');
+      await setAudience(wrapper, 'K12');
+      await setDesiredContent(wrapper, 'Basketball');
+
+      fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+
+      await waitFor(() => {
+        expect(wrapper.getByText(/User update failed/));
+      });
+    });
+
+    it('displays error messages when marketing information is not filled, user is not updated', async () => {
+      const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+
+      const wrapper = renderWelcomeView();
+
+      await setJobTitle(wrapper, '');
+      await setDesiredContent(wrapper, ' ');
+
+      fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+
+      expect(await wrapper.findByText('Job title is required')).toBeVisible();
+      expect(
+        await wrapper.findByText('Audience type is required'),
+      ).toBeVisible();
+      expect(
+        await wrapper.findByText('Desired content is required'),
+      ).toBeVisible();
+
+      await waitFor(() => {
+        expect(updateUserSpy).not.toBeCalled();
+      });
+    });
+
+    it('does not update user if one of the marketing info is missing', async () => {
+      const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+
+      const wrapper = renderWelcomeView();
+
+      await setJobTitle(wrapper, 'Player');
+      await setAudience(wrapper, 'K12');
+      await setDesiredContent(wrapper, '');
+
+      fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+
+      expect(wrapper.queryByText('Job title is required')).toBeNull();
+      expect(wrapper.queryByText('Audience type is required')).toBeNull();
+      expect(
+        await wrapper.findByText('Desired content is required'),
+      ).toBeVisible();
+
+      await waitFor(() => {
+        expect(updateUserSpy).not.toBeCalled();
       });
     });
   });
 
-  it('redirects to home page and notification is displayed when user successfully updated', async () => {
-    jest
-      .spyOn(fakeClient.users, 'updateUser')
-      .mockImplementation(() => Promise.resolve(true));
-
-    const wrapper = renderWelcomeView();
-
-    await setJobTitle(wrapper, 'Player');
-    await setAudience(wrapper, 'K12');
-    await setDesiredContent(wrapper, 'Basketball');
-
-    fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
-
-    await waitFor(() => {
-      expect(wrapper.getByText('Welcome to')).toBeVisible();
-      expect(wrapper.getByText('CourseSpark!')).toBeVisible();
+  describe('admin user', () => {
+    beforeEach(() => {
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          id: 'sk',
+          firstName: 'Saku',
+          lastName: 'Saku Koivu',
+          email: 'saku@koivu.com',
+          account: { id: 'AND', name: 'Anaheim Ducks' },
+        }),
+      );
+      fakeClient.accounts.insertAccount(
+        AccountsFactory.sample({
+          id: 'AND',
+          type: AccountType.TRIAL,
+          marketingInformation: {},
+        }),
+      );
     });
 
-    expect(
-      await wrapper.findByText('User kobe@la.com successfully updated'),
-    ).toBeVisible();
-  });
+    it('updates user and account when button clicked after full form filled out', async () => {
+      const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+      const updateAccountSpy = jest.spyOn(fakeClient.accounts, 'updateAccount');
 
-  it('error notification is displayed when user update fails', async () => {
-    jest
-      .spyOn(fakeClient.users, 'updateUser')
-      .mockImplementation(() => Promise.reject());
+      const wrapper = renderWelcomeView();
 
-    const wrapper = renderWelcomeView();
+      expect(
+        await wrapper.findByText('Tell us a bit more about you'),
+      ).toBeVisible();
 
-    await setJobTitle(wrapper, 'Player');
-    await setAudience(wrapper, 'K12');
-    await setDesiredContent(wrapper, 'Basketball');
+      await setJobTitle(wrapper, 'Player');
+      await setAudience(wrapper, 'K12');
+      await setDesiredContent(wrapper, 'Hockey');
+      await setOrganizationType(wrapper, 'Publisher');
+      await setOrganizationType(wrapper, 'Edtech');
+      await setDiscoveryMethod(wrapper, 'Employer');
+      await setDiscoveryMethod(wrapper, 'Social Media');
 
-    fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+      fireEvent.click(
+        await wrapper.findByRole('button', { name: "Let's Go!" }),
+      );
 
-    await waitFor(() => {
-      expect(wrapper.getByText(/User update failed/));
+      await waitFor(() => {
+        expect(updateUserSpy).toHaveBeenCalledWith('sk', {
+          jobTitle: 'Player',
+          audience: 'K12',
+          desiredContent: 'Hockey',
+          discoveryMethods: ['Employer', 'Social Media'],
+          type: 'b2bUser',
+        });
+      });
+
+      await waitFor(() => {
+        expect(updateAccountSpy).toHaveBeenCalledWith('AND', {
+          companySegments: ['Publisher', 'Edtech'],
+        });
+      });
     });
-  });
 
-  it('error messages are displayed when marketing information is not filled, user is not updated', async () => {
-    const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+    it('does not update user or account if the admin marketing info is missing', async () => {
+      const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+      const updateAccountSpy = jest.spyOn(fakeClient.accounts, 'updateAccount');
 
-    const wrapper = renderWelcomeView();
+      const wrapper = renderWelcomeView();
 
-    await setJobTitle(wrapper, '');
-    await setDesiredContent(wrapper, ' ');
+      await setJobTitle(wrapper, 'Player');
+      await setAudience(wrapper, 'K12');
+      await setDesiredContent(wrapper, 'Hockey');
 
-    fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+      fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
-    expect(await wrapper.findByText('Job title is required')).toBeVisible();
-    expect(await wrapper.findByText('Audience type is required')).toBeVisible();
-    expect(
-      await wrapper.findByText('Desired content is required'),
-    ).toBeVisible();
+      expect(
+        await wrapper.findByText('Organization type is required'),
+      ).toBeVisible();
+      expect(
+        await wrapper.findByText('Discovery method is required'),
+      ).toBeVisible();
 
-    await waitFor(() => {
-      expect(updateUserSpy).not.toBeCalled();
+      await waitFor(() => {
+        expect(updateUserSpy).not.toBeCalled();
+        expect(updateAccountSpy).not.toHaveBeenCalled();
+      });
     });
-  });
-
-  it('user is not updated if one of the marketing info is missing', async () => {
-    const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
-
-    const wrapper = renderWelcomeView();
-
-    await setJobTitle(wrapper, 'Player');
-    await setAudience(wrapper, 'K12');
-    await setDesiredContent(wrapper, '');
-
-    fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
-
-    expect(await wrapper.queryByText('Job title is required')).toBeNull();
-    expect(await wrapper.queryByText('Audience type is required')).toBeNull();
-    expect(
-      await wrapper.findByText('Desired content is required'),
-    ).toBeVisible();
-
-    await waitFor(() => {
-      expect(updateUserSpy).not.toBeCalled();
-    });
-  });
-
-  it(`redirects to home view if user is not in a trial account`, async () => {
-    fakeClient.users.insertCurrentUser(
-      UserFactory.sample({
-        id: 'jb',
-        firstName: 'Joe',
-        lastName: 'Bloggs',
-        email: 'jbloggs@jo.com',
-        account: { id: 'jo', name: 'jojo' },
-      }),
-    );
-    fakeClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'jo', type: AccountType.STANDARD }),
-    );
-
-    const wrapper = renderWelcomeView();
-
-    expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
-      'Welcome to CourseSpark!',
-    );
   });
 
   async function setJobTitle(wrapper: RenderResult, value: string) {
@@ -218,6 +310,38 @@ describe('Trial Welcome View', () => {
         target: { value },
       },
     );
+  }
+
+  async function setOrganizationType(wrapper: RenderResult, value: string) {
+    if (value) {
+      const dropdown = await wrapper.findByTestId(
+        'input-dropdown-organization-type',
+      );
+      fireEvent.click(within(dropdown).getByTestId('select'));
+      const option = within(dropdown).getByText(value);
+      expect(option).toBeVisible();
+      fireEvent.click(option);
+
+      // make sure dropdown is closed
+      fireEvent.click(within(dropdown).getByTestId('select'));
+      expect(within(dropdown).queryByText(value)).toBeNull();
+    }
+  }
+
+  async function setDiscoveryMethod(wrapper: RenderResult, value: string) {
+    if (value) {
+      const dropdown = await wrapper.findByTestId(
+        'input-dropdown-discovery-method',
+      );
+      fireEvent.click(within(dropdown).getByTestId('select'));
+      const option = within(dropdown).getByText(value);
+      expect(option).toBeVisible();
+      fireEvent.click(option);
+
+      // make sure dropdown is closed
+      fireEvent.click(within(dropdown).getByTestId('select'));
+      expect(within(dropdown).queryByText(value)).toBeNull();
+    }
   }
 
   function renderWelcomeView(): RenderResult {
