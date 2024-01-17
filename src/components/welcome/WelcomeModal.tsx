@@ -9,9 +9,9 @@ import {
 } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import AcceptedAgreement from 'src/components/registration/registrationForm/AcceptedAgreement';
-import s from './style.module.less';
 import { useUpdateAccount } from 'src/hooks/api/accountQuery';
 import { UpdateAccountRequest } from 'boclips-api-client/dist/sub-clients/accounts/model/UpdateAccountRequest';
+import s from './style.module.less';
 
 export interface MarketingInfo {
   audience: string;
@@ -130,6 +130,7 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
       closeOnClickOutside={false}
       displayCancelButton={false}
       showCloseIcon={false}
+      onCancel={() => null}
       onConfirm={handleUserUpdate}
       isLoading={isUserUpdating}
       footerClass={s.footer}

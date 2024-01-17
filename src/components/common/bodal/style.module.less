@@ -2,8 +2,26 @@
 @import '~@boclips-ui/styles/src/breakpoints';
 
 .modalWrapper {
-  @apply bg-white w-screen h-screen fixed left-0 top-0;
+  @apply bg-white w-screen h-screen fixed left-0 ;
   z-index: 51; // header is set to 50
+  .modal{
+    max-height: 80vh;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 100vh;
+      background: none;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: @blue-500;
+      border-radius: 100vh;
+    }
+  }
 
   .modalContent {
     @apply p-4;
@@ -32,33 +50,11 @@
   }
 }
 
-@media screen and (max-height: 720px) {
-  .modal {
-    max-height: 70vh;
-    overflow-y: scroll;
-
-    &::-webkit-scrollbar {
-      width: 7px;
-    }
-
-    &::-webkit-scrollbar-track {
-      border-radius: 100vh;
-      background: none;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: @blue-500;
-      border-radius: 100vh;
-    }
-  }
-}
-
 @media screen and (min-width: @screen-md) {
   .modalWrapper {
     background-color: transparent;
-    top: 55px;
-    left: 0;
-    height: 560px;
+    height: 100%;
+    display: flex;
 
     &:after {
       @apply w-screen h-screen fixed left-0 top-0;
@@ -70,7 +66,7 @@
     .modal {
       @apply p-8 bg-white rounded m-auto;
       position: relative;
-      top: 60px;
+      top: 0vh;
       width: 764px;
       max-width: 85vw;
       box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.13);
