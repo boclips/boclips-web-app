@@ -3,6 +3,7 @@ import Dropdown from '@boclips-ui/dropdown';
 import {
   AUDIENCE,
   DISCOVERY_METHOD,
+  JOB_TITLE,
   ORGANIZATION_TYPE,
 } from 'src/components/registration/dropdownValues';
 import { InputText } from '@boclips-ui/input';
@@ -27,15 +28,15 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
 
   return (
     <main tabIndex={-1} className={s.marketingInfoWrapper}>
-      <InputText
-        id="input-jobTitle"
-        aria-label="input-jobTitle"
-        onChange={(value) => handleChange('jobTitle', value)}
-        inputType="text"
-        placeholder="Select your job title"
-        className={s.input}
+      <Dropdown
+        mode="single"
         labelText="Job Title"
-        height="48px"
+        onUpdate={(value: string) => handleChange('jobTitle', value)}
+        options={JOB_TITLE}
+        dataQa="input-dropdown-job-title"
+        placeholder="Select your job title"
+        showLabel
+        fitWidth
         isError={errors.isJobTitleEmpty}
         errorMessage="Job title is required"
       />

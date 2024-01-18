@@ -55,10 +55,8 @@ describe('Trial Welcome Modal', () => {
       expect(wrapper.getByText('kobe@la.com')).toBeVisible();
       expect(wrapper.getByText('LA Lakers')).toBeVisible();
 
-      expect(wrapper.getByLabelText('Job Title')).toBeVisible();
-      expect(
-        wrapper.getByPlaceholderText('Select your job title'),
-      ).toBeVisible();
+      expect(wrapper.getByText('Job Title')).toBeVisible();
+      expect(wrapper.getByText('Select your job title')).toBeVisible();
 
       expect(wrapper.queryByText('Organization type')).toBeNull();
 
@@ -99,7 +97,7 @@ describe('Trial Welcome Modal', () => {
 
       const wrapper = renderWelcomeView();
 
-      await setJobTitle(wrapper, 'Player');
+      await setJobTitle(wrapper, 'Professor');
       await setAudience(wrapper, 'K12');
       await setDesiredContent(wrapper, 'Basketball');
 
@@ -107,7 +105,7 @@ describe('Trial Welcome Modal', () => {
 
       await waitFor(() => {
         expect(updateUserSpy).toHaveBeenCalledWith('kb', {
-          jobTitle: 'Player',
+          jobTitle: 'Professor',
           audiences: [],
           desiredContent: 'Basketball',
           discoveryMethods: [],
@@ -124,7 +122,7 @@ describe('Trial Welcome Modal', () => {
 
       const wrapper = renderWelcomeView();
 
-      await setJobTitle(wrapper, 'Player');
+      await setJobTitle(wrapper, 'Professor');
       await setAudience(wrapper, 'K12');
       await setDesiredContent(wrapper, 'Basketball');
 
@@ -153,7 +151,7 @@ describe('Trial Welcome Modal', () => {
 
       const wrapper = renderWelcomeView();
 
-      await setJobTitle(wrapper, 'Player');
+      await setJobTitle(wrapper, 'Professor');
       await setAudience(wrapper, 'K12');
       await setDesiredContent(wrapper, 'Basketball');
 
@@ -190,7 +188,7 @@ describe('Trial Welcome Modal', () => {
 
       const wrapper = renderWelcomeView();
 
-      await setJobTitle(wrapper, 'Player');
+      await setJobTitle(wrapper, 'Professor');
       await setAudience(wrapper, 'K12');
       await setDesiredContent(wrapper, '');
 
@@ -238,7 +236,7 @@ describe('Trial Welcome Modal', () => {
         await wrapper.findByText('Tell us a bit more about you'),
       ).toBeVisible();
 
-      await setJobTitle(wrapper, 'Player');
+      await setJobTitle(wrapper, 'Professor');
       await setAudience(wrapper, 'K12');
       await setDesiredContent(wrapper, 'Hockey');
       await setOrganizationType(wrapper, 'Publisher');
@@ -252,7 +250,7 @@ describe('Trial Welcome Modal', () => {
 
       await waitFor(() => {
         expect(updateUserSpy).toHaveBeenCalledWith('sk', {
-          jobTitle: 'Player',
+          jobTitle: 'Professor',
           audiences: [],
           desiredContent: 'Hockey',
           discoveryMethods: ['Employer', 'Social Media'],
@@ -273,7 +271,7 @@ describe('Trial Welcome Modal', () => {
 
       const wrapper = renderWelcomeView();
 
-      await setJobTitle(wrapper, 'Player');
+      await setJobTitle(wrapper, 'Professor');
       await setAudience(wrapper, 'K12');
       await setDesiredContent(wrapper, 'Hockey');
 
@@ -294,9 +292,13 @@ describe('Trial Welcome Modal', () => {
   });
 
   async function setJobTitle(wrapper: RenderResult, value: string) {
-    fireEvent.change(await wrapper.findByLabelText(/Job Title/), {
-      target: { value },
-    });
+    if (value) {
+      const dropdown = await wrapper.findByTestId('input-dropdown-job-title');
+      fireEvent.click(within(dropdown).getByTestId('select'));
+      const option = within(dropdown).getByText(value);
+      expect(option).toBeVisible();
+      fireEvent.click(option);
+    }
   }
 
   async function setAudience(wrapper: RenderResult, value: string) {

@@ -26,17 +26,17 @@ const AUDIENCE = createDropdownOptions([
 ]);
 
 const JOB_TITLE = createDropdownOptions([
-  'Teacher',
-  'Professor',
-  'Curriculum Developer / Instructional Designer',
-  'Product Manager / Owner',
-  'Procurement / Licensing / Purchasing',
+  'Curriculum Developer/Instructional Designer',
+  'Product Manager/Owner',
+  'Procurement/Licensing/Purchasing',
   'Administrator',
   'Portfolio Manager',
   'Project Manager',
   'Faculty',
   'Technology Specialist',
   'Executive',
+  'Teacher',
+  'Professor',
   'Other',
 ]);
 
