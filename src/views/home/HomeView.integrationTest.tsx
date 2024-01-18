@@ -33,7 +33,7 @@ describe('HomeView', () => {
       </MemoryRouter>,
     );
     expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
-      'Welcome to CourseSpark!',
+      'Welcome to Boclips Library',
     );
     expect(await wrapper.findByText('Browse All Videos')).toBeInTheDocument();
     expect(await wrapper.findByText('View My Playlists')).toBeInTheDocument();
@@ -337,7 +337,7 @@ describe('HomeView', () => {
     ).toBeNull();
 
     expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
-      'Welcome to CourseSpark!',
+      'Welcome to Boclips Library',
     );
   });
 
@@ -375,7 +375,7 @@ describe('HomeView', () => {
     ).toBeNull();
 
     expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
-      'Welcome to CourseSpark!',
+      'Welcome to Boclips Library',
     );
   });
 });

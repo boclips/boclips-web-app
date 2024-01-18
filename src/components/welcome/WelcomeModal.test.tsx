@@ -124,7 +124,7 @@ describe('Trial Welcome Modal', () => {
 
       await waitFor(() => {
         expect(wrapper.getByText('Welcome to')).toBeVisible();
-        expect(wrapper.getByText('CourseSpark!')).toBeVisible();
+        expect(wrapper.getByText('Boclips Library')).toBeVisible();
       });
 
       expect(
