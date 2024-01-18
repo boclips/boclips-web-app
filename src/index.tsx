@@ -10,9 +10,10 @@ import axios from 'axios';
 import { ExtraErrorData } from '@sentry/integrations';
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/react';
+import AppUnauthenticated from 'src/AppUnauthenticated';
+import { FallbackApp } from 'src/FallbackApp';
 import App from './App';
 import { Constants } from './AppConstants';
-import { FallbackApp } from './FallbackApp';
 
 // eslint-disable-next-line import/extensions
 import { loadHotjar } from './thirdParty/loadHotjar.js';
@@ -62,10 +63,10 @@ if (Constants.IS_SENTRY_ENABLED) {
   initializeSentry();
 }
 
-const onLogin = async () => {
-  const container = document.getElementById('root');
-  const root = createRoot(container);
+const container = document.getElementById('root');
+const root = createRoot(container);
 
+const onLogin = async () => {
   try {
     const apiClient = await ApiBoclipsClient.create(
       axios,
@@ -81,7 +82,6 @@ const onLogin = async () => {
       </Router>,
     );
   } catch (e) {
-    // If we can't fetch links via the api client (e.g a service is down) show a simple fallback page
     root.render(<FallbackApp />);
   }
 };
@@ -94,4 +94,21 @@ const authOptions = {
   onLogin,
 };
 
-BoclipsSecurity.createInstance(authOptions);
+const AppInitializer = () => {
+  const path = window.location.pathname;
+  const isRegisterView = path === '/register';
+
+  if (isRegisterView) {
+    return (
+      <Router>
+        <AppUnauthenticated />
+      </Router>
+    );
+  }
+
+  BoclipsSecurity.createInstance(authOptions);
+
+  return null;
+};
+
+root.render(<AppInitializer />);

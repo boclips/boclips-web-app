@@ -222,34 +222,6 @@ describe('App', () => {
     expect(history.location.hash).toEqual('#topic-0-target-2');
   });
 
-  it('renders registration view when user is logged in and has dev flag', async () => {
-    const apiClient = new FakeBoclipsClient();
-
-    apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
-
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/register']}>
-        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
-      </MemoryRouter>,
-    );
-
-    expect(await wrapper.findByText('Create your free account')).toBeVisible();
-  });
-
-  it('renders page not found when user is logged in but has no dev flag when accessing registration page', async () => {
-    const apiClient = new FakeBoclipsClient();
-
-    apiClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: false });
-
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/register']}>
-        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
-      </MemoryRouter>,
-    );
-
-    expect(await wrapper.findByText('Page not found!')).toBeVisible();
-  });
-
   it('home should display welcome popup if user is in trial and has no marketing info', async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.accounts.insertAccount(

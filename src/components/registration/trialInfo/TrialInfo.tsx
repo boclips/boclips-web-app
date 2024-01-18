@@ -37,7 +37,7 @@ const TrialInfo = () => {
         </Typography.H1>
         {features.map(({ title, description }) => {
           return (
-            <section className={s.featureInfo}>
+            <section key={title} className={s.featureInfo}>
               <Checkmark />
               <section>
                 <Typography.Body as="div" weight="medium">
