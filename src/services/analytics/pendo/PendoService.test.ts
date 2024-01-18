@@ -14,6 +14,9 @@ describe('Pendo Service', () => {
       account: {
         id: 'account-id',
         name: 'account name',
+        marketingInformation: {
+          companySegments: ['Publisher'],
+        },
       },
     });
 
@@ -37,6 +40,7 @@ describe('Pendo Service', () => {
       account: {
         id: 'account-id',
         name: 'account name',
+        type: ['Publisher'],
       },
     });
   });
@@ -73,6 +77,7 @@ describe('Pendo Service', () => {
       account: {
         id: 'n/a',
         name: 'n/a',
+        type: [],
       },
     });
   });
