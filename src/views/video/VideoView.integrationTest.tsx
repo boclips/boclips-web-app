@@ -394,7 +394,7 @@ describe('Video View', () => {
       });
 
       const helmet = Helmet.peek();
-      expect(helmet.title).toEqual('CourseSpark');
+      expect(helmet.title).toEqual('Library');
     });
   });
 

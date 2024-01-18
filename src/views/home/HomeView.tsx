@@ -38,7 +38,7 @@ const HomeView = () => {
         className="row-start-2 row-end-2 col-start-2 col-end-26 pb-3 lg:pb-0 lg:pt-0 lg:col-start-4 lg:col-end-13"
       >
         <h1 className={s.header}>
-          Welcome to <span className={s.coursespark}>CourseSpark!</span>
+          Welcome to <span className={s.library}>Boclips Library</span>
         </h1>
         <Search showIconOnly={false} />
         <div className="mt-9 flex justify-between">

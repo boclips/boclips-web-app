@@ -8,7 +8,7 @@ import React from 'react';
 import Logo from 'src/components/logo/Logo';
 
 describe('logo', () => {
-  it('does renders the CourseSpark logo if no logo url is provided', () => {
+  it('does renders the Library logo if no logo url is provided', () => {
     const navbar = render(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
@@ -18,7 +18,7 @@ describe('logo', () => {
     );
 
     expect(
-      navbar.getByLabelText('CourseSpark logo - Go to homepage'),
+      navbar.getByLabelText('Library logo - Go to homepage'),
     ).toBeInTheDocument();
   });
 

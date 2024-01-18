@@ -1,6 +1,6 @@
 import React from 'react';
 import SkipLink from 'src/components/skipLink/SkipLink';
-import CourseSparkLogoSVG from 'src/resources/icons/coursespark.svg';
+import LibraryLogoSVG from 'src/resources/icons/library-logo.svg';
 import c from 'classnames';
 import s from './style.module.less';
 
@@ -12,7 +12,7 @@ const InvisibleNavbar = () => {
         s.invisibleNavbar,
       )}
     >
-      <CourseSparkLogoSVG className={s.logo} data-qa="logo" />
+      <LibraryLogoSVG className={s.logo} data-qa="logo" />
       <SkipLink />
     </nav>
   );

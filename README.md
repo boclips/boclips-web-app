@@ -1,4 +1,4 @@
-# Boclips Web App / CourseSpark
+# Boclips Web App / CourseSpark / Library
 
 
 ## Cypress tests

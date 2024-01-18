@@ -15,7 +15,7 @@ describe('Suspense', () => {
     );
 
     expect(await findByTestId('header-text')).toHaveTextContent(
-      'Welcome to CourseSpark!',
+      'Welcome to Boclips Library',
     );
   });
 });

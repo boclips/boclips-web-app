@@ -77,7 +77,7 @@ describe('App', () => {
     );
 
     expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
-      'Welcome to CourseSpark!',
+      'Welcome to Boclips Library',
     );
     expect(wrapper.queryByText('Page not found!')).not.toBeInTheDocument();
   });

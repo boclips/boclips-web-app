@@ -147,7 +147,7 @@ const App = ({
                 fallback={<AccessDeniedView />}
                 roles={[ROLES.BOCLIPS_WEB_APP_BROWSE]}
               >
-                <Helmet title="CourseSpark" />
+                <Helmet title="Library" />
                 <Suspense fallback={<Loading />}>
                   <Routes>
                     <Route
