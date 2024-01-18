@@ -97,7 +97,7 @@ describe('MarketingInfoForm', () => {
       await wrapper.queryByText('Organization type is required'),
     ).toBeNull();
     expect(
-      await wrapper.queryByText('Discovery method is required'),
+      await wrapper.queryByText('I heard about Boclips is required'),
     ).toBeNull();
   });
 
@@ -117,7 +117,7 @@ describe('MarketingInfoForm', () => {
       await wrapper.findByText('Organization type is required'),
     ).toBeVisible();
     expect(
-      await wrapper.findByText('Discovery method is required'),
+      await wrapper.findByText('I heard about Boclips is required'),
     ).toBeVisible();
   });
 });

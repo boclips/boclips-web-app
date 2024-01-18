@@ -55,20 +55,28 @@ describe('Trial Welcome Modal', () => {
       expect(wrapper.getByText('kobe@la.com')).toBeVisible();
       expect(wrapper.getByText('LA Lakers')).toBeVisible();
 
-      expect(wrapper.getByLabelText('Job Title*')).toBeVisible();
-      expect(wrapper.getByPlaceholderText('example: Designer')).toBeVisible();
+      expect(wrapper.getByLabelText('Job Title')).toBeVisible();
+      expect(
+        wrapper.getByPlaceholderText('Select your job title'),
+      ).toBeVisible();
 
       expect(wrapper.queryByText('Organization type')).toBeNull();
 
-      expect(wrapper.getByText('Your audience type*')).toBeVisible();
-      expect(wrapper.getByText('example: K12')).toBeVisible();
+      expect(wrapper.getByText('Audience')).toBeVisible();
+      expect(
+        wrapper.getByText(
+          'Select your main audience (you can select more than one)',
+        ),
+      ).toBeVisible();
 
       expect(wrapper.queryByText('I heard about Boclips')).toBeNull();
 
+      expect(wrapper.getByLabelText('Content Topics')).toBeVisible();
       expect(
-        wrapper.getByLabelText('What Content are you interested in*'),
+        wrapper.getByPlaceholderText(
+          'I am looking for content in these topics...',
+        ),
       ).toBeVisible();
-      expect(wrapper.getByPlaceholderText('Design')).toBeVisible();
 
       expect(wrapper.getByText(/By clicking Let's Go!, you agree to the/));
 
@@ -167,11 +175,9 @@ describe('Trial Welcome Modal', () => {
       fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
       expect(await wrapper.findByText('Job title is required')).toBeVisible();
+      expect(await wrapper.findByText('Audience is required')).toBeVisible();
       expect(
-        await wrapper.findByText('Audience type is required'),
-      ).toBeVisible();
-      expect(
-        await wrapper.findByText('Desired content is required'),
+        await wrapper.findByText('Content topics is required'),
       ).toBeVisible();
 
       await waitFor(() => {
@@ -191,9 +197,9 @@ describe('Trial Welcome Modal', () => {
       fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
       expect(wrapper.queryByText('Job title is required')).toBeNull();
-      expect(wrapper.queryByText('Audience type is required')).toBeNull();
+      expect(wrapper.queryByText('Audience is required')).toBeNull();
       expect(
-        await wrapper.findByText('Desired content is required'),
+        await wrapper.findByText('Content topics is required'),
       ).toBeVisible();
 
       await waitFor(() => {
@@ -277,7 +283,7 @@ describe('Trial Welcome Modal', () => {
         await wrapper.findByText('Organization type is required'),
       ).toBeVisible();
       expect(
-        await wrapper.findByText('Discovery method is required'),
+        await wrapper.findByText('I heard about Boclips is required'),
       ).toBeVisible();
 
       await waitFor(() => {
@@ -304,12 +310,9 @@ describe('Trial Welcome Modal', () => {
   }
 
   async function setDesiredContent(wrapper: RenderResult, value: string) {
-    fireEvent.change(
-      await wrapper.findByLabelText(/What Content are you interested in/),
-      {
-        target: { value },
-      },
-    );
+    fireEvent.change(await wrapper.findByLabelText('Content Topics'), {
+      target: { value },
+    });
   }
 
   async function setOrganizationType(wrapper: RenderResult, value: string) {

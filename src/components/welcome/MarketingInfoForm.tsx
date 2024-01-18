@@ -32,9 +32,9 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
         aria-label="input-jobTitle"
         onChange={(value) => handleChange('jobTitle', value)}
         inputType="text"
-        placeholder="example: Designer"
+        placeholder="Select your job title"
         className={s.input}
-        labelText="Job Title*"
+        labelText="Job Title"
         height="48px"
         isError={errors.isJobTitleEmpty}
         errorMessage="Job title is required"
@@ -57,15 +57,15 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
       )}
       <Dropdown
         mode="single"
-        labelText="Your audience type*"
+        labelText="Audience"
         onUpdate={(value: string) => handleChange('audience', value)}
         options={AUDIENCE}
         dataQa="input-dropdown-audience"
-        placeholder="example: K12"
+        placeholder="Select your main audience (you can select more than one)"
         showLabel
         fitWidth
         isError={errors.isAudienceEmpty}
-        errorMessage="Audience type is required"
+        errorMessage="Audience is required"
       />
       {isAdmin && (
         <Dropdown
@@ -80,7 +80,7 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
           showLabel
           fitWidth
           isError={errors.isDiscoveryMethodsEmpty}
-          errorMessage="Discovery method is required"
+          errorMessage="I heard about Boclips is required"
         />
       )}
       <InputText
@@ -88,12 +88,12 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
         aria-label="input-desiredContent"
         onChange={(value) => handleChange('desiredContent', value)}
         inputType="text"
-        placeholder="Design"
+        placeholder="I am looking for content in these topics..."
         className={s.input}
-        labelText="What Content are you interested in*"
+        labelText="Content Topics"
         height="48px"
         isError={errors.isDesiredContentEmpty}
-        errorMessage="Desired content is required"
+        errorMessage="Content topics is required"
       />
     </main>
   );
