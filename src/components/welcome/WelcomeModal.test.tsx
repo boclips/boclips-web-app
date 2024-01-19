@@ -55,20 +55,26 @@ describe('Trial Welcome Modal', () => {
       expect(wrapper.getByText('kobe@la.com')).toBeVisible();
       expect(wrapper.getByText('LA Lakers')).toBeVisible();
 
-      expect(wrapper.getByLabelText('Job Title*')).toBeVisible();
-      expect(wrapper.getByPlaceholderText('example: Designer')).toBeVisible();
+      expect(wrapper.getByText('Job Title')).toBeVisible();
+      expect(wrapper.getByText('Select your job title')).toBeVisible();
 
       expect(wrapper.queryByText('Organization type')).toBeNull();
 
-      expect(wrapper.getByText('Your audience type*')).toBeVisible();
-      expect(wrapper.getByText('example: K12')).toBeVisible();
+      expect(wrapper.getByText('Audience')).toBeVisible();
+      expect(
+        wrapper.getByText(
+          'Select your main audience (you can select more than one)',
+        ),
+      ).toBeVisible();
 
       expect(wrapper.queryByText('I heard about Boclips')).toBeNull();
 
+      expect(wrapper.getByLabelText('Content Topics')).toBeVisible();
       expect(
-        wrapper.getByLabelText('What Content are you interested in*'),
+        wrapper.getByPlaceholderText(
+          'I am looking for content in these topics...',
+        ),
       ).toBeVisible();
-      expect(wrapper.getByPlaceholderText('Design')).toBeVisible();
 
       expect(wrapper.getByText(/By clicking Let's Go!, you agree to the/));
 
@@ -91,16 +97,17 @@ describe('Trial Welcome Modal', () => {
 
       const wrapper = renderWelcomeView();
 
-      await setJobTitle(wrapper, 'Player');
+      await setJobTitle(wrapper, 'Professor');
       await setAudience(wrapper, 'K12');
+      await setAudience(wrapper, 'Other');
       await setDesiredContent(wrapper, 'Basketball');
 
       fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
       await waitFor(() => {
         expect(updateUserSpy).toHaveBeenCalledWith('kb', {
-          jobTitle: 'Player',
-          audiences: [],
+          jobTitle: 'Professor',
+          audiences: ['K12', 'Other'],
           desiredContent: 'Basketball',
           discoveryMethods: [],
           type: 'b2bUser',
@@ -116,7 +123,7 @@ describe('Trial Welcome Modal', () => {
 
       const wrapper = renderWelcomeView();
 
-      await setJobTitle(wrapper, 'Player');
+      await setJobTitle(wrapper, 'Professor');
       await setAudience(wrapper, 'K12');
       await setDesiredContent(wrapper, 'Basketball');
 
@@ -145,7 +152,7 @@ describe('Trial Welcome Modal', () => {
 
       const wrapper = renderWelcomeView();
 
-      await setJobTitle(wrapper, 'Player');
+      await setJobTitle(wrapper, 'Professor');
       await setAudience(wrapper, 'K12');
       await setDesiredContent(wrapper, 'Basketball');
 
@@ -167,11 +174,9 @@ describe('Trial Welcome Modal', () => {
       fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
       expect(await wrapper.findByText('Job title is required')).toBeVisible();
+      expect(await wrapper.findByText('Audience is required')).toBeVisible();
       expect(
-        await wrapper.findByText('Audience type is required'),
-      ).toBeVisible();
-      expect(
-        await wrapper.findByText('Desired content is required'),
+        await wrapper.findByText('Content topics is required'),
       ).toBeVisible();
 
       await waitFor(() => {
@@ -184,16 +189,16 @@ describe('Trial Welcome Modal', () => {
 
       const wrapper = renderWelcomeView();
 
-      await setJobTitle(wrapper, 'Player');
+      await setJobTitle(wrapper, 'Professor');
       await setAudience(wrapper, 'K12');
       await setDesiredContent(wrapper, '');
 
       fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
       expect(wrapper.queryByText('Job title is required')).toBeNull();
-      expect(wrapper.queryByText('Audience type is required')).toBeNull();
+      expect(wrapper.queryByText('Audience is required')).toBeNull();
       expect(
-        await wrapper.findByText('Desired content is required'),
+        await wrapper.findByText('Content topics is required'),
       ).toBeVisible();
 
       await waitFor(() => {
@@ -232,8 +237,9 @@ describe('Trial Welcome Modal', () => {
         await wrapper.findByText('Tell us a bit more about you'),
       ).toBeVisible();
 
-      await setJobTitle(wrapper, 'Player');
+      await setJobTitle(wrapper, 'Professor');
       await setAudience(wrapper, 'K12');
+      await setAudience(wrapper, 'Other');
       await setDesiredContent(wrapper, 'Hockey');
       await setOrganizationType(wrapper, 'Publisher');
       await setOrganizationType(wrapper, 'Edtech');
@@ -246,8 +252,8 @@ describe('Trial Welcome Modal', () => {
 
       await waitFor(() => {
         expect(updateUserSpy).toHaveBeenCalledWith('sk', {
-          jobTitle: 'Player',
-          audiences: [],
+          jobTitle: 'Professor',
+          audiences: ['K12', 'Other'],
           desiredContent: 'Hockey',
           discoveryMethods: ['Employer', 'Social Media'],
           type: 'b2bUser',
@@ -267,7 +273,7 @@ describe('Trial Welcome Modal', () => {
 
       const wrapper = renderWelcomeView();
 
-      await setJobTitle(wrapper, 'Player');
+      await setJobTitle(wrapper, 'Professor');
       await setAudience(wrapper, 'K12');
       await setDesiredContent(wrapper, 'Hockey');
 
@@ -277,7 +283,7 @@ describe('Trial Welcome Modal', () => {
         await wrapper.findByText('Organization type is required'),
       ).toBeVisible();
       expect(
-        await wrapper.findByText('Discovery method is required'),
+        await wrapper.findByText('I heard about Boclips is required'),
       ).toBeVisible();
 
       await waitFor(() => {
@@ -288,9 +294,13 @@ describe('Trial Welcome Modal', () => {
   });
 
   async function setJobTitle(wrapper: RenderResult, value: string) {
-    fireEvent.change(await wrapper.findByLabelText(/Job Title/), {
-      target: { value },
-    });
+    if (value) {
+      const dropdown = await wrapper.findByTestId('input-dropdown-job-title');
+      fireEvent.click(within(dropdown).getByTestId('select'));
+      const option = within(dropdown).getByText(value);
+      expect(option).toBeVisible();
+      fireEvent.click(option);
+    }
   }
 
   async function setAudience(wrapper: RenderResult, value: string) {
@@ -300,16 +310,17 @@ describe('Trial Welcome Modal', () => {
       const option = within(dropdown).getByText(value);
       expect(option).toBeVisible();
       fireEvent.click(option);
+
+      // make sure dropdown is closed
+      fireEvent.click(within(dropdown).getByTestId('select'));
+      expect(within(dropdown).queryByText(value)).toBeNull();
     }
   }
 
   async function setDesiredContent(wrapper: RenderResult, value: string) {
-    fireEvent.change(
-      await wrapper.findByLabelText(/What Content are you interested in/),
-      {
-        target: { value },
-      },
-    );
+    fireEvent.change(await wrapper.findByLabelText('Content Topics'), {
+      target: { value },
+    });
   }
 
   async function setOrganizationType(wrapper: RenderResult, value: string) {

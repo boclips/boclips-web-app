@@ -3,6 +3,32 @@ import React from 'react';
 import MarketingInfoForm from 'src/components/welcome/MarketingInfoForm';
 
 describe('MarketingInfoForm', () => {
+  it('all job titles are available when dropdown clicked', async () => {
+    const wrapper = render(
+      <MarketingInfoForm errors={{}} setMarketingInfo={jest.fn()} isAdmin />,
+    );
+
+    expect(await wrapper.findByText('Job Title')).toBeVisible();
+    const dropdown = await wrapper.findByText('Select your job title');
+
+    fireEvent.click(dropdown);
+
+    expect(
+      wrapper.getByText('Curriculum Developer/Instructional Designer'),
+    ).toBeVisible();
+    expect(wrapper.getByText('Product Manager/Owner')).toBeVisible();
+    expect(wrapper.getByText('Procurement/Licensing/Purchasing')).toBeVisible();
+    expect(wrapper.getByText('Administrator')).toBeVisible();
+    expect(wrapper.getByText('Portfolio Manager')).toBeVisible();
+    expect(wrapper.getByText('Project Manager')).toBeVisible();
+    expect(wrapper.getByText('Faculty')).toBeVisible();
+    expect(wrapper.getByText('Technology Specialist')).toBeVisible();
+    expect(wrapper.getByText('Executive')).toBeVisible();
+    expect(wrapper.getByText('Teacher')).toBeVisible();
+    expect(wrapper.getByText('Professor')).toBeVisible();
+    expect(wrapper.getByText('Other')).toBeVisible();
+  });
+
   it('discovery method is visible for admin user', async () => {
     const wrapper = render(
       <MarketingInfoForm errors={{}} setMarketingInfo={jest.fn()} isAdmin />,
@@ -97,7 +123,7 @@ describe('MarketingInfoForm', () => {
       await wrapper.queryByText('Organization type is required'),
     ).toBeNull();
     expect(
-      await wrapper.queryByText('Discovery method is required'),
+      await wrapper.queryByText('I heard about Boclips is required'),
     ).toBeNull();
   });
 
@@ -117,7 +143,7 @@ describe('MarketingInfoForm', () => {
       await wrapper.findByText('Organization type is required'),
     ).toBeVisible();
     expect(
-      await wrapper.findByText('Discovery method is required'),
+      await wrapper.findByText('I heard about Boclips is required'),
     ).toBeVisible();
   });
 });

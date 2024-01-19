@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter, Router } from 'react-router-dom';
 import App from 'src/App';
@@ -179,7 +179,7 @@ describe('HomeView', () => {
         lastName: 'Bryant',
         email: 'kobe@la.com',
         account: { id: 'LAL', name: 'LA Lakers' },
-        audience: null,
+        audiences: [],
         jobTitle: null,
         desiredContent: null,
         discoveryMethods: [],
@@ -220,7 +220,7 @@ describe('HomeView', () => {
         lastName: 'Bryant',
         email: 'kobe@la.com',
         account: { id: 'LAL', name: 'LA Lakers' },
-        audience: null,
+        audiences: [],
         jobTitle: null,
         desiredContent: null,
         discoveryMethods: [],
@@ -259,7 +259,7 @@ describe('HomeView', () => {
         lastName: 'Bryant',
         email: 'kobe@la.com',
         account: { id: 'LAL', name: 'LA Lakers' },
-        audience: 'K12',
+        audiences: ['K12'],
         jobTitle: 'Designer',
         desiredContent: 'Designes',
         discoveryMethods: ['tiktok'],
@@ -283,15 +283,49 @@ describe('HomeView', () => {
       </MemoryRouter>,
     );
 
-    expect(
-      await wrapper.queryByText(
-        'Your colleague has invited you to a Boclips Library preview!',
-      ),
-    ).toBeNull();
+    expect(wrapper.queryByText('Job Title')).toBeNull();
+  });
 
-    expect(
-      await wrapper.queryByText('Tell us a bit more about you'),
-    ).toBeNull();
+  it('does not show regular welcome modal if user does not have discovery methods filled and is under trial account', async () => {
+    const fakeBoclipsClient = new FakeBoclipsClient();
+    fakeBoclipsClient.users.insertCurrentUser(
+      UserFactory.sample({
+        id: 'kb',
+        firstName: 'Kobe',
+        lastName: 'Bryant',
+        email: 'kobe@la.com',
+        account: { id: 'LAL', name: 'LA Lakers' },
+        audiences: ['K12'],
+        jobTitle: 'Designer',
+        desiredContent: 'Designes',
+        discoveryMethods: [],
+      }),
+    );
+    fakeBoclipsClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
+    fakeBoclipsClient.accounts.insertAccount(
+      AccountsFactory.sample({
+        id: 'LAL',
+        type: AccountType.TRIAL,
+        status: AccountStatus.ACTIVE,
+        marketingInformation: {
+          country: 'USA',
+          companySegments: ['Edtech'],
+        },
+      }),
+    );
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/']}>
+        <App
+          reactQueryClient={createReactQueryClient()}
+          apiClient={fakeBoclipsClient}
+          boclipsSecurity={stubBoclipsSecurity}
+        />
+      </MemoryRouter>,
+    );
+
+    await waitFor(() => {
+      expect(wrapper.queryByText('Job Title')).toBeNull();
+    });
   });
 
   it('does not show welcome modal if user does not have marketing info but have account type different than trial', async () => {
@@ -303,7 +337,7 @@ describe('HomeView', () => {
         lastName: 'Bryant',
         email: 'kobe@la.com',
         account: { id: 'LAL', name: 'LA Lakers' },
-        audience: null,
+        audiences: null,
         jobTitle: null,
         desiredContent: null,
       }),
@@ -326,15 +360,7 @@ describe('HomeView', () => {
       </MemoryRouter>,
     );
 
-    expect(
-      await wrapper.queryByText(
-        'Your colleague has invited you to a Boclips Library preview!',
-      ),
-    ).toBeNull();
-
-    expect(
-      await wrapper.queryByText('Tell us a bit more about you'),
-    ).toBeNull();
+    expect(await wrapper.queryByText('Job Title')).toBeNull();
 
     expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
       'Welcome to Boclips Library',
@@ -350,7 +376,7 @@ describe('HomeView', () => {
         lastName: 'Bryant',
         email: 'kobe@la.com',
         account: { id: 'LAL', name: 'LA Lakers' },
-        audience: null,
+        audiences: null,
         jobTitle: null,
         desiredContent: null,
       }),

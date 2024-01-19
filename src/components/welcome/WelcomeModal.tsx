@@ -14,7 +14,7 @@ import { UpdateAccountRequest } from 'boclips-api-client/dist/sub-clients/accoun
 import s from './style.module.less';
 
 export interface MarketingInfo {
-  audience: string;
+  audiences: string[];
   desiredContent: string;
   jobTitle: string;
   discoveryMethods: string[];
@@ -34,7 +34,7 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
     useUpdateAccount();
 
   const [marketingInfo, setMarketingInfo] = useState<MarketingInfo>({
-    audience: '',
+    audiences: [],
     desiredContent: '',
     jobTitle: '',
     discoveryMethods: [],
@@ -42,7 +42,7 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
   });
 
   const [errors, setErrors] = useState({
-    isAudienceEmpty: false,
+    isAudiencesEmpty: false,
     isDesiredContentEmpty: false,
     isJobTitleEmpty: false,
     isDiscoveryMethodsEmpty: false,
@@ -89,7 +89,7 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
     const userRequest: UpdateUserRequest = {
       type: UserType.b2bUser,
       jobTitle: marketingInfo.jobTitle,
-      audiences: [],
+      audiences: marketingInfo.audiences,
       desiredContent: marketingInfo.desiredContent,
       discoveryMethods: marketingInfo.discoveryMethods,
     };
@@ -103,7 +103,8 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
 
   const validateForm = (): boolean => {
     const isJobTitleEmpty = !marketingInfo.jobTitle.trim();
-    const isAudienceEmpty = !marketingInfo.audience.trim();
+    const isAudiencesEmpty =
+      !marketingInfo.audiences || marketingInfo.audiences.length === 0;
     const isDesiredContentEmpty = !marketingInfo.desiredContent.trim();
     const isDiscoveryMethodsEmpty =
       !marketingInfo.discoveryMethods ||
@@ -114,14 +115,14 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
 
     setErrors({
       isJobTitleEmpty,
-      isAudienceEmpty,
+      isAudiencesEmpty,
       isDesiredContentEmpty,
       isDiscoveryMethodsEmpty,
       isOrganizationTypesEmpty,
     });
 
     const validRegularFields =
-      !isJobTitleEmpty && !isAudienceEmpty && !isDesiredContentEmpty;
+      !isJobTitleEmpty && !isAudiencesEmpty && !isDesiredContentEmpty;
     const validAdminFields =
       !isDiscoveryMethodsEmpty && !isOrganizationTypesEmpty;
 

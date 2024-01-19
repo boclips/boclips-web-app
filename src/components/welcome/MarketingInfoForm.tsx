@@ -3,6 +3,7 @@ import Dropdown from '@boclips-ui/dropdown';
 import {
   AUDIENCE,
   DISCOVERY_METHOD,
+  JOB_TITLE,
   ORGANIZATION_TYPE,
 } from 'src/components/registration/dropdownValues';
 import { InputText } from '@boclips-ui/input';
@@ -27,15 +28,15 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
 
   return (
     <main tabIndex={-1} className={s.marketingInfoWrapper}>
-      <InputText
-        id="input-jobTitle"
-        aria-label="input-jobTitle"
-        onChange={(value) => handleChange('jobTitle', value)}
-        inputType="text"
-        placeholder="example: Designer"
-        className={s.input}
-        labelText="Job Title*"
-        height="48px"
+      <Dropdown
+        mode="single"
+        labelText="Job Title"
+        onUpdate={(value: string) => handleChange('jobTitle', value)}
+        options={JOB_TITLE}
+        dataQa="input-dropdown-job-title"
+        placeholder="Select your job title"
+        showLabel
+        fitWidth
         isError={errors.isJobTitleEmpty}
         errorMessage="Job title is required"
       />
@@ -56,16 +57,16 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
         />
       )}
       <Dropdown
-        mode="single"
-        labelText="Your audience type*"
-        onUpdate={(value: string) => handleChange('audience', value)}
+        mode="multiple"
+        labelText="Audience"
+        onUpdate={(values: string[]) => handleChange('audiences', values)}
         options={AUDIENCE}
         dataQa="input-dropdown-audience"
-        placeholder="example: K12"
+        placeholder="Select your main audience (you can select more than one)"
         showLabel
         fitWidth
-        isError={errors.isAudienceEmpty}
-        errorMessage="Audience type is required"
+        isError={errors.isAudiencesEmpty}
+        errorMessage="Audience is required"
       />
       {isAdmin && (
         <Dropdown
@@ -80,7 +81,7 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
           showLabel
           fitWidth
           isError={errors.isDiscoveryMethodsEmpty}
-          errorMessage="Discovery method is required"
+          errorMessage="I heard about Boclips is required"
         />
       )}
       <InputText
@@ -88,12 +89,12 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
         aria-label="input-desiredContent"
         onChange={(value) => handleChange('desiredContent', value)}
         inputType="text"
-        placeholder="Design"
+        placeholder="I am looking for content in these topics..."
         className={s.input}
-        labelText="What Content are you interested in*"
+        labelText="Content Topics"
         height="48px"
         isError={errors.isDesiredContentEmpty}
-        errorMessage="Desired content is required"
+        errorMessage="Content topics is required"
       />
     </main>
   );

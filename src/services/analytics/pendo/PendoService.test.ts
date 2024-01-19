@@ -9,7 +9,6 @@ describe('Pendo Service', () => {
       firstName: 'M',
       lastName: 'J',
       jobTitle: 'barista',
-      audience: 'caffeine addicts',
       audiences: ['caffeine addicts'],
       desiredContent: 'books&coffee',
       account: {
@@ -36,7 +35,6 @@ describe('Pendo Service', () => {
         full_name: 'M J',
         role: 'barista',
         content: 'books&coffee',
-        audience: '',
         audiences: ['caffeine addicts'],
       },
       account: {
@@ -54,7 +52,7 @@ describe('Pendo Service', () => {
       firstName: 'M',
       lastName: 'J',
       jobTitle: undefined,
-      audience: undefined,
+      audiences: undefined,
       desiredContent: undefined,
     });
     user = { ...user, account: null };
@@ -74,7 +72,6 @@ describe('Pendo Service', () => {
         full_name: 'M J',
         role: '',
         content: '',
-        audience: '',
         audiences: [],
       },
       account: {
