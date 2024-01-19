@@ -57,15 +57,15 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
         />
       )}
       <Dropdown
-        mode="single"
+        mode="multiple"
         labelText="Audience"
-        onUpdate={(value: string) => handleChange('audience', value)}
+        onUpdate={(values: string[]) => handleChange('audiences', values)}
         options={AUDIENCE}
         dataQa="input-dropdown-audience"
         placeholder="Select your main audience (you can select more than one)"
         showLabel
         fitWidth
-        isError={errors.isAudienceEmpty}
+        isError={errors.isAudiencesEmpty}
         errorMessage="Audience is required"
       />
       {isAdmin && (

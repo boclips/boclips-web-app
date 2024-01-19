@@ -44,16 +44,10 @@ const useShowTrialWelcomeModal = ({ showPopup, setIsAdmin }: Props) => {
 
 const isMarketingInfoSet = (user: User): boolean => {
   const isJobTitleSet = user.jobTitle?.trim().length > 0;
-  const isAudienceSet = user.audience?.trim().length > 0;
+  const isAudienceSet = user.audiences?.length > 0;
   const isDesiredContentSet = user.desiredContent?.trim().length > 0;
-  const isDiscoveryMethodSet = user.discoveryMethods?.length > 0;
 
-  return (
-    isJobTitleSet &&
-    isAudienceSet &&
-    isDesiredContentSet &&
-    isDiscoveryMethodSet
-  );
+  return isJobTitleSet && isAudienceSet && isDesiredContentSet;
 };
 
 const isAccountMarketingInfoSet = (account: Account): boolean => {

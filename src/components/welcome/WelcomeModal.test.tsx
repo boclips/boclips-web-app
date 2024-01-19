@@ -99,6 +99,7 @@ describe('Trial Welcome Modal', () => {
 
       await setJobTitle(wrapper, 'Professor');
       await setAudience(wrapper, 'K12');
+      await setAudience(wrapper, 'Other');
       await setDesiredContent(wrapper, 'Basketball');
 
       fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
@@ -106,7 +107,7 @@ describe('Trial Welcome Modal', () => {
       await waitFor(() => {
         expect(updateUserSpy).toHaveBeenCalledWith('kb', {
           jobTitle: 'Professor',
-          audiences: [],
+          audiences: ['K12', 'Other'],
           desiredContent: 'Basketball',
           discoveryMethods: [],
           type: 'b2bUser',
@@ -238,6 +239,7 @@ describe('Trial Welcome Modal', () => {
 
       await setJobTitle(wrapper, 'Professor');
       await setAudience(wrapper, 'K12');
+      await setAudience(wrapper, 'Other');
       await setDesiredContent(wrapper, 'Hockey');
       await setOrganizationType(wrapper, 'Publisher');
       await setOrganizationType(wrapper, 'Edtech');
@@ -251,7 +253,7 @@ describe('Trial Welcome Modal', () => {
       await waitFor(() => {
         expect(updateUserSpy).toHaveBeenCalledWith('sk', {
           jobTitle: 'Professor',
-          audiences: [],
+          audiences: ['K12', 'Other'],
           desiredContent: 'Hockey',
           discoveryMethods: ['Employer', 'Social Media'],
           type: 'b2bUser',
@@ -308,6 +310,10 @@ describe('Trial Welcome Modal', () => {
       const option = within(dropdown).getByText(value);
       expect(option).toBeVisible();
       fireEvent.click(option);
+
+      // make sure dropdown is closed
+      fireEvent.click(within(dropdown).getByTestId('select'));
+      expect(within(dropdown).queryByText(value)).toBeNull();
     }
   }
 

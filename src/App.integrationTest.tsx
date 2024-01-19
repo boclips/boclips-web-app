@@ -231,7 +231,7 @@ describe('App', () => {
       UserFactory.sample({
         account: { id: 'trial', name: 'trial' },
         desiredContent: undefined,
-        audience: undefined,
+        audiences: undefined,
       }),
     );
 

@@ -21,7 +21,6 @@ export class PendoService {
           full_name: `${user.firstName} ${user.lastName}`,
           role: user.jobTitle || '',
           content: user.desiredContent || '',
-          audience: user.audience || '',
           audiences: user.audiences || [],
         },
         account: {
