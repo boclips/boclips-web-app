@@ -137,7 +137,6 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
       onCancel={() => null}
       onConfirm={handleUserUpdate}
       isLoading={isUserUpdating || isAccountUpdating}
-      footerClass={s.footer}
       title={
         isAdmin
           ? 'Tell us a bit more about you'

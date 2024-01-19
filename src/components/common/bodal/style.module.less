@@ -5,7 +5,7 @@
   @apply bg-white w-screen h-screen fixed left-0;
   z-index: 51; // header is set to 50
   overflow: auto;
-  top:0;
+  top: 0;
 
   .modal {
     overflow-y: auto;
@@ -47,11 +47,11 @@
   }
 
   .oneButtonFooter {
-    justify-content: flex-end !important;
+    justify-content: flex-end;
   }
 
   .twoButtonFooter {
-    justify-content: space-between !important;
+    justify-content: space-between;
   }
 }
 
@@ -90,6 +90,10 @@
     .modalFooter {
       @apply flex relative mt-8 p-0 w-auto h-11 rounded-none;
       box-shadow: none;
+    }
+
+    .oneButtonFooter {
+      justify-content: center;
     }
   }
 }
