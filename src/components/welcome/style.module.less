@@ -1,6 +1,18 @@
 @import '~@boclips-ui/styles/src/colors';
 @import '~@boclips-ui/styles/src/breakpoints';
 
+.footerText {
+  text-align: center;
+  margin-top: 1rem;
+  width: 100%;
+  position: relative;
+
+  @media screen and (max-width: @screen-md) {
+    top: -5em;
+    z-index: 1;
+  }
+}
+
 .header {
   display: flex;
   flex-direction: column;
@@ -58,9 +70,9 @@
 }
 
 .updateMarketingInfoButton {
-  height: 48px
+  height: 48px;
 }
 
-.footer{
-  justify-content: center!important;
+.footer {
+  justify-content: center !important;
 }

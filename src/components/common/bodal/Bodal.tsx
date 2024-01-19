@@ -89,6 +89,14 @@ export const Bodal: React.FC<Props> = ({
     }
   }, [initialFocusRef]);
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
   return (
     <FocusTrap>
       {/* Below should be fine according to https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/479 */}

@@ -156,7 +156,7 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
 };
 
 const FooterText = () => (
-  <div className="w-full text-center mt-4">
+  <div className={s.footerText}>
     <AcceptedAgreement buttonText="Let's Go!" />
   </div>
 );
