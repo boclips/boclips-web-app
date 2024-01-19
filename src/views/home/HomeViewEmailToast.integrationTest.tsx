@@ -35,7 +35,7 @@ describe('home view notifications', () => {
     expect(await wrapper.queryByText('Email successfully verified')).toBeNull();
   });
 
-  it('display email verified toast if related request param is true', async () => {
+  it('display email verified toast if related request param is true and is removed after toast is rendered', async () => {
     const wrapper = render(
       <MemoryRouter initialEntries={['/?email_verified=true']}>
         <App
