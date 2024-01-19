@@ -146,4 +146,32 @@ describe('MarketingInfoForm', () => {
       await wrapper.findByText('I heard about Boclips is required'),
     ).toBeVisible();
   });
+
+  it('prompt is visible for regular user', async () => {
+    const wrapper = render(
+      <MarketingInfoForm
+        errors={{}}
+        setMarketingInfo={jest.fn()}
+        isAdmin={false}
+      />,
+    );
+
+    expect(
+      await wrapper.findByText(
+        'Complete your account setup by filling in the details below.',
+      ),
+    ).toBeVisible();
+  });
+
+  it('prompt is not visible for admin user', async () => {
+    const wrapper = render(
+      <MarketingInfoForm errors={{}} setMarketingInfo={jest.fn()} isAdmin />,
+    );
+
+    expect(
+      await wrapper.queryByText(
+        'Complete your account setup by filling in the details below.',
+      ),
+    ).toBeNull();
+  });
 });

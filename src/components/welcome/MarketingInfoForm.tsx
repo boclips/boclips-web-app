@@ -7,6 +7,7 @@ import {
   ORGANIZATION_TYPE,
 } from 'src/components/registration/dropdownValues';
 import { InputText } from '@boclips-ui/input';
+import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 
 interface Props {
@@ -28,6 +29,11 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
 
   return (
     <main tabIndex={-1} className={s.marketingInfoWrapper}>
+      {!isAdmin && (
+        <Typography.Body className="text-gray-800">
+          Complete your account setup by filling in the details below.
+        </Typography.Body>
+      )}
       <Dropdown
         mode="single"
         labelText="Job Title"
