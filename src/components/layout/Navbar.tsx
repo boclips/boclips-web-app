@@ -119,7 +119,7 @@ const NavbarResponsive = ({
         </div>
       )}
       {showSideMenu && mobileView && (
-        <SideMenu user={user} logOut={logOut} hasSearchInNavbar={false} />
+        <SideMenu logOut={logOut} hasSearchInNavbar={false} />
       )}
     </nav>
   );

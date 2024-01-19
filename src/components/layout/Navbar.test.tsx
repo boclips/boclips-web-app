@@ -83,24 +83,6 @@ describe(`Navbar`, () => {
       },
     );
 
-    it.each([
-      ['mobile', resizeToMobile],
-      ['tablet', resizeToTablet],
-    ])(
-      'closes menu on click on %s',
-      async (_screenType: string, resize: () => void) => {
-        resize();
-
-        fireEvent.click(await wrapper.findByLabelText('Menu'));
-
-        expect(wrapper.getByText('Ricky Julian')).toBeInTheDocument();
-
-        fireEvent.click(await wrapper.findByLabelText('Menu'));
-
-        expect(wrapper.queryByText('Ricky Julian')).not.toBeInTheDocument();
-      },
-    );
-
     it('is not visible on desktop', async () => {
       resizeToDesktop();
 

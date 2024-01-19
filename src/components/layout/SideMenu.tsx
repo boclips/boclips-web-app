@@ -4,24 +4,16 @@ import { Link } from 'src/components/common/Link';
 import ExternalLinkIcon from 'src/resources/icons/external-link-icon.svg';
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
-import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import c from 'classnames';
 
 interface Props {
-  user: User;
   logOut: () => void;
   hasSearchInNavbar?: boolean;
 }
 
-const SideMenu = ({ user, logOut, hasSearchInNavbar = true }: Props) => {
+const SideMenu = ({ logOut, hasSearchInNavbar = true }: Props) => {
   return (
     <div className={c(s.slideMenu, { [s.oneLineNavbar]: !hasSearchInNavbar })}>
-      <div className={s.userInfo}>
-        <span>
-          {user.firstName} {user.lastName}
-        </span>
-        <span>{user.email}</span>
-      </div>
       <div className={s.buttons}>
         <Link to="/alignments">Alignments</Link>
         <Link to="/playlists">Playlists</Link>
