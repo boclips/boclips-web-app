@@ -89,7 +89,7 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
     const userRequest: UpdateUserRequest = {
       type: UserType.b2bUser,
       jobTitle: marketingInfo.jobTitle,
-      audience: marketingInfo.audience,
+      audiences: [],
       desiredContent: marketingInfo.desiredContent,
       discoveryMethods: marketingInfo.discoveryMethods,
     };

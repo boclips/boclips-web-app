@@ -22,6 +22,7 @@ export class PendoService {
           role: user.jobTitle || '',
           content: user.desiredContent || '',
           audience: user.audience || '',
+          audiences: user.audiences || [],
         },
         account: {
           id: user.account?.id || 'n/a',

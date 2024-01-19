@@ -100,7 +100,7 @@ describe('Trial Welcome Modal', () => {
       await waitFor(() => {
         expect(updateUserSpy).toHaveBeenCalledWith('kb', {
           jobTitle: 'Player',
-          audience: 'K12',
+          audiences: [],
           desiredContent: 'Basketball',
           discoveryMethods: [],
           type: 'b2bUser',
@@ -247,7 +247,7 @@ describe('Trial Welcome Modal', () => {
       await waitFor(() => {
         expect(updateUserSpy).toHaveBeenCalledWith('sk', {
           jobTitle: 'Player',
-          audience: 'K12',
+          audiences: [],
           desiredContent: 'Hockey',
           discoveryMethods: ['Employer', 'Social Media'],
           type: 'b2bUser',
