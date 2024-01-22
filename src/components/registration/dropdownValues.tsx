@@ -20,7 +20,6 @@ const TYPE_OF_ORG = createDropdownOptions([
 const AUDIENCE = createDropdownOptions([
   'K12',
   'Higher Ed',
-  'K12 and Higher Ed',
   'Workforce',
   'Other',
 ]);
