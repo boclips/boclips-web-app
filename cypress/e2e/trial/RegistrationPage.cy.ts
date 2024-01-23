@@ -1,5 +1,3 @@
-import { cleanupStyles } from 'cypress/mount-utils';
-
 context('Registration Page', () => {
   it('Registration', () => {
     cy.visit('/register');

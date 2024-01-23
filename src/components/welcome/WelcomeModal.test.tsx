@@ -61,11 +61,7 @@ describe('Trial Welcome Modal', () => {
       expect(wrapper.queryByText('Organization type')).toBeNull();
 
       expect(wrapper.getByText('Audience')).toBeVisible();
-      expect(
-        wrapper.getByText(
-          'Select your main audience (you can select more than one)',
-        ),
-      ).toBeVisible();
+      expect(wrapper.getByText('Select your main audience')).toBeVisible();
 
       expect(wrapper.queryByText('I heard about Boclips')).toBeNull();
 

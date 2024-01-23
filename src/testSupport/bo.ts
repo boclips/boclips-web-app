@@ -20,6 +20,7 @@ import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
+import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 export interface Bo {
   create: {
@@ -34,6 +35,7 @@ export interface Bo {
     playlistWithVideos: () => void;
     featuredPlaylists: () => void;
     user: () => void;
+    trialUser: () => void;
   };
   inspect: () => FakeBoclipsClient;
   set: {
@@ -178,6 +180,17 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
         );
         apiClient.accounts.insertAccount(
           AccountsFactory.sample({ id: 'acc-id' }),
+        );
+      },
+      trialUser: async () => {
+        apiClient.users.insertCurrentUser(
+          UserFactory.sample({
+            firstName: 'Percy',
+            account: { id: 'acc-id', name: 'Percy account' },
+          }),
+        );
+        apiClient.accounts.insertAccount(
+          AccountsFactory.sample({ id: 'acc-id', type: AccountType.TRIAL }),
         );
       },
       subject: boCreateSubject,
