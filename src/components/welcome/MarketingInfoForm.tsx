@@ -68,7 +68,7 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
         onUpdate={(values: string[]) => handleChange('audiences', values)}
         options={AUDIENCE}
         dataQa="input-dropdown-audience"
-        placeholder="Select your main audience (you can select more than one)"
+        placeholder="Select your main audience"
         showLabel
         fitWidth
         isError={errors.isAudiencesEmpty}
