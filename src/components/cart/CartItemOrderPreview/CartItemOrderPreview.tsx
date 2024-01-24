@@ -46,13 +46,15 @@ export const CartItemOrderPreview = ({ videos }: Props) => {
             'flex flex-row py-3 border-b-2 border-blue-400 rounded',
           )}
         >
-          <div className={s.imgWrapper}>
-            <img
-              src={video.playback.links.thumbnail.getOriginalLink()}
-              alt={video.title}
-            />
-          </div>
-          <div className="ml-5 w-full">
+          {video.playback.links.thumbnail && (
+            <div className={s.imgWrapper}>
+              <img
+                src={video.playback.links.thumbnail.getOriginalLink()}
+                alt={video.title}
+              />
+            </div>
+          )}
+          <div className="w-full">
             <Typography.Title2
               as="div"
               className="text-gray-900 flex justify-between"
