@@ -5,6 +5,8 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Link } from 'boclips-api-client/dist/types';
+import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 
 describe('Cart Item Preview', () => {
   it('displays correct message when no additional services', async () => {
@@ -94,5 +96,89 @@ describe('Cart Item Preview', () => {
       wrapper.getByText('Other type of editing: bla bla'),
     ).toBeInTheDocument();
     expect(wrapper.getByText('$1,000')).toBeInTheDocument();
+  });
+
+  it('displays video thumbnail', () => {
+    const fakeClient = new FakeBoclipsClient();
+    const client = new QueryClient();
+
+    const cart = {
+      items: [
+        {
+          id: 'cart-item-id',
+          videoId: 'video-id',
+          additionalServices: {
+            trim: null,
+            transcriptRequested: false,
+            captionsRequested: false,
+          },
+        },
+      ],
+    };
+
+    client.setQueryData(['cart'], cart);
+
+    const video = VideoFactory.sample({
+      id: 'video-id',
+      title: 'video title',
+      playback: PlaybackFactory.sample({
+        links: {
+          thumbnail: new Link({ href: 'http://thumbnail.jpg' }),
+          createPlayerInteractedWithEvent: new Link({ href: '' }),
+        },
+      }),
+    });
+
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeClient}>
+        <QueryClientProvider client={client}>
+          <CartItemOrderPreview videos={[video]} />
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
+    );
+
+    expect(wrapper.getByAltText('video title')).toBeVisible();
+  });
+
+  it(`doesn't display video thumbnail if thumbnail link is null`, () => {
+    const fakeClient = new FakeBoclipsClient();
+    const client = new QueryClient();
+
+    const cart = {
+      items: [
+        {
+          id: 'cart-item-id',
+          videoId: 'video-id',
+          additionalServices: {
+            trim: null,
+            transcriptRequested: false,
+            captionsRequested: false,
+          },
+        },
+      ],
+    };
+
+    client.setQueryData(['cart'], cart);
+
+    const video = VideoFactory.sample({
+      id: 'video-id',
+      title: 'video title',
+      playback: PlaybackFactory.sample({
+        links: {
+          thumbnail: null,
+          createPlayerInteractedWithEvent: new Link({ href: '' }),
+        },
+      }),
+    });
+
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeClient}>
+        <QueryClientProvider client={client}>
+          <CartItemOrderPreview videos={[video]} />
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
+    );
+
+    expect(wrapper.queryByAltText('video title')).toBeNull();
   });
 });
