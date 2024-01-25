@@ -35,7 +35,8 @@ export interface Bo {
     playlistWithVideos: () => void;
     featuredPlaylists: () => void;
     user: () => void;
-    trialUser: () => void;
+    trialAdminUser: () => void;
+    trialRegularUser: () => void;
   };
   inspect: () => FakeBoclipsClient;
   set: {
@@ -182,7 +183,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
           AccountsFactory.sample({ id: 'acc-id' }),
         );
       },
-      trialUser: async () => {
+      trialAdminUser: async () => {
         apiClient.users.insertCurrentUser(
           UserFactory.sample({
             firstName: 'Percy',
@@ -191,6 +192,23 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
         );
         apiClient.accounts.insertAccount(
           AccountsFactory.sample({ id: 'acc-id', type: AccountType.TRIAL }),
+        );
+      },
+      trialRegularUser: async () => {
+        apiClient.users.insertCurrentUser(
+          UserFactory.sample({
+            firstName: 'Percy',
+            account: { id: 'acc-id', name: 'Percy account' },
+          }),
+        );
+        apiClient.accounts.insertAccount(
+          AccountsFactory.sample({
+            id: 'acc-id',
+            type: AccountType.TRIAL,
+            marketingInformation: {
+              companySegments: ['Edtech'],
+            },
+          }),
         );
       },
       subject: boCreateSubject,
