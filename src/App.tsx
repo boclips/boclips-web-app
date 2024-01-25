@@ -44,6 +44,10 @@ const CartView = lazyWithRetry(() => import('src/views/cart/CartView'));
 
 const OrdersView = lazyWithRetry(() => import('src/views/orders/OrdersView'));
 
+const ContentView = lazyWithRetry(
+  () => import('src/views/content/ContentView'),
+);
+
 const OrderView = lazyWithRetry(() => import('src/views/order/OrderView'));
 
 const VideoView = lazyWithRetry(() => import('src/views/video/VideoView'));
@@ -190,6 +194,18 @@ const App = ({
                         >
                           <Helmet title="My Orders" />
                           <OrdersView />
+                        </FeatureGate>
+                      }
+                    />
+                    <Route
+                      path="/content"
+                      element={
+                        <FeatureGate
+                          feature="BO_WEB_APP_DEV"
+                          fallback={<AccessDeniedView />}
+                        >
+                          <Helmet title="My Content" />
+                          <ContentView />
                         </FeatureGate>
                       }
                     />

@@ -34,6 +34,10 @@ export const AccountButton = () => {
     setOnMouseEnter(false);
   };
 
+  const contentOpenedEvent = () => {
+    AnalyticsFactory.hotjar().event(HotjarEvents.MyContentOpened);
+  };
+
   const ordersOpenedEvent = () => {
     AnalyticsFactory.hotjar().event(HotjarEvents.YourOrdersOpened);
   };
@@ -108,6 +112,15 @@ export const AccountButton = () => {
                 </Typography.Body>
               </Link>
             </div>
+            <FeatureGate feature="BO_WEB_APP_DEV">
+              <div className="pt-2">
+                <Link onClick={contentOpenedEvent} to="/content" tabIndex={-1}>
+                  <Typography.Body size="small" as="button">
+                    My content
+                  </Typography.Body>
+                </Link>
+              </div>
+            </FeatureGate>
             <FeatureGate linkName="userOrders">
               <div className="pt-2">
                 <Link onClick={ordersOpenedEvent} to="/orders" tabIndex={-1}>

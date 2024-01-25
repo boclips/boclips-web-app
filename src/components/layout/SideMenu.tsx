@@ -17,6 +17,9 @@ const SideMenu = ({ logOut, hasSearchInNavbar = true }: Props) => {
       <div className={s.buttons}>
         <Link to="/alignments">Alignments</Link>
         <Link to="/playlists">Playlists</Link>
+        <FeatureGate feature="BO_WEB_APP_DEV">
+          <Link to="/content">My content</Link>
+        </FeatureGate>
         <Link to="/orders">Your orders</Link>
         <FeatureGate linkName="cart">
           <Link to="/cart">Cart</Link>

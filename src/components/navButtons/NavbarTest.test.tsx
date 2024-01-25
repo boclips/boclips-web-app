@@ -85,6 +85,47 @@ describe(`Navbar test`, () => {
       expect(wrapper.getByText('Log out')).toBeInTheDocument();
     });
   });
+
+  it('does not contain your content link in tooltip when user does not have BWA_DEV feature enabled', async () => {
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({
+        firstName: 'yo',
+        features: { BO_WEB_APP_DEV: false },
+      }),
+    );
+
+    const wrapper = renderAccountButton();
+    expect(await wrapper.findByText('yo')).toBeInTheDocument();
+
+    fireEvent.click(await wrapper.findByText('yo'));
+
+    await waitFor(() => wrapper.getByTestId('account-modal'));
+
+    await waitFor(() => {
+      expect(wrapper.queryByText('My content')).toBeNull();
+      expect(wrapper.getByText('Log out')).toBeInTheDocument();
+    });
+  });
+
+  it('contains your content link in tooltip when user has BWA_DEV feature enabled', async () => {
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({
+        firstName: 'yo',
+        features: { BO_WEB_APP_DEV: true },
+      }),
+    );
+
+    const wrapper = renderAccountButton();
+    expect(await wrapper.findByText('yo')).toBeInTheDocument();
+
+    fireEvent.click(await wrapper.findByText('yo'));
+
+    await waitFor(() => wrapper.getByTestId('account-modal'));
+
+    await waitFor(() => {
+      expect(wrapper.getByText('My content')).toBeInTheDocument();
+    });
+  });
   /**
    * I'm not sure this actually tests anything.
    * Ideally we'd test that we'd actually get back to the home page, somehow.

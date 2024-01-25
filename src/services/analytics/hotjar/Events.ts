@@ -20,6 +20,7 @@ export const enum HotjarEvents {
   FiltersApplied = 'filters_applied',
   VideoPageOpened = 'video_page_opened',
   YourOrdersOpened = 'your_orders_opened',
+  MyContentOpened = 'my_content_opened',
   MyTeamOpened = 'my_team_opened',
   MyAccountOpened = 'my_account_opened',
 }

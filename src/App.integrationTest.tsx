@@ -245,4 +245,40 @@ describe('App', () => {
       await wrapper.findByText('Tell us a bit more about you'),
     ).toBeVisible();
   });
+
+  describe('My content view', () => {
+    it('redirects to my content page when hitting /content url', async () => {
+      const apiClient = new FakeBoclipsClient();
+      apiClient.users.insertCurrentUser(
+        UserFactory.sample({
+          features: { BO_WEB_APP_DEV: true },
+        }),
+      );
+
+      const wrapper = render(
+        <MemoryRouter initialEntries={['/content']}>
+          <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+        </MemoryRouter>,
+      );
+
+      expect(await wrapper.findByText('My content')).toBeVisible();
+    });
+
+    it('will not redirect to my content page when hitting /content url without BWA_DEV feature', async () => {
+      const apiClient = new FakeBoclipsClient();
+      apiClient.users.insertCurrentUser(
+        UserFactory.sample({
+          features: { BO_WEB_APP_DEV: false },
+        }),
+      );
+
+      const wrapper = render(
+        <MemoryRouter initialEntries={['/content']}>
+          <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+        </MemoryRouter>,
+      );
+
+      expect(await wrapper.findByText('Page not found!')).toBeInTheDocument();
+    });
+  });
 });
