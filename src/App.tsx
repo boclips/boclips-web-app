@@ -10,6 +10,8 @@ import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import ScrollToTop from 'src/hooks/scrollToTop';
 import { Helmet } from 'react-helmet';
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
+import { WithValidRoles } from 'src/components/common/errors/WithValidRoles';
+import { ROLES } from 'src/types/Roles';
 import { lazyWithRetry } from 'src/services/lazyWithRetry';
 import { FollowPlaylist } from 'src/services/followPlaylist';
 import UserAttributes from 'src/services/analytics/hotjar/UserAttributes';
@@ -144,13 +146,13 @@ const App = ({
       <GlobalQueryErrorProvider>
         <BoclipsSecurityProvider boclipsSecurity={boclipsSecurity}>
           <BoclipsClientProvider client={apiClient}>
-            <Suspense fallback={<Loading />}>
-              <JSErrorBoundary fallback={<FallbackView />}>
-                <FeatureGate
-                  fallback={<AccessDeniedView />}
-                  linkName="boclipsWebAppAccess"
-                >
-                  <Helmet title="Library" />
+            <JSErrorBoundary fallback={<FallbackView />}>
+              <WithValidRoles
+                fallback={<AccessDeniedView />}
+                roles={[ROLES.BOCLIPS_WEB_APP_BROWSE]}
+              >
+                <Helmet title="Library" />
+                <Suspense fallback={<Loading />}>
                   <Routes>
                     <Route
                       path="/"
@@ -289,10 +291,10 @@ const App = ({
                       }
                     />
                   </Routes>
-                  <ReactQueryDevtools initialIsOpen={false} />
-                </FeatureGate>
-              </JSErrorBoundary>
-            </Suspense>
+                </Suspense>
+                <ReactQueryDevtools initialIsOpen={false} />
+              </WithValidRoles>
+            </JSErrorBoundary>
           </BoclipsClientProvider>
         </BoclipsSecurityProvider>
       </GlobalQueryErrorProvider>

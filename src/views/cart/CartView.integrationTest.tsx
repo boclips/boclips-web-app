@@ -19,6 +19,8 @@ import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
 import { QueryClient } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet';
 import userEvent from '@testing-library/user-event';
+import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
+import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
 import { lastEvent } from 'src/testSupport/lastEvent';
 
 afterEach(cleanup);
@@ -279,6 +281,26 @@ describe('CartView', () => {
     const title = await wrapper.findByText('news video');
 
     expect(title.closest('a')).toHaveAttribute('href', `/videos/${video.id}`);
+  });
+
+  it(`displays access denied if user has BOCLIPS_WEB_APP_BROWSE role`, async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const security: BoclipsSecurity = {
+      ...stubBoclipsSecurity,
+      hasRole: (role) => role === 'BOCLIPS_WEB_APP_BROWSE',
+    };
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/cart']}>
+        <App
+          apiClient={fakeClient}
+          boclipsSecurity={security}
+          reactQueryClient={createReactQueryClient()}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByText('Page not found!')).toBeVisible();
   });
 
   describe('interacting with additional services', () => {

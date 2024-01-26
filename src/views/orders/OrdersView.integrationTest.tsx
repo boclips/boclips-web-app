@@ -14,6 +14,7 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { Helmet } from 'react-helmet';
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
+import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
 
 describe('OrderView', () => {
   it('loads the no orders view when there are no orders', async () => {
@@ -232,6 +233,26 @@ describe('OrderView', () => {
         'background-image: url(https://validThumbnail.com)',
       ),
     );
+  });
+
+  it(`displays access denied if user has BOCLIPS_WEB_APP_BROWSE role`, async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const security: BoclipsSecurity = {
+      ...stubBoclipsSecurity,
+      hasRole: (role) => role === 'BOCLIPS_WEB_APP_BROWSE',
+    };
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/orders']}>
+        <App
+          apiClient={fakeClient}
+          boclipsSecurity={security}
+          reactQueryClient={createReactQueryClient()}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByText('Page not found!')).toBeVisible();
   });
 
   describe('window titles', () => {
