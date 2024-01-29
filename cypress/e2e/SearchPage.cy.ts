@@ -8,6 +8,10 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 // featureGate role: BO_WEB_APP_COPY_VIDEO_ID_BUTTON
 
 context('Search page -- feature flags off', () => {
+  beforeEach(() => {
+    cy.intercept('https://cdn*', { statusCode: 200 });
+  });
+
   it('applies filters', () => {
     cy.visit('/');
     cy.bo((bo) => {
@@ -18,6 +22,7 @@ context('Search page -- feature flags off', () => {
     });
 
     cy.findByPlaceholderText('Search for videos');
+
     cy.findByRole('button', { name: 'search' }).click();
 
     cy.get('[data-qa="video-card-wrapper"]').should((videoCard) => {
@@ -60,7 +65,10 @@ context('Search page -- feature flags off', () => {
       );
     });
 
+    cy.get('#search');
+
     cy.findByPlaceholderText('Search for videos').type('cats');
+
     cy.findByRole('button', { name: 'search' }).click();
     cy.findByRole('button', { name: "Schrödinger's cat search topic" }).click();
 
@@ -84,7 +92,8 @@ context('Search page -- feature flags on', () => {
       };
     });
 
-    cy.findByPlaceholderText('Search for videos');
+    cy.get('#search');
+
     cy.findByRole('button', { name: 'search' }).click();
 
     cy.get('[data-qa="video-card-wrapper"]').should((videoCard) => {

@@ -36,7 +36,7 @@
     "node": ">16.13.0 <17"
   },
   "devDependencies": {
-    "@percy/cli": "1.27.1",
+    "@percy/cli": "^1.27.7",
     "@percy/cypress": "^3.1.2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.11",
     "@svgr/webpack": "^8.1.0",
@@ -51,7 +51,7 @@
     "boclips-percy-baseline": "0.3.0",
     "css-loader": "^6.8.1",
     "css-minimizer-webpack-plugin": "^5.0.1",
-    "cypress": "^13.6.0",
+    "cypress": "^13.6.3",
     "eslint": "^8.49.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.1.0",
