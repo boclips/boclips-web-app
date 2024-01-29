@@ -13,6 +13,8 @@ context('Homepage -- feature flags off', () => {
 
     cy.findByText('Cart').should('not.exist');
 
+    cy.findByText('All videos').should('be.visible');
+
     cy.percySnapshot('Home Page without feature flags');
   });
 
