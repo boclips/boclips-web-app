@@ -18,11 +18,15 @@ describe('App', () => {
   it('renders the not found page on user having incorrect role', async () => {
     const security: BoclipsSecurity = {
       ...stubBoclipsSecurity,
-      hasRole: (_role) => false,
+      hasRole: (_role) => true,
     };
+
+    const fakeApi = new FakeBoclipsClient();
+    delete fakeApi.links.boclipsWebAppAccess;
+
     const wrapper = render(
       <MemoryRouter>
-        <App boclipsSecurity={security} apiClient={new FakeBoclipsClient()} />,
+        <App boclipsSecurity={security} apiClient={fakeApi} />,
       </MemoryRouter>,
     );
 
