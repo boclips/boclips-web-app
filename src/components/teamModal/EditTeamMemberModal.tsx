@@ -2,15 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import { EditUserRequest, useUpdateUser } from 'src/hooks/api/userQuery';
 import {
-  UserType,
   UpdateUserRequest,
+  UserType,
 } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import YesNo from 'src/components/common/yesNo/YesNo';
-import { ROLES } from 'src/types/Roles';
-import { WithValidRoles } from 'src/components/common/errors/WithValidRoles';
 import { Typography } from '@boclips-ui/typography';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
+import { FeatureGate } from 'src/components/common/FeatureGate';
 
 type Props = {
   userToUpdate: AccountUser;
@@ -127,7 +126,7 @@ const EditTeamMemberModal = ({ userToUpdate, closeModal }: Props) => {
           setForm({ ...form, canManageUsers: value });
         }}
       />
-      <WithValidRoles roles={[ROLES.BOCLIPS_WEB_APP_ORDER]}>
+      <FeatureGate linkName="order">
         <YesNo
           id="ordering-permission"
           label="Can order videos?"
@@ -136,7 +135,7 @@ const EditTeamMemberModal = ({ userToUpdate, closeModal }: Props) => {
             setForm({ ...form, canOrder: value });
           }}
         />
-      </WithValidRoles>
+      </FeatureGate>
     </Bodal>
   );
 };

@@ -9,9 +9,8 @@ import {
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import YesNo from 'src/components/common/yesNo/YesNo';
-import { ROLES } from 'src/types/Roles';
-import { WithValidRoles } from 'src/components/common/errors/WithValidRoles';
 import { Typography } from '@boclips-ui/typography';
+import { FeatureGate } from 'src/components/common/FeatureGate';
 
 type Props = {
   closeModal: () => void;
@@ -163,7 +162,7 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
           setForm({ ...form, canManageUsers: value });
         }}
       />
-      <WithValidRoles roles={[ROLES.BOCLIPS_WEB_APP_ORDER]}>
+      <FeatureGate linkName="order">
         <YesNo
           id="ordering-permission"
           label="Can order videos?"
@@ -171,7 +170,7 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
             setForm({ ...form, canOrder: value });
           }}
         />
-      </WithValidRoles>
+      </FeatureGate>
     </Bodal>
   );
 };

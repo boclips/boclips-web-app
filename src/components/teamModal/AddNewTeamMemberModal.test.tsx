@@ -178,22 +178,18 @@ describe('My Team modal', () => {
 
     it(`shows the can order field if user has ordering permission`, async () => {
       const client = new FakeBoclipsClient();
-      const security: BoclipsSecurity = {
-        ...stubBoclipsSecurity,
-        hasRole: (role) => role === ROLES.BOCLIPS_WEB_APP_ORDER,
-      };
 
       const wrapper = render(
         <BoclipsClientProvider client={client}>
           <QueryClientProvider client={new QueryClient()}>
-            <BoclipsSecurityProvider boclipsSecurity={security}>
+            <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
               <AddNewTeamMemberModal closeModal={() => jest.fn()} />
             </BoclipsSecurityProvider>
           </QueryClientProvider>
         </BoclipsClientProvider>,
       );
 
-      expect(await wrapper.queryByText('Can order videos?')).toBeVisible();
+      expect(await wrapper.findByText('Can order videos?')).toBeVisible();
     });
   });
 });

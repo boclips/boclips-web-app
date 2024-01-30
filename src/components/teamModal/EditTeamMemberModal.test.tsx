@@ -25,7 +25,7 @@ describe('Edit Team member modal', () => {
     },
   };
 
-  it('renders teams modal', () => {
+  it('renders teams modal', async () => {
     const wrapper = render(
       <BoclipsClientProvider client={new FakeBoclipsClient()}>
         <QueryClientProvider client={new QueryClient()}>
@@ -39,7 +39,7 @@ describe('Edit Team member modal', () => {
       </BoclipsClientProvider>,
     );
 
-    expect(wrapper.getByText('Edit user')).toBeVisible();
+    expect(await wrapper.findByText('Edit user')).toBeVisible();
     expect(wrapper.getByText('First name')).toBeVisible();
     expect(wrapper.getByText('John')).toBeVisible();
     expect(wrapper.getByText('Last name')).toBeVisible();
@@ -47,7 +47,7 @@ describe('Edit Team member modal', () => {
     expect(wrapper.getByText('Email address')).toBeVisible();
     expect(wrapper.getByText('johny@boclips.com')).toBeVisible();
 
-    const orderYes = wrapper.getByLabelText('Can order videos? Yes');
+    const orderYes = await wrapper.findByLabelText('Can order videos? Yes');
     expect(orderYes).toBeChecked();
     const orderNo = wrapper.getByLabelText('Can order videos? No');
     expect(orderNo).not.toBeChecked();
