@@ -14,7 +14,7 @@ context('Registration Page', () => {
       body: { success: true },
     });
 
-    cy.findByText('Create your free account').should('be.visible');
+    cy.findByText('Create your account').should('be.visible');
 
     cy.findByLabelText('Organization name').should('be.visible');
     cy.findByLabelText('First name').should('be.visible');
