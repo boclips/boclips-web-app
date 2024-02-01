@@ -56,6 +56,7 @@ describe('userQuery', () => {
       accountName: 'Los Angeles Lakers',
       hasAcceptedEducationalUseTerms: true,
       country: 'country',
+      hasAcceptedTermsAndConditions: true,
     };
 
     act(() => result.current.mutate(request));
