@@ -72,18 +72,6 @@ describe('Trial Welcome Modal', () => {
         ),
       ).toBeVisible();
 
-      expect(wrapper.getByText(/By clicking Let's Go!, you agree to the/));
-
-      expect(
-        wrapper.getByRole('link', { name: 'Boclips Terms & Conditions' }),
-      ).toBeVisible();
-
-      expect(
-        wrapper.getByRole('link', {
-          name: 'Boclips Privacy Policy',
-        }),
-      ).toBeVisible();
-
       expect(wrapper.getByRole('button', { name: "Let's Go!" })).toBeVisible();
     });
 

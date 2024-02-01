@@ -164,6 +164,22 @@ describe('Registration Form Validation', () => {
     expect(createTrialUserSpy).not.toBeCalled();
   });
 
+  it('prompts user to check boclips Ts and Cs checkbox if not checked and user clicks submit', async () => {
+    const wrapper = renderRegistrationForm();
+
+    fillTheForm(wrapper, { hasAcceptedTermsAndConditions: false });
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+
+    expect(
+      await wrapper.findByText(
+        'Boclips Terms and Conditions agreement is required',
+      ),
+    ).toBeVisible();
+
+    expect(createTrialUserSpy).not.toBeCalled();
+  });
+
   it('displays error message if email already exists', async () => {
     jest
       .spyOn(fakeClient.users, 'createTrialUser')
@@ -208,6 +224,7 @@ describe('Registration Form Validation', () => {
       country: '',
       email: '',
       hasAcceptedEducationalUseTerms: false,
+      hasAcceptedTermsAndConditions: false,
     });
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -223,6 +240,10 @@ describe('Registration Form Validation', () => {
     await checkErrorIsVisible(wrapper, '1 number');
     await checkErrorIsVisible(wrapper, 'Please select a country');
     await checkErrorIsVisible(wrapper, 'Educational use agreement is required');
+    await checkErrorIsVisible(
+      wrapper,
+      'Boclips Terms and Conditions agreement is required',
+    );
 
     fillTheForm(wrapper, {});
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -240,6 +261,10 @@ describe('Registration Form Validation', () => {
     await checkErrorIsNotVisible(
       wrapper,
       'Educational use agreement is required',
+    );
+    await checkErrorIsNotVisible(
+      wrapper,
+      'Boclips Terms and Conditions agreement is required',
     );
 
     await waitFor(() => {
@@ -272,6 +297,7 @@ describe('Registration Form Validation', () => {
       accountName: 'Los Angeles Lakers',
       country: 'Poland',
       hasAcceptedEducationalUseTerms: true,
+      hasAcceptedTermsAndConditions: true,
     };
 
     fillRegistrationForm(wrapper, { ...defaults, ...change });

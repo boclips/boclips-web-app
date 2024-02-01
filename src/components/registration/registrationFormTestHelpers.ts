@@ -36,6 +36,10 @@ export function fillRegistrationForm(
   if (data.hasAcceptedEducationalUseTerms) {
     checkEducationalUseAgreement(wrapper);
   }
+
+  if (data.hasAcceptedTermsAndConditions) {
+    checkTermsAndConditions(wrapper);
+  }
 }
 
 function setDropdownValue(
@@ -56,6 +60,14 @@ const checkEducationalUseAgreement = (wrapper: RenderResult) => {
   fireEvent.click(
     wrapper.getByLabelText(
       /I certify that I am accessing this service solely for Educational Use./,
+    ),
+  );
+};
+
+const checkTermsAndConditions = (wrapper: RenderResult) => {
+  fireEvent.click(
+    wrapper.getByLabelText(
+      /I understand that by checking this box, I am agreeing to the Boclips Terms & Conditions/,
     ),
   );
 };

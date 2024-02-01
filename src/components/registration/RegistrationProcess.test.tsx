@@ -27,6 +27,7 @@ describe('registration process', () => {
       accountName: 'Los Angeles Lakers',
       country: 'Poland',
       hasAcceptedEducationalUseTerms: true,
+      hasAcceptedTermsAndConditions: true,
     };
 
     await fillRegistrationForm(wrapper, { ...defaults, ...change });
