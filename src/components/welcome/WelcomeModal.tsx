@@ -10,7 +10,6 @@ import {
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { useUpdateAccount } from 'src/hooks/api/accountQuery';
 import { UpdateAccountRequest } from 'boclips-api-client/dist/sub-clients/accounts/model/UpdateAccountRequest';
-import s from './style.module.less';
 
 export interface MarketingInfo {
   audiences: string[];
@@ -141,7 +140,7 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
           ? 'Tell us a bit more about you'
           : 'Your colleague has invited you to a Boclips Library preview!'
       }
-      footerText={<FooterText />}
+      footerText={null}
       confirmButtonText={"Let's Go!"}
     >
       <InvitedUserInfo />
@@ -154,9 +153,4 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
   );
 };
 
-const FooterText = () => (
-  <div className={s.footerText}>
-    <AcceptedAgreement buttonText="Let's Go!" />
-  </div>
-);
 export default WelcomeModal;
