@@ -7,6 +7,7 @@ import { LIST_OF_COUNTRIES } from 'src/components/registration/dropdownValues';
 import RegistrationPageCheckbox from 'src/components/common/input/RegistrationPageCheckbox';
 import { RegistrationData } from 'src/components/registration/registrationForm/RegistrationForm';
 import PasswordValidattor from 'react-password-validattor';
+import { Typography } from '@boclips-ui/typography';
 
 const passwordConfig = {
   classNames: {
@@ -49,6 +50,33 @@ const RegistrationFormFields = ({
   validationErrors,
   registrationData,
 }: RegistrationFormProps) => {
+  const educationalUseTermsLabel = (
+    <>
+      <Typography.Body size="small" weight="medium">
+        I certify that I am accessing this service solely for Educational Use.
+      </Typography.Body>
+      <Typography.Body size="small" className={s.checkboxCopyColor}>
+        {`"Educational Use" is defined as to copy, communicate, edit, and/or
+          incorporate into a publication or digital product for a learning
+          outcome.`}
+      </Typography.Body>
+    </>
+  );
+
+  const boclipsTermsConditionsLabel = (
+    <Typography.Body size="small" weight="medium">
+      I understand that by checking this box, I am agreeing to the{' '}
+      <a
+        rel="noopener noreferrer"
+        href="https://www.boclips.com/terms-and-conditions"
+        target="_blank"
+      >
+        <Typography.Link type="inline-blue">
+          Boclips Terms &amp; Conditions
+        </Typography.Link>
+      </a>
+    </Typography.Body>
+  );
   return (
     <>
       <InputText
@@ -178,6 +206,22 @@ const RegistrationFormFields = ({
           id="educational-use-agreement"
           checked={registrationData.hasAcceptedEducationalUseTerms}
           dataQa="input-checkbox-educational-use-agreement"
+          label={educationalUseTermsLabel}
+        />
+        <RegistrationPageCheckbox
+          onChange={(value) =>
+            handleChange('hasAcceptedTermsAndConditions', value.target.checked)
+          }
+          errorMessage={
+            validationErrors.hasAcceptedTermsAndConditions
+              ? 'Boclips Terms and Conditions agreement is required'
+              : null
+          }
+          name="boclips-terms-conditions-agreement"
+          id="boclips-terms-conditions-agreement"
+          checked={registrationData.hasAcceptedTermsAndConditions}
+          dataQa="input-checkbox-boclips-terms-conditions"
+          label={boclipsTermsConditionsLabel}
         />
       </div>
     </>

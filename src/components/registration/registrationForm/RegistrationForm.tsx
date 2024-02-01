@@ -6,7 +6,6 @@ import { displayNotification } from 'src/components/common/notification/displayN
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import RegistrationFormFields from 'src/components/registration/registrationForm/registrationFormFields/RegistrationFormFields';
-import AcceptedAgreement from 'src/components/registration/registrationForm/AcceptedAgreement';
 import CreateAccountButton from 'src/components/registration/registrationForm/createAccountButton/CreateAccountButton';
 import FormValidator from 'src/components/registration/registrationForm/validation/validation';
 import s from '../style.module.less';
@@ -20,6 +19,7 @@ export interface RegistrationData {
   accountName: string;
   country: string;
   hasAcceptedEducationalUseTerms: boolean;
+  hasAcceptedTermsAndConditions: boolean;
 }
 
 const emptyRegistrationData = (): RegistrationData => {
@@ -32,6 +32,7 @@ const emptyRegistrationData = (): RegistrationData => {
     accountName: '',
     country: '',
     hasAcceptedEducationalUseTerms: false,
+    hasAcceptedTermsAndConditions: false,
   };
 };
 
@@ -105,6 +106,8 @@ const RegistrationForm = ({
           country: registrationData.country,
           hasAcceptedEducationalUseTerms:
             registrationData.hasAcceptedEducationalUseTerms,
+          hasAcceptedTermsAndConditions:
+            registrationData.hasAcceptedTermsAndConditions,
         },
         {
           onSuccess: (user: User) => {
@@ -169,8 +172,6 @@ const RegistrationForm = ({
         onClick={handleUserCreation}
         isLoading={isTrialUserCreating}
       />
-
-      <AcceptedAgreement />
     </main>
   );
 };

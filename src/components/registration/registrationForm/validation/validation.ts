@@ -95,6 +95,15 @@ const FormValidator: FormValidatorClass = class
     return true;
   }
 
+  checkTermsAndConditionsAgreementValid(): boolean {
+    if (!this.registrationData.hasAcceptedTermsAndConditions) {
+      this.setError('hasAcceptedTermsAndConditions', true);
+      return false;
+    }
+    this.setError('hasAcceptedTermsAndConditions', false);
+    return true;
+  }
+
   isValid(): boolean {
     const checks = [
       this.checkIsNotEmpty('firstName', 'First name is required'),
@@ -107,6 +116,7 @@ const FormValidator: FormValidatorClass = class
         this.checkPasswordConfirmed(),
       this.checkIsNotEmpty('country', 'Please select a country'),
       this.checkEducationalUseAgreementValid(),
+      this.checkTermsAndConditionsAgreementValid(),
     ];
 
     return !checks.some((it) => it === false);

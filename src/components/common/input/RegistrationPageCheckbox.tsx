@@ -11,6 +11,7 @@ interface Props {
   checked: boolean;
   errorMessage?: string;
   dataQa?: string;
+  label: React.ReactElement;
 }
 
 const RegistrationPageCheckbox = ({
@@ -20,6 +21,7 @@ const RegistrationPageCheckbox = ({
   id,
   checked,
   errorMessage,
+  label,
 }: Props) => {
   return (
     <span className={s.wrapper}>
@@ -33,17 +35,7 @@ const RegistrationPageCheckbox = ({
           checked={checked}
           data-qa={dataQa}
         />
-        <div className={s.checkboxCopy}>
-          <Typography.Body size="small" weight="medium">
-            I certify that I am accessing this service solely for Educational
-            Use.
-          </Typography.Body>
-          <Typography.Body size="small" className={s.checkboxCopyColor}>
-            {`"Educational Use" is defined as to copy, communicate, edit, and/or
-          incorporate into a publication or digital product for a learning
-          outcome.`}
-          </Typography.Body>
-        </div>
+        <div className={s.checkboxCopy}>{label}</div>
       </label>
       {errorMessage && (
         <span className={s.errorMessage}>

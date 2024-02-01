@@ -46,6 +46,7 @@ describe('Registration Form', () => {
       accountName: 'Los Angeles Lakers',
       country: 'Poland',
       hasAcceptedEducationalUseTerms: true,
+      hasAcceptedTermsAndConditions: true,
     };
 
     await fillRegistrationForm(wrapper, { ...defaults, ...change });
@@ -87,16 +88,16 @@ describe('Registration Form', () => {
       wrapper.getByTestId('input-checkbox-educational-use-agreement'),
     ).toBeVisible();
 
-    expect(wrapper.getByTestId('accepted-agreement')).toHaveTextContent(
-      'By clicking Create Account, you agree to the Boclips Terms & Conditions and Boclips Privacy Policy',
-    );
+    expect(
+      wrapper.getByTestId('input-checkbox-boclips-terms-conditions'),
+    ).toBeVisible();
 
     expect(
       wrapper.getByRole('button', { name: 'Create Account' }),
     ).toBeVisible();
   });
 
-  it('typed values and educational use agreement are submitted when Create Account button is clicked', async () => {
+  it('typed values and checkboxes values are submitted when Create Account button is clicked', async () => {
     const fakeClient = new FakeBoclipsClient();
     const createTrialUserSpy = jest.spyOn(fakeClient.users, 'createTrialUser');
 
@@ -125,6 +126,7 @@ describe('Registration Form', () => {
         accountName: 'Los Angeles Lakers',
         country: 'POL',
         hasAcceptedEducationalUseTerms: true,
+        hasAcceptedTermsAndConditions: true,
       });
     });
   });
