@@ -42,6 +42,9 @@ context('Registration Page', () => {
     cy.findByLabelText('Confirm password').type('p@Ss1234');
 
     cy.findByText(/I certify that/).click();
+    cy.findByLabelText(
+      /I understand that by checking this box, I am agreeing to the Boclips Terms & Conditions/,
+    ).click();
 
     cy.findByRole('button', { name: 'Create Account' }).click();
 
