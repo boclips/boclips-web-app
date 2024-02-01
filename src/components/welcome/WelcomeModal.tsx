@@ -8,7 +8,6 @@ import {
   UserType,
 } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
-import AcceptedAgreement from 'src/components/registration/registrationForm/AcceptedAgreement';
 import { useUpdateAccount } from 'src/hooks/api/accountQuery';
 import { UpdateAccountRequest } from 'boclips-api-client/dist/sub-clients/accounts/model/UpdateAccountRequest';
 import s from './style.module.less';
