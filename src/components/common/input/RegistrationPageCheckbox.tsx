@@ -24,7 +24,7 @@ const RegistrationPageCheckbox = ({
   label,
 }: Props) => {
   return (
-    <span className={s.wrapper}>
+    <span className={c('mb-4', s.wrapper)}>
       <label className={s.checkboxWrapper} htmlFor={id}>
         <input
           onChange={onChange}
