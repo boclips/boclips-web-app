@@ -11,6 +11,7 @@ import { displayNotification } from 'src/components/common/notification/displayN
 import AcceptedAgreement from 'src/components/registration/registrationForm/AcceptedAgreement';
 import { useUpdateAccount } from 'src/hooks/api/accountQuery';
 import { UpdateAccountRequest } from 'boclips-api-client/dist/sub-clients/accounts/model/UpdateAccountRequest';
+import { TermsAndConditionsCheckbox } from 'src/components/common/TermsAndConditionsCheckbox';
 import s from './style.module.less';
 
 export interface MarketingInfo {
@@ -40,6 +41,8 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
     discoveryMethods: [],
     organizationTypes: [],
   });
+  const [termsAndConditionsChecked, setTermsAndConditionsChecked] =
+    useState(false);
 
   const [errors, setErrors] = useState({
     isAudiencesEmpty: false,
@@ -47,6 +50,7 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
     isJobTitleEmpty: false,
     isDiscoveryMethodsEmpty: false,
     isOrganizationTypesEmpty: false,
+    termsAndConditionsNotAccepted: false,
   });
 
   const updateAccount = (userRequest: UpdateUserRequest) => {
@@ -97,7 +101,10 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
     if (isAdmin) {
       updateAccount(userRequest);
     } else {
-      updateUser(userRequest);
+      updateUser({
+        ...userRequest,
+        ...{ hasAcceptedTermsAndConditions: termsAndConditionsChecked },
+      });
     }
   };
 
@@ -112,6 +119,7 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
     const isOrganizationTypesEmpty =
       !marketingInfo.organizationTypes ||
       marketingInfo.organizationTypes.length === 0;
+    const termsAndConditionsNotAccepted = !termsAndConditionsChecked;
 
     setErrors({
       isJobTitleEmpty,
@@ -119,14 +127,20 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
       isDesiredContentEmpty,
       isDiscoveryMethodsEmpty,
       isOrganizationTypesEmpty,
+      termsAndConditionsNotAccepted,
     });
 
     const validRegularFields =
       !isJobTitleEmpty && !isAudiencesEmpty && !isDesiredContentEmpty;
+
     const validAdminFields =
       !isDiscoveryMethodsEmpty && !isOrganizationTypesEmpty;
 
-    return validRegularFields && (!isAdmin || validAdminFields);
+    return (
+      validRegularFields &&
+      (!isAdmin || validAdminFields) &&
+      (isAdmin || !termsAndConditionsNotAccepted)
+    );
   };
 
   return (
@@ -142,7 +156,6 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
           ? 'Tell us a bit more about you'
           : 'Your colleague has invited you to a Boclips Library preview!'
       }
-      footerText={<FooterText />}
       confirmButtonText={"Let's Go!"}
     >
       <InvitedUserInfo />
@@ -151,13 +164,15 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
         setMarketingInfo={setMarketingInfo}
         isAdmin={isAdmin}
       />
+      {!isAdmin && (
+        <div className="mt-3">
+          <TermsAndConditionsCheckbox
+            handleChange={setTermsAndConditionsChecked}
+            isInvalid={errors.termsAndConditionsNotAccepted}
+          />
+        </div>
+      )}
     </Bodal>
   );
 };
-
-const FooterText = () => (
-  <div className={s.footerText}>
-    <AcceptedAgreement buttonText="Let's Go!" />
-  </div>
-);
 export default WelcomeModal;
