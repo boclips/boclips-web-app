@@ -7,7 +7,7 @@ import s from './style.module.less';
 
 const features = [
   {
-    title: 'No credit card required',
+    title: 'No Credit Card Required',
     description: 'Explore more than 2.2M Ed-Ready videos for free.',
   },
   {
