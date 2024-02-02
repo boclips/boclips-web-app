@@ -12,6 +12,7 @@ import AcceptedAgreement from 'src/components/registration/registrationForm/Acce
 import { useUpdateAccount } from 'src/hooks/api/accountQuery';
 import { UpdateAccountRequest } from 'boclips-api-client/dist/sub-clients/accounts/model/UpdateAccountRequest';
 import s from './style.module.less';
+import {TermsAndConditionsCheckbox} from "src/components/common/TermsAndConditionsCheckbox";
 
 export interface MarketingInfo {
   audiences: string[];
@@ -47,6 +48,7 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
     isJobTitleEmpty: false,
     isDiscoveryMethodsEmpty: false,
     isOrganizationTypesEmpty: false,
+    areTermsAndConditionsChecked: false,
   });
 
   const updateAccount = (userRequest: UpdateUserRequest) => {
@@ -151,6 +153,7 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
         setMarketingInfo={setMarketingInfo}
         isAdmin={isAdmin}
       />
+      <TermsAndConditionsCheckbox handleChange={} isValid={}
     </Bodal>
   );
 };

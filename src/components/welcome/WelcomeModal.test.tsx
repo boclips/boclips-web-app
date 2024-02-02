@@ -67,6 +67,11 @@ describe('Trial Welcome Modal', () => {
 
       expect(wrapper.getByLabelText('Content Topics')).toBeVisible();
       expect(
+        wrapper.getByLabelText(
+          /I understand that by checking this box, I am agreeing to the/,
+        ),
+      ).toBeVisible();
+      expect(
         wrapper.getByPlaceholderText(
           'I am looking for content in these topics...',
         ),
@@ -95,6 +100,7 @@ describe('Trial Welcome Modal', () => {
           desiredContent: 'Basketball',
           discoveryMethods: [],
           type: 'b2bUser',
+
         });
         expect(updateAccountSpy).not.toHaveBeenCalled();
       });
