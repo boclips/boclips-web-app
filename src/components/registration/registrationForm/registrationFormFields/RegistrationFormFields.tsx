@@ -68,7 +68,7 @@ const RegistrationFormFields = ({
       I understand that by checking this box, I am agreeing to the{' '}
       <a
         rel="noopener noreferrer"
-        href="https://www.boclips.com/terms-and-conditions"
+        href="https://www.boclips.com/mlsa-2"
         target="_blank"
       >
         <Typography.Link type="inline-blue">
