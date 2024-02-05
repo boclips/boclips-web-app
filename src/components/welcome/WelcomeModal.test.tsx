@@ -90,6 +90,7 @@ describe('Trial Welcome Modal', () => {
       await setAudience(wrapper, 'K12');
       await setAudience(wrapper, 'Other');
       await setDesiredContent(wrapper, 'Basketball');
+      await checkTermsAndConditions(wrapper);
 
       fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
@@ -100,7 +101,7 @@ describe('Trial Welcome Modal', () => {
           desiredContent: 'Basketball',
           discoveryMethods: [],
           type: 'b2bUser',
-
+          hasAcceptedTermsAndConditions: true,
         });
         expect(updateAccountSpy).not.toHaveBeenCalled();
       });
@@ -116,6 +117,7 @@ describe('Trial Welcome Modal', () => {
       await setJobTitle(wrapper, 'Professor');
       await setAudience(wrapper, 'K12');
       await setDesiredContent(wrapper, 'Basketball');
+      await checkTermsAndConditions(wrapper);
 
       fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
@@ -145,6 +147,7 @@ describe('Trial Welcome Modal', () => {
       await setJobTitle(wrapper, 'Professor');
       await setAudience(wrapper, 'K12');
       await setDesiredContent(wrapper, 'Basketball');
+      await checkTermsAndConditions(wrapper);
 
       fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
@@ -167,6 +170,11 @@ describe('Trial Welcome Modal', () => {
       expect(await wrapper.findByText('Audience is required')).toBeVisible();
       expect(
         await wrapper.findByText('Content topics is required'),
+      ).toBeVisible();
+      expect(
+        await wrapper.findByText(
+          'Boclips Terms and Conditions agreement is required',
+        ),
       ).toBeVisible();
 
       await waitFor(() => {
@@ -281,6 +289,43 @@ describe('Trial Welcome Modal', () => {
         expect(updateAccountSpy).not.toHaveBeenCalled();
       });
     });
+
+    it('does not show or require Ts&Cs checkbox for admin users', async () => {
+      const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+      const updateAccountSpy = jest.spyOn(fakeClient.accounts, 'updateAccount');
+
+      const wrapper = renderWelcomeView();
+
+      await setJobTitle(wrapper, 'Professor');
+      await setAudience(wrapper, 'K12');
+      await setAudience(wrapper, 'Other');
+      await setDesiredContent(wrapper, 'Hockey');
+      await setOrganizationType(wrapper, 'Publisher');
+      await setDiscoveryMethod(wrapper, 'Employer');
+      expect(
+        wrapper.queryByLabelText(
+          /I understand that by checking this box, I am agreeing to the Boclips Terms & Conditions/,
+        ),
+      ).toBeNull();
+
+      fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+
+      await waitFor(() => {
+        expect(updateUserSpy).toHaveBeenCalledWith('sk', {
+          jobTitle: 'Professor',
+          audiences: ['K12', 'Other'],
+          desiredContent: 'Hockey',
+          discoveryMethods: ['Employer'],
+          type: 'b2bUser',
+        });
+      });
+
+      await waitFor(() => {
+        expect(updateAccountSpy).toHaveBeenCalledWith('AND', {
+          companySegments: ['Publisher'],
+        });
+      });
+    });
   });
 
   async function setJobTitle(wrapper: RenderResult, value: string) {
@@ -343,6 +388,14 @@ describe('Trial Welcome Modal', () => {
       fireEvent.click(within(dropdown).getByTestId('select'));
       expect(within(dropdown).queryByText(value)).toBeNull();
     }
+  }
+
+  async function checkTermsAndConditions(wrapper: RenderResult) {
+    const checkbox = await wrapper.findByTestId(
+      'input-checkbox-boclips-terms-conditions',
+    );
+    expect(checkbox).toBeVisible();
+    fireEvent.click(checkbox);
   }
 
   function renderWelcomeView(): RenderResult {
