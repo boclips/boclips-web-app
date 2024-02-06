@@ -39,9 +39,7 @@ context('Trial Home Page', () => {
     });
 
     cy.findByLabelText('Content Topics').type('Test baby');
-    cy.findByLabelText(
-      /I understand that by checking this box, I am agreeing to the/,
-    ).click();
+    cy.findByTestId('input-checkbox-boclips-terms-conditions').click();
 
     cy.findByRole('button', { name: "Let's Go!" }).click();
 
