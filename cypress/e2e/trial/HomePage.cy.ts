@@ -39,7 +39,6 @@ context('Trial Home Page', () => {
     });
 
     cy.findByLabelText('Content Topics').type('Test baby');
-    cy.findByTestId('input-checkbox-boclips-terms-conditions').click();
 
     cy.findByRole('button', { name: "Let's Go!" }).click();
 
@@ -76,6 +75,7 @@ context('Trial Home Page', () => {
     });
 
     cy.findByLabelText('Content Topics').type('Test baby');
+    cy.get('[data-qa="input-checkbox-boclips-terms-conditions"').click();
 
     cy.findByRole('button', { name: "Let's Go!" }).click();
 
