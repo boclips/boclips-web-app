@@ -194,8 +194,8 @@ const RegistrationFormFields = ({
       </div>
       <div>
         <RegistrationPageCheckbox
-          onChange={(value) =>
-            handleChange('hasAcceptedEducationalUseTerms', value.target.checked)
+          onChange={(event) =>
+            handleChange('hasAcceptedEducationalUseTerms', event.target.checked)
           }
           errorMessage={
             validationErrors.hasAcceptedEducationalUseTerms
@@ -209,8 +209,8 @@ const RegistrationFormFields = ({
           label={educationalUseTermsLabel}
         />
         <RegistrationPageCheckbox
-          onChange={(value) =>
-            handleChange('hasAcceptedTermsAndConditions', value.target.checked)
+          onChange={(event) =>
+            handleChange('hasAcceptedTermsAndConditions', event.target.checked)
           }
           errorMessage={
             validationErrors.hasAcceptedTermsAndConditions
