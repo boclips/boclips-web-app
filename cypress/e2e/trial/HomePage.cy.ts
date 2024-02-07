@@ -52,9 +52,9 @@ context('Trial Home Page', () => {
       bo.create.trialRegularUser();
     });
 
-    cy.findByText(
-      'Your colleague has invited you to a Boclips Library preview!',
-    ).should('be.visible');
+    cy.findByText('Your colleague has invited you to Boclips Library!').should(
+      'be.visible',
+    );
     cy.findByText('Job Title').should('be.visible');
     cy.findByText('Organization type').should('not.exist');
     cy.findByText('Audience').should('be.visible');

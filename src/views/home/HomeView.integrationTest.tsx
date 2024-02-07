@@ -206,7 +206,7 @@ describe('HomeView', () => {
 
     expect(
       await wrapper.findByText(
-        'Your colleague has invited you to a Boclips Library preview!',
+        'Your colleague has invited you to Boclips Library!',
       ),
     ).toBeVisible();
   });
