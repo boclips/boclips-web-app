@@ -47,7 +47,7 @@ describe('Trial Welcome Modal', () => {
       const wrapper = renderWelcomeView();
       expect(
         await wrapper.findByText(
-          'Your colleague has invited you to a Boclips Library preview!',
+          'Your colleague has invited you to Boclips Library!',
         ),
       ).toBeVisible();
 
@@ -132,7 +132,7 @@ describe('Trial Welcome Modal', () => {
 
       expect(
         wrapper.queryByText(
-          'Your colleague has invited you to a Boclips Library preview!',
+          'Your colleague has invited you to Boclips Library!',
         ),
       ).toBeNull();
     });
