@@ -4,6 +4,7 @@ import { Typography } from '@boclips-ui/typography';
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
 import getFormattedDate from 'src/services/getFormattedDate';
 import getFormattedDuration from 'src/services/getFormattedDuration';
+import c from 'classnames';
 import s from './styles.module.less';
 
 interface Props {
@@ -19,7 +20,7 @@ const LicensedContentCard = ({ licensedContent }: Props) => {
   );
 
   return (
-    <div className={s.cardWrapper}>
+    <div className={c(s.grid, s.cardWrapper)}>
       <div className={s.videoWrapper}>
         <VideoPlayer videoLink={licensedContent.videoMetadata.links.self} />
       </div>

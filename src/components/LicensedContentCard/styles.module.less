@@ -1,18 +1,20 @@
 @import '@boclips-ui/styles/src/colors';
+@import '~@boclips-ui/styles/src/breakpoints';
 
 .cardWrapper {
-  display: flex;
-  flex-direction: row;
   border-radius: 0.25rem;
   background: @white;
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
-  padding: 1.5rem;
-  height: fit-content;
+  padding: 1.5rem 0;
+
+  &.grid {
+    display: grid;
+  }
 }
 
 .videoWrapper {
-  margin-right: 1.5rem;
-  min-width: 286px;
+  align-self: center;
+  padding-left: 1.5rem;
 }
 
 .licenseCardInfo {
@@ -63,5 +65,33 @@
         font-size: 1rem;
       }
     }
+  }
+}
+
+@media screen and (min-width: @screen-sm) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(1, min-content);
+    grid-column-gap: 1.5rem;
+  }
+
+  .licenseCardInfo {
+    padding-right: 1.5rem;
+  }
+}
+@media screen and (min-width: @screen-lg) {
+  .grid {
+    grid-template-columns: repeat(24, 1fr);
+    grid-template-rows: repeat(1, min-content);
+    grid-column-gap: 1.5rem;
+  }
+  .videoWrapper {
+    grid-column-start: 1;
+    grid-column-end: 8;
+  }
+
+  .licenseCardInfo {
+    grid-column-start: 8;
+    grid-column-end: 20;
   }
 }
