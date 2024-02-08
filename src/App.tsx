@@ -202,7 +202,7 @@ const App = ({
                           feature="BO_WEB_APP_DEV"
                           fallback={<AccessDeniedView />}
                         >
-                          <Helmet title="My Content" />
+                          <Helmet title="My Content Area" />
                           <ContentView />
                         </FeatureGate>
                       }

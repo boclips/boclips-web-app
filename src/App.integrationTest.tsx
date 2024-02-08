@@ -250,7 +250,7 @@ describe('App', () => {
     ).toBeVisible();
   });
 
-  describe('My content view', () => {
+  describe('My Content Area view', () => {
     it('redirects to my content page when hitting /content url', async () => {
       const apiClient = new FakeBoclipsClient();
       apiClient.users.insertCurrentUser(
@@ -265,7 +265,7 @@ describe('App', () => {
         </MemoryRouter>,
       );
 
-      expect(await wrapper.findByText('My content')).toBeVisible();
+      expect(await wrapper.findByText('My Content Area')).toBeVisible();
     });
 
     it('will not redirect to my content page when hitting /content url without BWA_DEV feature', async () => {
