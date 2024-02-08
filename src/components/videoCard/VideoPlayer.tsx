@@ -5,6 +5,7 @@ import { Player } from 'boclips-player-react';
 import { useBoclipsSecurity } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
 import { AnalyticsOptions } from 'boclips-player/dist/Events/AnalyticsOptions';
+import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
 import s from './VideoPlayer.module.less';
 
 const getPlayerOptions = (
@@ -68,7 +69,8 @@ const getPlayerOptions = (
 };
 
 interface Props {
-  video: Video;
+  video?: Video;
+  videoLink?: Link;
   controls?: 'cart';
   showDurationBadge?: boolean;
   setRef?: any;
@@ -77,6 +79,7 @@ interface Props {
 
 export const VideoPlayer = ({
   video,
+  videoLink,
   controls,
   showDurationBadge = false,
   setRef = () => null,
@@ -93,7 +96,9 @@ export const VideoPlayer = ({
     <div data-qa="player" className={s.playerWrapper}>
       <Player
         playerRef={setRef}
-        videoUri={video?.links?.self.getOriginalLink()}
+        videoUri={
+          video?.links?.self.getOriginalLink() || videoLink?.getOriginalLink()
+        }
         borderRadius="4px"
         options={options}
       />

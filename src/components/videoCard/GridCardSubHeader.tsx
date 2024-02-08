@@ -5,6 +5,7 @@ import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import Tooltip from '@boclips-ui/tooltip';
 import { bestForInfo } from 'src/resources/bestFor';
+import getFormattedDuration from 'src/services/getFormattedDuration';
 
 const GridCardSubHeader = ({
   video,
@@ -27,13 +28,7 @@ const GridCardSubHeader = ({
         </span>
       )}
       {video.playback.duration && (
-        <Badge
-          value={
-            video.playback.duration.asMinutes() > 60
-              ? video.playback.duration.format('H:mm:ss')
-              : video.playback.duration.format('mm:ss')
-          }
-        />
+        <Badge value={getFormattedDuration(video.playback.duration)} />
       )}
       <button onClick={onClick} type="button">
         <Typography.Body as="div" size="small" className={s.createdBy}>
