@@ -66,7 +66,7 @@ describe('registration process', () => {
 
     expect(
       wrapper.getByText(
-        'Congratulations! You’ve successfully created your free Boclips Library preview account.',
+        'Congratulations! You’ve successfully created your Boclips Library account.',
       ),
     ).toBeVisible();
     expect(wrapper.getByText('test@boclips.com.')).toBeVisible();

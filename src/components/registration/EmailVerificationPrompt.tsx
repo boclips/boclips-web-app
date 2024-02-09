@@ -19,8 +19,8 @@ const EmailVerificationPrompt = ({
         <VerifyEmailIllustration />
         <Typography.Body className={s.message}>
           <p>
-            Congratulations! You’ve successfully created your free Boclips
-            Library preview account.
+            Congratulations! You’ve successfully created your Boclips Library
+            account.
           </p>
           <p>
             We’ve shared a link to <b>{userEmail}.</b> Click on the link to
