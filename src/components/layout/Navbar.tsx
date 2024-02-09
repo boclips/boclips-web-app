@@ -97,8 +97,8 @@ const NavbarResponsive = ({
         ))}
       {isTrial && (
         <div data-qa="trial-banner" className={s.trialBanner}>
-          Welcome! You&apos;re currently exploring a free preview of Boclips
-          Library. Need more info? Click{' '}
+          Welcome! You&apos;re currently exploring Boclips Library. Need more
+          info? Click{' '}
           <a
             rel="noopener noreferrer"
             href="https://boclips.com/boclips-faq"
