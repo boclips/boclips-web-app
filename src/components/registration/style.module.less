@@ -16,9 +16,9 @@
 .formInputsWrapper {
   display: flex;
   flex-direction: column;
-  grid-column-start: 14;
+  grid-column-start: 3;
   grid-column-end: 25;
-  grid-row-start: 1;
+  grid-row-start: 2;
   grid-row-end: 3;
   border-radius: 27px;
   background: #FFF;
@@ -52,6 +52,13 @@
 
   & label[for="input-confirmPassword"] {
     align-self: flex-start;
+  }
+}
+
+@media screen and (min-width: @screen-lg) {
+  .formInputsWrapper {
+    grid-column-start: 14;
+    grid-row-start: 1;
   }
 }
 
