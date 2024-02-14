@@ -8,12 +8,15 @@ const InvisibleNavbar = () => {
   return (
     <nav
       className={c(
-        'col-start-2 col-end-27 row-start-1 row-end-1',
+        'col-start-2 col-end-26 row-start-1 row-end-1',
         s.invisibleNavbar,
       )}
     >
       <LibraryLogoSVG className={s.logo} data-qa="logo" />
-      <SkipLink />
+
+      <span className={s.skipLinkContainer}>
+        <SkipLink />
+      </span>
     </nav>
   );
 };
