@@ -5,6 +5,8 @@ import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/mo
 import getFormattedDate from 'src/services/getFormattedDate';
 import getFormattedDuration from 'src/services/getFormattedDuration';
 import c from 'classnames';
+import Button from '@boclips-ui/button';
+import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import s from './styles.module.less';
 
 interface Props {
@@ -12,6 +14,7 @@ interface Props {
 }
 
 const LicensedContentCard = ({ licensedContent }: Props) => {
+  const apiClient = useBoclipsClient();
   const getLabeledField = (label: string, value: string) => (
     <Typography.Body as="div" size="small">
       <span className={s.label}>{label}:</span>
@@ -47,6 +50,13 @@ const LicensedContentCard = ({ licensedContent }: Props) => {
             {licensedContent.videoMetadata.channelName}
           </Typography.Body>
         </div>
+      </div>
+      <div>
+        <Button
+          type="outline"
+          text="Embed Code"
+          onClick={() => apiClient.licenses.createEmbedCode(licensedContent)}
+        />
       </div>
     </div>
   );
