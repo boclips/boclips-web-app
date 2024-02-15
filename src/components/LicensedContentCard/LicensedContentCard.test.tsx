@@ -34,4 +34,27 @@ describe('Licensed Content Card', () => {
       '/videos/video-id',
     );
   });
+
+  it('make order a clickable link to order details page', () => {
+    const licensedContent: LicensedContent = LicensedContentFactory.sample({
+      videoId: 'video-id',
+      license: {
+        id: 'video-id',
+        orderId: 'order-1',
+        startDate: new Date('2022-01-11'),
+        endDate: new Date('2023-02-11'),
+      },
+    });
+
+    const wrapper = renderWithClients(
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <LicensedContentCard licensedContent={licensedContent} />,
+      </BoclipsSecurityProvider>,
+    );
+    expect(wrapper.getByText('order-1')).toBeVisible();
+    expect(wrapper.getByText('order-1').closest('a')).toHaveAttribute(
+      'href',
+      '/orders/order-1',
+    );
+  });
 });
