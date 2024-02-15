@@ -49,7 +49,20 @@ const LicensedContentCard = ({ licensedContent }: Props) => {
             getFormattedDate(licensedContent.license.endDate),
           )}
         </div>
-        {getLabeledField('Order ID', licensedContent.license.orderId)}
+        <div>
+          <Typography.Body as="div" size="small">
+            <span className={s.label}>Order ID:</span>
+            <Link
+              to={{
+                pathname: `/orders/${licensedContent.license.orderId}`,
+              }}
+              state={{ userNavigated: true }}
+              aria-label={`${licensedContent.license.orderId} order link`}
+            >
+              <span className={s.link}>{licensedContent.license.orderId}</span>
+            </Link>
+          </Typography.Body>
+        </div>
         <div className={s.videoMetadataRow}>
           <Typography.Body as="div" size="small">
             {getFormattedDuration(licensedContent.videoMetadata.duration)}
