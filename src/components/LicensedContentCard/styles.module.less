@@ -68,6 +68,59 @@
   }
 }
 
+.videoAssetsButtonWrapper {
+  --bo-ui-button-outline-background-color-hover: transparent;
+  --bo-ui-button-outline-svg-fill: transparent;
+  --bo-ui-button-outline-svg-stroke: @blue-800;
+
+  button {
+    width: 168px;
+    height: 48px;
+    font-size: 1rem;
+  }
+
+  .videoAssetsButton {
+    --bo-ui-button-svg-height: 6px;
+    --bo-ui-button-svg-width: 24px;
+
+    &[data-state='open'] {
+      --bo-ui-button-outline-text-colour: @blue-900;
+      --bo-ui-button-outline-border: 2px solid @blue-900;
+    }
+
+    svg {
+      stroke: none;
+    }
+  }
+}
+
+.videoAssetsDropdownWrapper {
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+  background: @white;
+  border-radius: 4px;
+  width: 162px;
+  padding: 0.25rem;
+
+  .assetDropdownItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    color: @gray-800;
+    padding: 0.5rem;
+    margin: 0.25rem;
+    //#focus;
+
+    svg {
+      margin-right: 0.75rem;
+    }
+
+    &:hover {
+      color: @blue-800;
+    }
+  }
+}
+
 @media screen and (min-width: @screen-sm) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
