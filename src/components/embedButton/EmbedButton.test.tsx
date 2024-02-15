@@ -6,6 +6,8 @@ import React from 'react';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { ToastContainer } from 'react-toastify';
 import userEvent from '@testing-library/user-event';
+import LicensedContentFactory from 'boclips-api-client/dist/test-support/LicensedContentFactory';
+import { Link } from 'boclips-api-client/dist/types';
 
 describe(`embed button`, () => {
   Object.assign(navigator, {
@@ -14,7 +16,7 @@ describe(`embed button`, () => {
     },
   });
 
-  it(`copies the embed code to clipboard on click`, async () => {
+  it(`copies the embed code to clipboard on click when video passed in`, async () => {
     jest.spyOn(navigator.clipboard, 'writeText');
 
     const video = VideoFactory.sample({});
@@ -37,6 +39,43 @@ describe(`embed button`, () => {
       expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
         "<iframe src='https://api.staging-boclips.com/v1/embeds/embed-id/view'/>",
       );
+    });
+    const notification = await wrapper.findByRole('alert');
+    expect(within(notification).getByText('Embed code copied!')).toBeVisible();
+  });
+
+  it(`copies the embed code to clipboard on click when licensedContent passed in`, async () => {
+    jest.spyOn(navigator.clipboard, 'writeText');
+    const licensedContent = LicensedContentFactory.sample({
+      videoId: 'video-id',
+      videoMetadata: {
+        ...LicensedContentFactory.sample({}).videoMetadata,
+        links: {
+          self: new Link({ href: 'link', templated: false }),
+          createEmbedCode: new Link({
+            href: 'createEmbed',
+            templated: false,
+          }),
+        },
+      },
+    });
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.licenses.insertEmbedForVideo('embed', 'video-id');
+    const createCodeSpy = jest.spyOn(fakeClient.licenses, 'createEmbedCode');
+
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeClient}>
+        <ToastContainer />
+        <EmbedButton licensedContent={licensedContent} />
+      </BoclipsClientProvider>,
+    );
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'embed' }));
+
+    expect(createCodeSpy).toHaveBeenCalledWith(licensedContent);
+
+    await waitFor(() => {
+      expect(navigator.clipboard.writeText).toHaveBeenCalledWith('embed');
     });
     const notification = await wrapper.findByRole('alert');
     expect(within(notification).getByText('Embed code copied!')).toBeVisible();

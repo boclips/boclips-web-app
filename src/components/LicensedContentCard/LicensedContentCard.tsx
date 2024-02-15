@@ -6,6 +6,7 @@ import getFormattedDate from 'src/services/getFormattedDate';
 import getFormattedDuration from 'src/services/getFormattedDuration';
 import c from 'classnames';
 import { Link } from 'react-router-dom';
+import LicensedContentPrimaryButton from 'src/components/LicensedContentCard/LicensedContentPrimaryButton';
 import s from './styles.module.less';
 
 interface Props {
@@ -71,6 +72,9 @@ const LicensedContentCard = ({ licensedContent }: Props) => {
             {licensedContent.videoMetadata.channelName}
           </Typography.Body>
         </div>
+      </div>
+      <div className={s.primaryButton}>
+        <LicensedContentPrimaryButton licensedContent={licensedContent} />
       </div>
     </div>
   );
