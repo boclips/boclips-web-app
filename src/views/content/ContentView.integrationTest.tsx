@@ -26,9 +26,13 @@ describe('ContentView', () => {
     expect(await wrapper.findByText('My Content Area')).toBeVisible();
 
     expect(
-      wrapper.getByText('You have no licensed content... yet!'),
+      wrapper.getByText('No results found for My Content Area.'),
     ).toBeVisible();
-    expect(wrapper.getByText('This is just a placeholder')).toBeInTheDocument();
+    expect(
+      wrapper.getByText(
+        'You can track and review all licensed content once you have placed orders. ',
+      ),
+    ).toBeInTheDocument();
   });
 
   it('displays licensed content', async () => {
