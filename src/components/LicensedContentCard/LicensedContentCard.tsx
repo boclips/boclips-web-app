@@ -5,6 +5,7 @@ import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/mo
 import getFormattedDate from 'src/services/getFormattedDate';
 import getFormattedDuration from 'src/services/getFormattedDuration';
 import c from 'classnames';
+import { Link } from 'react-router-dom';
 import s from './styles.module.less';
 
 interface Props {
@@ -25,9 +26,19 @@ const LicensedContentCard = ({ licensedContent }: Props) => {
         <VideoPlayer videoLink={licensedContent.videoMetadata.links.self} />
       </div>
       <div className={s.licenseCardInfo}>
-        <Typography.H4 className={s.title}>
-          {licensedContent.videoMetadata.title}
-        </Typography.H4>
+        <div className={s.header}>
+          <Link
+            to={{
+              pathname: `/videos/${licensedContent.videoId}`,
+            }}
+            state={{ userNavigated: true }}
+            aria-label={`${licensedContent.videoMetadata.title} content card`}
+          >
+            <Typography.H4 className={s.title}>
+              {licensedContent.videoMetadata.title}
+            </Typography.H4>
+          </Link>
+        </div>
         <div className="flex flex-row space-x-6">
           {getLabeledField(
             'Starting date',
