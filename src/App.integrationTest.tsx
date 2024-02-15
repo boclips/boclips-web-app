@@ -265,7 +265,9 @@ describe('App', () => {
         </MemoryRouter>,
       );
 
-      expect(await wrapper.findByText('My Content Area')).toBeVisible();
+      expect(
+        await wrapper.findByText('No results found for My Content Area.'),
+      ).toBeVisible();
     });
 
     it('will not redirect to my content page when hitting /content url without BWA_DEV feature', async () => {
