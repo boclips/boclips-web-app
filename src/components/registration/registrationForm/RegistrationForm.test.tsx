@@ -16,6 +16,7 @@ import { ToastContainer } from 'react-toastify';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { fillRegistrationForm } from 'src/components/registration/registrationFormTestHelpers';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const mockExecuteRecaptcha = jest.fn((_?: string) =>
   Promise.resolve('token_baby'),
@@ -49,19 +50,11 @@ describe('Registration Form', () => {
       hasAcceptedTermsAndConditions: true,
     };
 
-    await fillRegistrationForm(wrapper, { ...defaults, ...change });
+    fillRegistrationForm(wrapper, { ...defaults, ...change });
   }
 
   it('renders the form', async () => {
-    const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <GoogleReCaptchaProvider reCaptchaKey="123">
-            <RegistrationForm onRegistrationFinished={jest.fn()} />
-          </GoogleReCaptchaProvider>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
-    );
+    const wrapper = renderRegistrationForm();
 
     expect(wrapper.getByText('Create your account')).toBeVisible();
     expect(wrapper.getByLabelText('First name')).toBeVisible();
@@ -97,19 +90,39 @@ describe('Registration Form', () => {
     ).toBeVisible();
   });
 
+  function renderRegistrationForm(
+    apiClient: FakeBoclipsClient = new FakeBoclipsClient(),
+    registrationFormSpy: (userEmail: string) => void = jest.fn(),
+  ) {
+    return render(
+      <Router>
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={apiClient}>
+            <GoogleReCaptchaProvider reCaptchaKey="123">
+              <RegistrationForm onRegistrationFinished={registrationFormSpy} />
+            </GoogleReCaptchaProvider>
+          </BoclipsClientProvider>
+        </QueryClientProvider>
+      </Router>,
+    );
+  }
+
+  it('renders log in  link', async () => {
+    const wrapper = renderRegistrationForm();
+
+    expect(wrapper.getByText('Have an account?')).toBeVisible();
+    expect(wrapper.getByText('Log in')).toBeVisible();
+    expect(wrapper.getByText('Log in').closest('a')).toHaveAttribute(
+      'href',
+      '/',
+    );
+  });
+
   it('typed values and checkboxes values are submitted when Create Account button is clicked', async () => {
     const fakeClient = new FakeBoclipsClient();
     const createTrialUserSpy = jest.spyOn(fakeClient.users, 'createTrialUser');
 
-    const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={fakeClient}>
-          <GoogleReCaptchaProvider reCaptchaKey="123">
-            <RegistrationForm onRegistrationFinished={jest.fn()} />
-          </GoogleReCaptchaProvider>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
-    );
+    const wrapper = renderRegistrationForm(fakeClient);
 
     await fillTheForm(wrapper, {});
 
@@ -138,14 +151,16 @@ describe('Registration Form', () => {
       .mockImplementation(() => Promise.reject());
 
     const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={fakeClient}>
-          <ToastContainer />
-          <GoogleReCaptchaProvider reCaptchaKey="123">
-            <RegistrationForm onRegistrationFinished={jest.fn()} />
-          </GoogleReCaptchaProvider>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
+      <Router>
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={fakeClient}>
+            <ToastContainer />
+            <GoogleReCaptchaProvider reCaptchaKey="123">
+              <RegistrationForm onRegistrationFinished={jest.fn()} />
+            </GoogleReCaptchaProvider>
+          </BoclipsClientProvider>
+        </QueryClientProvider>
+      </Router>,
     );
 
     await fillTheForm(wrapper, {});
@@ -172,17 +187,9 @@ describe('Registration Form', () => {
 
     const onRegistrationFinishedSpy = jest.fn();
 
-    const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={fakeClient}>
-          <ToastContainer />
-          <GoogleReCaptchaProvider reCaptchaKey="123">
-            <RegistrationForm
-              onRegistrationFinished={onRegistrationFinishedSpy}
-            />
-          </GoogleReCaptchaProvider>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
+    const wrapper = renderRegistrationForm(
+      fakeClient,
+      onRegistrationFinishedSpy,
     );
 
     await fillTheForm(wrapper, {});
@@ -201,14 +208,16 @@ describe('Registration Form', () => {
     );
 
     const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <ToastContainer />
-          <GoogleReCaptchaProvider reCaptchaKey="123">
-            <RegistrationForm onRegistrationFinished={jest.fn()} />
-          </GoogleReCaptchaProvider>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
+      <Router>
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <ToastContainer />
+            <GoogleReCaptchaProvider reCaptchaKey="123">
+              <RegistrationForm onRegistrationFinished={jest.fn()} />
+            </GoogleReCaptchaProvider>
+          </BoclipsClientProvider>
+        </QueryClientProvider>
+      </Router>,
     );
 
     await fillTheForm(wrapper, {});

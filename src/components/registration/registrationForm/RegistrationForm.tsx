@@ -8,6 +8,7 @@ import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import RegistrationFormFields from 'src/components/registration/registrationForm/registrationFormFields/RegistrationFormFields';
 import CreateAccountButton from 'src/components/registration/registrationForm/createAccountButton/CreateAccountButton';
 import FormValidator from 'src/components/registration/registrationForm/validation/validation';
+import { Link } from 'react-router-dom';
 import s from '../style.module.less';
 
 export interface RegistrationData {
@@ -172,6 +173,24 @@ const RegistrationForm = ({
         onClick={handleUserCreation}
         isLoading={isTrialUserCreating}
       />
+
+      <section className={s.logIn}>
+        <Typography.Body size="small" weight="medium">
+          Have an account?
+          <Link
+            to={{
+              pathname: `/`,
+            }}
+            relative="path"
+            reloadDocument
+            state={{ userNavigated: true }}
+            aria-label="Log in link"
+          >
+            {' '}
+            <Typography.Link type="inline-blue">Log in</Typography.Link>
+          </Link>
+        </Typography.Body>
+      </section>
     </main>
   );
 };

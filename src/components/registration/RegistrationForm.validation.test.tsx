@@ -14,6 +14,7 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { fillRegistrationForm } from 'src/components/registration/registrationFormTestHelpers';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 describe('Registration Form Validation', () => {
   const fakeClient = new FakeBoclipsClient();
@@ -274,13 +275,15 @@ describe('Registration Form Validation', () => {
 
   function renderRegistrationForm(): RenderResult {
     return render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={fakeClient}>
-          <GoogleReCaptchaProvider reCaptchaKey="123">
-            <RegistrationForm onRegistrationFinished={jest.fn()} />
-          </GoogleReCaptchaProvider>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
+      <Router>
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={fakeClient}>
+            <GoogleReCaptchaProvider reCaptchaKey="123">
+              <RegistrationForm onRegistrationFinished={jest.fn()} />
+            </GoogleReCaptchaProvider>
+          </BoclipsClientProvider>
+        </QueryClientProvider>
+      </Router>,
     );
   }
 

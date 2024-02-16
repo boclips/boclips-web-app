@@ -11,6 +11,7 @@ import {
   resizeToMobile,
   resizeToTablet,
 } from 'src/testSupport/resizeTo';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 describe('registration', () => {
   it('displays trial info box in desktop view', async () => {
@@ -36,13 +37,15 @@ describe('registration', () => {
 
   const renderRegistration = () => {
     return render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <GoogleReCaptchaProvider reCaptchaKey="123">
-            <Registration />
-          </GoogleReCaptchaProvider>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
+      <Router>
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <GoogleReCaptchaProvider reCaptchaKey="123">
+              <Registration />
+            </GoogleReCaptchaProvider>
+          </BoclipsClientProvider>
+        </QueryClientProvider>
+      </Router>,
     );
   };
 });
