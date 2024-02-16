@@ -122,7 +122,10 @@ const RegistrationForm = ({
                 setError('email', 'Email already exists');
                 break;
               case 'ACCOUNT':
-                setError('accountName', 'Account name already exists');
+                setError(
+                  'accountName',
+                  'Organisation name already exists. Contact us for support or to be added.',
+                );
                 break;
               default:
                 displayNotification(

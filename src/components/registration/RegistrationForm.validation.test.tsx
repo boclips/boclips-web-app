@@ -209,7 +209,9 @@ describe('Registration Form Validation', () => {
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
     expect(
-      await wrapper.findByText('Account name already exists'),
+      await wrapper.findByText(
+        'Organisation name already exists. Contact us for support or to be added.',
+      ),
     ).toBeVisible();
   });
 
