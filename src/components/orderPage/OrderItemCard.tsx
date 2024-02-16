@@ -16,7 +16,7 @@ export const OrderItemCard = ({ item }: Props) => {
 
   const thumbnailUrl = isLoading
     ? ''
-    : video.playback?.links?.thumbnail.getOriginalLink();
+    : video.playback?.links?.thumbnail?.getOriginalLink();
 
   return (
     <div
