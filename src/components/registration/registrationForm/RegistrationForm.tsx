@@ -191,6 +191,21 @@ const RegistrationForm = ({
           </Link>
         </Typography.Body>
       </section>
+      <section className={s.support}>
+        <Typography.Body size="small" weight="medium">
+          Having trouble? Contact us at
+          <a
+            href="mailto:support@boclips.com"
+            aria-label="Support email"
+            target="_new"
+          >
+            {' '}
+            <Typography.Link type="inline-blue">
+              support@boclips.com
+            </Typography.Link>
+          </a>
+        </Typography.Body>
+      </section>
     </main>
   );
 };

@@ -118,6 +118,16 @@ describe('Registration Form', () => {
     );
   });
 
+  it('renders support email', async () => {
+    const wrapper = renderRegistrationForm();
+
+    expect(wrapper.getByText('Having trouble? Contact us at')).toBeVisible();
+    expect(wrapper.getByText('support@boclips.com')).toBeVisible();
+    expect(
+      wrapper.getByText('support@boclips.com').closest('a'),
+    ).toHaveAttribute('href', 'mailto:support@boclips.com');
+  });
+
   it('typed values and checkboxes values are submitted when Create Account button is clicked', async () => {
     const fakeClient = new FakeBoclipsClient();
     const createTrialUserSpy = jest.spyOn(fakeClient.users, 'createTrialUser');
