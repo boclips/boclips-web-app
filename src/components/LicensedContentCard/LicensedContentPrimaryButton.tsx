@@ -18,7 +18,7 @@ const LicensedContentPrimaryButton = ({ licensedContent }: Props) => {
   const downloadAction = licensedContent.videoMetadata.links.download;
   const [isDownloadLoading, setIsDownloadLoading] = useState<boolean>(false);
   const getButtonSpinner = (): ReactElement => (
-    <span data-qa="spinner" className={s.spinner}>
+    <span data-qa="spinner">
       <LoadingOutlined />
     </span>
   );
@@ -28,7 +28,7 @@ const LicensedContentPrimaryButton = ({ licensedContent }: Props) => {
   }
 
   return (
-    <>
+    <div className={s.primaryButton}>
       {embedAction && (
         <EmbedButton
           licensedContent={licensedContent}
@@ -67,7 +67,7 @@ const LicensedContentPrimaryButton = ({ licensedContent }: Props) => {
           }}
         />
       )}
-    </>
+    </div>
   );
 };
 

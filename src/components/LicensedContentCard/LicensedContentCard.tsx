@@ -7,6 +7,7 @@ import getFormattedDuration from 'src/services/getFormattedDuration';
 import c from 'classnames';
 import { Link } from 'react-router-dom';
 import LicensedContentPrimaryButton from 'src/components/LicensedContentCard/LicensedContentPrimaryButton';
+import LicensedContentAssetsButton from 'src/components/LicensedContentCard/LicensedContentAssetsButton';
 import s from './styles.module.less';
 
 interface Props {
@@ -73,7 +74,8 @@ const LicensedContentCard = ({ licensedContent }: Props) => {
           </Typography.Body>
         </div>
       </div>
-      <div className={s.primaryButton}>
+      <div className={s.actionButtons}>
+        <LicensedContentAssetsButton licensedContent={licensedContent} />
         <LicensedContentPrimaryButton licensedContent={licensedContent} />
       </div>
     </div>
