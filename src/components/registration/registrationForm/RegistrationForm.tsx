@@ -124,7 +124,7 @@ const RegistrationForm = ({
               case 'ACCOUNT':
                 setError(
                   'accountName',
-                  'Organisation name already exists. Contact us for support or to be added.',
+                  'Cannot use this organization name. Try another or contact us.',
                 );
                 break;
               default:
