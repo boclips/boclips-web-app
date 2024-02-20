@@ -7,6 +7,8 @@ import React from 'react';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import dayjs from 'dayjs';
 import { Link } from 'boclips-api-client/dist/types';
+import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
+import userEvent from '@testing-library/user-event';
 
 describe('ContentView', () => {
   it('loads the no content view (for now)', async () => {
@@ -76,4 +78,63 @@ describe('ContentView', () => {
     expect(wrapper.getByText('Order ID:')).toBeVisible();
     expect(wrapper.getByText('order-id')).toBeVisible();
   });
+
+  it('can navigate between content pages', async () => {
+    const apiClient = new FakeBoclipsClient();
+
+    for (let videoNo = 1; videoNo <= 12; videoNo++) {
+      apiClient.licenses.insert(contentItem(`video-${videoNo}`));
+    }
+
+    apiClient.users.insertCurrentUser(
+      UserFactory.sample({
+        features: { BO_WEB_APP_DEV: true },
+      }),
+    );
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/content']}>
+        <App apiClient={apiClient} boclipsSecurity={stubBoclipsSecurity} />
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByText('My Content Area')).toBeVisible();
+
+    expect(await wrapper.findByText('video-1')).toBeVisible();
+    expect(await wrapper.findByText('video-10')).toBeVisible();
+    expect(wrapper.queryByText('video-11')).toBeNull();
+
+    userEvent.click(wrapper.getByText('Next'));
+
+    expect(await wrapper.findByText('video-11')).toBeVisible();
+    expect(await wrapper.findByText('video-12')).toBeVisible();
+    expect(wrapper.queryByText('video-1')).toBeNull();
+    expect(wrapper.queryByText('video-10')).toBeNull();
+
+    userEvent.click(wrapper.getByText('Prev'));
+
+    expect(await wrapper.findByText('video-1')).toBeVisible();
+    expect(await wrapper.findByText('video-10')).toBeVisible();
+    expect(wrapper.queryByText('video-11')).toBeNull();
+  });
+
+  function contentItem(videoTitle: string): LicensedContent {
+    return {
+      videoId: 'video-id',
+      license: {
+        id: 'license-id',
+        orderId: 'order-id',
+        startDate: new Date('2022-01-11'),
+        endDate: new Date('2023-02-11'),
+      },
+      videoMetadata: {
+        title: videoTitle,
+        channelName: 'channel-name',
+        duration: dayjs.duration('PT112'),
+        links: {
+          self: new Link({ href: 'link', templated: false }),
+        },
+      },
+    };
+  }
 });
