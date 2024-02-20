@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout } from 'src/components/layout/Layout';
 import Navbar from 'src/components/layout/Navbar';
 import PageHeader from 'src/components/pageTitle/PageHeader';
@@ -9,8 +9,14 @@ import { Helmet } from 'react-helmet';
 import { useLicensedContentQuery } from 'src/hooks/api/licensedContentQuery';
 import MyContentArea from 'src/components/MyContentArea/MyContentArea';
 
+const PAGE_SIZE = 10;
+
 const ContentView = () => {
-  const { data: licensedContent } = useLicensedContentQuery();
+  const [currentPageNumber, setCurrentPageNumber] = useState(0);
+  const { data: licensedContent, isLoading } = useLicensedContentQuery(
+    currentPageNumber,
+    PAGE_SIZE,
+  );
   const hasLicensedContent = licensedContent?.page?.length > 0;
   return (
     <>
@@ -18,8 +24,11 @@ const ContentView = () => {
       <Layout rowsSetup="grid-rows-content-view" responsiveLayout>
         <Navbar />
         <PageHeader title={hasLicensedContent ? 'My Content Area' : ''} />
-        {hasLicensedContent ? (
-          <MyContentArea licensedContent={licensedContent?.page} />
+        {hasLicensedContent || isLoading ? (
+          <MyContentArea
+            licensedContentPage={licensedContent}
+            onPageChange={(newPage) => setCurrentPageNumber(newPage)}
+          />
         ) : (
           <ContentEmptyPlaceholderState
             row="3"
