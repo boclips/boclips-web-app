@@ -11,7 +11,7 @@ import MyContentArea from 'src/components/MyContentArea/MyContentArea';
 
 const ContentView = () => {
   const { data: licensedContent } = useLicensedContentQuery();
-  const hasLicensedContent = licensedContent?.length > 0;
+  const hasLicensedContent = licensedContent?.page?.length > 0;
   return (
     <>
       <Helmet title="My Content Area" />
@@ -19,7 +19,7 @@ const ContentView = () => {
         <Navbar />
         <PageHeader title={hasLicensedContent ? 'My Content Area' : ''} />
         {hasLicensedContent ? (
-          <MyContentArea licensedContent={licensedContent} />
+          <MyContentArea licensedContent={licensedContent?.page} />
         ) : (
           <ContentEmptyPlaceholderState
             row="3"
