@@ -54,7 +54,6 @@ const LicensedContentPrimaryButton = ({ licensedContent }: Props) => {
               .getDownloadVideoUrl(licensedContent)
               .then((url) => {
                 downloadFileFromUrl(url);
-                setIsDownloadLoading(false);
               })
               .catch(() => {
                 displayNotification(
@@ -63,7 +62,8 @@ const LicensedContentPrimaryButton = ({ licensedContent }: Props) => {
                   'Please try again later',
                   `download-video-failed-notification`,
                 );
-              });
+              })
+              .finally(() => setIsDownloadLoading(false));
           }}
         />
       )}
