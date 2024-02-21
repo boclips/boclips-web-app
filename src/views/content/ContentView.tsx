@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout } from 'src/components/layout/Layout';
 import Navbar from 'src/components/layout/Navbar';
 import PageHeader from 'src/components/pageTitle/PageHeader';
@@ -8,15 +8,30 @@ import Footer from 'src/components/layout/Footer';
 import { Helmet } from 'react-helmet';
 import { useLicensedContentQuery } from 'src/hooks/api/licensedContentQuery';
 import MyContentArea from 'src/components/MyContentArea/MyContentArea';
+import { useLocationParams } from 'src/hooks/useLocationParams';
+import { useNavigate } from 'react-router-dom';
 
 const PAGE_SIZE = 10;
 
 const ContentView = () => {
-  const [currentPageNumber, setCurrentPageNumber] = useState(0);
+  const locationParams = useLocationParams();
+  const navigator = useNavigate();
+
+  const [currentPageNumber, setCurrentPageNumber] = useState<number>(
+    locationParams.get('page') ? Number(locationParams.get('page')) : 0,
+  );
   const { data: licensedContent, isLoading } = useLicensedContentQuery(
     currentPageNumber,
     PAGE_SIZE,
   );
+
+  useEffect(() => {
+    locationParams.set('page', currentPageNumber.toString());
+    navigator({
+      search: locationParams.toString(),
+    });
+  }, [currentPageNumber]);
+
   const hasLicensedContent = licensedContent?.page?.length > 0;
   return (
     <>

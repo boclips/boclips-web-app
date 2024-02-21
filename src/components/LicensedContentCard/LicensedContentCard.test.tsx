@@ -174,7 +174,7 @@ describe('Licensed Content Card', () => {
     const captionsButton = await getAssetOption(wrapper, 'Captions');
     expect(captionsButton).toBeVisible();
 
-    userEvent.click(captionsButton);
+    await userEvent.click(captionsButton);
     await waitFor(async () =>
       expect(wrapper.getByText('Download Captions')).toBeVisible(),
     );

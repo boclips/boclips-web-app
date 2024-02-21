@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Router } from 'react-router-dom';
 import App from 'src/App';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import { Link } from 'boclips-api-client/dist/types';
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
 import userEvent from '@testing-library/user-event';
+import { createBrowserHistory } from 'history';
 
 describe('ContentView', () => {
   it('loads the no content view (for now)', async () => {
@@ -104,18 +105,48 @@ describe('ContentView', () => {
     expect(await wrapper.findByText('video-10')).toBeVisible();
     expect(wrapper.queryByText('video-11')).toBeNull();
 
-    userEvent.click(wrapper.getByText('Next'));
+    await userEvent.click(wrapper.getByText('Next'));
 
     expect(await wrapper.findByText('video-11')).toBeVisible();
     expect(await wrapper.findByText('video-12')).toBeVisible();
     expect(wrapper.queryByText('video-1')).toBeNull();
     expect(wrapper.queryByText('video-10')).toBeNull();
 
-    userEvent.click(wrapper.getByText('Prev'));
+    await userEvent.click(wrapper.getByText('Prev'));
 
     expect(await wrapper.findByText('video-1')).toBeVisible();
     expect(await wrapper.findByText('video-10')).toBeVisible();
     expect(wrapper.queryByText('video-11')).toBeNull();
+  });
+
+  it('persists page between pages', async () => {
+    const history = createBrowserHistory();
+    history.push('/content');
+    const apiClient = new FakeBoclipsClient();
+
+    for (let videoNo = 1; videoNo <= 12; videoNo++) {
+      apiClient.licenses.insert(contentItem(`video-${videoNo}`));
+    }
+
+    apiClient.users.insertCurrentUser(
+      UserFactory.sample({
+        features: { BO_WEB_APP_DEV: true },
+      }),
+    );
+
+    const wrapper = render(
+      <Router location={history.location} navigator={history}>
+        <App apiClient={apiClient} boclipsSecurity={stubBoclipsSecurity} />
+      </Router>,
+    );
+
+    expect(await wrapper.findByText('My Content Area')).toBeVisible();
+
+    await userEvent.click(wrapper.getByText('Next'));
+    expect(history.location.search).toContain('?page=1');
+
+    await userEvent.click(wrapper.getByText('Prev'));
+    expect(history.location.search).toContain('?page=0');
   });
 
   function contentItem(videoTitle: string): LicensedContent {
