@@ -38,7 +38,7 @@ describe('Licensed Content Card', () => {
     );
   });
 
-  it('make order a clickable link to order details page', () => {
+  it('make order id a clickable link to order details page', () => {
     const licensedContent: LicensedContent = LicensedContentFactory.sample({
       videoId: 'video-id',
       license: {
@@ -81,6 +81,53 @@ describe('Licensed Content Card', () => {
     );
 
     expect(wrapper.getByRole('button', { name: 'Video Assets' })).toBeVisible();
+  });
+
+  describe('Metadata', () => {
+    it('should have Metadata option when clicked Video Assets button', async () => {
+      const licensedContent: LicensedContent = LicensedContentFactory.sample({
+        videoId: 'video-id',
+        videoMetadata: {
+          title: 'video-title',
+          channelName: 'channel-name',
+          duration: dayjs.duration('PT112'),
+          links: {
+            self: new Link({ href: 'link', templated: false }),
+            downloadMetadata: new Link({ href: '/METADATA', templated: false }),
+          },
+        },
+      });
+
+      const wrapper = renderWithClients(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <LicensedContentCard licensedContent={licensedContent} />
+        </BoclipsSecurityProvider>,
+      );
+
+      expect(await getAssetOption(wrapper, 'Metadata')).toBeVisible();
+    });
+
+    it('should not have Metadata option when metadata link is missing', async () => {
+      const licensedContent: LicensedContent = LicensedContentFactory.sample({
+        videoId: 'video-id',
+        videoMetadata: {
+          title: 'video-title',
+          channelName: 'channel-name',
+          duration: dayjs.duration('PT112'),
+          links: {
+            self: new Link({ href: 'link', templated: false }),
+          },
+        },
+      });
+
+      const wrapper = renderWithClients(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <LicensedContentCard licensedContent={licensedContent} />
+        </BoclipsSecurityProvider>,
+      );
+
+      expect(await getAssetOption(wrapper, 'Metadata')).toBeUndefined();
+    });
   });
 
   it('should have Transcript option when clicked Video Assets button', async () => {

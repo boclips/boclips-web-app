@@ -32,6 +32,20 @@ const LicensedContentPrimaryButton = ({ licensedContent }: Props) => {
       });
   };
 
+  const downloadMetadata = async () => {
+    await client.licenses
+      .getMetadata(licensedContent)
+      .then((response) => {
+        const href = URL.createObjectURL(new Blob([response.content]));
+        downloadFileFromUrl(href, response.filename);
+        console.log(response);
+        URL.revokeObjectURL(href);
+      })
+      .catch(() => {
+        displayNotification('error', `Download metadata failed!`, '', ``);
+      });
+  };
+
   return (
     <>
       <div className={s.assetsButton}>
@@ -46,6 +60,18 @@ const LicensedContentPrimaryButton = ({ licensedContent }: Props) => {
               align="end"
             >
               <DropdownMenu.Group>
+                {licensedContent.videoMetadata.links.downloadMetadata && (
+                  <DropdownMenu.Item
+                    className={s.assetDropdownItem}
+                    textValue="Metadata"
+                    onSelect={downloadMetadata}
+                  >
+                    <DownloadSVG />
+                    <Typography.Body as="span" weight="medium">
+                      Metadata
+                    </Typography.Body>
+                  </DropdownMenu.Item>
+                )}
                 {licensedContent.videoMetadata.links.transcript && (
                   <DropdownMenu.Item
                     className={s.assetDropdownItem}
