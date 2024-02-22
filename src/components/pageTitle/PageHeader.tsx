@@ -6,11 +6,13 @@ interface Props {
   title: string;
   button?: React.ReactNode;
   cartItems?: React.ReactNode;
+  className?: string;
 }
 
-const PageHeader = ({ title, button, cartItems }: Props) => {
+const PageHeader = ({ title, button, cartItems, className }: Props) => {
+  const headerClassName = className ? `${s.header} ${className}` : s.header;
   return (
-    <section className={s.header} aria-labelledby="page-header">
+    <section className={headerClassName} aria-labelledby="page-header">
       <Typography.H1
         id="page-header"
         size="md"
