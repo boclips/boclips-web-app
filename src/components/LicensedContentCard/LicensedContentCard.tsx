@@ -8,6 +8,7 @@ import c from 'classnames';
 import { Link } from 'react-router-dom';
 import LicensedContentPrimaryButton from 'src/components/LicensedContentCard/LicensedContentPrimaryButton';
 import LicensedContentAssetsButton from 'src/components/LicensedContentCard/LicensedContentAssetsButton';
+import LicensedContentTerritoryRestrictions from 'src/components/LicensedContentCard/LicensedContentTerritoryRestrictions';
 import s from './styles.module.less';
 
 interface Props {
@@ -65,6 +66,9 @@ const LicensedContentCard = ({ licensedContent }: Props) => {
             </Link>
           </Typography.Body>
         </div>
+        <LicensedContentTerritoryRestrictions
+          licensedContent={licensedContent}
+        />
         <div className={s.videoMetadataRow}>
           <Typography.Body as="div" size="small">
             {getFormattedDuration(licensedContent.videoMetadata.duration)}

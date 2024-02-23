@@ -292,4 +292,35 @@ describe('Licensed Content Card', () => {
     const options = wrapper.queryAllByRole('menuitem');
     return options?.find((element) => within(element).queryByText(name));
   };
+
+  it('should display territory restrictions', async () => {
+    const licensedContent: LicensedContent = LicensedContentFactory.sample({
+      videoId: 'video-id',
+      license: {
+        id: 'license-id',
+        orderId: 'order-id',
+        startDate: new Date(),
+        endDate: new Date(),
+        restrictedTerritories: ['Australia'],
+      },
+      videoMetadata: {
+        title: 'video-title',
+        channelName: 'channel-name',
+        duration: dayjs.duration('PT112'),
+        links: {
+          self: new Link({ href: 'link', templated: false }),
+          createEmbedCode: new Link({ href: 'embed', templated: false }),
+        },
+      },
+    });
+
+    const wrapper = renderWithClients(
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <LicensedContentCard licensedContent={licensedContent} />
+      </BoclipsSecurityProvider>,
+    );
+
+    expect(await wrapper.findByText('Restricted in:')).toBeVisible();
+    expect(wrapper.getByText('Australia')).toBeVisible();
+  });
 });
