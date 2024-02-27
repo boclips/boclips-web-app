@@ -280,6 +280,18 @@ const App = ({
                       }
                     />
                     <Route
+                      path="/classroom/register"
+                      element={
+                        <FeatureGate
+                          feature="BO_WEB_APP_DEV"
+                          fallback={<NotFound />}
+                          isView
+                        >
+                          <RegisterView />
+                        </FeatureGate>
+                      }
+                    />
+                    <Route
                       path="*"
                       element={
                         <>

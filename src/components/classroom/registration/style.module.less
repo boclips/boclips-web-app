@@ -1,0 +1,161 @@
+@import '~@boclips-ui/styles/src/colors';
+@import '~@boclips-ui/styles/src/breakpoints';
+
+.formHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 2;
+  grid-column-end: 26;
+  margin-bottom: 1.5rem;
+}
+
+.formInputsWrapper {
+  display: flex;
+  flex-direction: column;
+  grid-column-start: 1;
+  grid-column-end: 27;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  border-radius: 27px;
+  background: #FFF;
+  padding: 0 2rem 3.5rem 2rem;
+  align-self: center;
+
+  .passwordContainer {
+    width: 100%;
+    position: relative;
+    top: -1rem;
+
+    .passwordGrid {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .passwordRule {
+      flex: 50%;
+      font-size: 14px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      &:nth-child(even) {
+        padding-left: .5rem;
+
+      }
+    }
+  }
+
+  & label[for="input-confirmPassword"] {
+    align-self: flex-start;
+  }
+}
+
+@media screen and (min-width: @screen-lg) {
+  .formInputsWrapper {
+    grid-row-start: 1;
+    box-shadow: 0 .5rem 1.5rem 0 rgba(0, 0, 0, 0.04);
+    grid-column-start: 14;
+    grid-column-end: 25;
+  }
+
+  .formHeader {
+    margin-top: 4.375rem;
+    margin-bottom: 3.625rem;
+  }
+}
+
+.input {
+  margin-bottom: 1.5rem;
+}
+
+.createAccountButtonWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-column-start: 9;
+  grid-column-end: 19;
+  grid-row-start: 4;
+  grid-row-end: 5;
+}
+
+.createAccountButton {
+  margin-top: 0.5rem;
+  height: 3rem;
+}
+
+.spinner {
+  padding-bottom: 0.5rem;
+}
+
+.grayText {
+  text-align: center;
+  color: @gray-600;
+  font-size: 12px !important;
+
+  * {
+    font-size: 12px !important;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+.emailVerificationPromptWrapper {
+  z-index: 99999;
+  height: min-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #FFF;
+  grid-row-start: 2;
+  grid-row-end: 6;
+  grid-column-start: 2;
+  grid-column-end: 26;
+}
+
+@media (min-width: @screen-lg) {
+  .emailVerificationPromptWrapper {
+    grid-column-start: 9;
+    grid-column-end: 19;
+    border: 1px solid @blue-500;
+    border-radius: 15px;
+    padding: 2.75rem;
+    margin-bottom: 2rem;
+  }
+}
+
+
+.message {
+  margin-top: 2rem;
+  max-width: 538px;
+
+  p {
+    margin-bottom: 2rem;
+    color: @gray-800;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 150%;
+
+    &:last-child {
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+.logIn, .support{
+  width: 100%;
+  text-align: center;
+  margin-top: 1rem;
+
+  .link {
+    color: @blue-700;
+  }
+}
+
+.logIn {
+  padding-top: 1rem;
+}
