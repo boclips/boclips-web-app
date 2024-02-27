@@ -1,11 +1,11 @@
 import React from 'react';
 import { InputText } from '@boclips-ui/input';
-import s from 'src/components/registration/style.module.less';
+import s from 'src/components/classroom/registration/style.module.less';
 import c from 'classnames';
 import Dropdown from '@boclips-ui/dropdown';
-import { LIST_OF_COUNTRIES } from 'src/components/registration/dropdownValues';
+import { LIST_OF_COUNTRIES } from 'src/components/classroom/registration/dropdownValues';
 import RegistrationPageCheckbox from 'src/components/common/input/RegistrationPageCheckbox';
-import { RegistrationData } from 'src/components/registration/registrationForm/RegistrationForm';
+import { ClassroomRegistrationData } from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
 import PasswordValidattor from 'react-password-validattor';
 import { Typography } from '@boclips-ui/typography';
 
@@ -39,17 +39,17 @@ const passwordConfig = {
   },
 };
 
-interface RegistrationFormProps {
+interface ClassroomRegistrationFormProps {
   handleChange: (name: string, value: string | string[] | boolean) => void;
-  validationErrors: RegistrationData;
-  registrationData: RegistrationData;
+  validationErrors: ClassroomRegistrationData;
+  registrationData: ClassroomRegistrationData;
 }
 
-const RegistrationFormFields = ({
+const ClassroomRegistrationFormFields = ({
   handleChange,
   validationErrors,
   registrationData,
-}: RegistrationFormProps) => {
+}: ClassroomRegistrationFormProps) => {
   const educationalUseTermsLabel = (
     <>
       <Typography.Body size="small" weight="medium">
@@ -228,4 +228,4 @@ const RegistrationFormFields = ({
   );
 };
 
-export default RegistrationFormFields;
+export default ClassroomRegistrationFormFields;

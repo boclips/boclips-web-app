@@ -1,9 +1,9 @@
 import { fireEvent, RenderResult, within } from '@testing-library/react';
-import { RegistrationData } from 'src/components/registration/registrationForm/RegistrationForm';
+import { ClassroomRegistrationData } from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
 
 export function fillRegistrationForm(
   wrapper: RenderResult,
-  data: RegistrationData,
+  data: ClassroomRegistrationData,
 ) {
   fireEvent.change(wrapper.container.querySelector('[id="input-firstName"]'), {
     target: { value: data.firstName },

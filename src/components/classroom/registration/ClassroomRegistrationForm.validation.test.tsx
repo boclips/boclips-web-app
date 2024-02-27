@@ -6,17 +6,17 @@ import {
   waitFor,
 } from '@testing-library/react';
 import React from 'react';
-import RegistrationForm, {
-  RegistrationData,
-} from 'src/components/registration/registrationForm/RegistrationForm';
+import ClassroomRegistrationForm, {
+  ClassroomRegistrationData,
+} from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
-import { fillRegistrationForm } from 'src/components/registration/registrationFormTestHelpers';
+import { fillRegistrationForm } from 'src/components/classroom/registration/classroomRegistrationFormTestHelpers';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-describe('Registration Form Validation', () => {
+describe('ClassroomRegistration Form Validation', () => {
   const fakeClient = new FakeBoclipsClient();
   const createTrialUserSpy = jest.spyOn(fakeClient.users, 'createTrialUser');
 
@@ -281,7 +281,7 @@ describe('Registration Form Validation', () => {
         <QueryClientProvider client={new QueryClient()}>
           <BoclipsClientProvider client={fakeClient}>
             <GoogleReCaptchaProvider reCaptchaKey="123">
-              <RegistrationForm onRegistrationFinished={jest.fn()} />
+              <ClassroomRegistrationForm onRegistrationFinished={jest.fn()} />
             </GoogleReCaptchaProvider>
           </BoclipsClientProvider>
         </QueryClientProvider>
@@ -291,9 +291,9 @@ describe('Registration Form Validation', () => {
 
   function fillTheForm(
     wrapper: RenderResult,
-    change?: Partial<RegistrationData>,
+    change?: Partial<ClassroomRegistrationData>,
   ) {
-    const defaults: RegistrationData = {
+    const defaults: ClassroomRegistrationData = {
       firstName: 'Lebron',
       lastName: 'James',
       email: 'lj@nba.com',

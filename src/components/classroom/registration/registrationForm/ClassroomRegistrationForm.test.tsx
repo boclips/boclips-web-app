@@ -5,9 +5,9 @@ import {
   waitFor,
 } from '@testing-library/react';
 import React from 'react';
-import RegistrationForm, {
-  RegistrationData,
-} from 'src/components/registration/registrationForm/RegistrationForm';
+import ClassroomRegistrationForm, {
+  ClassroomRegistrationData,
+} from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -15,7 +15,7 @@ import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/Create
 import { ToastContainer } from 'react-toastify';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
-import { fillRegistrationForm } from 'src/components/registration/registrationFormTestHelpers';
+import { fillRegistrationForm } from 'src/components/classroom/registration/classroomRegistrationFormTestHelpers';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 const mockExecuteRecaptcha = jest.fn((_?: string) =>
@@ -33,12 +33,12 @@ jest.mock('react-google-recaptcha-v3', () => {
   };
 });
 
-describe('Registration Form', () => {
+describe('ClassroomRegistration Form', () => {
   async function fillTheForm(
     wrapper: RenderResult,
-    change?: Partial<RegistrationData>,
+    change?: Partial<ClassroomRegistrationData>,
   ) {
-    const defaults: RegistrationData = {
+    const defaults: ClassroomRegistrationData = {
       firstName: 'LeBron',
       lastName: 'James',
       email: 'lj@nba.com',
@@ -99,7 +99,9 @@ describe('Registration Form', () => {
         <QueryClientProvider client={new QueryClient()}>
           <BoclipsClientProvider client={apiClient}>
             <GoogleReCaptchaProvider reCaptchaKey="123">
-              <RegistrationForm onRegistrationFinished={registrationFormSpy} />
+              <ClassroomRegistrationForm
+                onRegistrationFinished={registrationFormSpy}
+              />
             </GoogleReCaptchaProvider>
           </BoclipsClientProvider>
         </QueryClientProvider>
@@ -166,7 +168,7 @@ describe('Registration Form', () => {
           <BoclipsClientProvider client={fakeClient}>
             <ToastContainer />
             <GoogleReCaptchaProvider reCaptchaKey="123">
-              <RegistrationForm onRegistrationFinished={jest.fn()} />
+              <ClassroomRegistrationForm onRegistrationFinished={jest.fn()} />
             </GoogleReCaptchaProvider>
           </BoclipsClientProvider>
         </QueryClientProvider>
@@ -223,7 +225,7 @@ describe('Registration Form', () => {
           <BoclipsClientProvider client={new FakeBoclipsClient()}>
             <ToastContainer />
             <GoogleReCaptchaProvider reCaptchaKey="123">
-              <RegistrationForm onRegistrationFinished={jest.fn()} />
+              <ClassroomRegistrationForm onRegistrationFinished={jest.fn()} />
             </GoogleReCaptchaProvider>
           </BoclipsClientProvider>
         </QueryClientProvider>

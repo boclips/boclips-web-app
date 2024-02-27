@@ -1,6 +1,6 @@
 import * as EmailValidator from 'email-validator';
 import PasswordValidator from 'password-validator';
-import { RegistrationData } from 'src/components/registration/registrationForm/RegistrationForm';
+import { ClassroomRegistrationData } from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
 
 type SetError = (fieldName: string, errorMessage: string | boolean) => void;
 
@@ -10,7 +10,7 @@ type ValidationMethod = (
 ) => boolean;
 
 interface FormValidatorClass {
-  new (registrationData: RegistrationData, setError: SetError);
+  new (registrationData: ClassroomRegistrationData, setError: SetError);
 }
 
 interface FormValidatorInstance {
@@ -24,11 +24,11 @@ interface FormValidatorInstance {
 const FormValidator: FormValidatorClass = class
   implements FormValidatorInstance
 {
-  private registrationData: RegistrationData;
+  private registrationData: ClassroomRegistrationData;
 
   private setError: SetError;
 
-  constructor(registrationData: RegistrationData, setError: SetError) {
+  constructor(registrationData: ClassroomRegistrationData, setError: SetError) {
     this.registrationData = registrationData;
     this.setError = setError;
   }

@@ -5,7 +5,7 @@ import { render } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import React from 'react';
-import { Registration } from 'src/components/registration/Registration';
+import { ClassroomRegistration } from 'src/components/classroom/registration/ClassroomRegistration';
 import {
   resizeToDesktop,
   resizeToMobile,
@@ -41,7 +41,7 @@ describe('registration', () => {
         <QueryClientProvider client={new QueryClient()}>
           <BoclipsClientProvider client={new FakeBoclipsClient()}>
             <GoogleReCaptchaProvider reCaptchaKey="123">
-              <Registration />
+              <ClassroomRegistration />
             </GoogleReCaptchaProvider>
           </BoclipsClientProvider>
         </QueryClientProvider>

@@ -5,13 +5,13 @@ import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/Create
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
-import RegistrationFormFields from 'src/components/registration/registrationForm/registrationFormFields/RegistrationFormFields';
-import CreateAccountButton from 'src/components/registration/registrationForm/createAccountButton/CreateAccountButton';
-import FormValidator from 'src/components/registration/registrationForm/validation/validation';
+import ClassroomRegistrationFormFields from 'src/components/classroom/registration/registrationForm/registrationFormFields/ClassroomRegistrationFormFields';
+import CreateAccountButton from 'src/components/classroom/registration/registrationForm/createAccountButton/CreateAccountButton';
+import FormValidator from 'src/components/classroom/registration/registrationForm/validation/validation';
 import { Link } from 'react-router-dom';
 import s from '../style.module.less';
 
-export interface RegistrationData {
+export interface ClassroomRegistrationData {
   firstName: string;
   lastName: string;
   email: string;
@@ -23,7 +23,7 @@ export interface RegistrationData {
   hasAcceptedTermsAndConditions: boolean;
 }
 
-const emptyRegistrationData = (): RegistrationData => {
+const emptyRegistrationData = (): ClassroomRegistrationData => {
   return {
     firstName: '',
     lastName: '',
@@ -55,13 +55,11 @@ const ClassroomRegistrationForm = ({
     return executeRecaptcha('register');
   };
 
-  const [registrationData, setRegistrationData] = useState<RegistrationData>(
-    emptyRegistrationData(),
-  );
+  const [registrationData, setRegistrationData] =
+    useState<ClassroomRegistrationData>(emptyRegistrationData());
 
-  const [validationErrors, setValidationErrors] = useState<RegistrationData>(
-    emptyRegistrationData(),
-  );
+  const [validationErrors, setValidationErrors] =
+    useState<ClassroomRegistrationData>(emptyRegistrationData());
 
   const handleChange = (
     fieldName: string,
@@ -166,7 +164,7 @@ const ClassroomRegistrationForm = ({
         <Typography.H2>Create your account</Typography.H2>
       </section>
 
-      <RegistrationFormFields
+      <ClassroomRegistrationFormFields
         handleChange={handleChange}
         validationErrors={validationErrors}
         registrationData={registrationData}

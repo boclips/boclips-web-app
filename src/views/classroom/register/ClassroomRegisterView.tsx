@@ -1,11 +1,11 @@
 import React from 'react';
 import { Layout } from 'src/components/layout/Layout';
 import { Helmet } from 'react-helmet';
-import { Registration } from 'src/components/registration/Registration';
-import InvisibleNavbar from 'src/components/registration/invisibleNavbar/InvisibleNavbar';
+import { ClassroomRegistration } from 'src/components/classroom/registration/ClassroomRegistration';
+import InvisibleNavbar from 'src/components/classroom/registration/invisibleNavbar/InvisibleNavbar';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 
-const RegistrationView = () => {
+const ClassroomRegistrationView = () => {
   const breakpoints = useMediaBreakPoint();
   const isMobileView =
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
@@ -18,7 +18,7 @@ const RegistrationView = () => {
         backgroundColor={!isMobileView && '#F9FBFF'}
       >
         <InvisibleNavbar />
-        <Registration />
+        <ClassroomRegistration />
       </Layout>
     </>
   );

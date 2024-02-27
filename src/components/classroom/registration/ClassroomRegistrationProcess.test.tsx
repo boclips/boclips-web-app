@@ -6,19 +6,19 @@ import { fireEvent, render, RenderResult } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { ToastContainer } from 'react-toastify';
-import { RegistrationData } from 'src/components/registration/registrationForm/RegistrationForm';
+import { ClassroomRegistrationData } from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
 import React from 'react';
-import { fillRegistrationForm } from 'src/components/registration/registrationFormTestHelpers';
-import { Registration } from 'src/components/registration/Registration';
+import { fillRegistrationForm } from 'src/components/classroom/registration/classroomRegistrationFormTestHelpers';
+import { ClassroomRegistration } from 'src/components/classroom/registration/ClassroomRegistration';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
 describe('registration process', () => {
   async function fillTheForm(
     wrapper: RenderResult,
-    change?: Partial<RegistrationData>,
+    change?: Partial<ClassroomRegistrationData>,
   ) {
-    const defaults: RegistrationData = {
+    const defaults: ClassroomRegistrationData = {
       firstName: 'LeBron',
       lastName: 'James',
       email: 'lj@nba.com',
@@ -51,7 +51,7 @@ describe('registration process', () => {
           <Router location={history.location} navigator={history}>
             <ToastContainer />
             <GoogleReCaptchaProvider reCaptchaKey="123">
-              <Registration />
+              <ClassroomRegistration />
             </GoogleReCaptchaProvider>
           </Router>
         </BoclipsClientProvider>

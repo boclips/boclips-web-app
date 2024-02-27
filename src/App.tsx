@@ -19,6 +19,7 @@ import { RedirectFromExploreToAlignments } from 'src/components/alignments/Redir
 import * as Sentry from '@sentry/browser';
 import { ToastContainer } from 'react-toastify';
 import { RedirectFromSparksToAlignments } from 'src/components/alignments/RedirectFromSparksToAlignments';
+import ClassroomRegisterView from 'src/views/classroom/register/ClassroomRegisterView';
 import { BoclipsClientProvider } from './components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSecurityProvider';
 import { GlobalQueryErrorProvider } from './components/common/providers/GlobalQueryErrorProvider';
@@ -287,7 +288,7 @@ const App = ({
                           fallback={<NotFound />}
                           isView
                         >
-                          <RegisterView />
+                          <ClassroomRegisterView />
                         </FeatureGate>
                       }
                     />

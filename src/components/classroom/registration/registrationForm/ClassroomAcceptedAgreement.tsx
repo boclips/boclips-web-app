@@ -1,13 +1,15 @@
 import { Typography } from '@boclips-ui/typography';
 import c from 'classnames';
-import s from 'src/components/registration/style.module.less';
+import s from 'src/components/classroom/registration/style.module.less';
 import React from 'react';
 
 interface Props {
   buttonText?: string;
 }
 
-const AcceptedAgreement = ({ buttonText = 'Create Account' }: Props) => {
+const ClassroomAcceptedAgreement = ({
+  buttonText = 'Create Account',
+}: Props) => {
   return (
     <Typography.Body
       data-qa="accepted-agreement"
@@ -44,4 +46,4 @@ const AcceptedAgreement = ({ buttonText = 'Create Account' }: Props) => {
   );
 };
 
-export default AcceptedAgreement;
+export default ClassroomAcceptedAgreement;
