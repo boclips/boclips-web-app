@@ -17,7 +17,7 @@ export interface ClassroomRegistrationData {
   email: string;
   password: string;
   confirmPassword: string;
-  accountName: string;
+  schoolName: string;
   country: string;
   hasAcceptedEducationalUseTerms: boolean;
   hasAcceptedTermsAndConditions: boolean;
@@ -30,7 +30,7 @@ const emptyRegistrationData = (): ClassroomRegistrationData => {
     email: '',
     password: '',
     confirmPassword: '',
-    accountName: '',
+    schoolName: '',
     country: '',
     hasAcceptedEducationalUseTerms: false,
     hasAcceptedTermsAndConditions: false,
@@ -44,7 +44,7 @@ interface RegistrationFormProps {
 const ClassroomRegistrationForm = ({
   onRegistrationFinished,
 }: RegistrationFormProps) => {
-  const { mutate: createTrialUser, isLoading: isTrialUserCreating } =
+  const { mutate: createClassroomUser, isLoading: isClassroomUserCreating } =
     useAddNewTrialUser();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
@@ -93,7 +93,7 @@ const ClassroomRegistrationForm = ({
     const isFormValid = new FormValidator(registrationData, setError).isValid();
 
     if (isFormValid && token) {
-      createTrialUser(
+      createClassroomUser(
         {
           email: registrationData.email,
           firstName: registrationData.firstName,
@@ -101,7 +101,7 @@ const ClassroomRegistrationForm = ({
           password: registrationData.password,
           recaptchaToken: token,
           type: UserType.trialB2bUser,
-          accountName: registrationData.accountName,
+          accountName: registrationData.schoolName,
           country: registrationData.country,
           hasAcceptedEducationalUseTerms:
             registrationData.hasAcceptedEducationalUseTerms,
@@ -121,7 +121,7 @@ const ClassroomRegistrationForm = ({
                 break;
               case 'ACCOUNT':
                 setError(
-                  'accountName',
+                  'schoolName',
                   'Cannot use this school name. Try another or contact us.',
                 );
                 break;
@@ -172,7 +172,7 @@ const ClassroomRegistrationForm = ({
 
       <CreateAccountButton
         onClick={handleUserCreation}
-        isLoading={isTrialUserCreating}
+        isLoading={isClassroomUserCreating}
       />
 
       <section className={s.logIn}>

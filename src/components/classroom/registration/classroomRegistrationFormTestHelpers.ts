@@ -24,12 +24,9 @@ export function fillRegistrationForm(
       target: { value: data.confirmPassword },
     },
   );
-  fireEvent.change(
-    wrapper.container.querySelector('[id="input-accountName"]'),
-    {
-      target: { value: data.accountName },
-    },
-  );
+  fireEvent.change(wrapper.container.querySelector('[id="input-schoolName"]'), {
+    target: { value: data.schoolName },
+  });
 
   setDropdownValue(wrapper, 'input-dropdown-country', data.country);
 

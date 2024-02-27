@@ -44,7 +44,7 @@ describe('ClassroomRegistration Form', () => {
       email: 'lj@nba.com',
       password: 'p@ss1234',
       confirmPassword: 'p@ss1234',
-      accountName: 'Los Angeles Lakers',
+      schoolName: 'Los Angeles Lakers',
       country: 'Poland',
       hasAcceptedEducationalUseTerms: true,
       hasAcceptedTermsAndConditions: true,

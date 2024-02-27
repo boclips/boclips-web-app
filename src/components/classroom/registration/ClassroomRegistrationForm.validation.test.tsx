@@ -79,7 +79,7 @@ describe('ClassroomRegistration Form Validation', () => {
   it('account name cannot be empty', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { accountName: '' });
+    fillTheForm(wrapper, { schoolName: '' });
 
     await checkErrorIsNotVisible(wrapper, 'School name is required');
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
@@ -204,7 +204,7 @@ describe('ClassroomRegistration Form Validation', () => {
       );
 
     const wrapper = renderRegistrationForm();
-    fillTheForm(wrapper, { accountName: 'Boclips' });
+    fillTheForm(wrapper, { schoolName: 'Boclips' });
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
@@ -223,7 +223,7 @@ describe('ClassroomRegistration Form Validation', () => {
       lastName: '',
       password: '',
       confirmPassword: '',
-      accountName: '',
+      schoolName: '',
       country: '',
       email: '',
       hasAcceptedEducationalUseTerms: false,
@@ -299,7 +299,7 @@ describe('ClassroomRegistration Form Validation', () => {
       email: 'lj@nba.com',
       password: 'p@ssw0rd',
       confirmPassword: 'p@ssw0rd',
-      accountName: 'Los Angeles Lakers',
+      schoolName: 'Los Angeles Lakers',
       country: 'Poland',
       hasAcceptedEducationalUseTerms: true,
       hasAcceptedTermsAndConditions: true,
