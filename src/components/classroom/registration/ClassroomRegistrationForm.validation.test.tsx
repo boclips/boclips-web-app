@@ -81,9 +81,9 @@ describe('ClassroomRegistration Form Validation', () => {
 
     fillTheForm(wrapper, { accountName: '' });
 
-    await checkErrorIsNotVisible(wrapper, 'Organization name is required');
+    await checkErrorIsNotVisible(wrapper, 'School name is required');
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
-    await checkErrorIsVisible(wrapper, 'Organization name is required');
+    await checkErrorIsVisible(wrapper, 'School name is required');
 
     await waitFor(() => {
       expect(createTrialUserSpy).not.toBeCalled();
@@ -210,7 +210,7 @@ describe('ClassroomRegistration Form Validation', () => {
 
     expect(
       await wrapper.findByText(
-        'Cannot use this organization name. Try another or contact us.',
+        'Cannot use this school name. Try another or contact us.',
       ),
     ).toBeVisible();
   });
@@ -235,7 +235,7 @@ describe('ClassroomRegistration Form Validation', () => {
     await checkErrorIsVisible(wrapper, 'First name is required');
     await checkErrorIsVisible(wrapper, 'Last name is required');
     await checkErrorIsVisible(wrapper, 'Email is required');
-    await checkErrorIsVisible(wrapper, 'Organization name is required');
+    await checkErrorIsVisible(wrapper, 'School name is required');
     await checkErrorIsVisible(wrapper, '8 characters');
     await checkErrorIsVisible(wrapper, '1 capital letter');
     await checkErrorIsVisible(wrapper, "Password doesn't match");
@@ -254,7 +254,7 @@ describe('ClassroomRegistration Form Validation', () => {
     await checkErrorIsNotVisible(wrapper, 'First name is required');
     await checkErrorIsNotVisible(wrapper, 'Last name is required');
     await checkErrorIsNotVisible(wrapper, 'Email is required');
-    await checkErrorIsNotVisible(wrapper, 'Organization name is required');
+    await checkErrorIsNotVisible(wrapper, 'School name is required');
     await checkErrorIsNotVisible(wrapper, 'Password is required');
     await checkErrorIsNotVisible(wrapper, 'Please select a country');
     await checkErrorIsNotVisible(

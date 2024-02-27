@@ -122,7 +122,7 @@ const ClassroomRegistrationForm = ({
               case 'ACCOUNT':
                 setError(
                   'accountName',
-                  'Cannot use this organization name. Try another or contact us.',
+                  'Cannot use this school name. Try another or contact us.',
                 );
                 break;
               default:

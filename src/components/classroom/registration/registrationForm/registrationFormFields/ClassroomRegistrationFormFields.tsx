@@ -83,9 +83,9 @@ const ClassroomRegistrationFormFields = ({
         id="input-accountName"
         onChange={(value) => handleChange('accountName', value)}
         inputType="text"
-        placeholder="Your organization name"
+        placeholder="Your school name"
         className={s.input}
-        labelText="Organization name"
+        labelText="School name"
         height="48px"
         isError={!!validationErrors.accountName}
         errorMessage={validationErrors.accountName}

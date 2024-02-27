@@ -62,7 +62,7 @@ describe('ClassroomRegistration Form', () => {
     expect(wrapper.getByLabelText('Email Address')).toBeVisible();
     expect(wrapper.getByLabelText('Password')).toBeVisible();
     expect(wrapper.getByLabelText('Confirm password')).toBeVisible();
-    expect(wrapper.getByLabelText('Organization name')).toBeVisible();
+    expect(wrapper.getByLabelText('School name')).toBeVisible();
     expect(
       wrapper.getByLabelText(
         /I certify that I am accessing this service solely for Educational Use./,
