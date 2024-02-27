@@ -287,4 +287,40 @@ describe('App', () => {
       expect(await wrapper.findByText('Page not found!')).toBeInTheDocument();
     });
   });
+
+  describe('Classroom registration page', () => {
+    it('redirects to classroom registration page when hitting /classroom/register url', async () => {
+      const apiClient = new FakeBoclipsClient();
+      apiClient.users.insertCurrentUser(
+        UserFactory.sample({
+          features: { BO_WEB_APP_DEV: true },
+        }),
+      );
+
+      const wrapper = render(
+        <MemoryRouter initialEntries={['/classroom/register']}>
+          <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+        </MemoryRouter>,
+      );
+
+      expect(await wrapper.findByText('Create your account')).toBeVisible();
+    });
+
+    it('will not redirect to my content page when hitting /classroom/register url without BWA_DEV feature', async () => {
+      const apiClient = new FakeBoclipsClient();
+      apiClient.users.insertCurrentUser(
+        UserFactory.sample({
+          features: { BO_WEB_APP_DEV: false },
+        }),
+      );
+
+      const wrapper = render(
+        <MemoryRouter initialEntries={['/classroom/register']}>
+          <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+        </MemoryRouter>,
+      );
+
+      expect(await wrapper.findByText('Page not found!')).toBeInTheDocument();
+    });
+  });
 });

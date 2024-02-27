@@ -1,0 +1,66 @@
+@import '~@boclips-ui/styles/src/colors';
+@import '~@boclips-ui/styles/src/breakpoints';
+
+
+.blobWrapper {
+  grid-column-start: 1;
+  grid-column-end: 14;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  display: flex;
+  align-self: center;
+  justify-self: flex-end;
+
+  .blob {
+    width: 100%;
+    //height: 800px;
+  }
+}
+
+.trialInfo {
+  grid-column-start: 3;
+  grid-column-end: 12;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  position: relative;
+
+  .illustrationWrapper {
+    display: flex;
+
+    .illustration {
+      width: 100%;
+      height: auto;
+      z-index: 2;
+    }
+  }
+
+  h1 {
+    z-index: 3;
+  }
+
+  & > section:nth-child(2) {
+    margin-top: 2rem;
+  }
+
+  .green {
+    color: @success;
+  }
+
+  .featureInfo {
+    z-index: 3;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+
+    svg {
+      margin-right: 1rem;
+    }
+  }
+  .icon {
+    width: min-content;
+    margin-top: 2px;
+  }
+}
