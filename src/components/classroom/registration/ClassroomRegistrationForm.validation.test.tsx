@@ -18,7 +18,10 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 describe('ClassroomRegistration Form Validation', () => {
   const fakeClient = new FakeBoclipsClient();
-  const createTrialUserSpy = jest.spyOn(fakeClient.users, 'createTrialUser');
+  const createClassroomUserSpy = jest.spyOn(
+    fakeClient.users,
+    'createClassroomUser',
+  );
 
   it('first name cannot be empty', async () => {
     const wrapper = renderRegistrationForm();
@@ -30,7 +33,7 @@ describe('ClassroomRegistration Form Validation', () => {
     await checkErrorIsVisible(wrapper, 'First name is required');
 
     await waitFor(() => {
-      expect(createTrialUserSpy).not.toBeCalled();
+      expect(createClassroomUserSpy).not.toBeCalled();
     });
   });
 
@@ -44,7 +47,7 @@ describe('ClassroomRegistration Form Validation', () => {
     await checkErrorIsVisible(wrapper, 'Last name is required');
 
     await waitFor(() => {
-      expect(createTrialUserSpy).not.toBeCalled();
+      expect(createClassroomUserSpy).not.toBeCalled();
     });
   });
 
@@ -58,7 +61,7 @@ describe('ClassroomRegistration Form Validation', () => {
     await checkErrorIsVisible(wrapper, 'Email is required');
 
     await waitFor(() => {
-      expect(createTrialUserSpy).not.toBeCalled();
+      expect(createClassroomUserSpy).not.toBeCalled();
     });
   });
 
@@ -72,7 +75,7 @@ describe('ClassroomRegistration Form Validation', () => {
     await checkErrorIsVisible(wrapper, 'Please enter a valid email address');
 
     await waitFor(() => {
-      expect(createTrialUserSpy).not.toBeCalled();
+      expect(createClassroomUserSpy).not.toBeCalled();
     });
   });
 
@@ -86,7 +89,7 @@ describe('ClassroomRegistration Form Validation', () => {
     await checkErrorIsVisible(wrapper, 'School name is required');
 
     await waitFor(() => {
-      expect(createTrialUserSpy).not.toBeCalled();
+      expect(createClassroomUserSpy).not.toBeCalled();
     });
   });
 
@@ -99,7 +102,7 @@ describe('ClassroomRegistration Form Validation', () => {
     await checkErrorIsVisible(wrapper, '8 characters');
 
     await waitFor(() => {
-      expect(createTrialUserSpy).not.toBeCalled();
+      expect(createClassroomUserSpy).not.toBeCalled();
     });
   });
 
@@ -117,7 +120,7 @@ describe('ClassroomRegistration Form Validation', () => {
     await checkErrorIsVisible(wrapper, '1 number');
 
     await waitFor(() => {
-      expect(createTrialUserSpy).not.toBeCalled();
+      expect(createClassroomUserSpy).not.toBeCalled();
     });
   });
 
@@ -133,7 +136,7 @@ describe('ClassroomRegistration Form Validation', () => {
     await checkErrorIsVisible(wrapper, "Password doesn't match");
 
     await waitFor(() => {
-      expect(createTrialUserSpy).not.toBeCalled();
+      expect(createClassroomUserSpy).not.toBeCalled();
     });
   });
 
@@ -147,7 +150,7 @@ describe('ClassroomRegistration Form Validation', () => {
     await checkErrorIsVisible(wrapper, 'Please select a country');
 
     await waitFor(() => {
-      expect(createTrialUserSpy).not.toBeCalled();
+      expect(createClassroomUserSpy).not.toBeCalled();
     });
   });
 
@@ -162,7 +165,7 @@ describe('ClassroomRegistration Form Validation', () => {
       await wrapper.findByText('Educational use agreement is required'),
     ).toBeVisible();
 
-    expect(createTrialUserSpy).not.toBeCalled();
+    expect(createClassroomUserSpy).not.toBeCalled();
   });
 
   it('prompts user to check boclips Ts and Cs checkbox if not checked and user clicks submit', async () => {
@@ -178,12 +181,12 @@ describe('ClassroomRegistration Form Validation', () => {
       ),
     ).toBeVisible();
 
-    expect(createTrialUserSpy).not.toBeCalled();
+    expect(createClassroomUserSpy).not.toBeCalled();
   });
 
   it('displays error message if email already exists', async () => {
     jest
-      .spyOn(fakeClient.users, 'createTrialUser')
+      .spyOn(fakeClient.users, 'createClassroomUser')
       .mockImplementation(() =>
         Promise.reject(new Error('User already exists for account: Boclips')),
       );
@@ -198,7 +201,7 @@ describe('ClassroomRegistration Form Validation', () => {
 
   it('displays error message if account name already exists', async () => {
     jest
-      .spyOn(fakeClient.users, 'createTrialUser')
+      .spyOn(fakeClient.users, 'createClassroomUser')
       .mockImplementation(() =>
         Promise.reject(new Error('Account Boclips already exists')),
       );
@@ -271,7 +274,7 @@ describe('ClassroomRegistration Form Validation', () => {
     );
 
     await waitFor(() => {
-      expect(createTrialUserSpy).toBeCalled();
+      expect(createClassroomUserSpy).toBeCalled();
     });
   });
 

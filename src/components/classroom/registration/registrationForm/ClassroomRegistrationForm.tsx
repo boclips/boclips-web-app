@@ -1,6 +1,6 @@
 import React, { KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { Typography } from '@boclips-ui/typography';
-import { useAddNewTrialUser } from 'src/hooks/api/userQuery';
+import { useAddNewClassroomUser } from 'src/hooks/api/userQuery';
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
@@ -45,7 +45,7 @@ const ClassroomRegistrationForm = ({
   onRegistrationFinished,
 }: RegistrationFormProps) => {
   const { mutate: createClassroomUser, isLoading: isClassroomUserCreating } =
-    useAddNewTrialUser();
+    useAddNewClassroomUser();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const handleReCaptchaVerify = async () => {
@@ -100,8 +100,8 @@ const ClassroomRegistrationForm = ({
           lastName: registrationData.lastName,
           password: registrationData.password,
           recaptchaToken: token,
-          type: UserType.trialB2bUser,
-          accountName: registrationData.schoolName,
+          type: UserType.classroomUser,
+          schoolName: registrationData.schoolName,
           country: registrationData.country,
           hasAcceptedEducationalUseTerms:
             registrationData.hasAcceptedEducationalUseTerms,

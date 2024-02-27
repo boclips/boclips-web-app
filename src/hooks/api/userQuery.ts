@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import {
+  CreateClassroomUserRequest,
   CreateTrialUserRequest,
   CreateUserRequest,
 } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
@@ -52,6 +53,14 @@ export const useAddNewUser = () => {
         queryClient.invalidateQueries(['accountUsers', user.account.id]);
       },
     },
+  );
+};
+
+export const useAddNewClassroomUser = () => {
+  const client = useBoclipsClient();
+
+  return useMutation((userRequest: CreateClassroomUserRequest) =>
+    client.users.createClassroomUser(userRequest),
   );
 };
 

@@ -35,7 +35,7 @@ describe('registration process', () => {
 
   it('displays "check your email" view after successful registration', async () => {
     const fakeClient = new FakeBoclipsClient();
-    jest.spyOn(fakeClient.users, 'createTrialUser').mockImplementation(() =>
+    jest.spyOn(fakeClient.users, 'createClassroomUser').mockImplementation(() =>
       Promise.resolve(
         UserFactory.sample({
           email: 'test@boclips.com',

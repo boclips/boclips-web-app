@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { Constants } from 'src/AppConstants';
-import RegistrationForm from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
+import ClassroomRegistrationForm from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
 import ClassroomEmailVerificationPrompt from 'src/components/classroom/registration/ClassroomEmailVerificationPrompt';
 import TrialInfo from 'src/components/classroom/registration/trialInfo/TrialInfo';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
@@ -19,7 +19,7 @@ export const ClassroomRegistration = () => {
       {!userEmailCreated ? (
         <>
           {!isMobileView && <TrialInfo />}
-          <RegistrationForm
+          <ClassroomRegistrationForm
             onRegistrationFinished={(userEmail) =>
               setUserEmailCreated(userEmail)
             }

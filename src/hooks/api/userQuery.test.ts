@@ -3,6 +3,7 @@ import { act, renderHook, waitFor } from '@testing-library/react';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
 import { QueryClient } from '@tanstack/react-query';
 import {
+  useAddNewClassroomUser,
   useAddNewTrialUser,
   useFindAccountUsers,
   useUpdateUser,
@@ -13,6 +14,7 @@ import {
 } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
 import {
+  CreateClassroomUserRequest,
   CreateTrialUserRequest,
   UserType as CreationUserType,
 } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
@@ -63,6 +65,36 @@ describe('userQuery', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(createTrialUserSpy).toBeCalledWith(request);
+  });
+
+  it('adds classroom user', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const createClassroomUserSpy = jest.spyOn(
+      fakeClient.users,
+      'createClassroomUser',
+    );
+    // @ts-ignore
+    fakeClient.users.createClassroomUser = createClassroomUserSpy;
+    const { result } = renderHook(() => useAddNewClassroomUser(), {
+      wrapper: wrapperWithClients(fakeClient, new QueryClient()),
+    });
+
+    const request: CreateClassroomUserRequest = {
+      firstName: 'LeBron',
+      lastName: 'James',
+      email: 'lj@nba.com',
+      password: 'p@ss',
+      type: CreationUserType.classroomUser,
+      schoolName: 'Los Angeles Lakers',
+      hasAcceptedEducationalUseTerms: true,
+      country: 'country',
+      hasAcceptedTermsAndConditions: true,
+    };
+
+    act(() => result.current.mutate(request));
+
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
+    expect(createClassroomUserSpy).toBeCalledWith(request);
   });
 
   it('updates a user', async () => {

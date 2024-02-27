@@ -132,7 +132,10 @@ describe('ClassroomRegistration Form', () => {
 
   it('typed values and checkboxes values are submitted when Create Account button is clicked', async () => {
     const fakeClient = new FakeBoclipsClient();
-    const createTrialUserSpy = jest.spyOn(fakeClient.users, 'createTrialUser');
+    const createClassroomUserSpy = jest.spyOn(
+      fakeClient.users,
+      'createClassroomUser',
+    );
 
     const wrapper = renderRegistrationForm(fakeClient);
 
@@ -141,14 +144,14 @@ describe('ClassroomRegistration Form', () => {
     fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
 
     await waitFor(() => {
-      expect(createTrialUserSpy).toBeCalledWith({
+      expect(createClassroomUserSpy).toBeCalledWith({
         firstName: 'LeBron',
         lastName: 'James',
         email: 'lj@nba.com',
         password: 'p@ss1234',
         recaptchaToken: 'token_baby',
-        type: UserType.trialB2bUser,
-        accountName: 'Los Angeles Lakers',
+        type: UserType.classroomUser,
+        schoolName: 'Los Angeles Lakers',
         country: 'POL',
         hasAcceptedEducationalUseTerms: true,
         hasAcceptedTermsAndConditions: true,
@@ -156,10 +159,10 @@ describe('ClassroomRegistration Form', () => {
     });
   });
 
-  it('error notification is displayed when trial user creation fails, inputs are not cleared', async () => {
+  it('error notification is displayed when classroom user creation fails, inputs are not cleared', async () => {
     const fakeClient = new FakeBoclipsClient();
     jest
-      .spyOn(fakeClient.users, 'createTrialUser')
+      .spyOn(fakeClient.users, 'createClassroomUser')
       .mockImplementation(() => Promise.reject());
 
     const wrapper = render(
@@ -187,9 +190,9 @@ describe('ClassroomRegistration Form', () => {
     expect(wrapper.getAllByDisplayValue('p@ss1234')).toHaveLength(2);
   });
 
-  it('onRegistrationFinished is called when trial user creation passes', async () => {
+  it('onRegistrationFinished is called when classroom user creation passes', async () => {
     const fakeClient = new FakeBoclipsClient();
-    jest.spyOn(fakeClient.users, 'createTrialUser').mockImplementation(() =>
+    jest.spyOn(fakeClient.users, 'createClassroomUser').mockImplementation(() =>
       Promise.resolve(
         UserFactory.sample({
           email: 'test@boclips.com',
