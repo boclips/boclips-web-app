@@ -1,5 +1,5 @@
 import { Typography } from '@boclips-ui/typography';
-import Checkmark from 'src/resources/icons/checkmark.svg';
+import Checkmark from 'src/resources/icons/purple-checkmark.svg';
 import React from 'react';
 import TrailBackground from 'src/resources/icons/classroom-trial-bg.svg';
 import BlobSVG from 'src/resources/icons/blob.svg';
@@ -31,7 +31,7 @@ const TrialInfo = () => {
   return (
     <>
       <div className={s.trialInfo}>
-        <Typography.H1 size="lg">Explore Boclips Library!</Typography.H1>
+        <Typography.H1 size="lg">Explore Boclips Classroom!</Typography.H1>
         {features.map(({ title, description }) => {
           return (
             <section key={title} className={s.featureInfo}>
