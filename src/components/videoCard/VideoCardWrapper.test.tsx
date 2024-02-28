@@ -11,6 +11,7 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
 
@@ -69,7 +70,7 @@ describe('Video card', () => {
       title: 'video killed the radio star',
     });
 
-    it('shows copy video link in the video card', async () => {
+    it('shows copy video link in the video card for B2B', async () => {
       const fakeClient = new FakeBoclipsClient();
       fakeClient.videos.insertVideo(
         VideoFactory.sample({ id: '1', title: '1' }),
@@ -84,6 +85,34 @@ describe('Video card', () => {
       );
 
       expect(await wrapper.findByLabelText('Copy video link')).toBeVisible();
+    });
+
+    it('does not show copy video link in the video card for Classroom', async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          account: {
+            id: 'acc-1',
+            name: 'Ren',
+            products: [Product.CLASSROOM],
+          },
+        }),
+      );
+      fakeClient.videos.insertVideo(
+        VideoFactory.sample({ id: '1', title: '1' }),
+      );
+
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={fakeClient}>
+            <VideoCardWrapper video={video} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      expect(
+        wrapper.queryByLabelText('Copy video link'),
+      ).not.toBeInTheDocument();
     });
 
     it('does not show copy video id for non boclips users', async () => {

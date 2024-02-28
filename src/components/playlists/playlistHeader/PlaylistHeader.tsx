@@ -7,6 +7,8 @@ import { Typography } from '@boclips-ui/typography';
 import PlaylistNavigation from 'src/components/playlists/PlaylistNavigation';
 import PlaylistLastUpdatedBadge from 'src/components/playlists/playlistHeader/PlaylistLastUpdatedBadge';
 import PlaylistOwnerBadge from 'src/components/playlists/playlistHeader/PlaylistOwnerBadge';
+import { FeatureGate } from 'src/components/common/FeatureGate';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { OptionsButton } from './OptionsButton';
 import s from './style.module.less';
 
@@ -39,8 +41,10 @@ const PlaylistHeader = ({ playlist }: Props) => {
         </div>
       </div>
       <div className={s.playlistButtons}>
-        <PlaylistShareButton playlist={playlist} />
-        <OptionsButton playlist={playlist} />
+        <FeatureGate product={Product.B2B}>
+          <PlaylistShareButton playlist={playlist} />
+          <OptionsButton playlist={playlist} />
+        </FeatureGate>
       </div>
       {playlist.description && (
         <PlaylistDescription description={playlist.description} />

@@ -22,9 +22,18 @@ import { Constants } from 'src/AppConstants';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
-const insertUser = (client: FakeBoclipsClient) =>
-  client.users.insertCurrentUser(UserFactory.sample());
+const insertUser = (client: FakeBoclipsClient, product?: Product) =>
+  client.users.insertCurrentUser(
+    UserFactory.sample({
+      account: {
+        id: 'acc-1',
+        name: 'Ren',
+        products: [product],
+      },
+    }),
+  );
 
 const renderPlaylistsView = (client: BoclipsClient) =>
   render(
@@ -137,36 +146,54 @@ describe('PlaylistsView', () => {
     expect(await wrapper.findByText('Shared pears playlist')).toBeVisible();
   });
 
-  it('has a share button that copies playlist link to clipboard', async () => {
-    Object.assign(navigator, {
-      clipboard: {
-        writeText: () => Promise.resolve(),
-      },
+  describe('share playlists', () => {
+    it('has a share button that copies playlist link to clipboard only for B2B', async () => {
+      Object.assign(navigator, {
+        clipboard: {
+          writeText: () => Promise.resolve(),
+        },
+      });
+
+      jest.spyOn(navigator.clipboard, 'writeText');
+
+      const client = new FakeBoclipsClient();
+      insertUser(client, Product.B2B);
+
+      const playlists = [
+        CollectionFactory.sample({ id: '1', title: 'Playlist 1' }),
+        CollectionFactory.sample({ id: '2', title: 'Playlist 2' }),
+      ];
+
+      playlists.forEach((it) => client.collections.addToFake(it));
+
+      const wrapper = renderPlaylistsView(client);
+
+      const shareButton = await wrapper.findByTestId(`share-playlist-button-1`);
+
+      await act(async () => {
+        fireEvent.click(shareButton);
+      });
+
+      expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+        `${Constants.HOST}/playlists/1`,
+      );
     });
 
-    jest.spyOn(navigator.clipboard, 'writeText');
+    it('does not have a share button for Classroom', async () => {
+      const client = new FakeBoclipsClient();
+      insertUser(client, Product.CLASSROOM);
 
-    const client = new FakeBoclipsClient();
-    insertUser(client);
+      const playlists = [
+        CollectionFactory.sample({ id: '1', title: 'Playlist 1' }),
+        CollectionFactory.sample({ id: '2', title: 'Playlist 2' }),
+      ];
 
-    const playlists = [
-      CollectionFactory.sample({ id: '1', title: 'Playlist 1' }),
-      CollectionFactory.sample({ id: '2', title: 'Playlist 2' }),
-    ];
+      playlists.forEach((it) => client.collections.addToFake(it));
 
-    playlists.forEach((it) => client.collections.addToFake(it));
+      const wrapper = renderPlaylistsView(client);
 
-    const wrapper = renderPlaylistsView(client);
-
-    const shareButton = await wrapper.findByTestId(`share-playlist-button-1`);
-
-    await act(async () => {
-      fireEvent.click(shareButton);
+      expect(wrapper.queryByTestId(`share-playlist-button-1`)).toBeNull();
     });
-
-    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
-      `${Constants.HOST}/playlists/1`,
-    );
   });
 
   it('displays first 3 thumbnails', async () => {

@@ -6,6 +6,8 @@ import { Link } from 'boclips-api-client/dist/types';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { render } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('VideoCardButtons', () => {
   describe(`create embed code button`, () => {
@@ -45,6 +47,62 @@ describe('VideoCardButtons', () => {
       );
 
       expect(wrapper.queryByRole('button', { name: 'embed' })).toBeNull();
+    });
+  });
+
+  describe(`copy video link button`, () => {
+    it(`renders copy video link button when B2B user`, async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          account: {
+            id: 'acc-1',
+            name: 'Ren',
+            products: [Product.B2B],
+          },
+        }),
+      );
+
+      const video = VideoFactory.sample({ id: '1', title: '1' });
+
+      const wrapper = render(
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={new QueryClient()}>
+            <VideoCardButtons video={video} />
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      expect(
+        await wrapper.findByRole('button', { name: 'Copy video link' }),
+      ).toBeVisible();
+    });
+
+    it(`does not render copy video link button when Classroom user`, () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          account: {
+            id: 'acc-1',
+            name: 'Ren',
+            products: [Product.CLASSROOM],
+          },
+        }),
+      );
+
+      const video = VideoFactory.sample({ id: '1', title: '1' });
+
+      const wrapper = render(
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <QueryClientProvider client={new QueryClient()}>
+            <VideoCardButtons video={video} />
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      expect(
+        wrapper.queryByRole('button', { name: 'Copy video link' }),
+      ).toBeNull();
     });
   });
 });

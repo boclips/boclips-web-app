@@ -13,6 +13,8 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 
 describe('Playlist Header', () => {
   Object.assign(navigator, {
@@ -20,6 +22,21 @@ describe('Playlist Header', () => {
       writeText: () => Promise.resolve(),
     },
   });
+
+  const renderWrapper = (
+    playlist: Collection,
+    fakeClient: FakeBoclipsClient = new FakeBoclipsClient(),
+  ) => {
+    return render(
+      <MemoryRouter>
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={new QueryClient()}>
+            <PlaylistHeader playlist={playlist} />
+          </QueryClientProvider>
+        </BoclipsClientProvider>
+      </MemoryRouter>,
+    );
+  };
 
   it('has visible playlist title', async () => {
     const title = 'test playlist';
@@ -29,11 +46,7 @@ describe('Playlist Header', () => {
       description: 'Description',
     });
 
-    const wrapper = render(
-      <MemoryRouter>
-        <PlaylistHeader playlist={playlist} />
-      </MemoryRouter>,
-    );
+    const wrapper = renderWrapper(playlist);
 
     const titleElement = await wrapper.findByTestId('playlistTitle');
 
@@ -50,12 +63,7 @@ describe('Playlist Header', () => {
       mine: true,
     });
 
-    const wrapper = render(
-      <MemoryRouter>
-        <PlaylistHeader playlist={playlist} />
-      </MemoryRouter>,
-    );
-
+    const wrapper = renderWrapper(playlist);
     expect(wrapper.getByText('By: You')).toBeVisible();
   });
 
@@ -69,91 +77,138 @@ describe('Playlist Header', () => {
       ownerName: 'The Owner',
     });
 
-    const wrapper = render(
-      <MemoryRouter>
-        <PlaylistHeader playlist={playlist} />
-      </MemoryRouter>,
-    );
-
+    const wrapper = renderWrapper(playlist);
     expect(wrapper.getByText('By: The Owner')).toBeVisible();
   });
 
-  it('view-only playlist has a view-only share button for non-owner', async () => {
-    const playlist = CollectionFactory.sample({
-      id: '123',
-      title: 'Playlist title',
-      description: 'Description',
-      mine: false,
-      permissions: { anyone: CollectionPermission.VIEW_ONLY },
+  describe('share button for B2B', () => {
+    it('view-only playlist has a view-only share button for non-owner', async () => {
+      const playlist = CollectionFactory.sample({
+        id: '123',
+        title: 'Playlist title',
+        description: 'Description',
+        mine: false,
+        permissions: { anyone: CollectionPermission.VIEW_ONLY },
+      });
+
+      const wrapper = renderWrapper(playlist);
+
+      expect(
+        await wrapper.findByRole('button', { name: 'Get view-only link' }),
+      ).toBeVisible();
     });
 
-    const wrapper = render(
-      <MemoryRouter>
-        <PlaylistHeader playlist={playlist} />
-      </MemoryRouter>,
-    );
+    it('editable playlist has a share button for non-owner', async () => {
+      const playlist = CollectionFactory.sample({
+        id: '123',
+        title: 'Playlist title',
+        description: 'Description',
+        mine: false,
+        permissions: { anyone: CollectionPermission.EDIT },
+      });
 
-    expect(
-      await wrapper.findByRole('button', { name: 'Get view-only link' }),
-    ).toBeVisible();
+      const wrapper = renderWrapper(playlist);
+      expect(
+        await wrapper.findByRole('button', { name: 'Share' }),
+      ).toBeVisible();
+    });
+
+    it('copies the playlist link on the playlist page and shows notification', async () => {
+      jest.spyOn(navigator.clipboard, 'writeText');
+      const playlist = CollectionFactory.sample({
+        id: '123',
+        title: 'Playlist title',
+        description: 'Description',
+        mine: false,
+      });
+
+      const wrapper = render(
+        <MemoryRouter>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <QueryClientProvider client={new QueryClient()}>
+              <ToastContainer />
+              <PlaylistHeader playlist={playlist} />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
+        </MemoryRouter>,
+      );
+
+      const shareButton = await wrapper.findByRole('button', {
+        name: 'Get view-only link',
+      });
+
+      fireEvent.click(shareButton);
+
+      expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+        `${Constants.HOST}/playlists/123`,
+      );
+
+      await waitFor(() =>
+        wrapper.getByTestId('playlist-link-copied-notification'),
+      ).then((it) => {
+        expect(it).toBeVisible();
+      });
+
+      expect(wrapper.getByText('Link copied!')).toBeInTheDocument();
+      expect(
+        wrapper.getByText(
+          'You can now share this playlist using the copied link',
+        ),
+      ).toBeInTheDocument();
+    });
   });
 
-  it('editable playlist has a share button for non-owner', async () => {
-    const playlist = CollectionFactory.sample({
-      id: '123',
-      title: 'Playlist title',
-      description: 'Description',
-      mine: false,
-      permissions: { anyone: CollectionPermission.EDIT },
+  describe('share button for Classroom', () => {
+    it('does not show share button', async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          account: {
+            id: 'acc-1',
+            name: 'Ren',
+            products: [Product.CLASSROOM],
+          },
+        }),
+      );
+      const playlist = CollectionFactory.sample({
+        id: '123',
+        title: 'Playlist title',
+        description: 'Description',
+        mine: false,
+        permissions: { anyone: CollectionPermission.VIEW_ONLY },
+      });
+
+      const wrapper = renderWrapper(playlist, fakeClient);
+
+      expect(
+        wrapper.queryByRole('button', { name: 'Get view-only link' }),
+      ).toBeNull();
     });
 
-    const wrapper = render(
-      <MemoryRouter>
-        <PlaylistHeader playlist={playlist} />
-      </MemoryRouter>,
-    );
+    it('editable playlist has a share button for non-owner', async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          account: {
+            id: 'acc-1',
+            name: 'Ren',
+            products: [Product.CLASSROOM],
+          },
+        }),
+      );
 
-    expect(await wrapper.findByRole('button', { name: 'Share' })).toBeVisible();
-  });
+      const playlist = CollectionFactory.sample({
+        id: '123',
+        title: 'Playlist title',
+        description: 'Description',
+        mine: false,
+        permissions: { anyone: CollectionPermission.EDIT },
+      });
 
-  it('copies the playlist link on the playlist page and shows notification', async () => {
-    jest.spyOn(navigator.clipboard, 'writeText');
-    const playlist = CollectionFactory.sample({
-      id: '123',
-      title: 'Playlist title',
-      description: 'Description',
-      mine: false,
+      const wrapper = renderWrapper(playlist, fakeClient);
+
+      expect(wrapper.queryByRole('button', { name: 'Share' })).toBeNull();
     });
-
-    const wrapper = render(
-      <MemoryRouter>
-        <ToastContainer />
-        <PlaylistHeader playlist={playlist} />
-      </MemoryRouter>,
-    );
-
-    const shareButton = await wrapper.findByRole('button', {
-      name: 'Get view-only link',
-    });
-
-    fireEvent.click(shareButton);
-
-    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
-      `${Constants.HOST}/playlists/123`,
-    );
-
-    await waitFor(() =>
-      wrapper.getByTestId('playlist-link-copied-notification'),
-    ).then((it) => {
-      expect(it).toBeVisible();
-    });
-
-    expect(wrapper.getByText('Link copied!')).toBeInTheDocument();
-    expect(
-      wrapper.getByText(
-        'You can now share this playlist using the copied link',
-      ),
-    ).toBeInTheDocument();
   });
 
   it('sends Hotjar link copied event', async () => {
@@ -168,8 +223,12 @@ describe('Playlist Header', () => {
 
     const wrapper = render(
       <MemoryRouter>
-        <ToastContainer />
-        <PlaylistHeader playlist={playlist} />
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <QueryClientProvider client={new QueryClient()}>
+            <ToastContainer />
+            <PlaylistHeader playlist={playlist} />
+          </QueryClientProvider>
+        </BoclipsClientProvider>
       </MemoryRouter>,
     );
 
@@ -186,22 +245,51 @@ describe('Playlist Header', () => {
     );
   });
 
-  it('has an options button', async () => {
+  it('has an options button for B2B', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({
+        account: {
+          id: 'acc-1',
+          name: 'Ren',
+          products: [Product.B2B],
+        },
+      }),
+    );
+
     const playlist = CollectionFactory.sample({
       id: '123',
       title: 'Playlist title',
       description: 'Description',
     });
 
-    const wrapper = render(
-      <MemoryRouter>
-        <PlaylistHeader playlist={playlist} />
-      </MemoryRouter>,
-    );
+    const wrapper = renderWrapper(playlist, fakeClient);
 
     await waitFor(() => wrapper.getByText('Options')).then((it) => {
       expect(it).toBeInTheDocument();
     });
+  });
+
+  it('does not have an options button for Classroom', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({
+        account: {
+          id: 'acc-1',
+          name: 'Ren',
+          products: [Product.CLASSROOM],
+        },
+      }),
+    );
+    const playlist = CollectionFactory.sample({
+      id: '123',
+      title: 'Playlist title',
+      description: 'Description',
+    });
+
+    const wrapper = renderWrapper(playlist, fakeClient);
+
+    expect(wrapper.queryByText('Options')).toBeNull();
   });
 
   it('opens dropdown when clicked', async () => {
@@ -211,8 +299,8 @@ describe('Playlist Header', () => {
       description: 'Description',
     });
 
-    const client = new FakeBoclipsClient();
-    client.users.insertCurrentUser(
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.users.insertCurrentUser(
       UserFactory.sample({
         features: {
           BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST: true,
@@ -220,15 +308,7 @@ describe('Playlist Header', () => {
       }),
     );
 
-    const wrapper = render(
-      <MemoryRouter>
-        <BoclipsClientProvider client={client}>
-          <QueryClientProvider client={new QueryClient()}>
-            <PlaylistHeader playlist={playlist} />
-          </QueryClientProvider>
-        </BoclipsClientProvider>
-      </MemoryRouter>,
-    );
+    const wrapper = renderWrapper(playlist, fakeClient);
 
     await waitFor(() => wrapper.getByText('Options')).then((it) => {
       expect(it).toBeInTheDocument();
@@ -246,15 +326,7 @@ describe('Playlist Header', () => {
       description: 'Description',
     });
 
-    const wrapper = render(
-      <MemoryRouter>
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <QueryClientProvider client={new QueryClient()}>
-            <PlaylistHeader playlist={playlist} />
-          </QueryClientProvider>
-        </BoclipsClientProvider>
-      </MemoryRouter>,
-    );
+    const wrapper = renderWrapper(playlist);
 
     await waitFor(() => wrapper.getByText('Options')).then(async (it) => {
       expect(it).toBeInTheDocument();

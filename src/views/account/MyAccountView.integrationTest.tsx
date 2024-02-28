@@ -16,7 +16,10 @@ import { Helmet } from 'react-helmet';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
-import { Account } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import {
+  Account,
+  Product,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import userEvent from '@testing-library/user-event';
 
 describe('My Account view', () => {
@@ -30,12 +33,14 @@ describe('My Account view', () => {
     account: {
       id: 'acc-1',
       name: 'Elephant Academy',
+      products: [Product.B2B],
     },
   });
 
   const account = AccountsFactory.sample({
     id: 'acc-1',
     name: 'Elephant Academy',
+    products: [Product.B2B],
     createdAt: new Date('2023-09-18T14:19:55.612Z'),
   });
 
@@ -176,6 +181,34 @@ describe('My Account view', () => {
       wrapper();
 
       expect(await screen.findByTestId('skeleton')).toBeInTheDocument();
+    });
+  });
+
+  describe('School Profile for Classroom', () => {
+    it('renders school for classroom', async () => {
+      const classroomAccount = AccountsFactory.sample({
+        id: 'acc-2',
+        name: 'Owl Academy',
+        products: [Product.CLASSROOM],
+        createdAt: new Date('2023-09-18T14:19:55.612Z'),
+      });
+
+      const classroomUser = UserFactory.sample({
+        firstName: 'Bob',
+        lastName: 'Wick',
+        email: 'bob@owl.com',
+        jobTitle: 'Engineer',
+        account: {
+          id: 'acc-2',
+          name: 'Owl Academy',
+          products: [Product.CLASSROOM],
+        },
+      });
+      wrapper(classroomUser, classroomAccount);
+      expect(await screen.findByText(/School/)).toBeInTheDocument();
+      expect(await screen.findByText(/Owl Academy/)).toBeInTheDocument();
+      expect(await screen.findByText(/Created on/)).toBeInTheDocument();
+      expect(await screen.findByText(/September 2023/)).toBeInTheDocument();
     });
   });
 });

@@ -14,6 +14,7 @@ import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFa
 import {
   AccountStatus,
   AccountType,
+  Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
@@ -90,6 +91,48 @@ describe(`Navbar`, () => {
         expect(wrapper.queryByLabelText('Menu')).not.toBeInTheDocument(),
       );
     });
+  });
+
+  describe('Platform guide link for Classroom', () => {
+    const client = new FakeBoclipsClient();
+    let wrapper;
+
+    beforeEach(() => {
+      client.users.insertCurrentUser(
+        UserFactory.sample({
+          firstName: 'Ricky',
+          lastName: 'Julian',
+          email: 'sunnyvale@swearnet.com',
+          account: {
+            id: 'acc-1',
+            name: 'classroom account',
+            products: [Product.CLASSROOM],
+          },
+        }),
+      );
+
+      wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={client}>
+            <NavbarResponsive />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+    });
+
+    it.each([
+      ['mobile', resizeToMobile],
+      ['tablet', resizeToTablet],
+    ])(
+      'is not visible for classroom user %s',
+      async (_screenType: string, resize: () => void) => {
+        resize();
+
+        fireEvent.click(await wrapper.findByLabelText('Menu'));
+
+        expect(wrapper.queryByText('Platform guide')).not.toBeInTheDocument();
+      },
+    );
   });
 
   describe('Search bar', () => {
