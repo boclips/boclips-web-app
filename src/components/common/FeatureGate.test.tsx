@@ -5,131 +5,227 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe(`FeatureGate`, () => {
-  it(`shows component when feature is enabled`, async () => {
-    const fakeClient = new FakeBoclipsClient();
-    fakeClient.users.insertCurrentUser(
-      UserFactory.sample({ features: { BO_WEB_APP_PRICES: true } }),
-    );
-    const client = new QueryClient();
+  describe('Feature flag', () => {
+    it(`shows component when feature is enabled`, async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({ features: { BO_WEB_APP_PRICES: true } }),
+      );
+      const client = new QueryClient();
 
-    render(
-      <BoclipsClientProvider client={fakeClient}>
-        <QueryClientProvider client={client}>
-          <FeatureGate feature="BO_WEB_APP_PRICES">
-            <div>Hello there</div>
-          </FeatureGate>
-        </QueryClientProvider>
-      </BoclipsClientProvider>,
-    );
+      render(
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={client}>
+            <FeatureGate feature="BO_WEB_APP_PRICES">
+              <div>Hello there</div>
+            </FeatureGate>
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
 
-    expect(await screen.findByText('Hello there')).toBeVisible();
-  });
+      expect(await screen.findByText('Hello there')).toBeVisible();
+    });
 
-  it(`hides component when feature is disabled`, async () => {
-    const fakeClient = new FakeBoclipsClient();
-    fakeClient.users.insertCurrentUser(
-      UserFactory.sample({ features: { BO_WEB_APP_PRICES: false } }),
-    );
-    const client = new QueryClient();
+    it(`hides component when feature is disabled`, async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({ features: { BO_WEB_APP_PRICES: false } }),
+      );
+      const client = new QueryClient();
 
-    render(
-      <BoclipsClientProvider client={fakeClient}>
-        <QueryClientProvider client={client}>
-          <div>hi</div>
-          <FeatureGate feature="BO_WEB_APP_PRICES">
-            <div>I am hidden</div>
-          </FeatureGate>
-        </QueryClientProvider>
-      </BoclipsClientProvider>,
-    );
+      render(
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={client}>
+            <div>hi</div>
+            <FeatureGate feature="BO_WEB_APP_PRICES">
+              <div>I am hidden</div>
+            </FeatureGate>
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
 
-    await waitFor(() => {
-      expect(screen.queryByText('I am hidden')).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.queryByText('I am hidden')).not.toBeInTheDocument();
+      });
+    });
+
+    it(`renders the fallback if provided and feature not present`, async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({ features: { BO_WEB_APP_PRICES: false } }),
+      );
+      const client = new QueryClient();
+
+      render(
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={client}>
+            <FeatureGate feature="BO_WEB_APP_PRICES" fallback={<div>Hi</div>}>
+              <div>Should not see this</div>
+            </FeatureGate>
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      expect(await screen.findByText('Hi')).toBeVisible();
+      expect(await screen.queryByText('Should not see this')).toBeNull();
     });
   });
 
-  it(`hides component when link not present`, async () => {
-    const fakeClient = new FakeBoclipsClient();
-    fakeClient.links.cart = null;
+  describe('Link', () => {
+    it(`hides component when link not present`, async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.links.cart = null;
 
-    const client = new QueryClient();
+      const client = new QueryClient();
 
-    render(
-      <BoclipsClientProvider client={fakeClient}>
-        <QueryClientProvider client={client}>
-          <div>hi</div>
-          <FeatureGate linkName="cart">
-            <div>I am hidden</div>
-          </FeatureGate>
-        </QueryClientProvider>
-      </BoclipsClientProvider>,
-    );
+      render(
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={client}>
+            <div>hi</div>
+            <FeatureGate linkName="cart">
+              <div>I am hidden</div>
+            </FeatureGate>
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
 
-    await waitFor(() => {
-      expect(screen.queryByText('I am hidden')).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.queryByText('I am hidden')).not.toBeInTheDocument();
+      });
+    });
+
+    it(`shows component when link present`, async () => {
+      const fakeClient = new FakeBoclipsClient();
+
+      const client = new QueryClient();
+
+      render(
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={client}>
+            <div>hi</div>
+            <FeatureGate linkName="placeOrder">
+              <div>I am hidden</div>
+            </FeatureGate>
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      await waitFor(() => {
+        expect(screen.queryByText('I am hidden')).toBeInTheDocument();
+      });
+    });
+
+    it(`renders the fallback if provided and link not present`, async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.links.cart = null;
+
+      const client = new QueryClient();
+      render(
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={client}>
+            <FeatureGate linkName="cart" fallback={<div>Hi</div>}>
+              <div>Should not see this</div>
+            </FeatureGate>
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      expect(await screen.findByText('Hi')).toBeVisible();
+      expect(await screen.queryByText('Should not see this')).toBeNull();
     });
   });
 
-  it(`shows component when link present`, async () => {
-    const fakeClient = new FakeBoclipsClient();
+  describe('Product', () => {
+    it(`hides component when product not present`, async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          account: {
+            id: 'acc-1',
+            name: 'Ren',
+            products: [Product.CLASSROOM],
+          },
+        }),
+      );
 
-    const client = new QueryClient();
+      const client = new QueryClient();
 
-    render(
-      <BoclipsClientProvider client={fakeClient}>
-        <QueryClientProvider client={client}>
-          <div>hi</div>
-          <FeatureGate linkName="placeOrder">
-            <div>I am hidden</div>
-          </FeatureGate>
-        </QueryClientProvider>
-      </BoclipsClientProvider>,
-    );
+      render(
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={client}>
+            <div>hi</div>
+            <FeatureGate product={Product.B2B}>
+              <div>I am hidden</div>
+            </FeatureGate>
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
 
-    await waitFor(() => {
-      expect(screen.queryByText('I am hidden')).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.queryByText('I am hidden')).not.toBeInTheDocument();
+      });
     });
-  });
 
-  it(`renders the fallback if provided and feature not present`, async () => {
-    const fakeClient = new FakeBoclipsClient();
-    fakeClient.users.insertCurrentUser(
-      UserFactory.sample({ features: { BO_WEB_APP_PRICES: false } }),
-    );
-    const client = new QueryClient();
+    it(`shows component when product is present`, async () => {
+      const fakeClient = new FakeBoclipsClient();
 
-    render(
-      <BoclipsClientProvider client={fakeClient}>
-        <QueryClientProvider client={client}>
-          <FeatureGate feature="BO_WEB_APP_PRICES" fallback={<div>Hi</div>}>
-            <div>Should not see this</div>
-          </FeatureGate>
-        </QueryClientProvider>
-      </BoclipsClientProvider>,
-    );
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          account: {
+            id: 'acc-1',
+            name: 'Ren',
+            products: [Product.B2B],
+          },
+        }),
+      );
 
-    expect(await screen.findByText('Hi')).toBeVisible();
-    expect(await screen.queryByText('Should not see this')).toBeNull();
-  });
+      const client = new QueryClient();
 
-  it(`renders the fallback if provided and link not present`, async () => {
-    const fakeClient = new FakeBoclipsClient();
-    fakeClient.links.cart = null;
+      render(
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={client}>
+            <div>hi</div>
+            <FeatureGate product={Product.B2B}>
+              <div>I am not hidden</div>
+            </FeatureGate>
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
 
-    const client = new QueryClient();
-    render(
-      <BoclipsClientProvider client={fakeClient}>
-        <QueryClientProvider client={client}>
-          <FeatureGate linkName="cart" fallback={<div>Hi</div>}>
-            <div>Should not see this</div>
-          </FeatureGate>
-        </QueryClientProvider>
-      </BoclipsClientProvider>,
-    );
+      await waitFor(() => {
+        expect(screen.queryByText('I am not hidden')).toBeInTheDocument();
+      });
+    });
 
-    expect(await screen.findByText('Hi')).toBeVisible();
-    expect(await screen.queryByText('Should not see this')).toBeNull();
+    it(`renders the fallback if provided and product not present`, async () => {
+      const fakeClient = new FakeBoclipsClient();
+
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          account: {
+            id: 'acc-1',
+            name: 'Ren',
+            products: [Product.CLASSROOM],
+          },
+        }),
+      );
+
+      const client = new QueryClient();
+      render(
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={client}>
+            <FeatureGate product={Product.B2T} fallback={<div>Hi</div>}>
+              <div>Should not see this</div>
+            </FeatureGate>
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      expect(await screen.findByText('Hi')).toBeVisible();
+      expect(await screen.queryByText('Should not see this')).toBeNull();
+    });
   });
 });

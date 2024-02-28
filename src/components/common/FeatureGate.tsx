@@ -4,6 +4,8 @@ import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientP
 import { AdminLinks } from 'boclips-api-client/dist/types';
 import { Loading } from 'src/components/common/Loading';
 import { FeatureKey } from 'boclips-api-client/dist/sub-clients/common/model/FeatureKey';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import useUserProducts from 'src/hooks/useUserProducts';
 
 interface FeatureGateProps {
   children: React.ReactElement | React.ReactElement[];
@@ -12,16 +14,25 @@ interface FeatureGateProps {
 }
 
 type OptionalProps =
-  | { linkName: keyof AdminLinks; feature?: never }
-  | { feature: FeatureKey; linkName?: never };
+  | { linkName: keyof AdminLinks; feature?: never; product?: never }
+  | { feature: FeatureKey; linkName?: never; product?: never }
+  | { product: Product; linkName?: never; feature?: never };
 
 export const FeatureGate = (props: FeatureGateProps & OptionalProps) => {
-  const { feature, children, linkName, fallback, isView } = props;
+  const { feature, children, linkName, fallback, isView, product } = props;
   const links = useBoclipsClient().links;
   const { features, isLoading } = useFeatureFlags();
+  const { products, isLoading: isProductsLoading } = useUserProducts();
 
-  if (isLoading) {
+  if (isLoading || isProductsLoading) {
     return isView ? <Loading /> : null;
+  }
+
+  if (product) {
+    const hasProduct = products.some((p) => p === product);
+    if (hasProduct) {
+      return <>{children}</>;
+    }
   }
 
   if (linkName) {
