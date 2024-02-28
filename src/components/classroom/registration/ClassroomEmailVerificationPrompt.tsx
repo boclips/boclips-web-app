@@ -8,6 +8,7 @@ import VerifyEmailIllustration from '../../../resources/icons/registration-verif
 interface EmailVerificationPromptProps {
   userEmail: string;
 }
+
 const ClassroomEmailVerificationPrompt = ({
   userEmail,
 }: EmailVerificationPromptProps) => {
@@ -19,8 +20,7 @@ const ClassroomEmailVerificationPrompt = ({
         <VerifyEmailIllustration />
         <Typography.Body className={s.message}>
           <p>
-            Congratulations! You’ve successfully created your Boclips Library
-            account.
+            Congratulations! You’ve successfully created your CLASSROOM account.
           </p>
           <p>
             We’ve shared a link to <b>{userEmail}.</b> Click on the link to
