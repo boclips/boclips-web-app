@@ -12,6 +12,8 @@ import c from 'classnames';
 import Button from '@boclips-ui/button';
 import PencilSVG from 'src/resources/icons/pencil.svg';
 import EditPersonalProfileModal from 'src/views/account/EditPersonalProfileModal';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { FeatureGate } from 'src/components/common/FeatureGate';
 import s from './style.module.less';
 
 const MyAccountView = () => {
@@ -81,7 +83,12 @@ const MyAccountView = () => {
         </main>
         <section className={s.organisationProfile}>
           <Typography.H2 size="sm" className={`mb-4 ${s.skeleton}`}>
-            Organization Profile
+            <FeatureGate
+              product={Product.CLASSROOM}
+              fallback={<p>Organization Profile</p>}
+            >
+              <p>School</p>
+            </FeatureGate>
           </Typography.H2>
           <section
             data-qa={accountIsLoading ? 'skeleton' : ''}
