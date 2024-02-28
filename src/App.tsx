@@ -13,7 +13,7 @@ import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
 import { lazyWithRetry } from 'src/services/lazyWithRetry';
 import { FollowPlaylist } from 'src/services/followPlaylist';
 import UserAttributes from 'src/services/analytics/hotjar/UserAttributes';
-import { FeatureGate } from 'src/components/common/FeatureGate';
+import { AdminLinksKey, FeatureGate } from 'src/components/common/FeatureGate';
 import FallbackView from 'src/views/fallback/FallbackView';
 import { RedirectFromExploreToAlignments } from 'src/components/alignments/RedirectFromExploreToAlignments';
 import * as Sentry from '@sentry/browser';
@@ -152,7 +152,12 @@ const App = ({
               <JSErrorBoundary fallback={<FallbackView />}>
                 <FeatureGate
                   fallback={<AccessDeniedView />}
-                  linkName="boclipsWebAppAccess"
+                  anyLinkName={
+                    [
+                      'boclipsWebAppAccess',
+                      'classroomWebAppAccess',
+                    ] as AdminLinksKey[]
+                  }
                 >
                   <Helmet title="Library" />
                   <Routes>

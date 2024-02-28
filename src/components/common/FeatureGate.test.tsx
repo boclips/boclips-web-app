@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
-import { FeatureGate } from 'src/components/common/FeatureGate';
+import { AdminLinksKey, FeatureGate } from 'src/components/common/FeatureGate';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -135,6 +135,79 @@ describe(`FeatureGate`, () => {
 
       expect(await screen.findByText('Hi')).toBeVisible();
       expect(screen.queryByText('Should not see this')).toBeNull();
+    });
+  });
+
+  describe('Links', () => {
+    it(`hides component when all links not present`, async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.links.cart = null;
+      fakeClient.links.accountUsers = null;
+
+      const client = new QueryClient();
+
+      render(
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={client}>
+            <div>hi</div>
+            <FeatureGate
+              anyLinkName={['cart', 'accountUsers'] as AdminLinksKey[]}
+            >
+              <div>I am hidden</div>
+            </FeatureGate>
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      await waitFor(() => {
+        expect(screen.queryByText('I am hidden')).not.toBeInTheDocument();
+      });
+    });
+
+    it(`shows component when any of the links is present`, async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.links.cart = null;
+
+      const client = new QueryClient();
+
+      render(
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={client}>
+            <div>hi</div>
+            <FeatureGate
+              anyLinkName={['placeOrder', 'cart'] as AdminLinksKey[]}
+            >
+              <div>I am hidden</div>
+            </FeatureGate>
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      await waitFor(() => {
+        expect(screen.queryByText('I am hidden')).toBeInTheDocument();
+      });
+    });
+
+    it(`renders the fallback if provided and link not present`, async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.links.cart = null;
+
+      const client = new QueryClient();
+      render(
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={client}>
+            <FeatureGate
+              anyLinkName={['cart'] as AdminLinksKey[]}
+              fallback={<div>Hi</div>}
+            >
+              <div>Should not see this</div>
+            </FeatureGate>
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      expect(await screen.findByText('Hi')).toBeVisible();
+      expect(await screen.queryByText('Should not see this')).toBeNull();
     });
   });
 

@@ -13,13 +13,44 @@ interface FeatureGateProps {
   isView?: boolean;
 }
 
+export type AdminLinksKey = keyof AdminLinks;
+
 type OptionalProps =
-  | { linkName: keyof AdminLinks; feature?: never; product?: never }
-  | { feature: FeatureKey; linkName?: never; product?: never }
-  | { product: Product; linkName?: never; feature?: never };
+  | {
+      linkName: AdminLinksKey;
+      feature?: never;
+      product?: never;
+      anyLinkName?: never;
+    }
+  | {
+      anyLinkName: AdminLinksKey[];
+      linkName?: never;
+      feature?: never;
+      product?: never;
+    }
+  | {
+      feature: FeatureKey;
+      linkName?: never;
+      product?: never;
+      anyLinkName?: never;
+    }
+  | {
+      product: Product;
+      linkName?: never;
+      feature?: never;
+      anyLinkName?: never;
+    };
 
 export const FeatureGate = (props: FeatureGateProps & OptionalProps) => {
-  const { feature, children, linkName, fallback, isView, product } = props;
+  const {
+    feature,
+    children,
+    linkName,
+    fallback,
+    isView,
+    product,
+    anyLinkName,
+  } = props;
   const links = useBoclipsClient().links;
   const { features, isLoading } = useFeatureFlags();
   const { products, isLoading: isProductsLoading } = useUserProducts();
@@ -38,6 +69,13 @@ export const FeatureGate = (props: FeatureGateProps & OptionalProps) => {
   if (linkName) {
     const link = links[linkName];
     if (link) {
+      return <>{children}</>;
+    }
+  }
+
+  if (anyLinkName) {
+    const hasAnyLink = (anyLinkName as AdminLinksKey[]).some((it) => links[it]);
+    if (hasAnyLink) {
       return <>{children}</>;
     }
   }

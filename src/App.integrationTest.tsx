@@ -23,6 +23,7 @@ describe('App', () => {
 
     const fakeApi = new FakeBoclipsClient();
     delete fakeApi.links.boclipsWebAppAccess;
+    delete fakeApi.links.classroomWebAppAccess;
 
     const wrapper = render(
       <MemoryRouter>
