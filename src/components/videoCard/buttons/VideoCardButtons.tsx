@@ -6,6 +6,7 @@ import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPla
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { EmbedButton } from 'src/components/embedButton/EmbedButton';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import s from './style.module.less';
 import { CopyVideoLinkButton } from './CopyVideoLinkButton';
 import { CopyVideoIdButton } from './CopyVideoIdButton';
@@ -47,7 +48,9 @@ export const VideoCardButtons = ({
         <FeatureGate feature="BO_WEB_APP_COPY_VIDEO_ID_BUTTON">
           <CopyVideoIdButton video={video} />
         </FeatureGate>
-        <CopyVideoLinkButton video={video} onClick={trackCopyVideoLink} />
+        <FeatureGate product={Product.B2B}>
+          <CopyVideoLinkButton video={video} onClick={trackCopyVideoLink} />
+        </FeatureGate>
         {additionalSecondaryButtons}
       </div>
 
