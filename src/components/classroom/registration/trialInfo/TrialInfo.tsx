@@ -1,7 +1,7 @@
 import { Typography } from '@boclips-ui/typography';
 import Checkmark from 'src/resources/icons/checkmark.svg';
 import React from 'react';
-import TrailBackground from 'src/resources/icons/trial-bg.svg';
+import TrailBackground from 'src/resources/icons/classroom-trial-bg.svg';
 import BlobSVG from 'src/resources/icons/blob.svg';
 import s from './style.module.less';
 
