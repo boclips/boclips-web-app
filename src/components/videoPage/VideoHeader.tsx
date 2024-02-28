@@ -15,6 +15,7 @@ import { VideoLicensingDetails } from 'src/components/videoPage/videoLicensingDe
 import useFeatureFlags from 'src/hooks/useFeatureFlags';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 interface Props {
   video?: Video;
@@ -65,7 +66,9 @@ export const VideoHeader = ({ video }: Props) => {
       <div className={s.descriptionAndButtons}>
         <div>
           <VideoBadges video={video} />
-          {showLicensingDetails && <VideoLicensingDetails video={video} />}
+          <FeatureGate product={Product.B2B}>
+            {showLicensingDetails && <VideoLicensingDetails video={video} />}
+          </FeatureGate>
         </div>
         <div className={(s.sticky, s.buttons)}>
           <div className={s.iconButtons}>
