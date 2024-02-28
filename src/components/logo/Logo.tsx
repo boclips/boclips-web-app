@@ -1,7 +1,10 @@
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import LibraryLogoSVG from 'src/resources/icons/library-logo.svg';
+import ClassroomLogoSVG from 'src/resources/icons/classroom-logo.svg';
 import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
+import { FeatureGate } from 'src/components/common/FeatureGate';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import s from './style.module.less';
 
 const Logo = (): ReactElement => {
@@ -9,14 +12,19 @@ const Logo = (): ReactElement => {
 
   const logoTitle = user?.organisation?.logoUrl
     ? `${user.organisation.name} logo - Go to homepage`
-    : 'Library logo - Go to homepage';
+    : 'Boclips logo - Go to homepage';
 
   return (
     <Link to="/" reloadDocument aria-label={logoTitle} className={s.logo}>
       {user?.organisation?.logoUrl ? (
         <img alt={logoTitle} src={user?.organisation?.logoUrl} />
       ) : (
-        <LibraryLogoSVG />
+        <FeatureGate
+          product={Product.CLASSROOM}
+          fallback={<LibraryLogoSVG data-qa="library-logo" />}
+        >
+          <ClassroomLogoSVG data-qa="classroom-logo" />
+        </FeatureGate>
       )}
     </Link>
   );
