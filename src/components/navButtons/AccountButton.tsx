@@ -11,6 +11,7 @@ import { Typography } from '@boclips-ui/typography';
 import Button from '@boclips-ui/button';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { Link } from '../common/Link';
 import s from './newstyle.module.less';
 
@@ -146,25 +147,27 @@ export const AccountButton = () => {
                 </Typography.Body>
               </Link>
             </div>
-            <div className="pt-2">
-              <a
-                target="_blank"
-                href="https://www.boclips.com/boclips-platform-guide"
-                rel="noreferrer"
-                tabIndex={-1}
-              >
-                <Typography.Body
-                  size="small"
-                  as="button"
-                  className={s.menuItem}
+            <FeatureGate product={Product.B2B}>
+              <div className="pt-2">
+                <a
+                  target="_blank"
+                  href="https://www.boclips.com/boclips-platform-guide"
+                  rel="noreferrer"
+                  tabIndex={-1}
                 >
-                  <span>Platform guide</span>
-                  <span className={s.platformGuideIcon}>
-                    <ExternalLinkIcon />
-                  </span>
-                </Typography.Body>
-              </a>
-            </div>
+                  <Typography.Body
+                    size="small"
+                    as="button"
+                    className={s.menuItem}
+                  >
+                    <span>Platform guide</span>
+                    <span className={s.platformGuideIcon}>
+                      <ExternalLinkIcon />
+                    </span>
+                  </Typography.Body>
+                </a>
+              </div>
+            </FeatureGate>
             <div className="pt-2">
               <Typography.Link>
                 <Typography.Body

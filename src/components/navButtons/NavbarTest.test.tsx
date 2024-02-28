@@ -9,6 +9,7 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import NavbarResponsive from 'src/components/layout/Navbar';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe(`Navbar test`, () => {
   beforeEach(() => {
@@ -61,6 +62,30 @@ describe(`Navbar test`, () => {
       expect(navbar.getByText('My team')).toBeInTheDocument();
       expect(navbar.getByText('Log out')).toBeInTheDocument();
     });
+  });
+
+  it('does not show platform guide for classrom', async () => {
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({
+        firstName: 'Eddie',
+        lastName: 'Bravo',
+        email: 'eddie@10thplanetjj.com',
+        account: {
+          id: 'acc-1',
+          name: 'Ren',
+          products: [Product.CLASSROOM],
+        },
+      }),
+    );
+    const navbar = renderAccountButton();
+
+    fireEvent.click(await navbar.findByText('Eddie'));
+
+    await waitFor(() => navbar.getByTestId('account-modal'));
+
+    await waitFor(() =>
+      expect(navbar.queryByText('Platform guide')).not.toBeInTheDocument(),
+    );
   });
 
   it('does not contain your orders link in tooltip when user does not have userOrders link', async () => {
