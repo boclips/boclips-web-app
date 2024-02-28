@@ -1,7 +1,7 @@
 import './mockRecaptcha';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import React from 'react';
@@ -16,23 +16,23 @@ import { BrowserRouter as Router } from 'react-router-dom';
 describe('registration', () => {
   it('displays trial info box in desktop view', async () => {
     resizeToDesktop();
-    const wrapper = renderRegistration();
+    renderRegistration();
 
-    expect(await wrapper.findByText('Explore Boclips Library!')).toBeVisible();
+    expect(await screen.findByText('Explore Boclips Classroom!')).toBeVisible();
   });
 
   it('does not displays trial info box in mobile view', async () => {
     resizeToMobile();
-    const wrapper = renderRegistration();
+    renderRegistration();
 
-    expect(wrapper.queryByText('Explore Boclips Library!')).toBeNull();
+    expect(screen.queryByText('Explore Boclips Classroom!')).toBeNull();
   });
 
   it('does not displays trial info box in tablet view', async () => {
     resizeToTablet();
-    const wrapper = renderRegistration();
+    renderRegistration();
 
-    expect(wrapper.queryByText('Explore Boclips Library!')).toBeNull();
+    expect(screen.queryByText('Explore Boclips Classroom!')).toBeNull();
   });
 
   const renderRegistration = () => {
