@@ -23,9 +23,10 @@ export interface MarketingInfo {
 interface Props {
   showPopup: (arg: boolean) => void;
   isAdmin: boolean;
+  isClassroomUser: boolean;
 }
 
-const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
+const WelcomeModal = ({ showPopup, isAdmin, isClassroomUser }: Props) => {
   const { mutate: updateSelfUser, isLoading: isUserUpdating } =
     useUpdateSelfUser();
   const { data: user } = useGetUserQuery();
@@ -53,7 +54,9 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
 
   const updateAccount = (userRequest: UpdateUserRequest) => {
     const accountRequest: UpdateAccountRequest = {
-      companySegments: marketingInfo.organizationTypes,
+      companySegments: isClassroomUser
+        ? ['N/A']
+        : marketingInfo.organizationTypes,
     };
 
     updateSelfAccount(
@@ -132,7 +135,8 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
       !isJobTitleEmpty && !isAudiencesEmpty && !isDesiredContentEmpty;
 
     const validAdminFields =
-      !isDiscoveryMethodsEmpty && !isOrganizationTypesEmpty;
+      !isDiscoveryMethodsEmpty &&
+      (isClassroomUser || !isOrganizationTypesEmpty);
 
     return (
       validRegularFields &&
@@ -152,6 +156,8 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
       title={
         isAdmin
           ? 'Tell us a bit more about you'
+          : isClassroomUser
+          ? 'Your colleague has invited you to Boclips Classroom!'
           : 'Your colleague has invited you to Boclips Library!'
       }
       confirmButtonText={"Let's Go!"}
@@ -161,6 +167,7 @@ const WelcomeModal = ({ showPopup, isAdmin }: Props) => {
         errors={errors}
         setMarketingInfo={setMarketingInfo}
         isAdmin={isAdmin}
+        isClassroomUser={isClassroomUser}
       />
       {!isAdmin && (
         <div className="mt-3">

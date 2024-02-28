@@ -10,7 +10,7 @@ const createDropdownOptions = (items) =>
 
 const TYPE_OF_ORG = createDropdownOptions([
   'EdTech',
-  'School / College / University',
+  'School/College/University',
   'Ministry of Education',
   'Online Learning Provider',
   'Curriculum Designer',
@@ -25,7 +25,7 @@ const AUDIENCE = createDropdownOptions([
   'Other',
 ]);
 
-const JOB_TITLE = createDropdownOptions([
+const LIBRARY_JOB_TITLE = createDropdownOptions([
   'Curriculum Developer/Instructional Designer',
   'Product Manager/Owner',
   'Procurement/Licensing/Purchasing',
@@ -37,6 +37,21 @@ const JOB_TITLE = createDropdownOptions([
   'Executive',
   'Teacher',
   'Professor',
+  'Other',
+]);
+
+const CLASSROOM_JOB_TITLE = createDropdownOptions([
+  'Executive/Director',
+  'Principle/Headteacher',
+  'Procurement/Purchasing/Licensing',
+  'Administrator',
+  'Project Manager',
+  'Portfolio Manager',
+  'Curriculum Leader',
+  'Instructional Designer',
+  'Technology Specialist',
+  'Teacher/Professor',
+  'Faculty/Support Staff',
   'Other',
 ]);
 
@@ -75,7 +90,8 @@ const LIST_OF_COUNTRIES = iso.all().map((country) => ({
 export {
   TYPE_OF_ORG,
   AUDIENCE,
-  JOB_TITLE,
+  LIBRARY_JOB_TITLE,
+  CLASSROOM_JOB_TITLE,
   LIST_OF_COUNTRIES,
   DISCOVERY_METHOD,
   ORGANIZATION_TYPE,

@@ -5,14 +5,20 @@ import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/Us
 import {
   Account,
   AccountType,
+  Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 interface Props {
   showPopup: (arg: boolean) => void;
   setIsAdmin: (isAdmin: boolean) => void;
+  setIsClassroomUser: (isClassroomUser: boolean) => void;
 }
 
-const useShowTrialWelcomeModal = ({ showPopup, setIsAdmin }: Props) => {
+const useShowTrialWelcomeModal = ({
+  showPopup,
+  setIsAdmin,
+  setIsClassroomUser,
+}: Props) => {
   const navigate = useNavigate();
   const { data: user, isLoading: userLoading } = useGetUserQuery();
   const { data: account, isLoading: accountLoading } = useGetAccount(
@@ -26,10 +32,14 @@ const useShowTrialWelcomeModal = ({ showPopup, setIsAdmin }: Props) => {
     const isMarketingInfoSetForUser = user && isMarketingInfoSet(user);
     const isMarketingInfoSetForAccount =
       account && isAccountMarketingInfoSet(account);
+    const isClassroomUser =
+      account &&
+      account.products.some((product) => product === Product.CLASSROOM);
 
     if (isUserInTrial && !isMarketingInfoSetForUser) {
       showPopup(true);
       setIsAdmin(!isMarketingInfoSetForAccount);
+      setIsClassroomUser(isClassroomUser);
     }
   }, [
     user,
@@ -39,6 +49,7 @@ const useShowTrialWelcomeModal = ({ showPopup, setIsAdmin }: Props) => {
     navigate,
     showPopup,
     setIsAdmin,
+    setIsClassroomUser,
   ]);
 };
 
