@@ -29,7 +29,7 @@ export const FeatureGate = (props: FeatureGateProps & OptionalProps) => {
   }
 
   if (product) {
-    const hasProduct = products.some((p) => p === product);
+    const hasProduct = products?.some((p) => p === product);
     if (hasProduct) {
       return <>{children}</>;
     }

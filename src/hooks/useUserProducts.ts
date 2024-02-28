@@ -9,7 +9,7 @@ type Products = {
 function useUserProducts(): Products {
   const { data: user, isLoading } = useGetUserQuery();
   return {
-    products: user?.account.products,
+    products: user?.account?.products,
     isLoading,
   };
 }
