@@ -2,8 +2,8 @@ import React from 'react';
 import { Layout } from 'src/components/layout/Layout';
 import { Helmet } from 'react-helmet';
 import { Registration } from 'src/components/registration/Registration';
-import InvisibleNavbar from 'src/components/registration/invisibleNavbar/InvisibleNavbar';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import InvisibleNavbar from 'src/components/common/invisibleNavbar/InvisibleNavbar';
 
 const RegistrationView = () => {
   const breakpoints = useMediaBreakPoint();
@@ -17,7 +17,7 @@ const RegistrationView = () => {
         responsiveLayout
         backgroundColor={!isMobileView && '#F9FBFF'}
       >
-        <InvisibleNavbar />
+        <InvisibleNavbar product="LIBRARY" />
         <Registration />
       </Layout>
     </>

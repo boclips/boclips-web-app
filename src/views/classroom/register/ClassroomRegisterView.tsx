@@ -2,8 +2,8 @@ import React from 'react';
 import { Layout } from 'src/components/layout/Layout';
 import { Helmet } from 'react-helmet';
 import { ClassroomRegistration } from 'src/components/classroom/registration/ClassroomRegistration';
-import InvisibleNavbar from 'src/components/classroom/registration/invisibleNavbar/InvisibleNavbar';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import InvisibleNavbar from 'src/components/common/invisibleNavbar/InvisibleNavbar';
 
 const ClassroomRegistrationView = () => {
   const breakpoints = useMediaBreakPoint();
@@ -17,7 +17,7 @@ const ClassroomRegistrationView = () => {
         responsiveLayout
         backgroundColor={!isMobileView && '#F9FBFF'}
       >
-        <InvisibleNavbar />
+        <InvisibleNavbar product="CLASSROOM" />
         <ClassroomRegistration />
       </Layout>
     </>

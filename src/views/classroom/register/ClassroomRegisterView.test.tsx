@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { Helmet } from 'react-helmet';
 import React from 'react';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
@@ -28,5 +28,7 @@ describe('ClassroomRegisterView', () => {
     await waitFor(() => {
       expect(helmet.title).toEqual('Register');
     });
+
+    expect(screen.getByTestId('classroom-logo')).toBeInTheDocument();
   });
 });
