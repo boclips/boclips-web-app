@@ -177,7 +177,7 @@
     "ts-import-plugin": "^3.0.0",
     "ts-jest": "^29.1.1",
     "ts-loader": "^9.5.0",
-    "tsparticles": "^3.2.1",
+    "tsparticles": "^3.3.0",
     "tsparticles-preset-confetti": "^2.12.0",
     "typescript": "^5.3.3",
     "urijs": "^1.19.11"
