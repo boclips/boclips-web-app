@@ -16,6 +16,8 @@ import PlaylistOwnerBadge from 'src/components/playlists/playlistHeader/Playlist
 import SearchIcon from 'resources/icons/search-icon.svg';
 import { InputText } from '@boclips-ui/input';
 import { useDebounce } from 'src/hooks/useDebounce';
+import { FeatureGate } from 'src/components/common/FeatureGate';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import s from './style.module.less';
 import GridCard from '../common/gridCard/GridCard';
 import paginationStyles from '../common/pagination/pagination.module.less';
@@ -121,14 +123,16 @@ const Playlists = () => {
                     </div>
                   }
                   footer={
-                    <div className="p-2 items-end flex">
-                      <CopyButton
-                        ariaLabel="Copy playlist link"
-                        textToCopy={`${Constants.HOST}/playlists/${playlist.id}`}
-                        dataQa={`share-playlist-button-${playlist.id}`}
-                        onCopy={linkCopiedHotjarEvent}
-                      />
-                    </div>
+                    <FeatureGate product={Product.B2B}>
+                      <div className="p-2 items-end flex">
+                        <CopyButton
+                          ariaLabel="Copy playlist link"
+                          textToCopy={`${Constants.HOST}/playlists/${playlist.id}`}
+                          dataQa={`share-playlist-button-${playlist.id}`}
+                          onCopy={linkCopiedHotjarEvent}
+                        />
+                      </div>
+                    </FeatureGate>
                   }
                 />
               </li>
