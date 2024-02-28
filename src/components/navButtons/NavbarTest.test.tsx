@@ -64,7 +64,7 @@ describe(`Navbar test`, () => {
     });
   });
 
-  it('does not show platform guide for classrom', async () => {
+  it('does not show platform guide for classroom', async () => {
     fakeClient.users.insertCurrentUser(
       UserFactory.sample({
         firstName: 'Eddie',

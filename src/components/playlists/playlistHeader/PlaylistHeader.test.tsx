@@ -14,6 +14,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 
 describe('Playlist Header', () => {
   Object.assign(navigator, {
@@ -21,6 +22,21 @@ describe('Playlist Header', () => {
       writeText: () => Promise.resolve(),
     },
   });
+
+  const renderWrapper = (
+    playlist: Collection,
+    fakeClient: FakeBoclipsClient = new FakeBoclipsClient(),
+  ) => {
+    return render(
+      <MemoryRouter>
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={new QueryClient()}>
+            <PlaylistHeader playlist={playlist} />
+          </QueryClientProvider>
+        </BoclipsClientProvider>
+      </MemoryRouter>,
+    );
+  };
 
   it('has visible playlist title', async () => {
     const title = 'test playlist';
@@ -30,11 +46,7 @@ describe('Playlist Header', () => {
       description: 'Description',
     });
 
-    const wrapper = render(
-      <MemoryRouter>
-        <PlaylistHeader playlist={playlist} />
-      </MemoryRouter>,
-    );
+    const wrapper = renderWrapper(playlist);
 
     const titleElement = await wrapper.findByTestId('playlistTitle');
 
@@ -51,12 +63,7 @@ describe('Playlist Header', () => {
       mine: true,
     });
 
-    const wrapper = render(
-      <MemoryRouter>
-        <PlaylistHeader playlist={playlist} />
-      </MemoryRouter>,
-    );
-
+    const wrapper = renderWrapper(playlist);
     expect(wrapper.getByText('By: You')).toBeVisible();
   });
 
@@ -70,12 +77,7 @@ describe('Playlist Header', () => {
       ownerName: 'The Owner',
     });
 
-    const wrapper = render(
-      <MemoryRouter>
-        <PlaylistHeader playlist={playlist} />
-      </MemoryRouter>,
-    );
-
+    const wrapper = renderWrapper(playlist);
     expect(wrapper.getByText('By: The Owner')).toBeVisible();
   });
 
@@ -89,11 +91,7 @@ describe('Playlist Header', () => {
         permissions: { anyone: CollectionPermission.VIEW_ONLY },
       });
 
-      const wrapper = render(
-        <MemoryRouter>
-          <PlaylistHeader playlist={playlist} />
-        </MemoryRouter>,
-      );
+      const wrapper = renderWrapper(playlist);
 
       expect(
         await wrapper.findByRole('button', { name: 'Get view-only link' }),
@@ -109,12 +107,7 @@ describe('Playlist Header', () => {
         permissions: { anyone: CollectionPermission.EDIT },
       });
 
-      const wrapper = render(
-        <MemoryRouter>
-          <PlaylistHeader playlist={playlist} />
-        </MemoryRouter>,
-      );
-
+      const wrapper = renderWrapper(playlist);
       expect(
         await wrapper.findByRole('button', { name: 'Share' }),
       ).toBeVisible();
@@ -131,8 +124,12 @@ describe('Playlist Header', () => {
 
       const wrapper = render(
         <MemoryRouter>
-          <ToastContainer />
-          <PlaylistHeader playlist={playlist} />
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <QueryClientProvider client={new QueryClient()}>
+              <ToastContainer />
+              <PlaylistHeader playlist={playlist} />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
         </MemoryRouter>,
       );
 
@@ -181,15 +178,7 @@ describe('Playlist Header', () => {
         permissions: { anyone: CollectionPermission.VIEW_ONLY },
       });
 
-      const wrapper = render(
-        <MemoryRouter>
-          <BoclipsClientProvider client={fakeClient}>
-            <QueryClientProvider client={new QueryClient()}>
-              <PlaylistHeader playlist={playlist} />
-            </QueryClientProvider>
-          </BoclipsClientProvider>
-        </MemoryRouter>,
-      );
+      const wrapper = renderWrapper(playlist, fakeClient);
 
       expect(
         wrapper.queryByRole('button', { name: 'Get view-only link' }),
@@ -216,15 +205,7 @@ describe('Playlist Header', () => {
         permissions: { anyone: CollectionPermission.EDIT },
       });
 
-      const wrapper = render(
-        <MemoryRouter>
-          <BoclipsClientProvider client={fakeClient}>
-            <QueryClientProvider client={new QueryClient()}>
-              <PlaylistHeader playlist={playlist} />
-            </QueryClientProvider>
-          </BoclipsClientProvider>
-        </MemoryRouter>,
-      );
+      const wrapper = renderWrapper(playlist, fakeClient);
 
       expect(wrapper.queryByRole('button', { name: 'Share' })).toBeNull();
     });
@@ -242,8 +223,12 @@ describe('Playlist Header', () => {
 
     const wrapper = render(
       <MemoryRouter>
-        <ToastContainer />
-        <PlaylistHeader playlist={playlist} />
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <QueryClientProvider client={new QueryClient()}>
+            <ToastContainer />
+            <PlaylistHeader playlist={playlist} />
+          </QueryClientProvider>
+        </BoclipsClientProvider>
       </MemoryRouter>,
     );
 
@@ -260,22 +245,51 @@ describe('Playlist Header', () => {
     );
   });
 
-  it('has an options button', async () => {
+  it('has an options button for B2B', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({
+        account: {
+          id: 'acc-1',
+          name: 'Ren',
+          products: [Product.B2B],
+        },
+      }),
+    );
+
     const playlist = CollectionFactory.sample({
       id: '123',
       title: 'Playlist title',
       description: 'Description',
     });
 
-    const wrapper = render(
-      <MemoryRouter>
-        <PlaylistHeader playlist={playlist} />
-      </MemoryRouter>,
-    );
+    const wrapper = renderWrapper(playlist, fakeClient);
 
     await waitFor(() => wrapper.getByText('Options')).then((it) => {
       expect(it).toBeInTheDocument();
     });
+  });
+
+  it('does not have an options button for Classroom', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({
+        account: {
+          id: 'acc-1',
+          name: 'Ren',
+          products: [Product.CLASSROOM],
+        },
+      }),
+    );
+    const playlist = CollectionFactory.sample({
+      id: '123',
+      title: 'Playlist title',
+      description: 'Description',
+    });
+
+    const wrapper = renderWrapper(playlist, fakeClient);
+
+    expect(wrapper.queryByText('Options')).toBeNull();
   });
 
   it('opens dropdown when clicked', async () => {
@@ -285,8 +299,8 @@ describe('Playlist Header', () => {
       description: 'Description',
     });
 
-    const client = new FakeBoclipsClient();
-    client.users.insertCurrentUser(
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.users.insertCurrentUser(
       UserFactory.sample({
         features: {
           BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST: true,
@@ -294,15 +308,7 @@ describe('Playlist Header', () => {
       }),
     );
 
-    const wrapper = render(
-      <MemoryRouter>
-        <BoclipsClientProvider client={client}>
-          <QueryClientProvider client={new QueryClient()}>
-            <PlaylistHeader playlist={playlist} />
-          </QueryClientProvider>
-        </BoclipsClientProvider>
-      </MemoryRouter>,
-    );
+    const wrapper = renderWrapper(playlist, fakeClient);
 
     await waitFor(() => wrapper.getByText('Options')).then((it) => {
       expect(it).toBeInTheDocument();
@@ -320,15 +326,7 @@ describe('Playlist Header', () => {
       description: 'Description',
     });
 
-    const wrapper = render(
-      <MemoryRouter>
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <QueryClientProvider client={new QueryClient()}>
-            <PlaylistHeader playlist={playlist} />
-          </QueryClientProvider>
-        </BoclipsClientProvider>
-      </MemoryRouter>,
-    );
+    const wrapper = renderWrapper(playlist);
 
     await waitFor(() => wrapper.getByText('Options')).then(async (it) => {
       expect(it).toBeInTheDocument();
