@@ -72,7 +72,7 @@
     "jest-axe": "^8.0.0",
     "jest-environment-jsdom": "^29.6.3",
     "less": "^4.2.0",
-    "mini-css-extract-plugin": "^2.6.1",
+    "mini-css-extract-plugin": "^2.8.1",
     "postcss": "^8.4.31",
     "postcss-loader": "^7.3.3",
     "postcss-preset-env": "^7.2.3",
