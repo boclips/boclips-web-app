@@ -13,6 +13,7 @@ import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { VideoLicensingDetails } from 'src/components/videoPage/videoLicensingDetails/VideoLicensingDetails';
 import useFeatureFlags from 'src/hooks/useFeatureFlags';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
 
@@ -65,7 +66,9 @@ export const VideoHeader = ({ video }: Props) => {
       <div className={s.descriptionAndButtons}>
         <div>
           <VideoBadges video={video} />
-          {showLicensingDetails && <VideoLicensingDetails video={video} />}
+          <FeatureGate product={Product.B2B}>
+            {showLicensingDetails && <VideoLicensingDetails video={video} />}
+          </FeatureGate>
         </div>
         <div className={(s.sticky, s.buttons)}>
           <div className={s.iconButtons}>
