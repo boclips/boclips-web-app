@@ -79,23 +79,25 @@ export const VideoHeader = ({ video }: Props) => {
             </FeatureGate>
             {videoHasTranscript && <DownloadTranscriptButton video={video} />}
           </div>
-          {video?.links?.createEmbedCode ? (
-            <EmbedButton video={video} iconOnly={false} />
-          ) : (
-            <FeatureGate linkName="cart">
-              <AddToCartButton
-                video={video}
-                width="200px"
-                onClick={() => {
-                  AnalyticsFactory.hotjar().event(
-                    HotjarEvents.AddToCartFromVideoPage,
-                  );
-                }}
-              />
-            </FeatureGate>
-          )}
+          <FeatureGate product={Product.B2B}>
+            {video?.links?.createEmbedCode ? (
+              <EmbedButton video={video} iconOnly={false} />
+            ) : (
+              <FeatureGate linkName="cart">
+                <AddToCartButton
+                  video={video}
+                  width="200px"
+                  onClick={() => {
+                    AnalyticsFactory.hotjar().event(
+                      HotjarEvents.AddToCartFromVideoPage,
+                    );
+                  }}
+                />
+              </FeatureGate>
+            )}
+          </FeatureGate>
           <FeatureGate product={Product.CLASSROOM}>
-            <VideoShareButton />
+            <VideoShareButton video={video} />
           </FeatureGate>
         </div>
       </div>

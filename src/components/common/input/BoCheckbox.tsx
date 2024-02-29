@@ -12,6 +12,7 @@ interface Props {
   label?: React.ReactElement | string;
   errorMessage?: string;
   dataQa?: string;
+  showLabel?: boolean;
 }
 
 const BoCheckbox = ({
@@ -22,6 +23,7 @@ const BoCheckbox = ({
   checked,
   label,
   errorMessage,
+  showLabel = true,
 }: Props) => {
   return (
     <span className={s.wrapper}>
@@ -31,7 +33,7 @@ const BoCheckbox = ({
           <Typography.Body size="small">{errorMessage}</Typography.Body>
         </span>
       )}
-      <label className={s.checkboxWrapper} htmlFor={id}>
+      <label className={s.checkboxWrapper} htmlFor={id} aria-label={name}>
         <input
           onChange={onChange}
           type="checkbox"
@@ -41,9 +43,11 @@ const BoCheckbox = ({
           checked={checked}
           data-qa={dataQa}
         />
-        <Typography.Body size="small" weight={checked ? 'medium' : null}>
-          {label || name}
-        </Typography.Body>
+        {showLabel && (
+          <Typography.Body size="small" weight={checked ? 'medium' : null}>
+            {label || name}
+          </Typography.Body>
+        )}
       </label>
     </span>
   );
