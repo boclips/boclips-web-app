@@ -16,40 +16,72 @@ import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFa
 import {
   AccountStatus,
   AccountType,
+  Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('HomeView', () => {
   beforeEach(() => {
     resizeToDesktop(1024);
   });
-  it('loads the home view buttons', async () => {
-    const wrapper = render(
+
+  const renderWrapper = (
+    fakeClient: FakeBoclipsClient = new FakeBoclipsClient(),
+  ) => {
+    return render(
       <MemoryRouter initialEntries={['/']}>
         <App
           reactQueryClient={createReactQueryClient()}
-          apiClient={new FakeBoclipsClient()}
+          apiClient={fakeClient}
           boclipsSecurity={stubBoclipsSecurity}
         />
       </MemoryRouter>,
     );
+  };
+
+  it('displays Library title if product is B2B', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({
+        account: {
+          id: 'acc-1',
+          name: 'Ren',
+          products: [Product.B2B],
+        },
+      }),
+    );
+
+    const wrapper = renderWrapper(fakeClient);
     expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
       'Welcome to Boclips Library',
     );
+  });
+
+  it('displays Classroom title if product is Classroom', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({
+        account: {
+          id: 'acc-1',
+          name: 'Ren',
+          products: [Product.CLASSROOM],
+        },
+      }),
+    );
+
+    const wrapper = renderWrapper(fakeClient);
+    expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
+      'Welcome to Boclips Classroom',
+    );
+  });
+
+  it('loads the home view buttons', async () => {
+    const wrapper = renderWrapper();
     expect(await wrapper.findByText('Browse All Videos')).toBeInTheDocument();
     expect(await wrapper.findByText('View My Playlists')).toBeInTheDocument();
   });
 
   it('displays Home as window title', async () => {
-    render(
-      <MemoryRouter initialEntries={['/']}>
-        <App
-          reactQueryClient={createReactQueryClient()}
-          apiClient={new FakeBoclipsClient()}
-          boclipsSecurity={stubBoclipsSecurity}
-        />
-      </MemoryRouter>,
-    );
-
+    renderWrapper();
     const helmet = Helmet.peek();
 
     expect(helmet.title).toEqual('Home');
@@ -78,16 +110,7 @@ describe('HomeView', () => {
   });
 
   it('Search is visible on homepage', async () => {
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/']}>
-        <App
-          reactQueryClient={createReactQueryClient()}
-          apiClient={new FakeBoclipsClient()}
-          boclipsSecurity={stubBoclipsSecurity}
-        />
-      </MemoryRouter>,
-    );
-
+    const wrapper = renderWrapper();
     expect(
       await wrapper.findByPlaceholderText('Search for videos'),
     ).toBeInTheDocument();
@@ -109,15 +132,7 @@ describe('HomeView', () => {
         promoted: true,
       }),
     );
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/']}>
-        <App
-          reactQueryClient={createReactQueryClient()}
-          apiClient={fakeBoclipsClient}
-          boclipsSecurity={stubBoclipsSecurity}
-        />
-      </MemoryRouter>,
-    );
+    const wrapper = renderWrapper(fakeBoclipsClient);
 
     expect(
       await wrapper.findByText('my promoted playlist'),
@@ -149,16 +164,7 @@ describe('HomeView', () => {
       }),
     );
     window.resizeTo(765, 1024);
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/']}>
-        <App
-          reactQueryClient={createReactQueryClient()}
-          apiClient={fakeBoclipsClient}
-          boclipsSecurity={stubBoclipsSecurity}
-        />
-      </MemoryRouter>,
-    );
-
+    const wrapper = renderWrapper(fakeBoclipsClient);
     expect(
       await wrapper.findByText('my promoted playlist'),
     ).toBeInTheDocument();
@@ -194,16 +200,7 @@ describe('HomeView', () => {
         marketingInformation: { companySegments: ['Edtech'] }, // regular user has this field filled
       }),
     );
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/']}>
-        <App
-          reactQueryClient={createReactQueryClient()}
-          apiClient={fakeBoclipsClient}
-          boclipsSecurity={stubBoclipsSecurity}
-        />
-      </MemoryRouter>,
-    );
-
+    const wrapper = renderWrapper(fakeBoclipsClient);
     expect(
       await wrapper.findByText(
         'Your colleague has invited you to Boclips Library!',
@@ -235,16 +232,7 @@ describe('HomeView', () => {
         marketingInformation: { companySegments: [] }, // admin has no company segments set
       }),
     );
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/']}>
-        <App
-          reactQueryClient={createReactQueryClient()}
-          apiClient={fakeBoclipsClient}
-          boclipsSecurity={stubBoclipsSecurity}
-        />
-      </MemoryRouter>,
-    );
-
+    const wrapper = renderWrapper(fakeBoclipsClient);
     expect(
       await wrapper.findByText('Tell us a bit more about you'),
     ).toBeVisible();
@@ -273,15 +261,7 @@ describe('HomeView', () => {
         status: AccountStatus.ACTIVE,
       }),
     );
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/']}>
-        <App
-          reactQueryClient={createReactQueryClient()}
-          apiClient={fakeBoclipsClient}
-          boclipsSecurity={stubBoclipsSecurity}
-        />
-      </MemoryRouter>,
-    );
+    const wrapper = renderWrapper(fakeBoclipsClient);
 
     expect(wrapper.queryByText('Job Title')).toBeNull();
   });
@@ -313,16 +293,7 @@ describe('HomeView', () => {
         },
       }),
     );
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/']}>
-        <App
-          reactQueryClient={createReactQueryClient()}
-          apiClient={fakeBoclipsClient}
-          boclipsSecurity={stubBoclipsSecurity}
-        />
-      </MemoryRouter>,
-    );
-
+    const wrapper = renderWrapper(fakeBoclipsClient);
     await waitFor(() => {
       expect(wrapper.queryByText('Job Title')).toBeNull();
     });
@@ -336,7 +307,7 @@ describe('HomeView', () => {
         firstName: 'Kobe',
         lastName: 'Bryant',
         email: 'kobe@la.com',
-        account: { id: 'LAL', name: 'LA Lakers' },
+        account: { id: 'LAL', name: 'LA Lakers', products: [Product.B2B] },
         audiences: null,
         jobTitle: null,
         desiredContent: null,
@@ -350,17 +321,9 @@ describe('HomeView', () => {
         status: AccountStatus.ACTIVE,
       }),
     );
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/']}>
-        <App
-          reactQueryClient={createReactQueryClient()}
-          apiClient={fakeBoclipsClient}
-          boclipsSecurity={stubBoclipsSecurity}
-        />
-      </MemoryRouter>,
-    );
+    const wrapper = renderWrapper(fakeBoclipsClient);
 
-    expect(await wrapper.queryByText('Job Title')).toBeNull();
+    expect(wrapper.queryByText('Job Title')).toBeNull();
 
     expect(await wrapper.findByTestId('header-text')).toHaveTextContent(
       'Welcome to Boclips Library',
@@ -375,7 +338,7 @@ describe('HomeView', () => {
         firstName: 'Kobe',
         lastName: 'Bryant',
         email: 'kobe@la.com',
-        account: { id: 'LAL', name: 'LA Lakers' },
+        account: { id: 'LAL', name: 'LA Lakers', products: [Product.B2B] },
         audiences: null,
         jobTitle: null,
         desiredContent: null,
@@ -384,18 +347,9 @@ describe('HomeView', () => {
     fakeBoclipsClient.accounts.insertAccount(
       AccountsFactory.sample({ id: 'LAL', type: AccountType.TRIAL }),
     );
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/']}>
-        <App
-          reactQueryClient={createReactQueryClient()}
-          apiClient={fakeBoclipsClient}
-          boclipsSecurity={stubBoclipsSecurity}
-        />
-      </MemoryRouter>,
-    );
-
+    const wrapper = renderWrapper(fakeBoclipsClient);
     expect(
-      await wrapper.queryByText(
+      wrapper.queryByText(
         "You've just been added to Boclips by your colleague",
       ),
     ).toBeNull();
