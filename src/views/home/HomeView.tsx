@@ -23,15 +23,24 @@ const HomeView = () => {
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
   const [showTrialPopUp, setShowTrialPopUp] = useState<boolean>(false);
   const [isAdmin, setIsAdmin] = useState<boolean>();
+  const [isClassroomUser, setIsClassroomUser] = useState<boolean>();
 
-  useShowTrialWelcomeModal({ showPopup: setShowTrialPopUp, setIsAdmin });
+  useShowTrialWelcomeModal({
+    showPopup: setShowTrialPopUp,
+    setIsAdmin,
+    setIsClassroomUser,
+  });
   useEmailVerified();
 
   return (
     <Layout rowsSetup="grid-rows-newHomepage" responsiveLayout>
       <NewNavbar showSearch={false} />
       {showTrialPopUp && (
-        <WelcomeModal showPopup={setShowTrialPopUp} isAdmin={isAdmin} />
+        <WelcomeModal
+          showPopup={setShowTrialPopUp}
+          isAdmin={isAdmin}
+          isClassroomUser={isClassroomUser}
+        />
       )}
       <div
         data-qa="header-text"

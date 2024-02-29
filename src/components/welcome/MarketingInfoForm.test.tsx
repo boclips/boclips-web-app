@@ -29,6 +29,35 @@ describe('MarketingInfoForm', () => {
     expect(wrapper.getByText('Other')).toBeVisible();
   });
 
+  it('classroom specific job titles are available when dropdown clicked when classroom user', async () => {
+    const wrapper = render(
+      <MarketingInfoForm
+        errors={{}}
+        setMarketingInfo={jest.fn()}
+        isAdmin
+        isClassroomUser
+      />,
+    );
+
+    expect(await wrapper.findByText('Job Title')).toBeVisible();
+    const dropdown = await wrapper.findByText('Select your job title');
+
+    fireEvent.click(dropdown);
+
+    expect(wrapper.getByText('Executive/Director')).toBeVisible();
+    expect(wrapper.getByText('Principle/Headteacher')).toBeVisible();
+    expect(wrapper.getByText('Procurement/Purchasing/Licensing')).toBeVisible();
+    expect(wrapper.getByText('Administrator')).toBeVisible();
+    expect(wrapper.getByText('Project Manager')).toBeVisible();
+    expect(wrapper.getByText('Portfolio Manager')).toBeVisible();
+    expect(wrapper.getByText('Curriculum Leader')).toBeVisible();
+    expect(wrapper.getByText('Instructional Designer')).toBeVisible();
+    expect(wrapper.getByText('Technology Specialist')).toBeVisible();
+    expect(wrapper.getByText('Teacher/Professor')).toBeVisible();
+    expect(wrapper.getByText('Faculty/Support Staff')).toBeVisible();
+    expect(wrapper.getByText('Other')).toBeVisible();
+  });
+
   it('discovery method is visible for admin user', async () => {
     const wrapper = render(
       <MarketingInfoForm errors={{}} setMarketingInfo={jest.fn()} isAdmin />,
@@ -82,6 +111,22 @@ describe('MarketingInfoForm', () => {
     expect(
       await wrapper.findByText('Select your organization type'),
     ).toBeVisible();
+  });
+
+  it('organization type is not visible for admin classroom user', async () => {
+    const wrapper = render(
+      <MarketingInfoForm
+        errors={{}}
+        setMarketingInfo={jest.fn()}
+        isAdmin
+        isClassroomUser
+      />,
+    );
+
+    expect(await wrapper.queryByText('Organization type')).toBeNull();
+    expect(
+      await wrapper.queryByText('Select your organization type'),
+    ).toBeNull();
   });
 
   it('organization type is not visible for regular user', async () => {

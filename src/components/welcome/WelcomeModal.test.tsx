@@ -14,7 +14,10 @@ import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
 import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
-import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import {
+  AccountType,
+  Product,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('Trial Welcome Modal', () => {
   const fakeClient = new FakeBoclipsClient();
@@ -23,7 +26,7 @@ describe('Trial Welcome Modal', () => {
     fakeClient.clear();
   });
 
-  describe('Regular user', () => {
+  describe('Regular non-classroom user', () => {
     beforeEach(() => {
       fakeClient.users.insertCurrentUser(
         UserFactory.sample({
@@ -31,7 +34,7 @@ describe('Trial Welcome Modal', () => {
           firstName: 'Kobe',
           lastName: 'Bryant',
           email: 'kobe@la.com',
-          account: { id: 'LAL', name: 'LA Lakers' },
+          account: { id: 'LAL', name: 'LA Lakers', products: [Product.B2B] },
         }),
       );
       fakeClient.accounts.insertAccount(
@@ -53,6 +56,7 @@ describe('Trial Welcome Modal', () => {
 
       expect(await wrapper.findByText('Kobe Bryant')).toBeVisible();
       expect(wrapper.getByText('kobe@la.com')).toBeVisible();
+      expect(wrapper.getByText('Organization:')).toBeVisible();
       expect(wrapper.getByText('LA Lakers')).toBeVisible();
 
       expect(wrapper.getByText('Job Title')).toBeVisible();
@@ -205,7 +209,71 @@ describe('Trial Welcome Modal', () => {
     });
   });
 
-  describe('admin user', () => {
+  describe('Regular classroom user', () => {
+    beforeEach(() => {
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          id: 'kb',
+          firstName: 'Kobe',
+          lastName: 'Bryant',
+          email: 'kobe@la.com',
+          account: {
+            id: 'LAL',
+            name: 'LA Lakers',
+            products: [Product.CLASSROOM],
+          },
+        }),
+      );
+      fakeClient.accounts.insertAccount(
+        AccountsFactory.sample({
+          id: 'LAL',
+          type: AccountType.TRIAL,
+          marketingInformation: { companySegments: ['Edtech'] },
+          products: [Product.CLASSROOM],
+        }),
+      );
+    });
+
+    it('displays classroom specific trial welcome modal content', async () => {
+      const wrapper = renderWelcomeView();
+      expect(
+        await wrapper.findByText(
+          'Your colleague has invited you to Boclips Classroom!',
+        ),
+      ).toBeVisible();
+
+      expect(wrapper.getByText('School:')).toBeVisible();
+    });
+
+    it('updates user but not account when button clicked and form filled out', async () => {
+      const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+      const updateAccountSpy = jest.spyOn(fakeClient.accounts, 'updateAccount');
+
+      const wrapper = renderWelcomeView();
+
+      await setJobTitle(wrapper, 'Administrator');
+      await setAudience(wrapper, 'K12');
+      await setAudience(wrapper, 'Other');
+      await setDesiredContent(wrapper, 'Basketball');
+      await checkTermsAndConditions(wrapper);
+
+      fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+
+      await waitFor(() => {
+        expect(updateUserSpy).toHaveBeenCalledWith('kb', {
+          jobTitle: 'Administrator',
+          audiences: ['K12', 'Other'],
+          desiredContent: 'Basketball',
+          discoveryMethods: [],
+          type: 'b2bUser',
+          hasAcceptedTermsAndConditions: true,
+        });
+        expect(updateAccountSpy).not.toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('admin non-classroom user', () => {
     beforeEach(() => {
       fakeClient.users.insertCurrentUser(
         UserFactory.sample({
@@ -213,7 +281,11 @@ describe('Trial Welcome Modal', () => {
           firstName: 'Saku',
           lastName: 'Saku Koivu',
           email: 'saku@koivu.com',
-          account: { id: 'AND', name: 'Anaheim Ducks' },
+          account: {
+            id: 'AND',
+            name: 'Anaheim Ducks',
+            products: [Product.B2B],
+          },
         }),
       );
       fakeClient.accounts.insertAccount(
@@ -324,6 +396,102 @@ describe('Trial Welcome Modal', () => {
         expect(updateAccountSpy).toHaveBeenCalledWith('AND', {
           companySegments: ['Publisher'],
         });
+      });
+    });
+  });
+
+  describe('admin classroom user', () => {
+    beforeEach(() => {
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          id: 'sk',
+          firstName: 'Saku',
+          lastName: 'Saku Koivu',
+          email: 'saku@koivu.com',
+          account: {
+            id: 'AND',
+            name: 'Anaheim Ducks',
+            products: [Product.CLASSROOM],
+          },
+        }),
+      );
+      fakeClient.accounts.insertAccount(
+        AccountsFactory.sample({
+          id: 'AND',
+          type: AccountType.TRIAL,
+          marketingInformation: {},
+          products: [Product.CLASSROOM],
+        }),
+      );
+    });
+
+    it('does not display the organization type dropdown', async () => {
+      const wrapper = renderWelcomeView();
+      expect(
+        await wrapper.findByText('Tell us a bit more about you'),
+      ).toBeVisible();
+
+      expect(await wrapper.queryByText('Organization type')).toBeNull();
+    });
+
+    it('updates user and account when button clicked after full form filled out', async () => {
+      const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+      const updateAccountSpy = jest.spyOn(fakeClient.accounts, 'updateAccount');
+
+      const wrapper = renderWelcomeView();
+
+      expect(
+        await wrapper.findByText('Tell us a bit more about you'),
+      ).toBeVisible();
+
+      await setJobTitle(wrapper, 'Principle/Headteacher');
+      await setAudience(wrapper, 'K12');
+      await setAudience(wrapper, 'Other');
+      await setDesiredContent(wrapper, 'Hockey');
+      await setDiscoveryMethod(wrapper, 'Employer');
+      await setDiscoveryMethod(wrapper, 'Social Media');
+
+      fireEvent.click(
+        await wrapper.findByRole('button', { name: "Let's Go!" }),
+      );
+
+      await waitFor(() => {
+        expect(updateUserSpy).toHaveBeenCalledWith('sk', {
+          jobTitle: 'Principle/Headteacher',
+          audiences: ['K12', 'Other'],
+          desiredContent: 'Hockey',
+          discoveryMethods: ['Employer', 'Social Media'],
+          type: 'b2bUser',
+        });
+      });
+
+      await waitFor(() => {
+        expect(updateAccountSpy).toHaveBeenCalledWith('AND', {
+          companySegments: ['N/A'],
+        });
+      });
+    });
+
+    it('does not require Organization type to be filled out and does not validate it', async () => {
+      const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+      const updateAccountSpy = jest.spyOn(fakeClient.accounts, 'updateAccount');
+
+      const wrapper = renderWelcomeView();
+
+      await setJobTitle(wrapper, 'Principle/Headteacher');
+      await setAudience(wrapper, 'K12');
+      await setDesiredContent(wrapper, 'Hockey');
+
+      fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+
+      expect(
+        await wrapper.findByText('I heard about Boclips is required'),
+      ).toBeVisible();
+      expect(wrapper.queryByText('Organization type is required')).toBeNull();
+
+      await waitFor(() => {
+        expect(updateUserSpy).not.toBeCalled();
+        expect(updateAccountSpy).not.toHaveBeenCalled();
       });
     });
   });

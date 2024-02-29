@@ -3,7 +3,8 @@ import Dropdown from '@boclips-ui/dropdown';
 import {
   AUDIENCE,
   DISCOVERY_METHOD,
-  JOB_TITLE,
+  LIBRARY_JOB_TITLE,
+  CLASSROOM_JOB_TITLE,
   ORGANIZATION_TYPE,
 } from 'src/components/registration/dropdownValues';
 import { InputText } from '@boclips-ui/input';
@@ -14,9 +15,15 @@ interface Props {
   errors: { [key: string]: boolean };
   setMarketingInfo: (prevState) => void;
   isAdmin: boolean;
+  isClassroomUser?: boolean;
 }
 
-const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
+const MarketingInfoForm = ({
+  errors,
+  setMarketingInfo,
+  isAdmin,
+  isClassroomUser = false,
+}: Props) => {
   const handleChange = useCallback(
     (fieldName: string, value: string | string[]) => {
       setMarketingInfo((prevState) => ({
@@ -26,6 +33,10 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
     },
     [],
   );
+
+  const jobTitleOptions = isClassroomUser
+    ? CLASSROOM_JOB_TITLE
+    : LIBRARY_JOB_TITLE;
 
   return (
     <main tabIndex={-1} className={s.marketingInfoWrapper}>
@@ -38,7 +49,7 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
         mode="single"
         labelText="Job Title"
         onUpdate={(value: string) => handleChange('jobTitle', value)}
-        options={JOB_TITLE}
+        options={jobTitleOptions}
         dataQa="input-dropdown-job-title"
         placeholder="Select your job title"
         showLabel
@@ -46,7 +57,7 @@ const MarketingInfoForm = ({ errors, setMarketingInfo, isAdmin }: Props) => {
         isError={errors.isJobTitleEmpty}
         errorMessage="Job title is required"
       />
-      {isAdmin && (
+      {isAdmin && !isClassroomUser && (
         <Dropdown
           mode="multiple"
           labelText="Organization type"
