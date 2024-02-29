@@ -14,21 +14,21 @@ import {
 import { BrowserRouter as Router } from 'react-router-dom';
 
 describe('registration', () => {
-  it('displays trial info box in desktop view', async () => {
+  it('displays classroom info box in desktop view', async () => {
     resizeToDesktop();
     renderRegistration();
 
     expect(await screen.findByText('Explore Boclips Classroom!')).toBeVisible();
   });
 
-  it('does not displays trial info box in mobile view', async () => {
+  it('does not displays classroom info box in mobile view', async () => {
     resizeToMobile();
     renderRegistration();
 
     expect(screen.queryByText('Explore Boclips Classroom!')).toBeNull();
   });
 
-  it('does not displays trial info box in tablet view', async () => {
+  it('does not displays classroom info box in tablet view', async () => {
     resizeToTablet();
     renderRegistration();
 

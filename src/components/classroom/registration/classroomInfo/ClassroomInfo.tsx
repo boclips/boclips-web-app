@@ -1,7 +1,7 @@
 import { Typography } from '@boclips-ui/typography';
 import Checkmark from 'src/resources/icons/purple-checkmark.svg';
 import React from 'react';
-import TrailBackground from 'src/resources/icons/classroom-trial-bg.svg';
+import TrailBackground from 'src/resources/icons/classroom-info-bg.svg';
 import BlobSVG from 'src/resources/icons/blob.svg';
 import s from './style.module.less';
 
@@ -27,10 +27,10 @@ const features = [
   },
 ];
 
-const TrialInfo = () => {
+const ClassroomInfo = () => {
   return (
     <>
-      <div className={s.trialInfo}>
+      <div className={s.classroomInfo}>
         <Typography.H1 size="lg">Explore Boclips Classroom!</Typography.H1>
         {features.map(({ title, description }) => {
           return (
@@ -60,4 +60,4 @@ const TrialInfo = () => {
   );
 };
 
-export default TrialInfo;
+export default ClassroomInfo;
