@@ -32,10 +32,12 @@ const addHubspotScript = () => {
 };
 
 const initializeSentry = () => {
+  const environment = process.env.NODE_ENV;
   const sentryRelease = process.env.SENTRY_RELEASE;
 
   Sentry.init({
     release: sentryRelease,
+    environment,
     dsn: 'https://50de7aa7ec43491d9c7140376d0bf128@o236297.ingest.sentry.io/5633299',
     integrations: [new BrowserTracing() as Integration, new ExtraErrorData()],
     tracesSampleRate: 1.0,
