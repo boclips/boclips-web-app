@@ -74,7 +74,9 @@ export const VideoHeader = ({ video }: Props) => {
         <div className={(s.sticky, s.buttons)}>
           <div className={s.iconButtons}>
             <AddToPlaylistButton videoId={video?.id} />
-            <CopyVideoLinkButton video={video} onClick={trackVideoCopy} />
+            <FeatureGate product={Product.B2B}>
+              <CopyVideoLinkButton video={video} onClick={trackVideoCopy} />
+            </FeatureGate>
             {videoHasTranscript && <DownloadTranscriptButton video={video} />}
           </div>
           {video?.links?.createEmbedCode ? (
