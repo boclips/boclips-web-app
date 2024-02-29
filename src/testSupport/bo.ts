@@ -194,7 +194,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
             account: {
               id: 'acc-id',
               name: 'Percy account',
-              type: AccountType.STANDARD,
+              type: AccountType.TRIAL,
             },
           }),
         );
@@ -209,7 +209,10 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
             account: {
               id: 'acc-id',
               name: 'Percy account',
-              type: AccountType.STANDARD,
+              type: AccountType.TRIAL,
+              marketingInformation: {
+                companySegments: ['Edtech'],
+              },
             },
           }),
         );
