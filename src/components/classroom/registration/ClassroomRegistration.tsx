@@ -3,7 +3,7 @@ import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { Constants } from 'src/AppConstants';
 import ClassroomRegistrationForm from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
 import ClassroomEmailVerificationPrompt from 'src/components/classroom/registration/ClassroomEmailVerificationPrompt';
-import TrialInfo from 'src/components/classroom/registration/trialInfo/TrialInfo';
+import ClassroomInfo from 'src/components/classroom/registration/classroomInfo/ClassroomInfo';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 
 const CAPTCHA_TOKEN = Constants.CAPTCHA_TOKEN;
@@ -18,7 +18,7 @@ export const ClassroomRegistration = () => {
     <GoogleReCaptchaProvider reCaptchaKey={CAPTCHA_TOKEN}>
       {!userEmailCreated ? (
         <>
-          {!isMobileView && <TrialInfo />}
+          {!isMobileView && <ClassroomInfo />}
           <ClassroomRegistrationForm
             onRegistrationFinished={(userEmail) =>
               setUserEmailCreated(userEmail)
