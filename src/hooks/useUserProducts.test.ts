@@ -26,4 +26,22 @@ describe('user products', () => {
       expect(result.current.products).toEqual([Product.CLASSROOM]),
     );
   });
+
+  it('defaults products to empty array when null', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({
+        account: {
+          id: 'acc-1',
+          name: 'Ren',
+          products: null,
+        },
+      }),
+    );
+    const { result } = renderHook(() => useUserProducts(), {
+      wrapper: wrapperWithClients(fakeClient, new QueryClient()),
+    });
+
+    await waitFor(() => expect(result.current.products).toEqual([]));
+  });
 });
