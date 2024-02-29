@@ -12,6 +12,7 @@ import { fillRegistrationForm } from 'src/components/classroom/registration/clas
 import { ClassroomRegistration } from 'src/components/classroom/registration/ClassroomRegistration';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
+import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('registration process', () => {
   async function fillTheForm(
@@ -39,7 +40,7 @@ describe('registration process', () => {
       Promise.resolve(
         UserFactory.sample({
           email: 'test@boclips.com',
-          account: { name: 'BoAccount', id: '1' },
+          account: { name: 'BoAccount', id: '1', type: AccountType.STANDARD },
         }),
       ),
     );

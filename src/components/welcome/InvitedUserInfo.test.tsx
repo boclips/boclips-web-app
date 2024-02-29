@@ -5,7 +5,10 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import InvitedUserInfo from 'src/components/welcome/InvitedUserInfo';
-import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import {
+  AccountType,
+  Product,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('Invited User Info', () => {
   it('renders the user info', async () => {
@@ -18,6 +21,7 @@ describe('Invited User Info', () => {
         account: {
           name: 'Footballers',
           id: 'id',
+          type: AccountType.STANDARD,
         },
       }),
     );
@@ -51,6 +55,7 @@ describe('Invited User Info', () => {
           name: 'Footballers',
           id: 'id',
           products: [Product.CLASSROOM],
+          type: AccountType.STANDARD,
         },
       }),
     );

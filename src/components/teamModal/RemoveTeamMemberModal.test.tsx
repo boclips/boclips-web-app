@@ -11,6 +11,7 @@ import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/Create
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
 import { RemoveTeamMemberModal } from 'src/components/teamModal/RemoveTeamMemberModal';
+import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('Remove Team member modal', () => {
   const user: AccountUser = {
@@ -57,7 +58,11 @@ describe('Remove Team member modal', () => {
     client.users.updateUser = jest.fn();
     client.users.insertCurrentUser(
       UserFactory.sample({
-        account: { id: 'account-id', name: 'My Team Account' },
+        account: {
+          id: 'account-id',
+          name: 'My Team Account',
+          type: AccountType.STANDARD,
+        },
       }),
     );
 

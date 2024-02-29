@@ -4,7 +4,10 @@ import { wrapperWithClients } from 'src/testSupport/wrapper';
 import { QueryClient } from '@tanstack/react-query';
 import useUserProducts from 'src/hooks/useUserProducts';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
-import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import {
+  AccountType,
+  Product,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('user products', () => {
   it('get products of current user', async () => {
@@ -15,6 +18,7 @@ describe('user products', () => {
           id: 'acc-1',
           name: 'Ren',
           products: [Product.CLASSROOM],
+          type: AccountType.STANDARD,
         },
       }),
     );
@@ -35,6 +39,7 @@ describe('user products', () => {
           id: 'acc-1',
           name: 'Ren',
           products: null,
+          type: AccountType.STANDARD,
         },
       }),
     );

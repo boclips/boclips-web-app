@@ -5,7 +5,10 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
-import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import {
+  AccountType,
+  Product,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe(`FeatureGate`, () => {
   describe('Feature flag', () => {
@@ -220,6 +223,7 @@ describe(`FeatureGate`, () => {
             id: 'acc-1',
             name: 'Ren',
             products: [Product.CLASSROOM],
+            type: AccountType.STANDARD,
           },
         }),
       );
@@ -251,6 +255,7 @@ describe(`FeatureGate`, () => {
             id: 'acc-1',
             name: 'Ren',
             products: [Product.B2B],
+            type: AccountType.STANDARD,
           },
         }),
       );
@@ -282,6 +287,7 @@ describe(`FeatureGate`, () => {
             id: 'acc-1',
             name: 'Ren',
             products: [Product.CLASSROOM],
+            type: AccountType.STANDARD,
           },
         }),
       );

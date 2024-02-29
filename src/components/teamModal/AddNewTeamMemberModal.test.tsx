@@ -11,6 +11,7 @@ import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
 import { ROLES } from 'src/types/Roles';
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('My Team modal', () => {
   it('renders teams modal', () => {
@@ -40,7 +41,11 @@ describe('My Team modal', () => {
     client.users.createUser = jest.fn();
     client.users.insertCurrentUser(
       UserFactory.sample({
-        account: { id: 'best-account', name: 'simply the best' },
+        account: {
+          id: 'best-account',
+          name: 'simply the best',
+          type: AccountType.STANDARD,
+        },
       }),
     );
 

@@ -9,7 +9,10 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import NavbarResponsive from 'src/components/layout/Navbar';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import {
+  AccountType,
+  Product,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe(`Navbar test`, () => {
   beforeEach(() => {
@@ -74,6 +77,7 @@ describe(`Navbar test`, () => {
           id: 'acc-1',
           name: 'Ren',
           products: [Product.CLASSROOM],
+          type: AccountType.STANDARD,
         },
       }),
     );

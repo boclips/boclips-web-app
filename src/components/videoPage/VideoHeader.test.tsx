@@ -6,7 +6,10 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
-import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import {
+  AccountType,
+  Product,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('VideoHeader', () => {
   it('should render without crashing if links are null', () => {
@@ -42,7 +45,12 @@ describe('VideoHeader', () => {
     const client = new FakeBoclipsClient();
     client.users.insertCurrentUser(
       UserFactory.sample({
-        account: { id: 'acc-1', name: 'Ren', products: [Product.B2B] },
+        account: {
+          id: 'acc-1',
+          name: 'Ren',
+          products: [Product.B2B],
+          type: AccountType.STANDARD,
+        },
       }),
     );
     const wrapper = render(
@@ -60,7 +68,12 @@ describe('VideoHeader', () => {
     const client = new FakeBoclipsClient();
     client.users.insertCurrentUser(
       UserFactory.sample({
-        account: { id: 'acc-1', name: 'Ren', products: [Product.B2B] },
+        account: {
+          id: 'acc-1',
+          name: 'Ren',
+          products: [Product.B2B],
+          type: AccountType.STANDARD,
+        },
       }),
     );
     client.users.setCurrentUserFeatures({
@@ -82,7 +95,12 @@ describe('VideoHeader', () => {
     const client = new FakeBoclipsClient();
     client.users.insertCurrentUser(
       UserFactory.sample({
-        account: { id: 'acc-1', name: 'Ren', products: [Product.CLASSROOM] },
+        account: {
+          id: 'acc-1',
+          name: 'Ren',
+          products: [Product.CLASSROOM],
+          type: AccountType.STANDARD,
+        },
       }),
     );
 
@@ -101,7 +119,12 @@ describe('VideoHeader', () => {
     const client = new FakeBoclipsClient();
     client.users.insertCurrentUser(
       UserFactory.sample({
-        account: { id: 'acc-1', name: 'Ren', products: [Product.CLASSROOM] },
+        account: {
+          id: 'acc-1',
+          name: 'Ren',
+          products: [Product.CLASSROOM],
+          type: AccountType.STANDARD,
+        },
       }),
     );
 
@@ -120,7 +143,12 @@ describe('VideoHeader', () => {
     const client = new FakeBoclipsClient();
     client.users.insertCurrentUser(
       UserFactory.sample({
-        account: { id: 'acc-1', name: 'Ren', products: [Product.CLASSROOM] },
+        account: {
+          id: 'acc-1',
+          name: 'Ren',
+          products: [Product.CLASSROOM],
+          type: AccountType.STANDARD,
+        },
       }),
     );
 

@@ -230,11 +230,14 @@ describe('App', () => {
   it('home should display welcome popup if user is in trial and has no marketing info', async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'trial', type: AccountType.TRIAL }),
+      AccountsFactory.sample({
+        id: 'trial',
+        type: AccountType.TRIAL,
+      }),
     );
     apiClient.users.insertCurrentUser(
       UserFactory.sample({
-        account: { id: 'trial', name: 'trial' },
+        account: { id: 'trial', name: 'trial', type: AccountType.TRIAL },
         desiredContent: undefined,
         audiences: undefined,
       }),

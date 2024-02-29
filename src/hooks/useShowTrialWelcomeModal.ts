@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGetAccount, useGetUserQuery } from 'src/hooks/api/userQuery';
+import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 import {
-  Account,
   AccountType,
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
@@ -21,36 +20,24 @@ const useShowTrialWelcomeModal = ({
 }: Props) => {
   const navigate = useNavigate();
   const { data: user, isLoading: userLoading } = useGetUserQuery();
-  const { data: account, isLoading: accountLoading } = useGetAccount(
-    user?.account?.id,
-  );
   useEffect(() => {
-    if (userLoading || accountLoading) {
+    if (userLoading) {
       return;
     }
-    const isUserInTrial = account?.type === AccountType.TRIAL;
+    const isUserInTrial = user?.account?.type === AccountType.TRIAL;
     const isMarketingInfoSetForUser = user && isMarketingInfoSet(user);
     const isMarketingInfoSetForAccount =
-      account && isAccountMarketingInfoSet(account);
+      user?.account && isAccountMarketingInfoSet(user);
     const isClassroomUser =
-      account &&
-      account.products.some((product) => product === Product.CLASSROOM);
+      user?.account &&
+      user?.account?.products?.some((product) => product === Product.CLASSROOM);
 
     if (isUserInTrial && !isMarketingInfoSetForUser) {
       showPopup(true);
       setIsAdmin(!isMarketingInfoSetForAccount);
       setIsClassroomUser(isClassroomUser);
     }
-  }, [
-    user,
-    account,
-    userLoading,
-    accountLoading,
-    navigate,
-    showPopup,
-    setIsAdmin,
-    setIsClassroomUser,
-  ]);
+  }, [user, userLoading, navigate, showPopup, setIsAdmin, setIsClassroomUser]);
 };
 
 const isMarketingInfoSet = (user: User): boolean => {
@@ -61,8 +48,8 @@ const isMarketingInfoSet = (user: User): boolean => {
   return isJobTitleSet && isAudienceSet && isDesiredContentSet;
 };
 
-const isAccountMarketingInfoSet = (account: Account): boolean => {
-  return account.marketingInformation?.companySegments?.length > 0;
+const isAccountMarketingInfoSet = (user: User): boolean => {
+  return user?.account?.marketingInformation?.companySegments?.length > 0;
 };
 
 export default useShowTrialWelcomeModal;

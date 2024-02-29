@@ -6,7 +6,10 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import React from 'react';
 import Logo from 'src/components/logo/Logo';
-import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import {
+  AccountType,
+  Product,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('logo', () => {
   it('renders the Library logo if no logo url is provided and user does not have classroom product', async () => {
@@ -23,6 +26,7 @@ describe('logo', () => {
           id: 'account-id',
           name: 'Account name',
           products: [Product.B2B],
+          type: AccountType.STANDARD,
         },
       }),
     );
@@ -56,6 +60,7 @@ describe('logo', () => {
           id: 'account-id',
           name: 'Account name',
           products: [Product.CLASSROOM],
+          type: AccountType.STANDARD,
         },
       }),
     );

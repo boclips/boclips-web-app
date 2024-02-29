@@ -18,6 +18,7 @@ import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/Us
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 import {
   Account,
+  AccountType,
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import userEvent from '@testing-library/user-event';
@@ -34,6 +35,7 @@ describe('My Account view', () => {
       id: 'acc-1',
       name: 'Elephant Academy',
       products: [Product.B2B],
+      type: AccountType.STANDARD,
     },
   });
 
@@ -202,6 +204,7 @@ describe('My Account view', () => {
           id: 'acc-2',
           name: 'Owl Academy',
           products: [Product.CLASSROOM],
+          type: AccountType.STANDARD,
         },
       });
       wrapper(classroomUser, classroomAccount);

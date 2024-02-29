@@ -107,6 +107,7 @@ describe(`Navbar`, () => {
             id: 'acc-1',
             name: 'classroom account',
             products: [Product.CLASSROOM],
+            type: AccountType.STANDARD,
           },
         }),
       );
@@ -300,7 +301,13 @@ describe(`Navbar`, () => {
         }),
       );
       fakeClient.users.insertCurrentUser(
-        UserFactory.sample({ account: { id: 'trial', name: 'trial account' } }),
+        UserFactory.sample({
+          account: {
+            id: 'trial',
+            name: 'trial account',
+            type: AccountType.TRIAL,
+          },
+        }),
       );
 
       const wrapper = render(
@@ -328,7 +335,11 @@ describe(`Navbar`, () => {
       );
       fakeClient.users.insertCurrentUser(
         UserFactory.sample({
-          account: { id: 'non-trial', name: 'regular account' },
+          account: {
+            id: 'non-trial',
+            name: 'regular account',
+            type: AccountType.STANDARD,
+          },
         }),
       );
 

@@ -1,5 +1,6 @@
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { PendoService } from 'src/services/analytics/pendo/PendoService';
+import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('Pendo Service', () => {
   it('passes essential user data to pendo', () => {
@@ -17,6 +18,7 @@ describe('Pendo Service', () => {
         marketingInformation: {
           companySegments: ['Publisher'],
         },
+        type: AccountType.STANDARD,
       },
     });
 

@@ -34,7 +34,13 @@ describe('Trial Welcome Modal', () => {
           firstName: 'Kobe',
           lastName: 'Bryant',
           email: 'kobe@la.com',
-          account: { id: 'LAL', name: 'LA Lakers', products: [Product.B2B] },
+          account: {
+            id: 'LAL',
+            name: 'LA Lakers',
+            products: [Product.B2B],
+            type: AccountType.TRIAL,
+            marketingInformation: { companySegments: ['Edtech'] },
+          },
         }),
       );
       fakeClient.accounts.insertAccount(
@@ -221,6 +227,8 @@ describe('Trial Welcome Modal', () => {
             id: 'LAL',
             name: 'LA Lakers',
             products: [Product.CLASSROOM],
+            type: AccountType.TRIAL,
+            marketingInformation: { companySegments: ['Edtech'] },
           },
         }),
       );
@@ -285,6 +293,8 @@ describe('Trial Welcome Modal', () => {
             id: 'AND',
             name: 'Anaheim Ducks',
             products: [Product.B2B],
+            type: AccountType.TRIAL,
+            marketingInformation: {},
           },
         }),
       );
@@ -412,6 +422,8 @@ describe('Trial Welcome Modal', () => {
             id: 'AND',
             name: 'Anaheim Ducks',
             products: [Product.CLASSROOM],
+            type: AccountType.TRIAL,
+            marketingInformation: {},
           },
         }),
       );

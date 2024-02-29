@@ -7,7 +7,10 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { render } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
-import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import {
+  AccountType,
+  Product,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('VideoCardButtons', () => {
   describe(`create embed code button`, () => {
@@ -59,6 +62,7 @@ describe('VideoCardButtons', () => {
             id: 'acc-1',
             name: 'Ren',
             products: [Product.B2B],
+            type: AccountType.STANDARD,
           },
         }),
       );
@@ -86,6 +90,7 @@ describe('VideoCardButtons', () => {
             id: 'acc-1',
             name: 'Ren',
             products: [Product.CLASSROOM],
+            type: AccountType.STANDARD,
           },
         }),
       );
@@ -111,7 +116,12 @@ describe('VideoCardButtons', () => {
       const client = new FakeBoclipsClient();
       client.users.insertCurrentUser(
         UserFactory.sample({
-          account: { id: 'acc-1', name: 'Ren', products: [Product.CLASSROOM] },
+          account: {
+            id: 'acc-1',
+            name: 'Ren',
+            products: [Product.CLASSROOM],
+            type: AccountType.STANDARD,
+          },
         }),
       );
 

@@ -4,7 +4,7 @@ import MenuIconSVG from 'src/resources/icons/menu-icon.svg';
 import CrossIconSVG from 'src/resources/icons/cross-icon.svg';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import CartButton from 'src/components/navButtons/CartButton';
-import { useGetAccount, useGetUserQuery } from 'src/hooks/api/userQuery';
+import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { Constants } from 'src/AppConstants';
 import { useBoclipsSecurity } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
@@ -31,8 +31,7 @@ const NavbarResponsive = ({
 }: Props): ReactElement => {
   const [showSideMenu, setShowSideMenu] = useState(false);
   const { data: user, isLoading: isUserLoading } = useGetUserQuery();
-  const { data: account } = useGetAccount(user?.account.id);
-  const isTrial = account?.type === AccountType.TRIAL;
+  const isTrial = user?.account?.type === AccountType.TRIAL;
   const boclipsSecurity = useBoclipsSecurity();
   const breakpoints = useMediaBreakPoint();
   const mobileView =

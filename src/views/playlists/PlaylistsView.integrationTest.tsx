@@ -22,7 +22,10 @@ import { Constants } from 'src/AppConstants';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
-import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import {
+  AccountType,
+  Product,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 const insertUser = (client: FakeBoclipsClient, product?: Product) =>
   client.users.insertCurrentUser(
@@ -31,6 +34,7 @@ const insertUser = (client: FakeBoclipsClient, product?: Product) =>
         id: 'acc-1',
         name: 'Ren',
         products: [product],
+        type: AccountType.STANDARD,
       },
     }),
   );

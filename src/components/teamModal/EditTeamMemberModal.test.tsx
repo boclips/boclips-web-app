@@ -12,6 +12,7 @@ import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/Create
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import EditTeamMemberModal from 'src/components/teamModal/EditTeamMemberModal';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
+import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('Edit Team member modal', () => {
   const user: AccountUser = {
@@ -92,7 +93,11 @@ describe('Edit Team member modal', () => {
     client.users.updateUser = jest.fn();
     client.users.insertCurrentUser(
       UserFactory.sample({
-        account: { id: 'best-account', name: 'simply the best' },
+        account: {
+          id: 'best-account',
+          name: 'simply the best',
+          type: AccountType.STANDARD,
+        },
       }),
     );
 
