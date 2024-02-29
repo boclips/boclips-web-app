@@ -1,5 +1,4 @@
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
-import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import React from 'react';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
@@ -7,13 +6,15 @@ import { Typography } from '@boclips-ui/typography';
 import { VideoInfo } from 'src/components/common/videoInfo/VideoInfo';
 import { VideoBadges } from 'src/components/videoPage/VideoBadges';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { EmbedButton } from 'src/components/embedButton/EmbedButton';
 import { DownloadTranscriptButton } from 'src/components/downloadTranscriptButton/DownloadTranscriptButton';
 import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { VideoLicensingDetails } from 'src/components/videoPage/videoLicensingDetails/VideoLicensingDetails';
 import useFeatureFlags from 'src/hooks/useFeatureFlags';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { VideoShareButton } from 'src/components/videoShareButton/VideoShareButton';
+import { EmbedButton } from 'src/components/embedButton/EmbedButton';
+import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
 
@@ -91,6 +92,9 @@ export const VideoHeader = ({ video }: Props) => {
               />
             </FeatureGate>
           )}
+          <FeatureGate product={Product.CLASSROOM}>
+            <VideoShareButton />
+          </FeatureGate>
         </div>
       </div>
     </>

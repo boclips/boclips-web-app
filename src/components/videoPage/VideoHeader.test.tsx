@@ -96,4 +96,23 @@ describe('VideoHeader', () => {
 
     expect(wrapper.queryByText('Licensing Details')).toBeNull();
   });
+
+  it('should render share video button if product is CLASSROOM', async () => {
+    const client = new FakeBoclipsClient();
+    client.users.insertCurrentUser(
+      UserFactory.sample({
+        account: { id: 'acc-1', name: 'Ren', products: [Product.CLASSROOM] },
+      }),
+    );
+
+    const wrapper = render(
+      <BoclipsClientProvider client={client}>
+        <QueryClientProvider client={new QueryClient()}>
+          <VideoHeader video={VideoFactory.sample({})} />
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
+    );
+
+    expect(await wrapper.findByRole('button', { name: 'Share' })).toBeVisible();
+  });
 });

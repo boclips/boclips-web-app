@@ -105,4 +105,27 @@ describe('VideoCardButtons', () => {
       ).toBeNull();
     });
   });
+
+  describe(`share video button`, () => {
+    it('should render share video button if product is CLASSROOM', async () => {
+      const client = new FakeBoclipsClient();
+      client.users.insertCurrentUser(
+        UserFactory.sample({
+          account: { id: 'acc-1', name: 'Ren', products: [Product.CLASSROOM] },
+        }),
+      );
+
+      const wrapper = render(
+        <BoclipsClientProvider client={client}>
+          <QueryClientProvider client={new QueryClient()}>
+            <VideoCardButtons video={VideoFactory.sample({})} />
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      expect(
+        await wrapper.findByRole('button', { name: 'Share' }),
+      ).toBeVisible();
+    });
+  });
 });

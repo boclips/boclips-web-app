@@ -7,6 +7,7 @@ import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { EmbedButton } from 'src/components/embedButton/EmbedButton';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { VideoShareButton } from 'src/components/videoShareButton/VideoShareButton';
 import s from './style.module.less';
 import { CopyVideoLinkButton } from './CopyVideoLinkButton';
 import { CopyVideoIdButton } from './CopyVideoIdButton';
@@ -67,6 +68,9 @@ export const VideoCardButtons = ({
           />
         </FeatureGate>
       )}
+      <FeatureGate product={Product.CLASSROOM}>
+        <VideoShareButton iconOnly={iconOnly} />
+      </FeatureGate>
     </div>
   );
 };
