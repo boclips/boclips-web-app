@@ -34,6 +34,7 @@ export interface Props {
   showCloseIcon?: boolean;
   footerClass?: string;
   footerText?: ReactElement | string;
+  extraButton?: ReactElement;
 }
 
 export const Bodal: React.FC<Props> = ({
@@ -54,6 +55,7 @@ export const Bodal: React.FC<Props> = ({
   showCloseIcon = true,
   footerClass,
   footerText,
+  extraButton,
 }: PropsWithChildren<Props>) => {
   const breakpoints = useMediaBreakPoint();
   const mobileView = breakpoints.type === 'mobile';
@@ -138,7 +140,9 @@ export const Bodal: React.FC<Props> = ({
             <div
               className={c(
                 s.modalFooter,
-                displayCancelButton ? [s.twoButtonFooter] : [s.oneButtonFooter],
+                displayCancelButton || extraButton
+                  ? [s.multiButtonFooter]
+                  : [s.oneButtonFooter],
                 footerClass,
               )}
             >
@@ -151,6 +155,7 @@ export const Bodal: React.FC<Props> = ({
                 disabled={isLoading}
                 icon={getSpinner()}
               />
+              {extraButton}
             </div>
           )}
           {footerText}

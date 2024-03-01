@@ -68,7 +68,7 @@ const isFullDuration = (trim: Trim, duration: Duration) =>
   isBaseDuration(trim.from) &&
   durationInSeconds(trim.to) === duration.asSeconds();
 
-const durationInSeconds = (time: string): number => {
+export const durationInSeconds = (time: string): number => {
   const minutesAndSeconds = time.split(':');
   return +minutesAndSeconds[0] * 60 + +minutesAndSeconds[1];
 };

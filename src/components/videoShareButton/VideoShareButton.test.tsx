@@ -168,6 +168,17 @@ describe('video share button', () => {
       await wrapper.findByText('Please enter valid start and end times'),
     ).toBeVisible();
   });
+
+  it(`includes a link to google classroom`, async () => {
+    const wrapper = renderShareButton();
+    await openShareModal(wrapper);
+
+    expect(
+      await wrapper.findByRole('link', {
+        name: 'Share to Google Classroom',
+      }),
+    ).toBeVisible();
+  });
 });
 
 const renderShareButton = () => {

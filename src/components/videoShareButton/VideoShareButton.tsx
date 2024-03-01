@@ -8,10 +8,13 @@ import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { DurationInput } from 'src/components/cart/AdditionalServices/Trim/DurationInput';
 import BoCheckbox from 'src/components/common/input/BoCheckbox';
 import {
+  durationInSeconds,
   isTrimFromValid,
   isTrimToValid,
 } from 'src/components/cart/AdditionalServices/Trim/trimValidation';
 import { Typography } from '@boclips-ui/typography';
+import { GoogleClassroomShareLink } from 'src/components/videoShareButton/googleClassroom/GoogleClassroomShareLink';
+import { getShareableVideoLink } from 'src/components/videoShareButton/getShareableVideoLink';
 import s from './shareButton.module.less';
 
 interface VideoShareButtonProps {
@@ -23,6 +26,8 @@ export const VideoShareButton = ({
   iconOnly = false,
   video,
 }: VideoShareButtonProps) => {
+  const { data: user } = useGetUserQuery();
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [startTimeEnabled, setStartTimeEnabled] = useState(false);
   const [startDuration, setStartDuration] = useState('00:00');
@@ -33,6 +38,13 @@ export const VideoShareButton = ({
     video.playback.duration.format('mm:ss'),
   );
   const [endDurationValid, setEndDurationValid] = useState(true);
+
+  const shareLink = getShareableVideoLink(
+    video.id,
+    user?.id,
+    durationInSeconds(startDuration),
+    durationInSeconds(endDuration),
+  );
 
   const toggleModalVisibility = () => setIsModalVisible(!isModalVisible);
 
@@ -59,7 +71,6 @@ export const VideoShareButton = ({
     );
   };
 
-  const { data: user } = useGetUserQuery();
   return (
     <>
       <Button
@@ -92,12 +103,20 @@ export const VideoShareButton = ({
               </Typography.Body>
             </Typography.Body>
           }
+          extraButton={
+            <GoogleClassroomShareLink
+              link={shareLink}
+              postTitle={video.title}
+              postBody={`Use code ${user.shareCode} to view this.`}
+              onClick={() => {}}
+            />
+          }
         >
           <Typography.Body as="div" className="mb-8">
             Students need both the link and your unique teacher code to access
             to play video(s).
           </Typography.Body>
-          <div className="flex justify-around">
+          <div className="flex justify-between">
             <div className="flex items-center">
               <BoCheckbox
                 checked={startTimeEnabled}

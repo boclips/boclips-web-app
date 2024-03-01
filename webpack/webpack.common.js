@@ -111,6 +111,10 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.png$/i,
+        type: 'asset/resource',
+      },
     ],
   },
   // Add cache configuration for the entire build process

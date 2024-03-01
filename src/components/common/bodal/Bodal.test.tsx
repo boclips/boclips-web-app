@@ -298,4 +298,18 @@ describe('The mighty Bodal', () => {
 
     expect(handleOnCancel).toBeCalledTimes(1);
   });
+
+  it('renders extraButton element if provided', () => {
+    const wrapper = render(
+      <Bodal
+        title="Hello Bodal"
+        onCancel={jest.fn}
+        extraButton={<div>Second button!</div>}
+      >
+        <span>i must be here!</span>
+      </Bodal>,
+    );
+
+    expect(wrapper.getByText('Second button!')).toBeVisible();
+  });
 });
