@@ -23,7 +23,7 @@ import {
   TopicFactory,
 } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
-import { VideoAIMetadataType } from 'src/components/videoPage/videoAIMetadata/VideoAIMetadataType';
+import { VideoAIMetadata } from 'src/components/videoPage/videoMetadata/types/VideoAIMetadata';
 
 describe('Video View', () => {
   let fakeClient;
@@ -495,10 +495,10 @@ describe('Video View', () => {
 
       expect(await wrapper.findByText(video.id)).toBeVisible();
       expect(
-        await wrapper.queryByText(VideoAIMetadataType.LEARNING_OUTCOMES),
+        await wrapper.queryByText(VideoAIMetadata.LEARNING_OUTCOMES),
       ).toBeNull();
       expect(
-        await wrapper.queryByText(VideoAIMetadataType.ASSESSMENT_QUESTIONS),
+        await wrapper.queryByText(VideoAIMetadata.ASSESSMENT_QUESTIONS),
       ).toBeNull();
     });
 
@@ -518,10 +518,10 @@ describe('Video View', () => {
 
       expect(await wrapper.findByText(video.id)).toBeVisible();
       expect(
-        await wrapper.queryByText(VideoAIMetadataType.LEARNING_OUTCOMES),
+        await wrapper.queryByText(VideoAIMetadata.LEARNING_OUTCOMES),
       ).toBeNull();
       expect(
-        await wrapper.queryByText(VideoAIMetadataType.ASSESSMENT_QUESTIONS),
+        await wrapper.queryByText(VideoAIMetadata.ASSESSMENT_QUESTIONS),
       ).toBeNull();
     });
 
@@ -541,7 +541,7 @@ describe('Video View', () => {
 
       expect(await wrapper.findByText(video.id)).toBeVisible();
       expect(
-        await wrapper.findByText(VideoAIMetadataType.LEARNING_OUTCOMES),
+        await wrapper.findByText(VideoAIMetadata.LEARNING_OUTCOMES),
       ).toBeInTheDocument();
     });
   });

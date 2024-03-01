@@ -18,6 +18,10 @@ const RegisterView = lazyWithRetry(
   () => import('src/views/register/RegisterView'),
 );
 
+const UnauthorizedVideoView = lazyWithRetry(
+  () => import('src/views/unauthorizedVideoView/UnauthorizedVideoView'),
+);
+
 const queryClient = new QueryClient(queryClientConfig);
 
 const AppUnauthenticated = ({
@@ -60,6 +64,7 @@ const AppUnauthenticated = ({
       <BoclipsClientProvider client={apiClient}>
         <Routes>
           <Route path="/register" element={<RegisterView />} />
+          <Route path="/videos/:id" element={<UnauthorizedVideoView />} />
         </Routes>
       </BoclipsClientProvider>
     </QueryClientProvider>

@@ -23,6 +23,30 @@ export const doGetVideoRecommendations = (
 export const doGetVideo = (id: string, apiClient: BoclipsClient) =>
   apiClient.videos.get(id);
 
+export const doGetVideoWithShareCode = (
+  id: string,
+  apiClient: BoclipsClient,
+  referer: string,
+  shareCode?: string,
+): Promise<Video> => {
+  return apiClient.videos.get(id, referer, shareCode);
+};
+
+export const useGetVideoWithShareCode = (
+  videoId: string,
+  referer: string,
+  shareCode?: string,
+) => {
+  const apiClient = useBoclipsClient();
+  return useQuery(
+    ['videoWithShareCode'],
+    () => doGetVideoWithShareCode(videoId, apiClient, referer, shareCode),
+    {
+      enabled: !!videoId && !!referer,
+    },
+  );
+};
+
 export const useGetVideos = (videoIds: string[]) => {
   const apiClient = useBoclipsClient();
   return useQuery(['multipleVideos'], () => doGetVideos(videoIds, apiClient), {

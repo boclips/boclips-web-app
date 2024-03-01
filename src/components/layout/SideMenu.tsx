@@ -2,17 +2,16 @@ import s from 'src/components/layout/navbar.module.less';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { Link } from 'src/components/common/Link';
 import ExternalLinkIcon from 'src/resources/icons/external-link-icon.svg';
-import { Typography } from '@boclips-ui/typography';
 import React from 'react';
 import c from 'classnames';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import LogoutButton from 'src/components/layout/logoutButton/LogoutButton';
 
 interface Props {
-  logOut: () => void;
   hasSearchInNavbar?: boolean;
 }
 
-const SideMenu = ({ logOut, hasSearchInNavbar = true }: Props) => {
+const SideMenu = ({ hasSearchInNavbar = true }: Props) => {
   return (
     <div className={c(s.slideMenu, { [s.oneLineNavbar]: !hasSearchInNavbar })}>
       <div className={s.buttons}>
@@ -37,10 +36,9 @@ const SideMenu = ({ logOut, hasSearchInNavbar = true }: Props) => {
               <ExternalLinkIcon />
             </span>
           </a>
+
+          <LogoutButton />
         </FeatureGate>
-        <button type="button" onClick={logOut}>
-          <Typography.Link>Log out</Typography.Link>
-        </button>
       </div>
     </div>
   );

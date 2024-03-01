@@ -1,4 +1,5 @@
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
 import React from 'react';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
@@ -14,7 +15,7 @@ import useFeatureFlags from 'src/hooks/useFeatureFlags';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { VideoShareButton } from 'src/components/videoShareButton/VideoShareButton';
 import { EmbedButton } from 'src/components/embedButton/EmbedButton';
-import AddToCartButton from 'src/components/addToCartButton/AddToCartButton';
+import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
 import s from './style.module.less';
 
@@ -24,10 +25,13 @@ interface Props {
 
 export const VideoHeader = ({ video }: Props) => {
   const { features, isLoading: featuresAreLoading } = useFeatureFlags();
+  const { data: currentUser } = useGetUserQuery();
+
+  const isAuthenticated = !!currentUser;
 
   const showLicensingDetails =
     !featuresAreLoading &&
-    !features.LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED;
+    !features?.LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED;
 
   if (!video) {
     return null;
@@ -67,13 +71,13 @@ export const VideoHeader = ({ video }: Props) => {
       <div className={s.descriptionAndButtons}>
         <div>
           <VideoBadges video={video} />
-          <FeatureGate product={Product.B2B}>
+          <FeatureGate product={Product.B2B} fallback={null}>
             {showLicensingDetails && <VideoLicensingDetails video={video} />}
           </FeatureGate>
         </div>
         <div className={(s.sticky, s.buttons)}>
           <div className={s.iconButtons}>
-            <AddToPlaylistButton videoId={video?.id} />
+            {isAuthenticated && <AddToPlaylistButton videoId={video?.id} />}
             <FeatureGate product={Product.B2B}>
               <CopyVideoLinkButton video={video} onClick={trackVideoCopy} />
             </FeatureGate>

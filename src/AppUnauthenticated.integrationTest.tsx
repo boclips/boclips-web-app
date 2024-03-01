@@ -3,6 +3,7 @@ import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import AppUnauthenticated from 'src/AppUnauthenticated';
+import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 
 describe('Unauthenticated app', () => {
   it('renders registration view without authentication', async () => {
@@ -15,5 +16,21 @@ describe('Unauthenticated app', () => {
     );
 
     expect(await wrapper.findByText('Create your account')).toBeVisible();
+  });
+
+  it('renders video page view', async () => {
+    const apiClient = new FakeBoclipsClient();
+
+    apiClient.videos.insertVideo(
+      VideoFactory.sample({ id: 'video-id', title: 'Awesome video' }),
+    );
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/videos/video-id?referer=some-referer']}>
+        <AppUnauthenticated axiosApiClient={apiClient} />,
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByText('Awesome video')).toBeVisible();
   });
 });
