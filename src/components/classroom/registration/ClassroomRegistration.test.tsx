@@ -18,21 +18,23 @@ describe('registration', () => {
     resizeToDesktop();
     renderRegistration();
 
-    expect(await screen.findByText('Explore Boclips Classroom!')).toBeVisible();
+    expect(
+      await screen.findByText('Welcome to Boclips Classroom!'),
+    ).toBeVisible();
   });
 
   it('does not displays classroom info box in mobile view', async () => {
     resizeToMobile();
     renderRegistration();
 
-    expect(screen.queryByText('Explore Boclips Classroom!')).toBeNull();
+    expect(screen.queryByText('Welcome to Boclips Classroom!')).toBeNull();
   });
 
   it('does not displays classroom info box in tablet view', async () => {
     resizeToTablet();
     renderRegistration();
 
-    expect(screen.queryByText('Explore Boclips Classroom!')).toBeNull();
+    expect(screen.queryByText('Welcome to Boclips Classroom!')).toBeNull();
   });
 
   const renderRegistration = () => {

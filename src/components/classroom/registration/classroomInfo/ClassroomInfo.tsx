@@ -7,23 +7,24 @@ import s from './style.module.less';
 
 const features = [
   {
-    title: 'No Credit Card Required',
-    description: 'Explore more than 2.2M Ed-Ready videos for free.',
+    title: 'Curriculum-aligned',
+    description:
+      'Expertly curated to align to educational standards and curriculum objectives.',
   },
   {
-    title: 'Discover & Search Videos',
+    title: 'Discoverable',
     description:
-      'Effortlessly find the videos you need with advanced search and filtering options. Create and share playlists with team members.',
+      'Filter by subject, age, pedagogical use case, type, and more.',
   },
   {
-    title: 'Browse Educational Alignments',
+    title: 'Distraction-free',
     description:
-      'Access a wealth of resources aligned with OpenStax, NGSS, Common Core Math, and more!',
+      'Share videos directly with students in a distraction free environment curated for learning.',
   },
   {
-    title: 'No Commitment Invoice Payment for Instant Takeaway',
+    title: 'Safe and reliable',
     description:
-      'Pay via invoice, copy your embed code and get immediate access to your videos.',
+      'Content sourced directly from educational content creators, guaranteeing content provenance.',
   },
 ];
 
@@ -31,7 +32,12 @@ const ClassroomInfo = () => {
   return (
     <>
       <div className={s.classroomInfo}>
-        <Typography.H1 size="lg">Explore Boclips Classroom!</Typography.H1>
+        <Typography.H1 size="lg">Welcome to Boclips Classroom!</Typography.H1>
+        <Typography.Body as="div" size="small" className="mt-3 mb-3">
+          Enhance your classroom experience with over 2.2 million Ed-Ready
+          videos thoughtfully selected to facilitate dynamic, focused learning
+          without distractions.
+        </Typography.Body>
         {features.map(({ title, description }) => {
           return (
             <section key={title} className={s.featureInfo}>
