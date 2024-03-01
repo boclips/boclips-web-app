@@ -7,11 +7,11 @@ interface Props {
 }
 
 const Thumbnail = ({ video }: Props) => {
-  const thumnailUrl = video.playback?.links?.thumbnail?.getOriginalLink();
+  const thumbnailUrl = video?.playback?.links?.thumbnail?.getOriginalLink();
 
   return (
     <div className="h-36">
-      {thumnailUrl ? (
+      {thumbnailUrl ? (
         <div
           className={s.thumbnails}
           key={video.id}
