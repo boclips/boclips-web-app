@@ -14,6 +14,7 @@ describe('filterPanel', () => {
           hits: 10 - i,
           id: `${i}-option`,
           label: <span>Option {i}</span>,
+          name: `Option ${i}`,
         }),
       );
     }

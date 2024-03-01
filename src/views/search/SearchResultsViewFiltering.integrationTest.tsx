@@ -170,7 +170,9 @@ describe('SearchResultsFiltering', () => {
         expect(wrapper.queryByText('stock video')).toBeNull();
       });
 
-      expect(await wrapper.findByLabelText('News')).toBeInTheDocument();
+      expect(
+        await wrapper.findByRole('checkbox', { name: 'News' }),
+      ).toBeInTheDocument();
       expect(await wrapper.findByText('news video')).toBeInTheDocument();
 
       const selectedFiltersSection = wrapper.getByTestId('applied-filter-tags');

@@ -55,21 +55,23 @@ export const VideoCardButtons = ({
         {additionalSecondaryButtons}
       </div>
 
-      {video.links.createEmbedCode ? (
-        <EmbedButton video={video} iconOnly={iconOnly} />
-      ) : (
-        <FeatureGate linkName="cart">
-          <AddToCartButton
-            video={video}
-            key="cart-button"
-            width="148px"
-            onClick={onAddToCart}
-            iconOnly={iconOnly}
-          />
-        </FeatureGate>
-      )}
+      <FeatureGate product={Product.B2B}>
+        {video.links.createEmbedCode ? (
+          <EmbedButton video={video} iconOnly={iconOnly} />
+        ) : (
+          <FeatureGate linkName="cart">
+            <AddToCartButton
+              video={video}
+              key="cart-button"
+              width="148px"
+              onClick={onAddToCart}
+              iconOnly={iconOnly}
+            />
+          </FeatureGate>
+        )}
+      </FeatureGate>
       <FeatureGate product={Product.CLASSROOM}>
-        <VideoShareButton iconOnly={iconOnly} />
+        <VideoShareButton iconOnly={iconOnly} video={video} />
       </FeatureGate>
     </div>
   );

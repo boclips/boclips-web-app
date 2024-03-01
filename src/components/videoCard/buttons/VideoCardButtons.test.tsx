@@ -11,10 +11,11 @@ import {
   AccountType,
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 
 describe('VideoCardButtons', () => {
   describe(`create embed code button`, () => {
-    it(`renders embed code button when user has video embed link`, () => {
+    it(`renders embed code button when user has video embed link and B2B product`, async () => {
       const video = VideoFactory.sample({
         links: {
           self: new Link({ href: '', templated: false }),
@@ -23,15 +24,25 @@ describe('VideoCardButtons', () => {
         },
       });
 
+      const apiClient = new FakeBoclipsClient();
+
+      apiClient.users.insertCurrentUser(
+        UserFactory.sample({
+          account: AccountsFactory.sample({ products: [Product.B2B] }),
+        }),
+      );
+
       const wrapper = render(
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+        <BoclipsClientProvider client={apiClient}>
           <QueryClientProvider client={new QueryClient()}>
             <VideoCardButtons video={video} />
           </QueryClientProvider>
         </BoclipsClientProvider>,
       );
 
-      expect(wrapper.getByRole('button', { name: 'embed' })).toBeVisible();
+      expect(
+        await wrapper.findByRole('button', { name: 'embed' }),
+      ).toBeVisible();
     });
 
     it(`does not render embed code button when user doesn't have video embed link`, () => {

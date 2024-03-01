@@ -252,7 +252,9 @@ describe('Add to playlist button', () => {
 
     fireEvent.click(playlistButton);
 
-    const playlistCheckbox = await wrapper.findByLabelText(playlist.title);
+    const playlistCheckbox = await wrapper.findByRole('checkbox', {
+      name: playlist.title,
+    });
 
     fireEvent.click(playlistCheckbox);
 

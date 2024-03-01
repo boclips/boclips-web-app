@@ -11,6 +11,7 @@ interface Props {
   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
   onFocus: (event: React.FocusEvent<HTMLInputElement>) => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
 }
 
 export const BASE_DURATION = '00:00';
@@ -24,6 +25,7 @@ export const DurationInput = ({
   onChange,
   id,
   value,
+  disabled = false,
 }: Props) => {
   const debouncedIsValid = useDebounce(isValid, 100);
   const onKeyPress = (e) => {
@@ -34,11 +36,11 @@ export const DurationInput = ({
 
   return (
     <label htmlFor={id}>
-      {label}
+      <span className="mr-2">{label}</span>
       <input
         aria-label={ariaLabel}
         className={c(
-          'rounded outline-none w-16 h-10 ml-2 mr-6 px-2 text-center text-gray-800',
+          'rounded outline-none w-16 h-10 px-2 text-center text-gray-800',
           {
             'border-blue-300 border-1': debouncedIsValid,
             'border-red-error border-1': !debouncedIsValid,
@@ -52,6 +54,7 @@ export const DurationInput = ({
         placeholder={BASE_DURATION}
         id={id}
         value={value || ''}
+        disabled={disabled}
       />
     </label>
   );
