@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, within } from '@testing-library/react';
 import { VideoShareButton } from 'src/components/videoShareButton/VideoShareButton';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
@@ -9,8 +9,16 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import dayjs from 'src/day-js';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
+import { getShareableVideoLink } from 'src/components/videoShareButton/getShareableVideoLink';
+import { ToastContainer } from 'react-toastify';
 
 describe('video share button', () => {
+  Object.assign(navigator, {
+    clipboard: {
+      writeText: () => Promise.resolve(),
+    },
+  });
+
   it(`renders label when iconOnly false`, async () => {
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
@@ -130,6 +138,8 @@ describe('video share button', () => {
   });
 
   it(`validates start time > end time`, async () => {
+    jest.spyOn(navigator.clipboard, 'writeText');
+
     const wrapper = renderShareButton();
     await openShareModal(wrapper);
     expect(
@@ -167,6 +177,67 @@ describe('video share button', () => {
     expect(
       await wrapper.findByText('Please enter valid start and end times'),
     ).toBeVisible();
+
+    await userEvent.click(
+      await wrapper.findByRole('button', { name: 'Copy link' }),
+    );
+
+    expect(navigator.clipboard.writeText).not.toHaveBeenCalled();
+
+    expect(wrapper.queryByRole('alert')).toBeNull();
+
+    expect(
+      await wrapper.findByText('Share Tractor Video with students'),
+    ).toBeVisible();
+  });
+
+  it(`copies share link and closes modal on clicking main button`, async () => {
+    jest.spyOn(navigator.clipboard, 'writeText');
+
+    const wrapper = renderShareButton();
+    await openShareModal(wrapper);
+    expect(
+      await wrapper.findByText('Share Tractor Video with students'),
+    ).toBeVisible();
+    const startTimeInput = wrapper.getByRole('textbox', {
+      name: 'Start time:',
+    });
+    await userEvent.click(
+      wrapper.getByRole('checkbox', {
+        name: 'Start time enabled',
+        checked: false,
+      }),
+    );
+    await userEvent.type(startTimeInput, '00:10');
+
+    const endTimeInput = wrapper.getByRole('textbox', {
+      name: 'End time:',
+    });
+    await userEvent.click(
+      wrapper.getByRole('checkbox', {
+        name: 'End time enabled',
+        checked: false,
+      }),
+    );
+
+    await userEvent.clear(startTimeInput);
+    await userEvent.type(startTimeInput, '00:10');
+
+    await userEvent.clear(endTimeInput);
+    await userEvent.type(endTimeInput, '00:32');
+
+    await userEvent.click(
+      await wrapper.findByRole('button', { name: 'Copy link' }),
+    );
+
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+      getShareableVideoLink('video-1', 'user-1', 10, 32),
+    );
+
+    const notification = await wrapper.findByRole('alert');
+    expect(within(notification).getByText('Share link copied!')).toBeVisible();
+
+    expect(wrapper.queryByText('Share Tractor Video with students')).toBeNull();
   });
 
   it(`includes a link to google classroom`, async () => {
@@ -185,6 +256,7 @@ const renderShareButton = () => {
   const apiClient = new FakeBoclipsClient();
   apiClient.users.insertCurrentUser(
     UserFactory.sample({
+      id: 'user-1',
       shareCode: '1739',
     }),
   );
@@ -192,9 +264,11 @@ const renderShareButton = () => {
   return render(
     <QueryClientProvider client={new QueryClient()}>
       <BoclipsClientProvider client={apiClient}>
+        <ToastContainer />
         <VideoShareButton
           iconOnly
           video={VideoFactory.sample({
+            id: 'video-1',
             title: 'Tractor Video',
             playback: PlaybackFactory.sample({
               duration: dayjs.duration({ minutes: 1, seconds: 10 }),

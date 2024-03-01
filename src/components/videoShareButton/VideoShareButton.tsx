@@ -15,6 +15,7 @@ import {
 import { Typography } from '@boclips-ui/typography';
 import { GoogleClassroomShareLink } from 'src/components/videoShareButton/googleClassroom/GoogleClassroomShareLink';
 import { getShareableVideoLink } from 'src/components/videoShareButton/getShareableVideoLink';
+import { displayNotification } from 'src/components/common/notification/displayNotification';
 import s from './shareButton.module.less';
 
 interface VideoShareButtonProps {
@@ -71,6 +72,22 @@ export const VideoShareButton = ({
     );
   };
 
+  const handleCopyLink = () => {
+    if (!startDurationValid || !endDurationValid) {
+      return;
+    }
+
+    navigator.clipboard.writeText(shareLink).then(() => {
+      displayNotification(
+        'success',
+        'Share link copied!',
+        '',
+        'text-copied-notification',
+      );
+      toggleModalVisibility();
+    });
+  };
+
   return (
     <>
       <Button
@@ -91,6 +108,7 @@ export const VideoShareButton = ({
           confirmButtonText="Copy link"
           confirmButtonIcon={<CopyLinkIcon />}
           footerClass="mb-8"
+          onConfirm={handleCopyLink}
           footerText={
             <Typography.Body
               as="div"
