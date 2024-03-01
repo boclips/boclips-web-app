@@ -6,7 +6,7 @@ import MockedBoclipsSecurity from 'boclips-js-security';
 jest.mock('boclips-js-security', () => ({
   __esModule: true,
   default: {
-    createInstance: jest.fn().mockReturnValueOnce('Authorized App'),
+    createInstance: jest.fn(),
   },
 }));
 
@@ -32,7 +32,7 @@ describe('AppInitializer', () => {
     delete window.location;
     // @ts-ignore
     window.location = new URL(
-      'http://localhost/videos/5c542ab85438cdbcb56ddce2?referer=42b090f3-5a32-43d7-8faf-38bca304ca94',
+      'http://localhost/videos/shared/5c542ab85438cdbcb56ddce2?referer=42b090f3-5a32-43d7-8faf-38bca304ca94',
     );
 
     const wrapper = renderAppInitializer(<div>Unauthenticated App</div>);

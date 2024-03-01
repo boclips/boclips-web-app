@@ -26,7 +26,9 @@ describe('Unauthenticated app', () => {
     );
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/videos/video-id?referer=some-referer']}>
+      <MemoryRouter
+        initialEntries={['/videos/shared/video-id?referer=some-referer']}
+      >
         <AppUnauthenticated axiosApiClient={apiClient} />,
       </MemoryRouter>,
     );
