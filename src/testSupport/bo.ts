@@ -20,7 +20,10 @@ import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
-import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import {
+  AccountType,
+  Product,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 export interface Bo {
   create: {
@@ -86,9 +89,15 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
     });
   };
 
-  const boSetFeatures = async (features: {
+  const boSetUpUser = async (features: {
     [key in FeatureKey]?: boolean;
   }) => {
+    apiClient.users.insertCurrentUser(
+      UserFactory.sample({
+        account: AccountsFactory.sample({ products: [Product.B2B] }),
+      }),
+    );
+
     console.log(
       'setting features of user: ',
       await apiClient.users.getCurrentUser(),
@@ -165,7 +174,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
     },
     set: {
       facets: boSetFacets,
-      features: boSetFeatures,
+      features: boSetUpUser,
     },
     remove: {
       cartLink: () => delete apiClient.links.cart,
