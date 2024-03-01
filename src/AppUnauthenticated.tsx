@@ -64,7 +64,10 @@ const AppUnauthenticated = ({
       <BoclipsClientProvider client={apiClient}>
         <Routes>
           <Route path="/register" element={<RegisterView />} />
-          <Route path="/videos/:id" element={<UnauthorizedVideoView />} />
+          <Route
+            path="/videos/shared/:id"
+            element={<UnauthorizedVideoView />}
+          />
         </Routes>
       </BoclipsClientProvider>
     </QueryClientProvider>

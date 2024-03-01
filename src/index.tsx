@@ -98,9 +98,8 @@ const authOptions = {
 
 const AppInitializer = ({ viewMock }: { viewMock?: ReactElement }) => {
   const path = window.location.pathname;
-  const referer = window.location.search;
   const isRegisterView = path.match('/register');
-  const isVideoShareView = path.match('/videos') && referer.match('referer');
+  const isVideoShareView = path.match('/videos/shared');
 
   if (isRegisterView || isVideoShareView) {
     if (viewMock) return viewMock;

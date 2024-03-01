@@ -14,7 +14,7 @@ import { VideoPage } from 'src/components/videoPage/VideoPage';
 import ErrorView from 'src/views/error/ErrorView';
 
 const UnauthorizedVideoView = () => {
-  const videoId = useGetIdFromLocation('videos');
+  const videoId = useGetIdFromLocation('shared');
   const referer = useGetRefererFromLocation();
 
   const {
@@ -23,11 +23,11 @@ const UnauthorizedVideoView = () => {
     error,
   } = useGetVideoWithShareCode(videoId, referer);
 
-  if (isLoading && !video) return <Loading />;
+  if (isLoading) return <Loading />;
 
   const isVideoNotFound = (error as BoclipsApiError)?.status === 404;
 
-  if (isVideoNotFound) {
+  if (isVideoNotFound || !video) {
     return <ErrorView />;
   }
 
