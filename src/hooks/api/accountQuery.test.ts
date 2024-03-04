@@ -11,6 +11,7 @@ import {
 import { DeliveryMethod } from 'boclips-api-client/dist/sub-clients/common/model/DeliveryMethod';
 import { useUpdateAccount } from 'src/hooks/api/accountQuery';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
+import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 
 describe('accountQuery', () => {
   it('updates an account', async () => {
@@ -18,7 +19,10 @@ describe('accountQuery', () => {
     fakeClient.accounts.insertAccount(
       AccountsFactory.sample({ id: 'account-1' }),
     );
-    const updateAccountSpy = jest.spyOn(fakeClient.accounts, 'updateAccount');
+    const updateUserAccountSpy = jest.spyOn(
+      fakeClient.accounts,
+      'updateUserAccount',
+    );
 
     const request: UpdateAccountRequest = {
       name: 'New name',
@@ -36,14 +40,17 @@ describe('accountQuery', () => {
       wrapper: wrapperWithClients(fakeClient, new QueryClient()),
     });
 
+    const user = UserFactory.sample({
+      account: { ...UserFactory.sample().account, id: 'account-1' },
+    });
     act(() =>
       result.current.mutate({
-        accountId: 'account-1',
+        user,
         request,
       }),
     );
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
-    expect(updateAccountSpy).toBeCalledWith('account-1', request);
+    expect(updateUserAccountSpy).toBeCalledWith(user, request);
   });
 });

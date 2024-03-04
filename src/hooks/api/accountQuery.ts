@@ -3,9 +3,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { Account } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { UpdateAccountRequest } from 'boclips-api-client/dist/sub-clients/accounts/model/UpdateAccountRequest';
+import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
 
 export type EditAccountRequest = {
-  accountId: string;
+  user: User;
   request: UpdateAccountRequest;
 };
 
@@ -14,8 +15,8 @@ export const useUpdateAccount = () => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    ({ accountId, request }: EditAccountRequest) =>
-      doUpdateAccount(accountId, request, client),
+    ({ user, request }: EditAccountRequest) =>
+      doUpdateUserAccount(user, request, client),
     {
       onSuccess: () => {
         // do not wait until query cache is invalidated!
@@ -26,10 +27,10 @@ export const useUpdateAccount = () => {
   );
 };
 
-const doUpdateAccount = (
-  userId: string,
+const doUpdateUserAccount = (
+  user: User,
   updateRequest: UpdateAccountRequest,
   client: BoclipsClient,
 ): Promise<Account> => {
-  return client.accounts.updateAccount(userId, updateRequest);
+  return client.accounts.updateUserAccount(user, updateRequest);
 };
