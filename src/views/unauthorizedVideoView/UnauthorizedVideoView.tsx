@@ -3,7 +3,7 @@ import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import {
   useGetIdFromLocation,
-  useGetRefererFromLocation,
+  useGetAnyParamFromLocation,
 } from 'src/hooks/useLocationParams';
 import { useGetVideoWithShareCode } from 'src/hooks/api/videoQuery';
 import { Loading } from 'src/components/common/Loading';
@@ -15,7 +15,7 @@ import ErrorView from 'src/views/error/ErrorView';
 
 const UnauthorizedVideoView = () => {
   const videoId = useGetIdFromLocation('shared');
-  const referer = useGetRefererFromLocation();
+  const referer = useGetAnyParamFromLocation('referer');
 
   const {
     data: video,

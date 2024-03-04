@@ -84,8 +84,8 @@ export const useGetIdFromLocation = (path: string) => {
   return segments[index + 1];
 };
 
-export const useGetRefererFromLocation = () => {
+export const useGetAnyParamFromLocation = (param: string) => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  return searchParams.get('referer');
+  return searchParams.get(param);
 };

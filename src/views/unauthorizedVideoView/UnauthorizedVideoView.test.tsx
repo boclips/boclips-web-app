@@ -16,7 +16,7 @@ describe('Video View', () => {
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={apiClient}>
-          <MemoryRouter initialEntries={['/videos/video-id?referer=id']}>
+          <MemoryRouter initialEntries={['/videos/shared/video-id?referer=id']}>
             <UnauthorizedVideoView />
           </MemoryRouter>
         </BoclipsClientProvider>
