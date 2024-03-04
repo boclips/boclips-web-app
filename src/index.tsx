@@ -100,7 +100,7 @@ const AppInitializer = () => {
   const path = window.location.pathname;
   const isRegisterView = path === '/register';
 
-  if (isRegisterView) {
+  if (isRegisterView && BoclipsSecurity.getInstance()?.isAuthenticated()) {
     return (
       <Router>
         <AppUnauthenticated />
