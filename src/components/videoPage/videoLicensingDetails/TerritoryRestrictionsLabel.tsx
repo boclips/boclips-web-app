@@ -15,13 +15,13 @@ export const TerritoryRestrictionsLabel = ({ territories }: Props) => {
   };
 
   return (
-    <p className="flex flex-row items-center gap-1">
+    <span className="flex flex-row items-center gap-1">
       <span>{getLabel()}</span>
       <Tooltip text={territories.join(', ')}>
         <button type="button" data-qa="territories-details">
           <InfoSVG onClick={null} />
         </button>
       </Tooltip>
-    </p>
+    </span>
   );
 };

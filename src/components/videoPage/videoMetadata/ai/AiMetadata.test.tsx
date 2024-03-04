@@ -1,15 +1,20 @@
 import React from 'react';
-import { VideoAIMetadata } from 'src/components/videoPage/videoAIMetadata/VideoAIMetadata';
-import { VideoAIMetadataType } from 'src/components/videoPage/videoAIMetadata/VideoAIMetadataType';
 import { render } from '@testing-library/react';
+import AiMetadata from 'src/components/videoPage/videoMetadata/ai/AiMetadata';
+import { VideoAIMetadata } from 'src/components/videoPage/videoMetadata/types/VideoAIMetadata';
+import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
+import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import VideoAiMetadata from 'src/components/videoPage/videoMetadata/ai/VideoAiMetadata';
 
-describe('VideoAIMetadata', () => {
+describe('AiMetadata', () => {
   it('displays only the spinner when videoAIMetadata are loading', async () => {
     const wrapper = render(
-      <VideoAIMetadata
+      <AiMetadata
         isLoading
         metadata={['Some metadata']}
-        type={VideoAIMetadataType.LEARNING_OUTCOMES}
+        type={VideoAIMetadata.LEARNING_OUTCOMES}
       />,
     );
 
@@ -22,10 +27,10 @@ describe('VideoAIMetadata', () => {
 
   it('displays the metadata and AI generated badge when not loading', async () => {
     const wrapper = render(
-      <VideoAIMetadata
+      <AiMetadata
         isLoading={false}
         metadata={['Some metadata']}
-        type={VideoAIMetadataType.LEARNING_OUTCOMES}
+        type={VideoAIMetadata.LEARNING_OUTCOMES}
       />,
     );
 
@@ -38,10 +43,10 @@ describe('VideoAIMetadata', () => {
 
   it('can display multiple metadata items', async () => {
     const wrapper = render(
-      <VideoAIMetadata
+      <AiMetadata
         isLoading={false}
         metadata={['Some metadata', 'Some other metadata']}
-        type={VideoAIMetadataType.LEARNING_OUTCOMES}
+        type={VideoAIMetadata.LEARNING_OUTCOMES}
       />,
     );
 
@@ -52,15 +57,15 @@ describe('VideoAIMetadata', () => {
   it('displays an informative message when no metadata loaded', async () => {
     const wrapper = render(
       <>
-        <VideoAIMetadata
+        <AiMetadata
           isLoading={false}
           metadata={undefined}
-          type={VideoAIMetadataType.LEARNING_OUTCOMES}
+          type={VideoAIMetadata.LEARNING_OUTCOMES}
         />
-        <VideoAIMetadata
+        <AiMetadata
           isLoading={false}
           metadata={undefined}
-          type={VideoAIMetadataType.ASSESSMENT_QUESTIONS}
+          type={VideoAIMetadata.ASSESSMENT_QUESTIONS}
         />
       </>,
     );
@@ -79,5 +84,33 @@ describe('VideoAIMetadata', () => {
     expect(
       wrapper.queryByTestId('video-ai-metadata-loading-spinner'),
     ).toBeNull();
+  });
+
+  it(`doesn't render video description section if description is blank`, () => {
+    const video = VideoFactory.sample({ description: '' });
+
+    const wrapper = render(
+      <BoclipsClientProvider client={new FakeBoclipsClient()}>
+        <QueryClientProvider client={new QueryClient()}>
+          <VideoAiMetadata video={video} />
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
+    );
+
+    expect(wrapper.queryByText('Video Description')).toBeNull();
+  });
+
+  it(`doesn't render video description section if description is whitespace`, () => {
+    const video = VideoFactory.sample({ description: '   ' });
+
+    const wrapper = render(
+      <BoclipsClientProvider client={new FakeBoclipsClient()}>
+        <QueryClientProvider client={new QueryClient()}>
+          <VideoAiMetadata video={video} />
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
+    );
+
+    expect(wrapper.queryByText('Video Description')).toBeNull();
   });
 });

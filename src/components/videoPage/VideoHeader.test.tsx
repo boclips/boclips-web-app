@@ -11,7 +11,7 @@ import {
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
-describe('VideoHeader', () => {
+describe('VideoHeader B2B', () => {
   it('should render without crashing if links are null', () => {
     const wrapper = render(
       <BoclipsClientProvider client={new FakeBoclipsClient()}>
@@ -161,5 +161,27 @@ describe('VideoHeader', () => {
     );
 
     expect(await wrapper.findByRole('button', { name: 'Share' })).toBeVisible();
+  });
+});
+
+describe('Video header CLASSROOM', () => {
+  it('only displays elemets for classroom video page', () => {
+    const video = VideoFactory.sample({
+      id: 'video-id',
+      title: 'my video title',
+      links: null,
+    });
+
+    const wrapper = render(
+      <BoclipsClientProvider client={new FakeBoclipsClient()}>
+        <QueryClientProvider client={new QueryClient()}>
+          <VideoHeader video={video} />
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
+    );
+
+    expect(wrapper.getByText('my video title')).toBeVisible();
+    expect(wrapper.getByText('video-id')).toBeVisible();
+    expect(wrapper.getByText('18:39')).toBeVisible();
   });
 });

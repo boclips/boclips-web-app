@@ -2,16 +2,17 @@ import { LoadingOutlined } from '@ant-design/icons';
 import Badge from '@boclips-ui/badge';
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
-import { VideoAIMetadataContent } from 'src/components/videoPage/videoAIMetadata/VideoAIMetadataContent';
-import { VideoAIMetadataType } from 'src/components/videoPage/videoAIMetadata/VideoAIMetadataType';
-import s from './videoAIMetadata.module.less';
+import { VideoAIMetadataContent } from 'src/components/videoPage/videoMetadata/ai/VideoAIMetadataContent';
+import { VideoAIMetadata } from 'src/components/videoPage/videoMetadata/types/VideoAIMetadata';
+import s from '../style.module.less';
 
 interface Props {
   isLoading: boolean;
   metadata: string[];
-  type: VideoAIMetadataType;
+  type: VideoAIMetadata;
 }
-export const VideoAIMetadata = ({ isLoading, metadata, type }: Props) => {
+
+const AiMetadata = ({ isLoading, metadata, type }: Props) => {
   const getAIBadge = () =>
     isLoading ? (
       <LoadingOutlined
@@ -43,3 +44,5 @@ export const VideoAIMetadata = ({ isLoading, metadata, type }: Props) => {
     </>
   );
 };
+
+export default AiMetadata;

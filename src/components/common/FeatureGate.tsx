@@ -55,6 +55,10 @@ export const FeatureGate = (props: FeatureGateProps & OptionalProps) => {
   const { features, isLoading } = useFeatureFlags();
   const { products, isLoading: isProductsLoading } = useUserProducts();
 
+  if (!features) {
+    return null;
+  }
+
   if (isLoading || isProductsLoading) {
     return isView ? <Loading /> : null;
   }
