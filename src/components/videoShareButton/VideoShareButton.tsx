@@ -28,6 +28,7 @@ export const VideoShareButton = ({
   video,
 }: VideoShareButtonProps) => {
   const { data: user } = useGetUserQuery();
+  const videoDuration = video.playback.duration.format('mm:ss');
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [startTimeEnabled, setStartTimeEnabled] = useState(false);
@@ -35,9 +36,7 @@ export const VideoShareButton = ({
   const [startDurationValid, setStartDurationValid] = useState(true);
 
   const [endTimeEnabled, setEndTimeEnabled] = useState(false);
-  const [endDuration, setEndDuration] = useState(
-    video.playback.duration.format('mm:ss'),
-  );
+  const [endDuration, setEndDuration] = useState(videoDuration);
   const [endDurationValid, setEndDurationValid] = useState(true);
 
   const shareLink = getShareableVideoLink(
@@ -132,9 +131,9 @@ export const VideoShareButton = ({
         >
           <Typography.Body as="div" className="mb-8">
             Students need both the link and your unique teacher code to access
-            to play video(s).
+            and play video(s).
           </Typography.Body>
-          <div className="flex justify-between">
+          <div className="flex justify-start">
             <div className="flex items-center">
               <BoCheckbox
                 checked={startTimeEnabled}
@@ -157,7 +156,7 @@ export const VideoShareButton = ({
                 onFocus={() => {}}
               />
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center ml-16">
               <BoCheckbox
                 aria-label="end time enabled"
                 checked={endTimeEnabled}
@@ -178,6 +177,7 @@ export const VideoShareButton = ({
                 isValid={endDurationValid}
                 onBlur={validateFields}
                 onFocus={() => {}}
+                placeholder={videoDuration}
               />
             </div>
           </div>

@@ -12,6 +12,7 @@ interface Props {
   onFocus: (event: React.FocusEvent<HTMLInputElement>) => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
+  placeholder?: string;
 }
 
 export const BASE_DURATION = '00:00';
@@ -26,6 +27,7 @@ export const DurationInput = ({
   id,
   value,
   disabled = false,
+  placeholder = BASE_DURATION,
 }: Props) => {
   const debouncedIsValid = useDebounce(isValid, 100);
   const onKeyPress = (e) => {
@@ -51,7 +53,7 @@ export const DurationInput = ({
         onKeyPress={onKeyPress}
         onFocus={onFocus}
         onChange={onChange}
-        placeholder={BASE_DURATION}
+        placeholder={placeholder}
         id={id}
         value={value || ''}
         disabled={disabled}

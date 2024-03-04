@@ -7,7 +7,6 @@ import React, {
 import Button from '@boclips-ui/button';
 import CloseIconSVG from 'src/resources/icons/cross-icon.svg';
 import { LoadingOutlined } from '@ant-design/icons';
-import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import { TextButton } from 'src/components/common/textButton/TextButton';
 import { handleEscapeKeyEvent } from 'src/services/handleKeyEvent';
 import FocusTrap from 'focus-trap-react';
@@ -57,9 +56,6 @@ export const Bodal: React.FC<Props> = ({
   footerText,
   extraButton,
 }: PropsWithChildren<Props>) => {
-  const breakpoints = useMediaBreakPoint();
-  const mobileView = breakpoints.type === 'mobile';
-
   const getSpinner = (): ReactElement =>
     isLoading ? (
       <span data-qa="spinner" className="pb-2">
@@ -116,7 +112,6 @@ export const Bodal: React.FC<Props> = ({
         <div className={c(s.modal, { [s.small]: smallSize })} ref={ref}>
           <div className={s.modalContent}>
             <div className={s.modalHeader}>
-              {mobileView && <span />}
               <Typography.H1
                 size="sm"
                 className="text-gray-900"
