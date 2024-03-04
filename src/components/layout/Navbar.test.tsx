@@ -244,6 +244,77 @@ describe(`Navbar`, () => {
     );
   });
 
+  describe('My account in Navbar - mobile', () => {
+    const client = new FakeBoclipsClient();
+    let wrapper;
+
+    beforeEach(() => {
+      client.users.insertCurrentUser(UserFactory.sample());
+
+      wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={client}>
+            <NavbarResponsive />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+    });
+
+    it.each([
+      ['mobile', resizeToMobile],
+      ['tablet', resizeToTablet],
+    ])('is visible on %s', async (_screenType: string, resize: () => void) => {
+      resize();
+
+      fireEvent.click(await wrapper.findByLabelText('Menu'));
+      expect(wrapper.getByText('My account')).toBeVisible();
+    });
+  });
+
+  describe('Orders in Navbar', () => {
+    const client = new FakeBoclipsClient();
+    let wrapper;
+
+    beforeEach(() => {
+      client.users.insertCurrentUser(UserFactory.sample());
+
+      wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={client}>
+            <NavbarResponsive />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+    });
+
+    it.each([
+      ['mobile', resizeToMobile],
+      ['tablet', resizeToTablet],
+    ])(
+      'is visible on %s if userOrders link is present',
+      async (_screenType: string, resize: () => void) => {
+        resize();
+
+        fireEvent.click(await wrapper.findByLabelText('Menu'));
+        expect(wrapper.getByText('Your orders')).toBeVisible();
+      },
+    );
+
+    it.each([
+      ['mobile', resizeToMobile],
+      ['tablet', resizeToTablet],
+    ])(
+      'is not visible on %s if userOrders link is missing',
+      async (_screenType: string, resize: () => void) => {
+        client.links.userOrders = null;
+        resize();
+
+        fireEvent.click(await wrapper.findByLabelText('Menu'));
+        expect(wrapper.queryByText('Your orders')).toBeNull();
+      },
+    );
+  });
+
   describe('Show Options', () => {
     it('should hide options if requested', () => {
       resizeToDesktop();

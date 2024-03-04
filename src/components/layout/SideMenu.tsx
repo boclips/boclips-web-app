@@ -15,12 +15,15 @@ const SideMenu = ({ hasSearchInNavbar = true }: Props) => {
   return (
     <div className={c(s.slideMenu, { [s.oneLineNavbar]: !hasSearchInNavbar })}>
       <div className={s.buttons}>
+        <Link to="/account">My account</Link>
         <Link to="/alignments">Alignments</Link>
         <Link to="/playlists">Playlists</Link>
         <FeatureGate feature="BO_WEB_APP_DEV">
           <Link to="/content">My content</Link>
         </FeatureGate>
-        <Link to="/orders">Your orders</Link>
+        <FeatureGate linkName="userOrders">
+          <Link to="/orders">Your orders</Link>
+        </FeatureGate>
         <FeatureGate linkName="cart">
           <Link to="/cart">Cart</Link>
         </FeatureGate>
