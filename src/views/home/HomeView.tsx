@@ -35,6 +35,7 @@ const HomeView = () => {
   });
   useEmailVerified();
 
+  console.log(showTrialPopUp);
   return (
     <Layout rowsSetup="grid-rows-newHomepage" responsiveLayout>
       <NewNavbar showSearch={false} />
