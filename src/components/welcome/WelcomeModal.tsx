@@ -60,7 +60,7 @@ const WelcomeModal = ({ showPopup, isAdmin, isClassroomUser }: Props) => {
     };
 
     updateSelfAccount(
-      { accountId: user.account.id, request: accountRequest },
+      { user, request: accountRequest },
       {
         onSuccess: () => updateUser(userRequest),
         onError: (error: Error) => {
