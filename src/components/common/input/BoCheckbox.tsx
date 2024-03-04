@@ -33,7 +33,11 @@ const BoCheckbox = ({
           <Typography.Body size="small">{errorMessage}</Typography.Body>
         </span>
       )}
-      <label className={s.checkboxWrapper} htmlFor={id} aria-label={name}>
+      <label
+        className={s.checkboxWrapper}
+        htmlFor={id}
+        aria-label={showLabel ? null : name}
+      >
         <input
           onChange={onChange}
           type="checkbox"
