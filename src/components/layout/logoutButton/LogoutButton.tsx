@@ -13,7 +13,7 @@ const LogoutButton = () => {
   };
 
   return (
-    <button type="button" onClick={logOut}>
+    <button className="text-xs" type="button" onClick={logOut}>
       <Typography.Link>Log out</Typography.Link>
     </button>
   );

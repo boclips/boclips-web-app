@@ -164,10 +164,10 @@ export const AccountButton = () => {
                   </Typography.Body>
                 </a>
               </div>
-              <div className="pt-2">
-                <LogoutButton />
-              </div>
             </FeatureGate>
+            <div className="pt-2">
+              <LogoutButton />
+            </div>
           </div>
         </div>
       )}
