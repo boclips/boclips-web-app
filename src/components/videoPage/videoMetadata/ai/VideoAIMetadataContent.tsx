@@ -1,11 +1,11 @@
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
-import { VideoAIMetadataType } from 'src/components/videoPage/videoAIMetadata/VideoAIMetadataType';
-import s from './videoAIMetadata.module.less';
+import { VideoAIMetadata } from 'src/components/videoPage/videoMetadata/types/VideoAIMetadata';
+import s from '../style.module.less';
 
 interface Props {
   metadata: string[];
-  type: VideoAIMetadataType;
+  type: VideoAIMetadata;
 }
 export const VideoAIMetadataContent = ({ metadata, type }: Props) => (
   <ul className={s.outcomeList}>

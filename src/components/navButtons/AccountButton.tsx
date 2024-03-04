@@ -2,8 +2,6 @@ import MyAccountSVG from 'src/resources/icons/user-icon.svg';
 import ExternalLinkIcon from 'src/resources/icons/external-link-icon.svg';
 import React, { useRef, useState } from 'react';
 import c from 'classnames';
-import { useBoclipsSecurity } from 'src/components/common/providers/BoclipsSecurityProvider';
-import { Constants } from 'src/AppConstants';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
@@ -12,6 +10,7 @@ import Button from '@boclips-ui/button';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import LogoutButton from 'src/components/layout/logoutButton/LogoutButton';
 import { Link } from '../common/Link';
 import s from './newstyle.module.less';
 
@@ -60,8 +59,6 @@ export const AccountButton = () => {
       closeDialog();
     }
   };
-
-  const boclipsSecurity = useBoclipsSecurity();
 
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -167,25 +164,10 @@ export const AccountButton = () => {
                   </Typography.Body>
                 </a>
               </div>
+              <div className="pt-2">
+                <LogoutButton />
+              </div>
             </FeatureGate>
-            <div className="pt-2">
-              <Typography.Link>
-                <Typography.Body
-                  as="button"
-                  size="small"
-                  // Props aren't smart enough to know type does exist on button
-                  // @ts-ignore
-                  type="button"
-                  onClick={() =>
-                    boclipsSecurity.logout({
-                      redirectUri: `${Constants.HOST}/`,
-                    })
-                  }
-                >
-                  Log out
-                </Typography.Body>
-              </Typography.Link>
-            </div>
           </div>
         </div>
       )}

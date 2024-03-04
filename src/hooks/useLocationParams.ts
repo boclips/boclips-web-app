@@ -79,5 +79,13 @@ export const convertToURLSearchParams = (
 
 export const useGetIdFromLocation = (path: string) => {
   const location = useLocation();
-  return location.pathname.split(`/${path}/`)[1];
+  const segments = location.pathname.split('/');
+  const index = segments.findIndex((segment) => segment === path);
+  return segments[index + 1];
+};
+
+export const useGetAnyParamFromLocation = (param: string) => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  return searchParams.get(param);
 };

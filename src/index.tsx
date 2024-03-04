@@ -1,6 +1,6 @@
 import './main.less';
 
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import { Integration } from '@sentry/types';
@@ -65,9 +65,9 @@ if (Constants.IS_SENTRY_ENABLED) {
   initializeSentry();
 }
 
-const container = document.getElementById('root');
+const container =
+  document.getElementById('root') || document.createElement('div');
 const root = createRoot(container);
-
 const onLogin = async () => {
   try {
     const apiClient = await ApiBoclipsClient.create(
@@ -96,11 +96,14 @@ const authOptions = {
   onLogin,
 };
 
-const AppInitializer = () => {
+const AppInitializer = ({ viewMock }: { viewMock?: ReactElement }) => {
   const path = window.location.pathname;
-  const isRegisterView = path === '/register';
+  const isRegisterView = path.match('/register');
+  const isVideoShareView = path.match('/videos/shared');
 
-  if (isRegisterView) {
+  if (isRegisterView || isVideoShareView) {
+    if (viewMock) return viewMock;
+
     return (
       <Router>
         <AppUnauthenticated />
@@ -114,3 +117,5 @@ const AppInitializer = () => {
 };
 
 root.render(<AppInitializer />);
+
+export default AppInitializer;

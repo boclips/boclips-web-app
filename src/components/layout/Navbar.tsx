@@ -5,8 +5,6 @@ import CrossIconSVG from 'src/resources/icons/cross-icon.svg';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import CartButton from 'src/components/navButtons/CartButton';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
-import { Constants } from 'src/AppConstants';
-import { useBoclipsSecurity } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import PlaylistsButton from 'src/components/navButtons/PlaylistsButton';
 import SkipLink from 'src/components/skipLink/SkipLink';
@@ -32,7 +30,6 @@ const NavbarResponsive = ({
   const [showSideMenu, setShowSideMenu] = useState(false);
   const { data: user, isLoading: isUserLoading } = useGetUserQuery();
   const isTrial = user?.account?.type === AccountType.TRIAL;
-  const boclipsSecurity = useBoclipsSecurity();
   const breakpoints = useMediaBreakPoint();
   const mobileView =
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
@@ -48,12 +45,6 @@ const NavbarResponsive = ({
       document.querySelector('body').style.overflow = null;
     }
   }, [showSideMenu]);
-
-  const logOut = () => {
-    boclipsSecurity.logout({
-      redirectUri: `${Constants.HOST}/`,
-    });
-  };
 
   return (
     <nav
@@ -81,8 +72,8 @@ const NavbarResponsive = ({
             </button>
           </div>
         ) : (
-          <div className="col-start-15 col-end-26 row-start-1 row-end-1 flex h-full justify-end ">
-            <div className="flex mr-6">
+          <div className="col-start-15 col-end-26 row-start-1 row-end-1 flex h-full justify-end">
+            <div className={c('flex mr-6', s.buttonsDesktop)}>
               <HomeButton />
               <LibraryButton />
               <AlignmentsButton />
@@ -117,9 +108,7 @@ const NavbarResponsive = ({
           </a>
         </div>
       )}
-      {showSideMenu && mobileView && (
-        <SideMenu logOut={logOut} hasSearchInNavbar={false} />
-      )}
+      {showSideMenu && mobileView && <SideMenu hasSearchInNavbar={false} />}
     </nav>
   );
 };
