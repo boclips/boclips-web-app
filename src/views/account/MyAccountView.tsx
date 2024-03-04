@@ -65,12 +65,24 @@ const MyAccountView = () => {
               >{`${user?.email}`}</Typography.Body>
             </div>
             {user?.jobTitle && (
-              <div>
-                <Typography.Body>Job Title:</Typography.Body>
-                <Typography.Body
-                  className={s.info}
-                >{`${user?.jobTitle}`}</Typography.Body>
-              </div>
+              <FeatureGate product={Product.B2B}>
+                <div>
+                  <Typography.Body>Job Title:</Typography.Body>
+                  <Typography.Body
+                    className={s.info}
+                  >{`${user?.jobTitle}`}</Typography.Body>
+                </div>
+              </FeatureGate>
+            )}
+            {user?.shareCode && (
+              <FeatureGate product={Product.CLASSROOM}>
+                <div>
+                  <Typography.Body>Unique Teacher code:</Typography.Body>
+                  <Typography.Body
+                    className={s.info}
+                  >{`${user?.shareCode}`}</Typography.Body>
+                </div>
+              </FeatureGate>
             )}
             <span className={s.profileIcon}>
               <div className={s.circle}>
@@ -87,7 +99,7 @@ const MyAccountView = () => {
               product={Product.CLASSROOM}
               fallback={<p>Organization Profile</p>}
             >
-              <p>School</p>
+              <p>School Profile</p>
             </FeatureGate>
           </Typography.H2>
           <section

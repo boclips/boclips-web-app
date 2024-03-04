@@ -31,6 +31,7 @@ describe('My Account view', () => {
     lastName: 'Wick',
     email: 'bob@wick.com',
     jobTitle: 'Engineer',
+    shareCode: 'not-visible-for-b2b',
     account: {
       id: 'acc-1',
       name: 'Elephant Academy',
@@ -115,6 +116,9 @@ describe('My Account view', () => {
       expect(within(userProfile).getByText(/bob@wick.com/)).toBeInTheDocument();
       expect(within(userProfile).getByText(/Job Title:/)).toBeInTheDocument();
       expect(within(userProfile).getByText(/Engineer/)).toBeInTheDocument();
+      expect(
+        within(userProfile).queryByText(/Unique Teacher code:/),
+      ).toBeNull();
     });
 
     it('edit my profile section', async () => {
@@ -168,6 +172,38 @@ describe('My Account view', () => {
     });
   });
 
+  describe('User Profile for Classroom', () => {
+    it('renders unique teacher code and hides job title', async () => {
+      const classroomAccount = AccountsFactory.sample({
+        id: 'acc-2',
+        name: 'Owl Academy',
+        products: [Product.CLASSROOM],
+        createdAt: new Date('2023-09-18T14:19:55.612Z'),
+      });
+
+      const classroomUser = UserFactory.sample({
+        shareCode: 'DIBS',
+        account: {
+          id: 'acc-2',
+          name: 'Owl Academy',
+          products: [Product.CLASSROOM],
+          type: AccountType.STANDARD,
+        },
+      });
+      wrapper(classroomUser, classroomAccount);
+
+      const userProfile = await screen.findByRole('main');
+
+      expect(
+        within(userProfile).getByText(/Personal Profile/),
+      ).toBeInTheDocument();
+      expect(
+        within(userProfile).getByText(/Unique Teacher code:/),
+      ).toBeInTheDocument();
+      expect(within(userProfile).getByText(/DIBS/)).toBeInTheDocument();
+    });
+  });
+
   describe('Organization Profile', () => {
     it('renders my organization section', async () => {
       wrapper();
@@ -208,7 +244,7 @@ describe('My Account view', () => {
         },
       });
       wrapper(classroomUser, classroomAccount);
-      expect(await screen.findByText(/School/)).toBeInTheDocument();
+      expect(await screen.findByText(/School Profile/)).toBeInTheDocument();
       expect(await screen.findByText(/Owl Academy/)).toBeInTheDocument();
       expect(await screen.findByText(/Created on/)).toBeInTheDocument();
       expect(await screen.findByText(/September 2023/)).toBeInTheDocument();
