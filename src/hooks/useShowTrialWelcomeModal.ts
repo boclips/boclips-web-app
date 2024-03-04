@@ -1,11 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
-import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
-import {
-  AccountType,
-  Product,
-} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import computeUserDataContext from 'src/services/computeUserDataContext';
 
 interface Props {
   showPopup: (arg: boolean) => void;
@@ -24,32 +20,32 @@ const useShowTrialWelcomeModal = ({
     if (userLoading) {
       return;
     }
-    const isUserInTrial = user?.account?.type === AccountType.TRIAL;
-    const isMarketingInfoSetForUser = user && isMarketingInfoSet(user);
-    const isMarketingInfoSetForAccount =
-      user?.account && isAccountMarketingInfoSet(user);
-    const isClassroomUser =
-      user?.account &&
-      user?.account?.products?.some((product) => product === Product.CLASSROOM);
+    const {
+      isUserInTrial,
+      isClassroomUser,
+      isMarketingInfoMissingForUser,
+      isAdmin,
+    } = computeUserDataContext(user);
 
-    if (isUserInTrial && !isMarketingInfoSetForUser) {
+    const shouldShowPopup = shouldShowWelcomeModal(
+      isClassroomUser,
+      isUserInTrial,
+      isMarketingInfoMissingForUser,
+    );
+
+    if (shouldShowPopup) {
       showPopup(true);
-      setIsAdmin(!isMarketingInfoSetForAccount);
+      setIsAdmin(isAdmin);
       setIsClassroomUser(isClassroomUser);
     }
   }, [user, userLoading, navigate, showPopup, setIsAdmin, setIsClassroomUser]);
 };
 
-const isMarketingInfoSet = (user: User): boolean => {
-  const isJobTitleSet = user.jobTitle?.trim().length > 0;
-  const isAudienceSet = user.audiences?.length > 0;
-  const isDesiredContentSet = user.desiredContent?.trim().length > 0;
-
-  return isJobTitleSet && isAudienceSet && isDesiredContentSet;
+export const shouldShowWelcomeModal = (
+  isClassroomUser,
+  isUserInTrial,
+  isMarketingInfoMissingForUser,
+) => {
+  return (isClassroomUser || isUserInTrial) && isMarketingInfoMissingForUser;
 };
-
-const isAccountMarketingInfoSet = (user: User): boolean => {
-  return user?.account?.marketingInformation?.companySegments?.length > 0;
-};
-
 export default useShowTrialWelcomeModal;
