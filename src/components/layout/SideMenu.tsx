@@ -15,6 +15,10 @@ const SideMenu = ({ hasSearchInNavbar = true }: Props) => {
   return (
     <div className={c(s.slideMenu, { [s.oneLineNavbar]: !hasSearchInNavbar })}>
       <div className={s.buttons}>
+        <FeatureGate product={Product.CLASSROOM}>
+          <Link to="/">Home</Link>
+          <Link to="/videos">All videos</Link>
+        </FeatureGate>
         <Link to="/account">My account</Link>
         <Link to="/alignments">Alignments</Link>
         <Link to="/playlists">Playlists</Link>
@@ -39,9 +43,8 @@ const SideMenu = ({ hasSearchInNavbar = true }: Props) => {
               <ExternalLinkIcon />
             </span>
           </a>
-
-          <LogoutButton />
         </FeatureGate>
+        <LogoutButton />
       </div>
     </div>
   );
