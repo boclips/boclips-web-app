@@ -15,6 +15,7 @@ describe('user products', () => {
     fakeClient.users.insertCurrentUser(
       UserFactory.sample({
         account: {
+          ...UserFactory.sample().account,
           id: 'acc-1',
           name: 'Ren',
           products: [Product.CLASSROOM],
@@ -36,6 +37,7 @@ describe('user products', () => {
     fakeClient.users.insertCurrentUser(
       UserFactory.sample({
         account: {
+          ...UserFactory.sample().account,
           id: 'acc-1',
           name: 'Ren',
           products: null,

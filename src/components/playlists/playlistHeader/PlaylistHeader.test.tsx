@@ -167,6 +167,7 @@ describe('Playlist Header', () => {
       fakeClient.users.insertCurrentUser(
         UserFactory.sample({
           account: {
+            ...UserFactory.sample().account,
             id: 'acc-1',
             name: 'Ren',
             products: [Product.CLASSROOM],
@@ -194,6 +195,7 @@ describe('Playlist Header', () => {
       fakeClient.users.insertCurrentUser(
         UserFactory.sample({
           account: {
+            ...UserFactory.sample().account,
             id: 'acc-1',
             name: 'Ren',
             products: [Product.CLASSROOM],
@@ -255,6 +257,7 @@ describe('Playlist Header', () => {
     fakeClient.users.insertCurrentUser(
       UserFactory.sample({
         account: {
+          ...UserFactory.sample().account,
           id: 'acc-1',
           name: 'Ren',
           products: [Product.B2B],
@@ -281,6 +284,7 @@ describe('Playlist Header', () => {
     fakeClient.users.insertCurrentUser(
       UserFactory.sample({
         account: {
+          ...UserFactory.sample().account,
           id: 'acc-1',
           name: 'Ren',
           products: [Product.CLASSROOM],

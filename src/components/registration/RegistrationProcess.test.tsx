@@ -40,7 +40,12 @@ describe('registration process', () => {
       Promise.resolve(
         UserFactory.sample({
           email: 'test@boclips.com',
-          account: { name: 'BoAccount', id: '1', type: AccountType.TRIAL },
+          account: {
+            ...UserFactory.sample().account,
+            name: 'BoAccount',
+            id: '1',
+            type: AccountType.TRIAL,
+          },
         }),
       ),
     );

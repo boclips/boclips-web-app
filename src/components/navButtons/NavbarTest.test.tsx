@@ -74,6 +74,7 @@ describe(`Navbar test`, () => {
         lastName: 'Bravo',
         email: 'eddie@10thplanetjj.com',
         account: {
+          ...UserFactory.sample().account,
           id: 'acc-1',
           name: 'Ren',
           products: [Product.CLASSROOM],

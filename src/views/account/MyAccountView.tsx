@@ -5,7 +5,7 @@ import PageHeader from 'src/components/pageTitle/PageHeader';
 import Footer from 'src/components/layout/Footer';
 import { Helmet } from 'react-helmet';
 import { Typography } from '@boclips-ui/typography';
-import { useGetAccount, useGetUserQuery } from 'src/hooks/api/userQuery';
+import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import UserIcon from 'src/resources/icons/user-icon.svg';
 import HomeIcon from 'src/resources/icons/home-icon.svg';
 import c from 'classnames';
@@ -20,10 +20,6 @@ const MyAccountView = () => {
   const { data: user, isLoading: userIsLoading } = useGetUserQuery();
   const [openEditProfileModal, setOpenEditProfileModal] =
     useState<boolean>(false);
-
-  const { data: account, isLoading: accountIsLoading } = useGetAccount(
-    user?.account?.id,
-  );
 
   const formatDate = (date: Date): string => {
     return new Date(date).toLocaleDateString('en-uk', {
@@ -103,8 +99,8 @@ const MyAccountView = () => {
             </FeatureGate>
           </Typography.H2>
           <section
-            data-qa={accountIsLoading ? 'skeleton' : ''}
-            className={c(s.infoCard, { [s.skeleton]: accountIsLoading })}
+            data-qa={userIsLoading ? 'skeleton' : ''}
+            className={c(s.infoCard, { [s.skeleton]: userIsLoading })}
           >
             <div>
               <Typography.Body>Name:</Typography.Body>
@@ -112,11 +108,11 @@ const MyAccountView = () => {
                 className={s.info}
               >{`${user?.account.name}`}</Typography.Body>
             </div>
-            {account?.createdAt && (
+            {user?.account?.createdAt && (
               <div>
                 <Typography.Body>Created on:</Typography.Body>
                 <Typography.Body className={s.info}>
-                  {formatDate(account?.createdAt)}
+                  {formatDate(user?.account.createdAt)}
                 </Typography.Body>
               </div>
             )}

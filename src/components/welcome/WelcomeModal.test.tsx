@@ -35,6 +35,7 @@ describe('Trial Welcome Modal', () => {
           lastName: 'Bryant',
           email: 'kobe@la.com',
           account: {
+            ...UserFactory.sample().account,
             id: 'LAL',
             name: 'LA Lakers',
             products: [Product.B2B],
@@ -224,6 +225,7 @@ describe('Trial Welcome Modal', () => {
           lastName: 'Bryant',
           email: 'kobe@la.com',
           account: {
+            ...UserFactory.sample().account,
             id: 'LAL',
             name: 'LA Lakers',
             products: [Product.CLASSROOM],
@@ -290,6 +292,7 @@ describe('Trial Welcome Modal', () => {
           lastName: 'Saku Koivu',
           email: 'saku@koivu.com',
           account: {
+            ...UserFactory.sample().account,
             id: 'AND',
             name: 'Anaheim Ducks',
             products: [Product.B2B],
@@ -419,6 +422,7 @@ describe('Trial Welcome Modal', () => {
           lastName: 'Saku Koivu',
           email: 'saku@koivu.com',
           account: {
+            ...UserFactory.sample().account,
             id: 'AND',
             name: 'Anaheim Ducks',
             products: [Product.CLASSROOM],

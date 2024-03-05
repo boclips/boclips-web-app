@@ -95,6 +95,7 @@ describe('Video card', () => {
       fakeClient.users.insertCurrentUser(
         UserFactory.sample({
           account: {
+            ...UserFactory.sample().account,
             id: 'acc-1',
             name: 'Ren',
             products: [Product.CLASSROOM],

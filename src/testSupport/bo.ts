@@ -94,7 +94,10 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
   }) => {
     apiClient.users.insertCurrentUser(
       UserFactory.sample({
-        account: AccountsFactory.sample({ products: [Product.B2B] }),
+        account: {
+          ...UserFactory.sample().account,
+          products: [Product.B2B],
+        },
       }),
     );
 
@@ -186,6 +189,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
           UserFactory.sample({
             firstName: 'Percy',
             account: {
+              ...UserFactory.sample().account,
               id: 'acc-id',
               name: 'Percy account',
               type: AccountType.STANDARD,
@@ -201,6 +205,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
           UserFactory.sample({
             firstName: 'Percy',
             account: {
+              ...UserFactory.sample().account,
               id: 'acc-id',
               name: 'Percy account',
               type: AccountType.TRIAL,
@@ -216,6 +221,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
           UserFactory.sample({
             firstName: 'Percy',
             account: {
+              ...UserFactory.sample().account,
               id: 'acc-id',
               name: 'Percy account',
               type: AccountType.TRIAL,

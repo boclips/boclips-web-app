@@ -23,6 +23,7 @@ describe('logo', () => {
           logoUrl: null,
         },
         account: {
+          ...UserFactory.sample().account,
           id: 'account-id',
           name: 'Account name',
           products: [Product.B2B],
@@ -57,6 +58,7 @@ describe('logo', () => {
           logoUrl: null,
         },
         account: {
+          ...UserFactory.sample().account,
           id: 'account-id',
           name: 'Account name',
           products: [Product.CLASSROOM],

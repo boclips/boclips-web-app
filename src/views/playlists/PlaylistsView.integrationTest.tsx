@@ -31,6 +31,7 @@ const insertUser = (client: FakeBoclipsClient, product?: Product) =>
   client.users.insertCurrentUser(
     UserFactory.sample({
       account: {
+        ...UserFactory.sample().account,
         id: 'acc-1',
         name: 'Ren',
         products: [product],

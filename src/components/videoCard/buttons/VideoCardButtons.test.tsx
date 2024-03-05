@@ -11,7 +11,6 @@ import {
   AccountType,
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 
 describe('VideoCardButtons', () => {
   describe(`create embed code button`, () => {
@@ -28,7 +27,10 @@ describe('VideoCardButtons', () => {
 
       apiClient.users.insertCurrentUser(
         UserFactory.sample({
-          account: AccountsFactory.sample({ products: [Product.B2B] }),
+          account: {
+            ...UserFactory.sample().account,
+            products: [Product.B2B],
+          },
         }),
       );
 
@@ -70,6 +72,7 @@ describe('VideoCardButtons', () => {
       fakeClient.users.insertCurrentUser(
         UserFactory.sample({
           account: {
+            ...UserFactory.sample().account,
             id: 'acc-1',
             name: 'Ren',
             products: [Product.B2B],
@@ -98,6 +101,7 @@ describe('VideoCardButtons', () => {
       fakeClient.users.insertCurrentUser(
         UserFactory.sample({
           account: {
+            ...UserFactory.sample().account,
             id: 'acc-1',
             name: 'Ren',
             products: [Product.CLASSROOM],
@@ -128,6 +132,7 @@ describe('VideoCardButtons', () => {
       client.users.insertCurrentUser(
         UserFactory.sample({
           account: {
+            ...UserFactory.sample().account,
             id: 'acc-1',
             name: 'Ren',
             products: [Product.CLASSROOM],

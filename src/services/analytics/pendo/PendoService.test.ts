@@ -16,6 +16,7 @@ describe('Pendo Service', () => {
       audiences: ['caffeine addicts'],
       desiredContent: 'books&coffee',
       account: {
+        ...UserFactory.sample().account,
         id: 'account-id',
         name: 'account name',
         marketingInformation: {

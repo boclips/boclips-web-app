@@ -43,6 +43,7 @@ describe('HomeView', () => {
     fakeClient.users.insertCurrentUser(
       UserFactory.sample({
         account: {
+          ...UserFactory.sample().account,
           id: 'acc-1',
           name: 'Ren',
           products: [Product.B2B],
@@ -62,6 +63,7 @@ describe('HomeView', () => {
     fakeClient.users.insertCurrentUser(
       UserFactory.sample({
         account: {
+          ...UserFactory.sample().account,
           id: 'acc-1',
           name: 'Ren',
           products: [Product.CLASSROOM],
@@ -187,6 +189,7 @@ describe('HomeView', () => {
         lastName: 'Bryant',
         email: 'kobe@la.com',
         account: {
+          ...UserFactory.sample().account,
           id: 'LAL',
           name: 'LA Lakers',
           type: AccountType.TRIAL,
@@ -224,6 +227,7 @@ describe('HomeView', () => {
         lastName: 'Bryant',
         email: 'kobe@la.com',
         account: {
+          ...UserFactory.sample().account,
           id: 'LAL',
           name: 'LA Lakers',
           type: AccountType.TRIAL,
@@ -258,7 +262,12 @@ describe('HomeView', () => {
         firstName: 'Kobe',
         lastName: 'Bryant',
         email: 'kobe@la.com',
-        account: { id: 'LAL', name: 'LA Lakers', type: AccountType.TRIAL },
+        account: {
+          ...UserFactory.sample().account,
+          id: 'LAL',
+          name: 'LA Lakers',
+          type: AccountType.TRIAL,
+        },
         audiences: ['K12'],
         jobTitle: 'Designer',
         desiredContent: 'Designes',
@@ -286,7 +295,12 @@ describe('HomeView', () => {
         firstName: 'Kobe',
         lastName: 'Bryant',
         email: 'kobe@la.com',
-        account: { id: 'LAL', name: 'LA Lakers', type: AccountType.TRIAL },
+        account: {
+          ...UserFactory.sample().account,
+          id: 'LAL',
+          name: 'LA Lakers',
+          type: AccountType.TRIAL,
+        },
         audiences: ['K12'],
         jobTitle: 'Designer',
         desiredContent: 'Designes',
@@ -296,6 +310,7 @@ describe('HomeView', () => {
     fakeBoclipsClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
     fakeBoclipsClient.accounts.insertAccount(
       AccountsFactory.sample({
+        ...UserFactory.sample().account,
         id: 'LAL',
         type: AccountType.TRIAL,
         status: AccountStatus.ACTIVE,
@@ -320,6 +335,7 @@ describe('HomeView', () => {
         lastName: 'Bryant',
         email: 'kobe@la.com',
         account: {
+          ...UserFactory.sample().account,
           id: 'LAL',
           name: 'LA Lakers',
           products: [Product.B2B],
@@ -356,6 +372,7 @@ describe('HomeView', () => {
         lastName: 'Bryant',
         email: 'kobe@la.com',
         account: {
+          ...UserFactory.sample().account,
           id: 'LAL',
           name: 'LA Lakers',
           products: [Product.B2B],

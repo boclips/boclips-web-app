@@ -104,6 +104,7 @@ describe(`Navbar`, () => {
           lastName: 'Julian',
           email: 'sunnyvale@swearnet.com',
           account: {
+            ...UserFactory.sample().account,
             id: 'acc-1',
             name: 'classroom account',
             products: [Product.CLASSROOM],
@@ -279,6 +280,7 @@ describe(`Navbar`, () => {
       client.users.insertCurrentUser(
         UserFactory.sample({
           account: {
+            ...UserFactory.sample().account,
             name: 'Footballers',
             id: 'id',
             products: [Product.CLASSROOM],
@@ -315,6 +317,7 @@ describe(`Navbar`, () => {
       client.users.insertCurrentUser(
         UserFactory.sample({
           account: {
+            ...UserFactory.sample().account,
             name: 'Footballers',
             id: 'id',
             products: [Product.CLASSROOM],
@@ -446,6 +449,7 @@ describe(`Navbar`, () => {
       fakeClient.users.insertCurrentUser(
         UserFactory.sample({
           account: {
+            ...UserFactory.sample().account,
             id: 'trial',
             name: 'trial account',
             type: AccountType.TRIAL,
@@ -479,6 +483,7 @@ describe(`Navbar`, () => {
       fakeClient.users.insertCurrentUser(
         UserFactory.sample({
           account: {
+            ...UserFactory.sample().account,
             id: 'non-trial',
             name: 'regular account',
             type: AccountType.STANDARD,

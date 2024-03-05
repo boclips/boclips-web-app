@@ -15,9 +15,7 @@ import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { Helmet } from 'react-helmet';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
-import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 import {
-  Account,
   AccountType,
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
@@ -37,22 +35,12 @@ describe('My Account view', () => {
       name: 'Elephant Academy',
       products: [Product.B2B],
       type: AccountType.STANDARD,
+      createdAt: new Date('2024-03-05T08:38:50.971544Z'),
     },
   });
 
-  const account = AccountsFactory.sample({
-    id: 'acc-1',
-    name: 'Elephant Academy',
-    products: [Product.B2B],
-    createdAt: new Date('2023-09-18T14:19:55.612Z'),
-  });
-
-  const wrapper = (
-    currentUser: User = user,
-    accountToInsert: Account = account,
-  ) => {
+  const wrapper = (currentUser: User = user) => {
     boclipsClient.users.insertCurrentUser(currentUser);
-    boclipsClient.accounts.insertAccount(accountToInsert);
 
     render(
       <MemoryRouter initialEntries={['/account']}>
@@ -174,13 +162,6 @@ describe('My Account view', () => {
 
   describe('User Profile for Classroom', () => {
     it('renders unique teacher code and hides job title', async () => {
-      const classroomAccount = AccountsFactory.sample({
-        id: 'acc-2',
-        name: 'Owl Academy',
-        products: [Product.CLASSROOM],
-        createdAt: new Date('2023-09-18T14:19:55.612Z'),
-      });
-
       const classroomUser = UserFactory.sample({
         shareCode: 'DIBS',
         account: {
@@ -188,9 +169,10 @@ describe('My Account view', () => {
           name: 'Owl Academy',
           products: [Product.CLASSROOM],
           type: AccountType.STANDARD,
+          createdAt: new Date('2024-03-05T08:38:50.971544Z'),
         },
       });
-      wrapper(classroomUser, classroomAccount);
+      wrapper(classroomUser);
 
       const userProfile = await screen.findByRole('main');
 
@@ -212,25 +194,12 @@ describe('My Account view', () => {
       ).toBeInTheDocument();
       expect(await screen.findByText(/Elephant Academy/)).toBeInTheDocument();
       expect(await screen.findByText(/Created on/)).toBeInTheDocument();
-      expect(await screen.findByText(/September 2023/)).toBeInTheDocument();
-    });
-
-    it('displays skeleton when loading', async () => {
-      wrapper();
-
-      expect(await screen.findByTestId('skeleton')).toBeInTheDocument();
+      expect(await screen.findByText(/March 2024/)).toBeInTheDocument();
     });
   });
 
   describe('School Profile for Classroom', () => {
-    it('renders school for classroom', async () => {
-      const classroomAccount = AccountsFactory.sample({
-        id: 'acc-2',
-        name: 'Owl Academy',
-        products: [Product.CLASSROOM],
-        createdAt: new Date('2023-09-18T14:19:55.612Z'),
-      });
-
+    it('renders school and date for classroom', async () => {
       const classroomUser = UserFactory.sample({
         firstName: 'Bob',
         lastName: 'Wick',
@@ -241,13 +210,14 @@ describe('My Account view', () => {
           name: 'Owl Academy',
           products: [Product.CLASSROOM],
           type: AccountType.STANDARD,
+          createdAt: new Date('2024-03-05T08:38:50.971544Z'),
         },
       });
-      wrapper(classroomUser, classroomAccount);
+      wrapper(classroomUser);
       expect(await screen.findByText(/School Profile/)).toBeInTheDocument();
       expect(await screen.findByText(/Owl Academy/)).toBeInTheDocument();
       expect(await screen.findByText(/Created on/)).toBeInTheDocument();
-      expect(await screen.findByText(/September 2023/)).toBeInTheDocument();
+      expect(await screen.findByText(/March 2024/)).toBeInTheDocument();
     });
   });
 });

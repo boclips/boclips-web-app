@@ -42,6 +42,7 @@ describe('My Team modal', () => {
     client.users.insertCurrentUser(
       UserFactory.sample({
         account: {
+          ...UserFactory.sample().account,
           id: 'best-account',
           name: 'simply the best',
           type: AccountType.STANDARD,

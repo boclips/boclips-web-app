@@ -9,7 +9,6 @@ import { createBrowserHistory } from 'history';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
-import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import { AdminLinksFactory } from 'boclips-api-client/dist/test-support/AdminLinksFactory';
@@ -227,17 +226,18 @@ describe('App', () => {
     expect(history.location.hash).toEqual('#topic-0-target-2');
   });
 
-  it('home should display welcome popup if user is in trial and has no marketing info', async () => {
+  it('home should display admin welcome popup if user is in trial and has no marketing info', async () => {
     const apiClient = new FakeBoclipsClient();
-    apiClient.accounts.insertAccount(
-      AccountsFactory.sample({
-        id: 'trial',
-        type: AccountType.TRIAL,
-      }),
-    );
+
     apiClient.users.insertCurrentUser(
       UserFactory.sample({
-        account: { id: 'trial', name: 'trial', type: AccountType.TRIAL },
+        account: {
+          ...UserFactory.sample().account,
+          id: 'trial',
+          name: 'trial',
+          type: AccountType.TRIAL,
+          marketingInformation: { companySegments: null },
+        },
         desiredContent: undefined,
         audiences: undefined,
       }),

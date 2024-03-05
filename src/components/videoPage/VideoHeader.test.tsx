@@ -46,6 +46,7 @@ describe('VideoHeader B2B', () => {
     client.users.insertCurrentUser(
       UserFactory.sample({
         account: {
+          ...UserFactory.sample().account,
           id: 'acc-1',
           name: 'Ren',
           products: [Product.B2B],
@@ -69,6 +70,7 @@ describe('VideoHeader B2B', () => {
     client.users.insertCurrentUser(
       UserFactory.sample({
         account: {
+          ...UserFactory.sample().account,
           id: 'acc-1',
           name: 'Ren',
           products: [Product.B2B],
@@ -96,6 +98,7 @@ describe('VideoHeader B2B', () => {
     client.users.insertCurrentUser(
       UserFactory.sample({
         account: {
+          ...UserFactory.sample().account,
           id: 'acc-1',
           name: 'Ren',
           products: [Product.CLASSROOM],
@@ -120,6 +123,7 @@ describe('VideoHeader B2B', () => {
     client.users.insertCurrentUser(
       UserFactory.sample({
         account: {
+          ...UserFactory.sample().account,
           id: 'acc-1',
           name: 'Ren',
           products: [Product.CLASSROOM],
@@ -144,6 +148,7 @@ describe('VideoHeader B2B', () => {
     client.users.insertCurrentUser(
       UserFactory.sample({
         account: {
+          ...UserFactory.sample().account,
           id: 'acc-1',
           name: 'Ren',
           products: [Product.CLASSROOM],

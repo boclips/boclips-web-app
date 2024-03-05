@@ -19,6 +19,7 @@ describe('Invited User Info', () => {
         lastName: 'Beckham',
         email: 'db@gmail.com',
         account: {
+          ...UserFactory.sample().account,
           name: 'Footballers',
           id: 'id',
           type: AccountType.STANDARD,
@@ -52,6 +53,7 @@ describe('Invited User Info', () => {
         lastName: 'Beckham',
         email: 'db@gmail.com',
         account: {
+          ...UserFactory.sample().account,
           name: 'Footballers',
           id: 'id',
           products: [Product.CLASSROOM],

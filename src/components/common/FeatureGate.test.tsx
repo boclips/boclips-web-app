@@ -220,6 +220,7 @@ describe(`FeatureGate`, () => {
       fakeClient.users.insertCurrentUser(
         UserFactory.sample({
           account: {
+            ...UserFactory.sample().account,
             id: 'acc-1',
             name: 'Ren',
             products: [Product.CLASSROOM],
@@ -252,6 +253,7 @@ describe(`FeatureGate`, () => {
       fakeClient.users.insertCurrentUser(
         UserFactory.sample({
           account: {
+            ...UserFactory.sample().account,
             id: 'acc-1',
             name: 'Ren',
             products: [Product.B2B],
@@ -284,6 +286,7 @@ describe(`FeatureGate`, () => {
       fakeClient.users.insertCurrentUser(
         UserFactory.sample({
           account: {
+            ...UserFactory.sample().account,
             id: 'acc-1',
             name: 'Ren',
             products: [Product.CLASSROOM],
