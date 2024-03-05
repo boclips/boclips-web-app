@@ -8,6 +8,7 @@ import { EmbedButton } from 'src/components/embedButton/EmbedButton';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { VideoShareButton } from 'src/components/videoShareButton/VideoShareButton';
+import { DownloadTranscriptButton } from 'src/components/downloadTranscriptButton/DownloadTranscriptButton';
 import s from './style.module.less';
 import { CopyVideoLinkButton } from './CopyVideoLinkButton';
 import { CopyVideoIdButton } from './CopyVideoIdButton';
@@ -38,6 +39,8 @@ export const VideoCardButtons = ({
     AnalyticsFactory.hotjar().event(HotjarEvents.CopyLinkFromSearchResults);
   };
 
+  const hasTranscript = video?.links?.transcript?.getOriginalLink();
+
   return (
     <div className={s.buttonsWrapper} key={`copy-${video.id}`}>
       <div className={s.iconOnlyButtons}>
@@ -46,6 +49,11 @@ export const VideoCardButtons = ({
           onCleanup={onCleanupAddToPlaylist}
           onClick={onAddToPlaylist}
         />
+        {hasTranscript && (
+          <FeatureGate product={Product.CLASSROOM}>
+            <DownloadTranscriptButton video={video} />
+          </FeatureGate>
+        )}
         <FeatureGate feature="BO_WEB_APP_COPY_VIDEO_ID_BUTTON">
           <CopyVideoIdButton video={video} />
         </FeatureGate>

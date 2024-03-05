@@ -13,6 +13,77 @@ import {
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('VideoCardButtons', () => {
+  describe('CLASSROOM ', () => {
+    it('transcript button present', async () => {
+      const video = VideoFactory.sample({
+        links: {
+          self: new Link({ href: 'fake-link' }),
+          logInteraction: new Link({ href: 'fake-link' }),
+          transcript: new Link({ href: 'fake-link' }),
+        },
+      });
+      const fakeClient = new FakeBoclipsClient();
+
+      fakeClient.videos.insertVideo(video);
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          account: {
+            id: 'acc-1',
+            name: 'Ren',
+            products: [Product.CLASSROOM],
+            type: AccountType.STANDARD,
+          },
+        }),
+      );
+
+      const wrapper = render(
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={new QueryClient()}>
+            <VideoCardButtons video={video} />
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      expect(
+        await wrapper.findByLabelText('download-transcript'),
+      ).toBeVisible();
+    });
+
+    it('transcript button hidden when video has no transcript', async () => {
+      const video = VideoFactory.sample({
+        links: {
+          self: new Link({ href: 'fake-link' }),
+          logInteraction: new Link({ href: 'fake-link' }),
+        },
+      });
+      const fakeClient = new FakeBoclipsClient();
+
+      fakeClient.videos.insertVideo(video);
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          account: {
+            id: 'acc-1',
+            name: 'Ren',
+            products: [Product.CLASSROOM],
+            type: AccountType.STANDARD,
+          },
+        }),
+      );
+
+      const wrapper = render(
+        <BoclipsClientProvider client={fakeClient}>
+          <QueryClientProvider client={new QueryClient()}>
+            <VideoCardButtons video={video} />
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      expect(
+        wrapper.queryByLabelText('download-transcript'),
+      ).not.toBeInTheDocument();
+    });
+  });
+
   describe(`create embed code button`, () => {
     it(`renders embed code button when user has video embed link and B2B product`, async () => {
       const video = VideoFactory.sample({
