@@ -27,6 +27,7 @@ export class PendoService {
           id: user.account?.id || 'n/a',
           name: user.account?.name || 'n/a',
           type: user.account?.marketingInformation?.companySegments || [],
+          product: user.account?.products || [],
         },
       });
     }

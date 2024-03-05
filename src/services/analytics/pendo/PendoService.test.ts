@@ -1,6 +1,9 @@
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { PendoService } from 'src/services/analytics/pendo/PendoService';
-import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import {
+  AccountType,
+  Product,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('Pendo Service', () => {
   it('passes essential user data to pendo', () => {
@@ -19,6 +22,7 @@ describe('Pendo Service', () => {
           companySegments: ['Publisher'],
         },
         type: AccountType.STANDARD,
+        products: [Product.CLASSROOM],
       },
     });
 
@@ -43,6 +47,7 @@ describe('Pendo Service', () => {
         id: 'account-id',
         name: 'account name',
         type: ['Publisher'],
+        product: [Product.CLASSROOM],
       },
     });
   });
@@ -80,6 +85,7 @@ describe('Pendo Service', () => {
         id: 'n/a',
         name: 'n/a',
         type: [],
+        product: [],
       },
     });
   });
