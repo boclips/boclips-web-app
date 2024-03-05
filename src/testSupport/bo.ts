@@ -205,10 +205,11 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
           UserFactory.sample({
             firstName: 'Percy',
             account: {
-              ...UserFactory.sample().account,
               id: 'acc-id',
               name: 'Percy account',
               type: AccountType.TRIAL,
+              marketingInformation: null,
+              createdAt: new Date(),
             },
           }),
         );
@@ -221,13 +222,13 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
           UserFactory.sample({
             firstName: 'Percy',
             account: {
-              ...UserFactory.sample().account,
               id: 'acc-id',
               name: 'Percy account',
               type: AccountType.TRIAL,
               marketingInformation: {
                 companySegments: ['Edtech'],
               },
+              createdAt: new Date(),
             },
           }),
         );
