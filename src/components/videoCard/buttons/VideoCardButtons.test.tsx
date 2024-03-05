@@ -32,6 +32,7 @@ describe('VideoCardButtons', () => {
             name: 'Ren',
             products: [Product.CLASSROOM],
             type: AccountType.STANDARD,
+            createdAt: new Date(),
           },
         }),
       );
@@ -66,6 +67,7 @@ describe('VideoCardButtons', () => {
             name: 'Ren',
             products: [Product.CLASSROOM],
             type: AccountType.STANDARD,
+            createdAt: new Date(),
           },
         }),
       );
