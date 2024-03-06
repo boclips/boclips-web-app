@@ -103,7 +103,7 @@
     "@boclips-ui/dropdown": "^2.5.3",
     "@boclips-ui/education-level-badge": "2.0.2",
     "@boclips-ui/filter-badge": "4.0.2",
-    "@boclips-ui/input": "^2.2.1",
+    "@boclips-ui/input": "^2.2.2",
     "@boclips-ui/link": "2.0.2",
     "@boclips-ui/pagination": "2.0.2",
     "@boclips-ui/search-bar": "5.1.3",

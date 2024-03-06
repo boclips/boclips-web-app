@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { ApiBoclipsClient, BoclipsClient } from 'boclips-api-client';
 import { Route, Routes } from 'react-router-dom';
@@ -8,6 +8,8 @@ import { lazyWithRetry } from 'src/services/lazyWithRetry';
 import axios from 'axios';
 import { Constants } from 'src/AppConstants';
 import FallbackView from 'src/views/fallback/FallbackView';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { Loading } from 'src/components/common/Loading';
 
 interface Props {
   reactQueryClient?: QueryClient;
@@ -62,13 +64,16 @@ const AppUnauthenticated = ({
   return (
     <QueryClientProvider client={reactQueryClient}>
       <BoclipsClientProvider client={apiClient}>
-        <Routes>
-          <Route path="/register" element={<RegisterView />} />
-          <Route
-            path="/videos/shared/:id"
-            element={<UnauthorizedVideoView />}
-          />
-        </Routes>
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            <Route path="/register" element={<RegisterView />} />
+            <Route
+              path="/videos/shared/:id"
+              element={<UnauthorizedVideoView />}
+            />
+          </Routes>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </Suspense>
       </BoclipsClientProvider>
     </QueryClientProvider>
   );

@@ -1,5 +1,4 @@
 import React from 'react';
-import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import { Video } from 'boclips-api-client/dist/types';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BackArrow from 'resources/icons/back-arrow.svg';
@@ -10,6 +9,7 @@ import { FeatureGate } from 'src/components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import VideoAiMetadata from 'src/components/videoPage/videoMetadata/ai/VideoAiMetadata';
 import VideoDescription from 'src/components/videoPage/videoMetadata/VideoDescription';
+import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import s from './videoPage.module.less';
 
 interface Props {

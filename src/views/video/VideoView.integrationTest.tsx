@@ -156,7 +156,7 @@ describe('Video View', () => {
         await wrapper.findByRole('button', { name: 'embed' }),
       ).toBeVisible();
       expect(wrapper.getByText('Get embed code')).toBeVisible();
-      expect(await wrapper.queryByText('Add to cart')).not.toBeInTheDocument();
+      expect(wrapper.queryByText('Add to cart')).not.toBeInTheDocument();
     });
 
     it(`will not display embed video nor download transcript when there's no embed link`, async () => {
@@ -494,11 +494,9 @@ describe('Video View', () => {
       );
 
       expect(await wrapper.findByText(video.id)).toBeVisible();
+      expect(wrapper.queryByText(VideoAIMetadata.LEARNING_OUTCOMES)).toBeNull();
       expect(
-        await wrapper.queryByText(VideoAIMetadata.LEARNING_OUTCOMES),
-      ).toBeNull();
-      expect(
-        await wrapper.queryByText(VideoAIMetadata.ASSESSMENT_QUESTIONS),
+        wrapper.queryByText(VideoAIMetadata.ASSESSMENT_QUESTIONS),
       ).toBeNull();
     });
 
@@ -517,11 +515,9 @@ describe('Video View', () => {
       );
 
       expect(await wrapper.findByText(video.id)).toBeVisible();
+      expect(wrapper.queryByText(VideoAIMetadata.LEARNING_OUTCOMES)).toBeNull();
       expect(
-        await wrapper.queryByText(VideoAIMetadata.LEARNING_OUTCOMES),
-      ).toBeNull();
-      expect(
-        await wrapper.queryByText(VideoAIMetadata.ASSESSMENT_QUESTIONS),
+        wrapper.queryByText(VideoAIMetadata.ASSESSMENT_QUESTIONS),
       ).toBeNull();
     });
 
