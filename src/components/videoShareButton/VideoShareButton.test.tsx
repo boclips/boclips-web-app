@@ -191,7 +191,7 @@ describe('video share button', () => {
     ).toBeVisible();
   });
 
-  it(`copies share link and closes modal on clicking main button`, async () => {
+  it(`copies share link but doesn't close modal on clicking main button`, async () => {
     jest.spyOn(navigator.clipboard, 'writeText');
 
     const wrapper = renderShareButton();
@@ -237,7 +237,9 @@ describe('video share button', () => {
     const notification = await wrapper.findByRole('alert');
     expect(within(notification).getByText('Share link copied!')).toBeVisible();
 
-    expect(wrapper.queryByText('Share Tractor Video with students')).toBeNull();
+    expect(
+      await wrapper.findByText('Share Tractor Video with students'),
+    ).toBeVisible();
   });
 
   it(`includes a link to google classroom`, async () => {

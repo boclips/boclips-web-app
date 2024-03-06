@@ -83,7 +83,6 @@ export const VideoShareButton = ({
         '',
         'text-copied-notification',
       );
-      toggleModalVisibility();
     });
   };
 
