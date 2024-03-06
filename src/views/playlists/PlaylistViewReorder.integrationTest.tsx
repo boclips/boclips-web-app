@@ -26,7 +26,7 @@ const createVideoWithThumbnail = (id: string, videoTitle: string) => {
   });
 };
 
-describe('Playlist view - rearrange', () => {
+describe('Playlist view - reorder', () => {
   const client = new FakeBoclipsClient();
 
   const videos = [
@@ -74,15 +74,7 @@ describe('Playlist view - rearrange', () => {
     client.users.clear();
   });
 
-  it('allows to rearrange your playlist', async () => {
-    client.users.insertCurrentUser(
-      UserFactory.sample({
-        features: {
-          BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST: true,
-        },
-      }),
-    );
-
+  it('allows to reorder your playlist', async () => {
     render(
       <MemoryRouter initialEntries={['/playlists/123']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
@@ -93,18 +85,10 @@ describe('Playlist view - rearrange', () => {
       await userEvent.click(it);
     });
 
-    expect(screen.getByText('Rearrange')).toBeInTheDocument();
+    expect(screen.getByText('Reorder videos')).toBeInTheDocument();
   });
 
-  it('hides rearrange option when playlist is not yours', async () => {
-    client.users.insertCurrentUser(
-      UserFactory.sample({
-        features: {
-          BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST: true,
-        },
-      }),
-    );
-
+  it('hides reorder option when playlist is not yours', async () => {
     render(
       <MemoryRouter initialEntries={['/playlists/321']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
@@ -115,28 +99,6 @@ describe('Playlist view - rearrange', () => {
       await userEvent.click(it);
     });
 
-    expect(screen.queryByText('Rearrange')).not.toBeInTheDocument();
-  });
-
-  it('hides rearrange option when user doesnt have feature turned on', async () => {
-    client.users.insertCurrentUser(
-      UserFactory.sample({
-        features: {
-          BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST: false,
-        },
-      }),
-    );
-
-    render(
-      <MemoryRouter initialEntries={['/playlists/321']}>
-        <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
-      </MemoryRouter>,
-    );
-
-    await waitFor(() => screen.getByText('Options')).then(async (it) => {
-      await userEvent.click(it);
-    });
-
-    expect(screen.queryByText('Rearrange')).not.toBeInTheDocument();
+    expect(screen.queryByText('Reorder videos')).not.toBeInTheDocument();
   });
 });

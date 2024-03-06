@@ -1,11 +1,6 @@
 context('Playlist page', () => {
   it('renders empty playlist', () => {
     cy.visit('/');
-    cy.bo((bo) =>
-      bo.set.features({
-        BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST: true,
-      }),
-    );
     cy.bo((bo) => bo.create.emptyPlaylist());
     cy.get('[data-qa="playlists-button"]').click();
 
@@ -19,9 +14,6 @@ context('Playlist page', () => {
   it('can update playlist with new videos order (drag n drop)', () => {
     cy.visit('/');
     cy.bo((bo) => {
-      bo.set.features({
-        BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST: true,
-      });
       bo.inspect().links.cart = {
         href: 'https://www.boclips.com',
         templated: false,
@@ -32,7 +24,7 @@ context('Playlist page', () => {
 
     cy.findByText('My playlist').click();
     cy.findByText('Options').click();
-    cy.findByText('Rearrange').click();
+    cy.findByText('Reorder videos').click();
 
     cy.findAllByText('video title').then((it) => {
       const item1 = it.get(0);

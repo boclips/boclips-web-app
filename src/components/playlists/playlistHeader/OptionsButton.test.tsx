@@ -7,7 +7,6 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 
 describe('OptionsButton', () => {
   describe('Edit', () => {
@@ -75,18 +74,9 @@ describe('OptionsButton', () => {
   });
 
   describe('Reorder', () => {
-    it('should display rearrange button', async () => {
-      const client = new FakeBoclipsClient();
-      client.users.insertCurrentUser(
-        UserFactory.sample({
-          features: {
-            BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST: true,
-          },
-        }),
-      );
-
+    it('should display reorder button', async () => {
       const wrapper = render(
-        <BoclipsClientProvider client={client}>
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
           <QueryClientProvider client={new QueryClient()}>
             <OptionsButton
               playlist={CollectionFactory.sample({ mine: true })}
@@ -95,23 +85,14 @@ describe('OptionsButton', () => {
         </BoclipsClientProvider>,
       );
 
-      const rearrange = await getOption(wrapper, 'Rearrange');
-      expect(rearrange).toBeVisible();
+      const reorder = await getOption(wrapper, 'Reorder videos');
+      expect(reorder).toBeVisible();
     });
 
-    it('should display modal when rearrange button clicked', async () => {
-      const client = new FakeBoclipsClient();
-      client.users.insertCurrentUser(
-        UserFactory.sample({
-          features: {
-            BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST: true,
-          },
-        }),
-      );
-
+    it('should display modal when reorder button clicked', async () => {
       const wrapper = render(
         <QueryClientProvider client={new QueryClient()}>
-          <BoclipsClientProvider client={client}>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
             <OptionsButton
               playlist={CollectionFactory.sample({
                 title: 'Example playlist',
@@ -122,13 +103,13 @@ describe('OptionsButton', () => {
         </QueryClientProvider>,
       );
 
-      const rearrange = await getOption(wrapper, 'Rearrange');
-      await userEvent.click(rearrange);
+      const reorder = await getOption(wrapper, 'Reorder videos');
+      await userEvent.click(reorder);
 
       const modal = wrapper.getByRole('dialog');
 
       expect(modal).toBeVisible();
-      expect(within(modal).getByText('Rearrange videos')).toBeVisible();
+      expect(within(modal).getByText('Reorder videos')).toBeVisible();
     });
   });
 

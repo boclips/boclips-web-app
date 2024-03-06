@@ -1,6 +1,6 @@
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { Draggable } from 'react-beautiful-dnd';
-import s from 'src/components/playlistModal/rearrange/style.module.less';
+import s from 'src/components/playlistModal/reorder/style.module.less';
 import DragSVG from 'src/resources/icons/drag.svg';
 import { Typography } from '@boclips-ui/typography';
 import Badge from '@boclips-ui/badge';

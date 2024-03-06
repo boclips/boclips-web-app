@@ -4,7 +4,7 @@ import { Collection } from 'boclips-api-client/dist/sub-clients/collections/mode
 import { Typography } from '@boclips-ui/typography';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import PlaylistVideosListDraggable from 'src/components/playlistModal/rearrange/PlaylistVideosListDraggable';
+import PlaylistVideosListDraggable from 'src/components/playlistModal/reorder/PlaylistVideosListDraggable';
 import { useReorderPlaylist } from 'src/hooks/api/playlistsQuery';
 import s from './style.module.less';
 
@@ -14,14 +14,14 @@ interface Props {
   confirmButtonText: string;
 }
 
-const RearrangeModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
-  const [rearrangedVideos, setRearrangedVideos] = useState<Video[]>([
+const ReorderModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
+  const [reorderedVideos, setReorderedVideos] = useState<Video[]>([
     ...playlist.videos,
   ]);
 
   const { mutate: reorderPlaylist } = useReorderPlaylist(playlist);
   const onConfirm = () => {
-    reorderPlaylist(rearrangedVideos);
+    reorderPlaylist(reorderedVideos);
     onCancel();
   };
 
@@ -39,17 +39,17 @@ const RearrangeModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
     }
 
     const items = reorder(
-      rearrangedVideos,
+      reorderedVideos,
       result.source.index,
       result.destination.index,
     );
 
-    setRearrangedVideos(items);
+    setReorderedVideos(items);
   };
 
   return (
     <Bodal
-      title="Rearrange videos"
+      title="Reorder videos"
       confirmButtonText={confirmButtonText}
       onConfirm={onConfirm}
       onCancel={onCancel}
@@ -68,7 +68,7 @@ const RearrangeModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
               ref={provided.innerRef}
               className={s.listWrapper}
             >
-              {rearrangedVideos.map((video, index) => (
+              {reorderedVideos.map((video, index) => (
                 <PlaylistVideosListDraggable
                   key={video.id}
                   video={video}
@@ -84,4 +84,4 @@ const RearrangeModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
   );
 };
 
-export default RearrangeModal;
+export default ReorderModal;

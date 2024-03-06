@@ -310,16 +310,7 @@ describe('Playlist Header', () => {
       description: 'Description',
     });
 
-    const fakeClient = new FakeBoclipsClient();
-    fakeClient.users.insertCurrentUser(
-      UserFactory.sample({
-        features: {
-          BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST: true,
-        },
-      }),
-    );
-
-    const wrapper = renderWrapper(playlist, fakeClient);
+    const wrapper = renderWrapper(playlist, new FakeBoclipsClient());
 
     await waitFor(() => wrapper.getByText('Options')).then((it) => {
       expect(it).toBeInTheDocument();

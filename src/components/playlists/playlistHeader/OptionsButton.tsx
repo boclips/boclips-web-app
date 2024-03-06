@@ -3,7 +3,7 @@ import OptionsDotsSVG from 'src/resources/icons/options-dots.svg';
 import c from 'classnames';
 import PencilSVG from 'src/resources/icons/pencil.svg';
 import CopySVG from 'src/resources/icons/copy.svg';
-import RearrangeSVG from 'src/resources/icons/rearrange.svg';
+import ReorderSVG from 'src/resources/icons/reorder.svg';
 import BinSVG from 'src/resources/icons/bin.svg';
 import CrossSVG from 'src/resources/icons/cross-icon.svg';
 import { EditPlaylistModal } from 'src/components/playlistModal/EditPlaylistModal';
@@ -13,8 +13,7 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import Button from '@boclips-ui/button';
 import { OptionItem } from 'src/components/playlists/playlistHeader/OptionItem';
 import { CopyPlaylistModal } from 'src/components/playlistModal/CopyPlaylistModal';
-import RearrangeModal from 'src/components/playlistModal/rearrange/RearrangePlaylistModal';
-import { FeatureGate } from 'src/components/common/FeatureGate';
+import ReorderModal from 'src/components/playlistModal/reorder/ReorderPlaylistModal';
 import { RemovePlaylistModal } from 'src/components/playlistModal/RemovePlaylistModal';
 import { UnfollowPlaylistModal } from 'src/components/playlistModal/UnfollowPlaylistModal';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
@@ -29,7 +28,7 @@ const enum PlaylistModalState {
   EDIT,
   DUPLICATE,
   REMOVE,
-  REARRANGE,
+  REORDER,
   UNFOLLOW,
 }
 
@@ -87,20 +86,18 @@ export const OptionsButton = ({ playlist }: Props) => {
                     }}
                   />
                 )}
-                <FeatureGate feature="BO_WEB_APP_REORDER_VIDEOS_IN_PLAYLIST">
-                  {(playlist?.mine ||
-                    playlist?.permissions.anyone ===
-                      CollectionPermission.EDIT) && (
-                    <OptionItem
-                      text="Rearrange"
-                      label="Rearrange videos in this playlist"
-                      icon={<RearrangeSVG aria-hidden />}
-                      onSelect={() => {
-                        setModalState(PlaylistModalState.REARRANGE);
-                      }}
-                    />
-                  )}
-                </FeatureGate>
+                {(playlist?.mine ||
+                  playlist?.permissions.anyone ===
+                    CollectionPermission.EDIT) && (
+                  <OptionItem
+                    text="Reorder videos"
+                    label="Reorder videos in this playlist"
+                    icon={<ReorderSVG aria-hidden />}
+                    onSelect={() => {
+                      setModalState(PlaylistModalState.REORDER);
+                    }}
+                  />
+                )}
                 <OptionItem
                   text="Make a copy"
                   label="Make a copy of this playlist"
@@ -146,8 +143,8 @@ export const OptionsButton = ({ playlist }: Props) => {
           onCancel={() => setModalState(PlaylistModalState.NONE)}
         />
       )}
-      {modalState === PlaylistModalState.REARRANGE && (
-        <RearrangeModal
+      {modalState === PlaylistModalState.REORDER && (
+        <ReorderModal
           playlist={playlist}
           onCancel={() => setModalState(PlaylistModalState.NONE)}
           confirmButtonText="Update"
