@@ -14,14 +14,13 @@ import { InputText } from '@boclips-ui/input';
 import { useDebounce } from 'src/hooks/useDebounce';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import { Tabs } from 'antd';
 import List from 'antd/lib/list';
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
 import { Typography } from '@boclips-ui/typography';
+import * as Tabs from '@radix-ui/react-tabs';
 import s from './style.module.less';
 import GridCard from '../common/gridCard/GridCard';
 
-const { TabPane } = Tabs;
 export const PLAYLISTS_PAGE_SIZE = 1000;
 
 const Playlists = () => {
@@ -103,16 +102,30 @@ const Playlists = () => {
           constraints={{ required: true }}
         />
       </div>
-
-      <Tabs className={s.playlistTabs} defaultActiveKey="1" size="large">
-        <TabPane tab={<Typography.H5>My Playlists</Typography.H5>} key="1">
+      <Tabs.Root
+        defaultValue="my-playlists"
+        orientation="horizontal"
+        className={s.playlistTabs}
+      >
+        <Tabs.List aria-label="tabs playlists" className={s.tabNavBar}>
+          <Tabs.Trigger value="my-playlists" className={s.tabHeader}>
+            <Typography.H5>My Playlists</Typography.H5>
+          </Tabs.Trigger>
+          <Tabs.Trigger value="shared-playlists" className={s.tabHeader}>
+            <Typography.H5>Shared Playlists</Typography.H5>
+          </Tabs.Trigger>
+          <Tabs.Trigger value="boclips-playlists" className={s.tabHeader}>
+            <Typography.H5>Boclips Playlists</Typography.H5>
+          </Tabs.Trigger>
+        </Tabs.List>
+        <Tabs.Content value="my-playlists" className={s.tabContent}>
           {isInitialLoading ? (
             <SkeletonTiles className={s.skeletonCard} rows={3} cols={4} />
           ) : (
             renderPlaylistList(playlists, (playlist) => playlist.mine)
           )}
-        </TabPane>
-        <TabPane tab={<Typography.H5>Shared Playlists</Typography.H5>} key="2">
+        </Tabs.Content>
+        <Tabs.Content value="shared-playlists" className={s.tabContent}>
           {isInitialLoading ? (
             <SkeletonTiles className={s.skeletonCard} rows={3} cols={4} />
           ) : (
@@ -121,8 +134,8 @@ const Playlists = () => {
               (playlist) => !playlist.mine && !isCreatedByBoclips(playlist),
             )
           )}
-        </TabPane>
-        <TabPane tab={<Typography.H5>Boclips Playlists</Typography.H5>} key="3">
+        </Tabs.Content>
+        <Tabs.Content value="boclips-playlists" className={s.tabContent}>
           {isInitialLoading ? (
             <SkeletonTiles className={s.skeletonCard} rows={3} cols={4} />
           ) : (
@@ -131,8 +144,8 @@ const Playlists = () => {
               (playlist) => !playlist.mine && isCreatedByBoclips(playlist),
             )
           )}
-        </TabPane>
-      </Tabs>
+        </Tabs.Content>
+      </Tabs.Root>
     </main>
   );
 };
