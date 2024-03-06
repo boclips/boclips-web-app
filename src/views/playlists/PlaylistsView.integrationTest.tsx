@@ -138,12 +138,10 @@ describe('PlaylistsView', () => {
     it('displays shared playlists', async () => {
       const wrapper = renderPlaylistsView(client);
 
-      fireEvent.mouseDown(
-        await wrapper.findByRole('tab', { name: 'Shared Playlists' }),
-      );
+      fireEvent.click(await wrapper.findByText('Shared Playlists'));
       expect(await wrapper.findByText('Bob made this Playlist')).toBeVisible();
       expect(await wrapper.findByText('By: Bob')).toBeVisible();
-      expect(wrapper.queryByText('Playlist 1')).toBeNull();
+      expect(wrapper.queryByText('Playlist 1')).not.toBeVisible();
       expect(wrapper.queryByText('Boclips made this Playlist')).toBeNull();
     });
 
@@ -161,14 +159,12 @@ describe('PlaylistsView', () => {
       );
       const wrapper = renderPlaylistsView(client);
 
-      fireEvent.mouseDown(
-        await wrapper.findByRole('tab', { name: 'Boclips Playlists' }),
-      );
+      fireEvent.click(await wrapper.findByText('Boclips Playlists'));
       expect(
         await wrapper.findByText('Boclips made this Playlist'),
       ).toBeVisible();
       expect(await wrapper.findByText('By: Boclips')).toBeVisible();
-      expect(wrapper.queryByText('Playlist 1')).toBeNull();
+      expect(wrapper.queryByText('Playlist 1')).not.toBeVisible();
       expect(wrapper.queryByText('Bob made this Playlist')).toBeNull();
     });
 
@@ -256,20 +252,14 @@ describe('PlaylistsView', () => {
     );
     await userEvent.type(searchInput, 'pears');
 
-    fireEvent.mouseDown(
-      await wrapper.findByRole('tab', { name: 'My Playlists' }),
-    );
+    fireEvent.click(await wrapper.findByText('My Playlists'));
     await waitForElementToBeRemoved(() => wrapper.getByText('Apples'));
     expect(await wrapper.findByText('pears')).toBeVisible();
 
-    fireEvent.mouseDown(
-      await wrapper.findByRole('tab', { name: 'Shared Playlists' }),
-    );
+    fireEvent.click(await wrapper.findByText('Shared Playlists'));
     expect(await wrapper.findByText('Shared pears')).toBeVisible();
 
-    fireEvent.mouseDown(
-      await wrapper.findByRole('tab', { name: 'Boclips Playlists' }),
-    );
+    fireEvent.click(await wrapper.findByText('Boclips Playlists'));
     expect(await wrapper.findByText('Boclips loves pears')).toBeVisible();
   });
 

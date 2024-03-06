@@ -166,17 +166,20 @@
 }
 
 .playlistTabs{
-  .tabNavBar {
-    border-bottom: 2px solid @gray-400;
+  h5 {
+    margin-bottom: 0;
   }
 
-  .tabHeader {
-    color: @gray-700;
-    padding: 1rem 1rem 0.5rem;
-    margin-right: 1rem;
+  :global .ant-tabs-ink-bar {
+    background: @blue-800;
+    height: 4px !important;
+    border-radius: 10px !important;
+    border: 1px solid @blue-800 !important;
+  }
 
-    &:first-child{
-      padding: 1rem 1rem 0.5rem 0;
+  :global .ant-tabs-nav-list .ant-tabs-tab {
+    h5 {
+      color: #495A7C;
     }
 
     :hover {
@@ -184,24 +187,14 @@
     }
   }
 
-  .tabHeader[data-state='active'] {
-    color: @gray-900;
-    position:relative;
-
-    &:after {
-      content: '';
-      background-color:@blue-800;
-      position:absolute;
-      height: 4px;
-      bottom: -3px;
-      width: 100%;
-      left: 0;
-      border-radius: 4px;
-    }
+  :global .ant-tabs-nav {
+    margin-bottom: 1.5rem;
   }
 
-  .tabContent {
-    padding-top: 2rem;
+  :global .ant-tabs-tab-active {
+    h5 {
+      color: @gray-900 !important;
+    }
   }
 }
 
