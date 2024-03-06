@@ -279,30 +279,6 @@ describe('Playlist Header', () => {
     });
   });
 
-  it('does not have an options button for Classroom', async () => {
-    const fakeClient = new FakeBoclipsClient();
-    fakeClient.users.insertCurrentUser(
-      UserFactory.sample({
-        account: {
-          ...UserFactory.sample().account,
-          id: 'acc-1',
-          name: 'Ren',
-          products: [Product.CLASSROOM],
-          type: AccountType.STANDARD,
-        },
-      }),
-    );
-    const playlist = CollectionFactory.sample({
-      id: '123',
-      title: 'Playlist title',
-      description: 'Description',
-    });
-
-    const wrapper = renderWrapper(playlist, fakeClient);
-
-    expect(wrapper.queryByText('Options')).toBeNull();
-  });
-
   it('opens dropdown when clicked', async () => {
     const playlist = CollectionFactory.sample({
       id: '123',
