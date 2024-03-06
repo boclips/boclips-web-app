@@ -30,38 +30,19 @@ export const useOwnAndSharedPlaylistsQuery = (page: number, query?: string) => {
   const client = useBoclipsClient();
   const backendPageNumber = page - 1;
   return useQuery(playlistKeys.ownAndShared(backendPageNumber, query), () =>
-    client.collections
-      .getMySavedCollectionsWithoutDetails({
-        query,
-        partialTitleMatch: true,
-        page: backendPageNumber,
-        size: PLAYLISTS_PAGE_SIZE,
-        origin: 'BO_WEB_APP',
-      })
-      .then((playlists) => playlists),
+    doGetOwnAndSharedPlaylists(client, backendPageNumber, query),
   );
 };
 
 export const useGetPromotedPlaylistsQuery = () => {
   const client = useBoclipsClient();
-  return useQuery(['promoted'], () =>
-    client.collections
-      .getPromotedCollections({ origin: 'BO_WEB_APP' })
-      .then((playlists) => playlists),
-  );
+  return useQuery(['promoted'], () => doGetPromotedPlaylists(client));
 };
 
 export const useOwnAndEditableSharedPlaylistsQuery = () => {
   const client = useBoclipsClient();
   return useQuery(playlistKeys.own, () =>
-    client.collections
-      .getMySavedAndEditableCollectionsWithoutDetails({
-        origin: 'BO_WEB_APP',
-        size: 100,
-      })
-      .then((playlists) => {
-        return playlists.page;
-      }),
+    doGetOwnAndEditableSharedPlaylists(client),
   );
 };
 
@@ -251,6 +232,38 @@ export const useRemoveFromPlaylistMutation = (
       },
     },
   );
+};
+
+const doGetOwnAndEditableSharedPlaylists = (client: BoclipsClient) =>
+  client.collections
+    .getMySavedAndEditableCollectionsWithoutDetails({
+      origin: 'BO_WEB_APP',
+      size: 100,
+    })
+    .then((playlists) => {
+      return playlists.page;
+    });
+
+const doGetOwnAndSharedPlaylists = (
+  client: BoclipsClient,
+  page: number,
+  query?: string,
+) => {
+  return client.collections
+    .getMySavedCollectionsWithoutDetails({
+      query,
+      partialTitleMatch: true,
+      page,
+      size: PLAYLISTS_PAGE_SIZE,
+      origin: 'BO_WEB_APP',
+    })
+    .then((playlists) => playlists);
+};
+
+const doGetPromotedPlaylists = (client: BoclipsClient) => {
+  return client.collections
+    .getPromotedCollections({ origin: 'BO_WEB_APP' })
+    .then((playlists) => playlists);
 };
 
 export const usePlaylistMutation = () => {
