@@ -142,7 +142,18 @@ describe('PlaylistsView', () => {
       expect(wrapper.queryByText('Boclips made this Playlist')).toBeNull();
     });
 
-    it('displays Boclips playlists', async () => {
+    it('displays Boclips playlists and their owner as Boclips for external users', async () => {
+      client.users.insertCurrentUser(
+        UserFactory.sample({
+          account: {
+            id: 'acc-12',
+            name: 'External Account',
+            type: AccountType.STANDARD,
+            products: [Product.B2B],
+            createdAt: new Date(),
+          },
+        }),
+      );
       const wrapper = renderPlaylistsView(client);
 
       fireEvent.mouseDown(
@@ -152,6 +163,31 @@ describe('PlaylistsView', () => {
         await wrapper.findByText('Boclips made this Playlist'),
       ).toBeVisible();
       expect(await wrapper.findByText('By: Boclips')).toBeVisible();
+      expect(wrapper.queryByText('Playlist 1')).toBeNull();
+      expect(wrapper.queryByText('Bob made this Playlist')).toBeNull();
+    });
+
+    it('displays Boclips playlists and their owner as ownerName (Boclips) for internal users', async () => {
+      client.users.insertCurrentUser(
+        UserFactory.sample({
+          account: {
+            id: 'acc-1',
+            name: 'Boclips',
+            type: AccountType.STANDARD,
+            products: [Product.B2B],
+            createdAt: new Date(),
+          },
+        }),
+      );
+      const wrapper = renderPlaylistsView(client);
+
+      fireEvent.mouseDown(
+        await wrapper.findByRole('tab', { name: 'Boclips Playlists' }),
+      );
+      expect(
+        await wrapper.findByText('Boclips made this Playlist'),
+      ).toBeVisible();
+      expect(await wrapper.findByText('By: Eve (Boclips)')).toBeVisible();
       expect(wrapper.queryByText('Playlist 1')).toBeNull();
       expect(wrapper.queryByText('Bob made this Playlist')).toBeNull();
     });
