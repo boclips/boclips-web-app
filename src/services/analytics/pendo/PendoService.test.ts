@@ -104,7 +104,7 @@ describe('Pendo Service', () => {
       'error message is here',
     );
 
-    expect(trackSpy).lastCalledWith('Classroom Account Creation Failure', {
+    expect(trackSpy).lastCalledWith('Classroom Registration Failure', {
       email: 'email@gmail.com',
       schoolName: 'High School Musical',
       errorMessage: 'error message is here',

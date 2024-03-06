@@ -39,7 +39,7 @@ export class PendoService {
     errorMessage?: string,
   ) {
     if (this.pendoInstance) {
-      this.pendoInstance.track('Classroom Account Creation Failure', {
+      this.pendoInstance.track('Classroom Registration Failure', {
         email,
         schoolName,
         errorMessage,
