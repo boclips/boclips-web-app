@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { BoclipsClient } from 'boclips-api-client';
@@ -32,17 +32,37 @@ export const doGetVideoWithShareCode = (
   return apiClient.videos.get(id, referer, shareCode);
 };
 
-export const useGetVideoWithShareCode = (
-  videoId: string,
-  referer: string,
-  shareCode?: string,
-) => {
+export const useGetVideoWithReferer = (videoId: string, referer: string) => {
   const apiClient = useBoclipsClient();
   return useQuery(
-    ['videoWithShareCode'],
-    () => doGetVideoWithShareCode(videoId, apiClient, referer, shareCode),
+    ['videoWithShareCode', videoId],
+    () => doGetVideoWithShareCode(videoId, apiClient, referer),
     {
       enabled: !!videoId && !!referer,
+    },
+  );
+};
+
+export const useGetVideoWithShareCode = () => {
+  const client = useBoclipsClient();
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    async ({
+      videoId,
+      referer,
+      shareCode,
+    }: {
+      videoId: string;
+      referer: string;
+      shareCode: string;
+    }): Promise<Video> => {
+      return doGetVideoWithShareCode(videoId, client, referer, shareCode);
+    },
+    {
+      onSuccess: (video, { videoId }) => {
+        queryClient.setQueryData(['videoWithShareCode', videoId], video);
+      },
     },
   );
 };
