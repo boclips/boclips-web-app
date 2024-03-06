@@ -147,7 +147,7 @@ describe('PlaylistsView', () => {
       expect(
         await wrapper.findByText('Boclips made this Playlist'),
       ).toBeVisible();
-      expect(await wrapper.findByText('By: Eve')).toBeVisible();
+      expect(await wrapper.findByText('By: Boclips')).toBeVisible();
       expect(wrapper.queryByText('Playlist 1')).not.toBeVisible();
       expect(wrapper.queryByText('Bob made this Playlist')).toBeNull();
     });

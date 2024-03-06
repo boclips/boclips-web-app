@@ -9,19 +9,31 @@ interface Props {
 }
 
 const PlaylistOwnerBadge = ({ playlist }: Props) => {
-  if (!playlist.ownerName || !playlist.ownerName.trim()) return null;
+  function getOwnerName() {
+    if (playlist.mine) {
+      return 'You';
+    }
+    if (playlist.createdBy === 'Boclips') {
+      return 'Boclips';
+    }
+    return !playlist.ownerName || !playlist.ownerName.trim()
+      ? null
+      : playlist.ownerName;
+  }
 
-  const ownerName = playlist.mine ? 'You' : playlist.ownerName;
+  const ownerName = getOwnerName();
 
   return (
-    <Typography.Body
-      as="div"
-      size="small"
-      aria-label={`playlist owned by ${ownerName}`}
-      className={s.playlistBadge}
-    >
-      {`By: ${ownerName}`}
-    </Typography.Body>
+    ownerName && (
+      <Typography.Body
+        as="div"
+        size="small"
+        aria-label={`playlist owned by ${ownerName}`}
+        className={s.playlistBadge}
+      >
+        {`By: ${ownerName}`}
+      </Typography.Body>
+    )
   );
 };
 

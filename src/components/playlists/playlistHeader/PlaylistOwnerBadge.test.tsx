@@ -57,4 +57,42 @@ describe('Playlist Owner Badge', () => {
       wrapper.queryByLabelText('playlist owned by', { exact: false }),
     ).not.toBeInTheDocument();
   });
+
+  it('displays Boclips when playlist is createdBy Boclips', async () => {
+    const playlist = CollectionFactory.sample({
+      id: '123',
+      mine: false,
+      createdBy: 'Boclips',
+      ownerName: 'The Owner',
+    });
+
+    const wrapper = render(
+      <MemoryRouter>
+        <PlaylistOwnerBadge playlist={playlist} />
+      </MemoryRouter>,
+    );
+
+    expect(
+      wrapper.getByLabelText('playlist owned by Boclips'),
+    ).toBeInTheDocument();
+    expect(wrapper.getByText('By: Boclips')).toBeVisible();
+  });
+
+  it('displays You when playlist is createdBy Boclips but is mine', async () => {
+    const playlist = CollectionFactory.sample({
+      id: '123',
+      mine: true,
+      createdBy: 'Boclips',
+      ownerName: 'The Owner',
+    });
+
+    const wrapper = render(
+      <MemoryRouter>
+        <PlaylistOwnerBadge playlist={playlist} />
+      </MemoryRouter>,
+    );
+
+    expect(wrapper.getByLabelText('playlist owned by You')).toBeInTheDocument();
+    expect(wrapper.getByText('By: You')).toBeVisible();
+  });
 });
