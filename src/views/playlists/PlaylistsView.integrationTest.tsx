@@ -63,6 +63,11 @@ describe('PlaylistsView', () => {
     insertUser(client);
     const wrapper = renderPlaylistsView(client);
     expect(await wrapper.findByTitle('Playlists')).toBeVisible();
+    expect(
+      await wrapper.findByText(
+        'Create, search and share your own video playlists, as well as playlists that have been shared with you by your friends or colleagues, and featured playlists that have been curated by Boclips.',
+      ),
+    ).toBeVisible();
   });
 
   describe('Playlist tabs', () => {

@@ -46,6 +46,9 @@ export const PlaylistsHeader = () => {
             className="max-w-max"
           />
         }
+        description="Create, search and share your own video playlists, as well as
+          playlists that have been shared with you by your friends or
+          colleagues, and featured playlists that have been curated by Boclips."
       />
       {modalOpen && (
         <CreatePlaylistModal
