@@ -1,5 +1,4 @@
 import React from 'react';
-import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import {
   useGetIdFromLocation,
@@ -12,6 +11,7 @@ import { Layout } from 'src/components/layout/Layout';
 import { BoclipsApiError } from 'boclips-api-client/dist/types';
 import { VideoPage } from 'src/components/videoPage/VideoPage';
 import ErrorView from 'src/views/error/ErrorView';
+import UnauthorizedNavbar from 'src/components/layout/UnauthorizedNavbar';
 
 const UnauthorizedVideoView = () => {
   const videoId = useGetIdFromLocation('shared');
@@ -38,7 +38,7 @@ const UnauthorizedVideoView = () => {
       responsiveLayout
     >
       {video?.title && <Helmet title={video.title} />}
-      <Navbar showOptions={false} showSearch={false} />
+      <UnauthorizedNavbar />
       <VideoPage video={video} />
       <Footer className="row-start-last row-end-last" />
     </Layout>
