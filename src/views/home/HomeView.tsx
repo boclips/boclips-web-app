@@ -95,7 +95,12 @@ const HomeView = () => {
         <FeaturedPlaylists />
       </div>
       <div className="row-start-4 row-end-4 col-start-2 col-end-26">
-        <FeaturedVideos />
+        <FeatureGate
+          product={Product.CLASSROOM}
+          fallback={<FeaturedVideos product="LIBRARY" />}
+        >
+          <FeaturedVideos product="CLASSROOM" />
+        </FeatureGate>
       </div>
       <Footer className="col-start-2 col-end-26" />
     </Layout>
