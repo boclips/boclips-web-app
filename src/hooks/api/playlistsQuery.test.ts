@@ -36,7 +36,7 @@ describe('playlistsQuery', () => {
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(collectionsSpy).toBeCalledWith({
       page: 0,
-      size: 20,
+      size: 1000,
       origin: 'BO_WEB_APP',
       partialTitleMatch: true,
       query: 'bla',

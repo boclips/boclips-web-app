@@ -165,6 +165,37 @@
   overflow: hidden;
 }
 
+.playlistTabs{
+  h5 {
+    margin-bottom: 0;
+  }
+
+  :global .ant-tabs-ink-bar {
+    background: @blue-800;
+    height: 4px !important;
+    border-radius: 10px !important;
+    border: 1px solid @blue-800 !important;
+  }
+
+  :global .ant-tabs-nav-list .ant-tabs-tab {
+    color: #495A7C;
+
+    :hover {
+      color: @gray-900;
+    }
+  }
+
+  :global .ant-tabs-nav {
+    margin-bottom: 1.5rem;
+  }
+
+  :global .ant-tabs-tab-active {
+    h5 {
+      color: @gray-900 !important;
+    }
+  }
+}
+
 @media screen and (min-width: @screen-sm) {
   .cardWrapper {
     grid-template-columns: repeat(1, minmax(0, 1fr));
