@@ -32,4 +32,18 @@ export class PendoService {
       });
     }
   }
+
+  public trackClassroomAccountCreationFailure(
+    email: string,
+    schoolName: string,
+    errorMessage?: string,
+  ) {
+    if (this.pendoInstance) {
+      this.pendoInstance.track('Classroom Account Creation Failure', {
+        email,
+        schoolName,
+        errorMessage,
+      });
+    }
+  }
 }

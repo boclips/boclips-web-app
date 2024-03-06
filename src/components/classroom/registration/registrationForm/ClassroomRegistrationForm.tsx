@@ -9,6 +9,7 @@ import ClassroomRegistrationFormFields from 'src/components/classroom/registrati
 import CreateAccountButton from 'src/components/classroom/registration/registrationForm/createAccountButton/CreateAccountButton';
 import FormValidator from 'src/components/classroom/registration/registrationForm/validation/validation';
 import { Link } from 'react-router-dom';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import s from '../style.module.less';
 
 export interface ClassroomRegistrationData {
@@ -132,6 +133,12 @@ const ClassroomRegistrationForm = ({
                   error?.message,
                 );
             }
+
+            AnalyticsFactory.pendo().trackClassroomAccountCreationFailure(
+              registrationData.email,
+              registrationData.schoolName,
+              error?.message,
+            );
           },
         },
       );

@@ -90,4 +90,24 @@ describe('Pendo Service', () => {
       },
     });
   });
+
+  it('tracs classroom account creation failure', () => {
+    const trackSpy = jest.fn();
+    const service = new PendoService({
+      ...window.pendo,
+      track: trackSpy,
+    });
+
+    service.trackClassroomAccountCreationFailure(
+      'email@gmail.com',
+      'High School Musical',
+      'error message is here',
+    );
+
+    expect(trackSpy).lastCalledWith('Classroom Account Creation Failure', {
+      email: 'email@gmail.com',
+      schoolName: 'High School Musical',
+      errorMessage: 'error message is here',
+    });
+  });
 });
