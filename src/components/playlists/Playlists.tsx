@@ -103,36 +103,33 @@ const Playlists = () => {
           constraints={{ required: true }}
         />
       </div>
-
-      <Tabs className={s.playlistTabs} defaultActiveKey="1" size="large">
-        <TabPane tab={<Typography.H5>My Playlists</Typography.H5>} key="1">
-          {isInitialLoading ? (
-            <SkeletonTiles className={s.skeletonCard} rows={3} cols={4} />
-          ) : (
-            renderPlaylistList(playlists, (playlist) => playlist.mine)
-          )}
-        </TabPane>
-        <TabPane tab={<Typography.H5>Shared Playlists</Typography.H5>} key="2">
-          {isInitialLoading ? (
-            <SkeletonTiles className={s.skeletonCard} rows={3} cols={4} />
-          ) : (
-            renderPlaylistList(
+      {isInitialLoading ? (
+        <SkeletonTiles className={s.skeletonCard} rows={3} cols={4} />
+      ) : (
+        <Tabs className={s.playlistTabs} defaultActiveKey="1" size="large">
+          <TabPane tab={<Typography.H5>My Playlists</Typography.H5>} key="1">
+            {renderPlaylistList(playlists, (playlist) => playlist.mine)}
+          </TabPane>
+          <TabPane
+            tab={<Typography.H5>Shared Playlists</Typography.H5>}
+            key="2"
+          >
+            {renderPlaylistList(
               playlists,
               (playlist) => !playlist.mine && !isCreatedByBoclips(playlist),
-            )
-          )}
-        </TabPane>
-        <TabPane tab={<Typography.H5>Boclips Playlists</Typography.H5>} key="3">
-          {isInitialLoading ? (
-            <SkeletonTiles className={s.skeletonCard} rows={3} cols={4} />
-          ) : (
-            renderPlaylistList(
+            )}
+          </TabPane>
+          <TabPane
+            tab={<Typography.H5>Boclips Playlists</Typography.H5>}
+            key="3"
+          >
+            {renderPlaylistList(
               playlists,
               (playlist) => !playlist.mine && isCreatedByBoclips(playlist),
-            )
-          )}
-        </TabPane>
-      </Tabs>
+            )}
+          </TabPane>
+        </Tabs>
+      )}
     </main>
   );
 };
