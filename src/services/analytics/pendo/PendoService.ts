@@ -44,6 +44,7 @@ export class PendoService {
         schoolName,
         errorMessage,
       });
+      console.log('account creation failure event recorded');
     }
   }
 }
