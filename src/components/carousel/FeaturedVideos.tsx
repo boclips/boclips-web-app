@@ -4,7 +4,7 @@ import { Carousel } from 'src/components/common/carousel/Carousel';
 import VideoSlide from 'src/components/carousel/VideoSlide';
 import s from './styles.module.less';
 
-const featuredVideoIds = [
+const featuredLibraryVideoIds = [
   '63fdfe8ad7fbb13615d23591',
   '60cb11f60560d046cde9d1e9',
   '627b417eef77c448ec160d95',
@@ -17,8 +17,36 @@ const featuredVideoIds = [
   '6408901541a2894ba64e2548',
 ];
 
-const FeaturedVideos = () => {
-  const { data: videos, isLoading } = useGetVideos(featuredVideoIds);
+const featuredClassroomVideoIds = [
+  '642963c7f2ff6f79b7a3deee',
+  '65e219d3acb34d232a464c4f',
+  '62555fbb357dff6f7b1259bd',
+  '65153855ec623442504c7fa2',
+  '5c54d6d5d8eafeecae206c43',
+  '63c049bffedee80107512616',
+  '64e60019f7750101fe519fe3',
+  '63bea57e920da25f8bd866c6',
+  '5e15d46fcdc1f47e7c0b62a5',
+  '5c54d67cd8eafeecae20408c',
+];
+
+interface Props {
+  product: 'CLASSROOM' | 'LIBRARY';
+}
+
+const FeaturedVideos = ({ product }: Props) => {
+  let videoIds: string[];
+  switch (product) {
+    case 'CLASSROOM':
+      videoIds = featuredClassroomVideoIds;
+      break;
+    case 'LIBRARY':
+    default:
+      videoIds = featuredLibraryVideoIds;
+      break;
+  }
+
+  const { data: videos, isLoading } = useGetVideos(videoIds);
 
   const getVideoSlides = useMemo(
     () => videos?.map((video) => <VideoSlide key={video.id} video={video} />),
