@@ -165,6 +165,46 @@
   overflow: hidden;
 }
 
+.playlistTabs{
+  .tabNavBar {
+    border-bottom: 2px solid @gray-400;
+  }
+
+  .tabHeader {
+    color: @gray-700;
+    padding: 1rem 1rem 0.5rem;
+    margin-right: 1rem;
+
+    &:first-child{
+      padding: 1rem 1rem 0.5rem 0;
+    }
+
+    :hover {
+      color: @gray-900;
+    }
+  }
+
+  .tabHeader[data-state='active'] {
+    color: @gray-900;
+    position:relative;
+
+    &:after {
+      content: '';
+      background-color:@blue-800;
+      position:absolute;
+      height: 4px;
+      bottom: -3px;
+      width: 100%;
+      left: 0;
+      border-radius: 4px;
+    }
+  }
+
+  .tabContent {
+    padding-top: 2rem;
+  }
+}
+
 @media screen and (min-width: @screen-sm) {
   .cardWrapper {
     grid-template-columns: repeat(1, minmax(0, 1fr));

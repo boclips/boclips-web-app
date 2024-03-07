@@ -16,6 +16,7 @@ import {
 } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
+import { PLAYLISTS_PAGE_SIZE } from 'src/components/playlists/Playlists';
 
 describe('playlistsQuery', () => {
   it('will use list projection and convert page size when loading users playlists', async () => {
@@ -36,7 +37,7 @@ describe('playlistsQuery', () => {
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(collectionsSpy).toBeCalledWith({
       page: 0,
-      size: 20,
+      size: PLAYLISTS_PAGE_SIZE,
       origin: 'BO_WEB_APP',
       partialTitleMatch: true,
       query: 'bla',
