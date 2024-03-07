@@ -6,7 +6,6 @@ import CopySVG from 'src/resources/icons/copy.svg';
 import ReorderSVG from 'src/resources/icons/reorder.svg';
 import BinSVG from 'src/resources/icons/bin.svg';
 import CrossSVG from 'src/resources/icons/cross-icon.svg';
-import { EditPlaylistModal } from 'src/components/playlistModal/EditPlaylistModal';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
@@ -17,6 +16,12 @@ import ReorderModal from 'src/components/playlistModal/reorder/ReorderPlaylistMo
 import { RemovePlaylistModal } from 'src/components/playlistModal/RemovePlaylistModal';
 import { UnfollowPlaylistModal } from 'src/components/playlistModal/UnfollowPlaylistModal';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
+import { FeatureGate } from 'src/components/common/FeatureGate';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import ShareSVG from 'src/resources/icons/black-share.svg';
+import { EditPlaylistModal } from 'src/components/playlistModal/EditPlaylistModal';
+import { EditPlaylistPermissionsModal } from 'src/components/playlistModal/EditPlaylistPermissionsModal';
+import { copySharePlaylistLink } from 'src/services/copySharePlaylistLink';
 import s from './style.module.less';
 
 interface Props {
@@ -30,6 +35,7 @@ const enum PlaylistModalState {
   REMOVE,
   REORDER,
   UNFOLLOW,
+  SHARE_WITH_TEACHERS,
 }
 
 export const OptionsButton = ({ playlist }: Props) => {
@@ -107,6 +113,18 @@ export const OptionsButton = ({ playlist }: Props) => {
                   }}
                 />
                 {playlist.mine && (
+                  <FeatureGate product={Product.CLASSROOM}>
+                    <OptionItem
+                      text="Share with teachers"
+                      label="Share with teachers"
+                      icon={<ShareSVG aria-hidden />}
+                      onSelect={() => {
+                        setModalState(PlaylistModalState.SHARE_WITH_TEACHERS);
+                      }}
+                    />
+                  </FeatureGate>
+                )}
+                {playlist.mine && (
                   <OptionItem
                     text="Remove"
                     label="Remove this playlist"
@@ -153,6 +171,14 @@ export const OptionsButton = ({ playlist }: Props) => {
       {modalState === PlaylistModalState.UNFOLLOW && (
         <UnfollowPlaylistModal
           playlist={playlist}
+          onCancel={() => setModalState(PlaylistModalState.NONE)}
+        />
+      )}
+      {modalState === PlaylistModalState.SHARE_WITH_TEACHERS && (
+        <EditPlaylistPermissionsModal
+          title="Share this playlist with other teachers"
+          playlist={playlist}
+          handleClick={() => copySharePlaylistLink(playlist)}
           onCancel={() => setModalState(PlaylistModalState.NONE)}
         />
       )}
