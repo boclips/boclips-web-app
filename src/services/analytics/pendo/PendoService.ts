@@ -48,10 +48,16 @@ export class PendoService {
         schoolName,
         errorMessage,
       });
+
+      setTimeout(function () {
+        this.trackClassroomAccountCreationFailure(
+          email,
+          schoolName,
+          errorMessage,
+        );
+      }, 500);
+
       console.log('account creation failure event recorded:');
-      console.log(`email : ${email}`);
-      console.log(`schoolName : ${schoolName}`);
-      console.log(`errorMessage : ${errorMessage}`);
     } else {
       console.log('[TRACK-EVENT] pendo is not ready');
     }
