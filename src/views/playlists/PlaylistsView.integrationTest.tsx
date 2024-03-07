@@ -27,18 +27,20 @@ import {
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 
-const insertUser = (client: FakeBoclipsClient, product?: Product) =>
-  client.users.insertCurrentUser(
-    UserFactory.sample({
-      account: {
-        ...UserFactory.sample().account,
-        id: 'acc-1',
-        name: 'Ren',
-        products: [product],
-        type: AccountType.STANDARD,
-      },
-    }),
-  );
+const insertUser = (client: FakeBoclipsClient, product?: Product) => {
+  const user = UserFactory.sample({
+    id: 'user-1',
+    account: {
+      ...UserFactory.sample().account,
+      id: 'acc-1',
+      name: 'Ren',
+      products: [product],
+      type: AccountType.STANDARD,
+    },
+  });
+  client.users.insertCurrentUser(user);
+  return user;
+};
 
 const renderPlaylistsView = (client: BoclipsClient) =>
   render(
@@ -68,133 +70,202 @@ describe('PlaylistsView', () => {
     ).toBeVisible();
   });
 
-  it('renders playlists created by the user', async () => {
-    const client = new FakeBoclipsClient();
-    insertUser(client);
+  describe('Playlist tabs', () => {
+    let client: FakeBoclipsClient;
 
-    const playlists = [
-      CollectionFactory.sample({ id: '1', title: 'Playlist 1' }),
-      CollectionFactory.sample({ id: '2', title: 'Playlist 2' }),
-    ];
+    beforeEach(() => {
+      client = new FakeBoclipsClient();
+      const user = insertUser(client);
+      client.collections.setCurrentUser(user.id);
 
-    playlists.forEach((it) => client.collections.addToFake(it));
+      const playlists = [
+        CollectionFactory.sample({
+          id: '1',
+          title: 'Playlist 1',
+          owner: user.id,
+          mine: true,
+        }),
+        CollectionFactory.sample({
+          id: '2',
+          title: 'Playlist 2',
+          owner: user.id,
+          mine: true,
+        }),
+      ];
 
-    const wrapper = renderPlaylistsView(client);
+      playlists.forEach((it) => client.collections.addToFake(it));
 
-    expect(await wrapper.findByText('Playlist 1')).toBeVisible();
-    expect(await wrapper.findByText('Playlist 2')).toBeVisible();
+      const sharedPlaylist = CollectionFactory.sample({
+        id: '3',
+        title: 'Bob made this Playlist',
+        mine: false,
+        ownerName: 'Bob',
+      });
+      client.collections.addToFake(sharedPlaylist);
+      client.collections.bookmark(sharedPlaylist);
 
-    expect(await wrapper.findAllByText('By: You')).toHaveLength(2);
-  });
-
-  it('displays shared playlists', async () => {
-    const client = new FakeBoclipsClient();
-
-    const playlist = CollectionFactory.sample({
-      id: '1',
-      title: 'Playlist 1',
-      mine: false,
-      ownerName: 'The Owner',
+      const boclipsPlaylist = CollectionFactory.sample({
+        id: '4',
+        title: 'Boclips made this Playlist',
+        mine: false,
+        ownerName: 'Eve',
+        createdBy: 'Boclips',
+      });
+      client.collections.addToFake(boclipsPlaylist);
+      client.collections.bookmark(boclipsPlaylist);
     });
-    client.collections.addToFake(playlist);
-    await client.collections.bookmark(playlist);
 
-    const wrapper = renderPlaylistsView(client);
+    describe('BO_WEB_APP_DEV feature enabled', () => {
+      beforeEach(() => {
+        client.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
+      });
 
-    expect(await wrapper.findByText('Playlist 1')).toBeVisible();
-    expect(await wrapper.findByText('Shared with you')).toBeVisible();
+      it('renders playlists tabs', async () => {
+        const wrapper = renderPlaylistsView(client);
 
-    expect(await wrapper.findByText('By: The Owner')).toBeVisible();
-  });
+        expect(await wrapper.findByText('My Playlists')).toBeVisible();
+        expect(await wrapper.findByText('Shared Playlists')).toBeVisible();
+        expect(await wrapper.findByText('Boclips Playlists')).toBeVisible();
+      });
 
-  it('displays Boclips playlists and their owner as Boclips for external users', async () => {
-    const client = new FakeBoclipsClient();
+      it('renders playlists created by the user', async () => {
+        const wrapper = renderPlaylistsView(client);
 
-    client.users.insertCurrentUser(
-      UserFactory.sample({
-        account: {
-          id: 'acc-12',
-          name: 'External Account',
-          type: AccountType.STANDARD,
-          products: [Product.B2B],
-          createdAt: new Date(),
-        },
-      }),
-    );
+        fireEvent.click(await wrapper.findByText('My Playlists'));
+        expect(await wrapper.findByText('Playlist 1')).toBeVisible();
+        expect(await wrapper.findByText('Playlist 2')).toBeVisible();
+        expect(wrapper.queryByText('Bob made this Playlist')).toBeNull();
+        expect(wrapper.queryByText('Boclips made this Playlist')).toBeNull();
 
-    const boclipsPlaylist = CollectionFactory.sample({
-      id: '4',
-      title: 'Boclips made this Playlist',
-      mine: false,
-      ownerName: 'Eve',
-      createdBy: 'Boclips',
+        expect(await wrapper.findAllByText('By: You')).toHaveLength(2);
+      });
+
+      it('displays shared playlists', async () => {
+        const wrapper = renderPlaylistsView(client);
+
+        fireEvent.mouseDown(
+          await wrapper.findByRole('tab', { name: 'Shared Playlists' }),
+        );
+        expect(
+          await wrapper.findByText('Bob made this Playlist'),
+        ).toBeVisible();
+        expect(await wrapper.findByText('By: Bob')).toBeVisible();
+        expect(wrapper.queryByText('Playlist 1')).toBeNull();
+        expect(wrapper.queryByText('Boclips made this Playlist')).toBeNull();
+      });
+
+      it('displays Boclips playlists and their owner as Boclips for external users', async () => {
+        client.users.insertCurrentUser(
+          UserFactory.sample({
+            account: {
+              id: 'acc-12',
+              name: 'External Account',
+              type: AccountType.STANDARD,
+              products: [Product.B2B],
+              createdAt: new Date(),
+            },
+          }),
+        );
+        client.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
+        const wrapper = renderPlaylistsView(client);
+
+        fireEvent.mouseDown(
+          await wrapper.findByRole('tab', { name: 'Boclips Playlists' }),
+        );
+        expect(
+          await wrapper.findByText('Boclips made this Playlist'),
+        ).toBeVisible();
+        expect(await wrapper.findByText('By: Boclips')).toBeVisible();
+        expect(wrapper.queryByText('Playlist 1')).toBeNull();
+        expect(wrapper.queryByText('Bob made this Playlist')).toBeNull();
+      });
+
+      it('displays Boclips playlists and their owner as ownerName (Boclips) for internal users', async () => {
+        client.users.insertCurrentUser(
+          UserFactory.sample({
+            account: {
+              id: 'acc-1',
+              name: 'Boclips',
+              type: AccountType.STANDARD,
+              products: [Product.B2B],
+              createdAt: new Date(),
+            },
+          }),
+        );
+        client.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
+        const wrapper = renderPlaylistsView(client);
+
+        fireEvent.mouseDown(
+          await wrapper.findByRole('tab', { name: 'Boclips Playlists' }),
+        );
+        expect(
+          await wrapper.findByText('Boclips made this Playlist'),
+        ).toBeVisible();
+        expect(await wrapper.findByText('By: Eve (Boclips)')).toBeVisible();
+        expect(wrapper.queryByText('Playlist 1')).toBeNull();
+        expect(wrapper.queryByText('Bob made this Playlist')).toBeNull();
+      });
     });
-    client.collections.addToFake(boclipsPlaylist);
-    await client.collections.bookmark(boclipsPlaylist);
 
-    const wrapper = renderPlaylistsView(client);
+    describe('BO_WEB_APP_DEV feature disabled', () => {
+      beforeEach(() => {
+        client.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: false });
+      });
 
-    expect(
-      await wrapper.findByText('Boclips made this Playlist'),
-    ).toBeVisible();
-    expect(await wrapper.findByText('By: Boclips')).toBeVisible();
-  });
+      it('renders all playlists on page', async () => {
+        const wrapper = renderPlaylistsView(client);
 
-  it('displays Boclips playlists and their owner as ownerName (Boclips) for internal users', async () => {
-    const client = new FakeBoclipsClient();
-
-    client.users.insertCurrentUser(
-      UserFactory.sample({
-        account: {
-          id: 'acc-1',
-          name: 'Boclips',
-          type: AccountType.STANDARD,
-          products: [Product.B2B],
-          createdAt: new Date(),
-        },
-      }),
-    );
-
-    const boclipsPlaylist = CollectionFactory.sample({
-      id: '4',
-      title: 'Boclips made this Playlist',
-      mine: false,
-      ownerName: 'Eve',
-      createdBy: 'Boclips',
+        expect(await wrapper.findByText('Playlist 1')).toBeVisible();
+        expect(wrapper.getByText('Playlist 2')).toBeVisible();
+        expect(wrapper.getByText('Bob made this Playlist')).toBeVisible();
+        expect(wrapper.getByText('Boclips made this Playlist')).toBeVisible();
+        expect(wrapper.getAllByText('Shared with you')).toHaveLength(2);
+      });
     });
-    client.collections.addToFake(boclipsPlaylist);
-    await client.collections.bookmark(boclipsPlaylist);
-
-    const wrapper = renderPlaylistsView(client);
-
-    expect(
-      await wrapper.findByText('Boclips made this Playlist'),
-    ).toBeVisible();
-    expect(await wrapper.findByText('By: Eve (Boclips)')).toBeVisible();
   });
 
-  it('can search for playlist', async () => {
+  it('can search for playlist with separate tabs result when BO_WEB_APP enabled', async () => {
     const client = new FakeBoclipsClient();
+    const user = insertUser(client);
+    client.collections.setCurrentUser(user.id);
+    client.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
 
     const myPlaylists = [
       CollectionFactory.sample({
         id: '1',
         mine: true,
-        title: 'My playlist about apples',
+        title: 'Apples',
+        owner: user.id,
       }),
       CollectionFactory.sample({
         id: '2',
         mine: true,
-        title: 'My playlist about pears',
+        title: 'pears',
+        owner: user.id,
       }),
       CollectionFactory.sample({
         id: '3',
         mine: false,
-        title: 'Shared pears playlist',
+        title: 'Shared pears',
         ownerName: 'The Owner',
         links: {
           self: new Link({
             href: 'https://api.boclips.com/v1/collections/1',
+          }),
+          unbookmark: new Link({
+            href: 'https://api.staging-boclips.com/v1/collections/623707aa9d7ac66705d8b280?bookmarked=false',
+          }),
+        },
+      }),
+      CollectionFactory.sample({
+        id: '4',
+        mine: false,
+        title: 'Boclips loves pears',
+        ownerName: 'Some owner',
+        createdBy: 'Boclips',
+        links: {
+          self: new Link({
+            href: 'https://api.boclips.com/v1/collections/4',
           }),
           unbookmark: new Link({
             href: 'https://api.staging-boclips.com/v1/collections/623707aa9d7ac66705d8b280?bookmarked=false',
@@ -207,19 +278,90 @@ describe('PlaylistsView', () => {
 
     const wrapper = renderPlaylistsView(client);
 
-    expect(await wrapper.findByText('My playlist about apples')).toBeVisible();
-    expect(await wrapper.findByText('My playlist about pears')).toBeVisible();
-    expect(await wrapper.findByText('Shared pears playlist')).toBeVisible();
-
-    const searchInput = wrapper.getByPlaceholderText('Search for playlists');
+    const searchInput = await wrapper.findByPlaceholderText(
+      'Search for playlists',
+    );
     await userEvent.type(searchInput, 'pears');
 
-    await waitForElementToBeRemoved(() =>
-      wrapper.getByText('My playlist about apples'),
+    fireEvent.mouseDown(
+      await wrapper.findByRole('tab', { name: 'My Playlists' }),
     );
+    await waitForElementToBeRemoved(() => wrapper.getByText('Apples'));
+    expect(await wrapper.findByText('pears')).toBeVisible();
 
-    expect(await wrapper.findByText('My playlist about pears')).toBeVisible();
-    expect(await wrapper.findByText('Shared pears playlist')).toBeVisible();
+    fireEvent.mouseDown(
+      await wrapper.findByRole('tab', { name: 'Shared Playlists' }),
+    );
+    expect(await wrapper.findByText('Shared pears')).toBeVisible();
+
+    fireEvent.mouseDown(
+      await wrapper.findByRole('tab', { name: 'Boclips Playlists' }),
+    );
+    expect(await wrapper.findByText('Boclips loves pears')).toBeVisible();
+  });
+  it('can search for playlist when BO_WEB_APP disabled', async () => {
+    const client = new FakeBoclipsClient();
+    const user = insertUser(client);
+    client.collections.setCurrentUser(user.id);
+    client.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: false });
+
+    const myPlaylists = [
+      CollectionFactory.sample({
+        id: '1',
+        mine: true,
+        title: 'Apples',
+        owner: user.id,
+      }),
+      CollectionFactory.sample({
+        id: '2',
+        mine: true,
+        title: 'pears',
+        owner: user.id,
+      }),
+      CollectionFactory.sample({
+        id: '3',
+        mine: false,
+        title: 'Shared pears',
+        ownerName: 'The Owner',
+        links: {
+          self: new Link({
+            href: 'https://api.boclips.com/v1/collections/1',
+          }),
+          unbookmark: new Link({
+            href: 'https://api.staging-boclips.com/v1/collections/623707aa9d7ac66705d8b280?bookmarked=false',
+          }),
+        },
+      }),
+      CollectionFactory.sample({
+        id: '4',
+        mine: false,
+        title: 'Boclips loves pears',
+        ownerName: 'Some owner',
+        createdBy: 'Boclips',
+        links: {
+          self: new Link({
+            href: 'https://api.boclips.com/v1/collections/4',
+          }),
+          unbookmark: new Link({
+            href: 'https://api.staging-boclips.com/v1/collections/623707aa9d7ac66705d8b280?bookmarked=false',
+          }),
+        },
+      }),
+    ];
+
+    myPlaylists.forEach((it) => client.collections.addToFake(it));
+
+    const wrapper = renderPlaylistsView(client);
+
+    const searchInput = await wrapper.findByPlaceholderText(
+      'Search for playlists',
+    );
+    await userEvent.type(searchInput, 'pears');
+
+    await waitForElementToBeRemoved(() => wrapper.getByText('Apples'));
+    expect(await wrapper.findByText('pears')).toBeVisible();
+    expect(await wrapper.findByText('Shared pears')).toBeVisible();
+    expect(await wrapper.findByText('Boclips loves pears')).toBeVisible();
   });
 
   describe('share playlists', () => {
