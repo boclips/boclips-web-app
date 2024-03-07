@@ -14,9 +14,10 @@ import s from './style.module.less';
 
 interface Props {
   playlist: Collection;
+  showButtons?: boolean;
 }
 
-const PlaylistHeader = ({ playlist }: Props) => {
+const PlaylistHeader = ({ playlist, showButtons = true }: Props) => {
   return (
     <section
       className={c(
@@ -40,12 +41,14 @@ const PlaylistHeader = ({ playlist }: Props) => {
           <PlaylistLastUpdatedBadge playlist={playlist} />
         </div>
       </div>
-      <div className={s.playlistButtons}>
-        <FeatureGate product={Product.B2B}>
-          <PlaylistShareButton playlist={playlist} />
-        </FeatureGate>
-        <OptionsButton playlist={playlist} />
-      </div>
+      {showButtons && (
+        <div className={s.playlistButtons}>
+          <FeatureGate product={Product.B2B}>
+            <PlaylistShareButton playlist={playlist} />
+          </FeatureGate>
+          <OptionsButton playlist={playlist} />
+        </div>
+      )}
       {playlist.description && (
         <PlaylistDescription description={playlist.description} />
       )}

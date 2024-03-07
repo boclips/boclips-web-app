@@ -15,9 +15,10 @@ import { VideoCardButtons } from '../videoCard/buttons/VideoCardButtons';
 
 interface Props {
   playlist: Collection;
+  showButtons?: boolean;
 }
 
-const PlaylistBody = ({ playlist }: Props) => {
+const PlaylistBody = ({ playlist, showButtons = true }: Props) => {
   const [searchLocation, setSearchLocation] = useSearchQueryLocationParams();
   const { filters: filtersFromURL } = searchLocation;
 
@@ -82,19 +83,23 @@ const PlaylistBody = ({ playlist }: Props) => {
               video={video}
               handleFilterChange={handleFilterChange}
               buttonsRow={
-                <VideoCardButtons
-                  video={video}
-                  iconOnly
-                  onAddToCart={() => {
-                    AnalyticsFactory.hotjar().event(
-                      HotjarEvents.AddToCartFromPlaylistPage,
-                    );
-                  }}
-                  onCleanupAddToPlaylist={shouldRemoveVideoCardFromView}
-                  additionalSecondaryButtons={
-                    <CommentButton videoId={video.id} collection={playlist} />
-                  }
-                />
+                showButtons ? (
+                  <VideoCardButtons
+                    video={video}
+                    iconOnly
+                    onAddToCart={() => {
+                      AnalyticsFactory.hotjar().event(
+                        HotjarEvents.AddToCartFromPlaylistPage,
+                      );
+                    }}
+                    onCleanupAddToPlaylist={shouldRemoveVideoCardFromView}
+                    additionalSecondaryButtons={
+                      <CommentButton videoId={video.id} collection={playlist} />
+                    }
+                  />
+                ) : (
+                  <div>no buttons</div>
+                )
               }
             />
           ))
