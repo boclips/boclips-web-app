@@ -10,11 +10,15 @@ describe('Remove playlist modal', () => {
     const wrapper = renderWrapper();
 
     expect(
-      await wrapper.getByText('Remove the', { exact: false }),
+      await wrapper.getByText('Are you sure you want to remove', {
+        exact: false,
+      }),
     ).toBeVisible();
     expect(await wrapper.getByText('Original playlist')).toBeVisible();
     expect(
-      await wrapper.getByText('You will not be able to recover it.'),
+      await wrapper.getByText(
+        'Removing a playlist is a permanent action and cannot be undone.',
+      ),
     ).toBeVisible();
   });
 
