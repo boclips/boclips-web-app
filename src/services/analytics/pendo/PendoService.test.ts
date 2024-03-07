@@ -91,10 +91,13 @@ describe('Pendo Service', () => {
     });
   });
 
-  it('tracs classroom account creation failure', () => {
+  it('tracks classroom account creation failure', () => {
     const trackSpy = jest.fn();
     const service = new PendoService({
       ...window.pendo,
+      isReady(): boolean {
+        return true;
+      },
       track: trackSpy,
     });
 

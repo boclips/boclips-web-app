@@ -38,13 +38,22 @@ export class PendoService {
     schoolName: string,
     errorMessage?: string,
   ) {
-    if (this.pendoInstance) {
+    if (
+      this.pendoInstance &&
+      this.pendoInstance.isReady &&
+      this.pendoInstance.isReady()
+    ) {
       this.pendoInstance.track('Classroom Registration Failure', {
         email,
         schoolName,
         errorMessage,
       });
-      console.log('account creation failure event recorded');
+      console.log('account creation failure event recorded:');
+      console.log(`email : ${email}`);
+      console.log(`schoolName : ${schoolName}`);
+      console.log(`errorMessage : ${errorMessage}`);
+    } else {
+      console.log('[TRACK-EVENT] pendo is not ready');
     }
   }
 }
