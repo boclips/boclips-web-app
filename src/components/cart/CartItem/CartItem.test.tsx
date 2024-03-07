@@ -111,7 +111,7 @@ describe('CartItem', () => {
       fakeApiClient,
     );
 
-    fireEvent.click(await wrapper.findByText('Trim video'));
+    fireEvent.click(await wrapper.findByText(/Trim video/));
 
     expect(wrapper.getByText(/From:/)).toBeInTheDocument();
     expect(wrapper.getByText(/To:/)).toBeInTheDocument();
@@ -142,15 +142,15 @@ describe('CartItem', () => {
 
     fireEvent.click(await wrapper.findByText('Trim video'));
 
-    fireEvent.change(await wrapper.findByLabelText('trim-from'), {
+    fireEvent.change(await wrapper.findByLabelText('From:'), {
       target: { value: '2:00' },
     });
 
-    fireEvent.change(await wrapper.findByLabelText('trim-to'), {
+    fireEvent.change(await wrapper.findByLabelText('To:'), {
       target: { value: '3:00' },
     });
 
-    fireEvent.blur(await wrapper.findByLabelText('trim-from'));
+    fireEvent.blur(await wrapper.findByLabelText('From:'));
 
     cart = await fakeClient.carts.getCart();
 

@@ -330,17 +330,17 @@ describe('CartView', () => {
       );
       fireEvent.click(await wrapper.findByText('Trim video'));
 
-      fireEvent.change(await wrapper.findByLabelText('trim-from'), {
-        target: { value: '0:02' },
+      fireEvent.change(await wrapper.findByLabelText('From:'), {
+        target: { value: '00:02' },
       });
 
-      fireEvent.blur(await wrapper.findByLabelText('trim-from'));
+      fireEvent.blur(await wrapper.findByLabelText('From:'));
 
-      fireEvent.change(await wrapper.findByLabelText('trim-to'), {
-        target: { value: '0:03' },
+      fireEvent.change(await wrapper.findByLabelText('To:'), {
+        target: { value: '00:03' },
       });
 
-      fireEvent.blur(await wrapper.findByLabelText('trim-to'));
+      fireEvent.blur(await wrapper.findByLabelText('To:'));
 
       await waitFor(async () => {
         expect(
@@ -374,9 +374,9 @@ describe('CartView', () => {
 
       fireEvent.click(await wrapper.findByText('Trim video'));
 
-      fireEvent.focus(await wrapper.findByLabelText('trim-from'));
-      fireEvent.blur(await wrapper.findByLabelText('trim-from'));
-      fireEvent.change(await wrapper.findByLabelText('trim-from'), {
+      fireEvent.focus(await wrapper.findByLabelText('From:'));
+      fireEvent.blur(await wrapper.findByLabelText('From:'));
+      fireEvent.change(await wrapper.findByLabelText('From:'), {
         target: { value: '-2' },
       });
 
@@ -395,10 +395,10 @@ describe('CartView', () => {
         await wrapper.findByText('Specify your trimming options'),
       ).toBeVisible();
 
-      fireEvent.change(await wrapper.findByLabelText('trim-from'), {
+      fireEvent.change(await wrapper.findByLabelText('From:'), {
         target: { value: '0:00' },
       });
-      fireEvent.change(await wrapper.findByLabelText('trim-to'), {
+      fireEvent.change(await wrapper.findByLabelText('To:'), {
         target: { value: '0:05' },
       });
 
@@ -566,12 +566,12 @@ describe('CartView', () => {
 
       fireEvent.click(await wrapper.findByText('Trim video'));
 
-      fireEvent.focus(await wrapper.findByLabelText('trim-from'));
+      fireEvent.focus(await wrapper.findByLabelText('From:'));
 
-      await userEvent.type(wrapper.getByLabelText('trim-from'), 'k1a2:30s');
+      await userEvent.type(wrapper.getByLabelText('From:'), 'k1a2:30s');
 
       expect(
-        (wrapper.getByLabelText('trim-from') as HTMLInputElement).value,
+        ((await wrapper.findByLabelText('From:')) as HTMLInputElement).value,
       ).toEqual('12:30');
     });
 

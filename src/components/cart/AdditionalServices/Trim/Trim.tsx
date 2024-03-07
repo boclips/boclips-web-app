@@ -98,9 +98,7 @@ export const TrimService = ({ videoItem, cartItem, price }: Props) => {
     }
   };
 
-  const onChangeTrimInput = (e, trimCheckpoint) => {
-    const trim = e.target.value;
-
+  const onChangeTrimInput = (trim, trimCheckpoint) => {
     const value = { [trimCheckpoint]: trim };
     setTrimValue((prevState) => {
       return {
@@ -165,8 +163,7 @@ export const TrimService = ({ videoItem, cartItem, price }: Props) => {
           <Typography.Body as="div" className="flex flex-row mt-2">
             <DurationInput
               label="From:"
-              isValid={trimValidation?.isFromValid}
-              ariaLabel="trim-from"
+              isError={!trimValidation?.isFromValid}
               onBlur={onBlur}
               onFocus={() => setIsValidationEnabled(false)}
               onChange={(e) => onChangeTrimInput(e, 'from')}
@@ -174,8 +171,7 @@ export const TrimService = ({ videoItem, cartItem, price }: Props) => {
               value={trimValue.trim.from}
             />
             <DurationInput
-              ariaLabel="trim-to"
-              isValid={trimValidation?.isToValid}
+              isError={!trimValidation?.isToValid}
               label="To:"
               onFocus={() => setIsValidationEnabled(false)}
               onChange={(e) => onChangeTrimInput(e, 'to')}

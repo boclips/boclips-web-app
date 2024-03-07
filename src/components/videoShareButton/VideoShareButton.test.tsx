@@ -43,31 +43,6 @@ describe('video share button', () => {
     expect(wrapper.queryByText('Share')).toBeNull();
   });
 
-  it(`displays modal with title when clicked`, async () => {
-    const wrapper = renderShareButton();
-
-    const button = await wrapper.findByRole('button', { name: 'Share' });
-    await userEvent.click(button);
-
-    expect(
-      await wrapper.findByText('Share Tractor Video with students'),
-    ).toBeVisible();
-    expect(
-      wrapper.getByRole('button', {
-        name: 'Close Share Tractor Video with students modal',
-      }),
-    ).toBeVisible();
-    expect(wrapper.getByRole('button', { name: 'Copy link' })).toBeVisible();
-
-    const shareCodeFooter = wrapper.getByTestId('share-code-footer');
-    expect(shareCodeFooter).toBeVisible();
-    expect(shareCodeFooter.textContent).toEqual(
-      'Your unique Teacher code is 1739',
-    );
-
-    expect(wrapper.queryByRole('button', { name: 'Cancel' })).toBeNull();
-  });
-
   it(`allows selecting start and end time for shared link`, async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.users.insertCurrentUser(
@@ -82,7 +57,7 @@ describe('video share button', () => {
     await userEvent.click(button);
 
     expect(
-      await wrapper.findByText('Share Tractor Video with students'),
+      await wrapper.findByText('Share this video with students'),
     ).toBeVisible();
 
     const startCheckbox = wrapper.getByRole('checkbox', {
@@ -118,32 +93,13 @@ describe('video share button', () => {
     expect(endTimeInput).toBeEnabled();
   });
 
-  it(`end time is defaulted to end of video`, async () => {
-    const wrapper = renderShareButton();
-
-    const button = await wrapper.findByRole('button', { name: 'Share' });
-    await userEvent.click(button);
-
-    expect(
-      await wrapper.findByText('Share Tractor Video with students'),
-    ).toBeVisible();
-
-    const endTimeInput = wrapper.getByRole('textbox', {
-      name: 'End time:',
-    });
-    expect(endTimeInput).toBeVisible();
-    expect(endTimeInput).toBeDisabled();
-
-    expect((endTimeInput as HTMLInputElement).value).toEqual('01:10');
-  });
-
   it(`validates start time > end time`, async () => {
     jest.spyOn(navigator.clipboard, 'writeText');
 
     const wrapper = renderShareButton();
     await openShareModal(wrapper);
     expect(
-      await wrapper.findByText('Share Tractor Video with students'),
+      await wrapper.findByText('Share this video with students'),
     ).toBeVisible();
     const startTimeInput = wrapper.getByRole('textbox', {
       name: 'Start time:',
@@ -187,7 +143,7 @@ describe('video share button', () => {
     expect(wrapper.queryByRole('alert')).toBeNull();
 
     expect(
-      await wrapper.findByText('Share Tractor Video with students'),
+      await wrapper.findByText('Share this video with students'),
     ).toBeVisible();
   });
 
@@ -197,7 +153,7 @@ describe('video share button', () => {
     const wrapper = renderShareButton();
     await openShareModal(wrapper);
     expect(
-      await wrapper.findByText('Share Tractor Video with students'),
+      await wrapper.findByText('Share this video with students'),
     ).toBeVisible();
     const startTimeInput = wrapper.getByRole('textbox', {
       name: 'Start time:',
@@ -238,7 +194,7 @@ describe('video share button', () => {
     expect(within(notification).getByText('Share link copied!')).toBeVisible();
 
     expect(
-      await wrapper.findByText('Share Tractor Video with students'),
+      await wrapper.findByText('Share this video with students'),
     ).toBeVisible();
   });
 

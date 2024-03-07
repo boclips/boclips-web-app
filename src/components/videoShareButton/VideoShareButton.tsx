@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import ShareSVG from 'src/resources/icons/white-share.svg';
 import Button from '@boclips-ui/button';
 import { Bodal } from 'src/components/common/bodal/Bodal';
@@ -48,27 +48,48 @@ export const VideoShareButton = ({
 
   const toggleModalVisibility = () => setIsModalVisible(!isModalVisible);
 
-  const handleStartTimeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setStartDuration(e.target.value);
+  useEffect(() => {
+    if (startDuration.length === 5) validateFields();
+    if (endDuration.length === 5) validateFields();
+  }, [startDuration, endDuration]);
+
+  useEffect(() => {
+    return () => {
+      setStartTimeEnabled(false);
+      setStartDuration('00:00');
+      setStartDurationValid(true);
+      setEndTimeEnabled(false);
+      setEndDuration('00:00');
+      setEndDurationValid(true);
+    };
+  }, [isModalVisible]);
+
+  const handleStartTimeChange = (value: string) => {
+    setStartDuration(value);
   };
-  const handleEndTimeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEndDuration(e.target.value);
+
+  const handleEndTimeChange = (value: string) => {
+    setEndDuration(value);
   };
 
   const validateFields = () => {
-    setStartDurationValid(
-      isTrimFromValid(
-        { from: startDuration, to: endDuration },
-        video.playback.duration,
-      ),
-    );
+    if (startTimeEnabled) {
+      setStartDurationValid(
+        isTrimFromValid(
+          { from: startDuration, to: endDuration },
+          video.playback.duration,
+        ),
+      );
+    }
 
-    setEndDurationValid(
-      isTrimToValid(
-        { from: startDuration, to: endDuration },
-        video.playback.duration,
-      ),
-    );
+    if (endTimeEnabled) {
+      setEndDurationValid(
+        isTrimToValid(
+          { from: startDuration, to: endDuration },
+          video.playback.duration,
+        ),
+      );
+    }
   };
 
   const handleCopyLink = () => {
@@ -101,16 +122,17 @@ export const VideoShareButton = ({
       {isModalVisible && (
         <Bodal
           onCancel={toggleModalVisibility}
-          title={`Share ${video.title} with students`}
+          title="Share this video with students"
           displayCancelButton={false}
           confirmButtonText="Copy link"
           confirmButtonIcon={<CopyLinkIcon />}
-          footerClass="mb-8"
+          footerClass={s.bodalButtons}
           onConfirm={handleCopyLink}
+          smallSize={false}
           footerText={
             <Typography.Body
               as="div"
-              className="text-center pt-8 pb-8 bg-gray-100"
+              className="text-center pt-4 pb-6 text-gray-800"
               data-qa="share-code-footer"
             >
               {`Your unique Teacher code is `}
@@ -128,11 +150,11 @@ export const VideoShareButton = ({
             />
           }
         >
-          <Typography.Body as="div" className="mb-8">
+          <Typography.Body as="div" className="mb-14 text-gray-800">
             Students need both the link and your unique teacher code to access
-            and play video(s).
+            and play the video {video.title}
           </Typography.Body>
-          <div className="flex justify-start">
+          <div className="flex justify-center mb-10">
             <div className="flex items-center">
               <BoCheckbox
                 checked={startTimeEnabled}
@@ -146,13 +168,10 @@ export const VideoShareButton = ({
               <DurationInput
                 label="Start time:"
                 value={startDuration}
-                ariaLabel="Start time:"
                 id="start-time"
                 disabled={!startTimeEnabled}
                 onChange={handleStartTimeChange}
-                isValid={startDurationValid}
-                onBlur={validateFields}
-                onFocus={() => {}}
+                isError={!startDurationValid}
               />
             </div>
             <div className="flex items-center ml-16">
@@ -169,13 +188,11 @@ export const VideoShareButton = ({
               <DurationInput
                 label="End time:"
                 value={endDuration}
-                ariaLabel="End time:"
                 id="end-time"
                 disabled={!endTimeEnabled}
                 onChange={handleEndTimeChange}
-                isValid={endDurationValid}
+                isError={!endDurationValid}
                 onBlur={validateFields}
-                onFocus={() => {}}
                 placeholder={videoDuration}
               />
             </div>
