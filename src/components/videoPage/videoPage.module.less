@@ -18,6 +18,15 @@
   grid-column-end: 26;
   grid-row-start: 3;
   grid-row-end: 4;
+
+  :global {
+    .plyr__video-wrapper {
+      max-height: 550px;
+    }
+    .plyr__poster {
+      background-size: cover;
+    }
+  }
 }
 
 .headerSection {
@@ -48,7 +57,6 @@
 }
 
 @media screen and (min-width: @screen-lg) {
-
   .playerSection {
     grid-row-start: 3;
     grid-column-start: 2;
