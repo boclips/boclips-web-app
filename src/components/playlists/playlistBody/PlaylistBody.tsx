@@ -10,8 +10,8 @@ import { FilterKey } from 'src/types/search/FilterKey';
 import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
 import CommentButton from 'src/components/playlists/comments/CommentButton';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
-import s from './style.module.less';
-import { VideoCardButtons } from '../videoCard/buttons/VideoCardButtons';
+import s from '../style.module.less';
+import { VideoCardButtons } from '../../videoCard/buttons/VideoCardButtons';
 
 interface Props {
   playlist: Collection;

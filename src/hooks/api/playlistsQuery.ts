@@ -10,10 +10,10 @@ import { Collection } from 'boclips-api-client/dist/sub-clients/collections/mode
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { CollectionsClient } from 'boclips-api-client/dist/sub-clients/collections/client/CollectionsClient';
 import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collections/model/ListViewCollection';
-import { PLAYLISTS_PAGE_SIZE } from 'src/components/playlists/Playlists';
 import { useNavigate } from 'react-router-dom';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
+import { PLAYLISTS_PAGE_SIZE } from 'src/components/playlists/PlaylistList';
 import { playlistKeys } from './playlistKeys';
 
 interface UpdatePlaylistProps {
