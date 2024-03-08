@@ -30,8 +30,11 @@ const UnauthorizedVideoView = () => {
     error,
   } = useGetVideoWithReferer(videoId, referer);
 
-  const { mutate: getVideoWithShareCode, isSuccess } =
-    useGetVideoWithShareCode();
+  const {
+    mutate: getVideoWithShareCode,
+    isSuccess,
+    isLoading: isVideoLoading,
+  } = useGetVideoWithShareCode();
 
   useEffect(() => {
     if (limitedVideo) {
@@ -70,6 +73,7 @@ const UnauthorizedVideoView = () => {
           fetchAssetWithCode={({ assetId, referer: ref, shareCode }) =>
             getVideoWithShareCode({ videoId: assetId, referer: ref, shareCode })
           }
+          isFetching={isVideoLoading}
         />
       )}
       <VideoPage video={video} />

@@ -1,9 +1,9 @@
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import { Typography } from '@boclips-ui/typography';
 import { InputText } from '@boclips-ui/input';
-import Button from '@boclips-ui/button';
 import React, { useState } from 'react';
 import { handleEnterKeyEvent } from 'src/services/handleKeyEvent';
+import SpinnerButton from 'src/components/common/spinnerButton/SpinnerButton';
 import s from './style.module.less';
 
 interface Props {
@@ -14,9 +14,15 @@ interface Props {
     referer: string;
     shareCode: string;
   }) => void;
+  isFetching: boolean;
 }
 
-const ShareCodeModal = ({ assetId, referer, fetchAssetWithCode }: Props) => {
+const ShareCodeModal = ({
+  assetId,
+  referer,
+  fetchAssetWithCode,
+  isFetching = false,
+}: Props) => {
   const [shareCode, setShareCode] = useState('');
 
   const handleChange = (value: string) => {
@@ -56,11 +62,12 @@ const ShareCodeModal = ({ assetId, referer, fetchAssetWithCode }: Props) => {
             )
           }
         />
-        <Button
+        <SpinnerButton
           height="44px"
           onClick={handleClick}
           text="Watch Video"
           disabled={isButtonDisabled}
+          spinning={isFetching}
         />
       </section>
     </Bodal>

@@ -13,6 +13,7 @@ import {
   useGetAnyParamFromLocation,
   useGetIdFromLocation,
 } from 'src/hooks/useLocationParams';
+import { PageNotFoundError } from 'src/components/common/errors/pageNotFound/PageNotFoundError';
 
 const UnauthorizedPlaylistView = () => {
   const playlistId = useGetIdFromLocation('shared');
@@ -24,6 +25,7 @@ const UnauthorizedPlaylistView = () => {
   const {
     data: playlist,
     isSuccess,
+    isFetching,
     refetch: getPlaylistWithShareCode,
   } = useGetPlaylistWithShareCode(playlistId, referer, code);
 
@@ -39,6 +41,10 @@ const UnauthorizedPlaylistView = () => {
     }
   }, [isSuccess]);
 
+  if (!referer) {
+    return <PageNotFoundError />;
+  }
+
   return (
     <>
       <Helmet title={title} />
@@ -51,6 +57,7 @@ const UnauthorizedPlaylistView = () => {
             fetchAssetWithCode={({ shareCode }) => {
               setCode(shareCode);
             }}
+            isFetching={isFetching}
           />
         )}
         {!playlist ? (
