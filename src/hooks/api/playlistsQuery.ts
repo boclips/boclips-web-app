@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 import { PLAYLISTS_PAGE_SIZE } from 'src/components/playlists/PlaylistList';
+import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForCollectionFilter';
 import { playlistKeys } from './playlistKeys';
 
 interface UpdatePlaylistProps {
@@ -42,11 +43,11 @@ export const useOwnAndSharedPlaylistsQuery = (page: number, query?: string) => {
   );
 };
 
-export const useGetPromotedPlaylistsQuery = () => {
+export const useGetPromotedPlaylistsQuery = (product: PromotedForProduct) => {
   const client = useBoclipsClient();
   return useQuery(['promoted'], () =>
     client.collections
-      .getPromotedCollections({ origin: 'BO_WEB_APP' })
+      .getPromotedForCollections({ promotedFor: product, origin: 'BO_WEB_APP' })
       .then((playlists) => playlists),
   );
 };

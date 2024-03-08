@@ -7,20 +7,28 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
+import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForCollectionFilter';
 
 describe(`PromotedPlaylists`, () => {
-  it(`renders all promoted playlists`, async () => {
+  it(`renders all playlists promoted for product`, async () => {
     const fakeApiClient = new FakeBoclipsClient();
     fakeApiClient.collections.addToFake(
       CollectionFactory.sample({
-        promoted: true,
-        title: 'my promoted playlist',
+        promotedFor: [PromotedForProduct.LIBRARY, PromotedForProduct.TEACHERS],
+        title: 'my promoted for library and teachers playlist',
         videos: [VideoFactory.sample({})],
       }),
     );
     fakeApiClient.collections.addToFake(
       CollectionFactory.sample({
-        promoted: false,
+        promotedFor: [PromotedForProduct.TEACHERS],
+        title: 'my promoted for teachers playlist',
+        videos: [VideoFactory.sample({})],
+      }),
+    );
+    fakeApiClient.collections.addToFake(
+      CollectionFactory.sample({
+        promotedFor: [],
         title: 'my regular playlist',
         videos: [VideoFactory.sample({})],
       }),
@@ -30,7 +38,7 @@ describe(`PromotedPlaylists`, () => {
       <BoclipsClientProvider client={fakeApiClient}>
         <Router>
           <QueryClientProvider client={new QueryClient()}>
-            <FeaturedPlaylists />
+            <FeaturedPlaylists product="LIBRARY" />
           </QueryClientProvider>
         </Router>
       </BoclipsClientProvider>,
@@ -38,8 +46,11 @@ describe(`PromotedPlaylists`, () => {
 
     expect(await wrapper.findByText('Featured Playlists')).toBeInTheDocument();
     expect(
-      await wrapper.findByText('my promoted playlist'),
+      await wrapper.findByText('my promoted for library and teachers playlist'),
     ).toBeInTheDocument();
+    expect(
+      wrapper.queryByText('my promoted for teachers playlist'),
+    ).not.toBeInTheDocument();
     expect(wrapper.queryByText('my regular playlist')).not.toBeInTheDocument();
   });
 
@@ -47,14 +58,14 @@ describe(`PromotedPlaylists`, () => {
     const fakeApiClient = new FakeBoclipsClient();
     fakeApiClient.collections.addToFake(
       CollectionFactory.sample({
-        promoted: true,
+        promotedFor: [PromotedForProduct.CLASSROOM],
         title: 'my promoted playlist with videos',
         videos: [VideoFactory.sample({})],
       }),
     );
     fakeApiClient.collections.addToFake(
       CollectionFactory.sample({
-        promoted: true,
+        promotedFor: [PromotedForProduct.CLASSROOM],
         title: 'my promoted empty playlist',
         videos: [],
       }),
@@ -64,7 +75,7 @@ describe(`PromotedPlaylists`, () => {
       <BoclipsClientProvider client={fakeApiClient}>
         <Router>
           <QueryClientProvider client={new QueryClient()}>
-            <FeaturedPlaylists />
+            <FeaturedPlaylists product="CLASSROOM" />
           </QueryClientProvider>
         </Router>
       </BoclipsClientProvider>,

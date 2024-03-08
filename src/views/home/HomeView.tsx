@@ -92,7 +92,12 @@ const HomeView = () => {
         </div>
       )}
       <div className="row-start-3 row-end-3 col-start-2 col-end-26">
-        <FeaturedPlaylists />
+        <FeatureGate
+          product={Product.CLASSROOM}
+          fallback={<FeaturedPlaylists product="LIBRARY" />}
+        >
+          <FeaturedPlaylists product="CLASSROOM" />
+        </FeatureGate>
       </div>
       <div className="row-start-4 row-end-4 col-start-2 col-end-26">
         <FeatureGate

@@ -17,6 +17,7 @@ import {
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 import { PLAYLISTS_PAGE_SIZE } from 'src/components/playlists/PlaylistList';
+import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForCollectionFilter';
 
 describe('playlistsQuery', () => {
   it('will use list projection and convert page size when loading users playlists', async () => {
@@ -177,22 +178,28 @@ describe('playlistsQuery', () => {
     expect(collectionsSpy).toBeCalled();
   });
 
-  it(`will get promoted playlists`, async () => {
+  it(`will get promotedFor playlists`, async () => {
     const apiClient = new FakeBoclipsClient();
     const collectionsSpy = jest.spyOn(
       apiClient.collections,
-      'getPromotedCollections',
+      'getPromotedForCollections',
     );
     // @ts-ignore
-    apiClient.collections.getPromotedCollections = collectionsSpy;
+    apiClient.collections.getPromotedForCollections = collectionsSpy;
 
-    const playlistHook = renderHook(() => useGetPromotedPlaylistsQuery(), {
-      wrapper: wrapperWithClients(apiClient, new QueryClient()),
-    });
+    const playlistHook = renderHook(
+      () => useGetPromotedPlaylistsQuery(PromotedForProduct.CLASSROOM),
+      {
+        wrapper: wrapperWithClients(apiClient, new QueryClient()),
+      },
+    );
 
     await waitFor(() =>
       expect(playlistHook.result.current.isSuccess).toBeTruthy(),
     );
-    expect(collectionsSpy).toBeCalledWith({ origin: 'BO_WEB_APP' });
+    expect(collectionsSpy).toBeCalledWith({
+      promotedFor: PromotedForProduct.CLASSROOM,
+      origin: 'BO_WEB_APP',
+    });
   });
 });
