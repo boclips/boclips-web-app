@@ -152,7 +152,8 @@ export const VideoShareButton = ({
         >
           <Typography.Body as="div" className="mb-14 text-gray-800">
             Students need both the link and your unique teacher code to access
-            and play the video {video.title}
+            and play the video{' '}
+            <Typography.Body weight="medium">{video.title}</Typography.Body>
           </Typography.Body>
           <div className="flex justify-center mb-10">
             <div className="flex items-center">
