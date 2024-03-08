@@ -42,7 +42,16 @@ const UnauthorizedPlaylistView = () => {
   }, [isSuccess]);
 
   if (!referer) {
-    return <PageNotFoundError />;
+    return (
+      <>
+        <Helmet title={title} />
+        <Layout rowsSetup="grid-rows-playlist-view" responsiveLayout>
+          <UnauthorizedNavbar />
+          <PageNotFoundError />
+          <Footer className="col-start-2 col-end-26" />
+        </Layout>
+      </>
+    );
   }
 
   return (
