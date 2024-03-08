@@ -6,7 +6,7 @@ import { useDebounce } from 'src/hooks/useDebounce';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 
 import PlaylistSearch from 'src/components/playlists/search/PlaylistSearch';
-import PlaylistList from 'src/components/playlists/PlaylistList';
+import PlaylistList from 'src/components/playlists/playlistList/PlaylistList';
 import { PlaylistTabs } from 'src/components/playlists/PlaylistTabs';
 import s from './style.module.less';
 

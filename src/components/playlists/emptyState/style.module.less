@@ -4,17 +4,21 @@
   height: 432px;
   background: @blue-100;
   border-radius: 0.25rem;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(12, 1fr);
 }
 
 .heroCopyWrapper {
-  a {
-    color: inherit !important;
-  }
+  grid-column: 7 / 12;
 }
 
 .svgWrapper {
-  margin-right: 150px;
+  grid-column: 2 / 7;
+  justify-self: flex-end;
   width: 427px;
+  display: flex;
+  justify-content: flex-end;
 
   svg {
     max-width: 427px;
