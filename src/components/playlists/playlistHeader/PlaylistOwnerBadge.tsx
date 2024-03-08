@@ -17,7 +17,7 @@ const PlaylistOwnerBadge = ({ playlist }: Props) => {
       return 'You';
     }
     if (playlist.createdBy === 'Boclips') {
-      if (!userIsLoading && user.account?.name === 'Boclips') {
+      if (!userIsLoading && user?.account?.name === 'Boclips') {
         return `${playlist.ownerName} (Boclips)`;
       }
       return 'Boclips';

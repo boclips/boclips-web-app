@@ -17,6 +17,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import userEvent from '@testing-library/user-event';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
+import { renderWithClients } from 'src/testSupport/render';
 
 describe('Playlist Body', () => {
   const getWrapper = (
@@ -55,6 +56,21 @@ describe('Playlist Body', () => {
     });
 
     expect(addToPlaylistButton).toBeVisible();
+  });
+
+  it('has no buttons when requested', async () => {
+    const videos = [VideoFactory.sample({ id: 'video-1', title: 'Video One' })];
+    const playlist = CollectionFactory.sample({ id: '123', videos });
+
+    const wrapper = renderWithClients(
+      <PlaylistBody playlist={playlist} showButtons={false} />,
+    );
+
+    expect(
+      wrapper.queryByRole('button', {
+        name: 'Add to playlist',
+      }),
+    ).toBeNull();
   });
 
   it('has information message when no video on a playlist', async () => {

@@ -35,4 +35,20 @@ describe('Unauthenticated app', () => {
 
     expect(await wrapper.findByText('Awesome video')).toBeVisible();
   });
+
+  it('renders playlist page view', async () => {
+    const apiClient = new FakeBoclipsClient();
+
+    const wrapper = render(
+      <MemoryRouter
+        initialEntries={['/playlists/shared/playlist-id?referer=some-referer']}
+      >
+        <AppUnauthenticated axiosApiClient={apiClient} />,
+      </MemoryRouter>,
+    );
+
+    expect(
+      await wrapper.findByTitle('playlist skeleton unauthorized'),
+    ).toBeVisible();
+  });
 });

@@ -54,6 +54,20 @@ export const usePlaylistQuery = (id: string) => {
   );
 };
 
+export const useGetPlaylistWithShareCode = (
+  id: string,
+  referer?: string,
+  shareCode?: string,
+) => {
+  const client = useBoclipsClient();
+
+  return useQuery(
+    playlistKeys.detail(id),
+    () => client.collections.get(id, 'details', referer, shareCode),
+    { enabled: false, refetchOnWindowFocus: false },
+  );
+};
+
 export const doAddCommentToVideo = (
   collection: Collection,
   request: AddCommentToCollectionVideRequest,

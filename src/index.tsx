@@ -100,8 +100,9 @@ const AppInitializer = ({ viewMock }: { viewMock?: ReactElement }) => {
   const path = window.location.pathname;
   const isRegisterView = path.match('/register') && !path.match('/classroom');
   const isVideoShareView = path.match('/videos/shared');
+  const isPlaylistShareView = path.match('/playlists/shared');
 
-  if (isRegisterView || isVideoShareView) {
+  if (isRegisterView || isVideoShareView || isPlaylistShareView) {
     if (viewMock) return viewMock;
 
     return (

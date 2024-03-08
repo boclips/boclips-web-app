@@ -65,9 +65,11 @@ const UnauthorizedVideoView = () => {
       <UnauthorizedNavbar />
       {isModalOpen && (
         <ShareCodeModal
-          videoId={videoId}
+          assetId={videoId}
           referer={referer}
-          fetchVideoWithCode={getVideoWithShareCode}
+          fetchAssetWithCode={({ assetId, referer: ref, shareCode }) =>
+            getVideoWithShareCode({ videoId: assetId, referer: ref, shareCode })
+          }
         />
       )}
       <VideoPage video={video} />
