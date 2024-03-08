@@ -7,6 +7,11 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
+import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
+import {
+  AccountType,
+  Product,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('OptionsButton', () => {
   describe('Edit', () => {
@@ -226,6 +231,118 @@ describe('OptionsButton', () => {
 
       const removeButton = await getOption(wrapper, 'Remove');
       expect(removeButton).toBeUndefined();
+    });
+  });
+
+  describe('Share with teachers', () => {
+    const apiClient = new FakeBoclipsClient();
+    const classroomUser = UserFactory.sample({
+      account: {
+        id: 'acc-1',
+        name: 'Crazy Account',
+        products: [Product.CLASSROOM],
+        createdAt: new Date(),
+        type: AccountType.STANDARD,
+      },
+    });
+
+    it('is available for Classroom users for their own playlist', async () => {
+      apiClient.users.insertCurrentUser(classroomUser);
+
+      const wrapper = render(
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={apiClient}>
+            <OptionsButton
+              playlist={CollectionFactory.sample({ mine: true })}
+            />
+          </BoclipsClientProvider>
+        </QueryClientProvider>,
+      );
+
+      const shareWithTeachersButton = await getOption(
+        wrapper,
+        'Share with teachers',
+      );
+      expect(shareWithTeachersButton).toBeVisible();
+    });
+
+    it('is not available for Classroom users if they are not owner', async () => {
+      apiClient.users.insertCurrentUser(classroomUser);
+
+      const wrapper = render(
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={apiClient}>
+            <OptionsButton
+              playlist={CollectionFactory.sample({ mine: false })}
+            />
+          </BoclipsClientProvider>
+        </QueryClientProvider>,
+      );
+
+      const shareWithTeachersButton = await getOption(
+        wrapper,
+        'Share with teachers',
+      );
+      expect(shareWithTeachersButton).toBeUndefined();
+    });
+
+    it('should display modal when share button is clicked', async () => {
+      apiClient.users.insertCurrentUser(classroomUser);
+
+      const wrapper = render(
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={apiClient}>
+            <OptionsButton
+              playlist={CollectionFactory.sample({
+                title: 'Example playlist',
+                mine: true,
+              })}
+            />
+          </BoclipsClientProvider>
+        </QueryClientProvider>,
+      );
+
+      const shareWithTeachersButton = await getOption(
+        wrapper,
+        'Share with teachers',
+      );
+      await userEvent.click(shareWithTeachersButton);
+
+      const modal = wrapper.getByRole('dialog');
+
+      expect(modal).toBeVisible();
+      expect(
+        within(modal).getByText('Share this playlist with other teachers'),
+      ).toBeVisible();
+    });
+
+    it('is not available for B2B users', async () => {
+      apiClient.users.insertCurrentUser(
+        UserFactory.sample({
+          account: {
+            id: 'acc-1',
+            name: 'Crazy Account',
+            products: [Product.B2B],
+            createdAt: new Date(),
+            type: AccountType.STANDARD,
+          },
+        }),
+      );
+      const wrapper = render(
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={apiClient}>
+            <OptionsButton
+              playlist={CollectionFactory.sample({ mine: false })}
+            />
+          </BoclipsClientProvider>
+        </QueryClientProvider>,
+      );
+
+      const shareWithTeachersButton = await getOption(
+        wrapper,
+        'Share with teachers',
+      );
+      expect(shareWithTeachersButton).toBeUndefined();
     });
   });
 

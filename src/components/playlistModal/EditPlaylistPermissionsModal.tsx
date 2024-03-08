@@ -12,12 +12,14 @@ export interface Props {
   playlist: Collection;
   handleClick: () => void;
   onCancel: () => void;
+  title?: string;
 }
 
 export const EditPlaylistPermissionsModal = ({
   playlist,
   handleClick,
   onCancel,
+  title = 'Share this playlist',
 }: Props) => {
   const { mutate: changePlaylistPermissions, isLoading } =
     useUpdatePlaylistPermissionsMutation(playlist);
@@ -49,7 +51,7 @@ export const EditPlaylistPermissionsModal = ({
     <div className={s.playlistModalWrapper}>
       <Bodal
         dataQa="playlist-permissions-modal"
-        title="Share this playlist"
+        title={title}
         confirmButtonText="Copy link"
         onConfirm={handleClick}
         onCancel={onCancel}
