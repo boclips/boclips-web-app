@@ -31,7 +31,7 @@ describe('CartView', () => {
       amount: 600,
       currency: 'USD',
     },
-    types: [{ name: 'NEWS', id: 2 }],
+    type: 'NEWS',
     maxLicenseDurationYears: 5,
   });
   const instructionalVideo = VideoFactory.sample({
@@ -41,7 +41,7 @@ describe('CartView', () => {
       amount: 400,
       currency: 'USD',
     },
-    types: [{ name: 'INSTRUCTIONAL', id: 3 }],
+    type: 'INSTRUCTIONAL',
   });
   beforeEach(() => {
     window.resizeTo(1680, 1024);
