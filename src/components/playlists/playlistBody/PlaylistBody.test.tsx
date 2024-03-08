@@ -12,7 +12,7 @@ import {
   FakeBoclipsClient,
 } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import PlaylistBody from 'src/components/playlists/PlaylistBody';
+import PlaylistBody from 'src/components/playlists/playlistBody/PlaylistBody';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import userEvent from '@testing-library/user-event';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
