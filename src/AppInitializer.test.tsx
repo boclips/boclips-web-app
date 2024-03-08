@@ -38,11 +38,23 @@ describe('AppInitializer', () => {
     expect(MockedBoclipsSecurity.createInstance).toHaveBeenCalled();
   });
 
-  it('renders AppUnauthenticated for /videos/video-id?referer=user-id path', () => {
+  it('renders AppUnauthenticated for /videos/shared path', () => {
     delete window.location;
     // @ts-ignore
     window.location = new URL(
       'http://localhost/videos/shared/5c542ab85438cdbcb56ddce2?referer=42b090f3-5a32-43d7-8faf-38bca304ca94',
+    );
+
+    const wrapper = renderAppInitializer(<div>Unauthenticated App</div>);
+
+    expect(wrapper.getByText('Unauthenticated App')).toBeInTheDocument();
+  });
+
+  it('renders AppUnauthenticated for /playlists/shared path', () => {
+    delete window.location;
+    // @ts-ignore
+    window.location = new URL(
+      'http://localhost/playlists/shared/5c542ab85438cdbcb56ddce2?referer=42b090f3-5a32-43d7-8faf-38bca304ca94',
     );
 
     const wrapper = renderAppInitializer(<div>Unauthenticated App</div>);

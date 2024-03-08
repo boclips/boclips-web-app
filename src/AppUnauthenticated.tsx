@@ -24,6 +24,10 @@ const UnauthorizedVideoView = lazyWithRetry(
   () => import('src/views/unauthorizedVideoView/UnauthorizedVideoView'),
 );
 
+const UnauthorizedPlaylistView = lazyWithRetry(
+  () => import('src/views/unauthorizedPlaylistView/UnauthorizedPlaylistView'),
+);
+
 const queryClient = new QueryClient(queryClientConfig);
 
 const AppUnauthenticated = ({
@@ -70,6 +74,10 @@ const AppUnauthenticated = ({
             <Route
               path="/videos/shared/:id"
               element={<UnauthorizedVideoView />}
+            />
+            <Route
+              path="/playlists/shared/:id"
+              element={<UnauthorizedPlaylistView />}
             />
           </Routes>
           <ReactQueryDevtools initialIsOpen={false} />

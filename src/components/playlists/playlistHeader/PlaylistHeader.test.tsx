@@ -18,6 +18,7 @@ import {
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
+import { renderWithClients } from 'src/testSupport/render';
 
 describe('Playlist Header', () => {
   Object.assign(navigator, {
@@ -314,5 +315,21 @@ describe('Playlist Header', () => {
     await userEvent.click(wrapper.getByText('Edit'));
 
     expect(await wrapper.findByTestId('playlist-modal')).toBeVisible();
+  });
+
+  it('buttons are not displayed when requested', async () => {
+    const playlist = CollectionFactory.sample({
+      id: '123',
+      title: 'Playlist title',
+      description: 'Description',
+      mine: false,
+      permissions: { anyone: CollectionPermission.EDIT },
+    });
+
+    const wrapper = renderWithClients(
+      <PlaylistHeader playlist={playlist} showButtons={false} />,
+    );
+    expect(wrapper.queryByRole('button', { name: 'Share' })).toBeNull();
+    expect(wrapper.queryByRole('button', { name: 'Options' })).toBeNull();
   });
 });
