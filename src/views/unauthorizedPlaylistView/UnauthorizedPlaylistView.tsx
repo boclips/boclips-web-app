@@ -14,6 +14,7 @@ import {
 } from 'src/hooks/useLocationParams';
 import { PageNotFoundError } from 'src/components/common/errors/pageNotFound/PageNotFoundError';
 import PlaylistBody from 'src/components/playlists/playlistBody/PlaylistBody';
+import { ShareCodeRefererContextProvider } from 'src/components/common/providers/ShareCodeContextProvider';
 
 const UnauthorizedPlaylistView = () => {
   const playlistId = useGetIdFromLocation('shared');
@@ -54,6 +55,10 @@ const UnauthorizedPlaylistView = () => {
     );
   }
 
+  const nanana = () => {
+    return code ? { referer, shareCode: code } : null;
+  };
+
   return (
     <>
       <Helmet title={title} />
@@ -72,10 +77,10 @@ const UnauthorizedPlaylistView = () => {
         {!playlist ? (
           <SkeletonPage title="playlist skeleton unauthorized" />
         ) : (
-          <>
+          <ShareCodeRefererContextProvider shareCodeReferer={nanana()}>
             <PlaylistHeader playlist={playlist} showButtons={false} />
             <PlaylistBody playlist={playlist} showButtons={false} />
-          </>
+          </ShareCodeRefererContextProvider>
         )}
         <Footer className="col-start-2 col-end-26" />
       </Layout>

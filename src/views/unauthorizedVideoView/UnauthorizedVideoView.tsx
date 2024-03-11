@@ -17,12 +17,23 @@ import ErrorView from 'src/views/error/ErrorView';
 import UnauthorizedNavbar from 'src/components/layout/UnauthorizedNavbar';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import ShareCodeModal from 'src/components/shareCodeModal/ShareCodeModal';
+import { useLocation } from 'react-router-dom';
 
 const UnauthorizedVideoView = () => {
+  const location = useLocation();
+  const shareCodeReferer = location?.state?.shareCodeReferer || null;
   const videoId = useGetIdFromLocation('shared');
   const referer = useGetAnyParamFromLocation('referer');
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [code, setCode] = useState<string>(shareCodeReferer?.shareCode);
+  const [isModalOpen, setIsModalOpen] = useState(!shareCodeReferer);
   const [video, setVideo] = useState<Video | undefined>();
+
+  useEffect(() => {
+    if (shareCodeReferer) {
+      setIsModalOpen(false);
+      setCode(shareCodeReferer.shareCode);
+    }
+  }, [shareCodeReferer]);
 
   const {
     data: limitedVideo,
@@ -35,6 +46,12 @@ const UnauthorizedVideoView = () => {
     isSuccess,
     isLoading: isVideoLoading,
   } = useGetVideoWithShareCode();
+
+  useEffect(() => {
+    if (code) {
+      getVideoWithShareCode({ videoId, referer, shareCode: code });
+    }
+  }, [code]);
 
   useEffect(() => {
     if (limitedVideo) {
@@ -71,7 +88,7 @@ const UnauthorizedVideoView = () => {
           assetId={videoId}
           referer={referer}
           fetchAssetWithCode={({ assetId, referer: ref, shareCode }) =>
-            getVideoWithShareCode({ videoId: assetId, referer: ref, shareCode })
+            setCode(shareCode)
           }
           isFetching={isVideoLoading}
         />

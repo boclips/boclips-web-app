@@ -1,6 +1,7 @@
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { useShareCodeReferer } from 'src/components/common/providers/ShareCodeContextProvider';
 import { Link } from '../Link';
 import s from './style.module.less';
 
@@ -26,6 +27,8 @@ const GridCard = ({
   onLinkClicked,
 }: Props) => {
   const location = useLocation();
+  const shareCodeReferer = useShareCodeReferer();
+  const search = shareCodeReferer ? `referer=${shareCodeReferer.referer}` : '';
   return (
     <div className={s.gridCard} data-qa={`grid-card-for-${name}`}>
       {overlay}
@@ -35,11 +38,13 @@ const GridCard = ({
         <Link
           to={{
             pathname: link,
+            search,
           }}
           state={{
             name,
             userNavigated: true,
             originPathname: location.pathname,
+            shareCodeReferer,
           }}
           onClick={onLinkClicked}
           aria-label={`${name} grid card`}
