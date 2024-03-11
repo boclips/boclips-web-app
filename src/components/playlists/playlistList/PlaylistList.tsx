@@ -6,7 +6,7 @@ import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collecti
 import React from 'react';
 import c from 'classnames';
 import PlaylistCard from 'src/components/playlists/PlaylistCard';
-import EmptyStatePlaylist from 'src/components/playlists/emptyState/EmptyState';
+import { PlaylistEmptyState } from 'src/components/playlists/emptyState/EmptyState';
 import s from '../style.module.less';
 import paginationStyles from '../../common/pagination/pagination.module.less';
 
@@ -71,7 +71,7 @@ const PlaylistList: React.FC<PlaylistListProps> = ({
       )}
     />
   ) : (
-    <EmptyStatePlaylist playlistType={playlistType} />
+    <PlaylistEmptyState playlistType={playlistType} />
   );
 };
 

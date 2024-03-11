@@ -9,7 +9,7 @@ import { FilterKey } from 'src/types/search/FilterKey';
 import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
 import CommentButton from 'src/components/playlists/comments/CommentButton';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
-import PlaylistBodyEmptyState from 'src/components/playlists/playlistBody/PlaylistBodyEmptyState';
+import { PlaylistBodyEmptyState } from 'src/components/playlists/emptyState/EmptyState';
 import s from '../style.module.less';
 import { VideoCardButtons } from '../../videoCard/buttons/VideoCardButtons';
 
