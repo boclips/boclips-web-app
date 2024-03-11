@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import dayjs from 'src/day-js';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
-import { getShareableVideoLink } from 'src/components/videoShareButton/getShareableVideoLink';
+import { getShareableVideoLink } from 'src/components/videoShareButton/getShareableLink';
 import { ToastContainer } from 'react-toastify';
 
 describe('video share button', () => {

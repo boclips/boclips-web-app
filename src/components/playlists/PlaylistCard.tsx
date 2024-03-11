@@ -10,6 +10,7 @@ import { FeatureGate } from 'src/components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { CopyButton } from 'src/components/common/copyLinkButton/CopyButton';
 import { Constants } from 'src/AppConstants';
+import { PlaylistShareCodeButton } from 'src/components/playlists/buttons/PlaylistShareCodeButton';
 import s from './style.module.less';
 
 interface PlaylistCardProps {
@@ -42,16 +43,27 @@ const PlaylistCard: React.FC<PlaylistCardProps> = ({ playlist }) => {
           </div>
         }
         footer={
-          <FeatureGate product={Product.B2B}>
-            <div className="p-2 items-end flex">
-              <CopyButton
-                ariaLabel="Copy playlist link"
-                textToCopy={`${Constants.HOST}/playlists/${playlist.id}`}
-                dataQa={`share-playlist-button-${playlist.id}`}
-                onCopy={linkCopiedHotjarEvent}
-              />
-            </div>
-          </FeatureGate>
+          <>
+            <FeatureGate product={Product.B2B}>
+              <div className="p-2 items-end flex">
+                <CopyButton
+                  ariaLabel="Copy playlist link"
+                  textToCopy={`${Constants.HOST}/playlists/${playlist.id}`}
+                  dataQa={`share-playlist-button-${playlist.id}`}
+                  onCopy={linkCopiedHotjarEvent}
+                />
+              </div>
+            </FeatureGate>
+            <FeatureGate product={Product.CLASSROOM}>
+              <div className="p-2 items-end flex justify-end">
+                <PlaylistShareCodeButton
+                  iconOnly
+                  playlist={playlist}
+                  shareButtonHeight="40px"
+                />
+              </div>
+            </FeatureGate>
+          </>
         }
       />
     </li>

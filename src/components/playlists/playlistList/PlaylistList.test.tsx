@@ -43,6 +43,38 @@ describe('PlaylistList', () => {
     expect(screen.getByText('Playlist 2')).toBeInTheDocument();
   });
 
+  it('renders playlist cards with share button for classrooom users', async () => {
+    const apiClient = new FakeBoclipsClient();
+    apiClient.users.insertCurrentUser(
+      UserFactory.sample({
+        account: {
+          ...UserFactory.sample().account,
+          id: 'acc-1',
+          name: 'Ren',
+          products: [Product.CLASSROOM],
+          type: AccountType.STANDARD,
+        },
+      }),
+    );
+
+    render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={apiClient}>
+          <MemoryRouter initialEntries={['/playlists']}>
+            <PlaylistList playlists={mockPlaylists} playlistType="mine" />
+          </MemoryRouter>
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
+
+    expect(screen.getByText('Playlist 1')).toBeInTheDocument();
+    expect(screen.getByText('Playlist 2')).toBeInTheDocument();
+
+    expect(
+      await screen.findAllByRole('button', { name: 'Share' }),
+    ).toHaveLength(2);
+  });
+
   it('renders empty state when there are no filtered playlists', () => {
     const apiClient = new FakeBoclipsClient();
 

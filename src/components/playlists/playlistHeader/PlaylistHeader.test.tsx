@@ -191,6 +191,34 @@ describe('Playlist Header', () => {
       ).toBeNull();
     });
 
+    it('shows share code button', async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          account: {
+            ...UserFactory.sample().account,
+            id: 'acc-1',
+            name: 'Ren',
+            products: [Product.CLASSROOM],
+            type: AccountType.STANDARD,
+          },
+        }),
+      );
+      const playlist = CollectionFactory.sample({
+        id: '123',
+        title: 'Playlist title',
+        description: 'Description',
+        mine: true,
+        permissions: { anyone: CollectionPermission.VIEW_ONLY },
+      });
+
+      const wrapper = renderWrapper(playlist, fakeClient);
+
+      expect(
+        await wrapper.findByRole('button', { name: 'Share' }),
+      ).toBeVisible();
+    });
+
     it('editable playlist has a share button for non-owner', async () => {
       const fakeClient = new FakeBoclipsClient();
       fakeClient.users.insertCurrentUser(

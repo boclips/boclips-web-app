@@ -1,7 +1,10 @@
 import { parseUrl } from 'query-string';
-import { getShareableVideoLink } from './getShareableVideoLink';
+import {
+  getShareablePlaylistLink,
+  getShareableVideoLink,
+} from './getShareableLink';
 
-describe('getVideoDetailsLink', () => {
+describe('getShareableVideoLink', () => {
   it('creates a link with referer and share indicator', () => {
     const link = getShareableVideoLink('123', 'user-1');
 
@@ -34,5 +37,15 @@ describe('getVideoDetailsLink', () => {
     const parsedUrl = parseUrl(link);
     expect(parsedUrl.query.segmentStart).toEqual('10');
     expect(parsedUrl.query.segmentEnd).toBeUndefined();
+  });
+});
+
+describe('getShareablePlaylistLink', () => {
+  it('creates a link with referer and share indicator', () => {
+    const link = getShareablePlaylistLink('123', 'user-1');
+
+    const parsedUrl = parseUrl(link);
+    expect(parsedUrl.url).toContain('playlists/shared/123');
+    expect(parsedUrl.query.referer).toEqual('user-1');
   });
 });

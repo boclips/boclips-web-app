@@ -14,7 +14,7 @@ import {
 } from 'src/components/cart/AdditionalServices/Trim/trimValidation';
 import { Typography } from '@boclips-ui/typography';
 import { GoogleClassroomShareLink } from 'src/components/videoShareButton/googleClassroom/GoogleClassroomShareLink';
-import { getShareableVideoLink } from 'src/components/videoShareButton/getShareableVideoLink';
+import { getShareableVideoLink } from 'src/components/videoShareButton/getShareableLink';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import s from './shareButton.module.less';
 

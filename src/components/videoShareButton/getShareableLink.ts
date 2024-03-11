@@ -23,3 +23,16 @@ export const getShareableVideoLink = (
 
   return `${Constants.HOST}/videos/shared/${videoId}?${queryParams}`;
 };
+
+export const getShareablePlaylistLink = (
+  playlistId: string,
+  userId: string,
+): string => {
+  const params: { [key: string]: any } = {
+    referer: userId,
+  };
+
+  const queryParams = queryString.stringify(params);
+
+  return `${Constants.HOST}/playlists/shared/${playlistId}?${queryParams}`;
+};
