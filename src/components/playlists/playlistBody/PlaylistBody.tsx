@@ -16,9 +16,14 @@ import { VideoCardButtons } from '../../videoCard/buttons/VideoCardButtons';
 interface Props {
   playlist: Collection;
   showButtons?: boolean;
+  disableLinks?: boolean;
 }
 
-const PlaylistBody = ({ playlist, showButtons = true }: Props) => {
+const PlaylistBody = ({
+  playlist,
+  showButtons = true,
+  disableLinks = false,
+}: Props) => {
   const [searchLocation, setSearchLocation] = useSearchQueryLocationParams();
   const { filters: filtersFromURL } = searchLocation;
 
@@ -82,6 +87,7 @@ const PlaylistBody = ({ playlist, showButtons = true }: Props) => {
               key={video.id}
               video={video}
               handleFilterChange={handleFilterChange}
+              disableLink={disableLinks}
               buttonsRow={
                 showButtons && (
                   <VideoCardButtons

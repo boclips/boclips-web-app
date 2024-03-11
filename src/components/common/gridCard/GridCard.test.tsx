@@ -16,4 +16,14 @@ describe('Playlist Card', () => {
       '/playlists/test-id',
     );
   });
+
+  it('has no href when link is not provided', async () => {
+    render(
+      <MemoryRouter>
+        <GridCard header={<div />} name="test name" link={null} />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByText('test name').closest('a')).toBeNull();
+  });
 });

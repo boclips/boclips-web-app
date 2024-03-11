@@ -14,6 +14,7 @@ interface Props {
   onLinkClicked?: () => void;
   handleFilterChange?: (filterKey: FilterKey, values: string[]) => void;
   buttonsRow: React.ReactElement;
+  disableLink?: boolean;
 }
 
 const VideoGridCard = ({
@@ -22,9 +23,10 @@ const VideoGridCard = ({
   onLinkClicked,
   handleFilterChange,
   buttonsRow,
+  disableLink = false,
 }: Props) => (
   <GridCard
-    link={`/videos/${video.id}`}
+    link={disableLink ? null : `/videos/${video.id}`}
     onLinkClicked={onLinkClicked}
     key={video.id}
     name={video.title}

@@ -76,7 +76,11 @@ const UnauthorizedPlaylistView = () => {
         ) : (
           <>
             <PlaylistHeader playlist={playlist} showButtons={false} />
-            <PlaylistBody playlist={playlist} showButtons={false} />
+            <PlaylistBody
+              playlist={playlist}
+              showButtons={false}
+              disableLinks
+            />
           </>
         )}
         <Footer className="col-start-2 col-end-26" />

@@ -6,7 +6,7 @@ import s from './style.module.less';
 
 interface Props {
   name: string;
-  link: string;
+  link?: string;
   header: React.ReactElement;
   subheader?: React.ReactElement;
   footer?: React.ReactElement;
@@ -32,20 +32,24 @@ const GridCard = ({
       {header}
       {playerBadge && <div className={s.playerBadge}>{playerBadge}</div>}
       <div className={s.header}>
-        <Link
-          to={{
-            pathname: link,
-          }}
-          state={{
-            name,
-            userNavigated: true,
-            originPathname: location.pathname,
-          }}
-          onClick={onLinkClicked}
-          aria-label={`${name} grid card`}
-        >
+        {link ? (
+          <Link
+            to={{
+              pathname: link,
+            }}
+            state={{
+              name,
+              userNavigated: true,
+              originPathname: location.pathname,
+            }}
+            onClick={onLinkClicked}
+            aria-label={`${name} grid card`}
+          >
+            <Typography.Title2>{name}</Typography.Title2>
+          </Link>
+        ) : (
           <Typography.Title2>{name}</Typography.Title2>
-        </Link>
+        )}
       </div>
       {subheader}
       {footer}
