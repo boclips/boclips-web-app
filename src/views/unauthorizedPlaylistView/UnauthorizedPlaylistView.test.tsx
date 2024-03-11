@@ -86,4 +86,47 @@ describe('Playlist View', () => {
       wrapper.getByText('Somebody better put you back into your place'),
     ).toBeInTheDocument();
   });
+
+  it('should display error message when used share code is ivalid', async () => {
+    const apiClient = new FakeBoclipsClient();
+    const playlist = CollectionFactory.sample({
+      id: 'playlist-id',
+      title: 'You got mud on your face, you big disgrace',
+      description: 'We will, we will rock you, we will, we will rock you',
+      videos: [
+        VideoFactory.sample({
+          id: 'video1',
+          title: 'Somebody better put you back into your place',
+        }),
+      ],
+      mine: false,
+      ownerName: 'fckinfreddy',
+    });
+    apiClient.collections.addToFake(playlist);
+
+    apiClient.collections.addValidShareCode('pl123', '1234');
+
+    const wrapper = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={apiClient}>
+          <MemoryRouter
+            initialEntries={['/playlists/shared/playlist-id?referer=pl123']}
+          >
+            <UnauthorizedPlaylistView />
+          </MemoryRouter>
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
+
+    expect(await wrapper.findByRole('dialog')).toBeVisible();
+
+    expect(wrapper.queryByText('Invalid code')).toBeNull();
+
+    const input = wrapper.getByPlaceholderText('Teacher code');
+    await userEvent.type(input, 'abcd');
+
+    await userEvent.click(wrapper.getByRole('button', { name: 'Watch Video' }));
+
+    expect(await wrapper.findByText('Invalid code')).toBeVisible();
+  });
 });

@@ -15,6 +15,7 @@ interface Props {
     shareCode: string;
   }) => void;
   isFetching: boolean;
+  isError: boolean;
 }
 
 const ShareCodeModal = ({
@@ -22,6 +23,7 @@ const ShareCodeModal = ({
   referer,
   fetchAssetWithCode,
   isFetching = false,
+  isError = false,
 }: Props) => {
   const [shareCode, setShareCode] = useState('');
 
@@ -61,6 +63,9 @@ const ShareCodeModal = ({
               isButtonDisabled ? {} : handleClick(),
             )
           }
+          isError={isError}
+          errorMessage="Invalid code"
+          errorMessagePlacement="bottom"
         />
         <SpinnerButton
           height="44px"

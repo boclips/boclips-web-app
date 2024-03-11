@@ -26,6 +26,7 @@ const UnauthorizedPlaylistView = () => {
     data: playlist,
     isSuccess,
     isFetching,
+    isError,
     refetch: getPlaylistWithShareCode,
   } = useGetPlaylistWithShareCode(playlistId, referer, code);
 
@@ -67,6 +68,7 @@ const UnauthorizedPlaylistView = () => {
               setCode(shareCode);
             }}
             isFetching={isFetching}
+            isError={isError}
           />
         )}
         {!playlist ? (

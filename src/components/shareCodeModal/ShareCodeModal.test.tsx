@@ -10,6 +10,7 @@ describe('Share Code Modal', () => {
         assetId="asset-id"
         fetchAssetWithCode={() => {}}
         isFetching={false}
+        isError={false}
         referer="referer-1"
       />,
     );
@@ -20,6 +21,8 @@ describe('Share Code Modal', () => {
     ).toBeVisible();
     expect(wrapper.getByPlaceholderText('Teacher code')).toBeVisible();
     expect(wrapper.getByText('Watch Video')).toBeVisible();
+
+    expect(wrapper.queryByText('Invalid code')).toBeNull();
   });
 
   it('asset fetching invoked when button clicked', async () => {
@@ -30,6 +33,7 @@ describe('Share Code Modal', () => {
         assetId="asset-id"
         fetchAssetWithCode={fetchingSpy}
         isFetching={false}
+        isError={false}
         referer="referer-1"
       />,
     );
@@ -51,6 +55,7 @@ describe('Share Code Modal', () => {
         assetId="asset-id"
         fetchAssetWithCode={fetchingSpy}
         isFetching={false}
+        isError={false}
         referer="referer-1"
       />,
     );
@@ -71,6 +76,7 @@ describe('Share Code Modal', () => {
         assetId="asset-id"
         fetchAssetWithCode={fetchingSpy}
         isFetching={false}
+        isError={false}
         referer="referer-1"
       />,
     );
@@ -81,5 +87,21 @@ describe('Share Code Modal', () => {
     await userEvent.keyboard('{enter}');
 
     expect(fetchingSpy).not.toHaveBeenCalled();
+  });
+
+  it('error message displayed when isError is true', async () => {
+    const fetchingSpy = jest.fn();
+
+    const wrapper = render(
+      <ShareCodeModal
+        assetId="asset-id"
+        fetchAssetWithCode={fetchingSpy}
+        isFetching={false}
+        isError
+        referer="referer-1"
+      />,
+    );
+
+    expect(wrapper.getByText('Invalid code')).toBeVisible();
   });
 });
