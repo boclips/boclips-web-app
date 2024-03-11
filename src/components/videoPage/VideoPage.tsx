@@ -14,9 +14,11 @@ import s from './videoPage.module.less';
 
 interface Props {
   video: Video;
+  start?: number;
+  end?: number;
 }
 
-export const VideoPage = ({ video }: Props) => {
+export const VideoPage = ({ video, start = null, end = null }: Props) => {
   const navigate = useNavigate();
   const userNavigatedToPageViaApp = useLocation().state?.userNavigated;
 
@@ -37,7 +39,7 @@ export const VideoPage = ({ video }: Props) => {
       )}
       <main tabIndex={-1} className={s.playerSection}>
         {video?.playback?.links?.hlsStream?.getOriginalLink() ? (
-          <VideoPlayer video={video} />
+          <VideoPlayer video={video} segment={{ start, end }} />
         ) : (
           <img
             src={video.playback.links.thumbnail.getOriginalLink()}

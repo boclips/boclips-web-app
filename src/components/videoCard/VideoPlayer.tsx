@@ -4,6 +4,7 @@ import { Player } from 'boclips-player-react';
 import { AnalyticsOptions } from 'boclips-player/dist/Events/AnalyticsOptions';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
 import getPlayerOptions from 'src/components/videoCard/playerOptionsFactory/playerOptionsFactory';
+import { PlaybackSegment } from 'boclips-player/dist/MediaPlayer/MediaPlayer';
 import s from './VideoPlayer.module.less';
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
   showDurationBadge?: boolean;
   setRef?: any;
   analytics?: Partial<AnalyticsOptions>;
+  segment?: PlaybackSegment;
 }
 
 export const VideoPlayer = ({
@@ -22,6 +24,7 @@ export const VideoPlayer = ({
   showDurationBadge = false,
   setRef = () => null,
   analytics,
+  segment,
 }: Props) => {
   const options = getPlayerOptions(controls, showDurationBadge, analytics);
 
@@ -34,6 +37,7 @@ export const VideoPlayer = ({
         }
         borderRadius="4px"
         options={options}
+        segment={segment}
       />
     </div>
   );

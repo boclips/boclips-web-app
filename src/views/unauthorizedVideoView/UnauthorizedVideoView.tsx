@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Footer from 'src/components/layout/Footer';
 import {
-  useGetIdFromLocation,
   useGetAnyParamFromLocation,
+  useGetIdFromLocation,
+  useGetNumberParamFromLocation,
 } from 'src/hooks/useLocationParams';
 import {
   useGetVideoWithReferer,
@@ -21,6 +22,8 @@ import ShareCodeModal from 'src/components/shareCodeModal/ShareCodeModal';
 const UnauthorizedVideoView = () => {
   const videoId = useGetIdFromLocation('shared');
   const referer = useGetAnyParamFromLocation('referer');
+  const start = useGetNumberParamFromLocation('segmentStart');
+  const end = useGetNumberParamFromLocation('segmentEnd');
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [video, setVideo] = useState<Video | undefined>();
 
@@ -76,7 +79,7 @@ const UnauthorizedVideoView = () => {
           isFetching={isVideoLoading}
         />
       )}
-      <VideoPage video={video} />
+      <VideoPage video={video} start={start} end={end} />
       <Footer className="row-start-last row-end-last" />
     </Layout>
   );

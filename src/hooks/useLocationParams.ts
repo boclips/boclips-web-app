@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { getDecimalNumberOrNullFromString } from 'src/services/getDecimalNumberOrNullFromString';
 import { FilterKey } from '../types/search/FilterKey';
 
 export const useLocationParams = () => {
@@ -88,4 +89,8 @@ export const useGetAnyParamFromLocation = (param: string) => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   return searchParams.get(param);
+};
+
+export const useGetNumberParamFromLocation = (param: string) => {
+  return getDecimalNumberOrNullFromString(useGetAnyParamFromLocation(param));
 };
