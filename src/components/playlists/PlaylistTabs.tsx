@@ -1,78 +1,54 @@
 import React from 'react';
-import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collections/model/ListViewCollection';
-import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
-import * as Tabs from '@radix-ui/react-tabs';
 import { Typography } from '@boclips-ui/typography';
-import SkeletonTiles from 'src/components/skeleton/Skeleton';
-import PlaylistList from 'src/components/playlists/playlistList/PlaylistList';
+import {
+  useBoclipsPlaylistsQuery,
+  useOwnPlaylistsQuery,
+  useSavedPlaylistsQuery,
+} from 'src/hooks/api/playlistsQuery';
+import { List, Root, Trigger } from '@radix-ui/react-tabs';
+import { PlaylistTab } from 'src/components/playlists/PlaylistTab';
 import s from './style.module.less';
 
 interface PlaylistTabsProps {
-  playlists: Pageable<ListViewCollection>;
-  isInitialLoading: boolean;
+  query?: string;
 }
 
-export const PlaylistTabs: React.FC<PlaylistTabsProps> = ({
-  playlists,
-  isInitialLoading,
-}) => {
-  const isCreatedByBoclips = (playlist: ListViewCollection) =>
-    playlist.createdBy === 'Boclips';
-
+export const PlaylistTabs: React.FC<PlaylistTabsProps> = ({ query }) => {
   return (
-    <Tabs.Root
+    <Root
       defaultValue="my-playlists"
       orientation="horizontal"
       className={s.playlistTabs}
     >
-      <Tabs.List aria-label="tabs playlists" className={s.tabNavBar}>
-        <Tabs.Trigger value="my-playlists" className={s.tabHeader}>
+      <List aria-label="tabs playlists" className={s.tabNavBar}>
+        <Trigger value="my-playlists" className={s.tabHeader}>
           <Typography.H5>My Playlists</Typography.H5>
-        </Tabs.Trigger>
-        <Tabs.Trigger value="shared-playlists" className={s.tabHeader}>
+        </Trigger>
+        <Trigger value="shared-playlists" className={s.tabHeader}>
           <Typography.H5>Shared Playlists</Typography.H5>
-        </Tabs.Trigger>
-        <Tabs.Trigger value="boclips-playlists" className={s.tabHeader}>
+        </Trigger>
+        <Trigger value="boclips-playlists" className={s.tabHeader}>
           <Typography.H5>Boclips Playlists</Typography.H5>
-        </Tabs.Trigger>
-      </Tabs.List>
-      <Tabs.Content value="my-playlists" className={s.tabContent}>
-        {isInitialLoading ? (
-          <SkeletonTiles className={s.skeletonCard} rows={3} cols={4} />
-        ) : (
-          <PlaylistList
-            playlists={playlists}
-            filter={(playlist) => playlist.mine}
-            playlistType="mine"
-          />
-        )}
-      </Tabs.Content>
-      <Tabs.Content value="shared-playlists" className={s.tabContent}>
-        {isInitialLoading ? (
-          <SkeletonTiles className={s.skeletonCard} rows={3} cols={4} />
-        ) : (
-          <PlaylistList
-            playlists={playlists}
-            filter={(playlist) =>
-              !playlist.mine && !isCreatedByBoclips(playlist)
-            }
-            playlistType="shared"
-          />
-        )}
-      </Tabs.Content>
-      <Tabs.Content value="boclips-playlists" className={s.tabContent}>
-        {isInitialLoading ? (
-          <SkeletonTiles className={s.skeletonCard} rows={3} cols={4} />
-        ) : (
-          <PlaylistList
-            playlists={playlists}
-            filter={(playlist) =>
-              !playlist.mine && isCreatedByBoclips(playlist)
-            }
-            playlistType="boclips"
-          />
-        )}
-      </Tabs.Content>
-    </Tabs.Root>
+        </Trigger>
+      </List>
+      <PlaylistTab
+        value="my-playlists"
+        query={query}
+        getPlaylistsQuery={useOwnPlaylistsQuery}
+        type="mine"
+      />
+      <PlaylistTab
+        value="shared-playlists"
+        query={query}
+        getPlaylistsQuery={useSavedPlaylistsQuery}
+        type="shared"
+      />
+      <PlaylistTab
+        query={query}
+        value="boclips-playlists"
+        getPlaylistsQuery={useBoclipsPlaylistsQuery}
+        type="boclips"
+      />
+    </Root>
   );
 };

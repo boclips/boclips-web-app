@@ -4,9 +4,10 @@ import {
   useEditPlaylistMutation,
   useGetPromotedPlaylistsQuery,
   useOwnAndEditableSharedPlaylistsQuery,
-  useOwnAndSharedPlaylistsQuery,
+  useOwnPlaylistsQuery,
   useRemoveCommentFromPlaylistVideo,
   useReorderPlaylist,
+  useSavedPlaylistsQuery,
   useUpdatePlaylistPermissionsMutation,
 } from 'src/hooks/api/playlistsQuery';
 import { QueryClient } from '@tanstack/react-query';
@@ -24,16 +25,13 @@ describe('playlistsQuery', () => {
     const apiClient = new FakeBoclipsClient();
     const collectionsSpy = jest.spyOn(
       apiClient.collections,
-      'getMySavedCollectionsWithoutDetails',
+      'getMyCollections',
     );
     // @ts-ignore
-    apiClient.collections.getMySavedCollectionsWithoutDetails = collectionsSpy;
-    const { result } = renderHook(
-      () => useOwnAndSharedPlaylistsQuery(1, 'bla'),
-      {
-        wrapper: wrapperWithClients(apiClient, new QueryClient()),
-      },
-    );
+    apiClient.collections.getMyCollections = collectionsSpy;
+    const { result } = renderHook(() => useOwnPlaylistsQuery(1, 'bla'), {
+      wrapper: wrapperWithClients(apiClient, new QueryClient()),
+    });
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(collectionsSpy).toBeCalledWith({
