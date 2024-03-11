@@ -64,7 +64,7 @@ const PlaylistView = ({ followPlaylist }: Props) => {
             <PlaylistBody playlist={playlist} />
           </>
         )}
-        <Footer className="col-start-2 col-end-26" />
+        <Footer className="col-start-2 col-end-26 row-start-5" />
       </Layout>
     </>
   );

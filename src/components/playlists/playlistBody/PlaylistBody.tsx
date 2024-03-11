@@ -1,6 +1,5 @@
 import React from 'react';
 import c from 'classnames';
-import PlaylistAddIcon from 'src/resources/icons/playlist-add.svg';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { Typography } from '@boclips-ui/typography';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
@@ -10,6 +9,7 @@ import { FilterKey } from 'src/types/search/FilterKey';
 import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
 import CommentButton from 'src/components/playlists/comments/CommentButton';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import { PlaylistBodyEmptyState } from 'src/components/playlists/emptyState/EmptyState';
 import s from '../style.module.less';
 import { VideoCardButtons } from '../../videoCard/buttons/VideoCardButtons';
 
@@ -75,7 +75,7 @@ const PlaylistBody = ({ playlist, showButtons = true }: Props) => {
         }
       >
         {isEmptyPlaylist ? (
-          <EmptyCopy />
+          <PlaylistBodyEmptyState />
         ) : (
           playlist?.videos?.map((video: Video) => (
             <VideoGridCard
@@ -106,13 +106,5 @@ const PlaylistBody = ({ playlist, showButtons = true }: Props) => {
     </>
   );
 };
-
-const EmptyCopy = () => (
-  <Typography.H3 size="xs" weight="regular" data-qa="emptyPlaylistText">
-    Save interesting videos to this playlist. Simply click the
-    <PlaylistAddIcon className={s.addSvg} role="img" />
-    button on any video to get started.
-  </Typography.H3>
-);
 
 export default PlaylistBody;
