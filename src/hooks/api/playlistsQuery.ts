@@ -13,8 +13,8 @@ import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collecti
 import { useNavigate } from 'react-router-dom';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
-import { PLAYLISTS_PAGE_SIZE } from 'src/components/playlists/PlaylistList';
 import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForProduct';
+import { PLAYLISTS_PAGE_SIZE } from 'src/components/playlists/playlistList/PlaylistList';
 import { playlistKeys } from './playlistKeys';
 
 interface UpdatePlaylistProps {
