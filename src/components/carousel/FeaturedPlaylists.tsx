@@ -2,8 +2,8 @@ import React, { useMemo } from 'react';
 import { useGetPromotedPlaylistsQuery } from 'src/hooks/api/playlistsQuery';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import { Carousel } from 'src/components/common/carousel/Carousel';
-import { PlaylistSlide } from 'src/components/featuredPlaylists/PlaylistSlide';
 import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForProduct';
+import { PlaylistSlide } from 'src/components/carousel/PlaylistSlide';
 import s from './styles.module.less';
 
 interface Props {
