@@ -98,7 +98,7 @@ const authOptions = {
 
 const AppInitializer = ({ viewMock }: { viewMock?: ReactElement }) => {
   const path = window.location.pathname;
-  const isRegisterView = path.match('/register') && !path.match('/classroom');
+  const isRegisterView = path.match('/register');
   const isVideoShareView = path.match('/videos/shared');
   const isPlaylistShareView = path.match('/playlists/shared');
 

@@ -28,14 +28,14 @@ describe('AppInitializer', () => {
     expect(wrapper.getByText('Unauthenticated App')).toBeInTheDocument();
   });
 
-  it('renders AppAuthenticated for /register/classroom path', () => {
+  it('renders AppUnauthenticated for /classroom/register path', () => {
     delete window.location;
     // @ts-ignore
     window.location = new URL('http://localhost/classroom/register');
 
-    renderAppInitializer();
+    const wrapper = renderAppInitializer(<div>Unauthenticated App</div>);
 
-    expect(MockedBoclipsSecurity.createInstance).toHaveBeenCalled();
+    expect(wrapper.getByText('Unauthenticated App')).toBeInTheDocument();
   });
 
   it('renders AppUnauthenticated for /videos/shared path', () => {

@@ -20,6 +20,10 @@ const RegisterView = lazyWithRetry(
   () => import('src/views/register/RegisterView'),
 );
 
+const ClassroomRegisterView = lazyWithRetry(
+  () => import('src/views/classroom/register/ClassroomRegisterView'),
+);
+
 const UnauthorizedVideoView = lazyWithRetry(
   () => import('src/views/unauthorizedVideoView/UnauthorizedVideoView'),
 );
@@ -71,6 +75,10 @@ const AppUnauthenticated = ({
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/register" element={<RegisterView />} />
+            <Route
+              path="/classroom/register"
+              element={<ClassroomRegisterView />}
+            />
             <Route
               path="/videos/shared/:id"
               element={<UnauthorizedVideoView />}

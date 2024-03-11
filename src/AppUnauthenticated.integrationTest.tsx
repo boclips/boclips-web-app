@@ -20,6 +20,20 @@ describe('Unauthenticated app', () => {
     });
   });
 
+  describe('classroom registration', () => {
+    it('renders registration view without authentication', async () => {
+      const apiClient = new FakeBoclipsClient();
+
+      const wrapper = render(
+        <MemoryRouter initialEntries={['/classroom/register']}>
+          <AppUnauthenticated axiosApiClient={apiClient} />,
+        </MemoryRouter>,
+      );
+
+      expect(await wrapper.findByText('Create your account')).toBeVisible();
+    });
+  });
+
   describe('video page', () => {
     it('renders video page view', async () => {
       const apiClient = new FakeBoclipsClient();
