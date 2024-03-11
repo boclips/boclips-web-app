@@ -27,6 +27,7 @@ describe('Playlist Body', () => {
       videos: [],
     }),
   ) => {
+    fakeClient.videos.insertVideo(VideoFactory.sample({}));
     return render(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
         <BoclipsClientProvider client={fakeClient}>
@@ -76,24 +77,13 @@ describe('Playlist Body', () => {
   it('has information message when no video on a playlist', async () => {
     const wrapper = getWrapper();
 
+    expect(await wrapper.findByText('No Videos here yet.')).toBeVisible();
     expect(
-      await wrapper.queryByText('In this playlist:'),
-    ).not.toBeInTheDocument();
-
-    const textElement = wrapper.getByTestId('emptyPlaylistText');
-
+      wrapper.getByText('You can see videos here once you add some.'),
+    ).toBeVisible();
     expect(
-      textElement.innerHTML.startsWith(
-        'Save interesting videos to this playlist. Simply click the',
-      ),
-    ).toEqual(true);
-
-    expect(
-      textElement.innerHTML.endsWith('button on any video to get started.'),
-    ).toEqual(true);
-
-    expect(textElement).toBeVisible();
-    expect(wrapper.getByRole('img')).toBeVisible();
+      wrapper.getByRole('button', { name: 'Add some videos' }),
+    ).toBeVisible();
   });
 
   it('playlist card has price info', async () => {
