@@ -27,12 +27,43 @@ interface PlaylistMutationCallbacks {
   onError: (playlistId: string) => void;
 }
 
-export const useOwnAndSharedPlaylistsQuery = (page: number, query?: string) => {
+export const useOwnPlaylistsQuery = (page: number, query?: string) => {
   const client = useBoclipsClient();
   const backendPageNumber = page - 1;
-  return useQuery(playlistKeys.ownAndShared(backendPageNumber, query), () =>
+  return useQuery(playlistKeys.own(backendPageNumber, query), () =>
     client.collections
-      .getMySavedCollectionsWithoutDetails({
+      .getMyCollections({
+        query,
+        partialTitleMatch: true,
+        page: backendPageNumber,
+        size: PLAYLISTS_PAGE_SIZE,
+        origin: 'BO_WEB_APP',
+      })
+      .then((playlists) => playlists),
+  );
+};
+
+export const useSavedPlaylistsQuery = (page: number, query?: string) => {
+  const client = useBoclipsClient();
+  const backendPageNumber = page - 1;
+  return useQuery(playlistKeys.shared(backendPageNumber, query), () =>
+    client.collections
+      .getMyUserSharedBookmarkedCollections({
+        query,
+        partialTitleMatch: true,
+        page: backendPageNumber,
+        size: PLAYLISTS_PAGE_SIZE,
+        origin: 'BO_WEB_APP',
+      })
+      .then((playlists) => playlists),
+  );
+};
+export const useBoclipsPlaylistsQuery = (page: number, query?: string) => {
+  const client = useBoclipsClient();
+  const backendPageNumber = page - 1;
+  return useQuery(playlistKeys.boclips(backendPageNumber, query), () =>
+    client.collections
+      .getMyBoclipsBookmarkedCollections({
         query,
         partialTitleMatch: true,
         page: backendPageNumber,
@@ -54,7 +85,7 @@ export const useGetPromotedPlaylistsQuery = (product: PromotedForProduct) => {
 
 export const useOwnAndEditableSharedPlaylistsQuery = () => {
   const client = useBoclipsClient();
-  return useQuery(playlistKeys.own, () =>
+  return useQuery(playlistKeys.ownAndEditable, () =>
     client.collections
       .getMySavedAndEditableCollectionsWithoutDetails({
         origin: 'BO_WEB_APP',
@@ -276,7 +307,7 @@ export const usePlaylistMutation = () => {
     (request: CreateCollectionRequest) => client.collections.create(request),
     {
       onSettled: () => {
-        queryClient.invalidateQueries(playlistKeys.own);
+        queryClient.invalidateQueries(playlistKeys.ownAndEditable);
       },
     },
   );
@@ -293,7 +324,7 @@ export const useEditPlaylistMutation = (playlist: Collection) => {
       onMutate: () => {},
       onSuccess: () => {
         queryClient.invalidateQueries(playlistKeys.detail(playlist.id));
-        queryClient.invalidateQueries(playlistKeys.own);
+        queryClient.invalidateQueries(playlistKeys.ownAndEditable);
       },
     },
   );

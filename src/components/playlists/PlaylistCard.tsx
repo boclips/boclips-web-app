@@ -27,11 +27,6 @@ const PlaylistCard: React.FC<PlaylistCardProps> = ({ playlist }) => {
         key={playlist.id}
         link={`/playlists/${playlist.id}`}
         name={playlist.title}
-        overlay={
-          playlist.mine === false && (
-            <div className={s.sharedWithYouOverlay}>Shared with you</div>
-          )
-        }
         header={
           <Link tabIndex={-1} to={`/playlists/${playlist.id}`} aria-hidden>
             <Thumbnails videos={playlist.videos} />
