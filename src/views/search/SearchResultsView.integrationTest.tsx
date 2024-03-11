@@ -236,7 +236,7 @@ describe('SearchResults', () => {
     const video = VideoFactory.sample({
       id: 'video-id',
       title: 'news video',
-      types: [{ name: 'NEWS', id: 2 }],
+      type: 'NEWS',
     });
 
     fakeClient.videos.insertVideo(video);
@@ -260,7 +260,7 @@ describe('SearchResults', () => {
         VideoFactory.sample({
           id: '2',
           title: 'news video',
-          types: [{ name: 'NEWS', id: 2 }],
+          type: 'NEWS',
         }),
       );
 
@@ -279,7 +279,7 @@ describe('SearchResults', () => {
       const video = VideoFactory.sample({
         id: 'video-id',
         title: 'news video',
-        types: [{ name: 'NEWS', id: 2 }],
+        type: 'NEWS',
       });
 
       fakeClient.videos.insertVideo(video);
@@ -329,7 +329,7 @@ describe('SearchResults', () => {
       const video = VideoFactory.sample({
         id: 'video-id',
         title: 'news video',
-        types: [{ name: 'NEWS', id: 2 }],
+        type: 'NEWS',
       });
 
       fakeClient.videos.insertVideo(video);
@@ -365,7 +365,7 @@ describe('SearchResults', () => {
         VideoFactory.sample({
           id: '2',
           title: 'news',
-          types: [{ name: 'NEWS', id: 2 }],
+          type: 'NEWS',
           links: {
             self: new Link({ href: '', templated: false }),
             logInteraction: new Link({ href: '', templated: false }),

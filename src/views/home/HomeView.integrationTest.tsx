@@ -18,6 +18,7 @@ import {
   AccountType,
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForProduct';
 
 describe('HomeView', () => {
   beforeEach(() => {
@@ -126,7 +127,7 @@ describe('HomeView', () => {
       CollectionFactory.sample({
         title: 'my promoted playlist',
         videos: [VideoFactory.sample({})],
-        promoted: true,
+        promotedFor: [PromotedForProduct.LIBRARY, PromotedForProduct.CLASSROOM],
       }),
     );
     fakeBoclipsClient.videos.insertVideo(
@@ -150,21 +151,21 @@ describe('HomeView', () => {
       CollectionFactory.sample({
         title: 'my promoted playlist',
         videos: [VideoFactory.sample({})],
-        promoted: true,
+        promotedFor: [PromotedForProduct.LIBRARY, PromotedForProduct.CLASSROOM],
       }),
     );
     fakeBoclipsClient.collections.addToFake(
       CollectionFactory.sample({
         title: 'my promoted playlist 1',
         videos: [VideoFactory.sample({})],
-        promoted: true,
+        promotedFor: [PromotedForProduct.LIBRARY, PromotedForProduct.CLASSROOM],
       }),
     );
     fakeBoclipsClient.collections.addToFake(
       CollectionFactory.sample({
         title: 'my promoted playlist 2',
         videos: [VideoFactory.sample({})],
-        promoted: true,
+        promotedFor: [PromotedForProduct.LIBRARY, PromotedForProduct.CLASSROOM],
       }),
     );
     window.resizeTo(765, 1024);

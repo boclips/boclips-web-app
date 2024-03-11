@@ -60,14 +60,14 @@ describe('SearchResultsFiltering', () => {
       VideoFactory.sample({
         id: '1',
         title: 'stock video',
-        types: [{ name: 'STOCK', id: 1 }],
+        type: 'STOCK',
       }),
     );
     fakeClient.videos.insertVideo(
       VideoFactory.sample({
         id: '2',
         title: 'news video',
-        types: [{ name: 'NEWS', id: 2 }],
+        type: 'NEWS',
       }),
     );
 
@@ -85,7 +85,7 @@ describe('SearchResultsFiltering', () => {
         VideoFactory.sample({
           id: '1',
           title: 'stock video',
-          types: [{ name: 'STOCK', id: 1 }],
+          type: 'STOCK',
         }),
       );
 
@@ -128,12 +128,12 @@ describe('SearchResultsFiltering', () => {
         VideoFactory.sample({
           id: '1',
           title: 'stock video',
-          types: [{ name: 'STOCK', id: 1 }],
+          type: 'STOCK',
         }),
         VideoFactory.sample({
           id: '2',
           title: 'news video',
-          types: [{ name: 'NEWS', id: 2 }],
+          type: 'NEWS',
         }),
       ];
 
@@ -340,7 +340,7 @@ describe('SearchResultsFiltering', () => {
         VideoFactory.sample({
           id: '1',
           title: 'stock video',
-          types: [{ name: 'STOCK', id: 1 }],
+          type: 'STOCK',
         }),
       );
 
@@ -474,13 +474,13 @@ describe('SearchResultsFiltering', () => {
         VideoFactory.sample({
           id: '1',
           title: 'manx video',
-          types: [{ name: 'STOCK', id: 1 }],
+          type: 'STOCK',
           language: { code: 'glv', displayName: 'Manx' },
         }),
         VideoFactory.sample({
           id: '2',
           title: 'japanese video',
-          types: [{ name: 'NEWS', id: 2 }],
+          type: 'NEWS',
           language: { code: 'jpn', displayName: 'Japanese' },
         }),
       ];
@@ -552,20 +552,20 @@ describe('SearchResultsFiltering', () => {
         VideoFactory.sample({
           id: '1',
           title: 'stock video',
-          types: [{ name: 'STOCK', id: 1 }],
+          type: 'STOCK',
         }),
         VideoFactory.sample({
           id: '2',
           title: 'news video',
           subjects: [englishSubject],
-          types: [{ name: 'NEWS', id: 2 }],
+          type: 'NEWS',
         }),
 
         VideoFactory.sample({
           id: '3',
           title: 'french news video',
           subjects: [frenchSubject],
-          types: [{ name: 'NEWS', id: 2 }],
+          type: 'NEWS',
         }),
       ];
       fakeClient.subjects.insertSubject(englishSubject);
@@ -737,7 +737,7 @@ describe('SearchResultsFiltering', () => {
           id: '1',
           title: 'hello cars stock',
           topics: ['cars'],
-          types: [{ name: 'STOCK', id: 1 }],
+          type: 'STOCK',
         }),
       );
       client.videos.insertVideo(
@@ -745,7 +745,7 @@ describe('SearchResultsFiltering', () => {
           id: '1',
           title: 'hello boats stock',
           topics: ['boats'],
-          types: [{ name: 'STOCK', id: 1 }],
+          type: 'STOCK',
         }),
       );
       client.videos.insertVideo(
@@ -753,7 +753,7 @@ describe('SearchResultsFiltering', () => {
           id: '1',
           title: 'hello cars news',
           topics: ['cars'],
-          types: [{ name: 'NEWS', id: 2 }],
+          type: 'NEWS',
         }),
       );
       client.videos.setFacets(facets);
@@ -970,7 +970,7 @@ describe('SearchResultsFiltering', () => {
           title: 'video getty stock',
           channelId: 'getty-id',
           createdBy: 'Getty',
-          types: [{ name: 'STOCK', id: 1 }],
+          type: 'STOCK',
         }),
       );
       fakeClient.videos.insertVideo(
@@ -979,7 +979,7 @@ describe('SearchResultsFiltering', () => {
           title: 'video ted stock',
           channelId: 'ted-id',
           createdBy: 'TED',
-          types: [{ name: 'STOCK', id: 1 }],
+          type: 'STOCK',
         }),
       );
       fakeClient.videos.insertVideo(
@@ -988,7 +988,7 @@ describe('SearchResultsFiltering', () => {
           title: 'video getty news',
           channelId: 'getty-id',
           createdBy: 'Getty',
-          types: [{ name: 'NEWS', id: 2 }],
+          type: 'NEWS',
         }),
       );
       const wrapper = renderSearchResultsView([
@@ -1042,7 +1042,7 @@ describe('SearchResultsFiltering', () => {
         VideoFactory.sample({
           id: '1',
           title: 'history video',
-          types: [{ name: 'STOCK', id: 1 }],
+          type: 'STOCK',
         }),
       );
 
@@ -1098,7 +1098,7 @@ describe('SearchResultsFiltering', () => {
       const video = VideoFactory.sample({
         id: '1',
         title: 'log',
-        types: [{ name: 'STOCK', id: 1 }],
+        type: 'STOCK',
       });
 
       fakeClient.videos.insertVideo(video);

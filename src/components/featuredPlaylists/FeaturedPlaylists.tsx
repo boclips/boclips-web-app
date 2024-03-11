@@ -3,11 +3,27 @@ import { useGetPromotedPlaylistsQuery } from 'src/hooks/api/playlistsQuery';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import { Carousel } from 'src/components/common/carousel/Carousel';
 import { PlaylistSlide } from 'src/components/featuredPlaylists/PlaylistSlide';
+import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForProduct';
 import s from './styles.module.less';
 
-const FeaturedPlaylists = () => {
+interface Props {
+  product: 'CLASSROOM' | 'LIBRARY';
+}
+
+const FeaturedPlaylists = ({ product }: Props) => {
+  let promotedFor: PromotedForProduct;
+  switch (product) {
+    case 'CLASSROOM':
+      promotedFor = PromotedForProduct.CLASSROOM;
+      break;
+    case 'LIBRARY':
+    default:
+      promotedFor = PromotedForProduct.LIBRARY;
+      break;
+  }
+
   const { data: retrievedPlaylists, isInitialLoading } =
-    useGetPromotedPlaylistsQuery();
+    useGetPromotedPlaylistsQuery(promotedFor);
 
   const nonEmptyPlaylists = useMemo(
     () => retrievedPlaylists?.filter((playlist) => playlist.videos.length > 0),

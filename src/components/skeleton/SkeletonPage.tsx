@@ -3,10 +3,14 @@ import c from 'classnames';
 import SkeletonTiles from './Skeleton';
 import s from './style.module.less';
 
-const SkeletonPage = () => {
+interface Props {
+  title?: string;
+}
+const SkeletonPage = ({ title = 'skeleton' }: Props) => {
   return (
     <>
       <div
+        title={title}
         className={c(
           s.skeleton,
           s.header,
