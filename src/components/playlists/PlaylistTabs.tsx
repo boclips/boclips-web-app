@@ -4,7 +4,7 @@ import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable'
 import * as Tabs from '@radix-ui/react-tabs';
 import { Typography } from '@boclips-ui/typography';
 import SkeletonTiles from 'src/components/skeleton/Skeleton';
-import PlaylistList from 'src/components/playlists/PlaylistList';
+import PlaylistList from 'src/components/playlists/playlistList/PlaylistList';
 import s from './style.module.less';
 
 interface PlaylistTabsProps {
@@ -43,6 +43,7 @@ export const PlaylistTabs: React.FC<PlaylistTabsProps> = ({
           <PlaylistList
             playlists={playlists}
             filter={(playlist) => playlist.mine}
+            playlistType="mine"
           />
         )}
       </Tabs.Content>
@@ -55,6 +56,7 @@ export const PlaylistTabs: React.FC<PlaylistTabsProps> = ({
             filter={(playlist) =>
               !playlist.mine && !isCreatedByBoclips(playlist)
             }
+            playlistType="shared"
           />
         )}
       </Tabs.Content>
@@ -67,6 +69,7 @@ export const PlaylistTabs: React.FC<PlaylistTabsProps> = ({
             filter={(playlist) =>
               !playlist.mine && isCreatedByBoclips(playlist)
             }
+            playlistType="boclips"
           />
         )}
       </Tabs.Content>

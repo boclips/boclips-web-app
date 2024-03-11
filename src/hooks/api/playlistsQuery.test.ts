@@ -19,6 +19,7 @@ import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collec
 import { PLAYLISTS_PAGE_SIZE } from 'src/components/playlists/PlaylistList';
 import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForProduct';
 
+
 describe('playlistsQuery', () => {
   it('will use list projection and convert page size when loading users playlists', async () => {
     const apiClient = new FakeBoclipsClient();
