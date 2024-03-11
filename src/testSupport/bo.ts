@@ -24,6 +24,7 @@ import {
   AccountType,
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForProduct';
 
 export interface Bo {
   create: {
@@ -269,7 +270,9 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
           ],
         });
 
-        apiClient.collections.update(collectionId, { promoted: true });
+        apiClient.collections.update(collectionId, {
+          promotedFor: [PromotedForProduct.LIBRARY],
+        });
       },
 
       cartWithVideos: () => {

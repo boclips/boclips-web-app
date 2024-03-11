@@ -7,7 +7,7 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForCollectionFilter';
+import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForProduct';
 
 describe(`PromotedPlaylists`, () => {
   it(`renders all playlists promoted for product`, async () => {

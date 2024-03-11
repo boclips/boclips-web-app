@@ -18,7 +18,7 @@ import {
   AccountType,
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForCollectionFilter';
+import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForProduct';
 
 describe('HomeView', () => {
   beforeEach(() => {

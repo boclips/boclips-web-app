@@ -17,7 +17,7 @@ import {
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 import { PLAYLISTS_PAGE_SIZE } from 'src/components/playlists/PlaylistList';
-import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForCollectionFilter';
+import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForProduct';
 
 describe('playlistsQuery', () => {
   it('will use list projection and convert page size when loading users playlists', async () => {
