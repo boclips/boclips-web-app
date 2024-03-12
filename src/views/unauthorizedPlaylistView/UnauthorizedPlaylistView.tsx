@@ -80,6 +80,7 @@ const UnauthorizedPlaylistView = () => {
               playlist={playlist}
               showButtons={false}
               disableLinks
+              mode="LIST"
             />
           </>
         )}

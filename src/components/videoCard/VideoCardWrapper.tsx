@@ -10,21 +10,30 @@ import { Typography } from '@boclips-ui/typography';
 import { FilterKey } from 'src/types/search/FilterKey';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import s from './VideoCardWrapper.module.less';
-import { VideoCardButtons } from './buttons/VideoCardButtons';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 
 interface Props {
   video: Video;
   handleFilterChange?: (filter: FilterKey, values: string[]) => void;
+  disableTitleLink?: boolean;
+  buttonsRow: React.ReactElement;
 }
 
-const VideoCardTitle = ({ video }: Partial<Props>) => {
+const VideoCardTitle = ({
+  video,
+  disableTitleLink = false,
+}: Partial<Props>) => {
   const boclipsClient = useBoclipsClient();
   const onClick = () => {
     AnalyticsFactory.hotjar().event(HotjarEvents.VideoPageOpened);
     trackNavigateToVideoDetails(video, boclipsClient);
   };
-  return (
+
+  return disableTitleLink ? (
+    <Typography.Title2 className="inline-flex truncate">
+      {video?.title}
+    </Typography.Title2>
+  ) : (
     <Link
       className="inline-flex"
       onClick={onClick}
@@ -36,7 +45,12 @@ const VideoCardTitle = ({ video }: Partial<Props>) => {
   );
 };
 
-export const VideoCardWrapper = ({ video, handleFilterChange }: Props) => {
+export const VideoCardWrapper = ({
+  video,
+  handleFilterChange,
+  buttonsRow,
+  disableTitleLink = false,
+}: Props) => {
   const videoWithoutAgeRange = { ...video, ageRange: null };
 
   const onNameClick = () =>
@@ -68,18 +82,10 @@ export const VideoCardWrapper = ({ video, handleFilterChange }: Props) => {
         videoPlayer={<VideoPlayer video={video} showDurationBadge />}
         createdBy={createdByLink()}
         topBadge={priceBadge()}
-        title={<VideoCardTitle video={video} />}
-        actions={
-          <VideoCardButtons
-            video={video}
-            key={`video-cart-buttons-${video.id}`}
-            onAddToCart={() => {
-              AnalyticsFactory.hotjar().event(
-                HotjarEvents.AddToCartFromVideoCard,
-              );
-            }}
-          />
+        title={
+          <VideoCardTitle video={video} disableTitleLink={disableTitleLink} />
         }
+        actions={buttonsRow}
       />
     </div>
   );
