@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
 import ShareSVG from 'src/resources/icons/white-share.svg';
 import CopyLinkIcon from 'src/resources/icons/copy-link-icon.svg';
 import Button from '@boclips-ui/button';
@@ -25,12 +25,20 @@ export const PlaylistShareCodeButton = ({
   playlist,
 }: PlaylistShareCodeButtonProps) => {
   const { data: user, isLoading: userIsLoading } = useGetUserQuery();
-
   const [isModalVisible, setIsModalVisible] = useState(false);
-
   const shareLink = getShareablePlaylistLink(playlist.id, user?.id);
 
   const toggleModalVisibility = () => setIsModalVisible(!isModalVisible);
+
+  useEffect(() => {
+    const main = document.querySelector('main');
+    if (isModalVisible && main) {
+      main.removeAttribute('tabIndex');
+    }
+    return () => {
+      if (main) main.setAttribute('tabIndex', '-1');
+    };
+  }, [isModalVisible]);
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareLink).then(() => {
