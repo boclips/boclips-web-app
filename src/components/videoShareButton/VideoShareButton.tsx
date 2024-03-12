@@ -54,7 +54,15 @@ export const VideoShareButton = ({
   }, [startDuration, endDuration]);
 
   useEffect(() => {
+    const main = document.querySelector('main');
+
+    if (isModalVisible && main) {
+      main.removeAttribute('tabIndex');
+    }
+
     return () => {
+      if (main) main.setAttribute('tabIndex', '-1');
+
       setStartTimeEnabled(false);
       setStartDuration('00:00');
       setStartDurationValid(true);

@@ -2,10 +2,13 @@
 @import '~@boclips-ui/styles/src/breakpoints';
 
 .modalWrapper {
-  @apply bg-white w-screen h-screen fixed left-0;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
   z-index: 51; // header is set to 50
   overflow: auto;
   top: 0;
+  left: 0;
 
   .modal {
     overflow-y: auto;

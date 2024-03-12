@@ -1,4 +1,4 @@
-import { render, within } from '@testing-library/react';
+import { render, waitFor, within } from '@testing-library/react';
 import { VideoShareButton } from 'src/components/videoShareButton/VideoShareButton';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
@@ -208,6 +208,18 @@ describe('video share button', () => {
       }),
     ).toBeVisible();
   });
+
+  it('removes the tabIndex on main element, to allow copying the text', async () => {
+    const wrapper = renderShareButton();
+
+    expect(wrapper.getByRole('main')).toHaveAttribute('tabIndex', '-1');
+
+    openShareModal(wrapper);
+
+    await waitFor(() =>
+      expect(wrapper.getByRole('main')).not.toHaveAttribute('tabIndex'),
+    );
+  });
 });
 
 const renderShareButton = () => {
@@ -220,23 +232,26 @@ const renderShareButton = () => {
   );
 
   return render(
-    <QueryClientProvider client={new QueryClient()}>
-      <BoclipsClientProvider client={apiClient}>
-        <ToastContainer />
-        <VideoShareButton
-          iconOnly
-          video={VideoFactory.sample({
-            id: 'video-1',
-            title: 'Tractor Video',
-            playback: PlaybackFactory.sample({
-              duration: dayjs.duration({ minutes: 1, seconds: 10 }),
-            }),
-          })}
-        />
-      </BoclipsClientProvider>
-    </QueryClientProvider>,
+    <main tabIndex={-1}>
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={apiClient}>
+          <ToastContainer />
+          <VideoShareButton
+            iconOnly
+            video={VideoFactory.sample({
+              id: 'video-1',
+              title: 'Tractor Video',
+              playback: PlaybackFactory.sample({
+                duration: dayjs.duration({ minutes: 1, seconds: 10 }),
+              }),
+            })}
+          />
+        </BoclipsClientProvider>
+      </QueryClientProvider>
+    </main>,
   );
 };
+
 const openShareModal = async (wrapper) => {
   const button = await wrapper.findByRole('button', { name: 'Share' });
   await userEvent.click(button);
