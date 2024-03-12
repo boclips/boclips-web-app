@@ -13,20 +13,20 @@ import {
   isTrimToValid,
 } from 'src/components/cart/AdditionalServices/Trim/trimValidation';
 import { Typography } from '@boclips-ui/typography';
-import { GoogleClassroomShareLink } from 'src/components/videoShareButton/googleClassroom/GoogleClassroomShareLink';
-import { getShareableVideoLink } from 'src/components/videoShareButton/getShareableLink';
+import { GoogleClassroomShareLink } from 'src/components/shareCodeButton/googleClassroom/GoogleClassroomShareLink';
+import { getShareableVideoLink } from 'src/components/shareCodeButton/getShareableLink';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
-import s from './shareButton.module.less';
+import s from './shareCodeButton.module.less';
 
-interface VideoShareButtonProps {
+interface VideoShareCodeButtonProps {
   iconOnly?: boolean;
   video: Video;
 }
 
-export const VideoShareButton = ({
+export const VideoShareCodeButton = ({
   iconOnly = false,
   video,
-}: VideoShareButtonProps) => {
+}: VideoShareCodeButtonProps) => {
   const { data: user } = useGetUserQuery();
   const videoDuration = video.playback.duration.format('mm:ss');
 
@@ -158,7 +158,11 @@ export const VideoShareButton = ({
             />
           }
         >
-          <Typography.Body as="div" className="mb-14 text-gray-800">
+          <Typography.Body
+            as="div"
+            className="mb-14 text-gray-800"
+            data-qa="share-code-body"
+          >
             Students need both the link and your unique teacher code to access
             and play the video{' '}
             <Typography.Body weight="medium">{video.title}</Typography.Body>

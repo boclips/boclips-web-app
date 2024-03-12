@@ -13,7 +13,7 @@ import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { VideoLicensingDetails } from 'src/components/videoPage/videoLicensingDetails/VideoLicensingDetails';
 import useFeatureFlags from 'src/hooks/useFeatureFlags';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import { VideoShareButton } from 'src/components/videoShareButton/VideoShareButton';
+import { VideoShareCodeButton } from 'src/components/shareCodeButton/VideoShareCodeButton';
 import { EmbedButton } from 'src/components/embedButton/EmbedButton';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { CopyVideoLinkButton } from '../videoCard/buttons/CopyVideoLinkButton';
@@ -101,7 +101,7 @@ export const VideoHeader = ({ video }: Props) => {
             )}
           </FeatureGate>
           <FeatureGate product={Product.CLASSROOM}>
-            <VideoShareButton video={video} />
+            <VideoShareCodeButton video={video} />
           </FeatureGate>
         </div>
       </div>

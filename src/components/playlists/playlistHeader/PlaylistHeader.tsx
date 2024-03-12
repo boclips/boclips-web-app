@@ -9,7 +9,7 @@ import PlaylistLastUpdatedBadge from 'src/components/playlists/playlistHeader/Pl
 import PlaylistOwnerBadge from 'src/components/playlists/playlistHeader/PlaylistOwnerBadge';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import { PlaylistShareCodeButton } from 'src/components/playlists/buttons/PlaylistShareCodeButton';
+import { PlaylistShareCodeButton } from 'src/components/shareCodeButton/PlaylistShareCodeButton';
 import { OptionsButton } from './OptionsButton';
 import s from './style.module.less';
 

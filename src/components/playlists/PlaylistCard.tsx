@@ -10,7 +10,7 @@ import { FeatureGate } from 'src/components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { CopyButton } from 'src/components/common/copyLinkButton/CopyButton';
 import { Constants } from 'src/AppConstants';
-import { PlaylistShareCodeButton } from 'src/components/playlists/buttons/PlaylistShareCodeButton';
+import { PlaylistShareCodeButton } from 'src/components/shareCodeButton/PlaylistShareCodeButton';
 import s from './style.module.less';
 
 interface PlaylistCardProps {
