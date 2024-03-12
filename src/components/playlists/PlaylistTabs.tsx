@@ -30,10 +30,10 @@ export const PlaylistTabs: React.FC<PlaylistTabsProps> = ({
           <Typography.H5>My Playlists</Typography.H5>
         </Tabs.Trigger>
         <Tabs.Trigger value="shared-playlists" className={s.tabHeader}>
-          <Typography.H5>Shared Playlists</Typography.H5>
+          <Typography.H5>Shared with you</Typography.H5>
         </Tabs.Trigger>
         <Tabs.Trigger value="boclips-playlists" className={s.tabHeader}>
-          <Typography.H5>Boclips Playlists</Typography.H5>
+          <Typography.H5>Boclips Featured</Typography.H5>
         </Tabs.Trigger>
       </Tabs.List>
       <Tabs.Content value="my-playlists" className={s.tabContent}>
