@@ -6,6 +6,9 @@ import { VideoCardWrapper } from 'src/components/videoCard/VideoCardWrapper';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import Pagination from '@boclips-ui/pagination';
 import c from 'classnames';
+import { VideoCardButtons } from 'src/components/videoCard/buttons/VideoCardButtons';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import s from '../common/pagination/pagination.module.less';
 
 interface Props {
@@ -65,6 +68,17 @@ export const VideosListView = ({
           <VideoCardWrapper
             video={video}
             handleFilterChange={handleFilterChange}
+            buttonsRow={
+              <VideoCardButtons
+                video={video}
+                key={`video-cart-buttons-${video.id}`}
+                onAddToCart={() => {
+                  AnalyticsFactory.hotjar().event(
+                    HotjarEvents.AddToCartFromVideoCard,
+                  );
+                }}
+              />
+            }
           />
         </li>
       )}

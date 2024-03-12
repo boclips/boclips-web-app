@@ -10,6 +10,8 @@ import SkeletonPage from 'src/components/skeleton/SkeletonPage';
 import { FollowPlaylist } from 'src/services/followPlaylist';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { Helmet } from 'react-helmet';
+import { FeatureGate } from 'src/components/common/FeatureGate';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 interface Props {
   followPlaylist: FollowPlaylist;
@@ -61,7 +63,12 @@ const PlaylistView = ({ followPlaylist }: Props) => {
         ) : (
           <>
             <PlaylistHeader playlist={playlist} />
-            <PlaylistBody playlist={playlist} />
+            <FeatureGate
+              product={Product.CLASSROOM}
+              fallback={<PlaylistBody playlist={playlist} mode="GRID" />}
+            >
+              <PlaylistBody playlist={playlist} mode="LIST" />
+            </FeatureGate>
           </>
         )}
         <Footer className="col-start-2 col-end-26 row-start-5" />
