@@ -1,19 +1,47 @@
 import React from 'react';
-import { fireEvent, render, screen, within } from '@testing-library/react';
-import { PlaylistShareCodeButton } from 'src/components/playlists/buttons/PlaylistShareCodeButton';
+import { render, screen, within } from '@testing-library/react';
+import { PlaylistShareCodeButton } from 'src/components/shareCodeButton/PlaylistShareCodeButton';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import userEvent from '@testing-library/user-event';
-import { getShareablePlaylistLink } from 'src/components/videoShareButton/getShareableLink';
+import { getShareablePlaylistLink } from 'src/components/shareCodeButton/getShareableLink';
 import { ToastContainer } from 'react-toastify';
+import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 
-describe('PlaylistShareCodeButton', () => {
+describe('playlist share code button', () => {
   Object.assign(navigator, {
     clipboard: {
       writeText: () => Promise.resolve(),
     },
+  });
+
+  it(`renders label when iconOnly false`, async () => {
+    const wrapper = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <PlaylistShareCodeButton playlist={CollectionFactory.sample({})} />
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
+    expect(await wrapper.findByTestId('share-button')).toBeVisible();
+    expect(await wrapper.findByText('Share')).toBeVisible();
+  });
+
+  it(`doesn't render label when iconOnly`, async () => {
+    const wrapper = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <PlaylistShareCodeButton
+            iconOnly
+            playlist={CollectionFactory.sample({})}
+          />
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
+    expect(await wrapper.findByTestId('share-button')).toBeVisible();
+    expect(wrapper.queryByText('Share')).toBeNull();
   });
 
   it('displays playlist share code modal on click', async () => {
@@ -30,7 +58,7 @@ describe('PlaylistShareCodeButton', () => {
       </BoclipsClientProvider>,
     );
 
-    fireEvent.click(screen.getByRole('button', { name: 'Share' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Share' }));
 
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(screen.getByText('Share this playlist with students')).toBeVisible();
@@ -70,7 +98,7 @@ describe('PlaylistShareCodeButton', () => {
       </BoclipsClientProvider>,
     );
 
-    fireEvent.click(screen.getByRole('button', { name: 'Share' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Share' }));
 
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(screen.getByText('Share this playlist with students')).toBeVisible();
@@ -103,7 +131,7 @@ describe('PlaylistShareCodeButton', () => {
       </BoclipsClientProvider>,
     );
 
-    fireEvent.click(screen.getByRole('button', { name: 'Share' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Share' }));
 
     expect(
       await screen.findByRole('link', {

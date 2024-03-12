@@ -1,5 +1,5 @@
-import { render, waitFor, within } from '@testing-library/react';
-import { VideoShareButton } from 'src/components/videoShareButton/VideoShareButton';
+import { render, RenderResult, waitFor, within } from '@testing-library/react';
+import { VideoShareCodeButton } from 'src/components/shareCodeButton/VideoShareCodeButton';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
@@ -9,10 +9,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import dayjs from 'src/day-js';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
-import { getShareableVideoLink } from 'src/components/videoShareButton/getShareableLink';
+import { getShareableVideoLink } from 'src/components/shareCodeButton/getShareableLink';
 import { ToastContainer } from 'react-toastify';
 
-describe('video share button', () => {
+describe('video share code button', () => {
   Object.assign(navigator, {
     clipboard: {
       writeText: () => Promise.resolve(),
@@ -23,10 +23,11 @@ describe('video share button', () => {
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <VideoShareButton video={VideoFactory.sample({})} />
+          <VideoShareCodeButton video={VideoFactory.sample({})} />
         </BoclipsClientProvider>
       </QueryClientProvider>,
     );
+
     expect(await wrapper.findByTestId('share-button')).toBeVisible();
     expect(await wrapper.findByText('Share')).toBeVisible();
   });
@@ -35,26 +36,36 @@ describe('video share button', () => {
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <VideoShareButton iconOnly video={VideoFactory.sample({})} />
+          <VideoShareCodeButton iconOnly video={VideoFactory.sample({})} />
         </BoclipsClientProvider>
       </QueryClientProvider>,
     );
+
     expect(await wrapper.findByTestId('share-button')).toBeVisible();
     expect(wrapper.queryByText('Share')).toBeNull();
   });
 
-  it(`allows selecting start and end time for shared link`, async () => {
-    const apiClient = new FakeBoclipsClient();
-    apiClient.users.insertCurrentUser(
-      UserFactory.sample({
-        shareCode: '1739',
-      }),
+  it('displays playlist share code modal on click', async () => {
+    const wrapper = renderShareButton();
+    await openShareModal(wrapper);
+
+    expect(wrapper.getByRole('dialog')).toBeInTheDocument();
+    expect(wrapper.getByText('Share this video with students')).toBeVisible();
+
+    const body = wrapper.getByTestId('share-code-body');
+    expect(body).toBeVisible();
+    expect(body.textContent).toEqual(
+      'Students need both the link and your unique teacher code to access and play the video Tractor Video',
     );
 
-    const wrapper = renderShareButton();
+    const footer = await wrapper.findByTestId('share-code-footer');
+    expect(footer).toBeVisible();
+    expect(footer.textContent).toEqual('Your unique Teacher code is 1739');
+  });
 
-    const button = await wrapper.findByRole('button', { name: 'Share' });
-    await userEvent.click(button);
+  it(`allows selecting start and end time for shared link`, async () => {
+    const wrapper = renderShareButton();
+    await openShareModal(wrapper);
 
     expect(
       await wrapper.findByText('Share this video with students'),
@@ -98,6 +109,7 @@ describe('video share button', () => {
 
     const wrapper = renderShareButton();
     await openShareModal(wrapper);
+
     expect(
       await wrapper.findByText('Share this video with students'),
     ).toBeVisible();
@@ -152,6 +164,7 @@ describe('video share button', () => {
 
     const wrapper = renderShareButton();
     await openShareModal(wrapper);
+
     expect(
       await wrapper.findByText('Share this video with students'),
     ).toBeVisible();
@@ -236,7 +249,7 @@ const renderShareButton = () => {
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={apiClient}>
           <ToastContainer />
-          <VideoShareButton
+          <VideoShareCodeButton
             iconOnly
             video={VideoFactory.sample({
               id: 'video-1',
@@ -252,7 +265,7 @@ const renderShareButton = () => {
   );
 };
 
-const openShareModal = async (wrapper) => {
+const openShareModal = async (wrapper: RenderResult) => {
   const button = await wrapper.findByRole('button', { name: 'Share' });
   await userEvent.click(button);
 };
