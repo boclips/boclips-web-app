@@ -4,6 +4,8 @@ import { useDebounce } from 'src/hooks/useDebounce';
 
 import PlaylistSearch from 'src/components/playlists/search/PlaylistSearch';
 import { PlaylistTabs } from 'src/components/playlists/PlaylistTabs';
+import { FeatureGate } from 'src/components/common/FeatureGate';
+import { PlaylistListWrapper } from 'src/components/playlists/playlistList/PlaylistListWrapper';
 import s from './style.module.less';
 
 const Playlists = () => {
@@ -13,7 +15,12 @@ const Playlists = () => {
   return (
     <main tabIndex={-1} className={s.playlistsWrapper}>
       <PlaylistSearch setQuery={setQuery} />
-      <PlaylistTabs query={debouncedQuery} />
+      <FeatureGate
+        feature="BO_WEB_APP_DEV"
+        fallback={<PlaylistListWrapper query={query} />}
+      >
+        <PlaylistTabs query={debouncedQuery} />
+      </FeatureGate>
     </main>
   );
 };

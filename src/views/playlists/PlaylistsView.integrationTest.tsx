@@ -206,6 +206,20 @@ describe('PlaylistsView', () => {
         expect(wrapper.queryByText('Bob made this Playlist')).toBeNull();
       });
     });
+    describe('BO_WEB_APP_DEV feature disabled', () => {
+      beforeEach(() => {
+        client.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: false });
+      });
+
+      it('renders all playlists on page', async () => {
+        const wrapper = renderPlaylistsView(client);
+
+        expect(await wrapper.findByText('Playlist 1')).toBeVisible();
+        expect(wrapper.getByText('Playlist 2')).toBeVisible();
+        expect(wrapper.getByText('Bob made this Playlist')).toBeVisible();
+        expect(wrapper.getByText('Boclips made this Playlist')).toBeVisible();
+      });
+    });
   });
 
   it('can search for playlist with separate tabs result when BO_WEB_APP enabled', async () => {
@@ -283,6 +297,71 @@ describe('PlaylistsView', () => {
     );
     expect(await wrapper.findByText('Boclips loves pears')).toBeVisible();
   });
+
+  it('can search for playlist when BO_WEB_APP disabled', async () => {
+    const client = new FakeBoclipsClient();
+    const user = insertUser(client);
+    client.collections.setCurrentUser(user.id);
+    client.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: false });
+
+    const myPlaylists = [
+      CollectionFactory.sample({
+        id: '1',
+        mine: true,
+        title: 'Apples',
+        owner: user.id,
+      }),
+      CollectionFactory.sample({
+        id: '2',
+        mine: true,
+        title: 'pears',
+        owner: user.id,
+      }),
+      CollectionFactory.sample({
+        id: '3',
+        mine: false,
+        title: 'Shared pears',
+        ownerName: 'The Owner',
+        links: {
+          self: new Link({
+            href: 'https://api.boclips.com/v1/collections/1',
+          }),
+          unbookmark: new Link({
+            href: 'https://api.staging-boclips.com/v1/collections/623707aa9d7ac66705d8b280?bookmarked=false',
+          }),
+        },
+      }),
+      CollectionFactory.sample({
+        id: '4',
+        mine: false,
+        title: 'Boclips loves pears',
+        ownerName: 'Some owner',
+        createdBy: 'Boclips',
+        links: {
+          self: new Link({
+            href: 'https://api.boclips.com/v1/collections/4',
+          }),
+          unbookmark: new Link({
+            href: 'https://api.staging-boclips.com/v1/collections/623707aa9d7ac66705d8b280?bookmarked=false',
+          }),
+        },
+      }),
+    ];
+
+    myPlaylists.forEach((it) => client.collections.addToFake(it));
+
+    const wrapper = renderPlaylistsView(client);
+
+    const searchInput = await wrapper.findByPlaceholderText(
+      'Search for playlists',
+    );
+    await userEvent.type(searchInput, 'pears');
+
+    expect(await wrapper.findByText('pears')).toBeVisible();
+    expect(await wrapper.findByText('Shared pears')).toBeVisible();
+    expect(await wrapper.findByText('Boclips loves pears')).toBeVisible();
+  });
+
   describe('share playlists', () => {
     it('has a share button that copies playlist link to clipboard only for B2B', async () => {
       Object.assign(navigator, {
@@ -442,10 +521,7 @@ describe('PlaylistsView', () => {
       expect(wrapper.getByPlaceholderText('Add description')).toBeVisible();
       expect(wrapper.getByRole('button', { name: 'Cancel' })).toBeVisible();
       expect(
-        wrapper.getAllByRole('button', { name: 'Create new playlist' })[0],
-      ).toBeVisible();
-      expect(
-        wrapper.getAllByRole('button', { name: 'Create new playlist' })[1],
+        wrapper.getByRole('button', { name: 'Create new playlist' }),
       ).toBeVisible();
     });
 

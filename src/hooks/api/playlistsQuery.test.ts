@@ -7,7 +7,6 @@ import {
   useOwnPlaylistsQuery,
   useRemoveCommentFromPlaylistVideo,
   useReorderPlaylist,
-  useSavedPlaylistsQuery,
   useUpdatePlaylistPermissionsMutation,
 } from 'src/hooks/api/playlistsQuery';
 import { QueryClient } from '@tanstack/react-query';

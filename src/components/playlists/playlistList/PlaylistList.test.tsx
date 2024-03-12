@@ -112,25 +112,4 @@ describe('PlaylistList', () => {
 
     expect(screen.getByText('No Playlists here yet.')).toBeInTheDocument();
   });
-
-  it('applies filter function to playlists', () => {
-    const filterFunc = (playlist: ListViewCollection) => playlist.id === '1';
-
-    render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <MemoryRouter initialEntries={['/playlists']}>
-            <PlaylistList
-              playlists={mockPlaylists}
-              playlistType="mine"
-              filter={filterFunc}
-            />
-          </MemoryRouter>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
-    );
-
-    expect(screen.getByText('Playlist 1')).toBeInTheDocument();
-    expect(screen.queryByText('Playlist 2')).not.toBeInTheDocument();
-  });
 });

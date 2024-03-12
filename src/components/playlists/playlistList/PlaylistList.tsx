@@ -12,7 +12,6 @@ import paginationStyles from '../../common/pagination/pagination.module.less';
 
 interface PlaylistListProps {
   playlists: Pageable<ListViewCollection>;
-  filter?: (playlist: ListViewCollection) => boolean;
   page?: number;
   handlePageChange?: (newPage: number) => void;
   playlistType?: 'mine' | 'shared' | 'boclips';
@@ -22,7 +21,6 @@ export const PLAYLISTS_PAGE_SIZE = 20;
 
 const PlaylistList: React.FC<PlaylistListProps> = ({
   playlists,
-  filter = () => true,
   page = 1,
   handlePageChange = () => {},
   playlistType,
@@ -45,9 +43,7 @@ const PlaylistList: React.FC<PlaylistListProps> = ({
     [mobileView, page, playlists?.pageSpec.totalPages],
   );
 
-  const filteredPlaylists = playlists.page.filter(filter);
-
-  return filteredPlaylists?.length > 0 ? (
+  return playlists?.page.length > 0 ? (
     <List
       data-qa="playlist-grid-container"
       className={s.gridView}
@@ -65,7 +61,7 @@ const PlaylistList: React.FC<PlaylistListProps> = ({
         prefixCls: 'bo-pagination',
         itemRender,
       }}
-      dataSource={filteredPlaylists}
+      dataSource={playlists.page}
       renderItem={(playlist: ListViewCollection) => (
         <PlaylistCard playlist={playlist} />
       )}
