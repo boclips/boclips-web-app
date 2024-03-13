@@ -110,6 +110,7 @@ const PlaylistBody = ({
                 handleFilterChange={handleFilterChange}
                 disableTitleLink={disableLinks}
                 buttonsRow={showButtons && videoCardButtons(video, false)}
+                segment={playlist.segments?.[video.id]}
               />
             ) : (
               <VideoGridCard

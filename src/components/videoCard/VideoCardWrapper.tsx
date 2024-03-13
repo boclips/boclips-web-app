@@ -9,6 +9,7 @@ import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientP
 import { Typography } from '@boclips-ui/typography';
 import { FilterKey } from 'src/types/search/FilterKey';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import { Segment } from 'boclips-api-client/dist/sub-clients/collections/model/Segment';
 import s from './VideoCardWrapper.module.less';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 
@@ -17,6 +18,7 @@ interface Props {
   handleFilterChange?: (filter: FilterKey, values: string[]) => void;
   disableTitleLink?: boolean;
   buttonsRow: React.ReactElement;
+  segment?: Segment;
 }
 
 const VideoCardTitle = ({
@@ -50,6 +52,7 @@ export const VideoCardWrapper = ({
   handleFilterChange,
   buttonsRow,
   disableTitleLink = false,
+  segment,
 }: Props) => {
   const videoWithoutAgeRange = { ...video, ageRange: null };
 
@@ -79,7 +82,9 @@ export const VideoCardWrapper = ({
       <VideoCard
         key={video.id}
         video={videoWithoutAgeRange}
-        videoPlayer={<VideoPlayer video={video} showDurationBadge />}
+        videoPlayer={
+          <VideoPlayer video={video} showDurationBadge segment={segment} />
+        }
         createdBy={createdByLink()}
         topBadge={priceBadge()}
         title={
