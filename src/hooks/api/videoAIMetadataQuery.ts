@@ -1,5 +1,5 @@
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
-import { useQueries } from '@tanstack/react-query';
+import { useQueries, useQuery } from '@tanstack/react-query';
 import { BoclipsClient } from 'boclips-api-client';
 
 const doGetLearningOutcomes = (client: BoclipsClient, videoId: string) => {
@@ -33,4 +33,18 @@ export const useGetVideoAIMetadata = (videoId: string) => {
   });
 
   return [learningOutcomes, assessmentQuestions];
+};
+
+export const useGetVideoLearningOutcomes = (videoId: string) => {
+  const client = useBoclipsClient();
+  return useQuery(['learningOutcomes', videoId], () =>
+    doGetLearningOutcomes(client, videoId),
+  );
+};
+
+export const useGetVideoAssessmentQuestions = (videoId: string) => {
+  const client = useBoclipsClient();
+  return useQuery(['assessmentQuestions', videoId], () =>
+    doGetAssessmentQuestions(client, videoId),
+  );
 };
