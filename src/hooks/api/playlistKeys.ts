@@ -13,10 +13,6 @@ export const playlistKeys = {
     if (query) return [...all, 'own', page, query] as const;
     return [...all, 'own', page] as const;
   },
-  ownAndShared: (page: number, query?: string) => {
-    if (query) return [...all, 'ownAndShared', page, query] as const;
-    return [...all, 'ownAndShared', page] as const;
-  },
   ownAndEditable: [...all, 'ownAndEditable'] as const,
   detail: (id: string) => [...all, id] as const,
 };
