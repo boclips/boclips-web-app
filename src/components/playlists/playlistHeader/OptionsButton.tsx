@@ -22,6 +22,8 @@ import ShareSVG from 'src/resources/icons/black-share.svg';
 import { EditPlaylistModal } from 'src/components/playlistModal/EditPlaylistModal';
 import { EditPlaylistPermissionsModal } from 'src/components/playlistModal/EditPlaylistPermissionsModal';
 import { copySharePlaylistLink } from 'src/services/copySharePlaylistLink';
+import PlusSign from 'src/resources/icons/plus-sign.svg';
+import { useNavigate } from 'react-router-dom';
 import s from './style.module.less';
 
 interface Props {
@@ -39,6 +41,8 @@ const enum PlaylistModalState {
 }
 
 export const OptionsButton = ({ playlist }: Props) => {
+  const navigate = useNavigate();
+
   const [modalState, setModalState] = useState<PlaylistModalState>(
     PlaylistModalState.NONE,
   );
@@ -72,6 +76,16 @@ export const OptionsButton = ({ playlist }: Props) => {
               align="end"
             >
               <DropdownMenu.Group>
+                {(playlist?.mine ||
+                  playlist?.permissions.anyone ===
+                    CollectionPermission.EDIT) && (
+                  <OptionItem
+                    text="Add videos"
+                    label="Add videos to this playlist"
+                    icon={<PlusSign aria-hidden stroke="black" />}
+                    onSelect={() => navigate('/videos')}
+                  />
+                )}
                 {playlist.mine && (
                   <OptionItem
                     text="Edit"
