@@ -77,13 +77,11 @@ describe('Playlist Body', () => {
   it('has information message when no video on a playlist', async () => {
     const wrapper = getWrapper();
 
-    expect(await wrapper.findByText('No Videos here yet.')).toBeVisible();
+    expect(await wrapper.findByText('No videos here yet.')).toBeVisible();
     expect(
       wrapper.getByText('You can see videos here once you add some.'),
     ).toBeVisible();
-    expect(
-      wrapper.getByRole('button', { name: 'Add some videos' }),
-    ).toBeVisible();
+    expect(wrapper.getByRole('button', { name: 'Add videos' })).toBeVisible();
   });
 
   it('playlist card has price info', async () => {

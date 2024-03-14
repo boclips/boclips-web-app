@@ -110,6 +110,6 @@ describe('PlaylistList', () => {
       </QueryClientProvider>,
     );
 
-    expect(screen.getByText('No Playlists here yet.')).toBeInTheDocument();
+    expect(screen.getByText('No playlists here yet.')).toBeInTheDocument();
   });
 });
