@@ -106,10 +106,11 @@ export const AccountButton = () => {
             <Typography.Body
               size="small"
               as="div"
+              weight="medium"
               aria-label={`Your Teacher code is ${user.shareCode}`}
               className="bg-gray-100 w-full"
             >
-              <div className="py-3 pl-4 text-gray-500 flex flex-col">
+              <div className="py-3 pl-4 text-gray-800 flex flex-col">
                 <span className="mb-1">Teacher code</span>
                 <span>{user.shareCode}</span>
               </div>
