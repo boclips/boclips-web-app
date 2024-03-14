@@ -29,13 +29,11 @@ describe('Empty State', () => {
     it('renders playlist body empty state', async () => {
       const wrapper = getWrapper();
 
-      expect(await wrapper.findByText('No Videos here yet.')).toBeVisible();
+      expect(await wrapper.findByText('No videos here yet.')).toBeVisible();
       expect(
         wrapper.getByText('You can see videos here once you add some.'),
       ).toBeVisible();
-      expect(
-        wrapper.getByRole('button', { name: 'Add some videos' }),
-      ).toBeVisible();
+      expect(wrapper.getByRole('button', { name: 'Add videos' })).toBeVisible();
     });
   });
 });

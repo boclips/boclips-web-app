@@ -64,7 +64,7 @@ const PlaylistEmptyState = ({ playlistType }: PlaylistEmptyStateProps) => {
   };
   return (
     <EmptyState
-      text="No Playlists here yet."
+      text="No playlists here yet."
       description={getPlaylistCopy[playlistType]?.description}
       button={getPlaylistCopy[playlistType]?.button}
     />
@@ -76,12 +76,12 @@ const PlaylistBodyEmptyState = () => {
 
   return (
     <EmptyState
-      text="No Videos here yet."
+      text="No videos here yet."
       description="You can see videos here once you add some."
       button={
         <Button
           icon={<PlusSign />}
-          text="Add some videos"
+          text="Add videos"
           onClick={() => navigate('/videos')}
           height="48px"
           className="max-w-max"
