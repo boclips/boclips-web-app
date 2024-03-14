@@ -123,15 +123,15 @@ describe('PlaylistsView', () => {
       it('renders playlists tabs', async () => {
         const wrapper = renderPlaylistsView(client);
 
-        expect(await wrapper.findByText('My Playlists')).toBeVisible();
+        expect(await wrapper.findByText('My playlists')).toBeVisible();
         expect(await wrapper.findByText('Shared with you')).toBeVisible();
-        expect(await wrapper.findByText('Boclips Featured')).toBeVisible();
+        expect(await wrapper.findByText('Boclips featured')).toBeVisible();
       });
 
       it('renders playlists created by the user', async () => {
         const wrapper = renderPlaylistsView(client);
 
-        fireEvent.click(await wrapper.findByText('My Playlists'));
+        fireEvent.click(await wrapper.findByText('My playlists'));
         expect(await wrapper.findByText('Playlist 1')).toBeVisible();
         expect(await wrapper.findByText('Playlist 2')).toBeVisible();
         expect(wrapper.queryByText('Bob made this Playlist')).toBeNull();
@@ -170,7 +170,7 @@ describe('PlaylistsView', () => {
         const wrapper = renderPlaylistsView(client);
 
         fireEvent.mouseDown(
-          await wrapper.findByRole('tab', { name: 'Boclips Featured' }),
+          await wrapper.findByRole('tab', { name: 'Boclips featured' }),
         );
         expect(
           await wrapper.findByText('Boclips made this Playlist'),
@@ -196,7 +196,7 @@ describe('PlaylistsView', () => {
         const wrapper = renderPlaylistsView(client);
 
         fireEvent.mouseDown(
-          await wrapper.findByRole('tab', { name: 'Boclips Featured' }),
+          await wrapper.findByRole('tab', { name: 'Boclips featured' }),
         );
         expect(
           await wrapper.findByText('Boclips made this Playlist'),
@@ -268,7 +268,7 @@ describe('PlaylistsView', () => {
     await userEvent.type(searchInput, 'pears');
 
     fireEvent.mouseDown(
-      await wrapper.findByRole('tab', { name: 'My Playlists' }),
+      await wrapper.findByRole('tab', { name: 'My playlists' }),
     );
     await waitForElementToBeRemoved(() => wrapper.getByText('Apples'));
     expect(await wrapper.findByText('pears')).toBeVisible();
@@ -279,7 +279,7 @@ describe('PlaylistsView', () => {
     expect(await wrapper.findByText('Shared pears')).toBeVisible();
 
     fireEvent.mouseDown(
-      await wrapper.findByRole('tab', { name: 'Boclips Featured' }),
+      await wrapper.findByRole('tab', { name: 'Boclips featured' }),
     );
     expect(await wrapper.findByText('Boclips loves pears')).toBeVisible();
   });
