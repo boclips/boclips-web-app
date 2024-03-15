@@ -158,7 +158,7 @@ const RegistrationForm = ({
 
     // @ts-ignore
     return () => mainRef.current?.addEventListener('keydown', handleEvent);
-  }, [mainRef.current]);
+  }, [mainRef]);
 
   return (
     <main ref={mainRef} tabIndex={-1} className={s.formInputsWrapper}>
