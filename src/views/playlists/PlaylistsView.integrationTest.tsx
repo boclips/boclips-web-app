@@ -28,6 +28,32 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { lastEvent } from 'src/testSupport/lastEvent';
 
+const insertUser = (client: FakeBoclipsClient, product?: Product) => {
+  const user = UserFactory.sample({
+    id: 'user-1',
+    account: {
+      ...UserFactory.sample().account,
+      id: 'acc-1',
+      name: 'Ren',
+      products: [product],
+      type: AccountType.STANDARD,
+    },
+  });
+  client.users.insertCurrentUser(user);
+  return user;
+};
+
+const renderPlaylistsView = (client: BoclipsClient) =>
+  render(
+    <MemoryRouter initialEntries={['/playlists']}>
+      <App
+        apiClient={client}
+        boclipsSecurity={stubBoclipsSecurity}
+        reactQueryClient={new QueryClient()}
+      />
+    </MemoryRouter>,
+  );
+
 describe('PlaylistsView', () => {
   beforeEach(() => {
     window.resizeTo(1680, 1024);
@@ -93,15 +119,15 @@ describe('PlaylistsView', () => {
     it('renders playlists tabs', async () => {
       const wrapper = renderPlaylistsView(client);
 
-      expect(await wrapper.findByText('My Playlists')).toBeVisible();
+      expect(await wrapper.findByText('My playlists')).toBeVisible();
       expect(await wrapper.findByText('Shared with you')).toBeVisible();
-      expect(await wrapper.findByText('Boclips Featured')).toBeVisible();
+      expect(await wrapper.findByText('Boclips featured')).toBeVisible();
     });
 
     it('renders playlists created by the user', async () => {
       const wrapper = renderPlaylistsView(client);
 
-      fireEvent.click(await wrapper.findByText('My Playlists'));
+      fireEvent.click(await wrapper.findByText('My playlists'));
       expect(await wrapper.findByText('Playlist 1')).toBeVisible();
       expect(await wrapper.findByText('Playlist 2')).toBeVisible();
       expect(wrapper.queryByText('Bob made this Playlist')).toBeNull();
@@ -134,10 +160,11 @@ describe('PlaylistsView', () => {
           },
         }),
       );
+      client.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
       const wrapper = renderPlaylistsView(client);
 
       fireEvent.mouseDown(
-        await wrapper.findByRole('tab', { name: 'Boclips Featured' }),
+        await wrapper.findByRole('tab', { name: 'Boclips featured' }),
       );
       expect(
         await wrapper.findByText('Boclips made this Playlist'),
@@ -159,10 +186,11 @@ describe('PlaylistsView', () => {
           },
         }),
       );
+      client.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
       const wrapper = renderPlaylistsView(client);
 
       fireEvent.mouseDown(
-        await wrapper.findByRole('tab', { name: 'Boclips Featured' }),
+        await wrapper.findByRole('tab', { name: 'Boclips featured' }),
       );
       expect(
         await wrapper.findByText('Boclips made this Playlist'),
@@ -173,10 +201,11 @@ describe('PlaylistsView', () => {
     });
 
     it(`emits events when clicking shared, boclips and my playlists tabs`, async () => {
+      client.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
       const wrapper = renderPlaylistsView(client);
 
       fireEvent.mouseDown(
-        await wrapper.findByRole('tab', { name: 'Boclips Featured' }),
+        await wrapper.findByRole('tab', { name: 'Boclips featured' }),
       );
 
       expect(
@@ -264,7 +293,7 @@ describe('PlaylistsView', () => {
     await userEvent.type(searchInput, 'pears');
 
     fireEvent.mouseDown(
-      await wrapper.findByRole('tab', { name: 'My Playlists' }),
+      await wrapper.findByRole('tab', { name: 'My playlists' }),
     );
     await waitForElementToBeRemoved(() => wrapper.getByText('Apples'));
     expect(await wrapper.findByText('pears')).toBeVisible();
@@ -275,7 +304,7 @@ describe('PlaylistsView', () => {
     expect(await wrapper.findByText('Shared pears')).toBeVisible();
 
     fireEvent.mouseDown(
-      await wrapper.findByRole('tab', { name: 'Boclips Featured' }),
+      await wrapper.findByRole('tab', { name: 'Boclips featured' }),
     );
     expect(await wrapper.findByText('Boclips loves pears')).toBeVisible();
   });
@@ -573,29 +602,3 @@ describe('PlaylistsView', () => {
       fireEvent.click(wrapper.getByRole('button', { name: 'Create playlist' }));
   });
 });
-
-const insertUser = (client: FakeBoclipsClient, product?: Product) => {
-  const user = UserFactory.sample({
-    id: 'user-1',
-    account: {
-      ...UserFactory.sample().account,
-      id: 'acc-1',
-      name: 'Ren',
-      products: [product],
-      type: AccountType.STANDARD,
-    },
-  });
-  client.users.insertCurrentUser(user);
-  return user;
-};
-
-const renderPlaylistsView = (client: BoclipsClient) =>
-  render(
-    <MemoryRouter initialEntries={['/playlists']}>
-      <App
-        apiClient={client}
-        boclipsSecurity={stubBoclipsSecurity}
-        reactQueryClient={new QueryClient()}
-      />
-    </MemoryRouter>,
-  );

@@ -99,7 +99,7 @@ export const OptionsButton = ({ playlist }: Props) => {
                   <OptionItem
                     text="Add videos"
                     label="Add videos to this playlist"
-                    icon={<PlusSign aria-hidden stroke="black" />}
+                    icon={<PlusSign aria-hidden stroke="black" width={20} />}
                     onSelect={() => navigate('/videos')}
                   />
                 )}
@@ -107,7 +107,7 @@ export const OptionsButton = ({ playlist }: Props) => {
                   <OptionItem
                     text="Edit"
                     label="Edit playlist"
-                    icon={<PencilSVG aria-hidden />}
+                    icon={<PencilSVG aria-hidden width={20} />}
                     onSelect={() => {
                       setModalState(PlaylistModalState.EDIT);
                       trackPlatformInteraction({
@@ -120,7 +120,7 @@ export const OptionsButton = ({ playlist }: Props) => {
                   <OptionItem
                     text="Unfollow"
                     label="Unfollow playlist"
-                    icon={<CrossSVG aria-hidden />}
+                    icon={<CrossSVG aria-hidden width={20} />}
                     onSelect={() => {
                       setModalState(PlaylistModalState.UNFOLLOW);
                     }}
@@ -132,7 +132,7 @@ export const OptionsButton = ({ playlist }: Props) => {
                   <OptionItem
                     text="Reorder videos"
                     label="Reorder videos in this playlist"
-                    icon={<ReorderSVG aria-hidden />}
+                    icon={<ReorderSVG aria-hidden width={20} />}
                     onSelect={() => {
                       setModalState(PlaylistModalState.REORDER);
                       trackPlatformInteraction({
@@ -144,7 +144,7 @@ export const OptionsButton = ({ playlist }: Props) => {
                 <OptionItem
                   text="Make a copy"
                   label="Make a copy of this playlist"
-                  icon={<CopySVG aria-hidden />}
+                  icon={<CopySVG aria-hidden width={20} />}
                   onSelect={() => {
                     setModalState(PlaylistModalState.DUPLICATE);
                     trackPlatformInteraction({
@@ -157,7 +157,7 @@ export const OptionsButton = ({ playlist }: Props) => {
                     <OptionItem
                       text="Share with teachers"
                       label="Share with teachers"
-                      icon={<ShareSVG aria-hidden />}
+                      icon={<ShareSVG aria-hidden width={20} />}
                       onSelect={() => {
                         setModalState(PlaylistModalState.SHARE_WITH_TEACHERS);
                         trackPlatformInteraction({
@@ -172,7 +172,7 @@ export const OptionsButton = ({ playlist }: Props) => {
                   <OptionItem
                     text="Remove"
                     label="Remove this playlist"
-                    icon={<BinSVG aria-hidden />}
+                    icon={<BinSVG aria-hidden width={20} />}
                     onSelect={() => {
                       setModalState(PlaylistModalState.REMOVE);
                     }}

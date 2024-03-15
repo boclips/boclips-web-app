@@ -28,7 +28,7 @@ export const PlaylistTabs: React.FC<PlaylistTabsProps> = ({ query }) => {
     >
       <List aria-label="tabs playlists" className={s.tabNavBar}>
         <Trigger value="my-playlists" className={s.tabHeader}>
-          <Typography.H5>My Playlists</Typography.H5>
+          <Typography.H5>My playlists</Typography.H5>
         </Trigger>
         <Trigger
           value="shared-playlists"
@@ -46,7 +46,7 @@ export const PlaylistTabs: React.FC<PlaylistTabsProps> = ({ query }) => {
             handleTabChange('BOCLIPS_SHARED_PLAYLISTS_TAB_OPENED')
           }
         >
-          <Typography.H5>Boclips Featured</Typography.H5>
+          <Typography.H5>Boclips featured</Typography.H5>
         </Trigger>
       </List>
       <PlaylistTab

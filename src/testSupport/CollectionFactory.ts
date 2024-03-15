@@ -30,6 +30,9 @@ export class CollectionFactory {
       self: new Link({
         href: 'https://api.boclips.com/v1/collections/1',
       }),
+      safeEdit: new Link({
+        href: 'https://api.boclips.com/v1/collections/1',
+      }),
       addVideo: new Link({
         href: 'https://api.boclips.com/v1/collections/1/videos/{video_id}',
       }),
