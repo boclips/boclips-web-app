@@ -119,6 +119,7 @@ const PlaylistBody = ({
                 handleFilterChange={handleFilterChange}
                 disableTitleLink={disableLinks}
                 buttonsRow={showButtons && classroomVideoCardButtons(video)}
+                segment={playlist.segments?.[video.id]}
               />
             ) : (
               <VideoGridCard
