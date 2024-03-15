@@ -8,7 +8,6 @@ import {
 import { List, Root, Trigger } from '@radix-ui/react-tabs';
 import { PlaylistTab } from 'src/components/playlists/PlaylistTab';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
-import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import s from './style.module.less';
 
 interface PlaylistTabsProps {
@@ -16,9 +15,9 @@ interface PlaylistTabsProps {
 }
 
 export const PlaylistTabs: React.FC<PlaylistTabsProps> = ({ query }) => {
-  const { mutate: event } = usePlatformInteractedWithEvent();
+  const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
   const handleTabChange = (type: string) => {
-    event({ subtype: type, anonymous: false });
+    trackPlatformInteraction({ subtype: type });
   };
 
   return (

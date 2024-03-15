@@ -172,7 +172,7 @@ describe('PlaylistsView', () => {
       expect(wrapper.queryByText('Bob made this Playlist')).toBeNull();
     });
 
-    it(`emits events when clicking shared and boclips tabs`, async () => {
+    it(`emits events when clicking shared, boclips and my playlists tabs`, async () => {
       const wrapper = renderPlaylistsView(client);
 
       fireEvent.mouseDown(

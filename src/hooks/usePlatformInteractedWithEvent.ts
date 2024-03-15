@@ -4,7 +4,12 @@ import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientP
 export const usePlatformInteractedWithEvent = () => {
   const client = useBoclipsClient();
   return useMutation(
-    ({ subtype, anonymous }: { subtype: string; anonymous: boolean }) =>
-      client.events.trackPlatformInteraction(subtype, anonymous),
+    ({
+      subtype,
+      anonymous = false,
+    }: {
+      subtype: string;
+      anonymous?: boolean;
+    }) => client.events.trackPlatformInteraction(subtype, anonymous),
   );
 };
