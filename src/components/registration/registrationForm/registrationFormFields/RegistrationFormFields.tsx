@@ -41,12 +41,14 @@ const passwordConfig = {
 
 interface RegistrationFormProps {
   handleChange: (name: string, value: string | string[] | boolean) => void;
+  onFieldSelected: (name: string) => void;
   validationErrors: RegistrationData;
   registrationData: RegistrationData;
 }
 
 const RegistrationFormFields = ({
   handleChange,
+  onFieldSelected,
   validationErrors,
   registrationData,
 }: RegistrationFormProps) => {
@@ -81,6 +83,7 @@ const RegistrationFormFields = ({
     <>
       <InputText
         id="input-accountName"
+        onFocus={() => onFieldSelected('schoolName')}
         onChange={(value) => handleChange('accountName', value)}
         inputType="text"
         placeholder="Your organization name"
@@ -96,6 +99,7 @@ const RegistrationFormFields = ({
         <InputText
           id="input-firstName"
           aria-label="input-firstName"
+          onFocus={() => onFieldSelected('firstName')}
           onChange={(value) => handleChange('firstName', value)}
           inputType="text"
           placeholder="John"
@@ -108,6 +112,7 @@ const RegistrationFormFields = ({
         />
         <InputText
           id="input-lastName"
+          onFocus={() => onFieldSelected('lastName')}
           onChange={(value) => handleChange('lastName', value)}
           inputType="text"
           placeholder="Smith"
@@ -122,6 +127,7 @@ const RegistrationFormFields = ({
 
       <InputText
         id="input-email"
+        onFocus={() => onFieldSelected('email')}
         onChange={(value) => handleChange('email', value)}
         inputType="text"
         placeholder="your@email.com"
@@ -136,6 +142,7 @@ const RegistrationFormFields = ({
       <Dropdown
         mode="single"
         placeholder="Select country"
+        onFocused={() => onFieldSelected('country')}
         onUpdate={(value) => handleChange('country', value)}
         options={LIST_OF_COUNTRIES}
         dataQa="input-dropdown-country"
@@ -152,6 +159,10 @@ const RegistrationFormFields = ({
         <div className="flex flex-row w-full">
           <InputText
             id="input-password"
+            onFocus={() => {
+              onFieldSelected('password');
+              onFieldSelected('confirmPassword');
+            }}
             onChange={(value) => handleChange('password', value)}
             inputType="password"
             placeholder="*********"
@@ -164,6 +175,10 @@ const RegistrationFormFields = ({
 
           <InputText
             id="input-confirmPassword"
+            onFocus={() => {
+              onFieldSelected('password');
+              onFieldSelected('confirmPassword');
+            }}
             onChange={(value) => handleChange('confirmPassword', value)}
             inputType="password"
             placeholder="*********"
@@ -194,6 +209,7 @@ const RegistrationFormFields = ({
       </div>
       <div>
         <RegistrationPageCheckbox
+          onFocus={() => onFieldSelected('hasAcceptedEducationalUseTerms')}
           onChange={(event) =>
             handleChange('hasAcceptedEducationalUseTerms', event.target.checked)
           }
@@ -209,6 +225,7 @@ const RegistrationFormFields = ({
           label={educationalUseTermsLabel}
         />
         <RegistrationPageCheckbox
+          onFocus={() => onFieldSelected('hasAcceptedTermsAndConditions')}
           onChange={(event) =>
             handleChange('hasAcceptedTermsAndConditions', event.target.checked)
           }

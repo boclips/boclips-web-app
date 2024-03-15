@@ -17,6 +17,7 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { fillRegistrationForm } from 'src/components/registration/registrationFormTestHelpers';
 import { BrowserRouter as Router } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 
 const mockExecuteRecaptcha = jest.fn((_?: string) =>
   Promise.resolve('token_baby'),
@@ -239,5 +240,25 @@ describe('Registration Form', () => {
         'There was an error with our security verification. Please try again later.',
       ),
     ).toBeVisible();
+  });
+
+  it('validation errors are cleared on reselecting field', async () => {
+    const wrapper = renderRegistrationForm(new FakeBoclipsClient());
+
+    await fillTheForm(wrapper, { firstName: '' });
+
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
+
+    expect(await wrapper.findByText('First name is required')).toBeVisible();
+
+    await userEvent.click(
+      wrapper.getByRole('textbox', {
+        name: 'First name First name is required',
+      }),
+    );
+
+    expect(wrapper.queryByText('First name is required')).toBeNull();
   });
 });

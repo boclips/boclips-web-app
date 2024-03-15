@@ -6,6 +6,7 @@ import s from './style.module.less';
 
 interface Props {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onFocus?: () => void;
   name: string;
   id: string;
   checked: boolean;
@@ -17,6 +18,7 @@ interface Props {
 const RegistrationPageCheckbox = ({
   dataQa,
   onChange,
+  onFocus,
   name,
   id,
   checked,
@@ -28,6 +30,9 @@ const RegistrationPageCheckbox = ({
       <label className={s.checkboxWrapper} htmlFor={id}>
         <input
           onChange={onChange}
+          onFocus={() => {
+            if (onFocus) onFocus();
+          }}
           type="checkbox"
           className={c(s.checkbox, { [s.error]: errorMessage })}
           name={name}

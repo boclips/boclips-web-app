@@ -89,6 +89,10 @@ const ClassroomRegistrationForm = ({
     setValidationErrors((prevState) => ({ ...prevState, [fieldName]: value }));
   };
 
+  const clearError = (fieldName: string) => {
+    setError(fieldName, '');
+  };
+
   const handleUserCreation = async () => {
     const token = await tryHandleReCaptchaVerify();
     const isFormValid = new FormValidator(registrationData, setError).isValid();
@@ -173,6 +177,7 @@ const ClassroomRegistrationForm = ({
 
       <ClassroomRegistrationFormFields
         handleChange={handleChange}
+        onFieldSelected={clearError}
         validationErrors={validationErrors}
         registrationData={registrationData}
       />
