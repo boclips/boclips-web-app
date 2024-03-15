@@ -34,6 +34,10 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-gap: 1rem 1.5rem;
   place-content: start;
+  grid-row-start: 3;
+  grid-row-end: 5;
+  grid-column-start: 2;
+  grid-column-end: 26;
 }
 
 .skeletonCard {
@@ -46,7 +50,7 @@
 }
 
 .description {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   min-width: 100%;
 }
 
@@ -56,6 +60,13 @@
   align-items: center;
   grid-row-start: 3;
   grid-row-end: 3;
+  grid-column-start: 2;
+  grid-column-end: 26;
+}
+
+.modeList {
+  grid-column-start: 2;
+  grid-column-end: 26;
 }
 
 .playlistNavigation {
@@ -143,7 +154,7 @@
   overflow: hidden;
 }
 
-.playlistTabs{
+.playlistTabs {
   .tabNavBar {
     border-bottom: 2px solid @gray-400;
   }
@@ -153,7 +164,7 @@
     padding: 1rem 1rem 0.5rem;
     margin-right: 1rem;
 
-    &:first-child{
+    &:first-child {
       padding: 1rem 1rem 0.5rem 0;
     }
 
@@ -164,12 +175,12 @@
 
   .tabHeader[data-state='active'] {
     color: @gray-900;
-    position:relative;
+    position: relative;
 
     &:after {
       content: '';
-      background-color:@blue-800;
-      position:absolute;
+      background-color: @blue-800;
+      position: absolute;
       height: 4px;
       bottom: -3px;
       width: 100%;

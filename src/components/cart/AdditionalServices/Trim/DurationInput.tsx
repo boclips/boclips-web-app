@@ -30,7 +30,14 @@ export const DurationInput = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onKeyPress = (e) => {
-    if (e.key !== ':' && Number.isNaN(Number(e.key)) && e.key !== 'Backspace') {
+    if (
+      e.key !== ':' &&
+      Number.isNaN(Number(e.key)) &&
+      e.key !== 'Backspace' &&
+      e.key !== 'ArrowLeft' &&
+      e.key !== 'ArrowRight' &&
+      e.key !== 'Delete'
+    ) {
       e.preventDefault();
     }
   };

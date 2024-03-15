@@ -3,16 +3,17 @@ import c from 'classnames';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { Typography } from '@boclips-ui/typography';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import VideoGridCard from 'src/components/videoCard/VideoGridCard';
 import { FilterKey } from 'src/types/search/FilterKey';
 import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
-import CommentButton from 'src/components/playlists/comments/CommentButton';
-import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import { PlaylistBodyEmptyState } from 'src/components/playlists/emptyState/EmptyState';
 import { VideoCardWrapper } from 'src/components/videoCard/VideoCardWrapper';
+import PlaylistVideoCardButtons from 'src/components/videoCard/buttons/PlaylistVideoCardButtons';
+import { VideoCardButtons } from 'src/components/videoCard/buttons/VideoCardButtons';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import CommentButton from 'src/components/playlists/comments/CommentButton';
 import s from '../style.module.less';
-import { VideoCardButtons } from '../../videoCard/buttons/VideoCardButtons';
 
 interface Props {
   playlist: Collection;
@@ -55,6 +56,16 @@ const PlaylistBody = ({
     });
   };
 
+  const classroomVideoCardButtons = (video: Video) => {
+    return (
+      <PlaylistVideoCardButtons
+        video={video}
+        onCleanupAddToPlaylist={shouldRemoveVideoCardFromView}
+        playlistId={playlist.id}
+      />
+    );
+  };
+
   const videoCardButtons = (video: Video, iconOnly: boolean) => {
     return (
       <VideoCardButtons
@@ -73,15 +84,6 @@ const PlaylistBody = ({
     );
   };
 
-  const playListBodyClass = isEmptyPlaylist
-    ? c(s.emptyPlaylistWrapper, 'col-start-2 col-end-26')
-    : mode === 'LIST'
-    ? 'col-start-2 col-end-20 '
-    : c(
-        s.cardWrapperGrid,
-        'grid-row-start-5 grid-row-end-5 col-start-2 col-end-26',
-      );
-
   return (
     <>
       {!isEmptyPlaylist && (
@@ -98,7 +100,14 @@ const PlaylistBody = ({
           </Typography.H2>
         </section>
       )}
-      <main tabIndex={-1} className={playListBodyClass}>
+      <main
+        tabIndex={-1}
+        className={c({
+          [s.emptyPlaylistWrapper]: isEmptyPlaylist,
+          [s.modeList]: mode === 'LIST',
+          [s.cardWrapperGrid]: mode === 'GRID',
+        })}
+      >
         {isEmptyPlaylist ? (
           <PlaylistBodyEmptyState />
         ) : (
@@ -109,7 +118,7 @@ const PlaylistBody = ({
                 video={video}
                 handleFilterChange={handleFilterChange}
                 disableTitleLink={disableLinks}
-                buttonsRow={showButtons && videoCardButtons(video, false)}
+                buttonsRow={showButtons && classroomVideoCardButtons(video)}
               />
             ) : (
               <VideoGridCard
