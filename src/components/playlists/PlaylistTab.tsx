@@ -34,7 +34,7 @@ export const PlaylistTab = ({
   );
 
   return (
-    <Content value={value} className={s.tabContent}>
+    <Content value={value} className={s.tabContent} >
       {isLoading ? (
         <SkeletonTiles className={s.skeletonCard} rows={3} cols={4} />
       ) : (

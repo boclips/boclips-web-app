@@ -69,3 +69,7 @@ export const trackOrderConfirmationModalOpened = (apiClient: BoclipsClient) => {
 export const trackOrderConfirmed = (apiClient: BoclipsClient) => {
   apiClient.events.trackPlatformInteraction('ORDER_CONFIRMED', false);
 };
+
+export const trackTabChanged = (apiClient: BoclipsClient) => {
+  apiClient.events.trackPlatformInteraction('TAB_CHANGED', false);
+};
