@@ -12,18 +12,22 @@ import {
   AccountType,
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('OptionsButton', () => {
   describe('Edit', () => {
     it('is available for owners', async () => {
       const wrapper = render(
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <QueryClientProvider client={new QueryClient()}>
-            <OptionsButton
-              playlist={CollectionFactory.sample({ mine: true })}
-            />
-          </QueryClientProvider>
-        </BoclipsClientProvider>,
+        <MemoryRouter>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <QueryClientProvider client={new QueryClient()}>
+              <OptionsButton
+                playlist={CollectionFactory.sample({ mine: true })}
+              />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
+        </MemoryRouter>,
       );
 
       const editButton = await getOption(wrapper, 'Edit');
@@ -32,13 +36,15 @@ describe('OptionsButton', () => {
 
     it('is not available for non-owners', async () => {
       const wrapper = render(
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <QueryClientProvider client={new QueryClient()}>
-            <OptionsButton
-              playlist={CollectionFactory.sample({ mine: false })}
-            />
-          </QueryClientProvider>
-        </BoclipsClientProvider>,
+        <MemoryRouter>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <QueryClientProvider client={new QueryClient()}>
+              <OptionsButton
+                playlist={CollectionFactory.sample({ mine: false })}
+              />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
+        </MemoryRouter>,
       );
 
       const editButton = await getOption(wrapper, 'Edit');
@@ -49,13 +55,15 @@ describe('OptionsButton', () => {
   describe('Unfollow', () => {
     it('is not available for owners', async () => {
       const wrapper = render(
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <QueryClientProvider client={new QueryClient()}>
-            <OptionsButton
-              playlist={CollectionFactory.sample({ mine: true })}
-            />
-          </QueryClientProvider>
-        </BoclipsClientProvider>,
+        <MemoryRouter>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <QueryClientProvider client={new QueryClient()}>
+              <OptionsButton
+                playlist={CollectionFactory.sample({ mine: true })}
+              />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
+        </MemoryRouter>,
       );
 
       const editButton = await getOption(wrapper, 'Unfollow');
@@ -64,13 +72,15 @@ describe('OptionsButton', () => {
 
     it('is available for non-owners', async () => {
       const wrapper = render(
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <QueryClientProvider client={new QueryClient()}>
-            <OptionsButton
-              playlist={CollectionFactory.sample({ mine: false })}
-            />
-          </QueryClientProvider>
-        </BoclipsClientProvider>,
+        <MemoryRouter>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <QueryClientProvider client={new QueryClient()}>
+              <OptionsButton
+                playlist={CollectionFactory.sample({ mine: false })}
+              />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
+        </MemoryRouter>,
       );
 
       const editButton = await getOption(wrapper, 'Unfollow');
@@ -81,13 +91,15 @@ describe('OptionsButton', () => {
   describe('Reorder', () => {
     it('should display reorder button', async () => {
       const wrapper = render(
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <QueryClientProvider client={new QueryClient()}>
-            <OptionsButton
-              playlist={CollectionFactory.sample({ mine: true })}
-            />
-          </QueryClientProvider>
-        </BoclipsClientProvider>,
+        <MemoryRouter>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <QueryClientProvider client={new QueryClient()}>
+              <OptionsButton
+                playlist={CollectionFactory.sample({ mine: true })}
+              />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
+        </MemoryRouter>,
       );
 
       const reorder = await getOption(wrapper, 'Reorder videos');
@@ -96,16 +108,18 @@ describe('OptionsButton', () => {
 
     it('should display modal when reorder button clicked', async () => {
       const wrapper = render(
-        <QueryClientProvider client={new QueryClient()}>
-          <BoclipsClientProvider client={new FakeBoclipsClient()}>
-            <OptionsButton
-              playlist={CollectionFactory.sample({
-                title: 'Example playlist',
-                mine: true,
-              })}
-            />
-          </BoclipsClientProvider>
-        </QueryClientProvider>,
+        <MemoryRouter>
+          <QueryClientProvider client={new QueryClient()}>
+            <BoclipsClientProvider client={new FakeBoclipsClient()}>
+              <OptionsButton
+                playlist={CollectionFactory.sample({
+                  title: 'Example playlist',
+                  mine: true,
+                })}
+              />
+            </BoclipsClientProvider>
+          </QueryClientProvider>
+        </MemoryRouter>,
       );
 
       const reorder = await getOption(wrapper, 'Reorder videos');
@@ -121,13 +135,15 @@ describe('OptionsButton', () => {
   describe('Make a copy', () => {
     it('is available for owners', async () => {
       const wrapper = render(
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <QueryClientProvider client={new QueryClient()}>
-            <OptionsButton
-              playlist={CollectionFactory.sample({ mine: true })}
-            />
-          </QueryClientProvider>
-        </BoclipsClientProvider>,
+        <MemoryRouter>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <QueryClientProvider client={new QueryClient()}>
+              <OptionsButton
+                playlist={CollectionFactory.sample({ mine: true })}
+              />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
+        </MemoryRouter>,
       );
 
       const copyButton = await getOption(wrapper, 'Make a copy');
@@ -136,13 +152,15 @@ describe('OptionsButton', () => {
 
     it('is available for non-owners', async () => {
       const wrapper = render(
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <QueryClientProvider client={new QueryClient()}>
-            <OptionsButton
-              playlist={CollectionFactory.sample({ mine: false })}
-            />
-          </QueryClientProvider>
-        </BoclipsClientProvider>,
+        <MemoryRouter>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <QueryClientProvider client={new QueryClient()}>
+              <OptionsButton
+                playlist={CollectionFactory.sample({ mine: false })}
+              />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
+        </MemoryRouter>,
       );
 
       const copyButton = await getOption(wrapper, 'Make a copy');
@@ -162,18 +180,20 @@ describe('OptionsButton', () => {
       ];
 
       const wrapper = render(
-        <QueryClientProvider client={new QueryClient()}>
-          <BoclipsClientProvider client={apiClient}>
-            <OptionsButton
-              playlist={CollectionFactory.sample({
-                title: 'Original playlist',
-                description: 'Description of original playlist',
-                videos,
-                mine: false,
-              })}
-            />
-          </BoclipsClientProvider>
-        </QueryClientProvider>,
+        <MemoryRouter>
+          <QueryClientProvider client={new QueryClient()}>
+            <BoclipsClientProvider client={apiClient}>
+              <OptionsButton
+                playlist={CollectionFactory.sample({
+                  title: 'Original playlist',
+                  description: 'Description of original playlist',
+                  videos,
+                  mine: false,
+                })}
+              />
+            </BoclipsClientProvider>
+          </QueryClientProvider>
+        </MemoryRouter>,
       );
 
       const copyButton = await getOption(wrapper, 'Make a copy');
@@ -205,13 +225,15 @@ describe('OptionsButton', () => {
     const apiClient = new FakeBoclipsClient();
     it('is available for owners', async () => {
       const wrapper = render(
-        <QueryClientProvider client={new QueryClient()}>
-          <BoclipsClientProvider client={apiClient}>
-            <OptionsButton
-              playlist={CollectionFactory.sample({ mine: true })}
-            />
-          </BoclipsClientProvider>
-        </QueryClientProvider>,
+        <MemoryRouter>
+          <QueryClientProvider client={new QueryClient()}>
+            <BoclipsClientProvider client={apiClient}>
+              <OptionsButton
+                playlist={CollectionFactory.sample({ mine: true })}
+              />
+            </BoclipsClientProvider>
+          </QueryClientProvider>
+        </MemoryRouter>,
       );
 
       const removeButton = await getOption(wrapper, 'Remove');
@@ -220,13 +242,15 @@ describe('OptionsButton', () => {
 
     it('is not available for non-owners', async () => {
       const wrapper = render(
-        <QueryClientProvider client={new QueryClient()}>
-          <BoclipsClientProvider client={apiClient}>
-            <OptionsButton
-              playlist={CollectionFactory.sample({ mine: false })}
-            />
-          </BoclipsClientProvider>
-        </QueryClientProvider>,
+        <MemoryRouter>
+          <QueryClientProvider client={new QueryClient()}>
+            <BoclipsClientProvider client={apiClient}>
+              <OptionsButton
+                playlist={CollectionFactory.sample({ mine: false })}
+              />
+            </BoclipsClientProvider>
+          </QueryClientProvider>
+        </MemoryRouter>,
       );
 
       const removeButton = await getOption(wrapper, 'Remove');
@@ -250,13 +274,15 @@ describe('OptionsButton', () => {
       apiClient.users.insertCurrentUser(classroomUser);
 
       const wrapper = render(
-        <QueryClientProvider client={new QueryClient()}>
-          <BoclipsClientProvider client={apiClient}>
-            <OptionsButton
-              playlist={CollectionFactory.sample({ mine: true })}
-            />
-          </BoclipsClientProvider>
-        </QueryClientProvider>,
+        <MemoryRouter>
+          <QueryClientProvider client={new QueryClient()}>
+            <BoclipsClientProvider client={apiClient}>
+              <OptionsButton
+                playlist={CollectionFactory.sample({ mine: true })}
+              />
+            </BoclipsClientProvider>
+          </QueryClientProvider>
+        </MemoryRouter>,
       );
 
       const shareWithTeachersButton = await getOption(
@@ -270,13 +296,15 @@ describe('OptionsButton', () => {
       apiClient.users.insertCurrentUser(classroomUser);
 
       const wrapper = render(
-        <QueryClientProvider client={new QueryClient()}>
-          <BoclipsClientProvider client={apiClient}>
-            <OptionsButton
-              playlist={CollectionFactory.sample({ mine: false })}
-            />
-          </BoclipsClientProvider>
-        </QueryClientProvider>,
+        <MemoryRouter>
+          <QueryClientProvider client={new QueryClient()}>
+            <BoclipsClientProvider client={apiClient}>
+              <OptionsButton
+                playlist={CollectionFactory.sample({ mine: false })}
+              />
+            </BoclipsClientProvider>
+          </QueryClientProvider>
+        </MemoryRouter>,
       );
 
       const shareWithTeachersButton = await getOption(
@@ -290,16 +318,18 @@ describe('OptionsButton', () => {
       apiClient.users.insertCurrentUser(classroomUser);
 
       const wrapper = render(
-        <QueryClientProvider client={new QueryClient()}>
-          <BoclipsClientProvider client={apiClient}>
-            <OptionsButton
-              playlist={CollectionFactory.sample({
-                title: 'Example playlist',
-                mine: true,
-              })}
-            />
-          </BoclipsClientProvider>
-        </QueryClientProvider>,
+        <MemoryRouter>
+          <QueryClientProvider client={new QueryClient()}>
+            <BoclipsClientProvider client={apiClient}>
+              <OptionsButton
+                playlist={CollectionFactory.sample({
+                  title: 'Example playlist',
+                  mine: true,
+                })}
+              />
+            </BoclipsClientProvider>
+          </QueryClientProvider>
+        </MemoryRouter>,
       );
 
       const shareWithTeachersButton = await getOption(
@@ -329,13 +359,15 @@ describe('OptionsButton', () => {
         }),
       );
       const wrapper = render(
-        <QueryClientProvider client={new QueryClient()}>
-          <BoclipsClientProvider client={apiClient}>
-            <OptionsButton
-              playlist={CollectionFactory.sample({ mine: false })}
-            />
-          </BoclipsClientProvider>
-        </QueryClientProvider>,
+        <MemoryRouter>
+          <QueryClientProvider client={new QueryClient()}>
+            <BoclipsClientProvider client={apiClient}>
+              <OptionsButton
+                playlist={CollectionFactory.sample({ mine: false })}
+              />
+            </BoclipsClientProvider>
+          </QueryClientProvider>
+        </MemoryRouter>,
       );
 
       const shareWithTeachersButton = await getOption(
@@ -343,6 +375,65 @@ describe('OptionsButton', () => {
         'Share with teachers',
       );
       expect(shareWithTeachersButton).toBeUndefined();
+    });
+  });
+
+  describe('Add videos', () => {
+    it('is available for owners', async () => {
+      const wrapper = render(
+        <MemoryRouter>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <QueryClientProvider client={new QueryClient()}>
+              <OptionsButton
+                playlist={CollectionFactory.sample({ mine: true })}
+              />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
+        </MemoryRouter>,
+      );
+
+      const addVideosButton = await getOption(wrapper, 'Add videos');
+      expect(addVideosButton).toBeVisible();
+    });
+
+    it('is available for non-owners when editing is enabled', async () => {
+      const wrapper = render(
+        <MemoryRouter>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <QueryClientProvider client={new QueryClient()}>
+              <OptionsButton
+                playlist={CollectionFactory.sample({
+                  mine: false,
+                  permissions: { anyone: CollectionPermission.EDIT },
+                })}
+              />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
+        </MemoryRouter>,
+      );
+
+      const addVideosButton = await getOption(wrapper, 'Add videos');
+      expect(addVideosButton).toBeVisible();
+    });
+
+    it('is not available for non-owners when editing is not enabled', async () => {
+      const wrapper = render(
+        <MemoryRouter>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <QueryClientProvider client={new QueryClient()}>
+              <OptionsButton
+                playlist={CollectionFactory.sample({
+                  mine: false,
+                  permissions: { anyone: CollectionPermission.VIEW_ONLY },
+                })}
+              />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
+        </MemoryRouter>,
+      );
+
+      const addVideosButton = await getOption(wrapper, 'Add videos');
+      expect(addVideosButton).toBeUndefined();
     });
   });
 

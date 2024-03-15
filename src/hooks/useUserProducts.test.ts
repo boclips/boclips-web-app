@@ -49,6 +49,33 @@ describe('user products', () => {
       wrapper: wrapperWithClients(fakeClient, new QueryClient()),
     });
 
-    await waitFor(() => expect(result.current.products).toEqual([]));
+    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
+    expect(result.current.products).toEqual([]);
+  });
+
+  it('defaults products to empty array when account is null', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const user = UserFactory.sample({});
+    delete user.account;
+
+    fakeClient.users.insertCurrentUser(user);
+    const { result } = renderHook(() => useUserProducts(), {
+      wrapper: wrapperWithClients(fakeClient, new QueryClient()),
+    });
+
+    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
+    expect(result.current.products).toEqual([]);
+  });
+
+  it('defaults products to empty array when user is null', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.users.insertCurrentUser(null);
+
+    const { result } = renderHook(() => useUserProducts(), {
+      wrapper: wrapperWithClients(fakeClient, new QueryClient()),
+    });
+
+    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
+    expect(result.current.products).toEqual([]);
   });
 });

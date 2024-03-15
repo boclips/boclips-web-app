@@ -102,6 +102,20 @@ export const AccountButton = () => {
           className={s.tooltip}
           onBlur={handleDialogBlur}
         >
+          <FeatureGate product={Product.CLASSROOM}>
+            <Typography.Body
+              size="small"
+              as="div"
+              weight="medium"
+              aria-label={`Your Teacher code is ${user.shareCode}`}
+              className="bg-gray-100 w-full"
+            >
+              <div className="py-3 pl-4 text-gray-800 flex flex-col">
+                <span className="mb-1">Teacher code</span>
+                <span>{user.shareCode}</span>
+              </div>
+            </Typography.Body>
+          </FeatureGate>
           <div role="menu" className={s.menu} aria-label="Account menu">
             <div className="pt-2">
               <Link onClick={accountOpenedEvent} to="/account" tabIndex={-1}>

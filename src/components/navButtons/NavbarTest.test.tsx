@@ -227,4 +227,58 @@ describe(`Navbar test`, () => {
 
     expect(navbar.getByText('Log out')).toBeVisible();
   });
+
+  it('shows teacher code for classroom user', async () => {
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({
+        firstName: 'Eddie',
+        lastName: 'Bravo',
+        email: 'eddie@10thplanetjj.com',
+        account: {
+          ...UserFactory.sample().account,
+          id: 'acc-1',
+          name: 'Ren',
+          products: [Product.CLASSROOM],
+          type: AccountType.STANDARD,
+        },
+        shareCode: '12AB',
+      }),
+    );
+    const navbar = renderAccountButton();
+
+    fireEvent.click(await navbar.findByText('Eddie'));
+
+    await waitFor(() => navbar.getByTestId('account-modal'));
+
+    expect(navbar.getByLabelText('Your Teacher code is 12AB')).toBeVisible();
+    expect(navbar.getByText('Teacher code')).toBeVisible();
+    expect(navbar.getByText('12AB')).toBeVisible();
+  });
+
+  it('does not show teacher code for non-classroom user', async () => {
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({
+        firstName: 'Eddie',
+        lastName: 'Bravo',
+        email: 'eddie@10thplanetjj.com',
+        account: {
+          ...UserFactory.sample().account,
+          id: 'acc-1',
+          name: 'Ren',
+          products: [Product.B2B],
+          type: AccountType.STANDARD,
+        },
+        shareCode: '12AB',
+      }),
+    );
+    const navbar = renderAccountButton();
+
+    fireEvent.click(await navbar.findByText('Eddie'));
+
+    await waitFor(() => navbar.getByTestId('account-modal'));
+
+    expect(navbar.queryByLabelText('Your Teacher code is 12AB')).toBeNull();
+    expect(navbar.queryByText('Teacher code')).toBeNull();
+    expect(navbar.queryByText('12AB')).toBeNull();
+  });
 });

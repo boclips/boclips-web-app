@@ -1,11 +1,11 @@
-context('Libray page', () => {
+context('Library page', () => {
   it('renders empty library', () => {
     cy.visit('/');
     cy.get('[data-qa="playlists-button"]').click();
 
-    cy.findByRole('button', { name: 'Create new playlist' }).should(
-      'be.visible',
-    );
+    cy.findAllByRole('button', { name: 'Create new playlist' })
+      .first()
+      .should('be.visible');
     cy.findAllByRole('progressbar').should('not.exist');
 
     cy.percySnapshot('Empty library view');

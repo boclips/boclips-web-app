@@ -22,6 +22,8 @@ import ShareSVG from 'src/resources/icons/black-share.svg';
 import { EditPlaylistModal } from 'src/components/playlistModal/EditPlaylistModal';
 import { EditPlaylistPermissionsModal } from 'src/components/playlistModal/EditPlaylistPermissionsModal';
 import { copySharePlaylistLink } from 'src/services/copySharePlaylistLink';
+import PlusSign from 'src/resources/icons/plus-sign.svg';
+import { useNavigate } from 'react-router-dom';
 import s from './style.module.less';
 
 interface Props {
@@ -39,6 +41,8 @@ const enum PlaylistModalState {
 }
 
 export const OptionsButton = ({ playlist }: Props) => {
+  const navigate = useNavigate();
+
   const [modalState, setModalState] = useState<PlaylistModalState>(
     PlaylistModalState.NONE,
   );
@@ -72,11 +76,21 @@ export const OptionsButton = ({ playlist }: Props) => {
               align="end"
             >
               <DropdownMenu.Group>
+                {(playlist?.mine ||
+                  playlist?.permissions.anyone ===
+                    CollectionPermission.EDIT) && (
+                  <OptionItem
+                    text="Add videos"
+                    label="Add videos to this playlist"
+                    icon={<PlusSign aria-hidden stroke="black" width={20} />}
+                    onSelect={() => navigate('/videos')}
+                  />
+                )}
                 {playlist.mine && (
                   <OptionItem
                     text="Edit"
                     label="Edit playlist"
-                    icon={<PencilSVG aria-hidden />}
+                    icon={<PencilSVG aria-hidden width={20} />}
                     onSelect={() => {
                       setModalState(PlaylistModalState.EDIT);
                     }}
@@ -86,7 +100,7 @@ export const OptionsButton = ({ playlist }: Props) => {
                   <OptionItem
                     text="Unfollow"
                     label="Unfollow playlist"
-                    icon={<CrossSVG aria-hidden />}
+                    icon={<CrossSVG aria-hidden width={20} />}
                     onSelect={() => {
                       setModalState(PlaylistModalState.UNFOLLOW);
                     }}
@@ -98,7 +112,7 @@ export const OptionsButton = ({ playlist }: Props) => {
                   <OptionItem
                     text="Reorder videos"
                     label="Reorder videos in this playlist"
-                    icon={<ReorderSVG aria-hidden />}
+                    icon={<ReorderSVG aria-hidden width={20} />}
                     onSelect={() => {
                       setModalState(PlaylistModalState.REORDER);
                     }}
@@ -107,7 +121,7 @@ export const OptionsButton = ({ playlist }: Props) => {
                 <OptionItem
                   text="Make a copy"
                   label="Make a copy of this playlist"
-                  icon={<CopySVG aria-hidden />}
+                  icon={<CopySVG aria-hidden width={20} />}
                   onSelect={() => {
                     setModalState(PlaylistModalState.DUPLICATE);
                   }}
@@ -117,7 +131,7 @@ export const OptionsButton = ({ playlist }: Props) => {
                     <OptionItem
                       text="Share with teachers"
                       label="Share with teachers"
-                      icon={<ShareSVG aria-hidden />}
+                      icon={<ShareSVG aria-hidden width={20} />}
                       onSelect={() => {
                         setModalState(PlaylistModalState.SHARE_WITH_TEACHERS);
                       }}
@@ -128,7 +142,7 @@ export const OptionsButton = ({ playlist }: Props) => {
                   <OptionItem
                     text="Remove"
                     label="Remove this playlist"
-                    icon={<BinSVG aria-hidden />}
+                    icon={<BinSVG aria-hidden width={20} />}
                     onSelect={() => {
                       setModalState(PlaylistModalState.REMOVE);
                     }}
