@@ -46,6 +46,16 @@ describe('Side Menu', () => {
     ).toBeVisible();
   });
 
+  it(`displays my team when user has link`, async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.links = AdminLinksFactory.sample({
+      updateUser: { href: '/team' },
+    });
+    const wrapper = renderSideMenu(fakeClient);
+
+    expect(await wrapper.findByRole('link', { name: 'My team' })).toBeVisible();
+  });
+
   it(`displays platform guide when user has product B2B`, async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.users.insertCurrentUser(

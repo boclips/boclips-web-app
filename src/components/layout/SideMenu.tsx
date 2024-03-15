@@ -26,6 +26,9 @@ const SideMenu = ({ hasSearchInNavbar = true }: Props) => {
         <FeatureGate linkName="userOrders">
           <Link to="/orders">My orders</Link>
         </FeatureGate>
+        <FeatureGate linkName="updateUser">
+          <Link to="/team">My team</Link>
+        </FeatureGate>
         <FeatureGate linkName="cart">
           <Link to="/cart">Cart</Link>
         </FeatureGate>
