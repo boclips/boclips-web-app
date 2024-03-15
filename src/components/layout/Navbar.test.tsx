@@ -309,6 +309,45 @@ describe(`Navbar`, () => {
     });
   });
 
+  describe('Share code in Classroom Navbar - mobile', () => {
+    const client = new FakeBoclipsClient();
+    let wrapper;
+
+    beforeEach(() => {
+      client.users.insertCurrentUser(
+        UserFactory.sample({
+          shareCode: 'XWD2',
+          account: {
+            ...UserFactory.sample().account,
+            name: 'Footballers',
+            id: 'id',
+            products: [Product.CLASSROOM],
+            type: AccountType.STANDARD,
+          },
+        }),
+      );
+
+      wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={client}>
+            <NavbarResponsive />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+    });
+
+    it.each([
+      ['mobile', resizeToMobile],
+      ['tablet', resizeToTablet],
+    ])('is visible on %s', async (_screenType: string, resize: () => void) => {
+      resize();
+
+      fireEvent.click(await wrapper.findByLabelText('Menu'));
+      expect(wrapper.getByText('Unique access code')).toBeVisible();
+      expect(wrapper.getByText('XWD2')).toBeVisible();
+    });
+  });
+
   describe('All videos in Navbar - mobile', () => {
     const client = new FakeBoclipsClient();
     let wrapper;
