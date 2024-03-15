@@ -19,6 +19,7 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import userEvent from '@testing-library/user-event';
 import { QueryClient } from '@tanstack/react-query';
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
+import { lastEvent } from 'src/testSupport/lastEvent';
 
 describe('editing a playlist', () => {
   let client = null;
@@ -123,7 +124,7 @@ describe('editing a playlist', () => {
     expect(await wrapper.queryByText('Edit')).toBeNull();
   });
 
-  it('can edit playlist', async () => {
+  it('can edit playlist and emits event when successful', async () => {
     const newPlaylist = CollectionFactory.sample({
       id: '123',
       title: 'Hello there',
@@ -166,6 +167,14 @@ describe('editing a playlist', () => {
     await waitForElementToBeRemoved(() =>
       wrapper.getByTestId('playlist-modal'),
     );
+
+    await waitFor(() => {
+      expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({
+        type: 'PLATFORM_INTERACTED_WITH',
+        subtype: 'PLAYLIST_EDITED',
+        anonymous: false,
+      });
+    });
 
     expect(await wrapper.findByTestId('playlistTitle')).toHaveTextContent(
       'Good bye',

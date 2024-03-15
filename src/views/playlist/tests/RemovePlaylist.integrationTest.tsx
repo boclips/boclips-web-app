@@ -1,12 +1,13 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { render, RenderResult, within } from '@testing-library/react';
+import { render, RenderResult, waitFor, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
+import { lastEvent } from 'src/testSupport/lastEvent';
 
 describe('Remove playlist', () => {
   const playlist = CollectionFactory.sample({
@@ -18,7 +19,7 @@ describe('Remove playlist', () => {
     owner: 'itsmemario',
   });
 
-  it('successfully removing a playlist will redirect to playlists page', async () => {
+  it('successfully removing a playlist will emit event and redirect to playlists page', async () => {
     const apiClient = new FakeBoclipsClient();
 
     apiClient.collections.setCurrentUser('itsmemario');
@@ -34,6 +35,14 @@ describe('Remove playlist', () => {
     expect(myPlaylistsBefore.page).toHaveLength(1);
 
     await removePlaylist(wrapper);
+
+    await waitFor(() => {
+      expect(lastEvent(apiClient, 'PLATFORM_INTERACTED_WITH')).toEqual({
+        type: 'PLATFORM_INTERACTED_WITH',
+        subtype: 'PLAYLIST_REMOVED',
+        anonymous: false,
+      });
+    });
 
     expect(await wrapper.getByText('Playlists')).toBeVisible();
 

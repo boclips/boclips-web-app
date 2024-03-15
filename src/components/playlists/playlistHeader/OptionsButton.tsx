@@ -24,6 +24,8 @@ import { EditPlaylistPermissionsModal } from 'src/components/playlistModal/EditP
 import { copySharePlaylistLink } from 'src/services/copySharePlaylistLink';
 import PlusSign from 'src/resources/icons/plus-sign.svg';
 import { useNavigate } from 'react-router-dom';
+import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
+import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import s from './style.module.less';
 
 interface Props {
@@ -42,6 +44,8 @@ const enum PlaylistModalState {
 
 export const OptionsButton = ({ playlist }: Props) => {
   const navigate = useNavigate();
+  const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
+  const { data: user, isLoading: userLoading } = useGetUserQuery();
 
   const [modalState, setModalState] = useState<PlaylistModalState>(
     PlaylistModalState.NONE,
@@ -56,13 +60,26 @@ export const OptionsButton = ({ playlist }: Props) => {
     displayNotification('error', message, 'Please try again', dataQa);
   };
 
+  const handleCopySharePlaylistLink = () => {
+    if (!userLoading && user.account?.products.includes(Product.CLASSROOM)) {
+      trackPlatformInteraction({
+        subtype: 'PLAYLIST_SHARE_TEACHERS_CODE_COPIED',
+      });
+    }
+    copySharePlaylistLink(playlist);
+  };
+
   return (
     <>
       <div className={c(s.playlistButton, 'md:order-2 sm:order-last')}>
         <DropdownMenu.Root modal={false}>
           <DropdownMenu.Trigger className={s.optionsButton} asChild>
             <Button
-              onClick={() => null}
+              onClick={() =>
+                trackPlatformInteraction({
+                  subtype: 'PLAYLIST_OPTIONS_BUTTON_CLICKED',
+                })
+              }
               text="Options"
               icon={<OptionsDotsSVG />}
               type="outline"
@@ -93,6 +110,9 @@ export const OptionsButton = ({ playlist }: Props) => {
                     icon={<PencilSVG aria-hidden />}
                     onSelect={() => {
                       setModalState(PlaylistModalState.EDIT);
+                      trackPlatformInteraction({
+                        subtype: 'PLAYLIST_EDIT_BUTTON_CLICKED',
+                      });
                     }}
                   />
                 )}
@@ -115,6 +135,9 @@ export const OptionsButton = ({ playlist }: Props) => {
                     icon={<ReorderSVG aria-hidden />}
                     onSelect={() => {
                       setModalState(PlaylistModalState.REORDER);
+                      trackPlatformInteraction({
+                        subtype: 'PLAYLIST_REORDER_VIDEOS_BUTTON_CLICKED',
+                      });
                     }}
                   />
                 )}
@@ -124,6 +147,9 @@ export const OptionsButton = ({ playlist }: Props) => {
                   icon={<CopySVG aria-hidden />}
                   onSelect={() => {
                     setModalState(PlaylistModalState.DUPLICATE);
+                    trackPlatformInteraction({
+                      subtype: 'PLAYLIST_MAKE_COPY_BUTTON_CLICKED',
+                    });
                   }}
                 />
                 {playlist.mine && (
@@ -134,6 +160,10 @@ export const OptionsButton = ({ playlist }: Props) => {
                       icon={<ShareSVG aria-hidden />}
                       onSelect={() => {
                         setModalState(PlaylistModalState.SHARE_WITH_TEACHERS);
+                        trackPlatformInteraction({
+                          subtype:
+                            'PLAYLIST_SHARE_WITH_TEACHERS_BUTTON_CLICKED',
+                        });
                       }}
                     />
                   </FeatureGate>
@@ -192,7 +222,7 @@ export const OptionsButton = ({ playlist }: Props) => {
         <EditPlaylistPermissionsModal
           title="Share this playlist with other teachers"
           playlist={playlist}
-          handleClick={() => copySharePlaylistLink(playlist)}
+          handleClick={handleCopySharePlaylistLink}
           onCancel={() => setModalState(PlaylistModalState.NONE)}
         />
       )}

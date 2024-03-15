@@ -3,6 +3,7 @@ import { Collection } from 'boclips-api-client/dist/sub-clients/collections/mode
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import { Typography } from '@boclips-ui/typography';
 import { useRemovePlaylistMutation } from 'src/hooks/api/playlistsQuery';
+import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 import s from './style.module.less';
 
 export interface Props {
@@ -11,8 +12,19 @@ export interface Props {
 }
 
 export const RemovePlaylistModal = ({ playlist, onCancel }: Props) => {
-  const { mutate: removePlaylist, isLoading } =
-    useRemovePlaylistMutation(playlist);
+  const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
+
+  const {
+    mutate: removePlaylist,
+    isLoading,
+    isSuccess,
+  } = useRemovePlaylistMutation(playlist);
+
+  React.useEffect(() => {
+    if (isSuccess) {
+      trackPlatformInteraction({ subtype: 'PLAYLIST_REMOVED' });
+    }
+  });
 
   return (
     <div className={s.playlistModalWrapper}>

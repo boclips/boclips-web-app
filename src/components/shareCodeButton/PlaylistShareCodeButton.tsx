@@ -8,8 +8,8 @@ import { Typography } from '@boclips-ui/typography';
 import { GoogleClassroomShareLink } from 'src/components/shareCodeButton/googleClassroom/GoogleClassroomShareLink';
 import { getShareablePlaylistLink } from 'src/components/shareCodeButton/getShareableLink';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
-import s from './shareCodeButton.module.less';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
+import s from './shareCodeButton.module.less';
 
 interface PlaylistShareCodeButtonProps {
   iconOnly?: boolean;

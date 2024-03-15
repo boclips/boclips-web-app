@@ -5,6 +5,7 @@ import {
   PlaylistFormProps,
   PlaylistModal,
 } from 'src/components/playlistModal/PlaylistModal';
+import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 
 export interface Props {
   playlist: Collection;
@@ -22,7 +23,7 @@ export const EditPlaylistModal = ({
   const [playlistFormUsedInMutation, setPlaylistFormUsedInMutation] = useState<
     PlaylistFormProps | undefined
   >(undefined);
-
+  const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
   const {
     mutate: editPlaylist,
     isSuccess,
@@ -48,6 +49,7 @@ export const EditPlaylistModal = ({
   ]);
 
   const handleEditPlaylistSuccess = (playlistTitle: string) => {
+    trackPlatformInteraction({ subtype: 'PLAYLIST_EDITED' });
     showSuccessNotification(
       `Playlist "${playlistTitle}" edited`,
       'edit-playlist-success',
