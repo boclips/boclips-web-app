@@ -8,7 +8,7 @@ import s from './style.module.less';
 
 const Playlists = () => {
   const [query, setQuery] = useState<string | undefined>(undefined);
-  const debouncedQuery = useDebounce(query, 1000);
+  const debouncedQuery = useDebounce(query, 0);
 
   return (
     <main tabIndex={-1} className={s.playlistsWrapper}>

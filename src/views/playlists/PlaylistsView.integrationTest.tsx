@@ -178,15 +178,11 @@ describe('PlaylistsView', () => {
       fireEvent.mouseDown(
         await wrapper.findByRole('tab', { name: 'Boclips Featured' }),
       );
-      fireEvent.click(
-        await wrapper.findByRole('tab', { name: 'Boclips Featured' }),
-      );
-      fireEvent.change(
-        await wrapper.findByRole('tab', { name: 'Boclips Featured' }),
-      );
+
       expect(
         await wrapper.findByText('Boclips made this Playlist'),
       ).toBeVisible();
+
       await waitFor(() => {
         expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({
           type: 'PLATFORM_INTERACTED_WITH',
@@ -195,12 +191,16 @@ describe('PlaylistsView', () => {
         });
       });
 
-      fireEvent.change(await wrapper.findByLabelText('Shared with you'));
+      fireEvent.mouseDown(
+        await wrapper.findByRole('tab', { name: 'Shared with you' }),
+      );
 
-      expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({
-        type: 'PLATFORM_INTERACTED_WITH',
-        subtype: 'USER_SHARED_PLAYLISTS_TAB_OPENED',
-        anonymous: false,
+      await waitFor(() => {
+        expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({
+          type: 'PLATFORM_INTERACTED_WITH',
+          subtype: 'USER_SHARED_PLAYLISTS_TAB_OPENED',
+          anonymous: false,
+        });
       });
     });
   });
