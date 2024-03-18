@@ -3,6 +3,7 @@ import Thumbnail from 'src/components/playlists/thumbnails/Thumbnail';
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/types';
+import s from './styles.module.less';
 
 const VideoSlide = ({ video }: { video: Video }) => (
   <Link
@@ -18,6 +19,9 @@ const VideoSlide = ({ video }: { video: Video }) => (
       <Thumbnail video={video} />
       <div className="m-3">
         <Typography.H4 className="truncate">{video.title}</Typography.H4>
+        <Typography.Body as="div" size="small" className={s.createdBy}>
+          {video.createdBy}
+        </Typography.Body>
       </div>
     </div>
   </Link>
