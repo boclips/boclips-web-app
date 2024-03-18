@@ -195,7 +195,7 @@ const ClassroomRegistrationFormFields = ({
         {(registrationData.password.length > 0 ||
           !!validationErrors.password) && (
           <PasswordValidattor
-            rules={['minLength', 'specialChar', 'capital', 'number', 'matches']}
+            rules={['minLength', 'specialChar', 'capital', 'matches', 'number']}
             minLength={8}
             password={registrationData.password}
             confirmedPassword={
