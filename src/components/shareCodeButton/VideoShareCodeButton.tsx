@@ -143,7 +143,7 @@ export const VideoShareCodeButton = ({
               className="text-center pt-4 pb-6 text-gray-800"
               data-qa="share-code-footer"
             >
-              {`Your unique Teacher code is `}
+              {`Your unique access code is `}
               <Typography.Body weight="medium">
                 {user.shareCode}
               </Typography.Body>
@@ -163,7 +163,7 @@ export const VideoShareCodeButton = ({
             className="mb-14 text-gray-800"
             data-qa="share-code-body"
           >
-            Students need both the link and your unique teacher code to access
+            Students need both the link and your unique access code to access
             and play the video{' '}
             <Typography.Body weight="medium">{video.title}</Typography.Body>
           </Typography.Body>

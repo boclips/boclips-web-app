@@ -51,7 +51,7 @@ describe('Video View', () => {
 
     expect(await wrapper.findByRole('dialog')).toBeVisible();
     expect(wrapper.getByText('Enter code to watch videos')).toBeVisible();
-    expect(wrapper.getByPlaceholderText('Teacher code')).toBeVisible();
+    expect(wrapper.getByPlaceholderText('Unique access code')).toBeVisible();
     expect(wrapper.getByText('Watch Video')).toBeVisible();
   });
 
@@ -74,7 +74,7 @@ describe('Video View', () => {
 
     expect(await wrapper.findByRole('dialog')).toBeVisible();
 
-    const input = wrapper.getByPlaceholderText('Teacher code');
+    const input = wrapper.getByPlaceholderText('Unique access code');
     const button = wrapper.getByRole('button', { name: 'Watch Video' });
 
     expect(button).toHaveAttribute('disabled');

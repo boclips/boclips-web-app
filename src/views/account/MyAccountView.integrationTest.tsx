@@ -104,9 +104,7 @@ describe('My Account view', () => {
       expect(within(userProfile).getByText(/bob@wick.com/)).toBeInTheDocument();
       expect(within(userProfile).getByText(/Job Title:/)).toBeInTheDocument();
       expect(within(userProfile).getByText(/Engineer/)).toBeInTheDocument();
-      expect(
-        within(userProfile).queryByText(/Unique Teacher code:/),
-      ).toBeNull();
+      expect(within(userProfile).queryByText(/Unique access code:/)).toBeNull();
     });
 
     it('edit my profile section', async () => {
@@ -161,7 +159,7 @@ describe('My Account view', () => {
   });
 
   describe('User Profile for Classroom', () => {
-    it('renders unique teacher code and hides job title', async () => {
+    it('renders unique access code and hides job title', async () => {
       const classroomUser = UserFactory.sample({
         shareCode: 'DIBS',
         account: {
@@ -180,7 +178,7 @@ describe('My Account view', () => {
         within(userProfile).getByText(/Personal Profile/),
       ).toBeInTheDocument();
       expect(
-        within(userProfile).getByText(/Unique Teacher code:/),
+        within(userProfile).getByText(/Unique access code:/),
       ).toBeInTheDocument();
       expect(within(userProfile).getByText(/DIBS/)).toBeInTheDocument();
     });

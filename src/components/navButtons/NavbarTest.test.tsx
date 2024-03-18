@@ -228,7 +228,7 @@ describe(`Navbar test`, () => {
     expect(navbar.getByText('Log out')).toBeVisible();
   });
 
-  it('shows teacher code for classroom user', async () => {
+  it('shows unique access code for classroom user', async () => {
     fakeClient.users.insertCurrentUser(
       UserFactory.sample({
         firstName: 'Eddie',
@@ -250,12 +250,14 @@ describe(`Navbar test`, () => {
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 
-    expect(navbar.getByLabelText('Your Teacher code is 12AB')).toBeVisible();
-    expect(navbar.getByText('Teacher code')).toBeVisible();
+    expect(
+      navbar.getByLabelText('Your unique access code is 12AB'),
+    ).toBeVisible();
+    expect(navbar.getByText('Unique access code')).toBeVisible();
     expect(navbar.getByText('12AB')).toBeVisible();
   });
 
-  it('does not show teacher code for non-classroom user', async () => {
+  it('does not show unique access code for non-classroom user', async () => {
     fakeClient.users.insertCurrentUser(
       UserFactory.sample({
         firstName: 'Eddie',
@@ -277,8 +279,10 @@ describe(`Navbar test`, () => {
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 
-    expect(navbar.queryByLabelText('Your Teacher code is 12AB')).toBeNull();
-    expect(navbar.queryByText('Teacher code')).toBeNull();
+    expect(
+      navbar.queryByLabelText('Your unique access code is 12AB'),
+    ).toBeNull();
+    expect(navbar.queryByText('Unique access code')).toBeNull();
     expect(navbar.queryByText('12AB')).toBeNull();
   });
 });

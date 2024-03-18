@@ -73,7 +73,7 @@ const MyAccountView = () => {
             {user?.shareCode && (
               <FeatureGate product={Product.CLASSROOM}>
                 <div>
-                  <Typography.Body>Unique Teacher code:</Typography.Body>
+                  <Typography.Body>Unique access code:</Typography.Body>
                   <Typography.Body
                     className={s.info}
                   >{`${user?.shareCode}`}</Typography.Body>
