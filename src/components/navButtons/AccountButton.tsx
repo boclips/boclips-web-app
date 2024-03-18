@@ -107,11 +107,11 @@ export const AccountButton = () => {
               size="small"
               as="div"
               weight="medium"
-              aria-label={`Your Teacher code is ${user.shareCode}`}
+              aria-label={`Your unique access code is ${user.shareCode}`}
               className="bg-gray-100 w-full"
             >
               <div className="py-3 pl-4 text-gray-800 flex flex-col">
-                <span className="mb-1">Teacher code</span>
+                <span className="mb-1">Unique access code</span>
                 <span>{user.shareCode}</span>
               </div>
             </Typography.Body>

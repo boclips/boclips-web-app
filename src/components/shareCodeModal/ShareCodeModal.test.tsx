@@ -19,7 +19,7 @@ describe('Share Code Modal', () => {
     expect(
       wrapper.getByText("Don't have a code? Ask your teacher."),
     ).toBeVisible();
-    expect(wrapper.getByPlaceholderText('Teacher code')).toBeVisible();
+    expect(wrapper.getByPlaceholderText('Unique access code')).toBeVisible();
     expect(wrapper.getByText('Watch Video')).toBeVisible();
 
     expect(wrapper.queryByText('Invalid code')).toBeNull();
@@ -38,7 +38,7 @@ describe('Share Code Modal', () => {
       />,
     );
 
-    const input = wrapper.getByPlaceholderText('Teacher code');
+    const input = wrapper.getByPlaceholderText('Unique access code');
     await userEvent.type(input, '1234');
 
     const button = wrapper.getByRole('button', { name: 'Watch Video' });
@@ -60,7 +60,7 @@ describe('Share Code Modal', () => {
       />,
     );
 
-    const input = wrapper.getByPlaceholderText('Teacher code');
+    const input = wrapper.getByPlaceholderText('Unique access code');
     await userEvent.type(input, '1234');
 
     await userEvent.keyboard('{enter}');
@@ -81,7 +81,7 @@ describe('Share Code Modal', () => {
       />,
     );
 
-    const input = wrapper.getByPlaceholderText('Teacher code');
+    const input = wrapper.getByPlaceholderText('Unique access code');
     await userEvent.type(input, '134');
 
     await userEvent.keyboard('{enter}');

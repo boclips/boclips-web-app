@@ -55,12 +55,12 @@ describe('video share code button', () => {
     const body = wrapper.getByTestId('share-code-body');
     expect(body).toBeVisible();
     expect(body.textContent).toEqual(
-      'Students need both the link and your unique teacher code to access and play the video Tractor Video',
+      'Students need both the link and your unique access code to access and play the video Tractor Video',
     );
 
     const footer = await wrapper.findByTestId('share-code-footer');
     expect(footer).toBeVisible();
-    expect(footer.textContent).toEqual('Your unique Teacher code is 1739');
+    expect(footer.textContent).toEqual('Your unique access code is 1739');
   });
 
   it(`allows selecting start and end time for shared link`, async () => {

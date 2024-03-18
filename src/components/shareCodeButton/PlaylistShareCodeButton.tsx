@@ -80,7 +80,7 @@ export const PlaylistShareCodeButton = ({
                 className="text-center pt-4 pb-6 text-gray-800"
                 data-qa="share-code-footer"
               >
-                {`Your unique Teacher code is `}
+                {`Your unique access code is `}
                 <Typography.Body weight="medium">
                   {user.shareCode}
                 </Typography.Body>
@@ -105,7 +105,7 @@ export const PlaylistShareCodeButton = ({
             </p>
             <br />
             <p>
-              Students need both the link and your unique teacher code to access
+              Students need both the link and your unique access code to access
               and play video(s).
             </p>
           </Typography.Body>
