@@ -8,6 +8,7 @@ import { Typography } from '@boclips-ui/typography';
 import { GoogleClassroomShareLink } from 'src/components/shareCodeButton/googleClassroom/GoogleClassroomShareLink';
 import { getShareablePlaylistLink } from 'src/components/shareCodeButton/getShareableLink';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
+import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 import s from './shareCodeButton.module.less';
 
 interface PlaylistShareCodeButtonProps {
@@ -27,8 +28,14 @@ export const PlaylistShareCodeButton = ({
   const { data: user, isLoading: userIsLoading } = useGetUserQuery();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const shareLink = getShareablePlaylistLink(playlist.id, user?.id);
+  const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
 
-  const toggleModalVisibility = () => setIsModalVisible(!isModalVisible);
+  const toggleModalVisibility = async () => {
+    await trackPlatformInteraction({
+      subtype: 'PLAYLIST_SHARE_CODE_MODAL_OPENED',
+    });
+    setIsModalVisible(!isModalVisible);
+  };
 
   useEffect(() => {
     const main = document.querySelector('main');
@@ -41,6 +48,9 @@ export const PlaylistShareCodeButton = ({
   }, [isModalVisible]);
 
   const handleCopyLink = () => {
+    trackPlatformInteraction({
+      subtype: 'PLAYLIST_SHARE_CODE_LINK_COPIED',
+    });
     navigator.clipboard.writeText(shareLink).then(() => {
       displayNotification(
         'success',

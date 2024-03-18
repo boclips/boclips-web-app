@@ -9,6 +9,9 @@ import userEvent from '@testing-library/user-event';
 import { getShareablePlaylistLink } from 'src/components/shareCodeButton/getShareableLink';
 import { ToastContainer } from 'react-toastify';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+import { lastEvent } from 'src/testSupport/lastEvent';
+import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
+import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 
 describe('playlist share code button', () => {
   Object.assign(navigator, {
@@ -121,8 +124,49 @@ describe('playlist share code button', () => {
     );
   });
 
-  const renderShareButton = () => {
-    const apiClient = new FakeBoclipsClient();
+  it('emits events when share code modal opened', async () => {
+    const client = new FakeBoclipsClient();
+    const wrapper = renderShareButton(client);
+    await openShareModal(wrapper);
+
+    expect(wrapper.getByRole('dialog')).toBeInTheDocument();
+    expect(
+      wrapper.getByText('Share this playlist with students'),
+    ).toBeVisible();
+
+    await waitFor(() => {
+      expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({
+        type: 'PLATFORM_INTERACTED_WITH',
+        subtype: 'PLAYLIST_SHARE_CODE_MODAL_OPENED',
+        anonymous: false,
+      });
+    });
+  });
+
+  it('emits events when share code link is copied', async () => {
+    const client = new FakeBoclipsClient();
+    const wrapper = renderShareButton(client);
+    await openShareModal(wrapper);
+
+    expect(wrapper.getByRole('dialog')).toBeInTheDocument();
+    expect(
+      wrapper.getByText('Share this playlist with students'),
+    ).toBeVisible();
+
+    await userEvent.click(
+      await wrapper.findByRole('button', { name: 'Copy link' }),
+    );
+
+    await waitFor(() => {
+      expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({
+        type: 'PLATFORM_INTERACTED_WITH',
+        subtype: 'PLAYLIST_SHARE_CODE_LINK_COPIED',
+        anonymous: false,
+      });
+    });
+  });
+
+  const renderShareButton = (apiClient = new FakeBoclipsClient()) => {
     apiClient.users.insertCurrentUser(
       UserFactory.sample({
         id: 'user-id',
@@ -132,15 +176,17 @@ describe('playlist share code button', () => {
 
     return render(
       <main tabIndex={-1}>
-        <QueryClientProvider client={new QueryClient()}>
-          <BoclipsClientProvider client={apiClient}>
-            <ToastContainer />
-            <PlaylistShareCodeButton
-              iconOnly
-              playlist={{ id: 'playlist-id', title: 'My Playlist' }}
-            />
-          </BoclipsClientProvider>
-        </QueryClientProvider>
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <QueryClientProvider client={new QueryClient()}>
+            <BoclipsClientProvider client={apiClient}>
+              <ToastContainer />
+              <PlaylistShareCodeButton
+                iconOnly
+                playlist={{ id: 'playlist-id', title: 'My Playlist' }}
+              />
+            </BoclipsClientProvider>
+          </QueryClientProvider>
+        </BoclipsSecurityProvider>
       </main>,
     );
   };

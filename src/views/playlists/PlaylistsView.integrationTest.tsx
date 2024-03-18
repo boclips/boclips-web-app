@@ -26,6 +26,7 @@ import {
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
+import { lastEvent } from 'src/testSupport/lastEvent';
 
 const insertUser = (client: FakeBoclipsClient, product?: Product) => {
   const user = UserFactory.sample({
@@ -166,7 +167,6 @@ describe('PlaylistsView', () => {
             },
           }),
         );
-        client.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
         const wrapper = renderPlaylistsView(client);
 
         fireEvent.mouseDown(
@@ -192,7 +192,6 @@ describe('PlaylistsView', () => {
             },
           }),
         );
-        client.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
         const wrapper = renderPlaylistsView(client);
 
         fireEvent.mouseDown(
@@ -205,14 +204,45 @@ describe('PlaylistsView', () => {
         expect(wrapper.queryByText('Playlist 1')).toBeNull();
         expect(wrapper.queryByText('Bob made this Playlist')).toBeNull();
       });
+
+      it(`emits events when clicking shared, boclips and my playlists tabs`, async () => {
+        const wrapper = renderPlaylistsView(client);
+
+        fireEvent.mouseDown(
+          await wrapper.findByRole('tab', { name: 'Boclips featured' }),
+        );
+
+        expect(
+          await wrapper.findByText('Boclips made this Playlist'),
+        ).toBeVisible();
+
+        await waitFor(() => {
+          expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({
+            type: 'PLATFORM_INTERACTED_WITH',
+            subtype: 'BOCLIPS_SHARED_PLAYLISTS_TAB_OPENED',
+            anonymous: false,
+          });
+        });
+
+        fireEvent.mouseDown(
+          await wrapper.findByRole('tab', { name: 'Shared with you' }),
+        );
+
+        await waitFor(() => {
+          expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({
+            type: 'PLATFORM_INTERACTED_WITH',
+            subtype: 'USER_SHARED_PLAYLISTS_TAB_OPENED',
+            anonymous: false,
+          });
+        });
+      });
     });
   });
 
-  it('can search for playlist with separate tabs result when BO_WEB_APP enabled', async () => {
+  it('can search for playlist with separate tabs result', async () => {
     const client = new FakeBoclipsClient();
     const user = insertUser(client);
     client.collections.setCurrentUser(user.id);
-    client.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
 
     const myPlaylists = [
       CollectionFactory.sample({
@@ -283,6 +313,7 @@ describe('PlaylistsView', () => {
     );
     expect(await wrapper.findByText('Boclips loves pears')).toBeVisible();
   });
+
   describe('share playlists', () => {
     it('has a share button that copies playlist link to clipboard only for B2B', async () => {
       Object.assign(navigator, {
