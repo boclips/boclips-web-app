@@ -6,9 +6,15 @@ interface Props {
   className?: string;
   rows?: number;
   cols?: number;
+  animated?: boolean;
 }
 
-const SkeletonTiles = ({ className, rows = 2, cols = 4 }: Props) => {
+const SkeletonTiles = ({
+  className,
+  rows = 2,
+  cols = 4,
+  animated = true,
+}: Props) => {
   const skeletonsToRender = Array.from(Array(rows * cols).keys());
   const getGridColsClass = () => `grid-cols-${cols}`;
 
@@ -17,7 +23,11 @@ const SkeletonTiles = ({ className, rows = 2, cols = 4 }: Props) => {
       {skeletonsToRender.map((i) => (
         <div
           key={i}
-          className={c(className, s.skeleton)}
+          className={c(
+            className,
+            s.skeleton,
+            animated ? s.skeletonAnimated : '',
+          )}
           role="progressbar"
           aria-label="Loading"
         />

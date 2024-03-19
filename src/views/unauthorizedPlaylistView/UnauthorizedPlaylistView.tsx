@@ -72,7 +72,10 @@ const UnauthorizedPlaylistView = () => {
           />
         )}
         {!playlist ? (
-          <SkeletonPage title="playlist skeleton unauthorized" />
+          <SkeletonPage
+            title="playlist skeleton unauthorized"
+            animated={false}
+          />
         ) : (
           <>
             <PlaylistHeader playlist={playlist} showButtons={false} />
