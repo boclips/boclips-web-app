@@ -55,7 +55,7 @@ const ShareCodeModal = ({
           inputType="text"
           placeholder="Unique access code"
           height="44px"
-          width="170px"
+          width="180px"
           defaultValue={shareCode}
           constraints={{ maxLength: 4 }}
           onKeyDown={(e) =>
