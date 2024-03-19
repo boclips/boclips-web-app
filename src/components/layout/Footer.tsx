@@ -21,7 +21,7 @@ const Footer = ({ className }: Props) => {
         <a
           rel="noopener noreferrer"
           className={s.link}
-          href="https://www.boclips.com/terms-and-conditions"
+          href="https://www.boclips.com/mlsa"
           target="_blank"
         >
           <Typography.Body size="small" weight="medium">
