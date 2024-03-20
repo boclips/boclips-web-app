@@ -227,7 +227,7 @@ describe('video share code button', () => {
 
     expect(wrapper.getByRole('main')).toHaveAttribute('tabIndex', '-1');
 
-    openShareModal(wrapper);
+    await openShareModal(wrapper);
 
     await waitFor(() =>
       expect(wrapper.getByRole('main')).not.toHaveAttribute('tabIndex'),

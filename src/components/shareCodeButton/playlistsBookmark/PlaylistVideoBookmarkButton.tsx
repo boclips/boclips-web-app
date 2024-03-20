@@ -8,6 +8,7 @@ import {
 } from 'src/hooks/api/playlistsQuery';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import BookmarkModal from 'src/components/shareCodeButton/playlistsBookmark/bookmarkModal/BookmarkModal';
+import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 import s from './style.module.less';
 
 interface VideoShareCodeButtonProps {
@@ -20,11 +21,22 @@ const PlaylistVideoBookmarkButton = ({
   playlistId,
 }: VideoShareCodeButtonProps) => {
   const { data: playlist } = usePlaylistQuery(playlistId);
+  const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
   const { mutate: updatePlaylist } = useEditPlaylistMutation(playlist);
   const hasBookmark = !!playlist?.segments && !!playlist.segments[video.id];
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const toggleModalVisibility = () => setIsModalVisible(!isModalVisible);
+  const analyticsType: string = hasBookmark
+    ? 'UPDATE_BOOKMARK'
+    : 'SET_BOOKMARK';
+  const toggleModalVisibility = () => {
+    if (!isModalVisible) {
+      trackPlatformInteraction({
+        subtype: `${analyticsType}_MODAL_OPENED`,
+        anonymous: false,
+      });
+    }
+    setIsModalVisible(!isModalVisible);
+  };
 
   const onConfirm = (
     segments: Record<string, { start: number; end: number }>,
@@ -33,6 +45,10 @@ const PlaylistVideoBookmarkButton = ({
       { segments },
       {
         onSuccess: () => {
+          trackPlatformInteraction({
+            subtype: `${analyticsType}_MODAL_SUBMITTED`,
+            anonymous: false,
+          });
           displayNotification(
             'success',
             'Video bookmark has been updated',
