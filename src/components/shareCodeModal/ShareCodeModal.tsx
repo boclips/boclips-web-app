@@ -26,12 +26,18 @@ const ShareCodeModal = ({
   isError = false,
 }: Props) => {
   const [shareCode, setShareCode] = useState('');
+  const [hideError, setHideError] = useState(false);
 
   const handleChange = (value: string) => {
     setShareCode(value);
   };
 
+  const handleFocus = () => {
+    setHideError(true);
+  };
+
   const handleClick = () => {
+    setHideError(false);
     fetchAssetWithCode({ assetId, referer, shareCode });
   };
 
@@ -52,6 +58,7 @@ const ShareCodeModal = ({
         <InputText
           id="share-code-input"
           onChange={handleChange}
+          onFocus={handleFocus}
           inputType="text"
           placeholder="Unique access code"
           height="44px"
@@ -63,7 +70,7 @@ const ShareCodeModal = ({
               isButtonDisabled ? {} : handleClick(),
             )
           }
-          isError={isError}
+          isError={!hideError && isError}
           errorMessage="Invalid code"
           errorMessagePlacement="bottom"
         />
