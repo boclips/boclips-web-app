@@ -5,8 +5,6 @@ import BackArrow from 'resources/icons/back-arrow.svg';
 import { TextButton } from 'src/components/common/textButton/TextButton';
 import { VideoHeader } from 'src/components/videoPage/VideoHeader';
 import VideoRecommendations from 'src/components/videoPage/VideoRecommendations';
-import { FeatureGate } from 'src/components/common/FeatureGate';
-import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import VideoAiMetadata from 'src/components/videoPage/videoMetadata/ai/VideoAiMetadata';
 import VideoDescription from 'src/components/videoPage/videoMetadata/VideoDescription';
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
@@ -53,14 +51,8 @@ export const VideoPage = ({ video, start = null, end = null }: Props) => {
       </section>
 
       <VideoDescription video={video} />
-
-      <FeatureGate product={Product.B2B} fallback={null}>
-        <VideoAiMetadata video={video} />
-      </FeatureGate>
-
-      <FeatureGate product={Product.B2B} fallback={null}>
-        <VideoRecommendations video={video} />
-      </FeatureGate>
+      <VideoAiMetadata video={video} />
+      <VideoRecommendations video={video} />
     </>
   );
 };
