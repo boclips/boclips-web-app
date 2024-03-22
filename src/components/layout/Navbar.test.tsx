@@ -494,5 +494,38 @@ describe(`Navbar`, () => {
 
       expect(wrapper.queryByTestId('trial-banner')).toBeNull();
     });
+
+    it(`does not render the trial banner for trial classroom users`, async () => {
+      const fakeClient = new FakeBoclipsClient();
+      fakeClient.accounts.insertAccount(
+        AccountsFactory.sample({
+          type: AccountType.TRIAL,
+          status: AccountStatus.ACTIVE,
+          id: 'trial',
+          products: [Product.CLASSROOM],
+        }),
+      );
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          account: {
+            ...UserFactory.sample().account,
+            id: 'trial',
+            name: 'classroom account',
+            type: AccountType.TRIAL,
+            products: [Product.CLASSROOM],
+          },
+        }),
+      );
+
+      const wrapper = render(
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={fakeClient}>
+            <NavbarResponsive showOptions={false} />
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>,
+      );
+
+      expect(wrapper.queryByTestId('trial-banner')).toBeNull();
+    });
   });
 });
