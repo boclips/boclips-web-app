@@ -14,7 +14,10 @@ import LibraryButton from 'src/components/navButtons/LibraryButton';
 import { HomeButton } from 'src/components/navButtons/HomeButton';
 import { AccountButton } from 'src/components/navButtons/AccountButton';
 import Logo from 'src/components/logo/Logo';
-import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import {
+  AccountType,
+  Product,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import s from './navbar.module.less';
 import { Search } from '../searchBar/SearchBar';
 
@@ -29,7 +32,9 @@ const NavbarResponsive = ({
 }: Props): ReactElement => {
   const [showSideMenu, setShowSideMenu] = useState(false);
   const { data: user, isLoading: isUserLoading } = useGetUserQuery();
-  const isTrial = user?.account?.type === AccountType.TRIAL;
+  const isLibraryTrial =
+    user?.account?.type === AccountType.TRIAL &&
+    user.account.products.indexOf(Product.CLASSROOM) < 0;
   const breakpoints = useMediaBreakPoint();
   const mobileView =
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
@@ -85,7 +90,7 @@ const NavbarResponsive = ({
             {!isUserLoading && <AccountButton />}
           </div>
         ))}
-      {isTrial && (
+      {isLibraryTrial && (
         <div data-qa="trial-banner" className={s.trialBanner}>
           Welcome! You&apos;re currently exploring Boclips Library. Need more
           info? Click{' '}
