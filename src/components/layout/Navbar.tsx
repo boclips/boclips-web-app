@@ -32,7 +32,9 @@ const NavbarResponsive = ({
 }: Props): ReactElement => {
   const [showSideMenu, setShowSideMenu] = useState(false);
   const { data: user, isLoading: isUserLoading } = useGetUserQuery();
-  const isTrial = user?.account?.type === AccountType.TRIAL;
+  const isLibraryTrial =
+    user?.account?.type === AccountType.TRIAL &&
+    user.account.products.indexOf(Product.CLASSROOM) < 0;
   const breakpoints = useMediaBreakPoint();
   const mobileView =
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
@@ -88,30 +90,28 @@ const NavbarResponsive = ({
             {!isUserLoading && <AccountButton />}
           </div>
         ))}
-      {isTrial && (
-        <FeatureGate product={Product.B2B}>
-          <div data-qa="trial-banner" className={s.trialBanner}>
-            Welcome! You&apos;re currently exploring Boclips Library. Need more
-            info? Click{' '}
-            <a
-              rel="noopener noreferrer"
-              href="https://boclips.com/boclips-faq"
-              target="_blank"
-              className="underline"
-            >
-              here
-            </a>{' '}
-            or connect with our{' '}
-            <a
-              rel="noopener noreferrer"
-              href="https://www.boclips.com/contact"
-              target="_blank"
-              className="underline"
-            >
-              sales team
-            </a>
-          </div>
-        </FeatureGate>
+      {isLibraryTrial && (
+        <div data-qa="trial-banner" className={s.trialBanner}>
+          Welcome! You&apos;re currently exploring Boclips Library. Need more
+          info? Click{' '}
+          <a
+            rel="noopener noreferrer"
+            href="https://boclips.com/boclips-faq"
+            target="_blank"
+            className="underline"
+          >
+            here
+          </a>{' '}
+          or connect with our{' '}
+          <a
+            rel="noopener noreferrer"
+            href="https://www.boclips.com/contact"
+            target="_blank"
+            className="underline"
+          >
+            sales team
+          </a>
+        </div>
       )}
       {showSideMenu && mobileView && <SideMenu hasSearchInNavbar={false} />}
     </nav>
