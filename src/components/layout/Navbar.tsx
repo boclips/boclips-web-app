@@ -14,7 +14,10 @@ import LibraryButton from 'src/components/navButtons/LibraryButton';
 import { HomeButton } from 'src/components/navButtons/HomeButton';
 import { AccountButton } from 'src/components/navButtons/AccountButton';
 import Logo from 'src/components/logo/Logo';
-import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import {
+  AccountType,
+  Product,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import s from './navbar.module.less';
 import { Search } from '../searchBar/SearchBar';
 
@@ -86,27 +89,29 @@ const NavbarResponsive = ({
           </div>
         ))}
       {isTrial && (
-        <div data-qa="trial-banner" className={s.trialBanner}>
-          Welcome! You&apos;re currently exploring Boclips Library. Need more
-          info? Click{' '}
-          <a
-            rel="noopener noreferrer"
-            href="https://boclips.com/boclips-faq"
-            target="_blank"
-            className="underline"
-          >
-            here
-          </a>{' '}
-          or connect with our{' '}
-          <a
-            rel="noopener noreferrer"
-            href="https://www.boclips.com/contact"
-            target="_blank"
-            className="underline"
-          >
-            sales team
-          </a>
-        </div>
+        <FeatureGate product={Product.B2B}>
+          <div data-qa="trial-banner" className={s.trialBanner}>
+            Welcome! You&apos;re currently exploring Boclips Library. Need more
+            info? Click{' '}
+            <a
+              rel="noopener noreferrer"
+              href="https://boclips.com/boclips-faq"
+              target="_blank"
+              className="underline"
+            >
+              here
+            </a>{' '}
+            or connect with our{' '}
+            <a
+              rel="noopener noreferrer"
+              href="https://www.boclips.com/contact"
+              target="_blank"
+              className="underline"
+            >
+              sales team
+            </a>
+          </div>
+        </FeatureGate>
       )}
       {showSideMenu && mobileView && <SideMenu hasSearchInNavbar={false} />}
     </nav>
