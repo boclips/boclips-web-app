@@ -17,7 +17,7 @@ interface BookmarkModalProps {
   title: string;
   video: Video;
   initialSegment?: Segment;
-  onConfirm: (segments: Record<string, { start: number; end: number }>) => void;
+  onConfirm: (videoId: string, segment: Segment) => void;
 }
 
 const BookmarkModal = ({
@@ -88,16 +88,16 @@ const BookmarkModal = ({
   const handleConfirm = () => {
     if (!startDurationValid || !endDurationValid) return;
 
-    const segments: Record<string, { start: number; end: number }> = {};
+    let segment: Segment = {};
 
     if (startTimeEnabled || endTimeEnabled) {
-      segments[video.id] = {
+      segment = {
         start: durationInSeconds(startDuration),
         end: durationInSeconds(endDuration),
       };
     }
 
-    onConfirm(segments);
+    onConfirm(video.id, segment);
   };
 
   return (
