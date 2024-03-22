@@ -34,7 +34,7 @@ const NavbarResponsive = ({
   const { data: user, isLoading: isUserLoading } = useGetUserQuery();
   const isLibraryTrial =
     user?.account?.type === AccountType.TRIAL &&
-    user.account.products.indexOf(Product.CLASSROOM) < 0;
+    user?.account?.products?.indexOf(Product.CLASSROOM) < 0;
   const breakpoints = useMediaBreakPoint();
   const mobileView =
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
