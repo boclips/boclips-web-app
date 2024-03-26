@@ -9,6 +9,7 @@ import {
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import BookmarkModal from 'src/components/shareCodeButton/playlistsBookmark/bookmarkModal/BookmarkModal';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
+import { Segment } from 'boclips-api-client/dist/sub-clients/collections/model/Segment';
 import s from './style.module.less';
 
 interface VideoShareCodeButtonProps {
@@ -38,11 +39,16 @@ const PlaylistVideoBookmarkButton = ({
     setIsModalVisible(!isModalVisible);
   };
 
-  const onConfirm = (
-    segments: Record<string, { start: number; end: number }>,
-  ) => {
+  const onConfirm = (videoId: string, segment: Segment) => {
+    if (!playlist.segments) {
+      playlist.segments = {};
+    }
+
+    playlist.segments[videoId] = segment;
+    const updatedSegments = playlist.segments;
+
     updatePlaylist(
-      { segments },
+      { segments: updatedSegments },
       {
         onSuccess: () => {
           trackPlatformInteraction({

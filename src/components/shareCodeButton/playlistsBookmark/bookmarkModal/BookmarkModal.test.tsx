@@ -21,17 +21,8 @@ import { lastEvent } from 'src/testSupport/lastEvent';
 
 describe('Bookmark modal for playlists', () => {
   const video = VideoFactory.sample({ id: 'video-id' });
-  const collection = CollectionFactory.sample({
-    id: 'non-segment',
-    videos: [video],
-  });
-  const collectionWithSegment = CollectionFactory.sample({
-    id: 'has-segment',
-    videos: [video],
-    segments: {
-      'video-id': { start: 10, end: 11 },
-    },
-  });
+  const nonBookmarkedCollectionId = 'non-segment';
+  const bookmarkedCollectionId = 'has-segments';
   const apiClient = new FakeBoclipsClient();
 
   beforeEach(() => {
@@ -39,12 +30,29 @@ describe('Bookmark modal for playlists', () => {
     apiClient.collections.clear();
 
     apiClient.videos.insertVideo(video);
-    apiClient.collections.addToFake(collection);
-    apiClient.collections.addToFake(collectionWithSegment);
+    apiClient.collections.addToFake(
+      CollectionFactory.sample({
+        id: nonBookmarkedCollectionId,
+        videos: [video],
+      }),
+    );
+    apiClient.collections.addToFake(
+      CollectionFactory.sample({
+        id: bookmarkedCollectionId,
+        videos: [video],
+        segments: {
+          'video-id': { start: 10, end: 11 },
+        },
+      }),
+    );
   });
 
   it(`allows setting start and end time for video`, async () => {
-    const wrapper = renderBookmarkButton(video, collection.id, apiClient);
+    const wrapper = renderBookmarkButton(
+      video,
+      nonBookmarkedCollectionId,
+      apiClient,
+    );
     await openShareModal(wrapper);
 
     expect(
@@ -85,7 +93,9 @@ describe('Bookmark modal for playlists', () => {
 
     await userEvent.click(wrapper.getByText('Set'));
 
-    const updatedPlaylist = await apiClient.collections.get(collection.id);
+    const updatedPlaylist = await apiClient.collections.get(
+      nonBookmarkedCollectionId,
+    );
 
     await waitFor(() => {
       expect(updatedPlaylist.segments[video.id].start).toEqual(32);
@@ -99,7 +109,7 @@ describe('Bookmark modal for playlists', () => {
   it(`allows removing start and end time for video`, async () => {
     const wrapper = renderBookmarkButton(
       video,
-      collectionWithSegment.id,
+      bookmarkedCollectionId,
       apiClient,
     );
 
@@ -131,11 +141,11 @@ describe('Bookmark modal for playlists', () => {
     await userEvent.click(wrapper.getByText('Set'));
 
     const updatedPlaylist = await apiClient.collections.get(
-      collectionWithSegment.id,
+      bookmarkedCollectionId,
     );
 
     await waitFor(() => {
-      expect(updatedPlaylist.segments[video.id]).toEqual(undefined);
+      expect(updatedPlaylist.segments[video.id]).toBeUndefined();
       expect(
         wrapper.getByText('Video bookmark has been updated'),
       ).toBeInTheDocument();
@@ -188,7 +198,11 @@ describe('Bookmark modal for playlists', () => {
   });
 
   it(`sends a platform interaction event when set bookmark modal is opened`, async () => {
-    const wrapper = renderBookmarkButton(video, collection.id, apiClient);
+    const wrapper = renderBookmarkButton(
+      video,
+      nonBookmarkedCollectionId,
+      apiClient,
+    );
     await openShareModal(wrapper);
 
     expect(
@@ -203,10 +217,11 @@ describe('Bookmark modal for playlists', () => {
       });
     });
   });
+
   it(`sends a platform interaction event when update bookmark modal is opened`, async () => {
     const wrapper = renderBookmarkButton(
       video,
-      collectionWithSegment.id,
+      bookmarkedCollectionId,
       apiClient,
     );
     await openShareModal(wrapper);
@@ -226,7 +241,11 @@ describe('Bookmark modal for playlists', () => {
   });
 
   it(`sends a platform interaction event when bookmark is set`, async () => {
-    const wrapper = renderBookmarkButton(video, collection.id, apiClient);
+    const wrapper = renderBookmarkButton(
+      video,
+      nonBookmarkedCollectionId,
+      apiClient,
+    );
     await openShareModal(wrapper);
 
     expect(
@@ -256,7 +275,9 @@ describe('Bookmark modal for playlists', () => {
       ).toBeInTheDocument();
     });
 
-    const updatedPlaylist = await apiClient.collections.get(collection.id);
+    const updatedPlaylist = await apiClient.collections.get(
+      nonBookmarkedCollectionId,
+    );
 
     await waitFor(() => {
       expect(updatedPlaylist?.segments[video.id].start).toEqual(32);
@@ -271,7 +292,7 @@ describe('Bookmark modal for playlists', () => {
   it(`sends a platform interaction event when bookmark is updated`, async () => {
     const wrapper = renderBookmarkButton(
       video,
-      collectionWithSegment.id,
+      bookmarkedCollectionId,
       apiClient,
     );
     await openShareModal(wrapper);
@@ -289,7 +310,7 @@ describe('Bookmark modal for playlists', () => {
     await userEvent.click(wrapper.getByText('Set'));
 
     const updatedPlaylist = await apiClient.collections.get(
-      collectionWithSegment.id,
+      bookmarkedCollectionId,
     );
 
     await waitFor(() => {
@@ -323,7 +344,11 @@ describe('Bookmark modal for playlists', () => {
       .fn()
       .mockRejectedValue(new Error('Network Error'));
 
-    const wrapper = renderBookmarkButton(video, collection.id, apiClient);
+    const wrapper = renderBookmarkButton(
+      video,
+      nonBookmarkedCollectionId,
+      apiClient,
+    );
     await openShareModal(wrapper);
 
     const endCheckbox = wrapper.getByRole('checkbox', {
