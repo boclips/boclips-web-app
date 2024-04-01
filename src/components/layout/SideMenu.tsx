@@ -8,6 +8,7 @@ import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Acco
 import LogoutButton from 'src/components/layout/logoutButton/LogoutButton';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { Typography } from '@boclips-ui/typography';
+import getFormattedDate from 'src/services/getFormattedDate';
 
 interface Props {
   hasSearchInNavbar?: boolean;
@@ -21,16 +22,39 @@ const SideMenu = ({ hasSearchInNavbar = true }: Props) => {
       <div className={s.buttons}>
         <FeatureGate product={Product.CLASSROOM}>
           {user && !isLoading && (
-            <Typography.Body
-              as="div"
-              aria-label={`Your unique access code code is ${user.shareCode}`}
-              className={s.shareCode}
-            >
-              <div className="py-3 pl-4 flex flex-col">
-                <span className="mb-1">Unique access code</span>
-                <span>{user.shareCode}</span>
-              </div>
-            </Typography.Body>
+            <div className="pl-4 flex flex-col">
+              <Typography.Body
+                as="div"
+                aria-label={`Your unique access code code is ${user.shareCode}`}
+                className={s.shareCode}
+              >
+                <div className="flex flex-col">
+                  <span className="mb-1">Unique access code</span>
+                  <span>{user.shareCode}</span>
+                </div>
+              </Typography.Body>
+              {user.accessExpiresOn && (
+                <Typography.Body
+                  as="div"
+                  className={s.expiryDate}
+                  aria-label={`Free access until ${getFormattedDate(
+                    user.accessExpiresOn,
+                    {
+                      monthFormat: 'long',
+                    },
+                  )}`}
+                >
+                  <div className="flex flex-col">
+                    <span className="mb-1">Free access until</span>
+                    <span>
+                      {getFormattedDate(user.accessExpiresOn, {
+                        monthFormat: 'long',
+                      })}
+                    </span>
+                  </div>
+                </Typography.Body>
+              )}
+            </div>
           )}
         </FeatureGate>
         <Link to="/">Home</Link>

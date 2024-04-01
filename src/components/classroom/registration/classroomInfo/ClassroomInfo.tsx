@@ -7,6 +7,10 @@ import s from './style.module.less';
 
 const features = [
   {
+    title: '60-day free access ',
+    description: 'Explore, collaborate and share freely for 60 days.',
+  },
+  {
     title: 'Curriculum-aligned',
     description:
       'Expertly curated to align to educational standards and curriculum objectives.',

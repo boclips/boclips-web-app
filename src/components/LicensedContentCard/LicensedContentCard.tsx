@@ -45,11 +45,11 @@ const LicensedContentCard = ({ licensedContent }: Props) => {
         <div className="flex flex-row space-x-6">
           {getLabeledField(
             'Starting date',
-            getFormattedDate(licensedContent.license.startDate),
+            getFormattedDate(licensedContent.license.startDate, {}),
           )}
           {getLabeledField(
             'Expiry date',
-            getFormattedDate(licensedContent.license.endDate),
+            getFormattedDate(licensedContent.license.endDate, {}),
           )}
         </div>
         <div>
