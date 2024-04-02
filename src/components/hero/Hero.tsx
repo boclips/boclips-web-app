@@ -1,5 +1,6 @@
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
+import c from 'classnames';
 import s from './style.module.less';
 
 interface Props {
@@ -22,12 +23,12 @@ export const Hero = ({
   return (
     <main
       tabIndex={-1}
-      className={`${s.heroWrapper} col-start-2 col-end-26 row-start-${row} row-end-${row} text-blue-800 flex flex-row justify-center`}
+      className={`${s.heroWrapper} col-start-2 col-end-26 row-start-${row} row-end-${row} text-blue-800 flex flex-row justify-around`}
     >
       <section className={`${s.svgWrapper} flex justify-center items-center`}>
         {icon}
       </section>
-      <section className="flex flex-col justify-center">
+      <section className={c(s.heroCopyWrapper, 'flex flex-col justify-center')}>
         <Typography.H1 size="lg" className="blue-800 ">
           {title}
         </Typography.H1>
