@@ -14,6 +14,7 @@ import PencilSVG from 'src/resources/icons/pencil.svg';
 import EditPersonalProfileModal from 'src/views/account/EditPersonalProfileModal';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { FeatureGate } from 'src/components/common/FeatureGate';
+import getFormattedDate from 'src/services/getFormattedDate';
 import s from './style.module.less';
 
 const MyAccountView = () => {
@@ -22,10 +23,7 @@ const MyAccountView = () => {
     useState<boolean>(false);
 
   const formatDate = (date: Date): string => {
-    return new Date(date).toLocaleDateString('en-uk', {
-      year: 'numeric',
-      month: 'long',
-    });
+    return getFormattedDate(date, { monthFormat: 'long' });
   };
 
   return (

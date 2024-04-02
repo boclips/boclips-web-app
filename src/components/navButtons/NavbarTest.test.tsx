@@ -242,6 +242,7 @@ describe(`Navbar test`, () => {
           type: AccountType.STANDARD,
         },
         shareCode: '12AB',
+        accessExpiresOn: new Date('2024-04-13'),
       }),
     );
     const navbar = renderAccountButton();
@@ -255,6 +256,13 @@ describe(`Navbar test`, () => {
     ).toBeVisible();
     expect(navbar.getByText('Unique access code')).toBeVisible();
     expect(navbar.getByText('12AB')).toBeVisible();
+
+    expect(
+      navbar.getByLabelText('Free access until 13 April 2024'),
+    ).toBeVisible();
+
+    expect(navbar.getByText('Free access until')).toBeVisible();
+    expect(navbar.getByText('13 April 2024')).toBeVisible();
   });
 
   it('does not show unique access code for non-classroom user', async () => {
@@ -271,6 +279,7 @@ describe(`Navbar test`, () => {
           type: AccountType.STANDARD,
         },
         shareCode: '12AB',
+        accessExpiresOn: new Date('2024-04-04T10:04:31.362Z'),
       }),
     );
     const navbar = renderAccountButton();
@@ -284,5 +293,9 @@ describe(`Navbar test`, () => {
     ).toBeNull();
     expect(navbar.queryByText('Unique access code')).toBeNull();
     expect(navbar.queryByText('12AB')).toBeNull();
+
+    expect(navbar.queryByText('Free access until 04 April 2024')).toBeNull();
+    expect(navbar.queryByText('Free access until')).toBeNull();
+    expect(navbar.queryByText('04 April 2024')).toBeNull();
   });
 });

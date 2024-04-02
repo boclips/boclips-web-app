@@ -11,6 +11,7 @@ import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import LogoutButton from 'src/components/layout/logoutButton/LogoutButton';
+import getFormattedDate from 'src/services/getFormattedDate';
 import { Link } from '../common/Link';
 import s from './newstyle.module.less';
 
@@ -103,18 +104,43 @@ export const AccountButton = () => {
           onBlur={handleDialogBlur}
         >
           <FeatureGate product={Product.CLASSROOM}>
-            <Typography.Body
-              size="small"
-              as="div"
-              weight="medium"
-              aria-label={`Your unique access code is ${user.shareCode}`}
-              className="bg-gray-100 w-full"
-            >
-              <div className="py-3 pl-4 text-gray-800 flex flex-col">
-                <span className="mb-1">Unique access code</span>
-                <span>{user.shareCode}</span>
-              </div>
-            </Typography.Body>
+            <div className="w-full">
+              <Typography.Body
+                size="small"
+                as="div"
+                weight="medium"
+                aria-label={`Your unique access code is ${user.shareCode}`}
+                className="bg-gray-100"
+              >
+                <div className="py-3 pl-4 text-gray-800 flex flex-col">
+                  <span className="mb-1">Unique access code</span>
+                  <span>{user.shareCode}</span>
+                </div>
+              </Typography.Body>
+              {user.accessExpiresOn && (
+                <Typography.Body
+                  size="small"
+                  as="div"
+                  weight="medium"
+                  className={s.expiryDate}
+                  aria-label={`Free access until ${getFormattedDate(
+                    user.accessExpiresOn,
+                    {
+                      monthFormat: 'long',
+                    },
+                  )}`}
+                >
+                  <div className="py-3 pl-4 text-gray-800 flex flex-col">
+                    <span className="mb-1">Free access until</span>
+                    <span>
+                      {getFormattedDate(user.accessExpiresOn, {
+                        monthFormat: 'long',
+                      })}
+                    </span>
+                  </div>
+                </Typography.Body>
+              )}
+            </div>
           </FeatureGate>
           <div role="menu" className={s.menu} aria-label="Account menu">
             <div className="pt-2">
