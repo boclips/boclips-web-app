@@ -33,6 +33,29 @@ describe('App', () => {
     expect(await wrapper.findByText('Page not found!')).toBeVisible();
   });
 
+  it('renders the end of trial page on user having reportAccessExpired role', async () => {
+    const security: BoclipsSecurity = {
+      ...stubBoclipsSecurity,
+      hasRole: (_role) => true,
+    };
+
+    const apiClient = new FakeBoclipsClient();
+    apiClient.links.reportAccessExpired = {
+      href: '/report-access-expired',
+      templated: false,
+    };
+
+    const wrapper = render(
+      <MemoryRouter>
+        <App boclipsSecurity={security} apiClient={apiClient} />,
+      </MemoryRouter>,
+    );
+
+    expect(
+      await wrapper.findByText('Your free trial has ended!'),
+    ).toBeVisible();
+  });
+
   it('renders the not found page on user accessing cart but not having cart link', async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.links = AdminLinksFactory.sample({ cart: null });

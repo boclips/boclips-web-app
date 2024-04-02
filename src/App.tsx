@@ -13,12 +13,13 @@ import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
 import { lazyWithRetry } from 'src/services/lazyWithRetry';
 import { FollowPlaylist } from 'src/services/followPlaylist';
 import UserAttributes from 'src/services/analytics/hotjar/UserAttributes';
-import { AdminLinksKey, FeatureGate } from 'src/components/common/FeatureGate';
+import { FeatureGate } from 'src/components/common/FeatureGate';
 import FallbackView from 'src/views/fallback/FallbackView';
 import { RedirectFromExploreToAlignments } from 'src/components/alignments/RedirectFromExploreToAlignments';
 import * as Sentry from '@sentry/browser';
 import { ToastContainer } from 'react-toastify';
 import { RedirectFromSparksToAlignments } from 'src/components/alignments/RedirectFromSparksToAlignments';
+import { AccessGate } from 'src/components/common/errors/AccessGate';
 import { BoclipsClientProvider } from './components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSecurityProvider';
 import { GlobalQueryErrorProvider } from './components/common/providers/GlobalQueryErrorProvider';
@@ -150,15 +151,7 @@ const App = ({
           <BoclipsClientProvider client={apiClient}>
             <Suspense fallback={<Loading />}>
               <JSErrorBoundary fallback={<FallbackView />}>
-                <FeatureGate
-                  fallback={<AccessDeniedView />}
-                  anyLinkName={
-                    [
-                      'boclipsWebAppAccess',
-                      'classroomWebAppAccess',
-                    ] as AdminLinksKey[]
-                  }
-                >
+                <AccessGate>
                   <Helmet title="Library" />
                   <Routes>
                     <Route
@@ -311,7 +304,7 @@ const App = ({
                     />
                   </Routes>
                   <ReactQueryDevtools initialIsOpen={false} />
-                </FeatureGate>
+                </AccessGate>
               </JSErrorBoundary>
             </Suspense>
           </BoclipsClientProvider>
