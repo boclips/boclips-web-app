@@ -43,6 +43,7 @@ const ContentView = () => {
           <MyContentArea
             licensedContentPage={licensedContent}
             onPageChange={(newPage) => setCurrentPageNumber(newPage)}
+            isLoading={isLoading}
           />
         ) : (
           <ContentEmptyPlaceholderState
