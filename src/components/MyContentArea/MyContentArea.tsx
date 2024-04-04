@@ -5,13 +5,19 @@ import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/mo
 import Pagination from '@boclips-ui/pagination';
 import s from 'src/components/common/pagination/pagination.module.less';
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
+import VideoCardPlaceholder from '@boclips-ui/video-card-placeholder';
 
 interface Props {
   licensedContentPage: Pageable<LicensedContent>;
   onPageChange: (newPage: number) => void;
+  isLoading: boolean;
 }
 
-const MyContentArea = ({ licensedContentPage, onPageChange }: Props) => {
+const MyContentArea = ({
+  licensedContentPage,
+  onPageChange,
+  isLoading,
+}: Props) => {
   const itemRender = React.useCallback(
     (page, type) => {
       return (
@@ -27,11 +33,23 @@ const MyContentArea = ({ licensedContentPage, onPageChange }: Props) => {
     [licensedContentPage],
   );
 
+  const placeholderView = Array.from(Array(6)).map((value) => (
+    <div
+      className="mb-8 w-full"
+      style={{ maxHeight: '265px' }}
+      key={`licensed-content-placeholder-${value}`}
+      data-qa="licensed-content-card-placeholder"
+    >
+      <VideoCardPlaceholder displayHeader={false} />
+    </div>
+  ));
+
   return (
     <main
       tabIndex={-1}
-      className="col-start-2 col-end-26 row-start-3 row-end-4 flex items-start"
+      className="col-start-2 col-end-26 row-start-3 row-end-4 flex flex-col items-start"
     >
+      {isLoading && placeholderView}
       {licensedContentPage?.page && (
         <List
           className="w-full"
