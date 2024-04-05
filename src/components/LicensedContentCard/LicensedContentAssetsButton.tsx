@@ -84,7 +84,7 @@ const LicensedContentPrimaryButton = ({ licensedContent }: Props) => {
                     </Typography.Body>
                   </DropdownMenu.Item>
                 )}
-                {licensedContent.videoMetadata.links.download && (
+                {licensedContent.videoMetadata.links.downloadCaptions && (
                   <DropdownMenu.Item
                     className={s.assetDropdownItem}
                     textValue="Captions"

@@ -175,7 +175,7 @@ describe('Licensed Content Card', () => {
     expect(await getAssetOption(wrapper, 'Transcript')).toBeUndefined();
   });
 
-  it('should have Captions option when clicked Video Assets button', async () => {
+  it('should have Captions option when Video Assets button clicked and captions link present', async () => {
     const licensedContent: LicensedContent = LicensedContentFactory.sample({
       videoId: 'video-id',
       videoMetadata: {
@@ -184,7 +184,10 @@ describe('Licensed Content Card', () => {
         duration: dayjs.duration('PT112'),
         links: {
           self: new Link({ href: 'link', templated: false }),
-          download: new Link({ href: 'download', templated: false }),
+          downloadCaptions: new Link({
+            href: 'downloadCaptions',
+            templated: false,
+          }),
         },
       },
     });
@@ -207,7 +210,10 @@ describe('Licensed Content Card', () => {
         duration: dayjs.duration('PT112'),
         links: {
           self: new Link({ href: 'link', templated: false }),
-          download: new Link({ href: 'download', templated: false }),
+          downloadCaptions: new Link({
+            href: 'downloadCaptions',
+            templated: false,
+          }),
         },
       },
     });
@@ -227,7 +233,7 @@ describe('Licensed Content Card', () => {
     );
   });
 
-  it('should not have Captions option when deliveryMethod is EMBED', async () => {
+  it('should not have Captions option when downloadCaptions link is null', async () => {
     const licensedContent: LicensedContent = LicensedContentFactory.sample({
       videoId: 'video-id',
       videoMetadata: {
@@ -236,7 +242,7 @@ describe('Licensed Content Card', () => {
         duration: dayjs.duration('PT112'),
         links: {
           self: new Link({ href: 'link', templated: false }),
-          createEmbedCode: new Link({ href: 'embed', templated: false }),
+          downloadCaptions: null,
         },
       },
     });
