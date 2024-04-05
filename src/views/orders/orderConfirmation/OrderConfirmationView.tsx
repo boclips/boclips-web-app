@@ -40,7 +40,9 @@ const OrderConfirmationView = () => {
               confirmation.
             </>
           }
-          moreDescription="You can track and review all orders in your account"
+          moreDescription="You can track and review all orders in your account. You can view and retrieve all purchased videos in your Content
+              area once your order has been processed and your content license
+              generated."
           actions={
             <>
               <Button
@@ -53,9 +55,9 @@ const OrderConfirmationView = () => {
                 height="44px"
                 width="170px"
               />
-              <Link className="ml-6" to="/orders" data-qa="view-orders">
+              <Link className="ml-6" to="/content" data-qa="view-orders">
                 <Typography.Body weight="medium">
-                  View all orders
+                  View my content
                 </Typography.Body>
               </Link>
             </>
