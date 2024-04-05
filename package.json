@@ -132,7 +132,7 @@
     "@tsparticles/react": "^3.0.0",
     "@types/jest": "^29.5.5",
     "@types/mixpanel": "^2.14.4",
-    "@types/pendo-io-browser": "^2.17.2",
+    "@types/pendo-io-browser": "^2.18.0",
     "@types/react": "^18.2.20",
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-dom": "^18.2.7",
