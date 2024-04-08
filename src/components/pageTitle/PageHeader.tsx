@@ -7,11 +7,19 @@ interface Props {
   button?: React.ReactNode;
   cartItems?: React.ReactNode;
   description?: React.ReactNode;
+  className?: string;
 }
 
-const PageHeader = ({ title, button, cartItems, description }: Props) => {
+const PageHeader = ({
+  title,
+  button,
+  cartItems,
+  description,
+  className,
+}: Props) => {
+  const headerClassName = className ? `${s.header} ${className}` : s.header;
   return (
-    <section className={s.header} aria-labelledby="page-header">
+    <section className={headerClassName} aria-labelledby="page-header">
       <div className={s.title}>
         <Typography.H1
           id="page-header"
@@ -21,9 +29,11 @@ const PageHeader = ({ title, button, cartItems, description }: Props) => {
         >
           {title} {cartItems}
         </Typography.H1>
-        <div className={s.description}>
-          <Typography.Body>{description}</Typography.Body>
-        </div>
+        {description && (
+          <div className={s.description}>
+            <Typography.Body>{description}</Typography.Body>
+          </div>
+        )}
       </div>
       {button}
     </section>
