@@ -42,7 +42,11 @@ export const Hero = ({
           </Typography.Body>
         )}
         {moreDescription && (
-          <Typography.Body as="p" className="text-gray-800 mt-6">
+          <Typography.Body
+            as="p"
+            className="text-gray-800 mt-6"
+            data-qa="more-description"
+          >
             {moreDescription}
           </Typography.Body>
         )}

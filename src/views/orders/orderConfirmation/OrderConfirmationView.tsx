@@ -40,7 +40,8 @@ const OrderConfirmationView = () => {
               confirmation.
             </>
           }
-          moreDescription="You can track and review all orders in your account"
+          moreDescription="You can track and review all orders in your account. Content you have purchased will be
+          shown on My content page when your order has been received and your content is licensed."
           actions={
             <>
               <Button

@@ -43,6 +43,11 @@ describe('OrderConfirmationView', () => {
     expect(wrapper.getByTestId('description')).toHaveTextContent(
       'Your order #123 is currently being processed. We’ve sent you an email with your order confirmation.',
     );
+    expect(wrapper.getByTestId('more-description')).toHaveTextContent(
+      'You can track and review all orders in your account. ' +
+        'Content you have purchased will be shown on My content page when ' +
+        'your order has been received and your content is licensed.',
+    );
   });
 
   describe('window titles', () => {
