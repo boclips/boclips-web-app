@@ -8,10 +8,34 @@ import { Hero } from 'src/components/hero/Hero';
 import OrderConfirmedSVG from 'src/resources/icons/order-confirmed.svg';
 import { Typography } from '@boclips-ui/typography';
 import { Helmet } from 'react-helmet';
+import useFeatureFlags from 'src/hooks/useFeatureFlags';
+import { FeatureGate } from 'src/components/common/FeatureGate';
 
 const OrderConfirmationView = () => {
+  const { features, isLoading } = useFeatureFlags();
   const navigate = useNavigate();
   const state = useLocation()?.state;
+
+  const orderDescription =
+    'You can track and review all orders in your account.';
+  const myContentDescription = `${orderDescription} You can view and retrieve all purchased videos in your Content area once your order has been processed and your content license generated.`;
+
+  const orderConfirmationDescription = () =>
+    !isLoading && features.BO_WEB_APP_DEV
+      ? myContentDescription
+      : orderDescription;
+
+  const viewMyContentLink = () => (
+    <Link className="ml-6" to="/content" data-qa="view-orders">
+      <Typography.Body weight="medium">View my content</Typography.Body>
+    </Link>
+  );
+
+  const viewAllOrderLink = () => (
+    <Link className="ml-6" to="/orders" data-qa="view-orders">
+      <Typography.Body weight="medium">View all orders</Typography.Body>
+    </Link>
+  );
 
   useEffect(() => {
     if (!state || !state.orderLocation) {
@@ -40,8 +64,7 @@ const OrderConfirmationView = () => {
               confirmation.
             </>
           }
-          moreDescription="You can track and review all orders in your account. Content you have purchased will be
-          shown on My content page when your order has been received and your content is licensed."
+          moreDescription={orderConfirmationDescription()}
           actions={
             <>
               <Button
@@ -54,11 +77,12 @@ const OrderConfirmationView = () => {
                 height="44px"
                 width="170px"
               />
-              <Link className="ml-6" to="/orders" data-qa="view-orders">
-                <Typography.Body weight="medium">
-                  View all orders
-                </Typography.Body>
-              </Link>
+              <FeatureGate
+                feature="BO_WEB_APP_DEV"
+                fallback={viewAllOrderLink()}
+              >
+                {viewMyContentLink()}
+              </FeatureGate>
             </>
           }
         />
@@ -67,5 +91,4 @@ const OrderConfirmationView = () => {
     </>
   );
 };
-
 export default OrderConfirmationView;
