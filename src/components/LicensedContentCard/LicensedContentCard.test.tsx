@@ -7,13 +7,19 @@ import LicensedContentFactory from 'boclips-api-client/dist/test-support/License
 import { render, renderWithClients } from 'src/testSupport/render';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
-import { RenderResult, waitFor, within } from '@testing-library/react';
+import {
+  fireEvent,
+  RenderResult,
+  waitFor,
+  within,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { lastEvent } from 'src/testSupport/lastEvent';
 
 describe('Licensed Content Card', () => {
-  it('make title a clickable link to video page', () => {
+  it('make title a clickable link to video page', async () => {
     const licensedContent: LicensedContent = LicensedContentFactory.sample({
       videoId: 'video-id',
       videoMetadata: {
@@ -25,20 +31,28 @@ describe('Licensed Content Card', () => {
         },
       },
     });
-
+    const client = new FakeBoclipsClient();
     const wrapper = renderWithClients(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
         <LicensedContentCard licensedContent={licensedContent} />,
       </BoclipsSecurityProvider>,
+      client,
     );
-    expect(wrapper.getByText('video-title')).toBeVisible();
-    expect(wrapper.getByText('video-title').closest('a')).toHaveAttribute(
-      'href',
-      '/videos/video-id',
-    );
+    const title = wrapper.getByText('video-title');
+    expect(title).toBeVisible();
+    expect(title.closest('a')).toHaveAttribute('href', '/videos/video-id');
+
+    fireEvent.click(title);
+    await waitFor(() => {
+      expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({
+        type: 'PLATFORM_INTERACTED_WITH',
+        subtype: 'MY_CONTENT_VIDEO_TITLE_CLICKED',
+        anonymous: false,
+      });
+    });
   });
 
-  it('make order id a clickable link to order details page', () => {
+  it('make order id a clickable link to order details page', async () => {
     const licensedContent: LicensedContent = LicensedContentFactory.sample({
       videoId: 'video-id',
       license: {
@@ -48,17 +62,28 @@ describe('Licensed Content Card', () => {
         endDate: new Date('2023-02-11'),
       },
     });
+    const fakeClient = new FakeBoclipsClient();
 
     const wrapper = renderWithClients(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
         <LicensedContentCard licensedContent={licensedContent} />,
       </BoclipsSecurityProvider>,
+      fakeClient,
     );
     expect(wrapper.getByText('order-1')).toBeVisible();
     expect(wrapper.getByText('order-1').closest('a')).toHaveAttribute(
       'href',
       '/orders/order-1',
     );
+
+    fireEvent.click(wrapper.getByText('order-1'));
+    await waitFor(() => {
+      expect(lastEvent(fakeClient, 'PLATFORM_INTERACTED_WITH')).toEqual({
+        type: 'PLATFORM_INTERACTED_WITH',
+        subtype: 'MY_CONTENT_AREA_ORDER_ID_CLICKED',
+        anonymous: false,
+      });
+    });
   });
 
   it('should have Video Assets button visible', async () => {
@@ -97,14 +122,27 @@ describe('Licensed Content Card', () => {
           },
         },
       });
+      const fakeClient = new FakeBoclipsClient();
 
       const wrapper = renderWithClients(
         <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
           <LicensedContentCard licensedContent={licensedContent} />
         </BoclipsSecurityProvider>,
+        fakeClient,
       );
 
       expect(await getAssetOption(wrapper, 'Metadata')).toBeVisible();
+      fireEvent.click(
+        await wrapper.findByRole('menuitem', { name: 'Metadata' }),
+      );
+
+      await waitFor(() => {
+        expect(lastEvent(fakeClient, 'PLATFORM_INTERACTED_WITH')).toEqual({
+          type: 'PLATFORM_INTERACTED_WITH',
+          subtype: 'MY_CONTENT_METADATA_BUTTON_CLICKED',
+          anonymous: false,
+        });
+      });
     });
 
     it('should not have Metadata option when metadata link is missing', async () => {
@@ -143,14 +181,27 @@ describe('Licensed Content Card', () => {
         },
       },
     });
+    const fakeClient = new FakeBoclipsClient();
 
     const wrapper = renderWithClients(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
         <LicensedContentCard licensedContent={licensedContent} />
       </BoclipsSecurityProvider>,
+      fakeClient,
     );
 
     expect(await getAssetOption(wrapper, 'Transcript')).toBeVisible();
+    fireEvent.click(
+      await wrapper.findByRole('menuitem', { name: 'Transcript' }),
+    );
+
+    await waitFor(() => {
+      expect(lastEvent(fakeClient, 'PLATFORM_INTERACTED_WITH')).toEqual({
+        type: 'PLATFORM_INTERACTED_WITH',
+        subtype: 'MY_CONTENT_TRANSCRIPT_BUTTON_CLICKED',
+        anonymous: false,
+      });
+    });
   });
 
   it('should not have Transcript option when video has no transcript', async () => {
@@ -191,14 +242,25 @@ describe('Licensed Content Card', () => {
         },
       },
     });
+    const fakeClient = new FakeBoclipsClient();
 
     const wrapper = renderWithClients(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
         <LicensedContentCard licensedContent={licensedContent} />
       </BoclipsSecurityProvider>,
+      fakeClient,
     );
 
     expect(await getAssetOption(wrapper, 'Captions')).toBeVisible();
+    fireEvent.click(await wrapper.findByRole('menuitem', { name: 'Captions' }));
+
+    await waitFor(() => {
+      expect(lastEvent(fakeClient, 'PLATFORM_INTERACTED_WITH')).toEqual({
+        type: 'PLATFORM_INTERACTED_WITH',
+        subtype: 'MY_CONTENT_CAPTIONS_BUTTON_CLICKED',
+        anonymous: false,
+      });
+    });
   });
 
   it('should open Captions modal when Captions button clicked', async () => {

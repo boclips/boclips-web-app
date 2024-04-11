@@ -12,12 +12,14 @@ import MyContentArea from 'src/components/MyContentArea/MyContentArea';
 import { useLocationParams } from 'src/hooks/useLocationParams';
 import { useNavigate } from 'react-router-dom';
 import Tooltip from '@boclips-ui/tooltip';
+import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 import s from './style.module.less';
 
 const PAGE_SIZE = 10;
 
 const ContentView = () => {
   const locationParams = useLocationParams();
+  const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
   const navigator = useNavigate();
 
   const [currentPageNumber, setCurrentPageNumber] = useState<number>(
@@ -27,6 +29,10 @@ const ContentView = () => {
     currentPageNumber,
     PAGE_SIZE,
   );
+
+  const handleTooltipHover = () => {
+    trackPlatformInteraction({ subtype: 'MY_CONTENT_AREA_INFO_VIEWED' });
+  };
 
   useEffect(() => {
     locationParams.set('page', currentPageNumber.toString());
@@ -87,7 +93,12 @@ const ContentView = () => {
                   </div>
                 }
               >
-                <div data-qa="territories-details" className={s.infoIcon}>
+                <div
+                  data-qa="content-info"
+                  className={s.infoIcon}
+                  onMouseOver={handleTooltipHover}
+                  onFocus={handleTooltipHover}
+                >
                   <InfoIcon onClick={null} />
                 </div>
               </Tooltip>
