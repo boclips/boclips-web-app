@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import LicensedContentPrimaryButton from 'src/components/LicensedContentCard/LicensedContentPrimaryButton';
 import LicensedContentAssetsButton from 'src/components/LicensedContentCard/LicensedContentAssetsButton';
 import LicensedContentTerritoryRestrictions from 'src/components/LicensedContentCard/LicensedContentTerritoryRestrictions';
+import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 import s from './styles.module.less';
 
 interface Props {
@@ -16,6 +17,8 @@ interface Props {
 }
 
 const LicensedContentCard = ({ licensedContent }: Props) => {
+  const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
+
   const getLabeledField = (label: string, value: string) => (
     <Typography.Body as="div" size="small">
       <span className={s.label}>{label}:</span>
@@ -34,6 +37,11 @@ const LicensedContentCard = ({ licensedContent }: Props) => {
             to={{
               pathname: `/videos/${licensedContent.videoId}`,
             }}
+            onClick={() =>
+              trackPlatformInteraction({
+                subtype: 'MY_CONTENT_VIDEO_TITLE_CLICKED',
+              })
+            }
             state={{ userNavigated: true }}
             aria-label={`${licensedContent.videoMetadata.title} content card`}
           >
@@ -60,6 +68,11 @@ const LicensedContentCard = ({ licensedContent }: Props) => {
                 pathname: `/orders/${licensedContent.license.orderId}`,
               }}
               state={{ userNavigated: true }}
+              onClick={() =>
+                trackPlatformInteraction({
+                  subtype: 'MY_CONTENT_AREA_ORDER_ID_CLICKED',
+                })
+              }
               aria-label={`${licensedContent.license.orderId} order link`}
             >
               <span className={s.link}>{licensedContent.license.orderId}</span>

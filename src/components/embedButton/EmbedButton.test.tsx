@@ -44,6 +44,36 @@ describe(`embed button`, () => {
     expect(within(notification).getByText('Embed code copied!')).toBeVisible();
   });
 
+  it(`calls onClick when clicked`, async () => {
+    jest.spyOn(navigator.clipboard, 'writeText');
+
+    const video = VideoFactory.sample({});
+    const fakeClient = new FakeBoclipsClient();
+    const onClickSpy = jest.fn();
+    const createCodeSpy = jest.spyOn(fakeClient.videos, 'createEmbedCode');
+
+    const wrapper = render(
+      <BoclipsClientProvider client={fakeClient}>
+        <ToastContainer />
+        <EmbedButton video={video} onClick={onClickSpy} />
+      </BoclipsClientProvider>,
+    );
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'embed' }));
+
+    expect(createCodeSpy).toHaveBeenCalledWith(video);
+
+    await waitFor(() => {
+      // This is hardcoded in the api client, a bit coupled
+      expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+        "<iframe src='https://api.staging-boclips.com/v1/embeds/embed-id/view'/>",
+      );
+    });
+    const notification = await wrapper.findByRole('alert');
+    expect(within(notification).getByText('Embed code copied!')).toBeVisible();
+    expect(onClickSpy).toHaveBeenCalledTimes(1);
+  });
+
   it(`copies the embed code to clipboard on click when licensedContent passed in`, async () => {
     jest.spyOn(navigator.clipboard, 'writeText');
     const licensedContent = LicensedContentFactory.sample({

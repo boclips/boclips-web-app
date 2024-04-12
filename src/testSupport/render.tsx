@@ -15,10 +15,13 @@ export const render = (component: React.ReactElement) =>
     </MemoryRouter>,
   );
 
-export const renderWithClients = (component: React.ReactElement) =>
+export const renderWithClients = (
+  component: React.ReactElement,
+  client = new FakeBoclipsClient(),
+) =>
   rtlRender(
     <MemoryRouter>
-      <BoclipsClientProvider client={new FakeBoclipsClient()}>
+      <BoclipsClientProvider client={client}>
         <QueryClientProvider client={new QueryClient()}>
           {component}
         </QueryClientProvider>

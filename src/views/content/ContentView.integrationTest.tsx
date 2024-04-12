@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { MemoryRouter, Router } from 'react-router-dom';
 import App from 'src/App';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
@@ -10,6 +10,7 @@ import { Link } from 'boclips-api-client/dist/types';
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
 import userEvent from '@testing-library/user-event';
 import { createBrowserHistory } from 'history';
+import { lastEvent } from 'src/testSupport/lastEvent';
 
 describe('ContentView', () => {
   it('loads the no content view (for now)', async () => {
@@ -38,31 +39,7 @@ describe('ContentView', () => {
   });
 
   it('displays licensed content', async () => {
-    const apiClient = new FakeBoclipsClient();
-    apiClient.licenses.insert({
-      videoId: 'id',
-      license: {
-        id: 'video-id',
-        orderId: 'order-id',
-        startDate: new Date('2022-01-11'),
-        endDate: new Date('2023-02-11'),
-      },
-      videoMetadata: {
-        title: 'video-title',
-        channelName: 'channel-name',
-        duration: dayjs.duration('PT112'),
-        links: {
-          self: new Link({ href: 'link', templated: false }),
-        },
-      },
-    });
-
-    apiClient.users.insertCurrentUser(
-      UserFactory.sample({
-        features: { BO_WEB_APP_DEV: true },
-      }),
-    );
-
+    const apiClient = setupLicenses();
     const wrapper = render(
       <MemoryRouter initialEntries={['/content']}>
         <App apiClient={apiClient} boclipsSecurity={stubBoclipsSecurity} />
@@ -149,23 +126,70 @@ describe('ContentView', () => {
     expect(history.location.search).toContain('?page=0');
   });
 
-  function contentItem(videoTitle: string): LicensedContent {
-    return {
-      videoId: 'video-id',
+  it(`emits platform interacted with event on viewing info`, async () => {
+    const apiClient = setupLicenses();
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/content']}>
+        <App apiClient={apiClient} boclipsSecurity={stubBoclipsSecurity} />
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByText('My Content Area')).toBeVisible();
+    await userEvent.hover(wrapper.getByTestId('content-info'));
+
+    await waitFor(() => {
+      expect(lastEvent(apiClient, 'PLATFORM_INTERACTED_WITH')).toEqual({
+        type: 'PLATFORM_INTERACTED_WITH',
+        subtype: 'MY_CONTENT_AREA_INFO_VIEWED',
+        anonymous: false,
+      });
+    });
+  });
+
+  const contentItem = (videoTitle: string): LicensedContent => ({
+    videoId: 'video-id',
+    license: {
+      id: 'license-id',
+      orderId: 'order-id',
+      startDate: new Date('2022-01-11'),
+      endDate: new Date('2023-02-11'),
+    },
+    videoMetadata: {
+      title: videoTitle,
+      channelName: 'channel-name',
+      duration: dayjs.duration('PT112'),
+      links: {
+        self: new Link({ href: 'link', templated: false }),
+      },
+    },
+  });
+
+  const setupLicenses = () => {
+    const apiClient = new FakeBoclipsClient();
+    apiClient.licenses.insert({
+      videoId: 'id',
       license: {
-        id: 'license-id',
+        id: 'video-id',
         orderId: 'order-id',
         startDate: new Date('2022-01-11'),
         endDate: new Date('2023-02-11'),
       },
       videoMetadata: {
-        title: videoTitle,
+        title: 'video-title',
         channelName: 'channel-name',
         duration: dayjs.duration('PT112'),
         links: {
           self: new Link({ href: 'link', templated: false }),
         },
       },
-    };
-  }
+    });
+
+    apiClient.users.insertCurrentUser(
+      UserFactory.sample({
+        features: { BO_WEB_APP_DEV: true },
+      }),
+    );
+    return apiClient;
+  };
 });

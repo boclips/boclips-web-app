@@ -15,6 +15,7 @@ interface Props {
   label?: string;
   width?: string;
   height?: string;
+  onClick?: () => void;
 }
 export const EmbedButton = ({
   video,
@@ -23,9 +24,14 @@ export const EmbedButton = ({
   height,
   iconOnly = true,
   label = 'Get embed code',
+  onClick,
 }: Props) => {
   const client = useBoclipsClient();
-  const onClick = async () => {
+  const onClickEvent = async () => {
+    if (onClick) {
+      onClick();
+    }
+
     if (!video && !licensedContent) {
       return;
     }
@@ -50,7 +56,7 @@ export const EmbedButton = ({
       icon={<EmbedIcon />}
       name="Embed"
       aria-label="embed"
-      onClick={onClick}
+      onClick={onClickEvent}
       width={width || defaultWidth}
       height={height || '40px'}
       text={!iconOnly && label}

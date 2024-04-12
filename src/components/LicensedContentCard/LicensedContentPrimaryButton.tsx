@@ -7,6 +7,7 @@ import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientP
 import { downloadFileFromUrl } from 'src/services/downloadFileFromUrl';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { LoadingOutlined } from '@ant-design/icons';
+import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 import DownloadIconSVG from '../../resources/icons/download-icon.svg';
 
 interface Props {
@@ -14,6 +15,8 @@ interface Props {
 }
 const LicensedContentPrimaryButton = ({ licensedContent }: Props) => {
   const apiClient = useBoclipsClient();
+  const { mutate: trackPlatformInteractedWithEvent } =
+    usePlatformInteractedWithEvent();
   const embedAction = licensedContent.videoMetadata.links.createEmbedCode;
   const downloadAction = licensedContent.videoMetadata.links.download;
   const [isDownloadLoading, setIsDownloadLoading] = useState<boolean>(false);
@@ -36,6 +39,11 @@ const LicensedContentPrimaryButton = ({ licensedContent }: Props) => {
           width="155px"
           height="48px"
           label="Embed Code"
+          onClick={() =>
+            trackPlatformInteractedWithEvent({
+              subtype: 'MY_CONTENT_EMBED_BUTTON_CLICKED',
+            })
+          }
         />
       )}
       {downloadAction && (
@@ -50,6 +58,9 @@ const LicensedContentPrimaryButton = ({ licensedContent }: Props) => {
           className={s.downloadButton}
           onClick={() => {
             setIsDownloadLoading(true);
+            trackPlatformInteractedWithEvent({
+              subtype: 'MY_CONTENT_DOWNLOAD_BUTTON_CLICKED',
+            });
             apiClient.licenses
               .getDownloadVideoUrl(licensedContent)
               .then((url) => {

@@ -10,6 +10,7 @@ import DownloadSVG from 'src/resources/icons/download.svg';
 import { Typography } from '@boclips-ui/typography';
 import OptionsDotsSVG from 'src/resources/icons/options-dots.svg';
 import { CaptionsModal } from 'src/components/LicensedContentCard/CaptionsModal';
+import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 
 interface Props {
   licensedContent: LicensedContent;
@@ -17,14 +18,17 @@ interface Props {
 const LicensedContentPrimaryButton = ({ licensedContent }: Props) => {
   const client = useBoclipsClient();
   const [openCaptionsModal, setOpenCaptionsModal] = React.useState(false);
-
+  const { mutate: platformInteractedWithEvent } =
+    usePlatformInteractedWithEvent();
   const downloadTranscript = async () => {
+    platformInteractedWithEvent({
+      subtype: 'MY_CONTENT_TRANSCRIPT_BUTTON_CLICKED',
+    });
     await client.licenses
       .getTranscript(licensedContent)
       .then((response) => {
         const href = URL.createObjectURL(new Blob([response.content]));
         downloadFileFromUrl(href, response.filename);
-
         URL.revokeObjectURL(href);
       })
       .catch(() => {
@@ -33,6 +37,9 @@ const LicensedContentPrimaryButton = ({ licensedContent }: Props) => {
   };
 
   const downloadMetadata = async () => {
+    platformInteractedWithEvent({
+      subtype: 'MY_CONTENT_METADATA_BUTTON_CLICKED',
+    });
     await client.licenses
       .getMetadata(licensedContent)
       .then((response) => {
@@ -51,7 +58,16 @@ const LicensedContentPrimaryButton = ({ licensedContent }: Props) => {
       <div className={s.assetsButton}>
         <DropdownMenu.Root modal={false}>
           <DropdownMenu.Trigger className={s.assetsDropdown} asChild>
-            <Button onClick={() => null} text="Video Assets" type="outline" />
+            <Button
+              onClick={() =>
+                platformInteractedWithEvent({
+                  subtype: 'MY_CONTENT_VIDEO_ASSETS_CLICKED',
+                  anonymous: false,
+                })
+              }
+              text="Video Assets"
+              type="outline"
+            />
           </DropdownMenu.Trigger>
 
           <DropdownMenu.Portal>
@@ -88,7 +104,12 @@ const LicensedContentPrimaryButton = ({ licensedContent }: Props) => {
                   <DropdownMenu.Item
                     className={s.assetDropdownItem}
                     textValue="Captions"
-                    onSelect={() => setOpenCaptionsModal(true)}
+                    onSelect={() => {
+                      platformInteractedWithEvent({
+                        subtype: 'MY_CONTENT_CAPTIONS_BUTTON_CLICKED',
+                      });
+                      setOpenCaptionsModal(true);
+                    }}
                   >
                     <OptionsDotsSVG />
                     <Typography.Body as="span" weight="medium">
