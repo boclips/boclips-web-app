@@ -71,15 +71,14 @@ const ContentView = () => {
                     <br />
                     <p>
                       On this page, you&apos;ll find all the essential
-                      information about the content you&apos;ve purchased.
+                      information about the content you&apos;ve purchased. You
+                      can download the metadata, transcript, and captions if you
+                      have a download account.
                     </p>
                     <br />
                     <p>
-                      You can download the metadata, transcript, and captions if
-                      you have a download account. If you have any questions
-                      about video assets contact us at
+                      If you have any questions about video assets contact us at{' '}
                       <a href="mailTo:support@boclips.com">
-                        {' '}
                         support@boclips.com
                       </a>
                       .
