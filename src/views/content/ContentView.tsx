@@ -61,29 +61,14 @@ const ContentView = () => {
                     </p>
                     <br />
                     <p>
-                      Find all your purchased content in one place. Content will
-                      be shown here when your order has been received and your
-                      content is licensed according to your requirements. There
-                      could be a small time delay between order and licensing
-                      but you will be able to see your order in My Orders in the
-                      meantime.
-                    </p>
-                    <br />
-                    <p>
-                      Access and takeaway the content files and also
-                      supplementary video assets such as metadata, transcripts
-                      and captions.
-                    </p>
-                    <br />
-                    <p>
-                      On this page, you&apos;ll find all the essential
-                      information about the content you&apos;ve purchased. You
-                      can download the metadata, transcript, and captions if you
-                      have a download account.
-                    </p>
-                    <br />
-                    <p>
-                      If you have any questions about video assets contact us at{' '}
+                      Access all your purchased content here once your order is
+                      processed and licensed. Note that there may be a brief
+                      delay between ordering and licensing; track your order
+                      under My Orders in the meantime.
+                      <br />
+                      Download content files, metadata, transcripts, and
+                      captions here, if available in your account. For
+                      inquiries, contact{' '}
                       <a href="mailTo:support@boclips.com">
                         support@boclips.com
                       </a>
