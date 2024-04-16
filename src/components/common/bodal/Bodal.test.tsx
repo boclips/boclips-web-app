@@ -312,4 +312,50 @@ describe('The mighty Bodal', () => {
 
     expect(wrapper.getByText('Second button!')).toBeVisible();
   });
+
+  it('confirm button disabled if button disabled', () => {
+    const wrapper = render(
+      <Bodal
+        title="Hello Bodal"
+        onCancel={jest.fn}
+        extraButton={<div>Second button!</div>}
+        isConfirmEnabled={false}
+      >
+        <span>i must be here!</span>
+      </Bodal>,
+    );
+
+    expect(wrapper.getByRole('button', { name: 'Confirm' })).toBeDisabled();
+  });
+
+  it('confirm button disabled if isLoading', () => {
+    const wrapper = render(
+      <Bodal
+        title="Hello Bodal"
+        onCancel={jest.fn}
+        extraButton={<div>Second button!</div>}
+        isLoading
+      >
+        <span>i must be here!</span>
+      </Bodal>,
+    );
+    expect(
+      wrapper.getByRole('button', { name: 'loading Confirm' }),
+    ).toBeDisabled();
+  });
+
+  it('confirm button enabled if isLoading is false and confirm is enabled', () => {
+    const wrapper = render(
+      <Bodal
+        title="Hello Bodal"
+        onCancel={jest.fn}
+        extraButton={<div>Second button!</div>}
+        isLoading={false}
+        isConfirmEnabled
+      >
+        <span>i must be here!</span>
+      </Bodal>,
+    );
+    expect(wrapper.getByRole('button', { name: 'Confirm' })).toBeEnabled();
+  });
 });
