@@ -21,6 +21,7 @@ export interface Props {
   onCancel?: () => void;
   confirmButtonText?: string;
   isLoading?: boolean;
+  isConfirmEnabled?: boolean;
   cancelButtonText?: string;
   dataQa?: string;
   initialFocusRef?: React.RefObject<HTMLElement> | string;
@@ -41,6 +42,7 @@ export const Bodal: React.FC<Props> = ({
   onConfirm,
   confirmButtonText = 'Confirm',
   isLoading = false,
+  isConfirmEnabled = true,
   onCancel,
   cancelButtonText = 'Cancel',
   dataQa = 'modal',
@@ -147,7 +149,8 @@ export const Bodal: React.FC<Props> = ({
               <Button
                 onClick={onConfirm}
                 text={confirmButtonText}
-                disabled={isLoading}
+                name={confirmButtonText}
+                disabled={isLoading || (!isConfirmEnabled && !isLoading)}
                 icon={getSpinner()}
               />
               {extraButton}

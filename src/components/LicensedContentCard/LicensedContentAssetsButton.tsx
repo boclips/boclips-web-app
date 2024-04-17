@@ -122,7 +122,12 @@ const LicensedContentPrimaryButton = ({ licensedContent }: Props) => {
           </DropdownMenu.Portal>
         </DropdownMenu.Root>
       </div>
-      {openCaptionsModal && <CaptionsModal setOpen={setOpenCaptionsModal} />}
+      {openCaptionsModal && (
+        <CaptionsModal
+          setOpen={setOpenCaptionsModal}
+          downloadLink={licensedContent.videoMetadata.links.downloadCaptions}
+        />
+      )}
     </>
   );
 };

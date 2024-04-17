@@ -9,3 +9,15 @@ export const downloadFileFromUrl = (fileUrl: string, filename?: string) => {
   link.click();
   document.body.removeChild(link);
 };
+
+export const fetchFile = (fileUrl: string) => {
+  fetch(fileUrl).then(async (response) => {
+    const blob = await response.blob();
+    const fileName = response.headers
+      .get('Content-Disposition')
+      ?.split('filename=')[1]
+      ?.replaceAll('"', '');
+
+    downloadFileFromUrl(URL.createObjectURL(blob), fileName);
+  });
+};

@@ -84,4 +84,47 @@ describe('LicensedContentAssetsButton', () => {
       });
     });
   });
+
+  it(`can download captions when present`, async () => {
+    const client = new FakeBoclipsClient();
+    const wrapper = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={client}>
+          <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+            <LicensedContentAssetsButton
+              licensedContent={LicensedContentFactory.sample({
+                ...LicensedContentFactory.sample({}),
+                videoMetadata: {
+                  title: 'video-title',
+                  channelName: 'channel-name',
+                  duration: dayjs.duration('PT112'),
+                  links: {
+                    self: new Link({ href: 'link', templated: false }),
+                    downloadCaptions: new Link({
+                      href: '/captions',
+                      templated: false,
+                    }),
+                  },
+                },
+              })}
+            />
+          </BoclipsSecurityProvider>
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
+
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Video Assets' }),
+    );
+    await waitFor(() =>
+      expect(wrapper.getByRole('menuitem', { name: 'Captions' })).toBeVisible(),
+    );
+    await userEvent.click(
+      await wrapper.findByRole('menuitem', { name: 'Captions' }),
+    );
+
+    expect(await wrapper.findByText('Download Captions')).toBeVisible();
+    expect(await wrapper.findByLabelText('English WEBVTT')).toBeVisible();
+    expect(await wrapper.findByLabelText('English SRT')).toBeVisible();
+  });
 });
