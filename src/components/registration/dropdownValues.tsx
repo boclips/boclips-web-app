@@ -42,7 +42,7 @@ const LIBRARY_JOB_TITLE = createDropdownOptions([
 
 const CLASSROOM_JOB_TITLE = createDropdownOptions([
   'Executive/Director',
-  'Principle/Headteacher',
+  'Principal/Headteacher',
   'Procurement/Purchasing/Licensing',
   'Administrator',
   'Project Manager',

@@ -45,7 +45,7 @@ describe('MarketingInfoForm', () => {
     fireEvent.click(dropdown);
 
     expect(wrapper.getByText('Executive/Director')).toBeVisible();
-    expect(wrapper.getByText('Principle/Headteacher')).toBeVisible();
+    expect(wrapper.getByText('Principal/Headteacher')).toBeVisible();
     expect(wrapper.getByText('Procurement/Purchasing/Licensing')).toBeVisible();
     expect(wrapper.getByText('Administrator')).toBeVisible();
     expect(wrapper.getByText('Project Manager')).toBeVisible();
