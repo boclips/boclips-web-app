@@ -1,6 +1,6 @@
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import App from 'src/App';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import React from 'react';
@@ -12,6 +12,7 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import { AdminLinksFactory } from 'boclips-api-client/dist/test-support/AdminLinksFactory';
+import { lastEvent } from 'src/testSupport/lastEvent';
 
 describe('App', () => {
   it('renders the not found page on user having incorrect role', async () => {
@@ -33,7 +34,7 @@ describe('App', () => {
     expect(await wrapper.findByText('Page not found!')).toBeVisible();
   });
 
-  it('renders the end of trial page on user having reportAccessExpired role', async () => {
+  it('renders the end of trial page on user having reportAccessExpired role and emits event', async () => {
     const security: BoclipsSecurity = {
       ...stubBoclipsSecurity,
       hasRole: (_role) => true,
@@ -54,6 +55,11 @@ describe('App', () => {
     expect(
       await wrapper.findByText('Your free trial has ended!'),
     ).toBeVisible();
+    await waitFor(() => {
+      expect(lastEvent(apiClient, 'USER_EXPIRED')).toEqual({
+        type: 'USER_EXPIRED',
+      });
+    });
   });
 
   it('renders the not found page on user accessing cart but not having cart link', async () => {

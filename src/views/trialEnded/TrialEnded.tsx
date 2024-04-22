@@ -6,8 +6,12 @@ import { Hero } from 'src/components/hero/Hero';
 import TrialEndedSVG from 'src/resources/icons/trial-ended.svg';
 import Button from '@boclips-ui/button';
 import { Helmet } from 'react-helmet';
+import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 
 const TrialEnded = () => {
+  const apiClient = useBoclipsClient();
+  apiClient.events.trackUserExpired();
+
   return (
     <Layout rowsSetup="grid-rows-home">
       <Helmet title="Trial Ended!" />
