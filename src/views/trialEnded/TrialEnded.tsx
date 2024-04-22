@@ -7,10 +7,14 @@ import TrialEndedSVG from 'src/resources/icons/trial-ended.svg';
 import Button from '@boclips-ui/button';
 import { Helmet } from 'react-helmet';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
+import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 
 const TrialEnded = () => {
-  const apiClient = useBoclipsClient();
-  apiClient.events.trackUserExpired();
+  const { mutate: trackEvent } = usePlatformInteractedWithEvent();
+  trackEvent({
+    subtype: 'CLASSROOM_TRIAL_EXPIRED_SCREEN_VIEWED',
+    anonymous: false,
+  });
 
   return (
     <Layout rowsSetup="grid-rows-home">
