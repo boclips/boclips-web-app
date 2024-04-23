@@ -56,8 +56,10 @@ describe('App', () => {
       await wrapper.findByText('Your free trial has ended!'),
     ).toBeVisible();
     await waitFor(() => {
-      expect(lastEvent(apiClient, 'USER_EXPIRED')).toEqual({
-        type: 'USER_EXPIRED',
+      expect(lastEvent(apiClient, 'PLATFORM_INTERACTED_WITH')).toEqual({
+        type: 'PLATFORM_INTERACTED_WITH',
+        subtype: 'CLASSROOM_TRIAL_EXPIRED_SCREEN_VIEWED',
+        anonymous: false,
       });
     });
   });
