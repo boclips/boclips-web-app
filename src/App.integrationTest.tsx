@@ -15,40 +15,21 @@ import { AdminLinksFactory } from 'boclips-api-client/dist/test-support/AdminLin
 import { lastEvent } from 'src/testSupport/lastEvent';
 
 describe('App', () => {
-  it('renders the not found page on user having incorrect role', async () => {
-    const security: BoclipsSecurity = {
-      ...stubBoclipsSecurity,
-      hasRole: (_role) => true,
-    };
-
-    const fakeApi = new FakeBoclipsClient();
-    delete fakeApi.links.boclipsWebAppAccess;
-    delete fakeApi.links.classroomWebAppAccess;
-
-    const wrapper = render(
-      <MemoryRouter>
-        <App boclipsSecurity={security} apiClient={fakeApi} />,
-      </MemoryRouter>,
-    );
-
-    expect(await wrapper.findByText('Page not found!')).toBeVisible();
-  });
+  const security: BoclipsSecurity = {
+    ...stubBoclipsSecurity,
+    hasRole: (_role) => true,
+  };
 
   it('renders the end of trial page on user having reportAccessExpired role and emits event', async () => {
-    const security: BoclipsSecurity = {
-      ...stubBoclipsSecurity,
-      hasRole: (_role) => true,
-    };
-
     const apiClient = new FakeBoclipsClient();
     apiClient.links.reportAccessExpired = {
-      href: '/report-access-expired',
+      href: '/expired',
       templated: false,
     };
 
     const wrapper = render(
       <MemoryRouter>
-        <App boclipsSecurity={security} apiClient={apiClient} />,
+        <App boclipsSecurity={security} apiClient={apiClient} />
       </MemoryRouter>,
     );
 
@@ -64,12 +45,25 @@ describe('App', () => {
     });
   });
 
+  it('renders the not found page on user having incorrect role', async () => {
+    const fakeApi = new FakeBoclipsClient();
+    delete fakeApi.links.boclipsWebAppAccess;
+    delete fakeApi.links.classroomWebAppAccess;
+
+    const wrapper = render(
+      <MemoryRouter>
+        <App boclipsSecurity={security} apiClient={fakeApi} />,
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByText('Page not found!')).toBeVisible();
+  });
   it('renders the not found page on user accessing cart but not having cart link', async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.links = AdminLinksFactory.sample({ cart: null });
     const wrapper = render(
       <MemoryRouter initialEntries={['/cart']}>
-        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />
       </MemoryRouter>,
     );
 
@@ -81,7 +75,7 @@ describe('App', () => {
     apiClient.links = AdminLinksFactory.sample({ userOrders: null });
     const wrapper = render(
       <MemoryRouter initialEntries={['/orders']}>
-        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />
       </MemoryRouter>,
     );
 
@@ -101,13 +95,9 @@ describe('App', () => {
   });
 
   it("doesn't render the not found page if user has correct role", async () => {
-    const security: BoclipsSecurity = {
-      ...stubBoclipsSecurity,
-      hasRole: (_role) => true,
-    };
     const wrapper = render(
       <MemoryRouter>
-        <App boclipsSecurity={security} apiClient={new FakeBoclipsClient()} />,
+        <App boclipsSecurity={security} apiClient={new FakeBoclipsClient()} />
       </MemoryRouter>,
     );
 
