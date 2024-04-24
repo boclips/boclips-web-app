@@ -73,7 +73,7 @@ describe(`FeatureGate`, () => {
       );
 
       expect(await screen.findByText('Hi')).toBeVisible();
-      expect(await screen.queryByText('Should not see this')).toBeNull();
+      expect(screen.queryByText('Should not see this')).toBeNull();
     });
   });
 

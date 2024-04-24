@@ -55,36 +55,32 @@ export const FeatureGate = (props: FeatureGateProps & OptionalProps) => {
   const { features, isLoading } = useFeatureFlags();
   const { products, isLoading: isProductsLoading } = useUserProducts();
 
-  if (!features) {
-    return null;
-  }
-
   if (isLoading || isProductsLoading) {
     return isView ? <Loading /> : null;
   }
 
-  if (product) {
+  if (product && products) {
     const hasProduct = products?.some((p) => p === product);
     if (hasProduct) {
       return <>{children}</>;
     }
   }
 
-  if (linkName) {
+  if (linkName && links) {
     const link = links[linkName];
     if (link) {
       return <>{children}</>;
     }
   }
 
-  if (anyLinkName) {
+  if (anyLinkName && links) {
     const hasAnyLink = (anyLinkName as AdminLinksKey[]).some((it) => links[it]);
     if (hasAnyLink) {
       return <>{children}</>;
     }
   }
 
-  if (feature) {
+  if (feature && features) {
     const isEnabled = features[feature];
     if (isEnabled) {
       return <>{children}</>;

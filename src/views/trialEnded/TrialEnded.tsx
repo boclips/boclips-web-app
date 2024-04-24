@@ -1,7 +1,7 @@
 import { Layout } from 'src/components/layout/Layout';
 import { EmptyNavbar } from 'src/components/layout/EmptyNavbar';
 import Footer from 'src/components/layout/Footer';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Hero } from 'src/components/hero/Hero';
 import TrialEndedSVG from 'src/resources/icons/trial-ended.svg';
 import Button from '@boclips-ui/button';
@@ -10,10 +10,13 @@ import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedW
 
 const TrialEnded = () => {
   const { mutate: trackEvent } = usePlatformInteractedWithEvent();
-  trackEvent({
-    subtype: 'CLASSROOM_TRIAL_EXPIRED_SCREEN_VIEWED',
-    anonymous: false,
-  });
+
+  useEffect(() => {
+    trackEvent({
+      subtype: 'CLASSROOM_TRIAL_EXPIRED_SCREEN_VIEWED',
+      anonymous: false,
+    });
+  }, [trackEvent]);
 
   return (
     <Layout rowsSetup="grid-rows-home">

@@ -13,7 +13,7 @@ type FeatureFlags = {
 function useFeatureFlags(): FeatureFlags {
   const { data: user, isLoading } = useGetUserQuery();
   return {
-    features: user?.features,
+    features: user?.features || {},
     isLoading,
   };
 }
