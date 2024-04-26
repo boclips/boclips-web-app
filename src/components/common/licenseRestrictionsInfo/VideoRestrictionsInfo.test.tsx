@@ -44,12 +44,12 @@ describe('video license restrictions', () => {
     ).toBeVisible();
   });
 
-  it(`does not display license restrictions info when LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED toggle is on`, async () => {
+  it(`does not display license restrictions info when BO_WEB_APP_HIDE_LICENSE_RESTRICTIONS toggle is on`, async () => {
     const fakeClient = new FakeBoclipsClient();
     const client = new QueryClient();
     fakeClient.users.insertCurrentUser(
       UserFactory.sample({
-        features: { LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED: true },
+        features: { BO_WEB_APP_HIDE_LICENSE_RESTRICTIONS: true },
       }),
     );
 

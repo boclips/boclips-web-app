@@ -30,8 +30,7 @@ export const VideoHeader = ({ video }: Props) => {
   const isAuthenticated = !!currentUser;
 
   const showLicensingDetails =
-    !featuresAreLoading &&
-    !features?.LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED;
+    !featuresAreLoading && !features?.BO_WEB_APP_HIDE_LICENSE_RESTRICTIONS;
 
   if (!video) {
     return null;

@@ -13,8 +13,7 @@ const LicenseRestrictionsInfo = ({
   const { features, isLoading: featuresAreLoading } = useFeatureFlags();
 
   const showLicensingDetails =
-    !featuresAreLoading &&
-    !features.LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED;
+    !featuresAreLoading && !features.BO_WEB_APP_HIDE_LICENSE_RESTRICTIONS;
 
   return (
     showLicensingDetails && (

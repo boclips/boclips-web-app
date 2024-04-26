@@ -71,10 +71,10 @@ describe('Order Modal', () => {
     expect(await wrapper.findByText('Total')).toBeVisible();
   });
 
-  it(`displays license restrictions info when without CTA when LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED is false`, async () => {
+  it(`displays license restrictions info when without CTA when BO_WEB_APP_HIDE_LICENSE_RESTRICTIONS is false`, async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.users.setCurrentUserFeatures({
-      LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED: false,
+      BO_WEB_APP_HIDE_LICENSE_RESTRICTIONS: false,
     });
 
     const history = createBrowserHistory();
@@ -101,10 +101,10 @@ describe('Order Modal', () => {
     ).not.toBeInTheDocument();
   });
 
-  it(`doesn't display license restrictions info when without CTA when LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED is true`, () => {
+  it(`doesn't display license restrictions info when without CTA when BO_WEB_APP_HIDE_LICENSE_RESTRICTIONS is true`, () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.users.setCurrentUserFeatures({
-      LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED: true,
+      BO_WEB_APP_HIDE_LICENSE_RESTRICTIONS: true,
     });
 
     const history = createBrowserHistory();

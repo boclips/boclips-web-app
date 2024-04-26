@@ -65,7 +65,7 @@ describe('VideoHeader B2B', () => {
     expect(await wrapper.findByText('Licensing Details')).toBeVisible();
   });
 
-  it('should not render video license duration section if user has LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED flag', () => {
+  it('should not render video license duration section if user has BO_WEB_APP_HIDE_LICENSE_RESTRICTIONS flag', () => {
     const client = new FakeBoclipsClient();
     client.users.insertCurrentUser(
       UserFactory.sample({
@@ -79,7 +79,7 @@ describe('VideoHeader B2B', () => {
       }),
     );
     client.users.setCurrentUserFeatures({
-      LICENSE_DURATION_RESTRICTION_CHECKS_DISABLED: true,
+      BO_WEB_APP_HIDE_LICENSE_RESTRICTIONS: true,
     });
 
     const wrapper = render(
