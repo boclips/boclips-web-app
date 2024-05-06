@@ -110,7 +110,7 @@ describe('playlistsQuery', () => {
     );
     expect(collectionsSpy).toBeCalledWith({
       origin: 'BO_WEB_APP',
-      size: 100,
+      size: 500,
     });
   });
 

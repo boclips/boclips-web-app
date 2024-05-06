@@ -89,7 +89,7 @@ export const useOwnAndEditableSharedPlaylistsQuery = () => {
     client.collections
       .getMySavedAndEditableCollectionsWithoutDetails({
         origin: 'BO_WEB_APP',
-        size: 100,
+        size: 500,
       })
       .then((playlists) => {
         return playlists.page;
