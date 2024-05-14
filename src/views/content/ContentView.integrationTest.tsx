@@ -47,6 +47,11 @@ describe('ContentView', () => {
     );
 
     expect(await wrapper.findByText('My Content Area')).toBeVisible();
+    expect(
+      await wrapper.findByText(
+        /Your Licenses from 31 March 2023 are available here. For any order prior to 31 March 2023 please reach out to/,
+      ),
+    ).toBeVisible();
 
     expect(await wrapper.findByText('video-title')).toBeVisible();
     expect(wrapper.getByText('Starting date:')).toBeVisible();
