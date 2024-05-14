@@ -34,7 +34,8 @@ module.exports = {
         navbar: 'repeat(2, auto)',
         'cart-view': 'minmax(74px, auto) minmax(50px, auto) 1fr auto',
         'orders-view': 'minmax(74px, auto) minmax(50px, auto) 1fr auto',
-        'content-view': 'minmax(74px, auto) minmax(50px, auto) 1fr auto',
+        'content-view':
+          'minmax(74px, auto) minmax(50px, auto) minmax(50px, auto) 1fr auto',
         'library-view': 'minmax(74px, auto) minmax(50px, auto) 1fr auto',
         'registration-view': 'minmax(74px, auto) 1fr',
         'welcome-view': 'minmax(74px, auto) auto auto auto 1fr auto',

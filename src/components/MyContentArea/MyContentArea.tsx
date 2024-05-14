@@ -47,7 +47,7 @@ const MyContentArea = ({
   return (
     <main
       tabIndex={-1}
-      className="col-start-2 col-end-26 row-start-3 row-end-4 flex flex-col items-start"
+      className="col-start-2 col-end-26 row-start-4 row-end-5 flex flex-col items-start"
     >
       {isLoading && placeholderView}
       {licensedContentPage?.page && (

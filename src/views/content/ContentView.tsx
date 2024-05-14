@@ -13,6 +13,8 @@ import { useLocationParams } from 'src/hooks/useLocationParams';
 import { useNavigate } from 'react-router-dom';
 import Tooltip from '@boclips-ui/tooltip';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
+import { Typography } from '@boclips-ui/typography';
+import getFormattedDate from 'src/services/getFormattedDate';
 import s from './style.module.less';
 
 const PAGE_SIZE = 10;
@@ -22,6 +24,9 @@ const ContentView = () => {
   const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
   const navigator = useNavigate();
 
+  const licensesStartDate = getFormattedDate(new Date('2023-03-31'), {
+    monthFormat: 'long',
+  });
   const [currentPageNumber, setCurrentPageNumber] = useState<number>(
     locationParams.get('page') ? Number(locationParams.get('page')) : 0,
   );
@@ -89,6 +94,19 @@ const ContentView = () => {
             )
           }
         />
+        {hasLicensedContent && (
+          <Typography.Body
+            as="div"
+            weight="medium"
+            className="row-start-3 row-end-3 col-start-2 col-end-24"
+          >
+            Your Licenses from {licensesStartDate} are available here. For any
+            order prior to {licensesStartDate} please reach out to{' '}
+            <Typography.Link type="inline-blue">
+              <a href="mailto:support@boclips.com">support@boclips.com</a>
+            </Typography.Link>
+          </Typography.Body>
+        )}
         {hasLicensedContent || isLoading ? (
           <MyContentArea
             licensedContentPage={licensedContent}
@@ -97,7 +115,7 @@ const ContentView = () => {
           />
         ) : (
           <ContentEmptyPlaceholderState
-            row="3"
+            row="4"
             icon={<EmptyContentSVG />}
             title="No results found for My Content Area."
             description="You can track and review all licensed content once you have placed orders. "
