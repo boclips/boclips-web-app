@@ -10,6 +10,8 @@ import { Constants } from 'src/AppConstants';
 import FallbackView from 'src/views/fallback/FallbackView';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Loading } from 'src/components/common/Loading';
+import { Helmet } from 'react-helmet';
+import NotFound from 'src/views/notFound/NotFound';
 
 interface Props {
   reactQueryClient?: QueryClient;
@@ -86,6 +88,15 @@ const AppUnauthenticated = ({
             <Route
               path="/playlists/shared/:id"
               element={<UnauthorizedPlaylistView />}
+            />
+            <Route
+              path="*"
+              element={
+                <>
+                  <Helmet title="Page not found" />
+                  <NotFound unauthenticated />
+                </>
+              }
             />
           </Routes>
           <ReactQueryDevtools initialIsOpen={false} />
