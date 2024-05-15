@@ -15,6 +15,7 @@ import Tooltip from '@boclips-ui/tooltip';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 import { Typography } from '@boclips-ui/typography';
 import getFormattedDate from 'src/services/getFormattedDate';
+import { Warning } from 'src/components/common/warning/Warning';
 import s from './style.module.less';
 
 const PAGE_SIZE = 10;
@@ -95,17 +96,17 @@ const ContentView = () => {
           }
         />
         {hasLicensedContent && (
-          <Typography.Body
-            as="div"
-            weight="medium"
-            className="row-start-3 row-end-3 col-start-2 col-end-24"
-          >
-            Your Licenses from {licensesStartDate} are available here. For any
-            order prior to {licensesStartDate} please reach out to{' '}
-            <Typography.Link type="inline-blue">
-              <a href="mailto:support@boclips.com">support@boclips.com</a>
-            </Typography.Link>
-          </Typography.Body>
+          <div className="row-start-3 row-end-3 col-start-2 col-end-26">
+            <Warning>
+              <Typography.Body>
+                Your Licenses from {licensesStartDate} are available here. For
+                any order prior to {licensesStartDate} please reach out to{' '}
+                <Typography.Link type="inline-blue">
+                  <a href="mailto:support@boclips.com">support@boclips.com</a>
+                </Typography.Link>
+              </Typography.Body>
+            </Warning>
+          </div>
         )}
         {hasLicensedContent || isLoading ? (
           <MyContentArea
