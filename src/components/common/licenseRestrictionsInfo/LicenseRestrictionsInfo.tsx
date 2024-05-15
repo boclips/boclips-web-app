@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography } from '@boclips-ui/typography';
 import useFeatureFlags from 'src/hooks/useFeatureFlags';
-import s from './style.module.less';
+import { Warning } from 'src/components/common/warning/Warning';
 
 interface LicenseRestrictionsInfoProps {
   displayCTAText?: boolean;
@@ -17,7 +17,7 @@ const LicenseRestrictionsInfo = ({
 
   return (
     showLicensingDetails && (
-      <div className={s.licenseRestrictionsInfo}>
+      <Warning>
         <Typography.Body data-qa="video-restriction-info">
           Videos have restrictions associated with their license.
           {displayCTAText && (
@@ -27,7 +27,7 @@ const LicenseRestrictionsInfo = ({
             </span>
           )}
         </Typography.Body>
-      </div>
+      </Warning>
     )
   );
 };
