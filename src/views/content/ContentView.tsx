@@ -116,7 +116,6 @@ const ContentView = () => {
           />
         ) : (
           <ContentEmptyPlaceholderState
-            row="4"
             icon={<EmptyContentSVG />}
             title="No results found for My Content Area."
             description="You can track and review all licensed content once you have placed orders. "
