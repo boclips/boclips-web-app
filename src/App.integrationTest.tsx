@@ -275,42 +275,18 @@ describe('App', () => {
     ).toBeVisible();
   });
 
-  describe('My Content Area view', () => {
-    it('redirects to my content page when hitting /content url', async () => {
-      const apiClient = new FakeBoclipsClient();
-      apiClient.users.insertCurrentUser(
-        UserFactory.sample({
-          features: { BO_WEB_APP_DEV: true },
-        }),
-      );
+  it('redirects to my content page when hitting /content url', async () => {
+    const apiClient = new FakeBoclipsClient();
 
-      const wrapper = render(
-        <MemoryRouter initialEntries={['/content']}>
-          <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
-        </MemoryRouter>,
-      );
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/content']}>
+        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+      </MemoryRouter>,
+    );
 
-      expect(
-        await wrapper.findByText('No results found for My Content Area.'),
-      ).toBeVisible();
-    });
-
-    it('will not redirect to my content page when hitting /content url without BWA_DEV feature', async () => {
-      const apiClient = new FakeBoclipsClient();
-      apiClient.users.insertCurrentUser(
-        UserFactory.sample({
-          features: { BO_WEB_APP_DEV: false },
-        }),
-      );
-
-      const wrapper = render(
-        <MemoryRouter initialEntries={['/content']}>
-          <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
-        </MemoryRouter>,
-      );
-
-      expect(await wrapper.findByText('Page not found!')).toBeInTheDocument();
-    });
+    expect(
+      await wrapper.findByText('No results found for My Content Area.'),
+    ).toBeVisible();
   });
 
   describe('Classroom registration page', () => {
