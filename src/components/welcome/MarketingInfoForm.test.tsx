@@ -16,14 +16,13 @@ describe('MarketingInfoForm', () => {
     expect(
       wrapper.getByText('Curriculum Developer/Instructional Designer'),
     ).toBeVisible();
+    expect(wrapper.getByText('Curriculum Leader')).toBeVisible();
     expect(wrapper.getByText('Product Manager/Owner')).toBeVisible();
-    expect(wrapper.getByText('Procurement/Licensing/Purchasing')).toBeVisible();
-    expect(wrapper.getByText('Administrator')).toBeVisible();
-    expect(wrapper.getByText('Portfolio Manager')).toBeVisible();
-    expect(wrapper.getByText('Project Manager')).toBeVisible();
-    expect(wrapper.getByText('Faculty')).toBeVisible();
-    expect(wrapper.getByText('Technology Specialist')).toBeVisible();
+    expect(wrapper.getByText('Procurement/Licensing')).toBeVisible();
+    expect(wrapper.getByText('Faculty/Support Staff')).toBeVisible();
     expect(wrapper.getByText('Executive')).toBeVisible();
+    expect(wrapper.getByText('Project Manager')).toBeVisible();
+    expect(wrapper.getByText('Portfolio Manager')).toBeVisible();
     expect(wrapper.getByText('Teacher')).toBeVisible();
     expect(wrapper.getByText('Professor')).toBeVisible();
     expect(wrapper.getByText('Other')).toBeVisible();
@@ -44,17 +43,19 @@ describe('MarketingInfoForm', () => {
 
     fireEvent.click(dropdown);
 
-    expect(wrapper.getByText('Executive/Director')).toBeVisible();
-    expect(wrapper.getByText('Principal/Headteacher')).toBeVisible();
-    expect(wrapper.getByText('Procurement/Purchasing/Licensing')).toBeVisible();
     expect(wrapper.getByText('Administrator')).toBeVisible();
-    expect(wrapper.getByText('Project Manager')).toBeVisible();
-    expect(wrapper.getByText('Portfolio Manager')).toBeVisible();
+    expect(
+      wrapper.getByText('Curriculum Developer/Instructional Designer'),
+    ).toBeVisible();
     expect(wrapper.getByText('Curriculum Leader')).toBeVisible();
-    expect(wrapper.getByText('Instructional Designer')).toBeVisible();
-    expect(wrapper.getByText('Technology Specialist')).toBeVisible();
-    expect(wrapper.getByText('Teacher/Professor')).toBeVisible();
+    expect(wrapper.getByText('Product Manager/Owner')).toBeVisible();
+    expect(wrapper.getByText('Procurement/Licensing')).toBeVisible();
+    expect(wrapper.getByText('Principal')).toBeVisible();
     expect(wrapper.getByText('Faculty/Support Staff')).toBeVisible();
+    expect(wrapper.getByText('Technology Specialist')).toBeVisible();
+    expect(wrapper.getByText('Project Manager')).toBeVisible();
+    expect(wrapper.getByText('Teacher')).toBeVisible();
+    expect(wrapper.getByText('Professor')).toBeVisible();
     expect(wrapper.getByText('Other')).toBeVisible();
   });
 

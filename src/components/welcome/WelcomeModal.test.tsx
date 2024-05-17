@@ -460,7 +460,7 @@ describe('Trial Welcome Modal', () => {
         await wrapper.findByText('Tell us a bit more about you'),
       ).toBeVisible();
 
-      await setJobTitle(wrapper, 'Principal/Headteacher');
+      await setJobTitle(wrapper, 'Professor');
       await setAudience(wrapper, 'K12');
       await setAudience(wrapper, 'Other');
       await setDesiredContent(wrapper, 'Hockey');
@@ -473,7 +473,7 @@ describe('Trial Welcome Modal', () => {
 
       await waitFor(() => {
         expect(updateUserSpy).toHaveBeenCalledWith('sk', {
-          jobTitle: 'Principal/Headteacher',
+          jobTitle: 'Professor',
           audiences: ['K12', 'Other'],
           desiredContent: 'Hockey',
           discoveryMethods: ['Employer', 'Social Media'],
@@ -494,7 +494,7 @@ describe('Trial Welcome Modal', () => {
 
       const wrapper = renderWelcomeView();
 
-      await setJobTitle(wrapper, 'Principal/Headteacher');
+      await setJobTitle(wrapper, 'Professor');
       await setAudience(wrapper, 'K12');
       await setDesiredContent(wrapper, 'Hockey');
 
