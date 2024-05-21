@@ -299,7 +299,7 @@ describe(`FeatureGate`, () => {
       render(
         <BoclipsClientProvider client={fakeClient}>
           <QueryClientProvider client={client}>
-            <FeatureGate product={Product.B2T} fallback={<div>Hi</div>}>
+            <FeatureGate product={Product.LTI} fallback={<div>Hi</div>}>
               <div>Should not see this</div>
             </FeatureGate>
           </QueryClientProvider>
