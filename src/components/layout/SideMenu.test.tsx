@@ -42,7 +42,7 @@ describe('Side Menu', () => {
     const wrapper = renderSideMenu(fakeClient);
 
     expect(
-      await wrapper.findByRole('link', { name: 'My orders' }),
+      await wrapper.findByRole('link', { name: 'Order History' }),
     ).toBeVisible();
   });
 

@@ -70,7 +70,7 @@ const ContentView = () => {
                       Access all your purchased content here once your order is
                       processed and licensed. Note that there may be a brief
                       delay between ordering and licensing; track your order
-                      under My Orders in the meantime.
+                      under Order History in the meantime.
                       <br />
                       Download content files, metadata, transcripts, and
                       captions here, if available in your account. For

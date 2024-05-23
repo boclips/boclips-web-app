@@ -192,7 +192,7 @@ const App = ({
                           linkName="userOrders"
                           fallback={<AccessDeniedView />}
                         >
-                          <Helmet title="My Orders" />
+                          <Helmet title="Order History" />
                           <OrdersView />
                         </FeatureGate>
                       }

@@ -32,7 +32,7 @@ const OrdersView = () => {
   return (
     <Layout rowsSetup="grid-rows-orders-view">
       <Navbar />
-      <PageHeader title="Your Orders" />
+      <PageHeader title="My Orders" />
       {hasOrders ? (
         <ErrorBoundary fallback={<RefreshPageError row="3" />}>
           <OrdersTable paginationPage={changePaginationPage} orders={orders} />

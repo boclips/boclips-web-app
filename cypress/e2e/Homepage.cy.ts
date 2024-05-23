@@ -26,7 +26,7 @@ context('Homepage -- feature flags off', () => {
     });
 
     cy.get('[data-qa="account-menu"]').click();
-    cy.findByText('My orders').should('not.exist');
+    cy.findByText('Order History').should('not.exist');
 
     cy.percySnapshot('Account panel without feature flags');
   });
@@ -67,7 +67,7 @@ context('Homepage -- feature flags on', () => {
       };
     });
     cy.get('[data-qa="account-menu"]').click();
-    cy.findByText('My orders').should('exist');
+    cy.findByText('Order History').should('exist');
 
     cy.percySnapshot('Account panel with feature flags');
   });

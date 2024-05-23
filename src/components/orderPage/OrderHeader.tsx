@@ -11,7 +11,7 @@ export const OrderHeader = ({ id }: { id?: string }) => {
     >
       <Link to="/orders" className="mr-4">
         <Typography.Body size="small" weight="medium">
-          Your orders
+          My orders
         </Typography.Body>
       </Link>
       <Arrow className="w-2  mr-4 self-center" />

@@ -163,7 +163,7 @@ export const AccountButton = () => {
               <div className="pt-2">
                 <Link onClick={ordersOpenedEvent} to="/orders" tabIndex={-1}>
                   <Typography.Body size="small" as="button">
-                    My orders
+                    Order History
                   </Typography.Body>
                 </Link>
               </div>

@@ -37,7 +37,7 @@ describe('order table', () => {
     const order = await wrapper.findAllByText('Order i-am-the-id');
 
     expect(order.length).toEqual(2);
-    expect(wrapper.getByText('Your orders')).toBeVisible();
+    expect(wrapper.getByText('My orders')).toBeVisible();
     expect(wrapper.queryByText('not-the-id')).not.toBeInTheDocument();
   });
 

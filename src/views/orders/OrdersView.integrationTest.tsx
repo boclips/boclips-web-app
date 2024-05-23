@@ -89,7 +89,7 @@ describe('OrderView', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByText('Your Orders')).toBeVisible();
+    expect(await wrapper.findByText('My Orders')).toBeVisible();
     expect((await wrapper.findAllByText('Order number')).length).toEqual(2);
     expect(await wrapper.findByText('woop-woop-im-an-id')).toBeVisible();
     expect(await wrapper.findByText('me-too!')).toBeVisible();
@@ -235,7 +235,7 @@ describe('OrderView', () => {
   });
 
   describe('window titles', () => {
-    it('displays My Orders as window title', async () => {
+    it('displays Order History as window title', async () => {
       render(
         <MemoryRouter initialEntries={['/orders']}>
           <App
@@ -248,7 +248,7 @@ describe('OrderView', () => {
       const helmet = Helmet.peek();
 
       await waitFor(() => {
-        expect(helmet.title).toEqual('My Orders');
+        expect(helmet.title).toEqual('Order History');
       });
     });
   });

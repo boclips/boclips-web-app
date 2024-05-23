@@ -77,7 +77,7 @@ describe(`Navbar`, () => {
 
         fireEvent.click(await wrapper.findByLabelText('Menu'));
 
-        expect(wrapper.getByText('My orders')).toBeInTheDocument();
+        expect(wrapper.getByText('Order History')).toBeInTheDocument();
         expect(wrapper.getByText('Cart')).toBeInTheDocument();
         expect(wrapper.getByText('Platform guide')).toBeInTheDocument();
         expect(wrapper.getByText('Log out')).toBeInTheDocument();
