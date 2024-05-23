@@ -132,7 +132,7 @@ describe(`Navbar test`, () => {
     await waitFor(() => wrapper.getByTestId('account-modal'));
 
     await waitFor(() => {
-      expect(wrapper.queryByText('My content')).toBeNull();
+      expect(wrapper.queryByText('Licenses')).toBeNull();
       expect(wrapper.getByText('Log out')).toBeInTheDocument();
     });
   });
@@ -153,7 +153,7 @@ describe(`Navbar test`, () => {
     await waitFor(() => wrapper.getByTestId('account-modal'));
 
     await waitFor(() => {
-      expect(wrapper.getByText('My content')).toBeInTheDocument();
+      expect(wrapper.getByText('Licenses')).toBeInTheDocument();
     });
   });
   /**

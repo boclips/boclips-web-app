@@ -44,7 +44,7 @@ const CartView = lazyWithRetry(() => import('src/views/cart/CartView'));
 const OrdersView = lazyWithRetry(() => import('src/views/orders/OrdersView'));
 
 const ContentView = lazyWithRetry(
-  () => import('src/views/content/ContentView'),
+  () => import('src/views/licenses/LicensesView'),
 );
 
 const OrderView = lazyWithRetry(() => import('src/views/order/OrderView'));
@@ -201,7 +201,16 @@ const App = ({
                       path="/content"
                       element={
                         <>
-                          <Helmet title="My Content Area" />
+                          <Helmet title="Licenses" />
+                          <ContentView />
+                        </>
+                      }
+                    />
+                    <Route
+                      path="/licenses"
+                      element={
+                        <>
+                          <Helmet title="Licenses" />
                           <ContentView />
                         </>
                       }

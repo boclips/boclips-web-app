@@ -275,7 +275,7 @@ describe('App', () => {
     ).toBeVisible();
   });
 
-  it('redirects to my content page when hitting /content url', async () => {
+  it('redirects to Licenses page when hitting /content url', async () => {
     const apiClient = new FakeBoclipsClient();
 
     const wrapper = render(
@@ -285,7 +285,21 @@ describe('App', () => {
     );
 
     expect(
-      await wrapper.findByText('No results found for My Content Area.'),
+      await wrapper.findByText('No results found for Licenses.'),
+    ).toBeVisible();
+  });
+
+  it('redirects to Licenses page when hitting /licenses url', async () => {
+    const apiClient = new FakeBoclipsClient();
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/licenses']}>
+        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
+      </MemoryRouter>,
+    );
+
+    expect(
+      await wrapper.findByText('No results found for Licenses.'),
     ).toBeVisible();
   });
 
@@ -307,7 +321,7 @@ describe('App', () => {
       expect(await wrapper.findByText('Create your account')).toBeVisible();
     });
 
-    it('will not redirect to my content page when hitting /classroom/register url without BWA_DEV feature', async () => {
+    it('will not redirect to Licenses page when hitting /classroom/register url without BWA_DEV feature', async () => {
       const apiClient = new FakeBoclipsClient();
       apiClient.users.insertCurrentUser(
         UserFactory.sample({

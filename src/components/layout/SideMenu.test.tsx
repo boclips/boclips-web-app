@@ -76,11 +76,11 @@ describe('Side Menu', () => {
     ).toBeVisible();
   });
 
-  it(`displays my content`, async () => {
+  it(`displays Licenses`, async () => {
     const wrapper = renderSideMenu(new FakeBoclipsClient());
 
     expect(
-      await wrapper.findByRole('link', { name: 'My content' }),
+      await wrapper.findByRole('link', { name: 'Licenses' }),
     ).toBeVisible();
   });
 

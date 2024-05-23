@@ -8,7 +8,7 @@ import InfoIcon from 'src/resources/icons/info.svg';
 import Footer from 'src/components/layout/Footer';
 import { Helmet } from 'react-helmet';
 import { useLicensedContentQuery } from 'src/hooks/api/licensedContentQuery';
-import MyContentArea from 'src/components/MyContentArea/MyContentArea';
+import LicensesArea from 'src/components/licensesArea/LicensesArea';
 import { useLocationParams } from 'src/hooks/useLocationParams';
 import { useNavigate } from 'react-router-dom';
 import Tooltip from '@boclips-ui/tooltip';
@@ -20,7 +20,7 @@ import s from './style.module.less';
 
 const PAGE_SIZE = 10;
 
-const ContentView = () => {
+const LicensesView = () => {
   const locationParams = useLocationParams();
   const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
   const navigator = useNavigate();
@@ -50,12 +50,12 @@ const ContentView = () => {
   const hasLicensedContent = licensedContent?.page?.length > 0;
   return (
     <>
-      <Helmet title="My Content Area" />
+      <Helmet title="Licenses" />
       <Layout rowsSetup="grid-rows-content-view" responsiveLayout>
         <Navbar />
         <PageHeader
           className={s.contentHeader}
-          title={hasLicensedContent ? 'My Content Area' : ''}
+          title={hasLicensedContent ? 'Licenses' : ''}
           button={
             hasLicensedContent && (
               <Tooltip
@@ -63,7 +63,7 @@ const ContentView = () => {
                 text={
                   <div className="text-left w-96">
                     <p>
-                      <b>My Content Area</b>
+                      <b>Licenses</b>
                     </p>
                     <br />
                     <p>
@@ -109,7 +109,7 @@ const ContentView = () => {
           </div>
         )}
         {hasLicensedContent || isLoading ? (
-          <MyContentArea
+          <LicensesArea
             licensedContentPage={licensedContent}
             onPageChange={(newPage) => setCurrentPageNumber(newPage)}
             isLoading={isLoading}
@@ -117,7 +117,7 @@ const ContentView = () => {
         ) : (
           <ContentEmptyPlaceholderState
             icon={<EmptyContentSVG />}
-            title="No results found for My Content Area."
+            title="No results found for Licenses."
             description="You can track and review all licensed content once you have placed orders. "
           />
         )}
@@ -127,4 +127,4 @@ const ContentView = () => {
   );
 };
 
-export default ContentView;
+export default LicensesView;

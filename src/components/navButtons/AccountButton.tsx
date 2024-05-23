@@ -154,7 +154,7 @@ export const AccountButton = () => {
               <div className="pt-2">
                 <Link onClick={contentOpenedEvent} to="/content" tabIndex={-1}>
                   <Typography.Body size="small" as="button">
-                    My content
+                    Licenses
                   </Typography.Body>
                 </Link>
               </div>

@@ -28,7 +28,7 @@ describe('ContentView', () => {
     );
 
     expect(
-      await wrapper.findByText('No results found for My Content Area.'),
+      await wrapper.findByText('No results found for Licenses.'),
     ).toBeVisible();
 
     expect(
@@ -46,7 +46,7 @@ describe('ContentView', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByText('My Content Area')).toBeVisible();
+    expect(await wrapper.findByText('Licenses')).toBeVisible();
     expect(
       await wrapper.findByText(
         /Your Licenses from 31 March 2023 are available here. For any order prior to 31 March 2023 please reach out to/,
@@ -81,7 +81,7 @@ describe('ContentView', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByText('My Content Area')).toBeVisible();
+    expect(await wrapper.findByText('Licenses')).toBeVisible();
 
     expect(await wrapper.findByText('video-1')).toBeVisible();
     expect(await wrapper.findByText('video-10')).toBeVisible();
@@ -122,7 +122,7 @@ describe('ContentView', () => {
       </Router>,
     );
 
-    expect(await wrapper.findByText('My Content Area')).toBeVisible();
+    expect(await wrapper.findByText('Licenses')).toBeVisible();
 
     await userEvent.click(wrapper.getByText('Next'));
     expect(history.location.search).toContain('?page=1');
@@ -140,7 +140,7 @@ describe('ContentView', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByText('My Content Area')).toBeVisible();
+    expect(await wrapper.findByText('Licenses')).toBeVisible();
     await userEvent.hover(wrapper.getByTestId('content-info'));
 
     await waitFor(() => {

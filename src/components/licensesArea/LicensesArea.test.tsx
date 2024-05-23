@@ -1,15 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import MyContentArea from 'src/components/MyContentArea/MyContentArea';
+import LicensesArea from 'src/components/licensesArea/LicensesArea';
 
-describe('My Content Area', () => {
+describe('Licenses', () => {
   it('displays licensed content card placeholder when still loading', () => {
     const wrapper = render(
-      <MyContentArea
-        licensedContentPage={null}
-        onPageChange={null}
-        isLoading
-      />,
+      <LicensesArea licensedContentPage={null} onPageChange={null} isLoading />,
     );
 
     expect(
