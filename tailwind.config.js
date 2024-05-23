@@ -49,7 +49,7 @@ module.exports = {
         'large-screen-video-view':
           'minmax(74px, auto) minmax(0, auto) repeat(3, auto)',
         'video-view': 'minmax(74px, auto) minmax(0, auto) repeat(6, auto)',
-        'my-account-view':
+        'my-profile-view':
           'minmax(74px, auto) min-content min-content min-content 1fr auto',
       },
       gridTemplateColumns: {

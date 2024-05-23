@@ -91,8 +91,8 @@ const ClassroomRegisterView = lazyWithRetry(
   () => import('src/views/classroom/register/ClassroomRegisterView'),
 );
 
-const MyAccountView = lazyWithRetry(
-  () => import('src/views/account/AccountView'),
+const MyProfileView = lazyWithRetry(
+  () => import('src/views/profile/ProfileView'),
 );
 
 const MyTeamView = lazyWithRetry(() => import('src/views/team/TeamView'));
@@ -274,7 +274,7 @@ const App = ({
                         </FeatureGate>
                       }
                     />
-                    <Route path="/account" element={<MyAccountView />} />
+                    <Route path="/profile" element={<MyProfileView />} />
                     <Route
                       path="/register"
                       element={

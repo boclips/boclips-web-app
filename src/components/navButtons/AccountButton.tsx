@@ -144,9 +144,9 @@ export const AccountButton = () => {
           </FeatureGate>
           <div role="menu" className={s.menu} aria-label="Account menu">
             <div className="pt-2">
-              <Link onClick={accountOpenedEvent} to="/account" tabIndex={-1}>
+              <Link onClick={accountOpenedEvent} to="/profile" tabIndex={-1}>
                 <Typography.Body size="small" as="button">
-                  Account
+                  Profile
                 </Typography.Body>
               </Link>
             </div>

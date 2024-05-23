@@ -20,7 +20,7 @@ describe('Side Menu', () => {
 
     expect(wrapper.getByRole('link', { name: 'Home' })).toBeVisible();
     expect(wrapper.getByRole('link', { name: 'All videos' })).toBeVisible();
-    expect(wrapper.getByRole('link', { name: 'Account' })).toBeVisible();
+    expect(wrapper.getByRole('link', { name: 'Profile' })).toBeVisible();
     expect(wrapper.getByRole('link', { name: 'Alignments' })).toBeVisible();
     expect(wrapper.getByRole('link', { name: 'Playlists' })).toBeVisible();
     expect(wrapper.getByRole('button', { name: 'Log out' })).toBeVisible();

@@ -8,7 +8,7 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
-import EditPersonalProfileModal from 'src/views/account/EditPersonalProfileModal';
+import EditPersonalProfileModal from 'src/views/profile/EditPersonalProfileModal';
 
 describe('Edit Personal Profile modal', () => {
   const user: User = {

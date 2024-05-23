@@ -11,13 +11,13 @@ import HomeIcon from 'src/resources/icons/home-icon.svg';
 import c from 'classnames';
 import Button from '@boclips-ui/button';
 import PencilSVG from 'src/resources/icons/pencil.svg';
-import EditPersonalProfileModal from 'src/views/account/EditPersonalProfileModal';
+import EditPersonalProfileModal from 'src/views/profile/EditPersonalProfileModal';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import getFormattedDate from 'src/services/getFormattedDate';
 import s from './style.module.less';
 
-const AccountView = () => {
+const ProfileView = () => {
   const { data: user, isLoading: userIsLoading } = useGetUserQuery();
   const [openEditProfileModal, setOpenEditProfileModal] =
     useState<boolean>(false);
@@ -28,13 +28,13 @@ const AccountView = () => {
 
   return (
     <>
-      <Helmet title="Account" />
-      <Layout rowsSetup="grid-rows-my-account-view" responsiveLayout>
+      <Helmet title="Profile" />
+      <Layout rowsSetup="grid-rows-my-profile-view" responsiveLayout>
         <Navbar />
-        <PageHeader title="Account" />
+        <PageHeader title="Profile" />
         <main tabIndex={-1} className={s.profileSection}>
           <Typography.H2 size="sm" className="mb-4">
-            Personal Profile
+            Personal
           </Typography.H2>
           <section className={c(s.infoCard, { [s.skeleton]: userIsLoading })}>
             <div>
@@ -91,9 +91,9 @@ const AccountView = () => {
           <Typography.H2 size="sm" className={`mb-4 ${s.skeleton}`}>
             <FeatureGate
               product={Product.CLASSROOM}
-              fallback={<p>Organization Profile</p>}
+              fallback={<p>Organization</p>}
             >
-              <p>School Profile</p>
+              <p>School</p>
             </FeatureGate>
           </Typography.H2>
           <section
@@ -148,4 +148,4 @@ const AccountView = () => {
   );
 };
 
-export default AccountView;
+export default ProfileView;

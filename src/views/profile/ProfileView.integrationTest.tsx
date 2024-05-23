@@ -21,7 +21,7 @@ import {
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import userEvent from '@testing-library/user-event';
 
-describe('Account view', () => {
+describe('Profile view', () => {
   const boclipsClient = new FakeBoclipsClient();
 
   const user = UserFactory.sample({
@@ -43,7 +43,7 @@ describe('Account view', () => {
     boclipsClient.users.insertCurrentUser(currentUser);
 
     render(
-      <MemoryRouter initialEntries={['/account']}>
+      <MemoryRouter initialEntries={['/profile']}>
         <App
           reactQueryClient={createReactQueryClient()}
           apiClient={boclipsClient}
@@ -57,9 +57,9 @@ describe('Account view', () => {
     boclipsClient.users.clear();
   });
 
-  it('renders account page', async () => {
+  it('renders profile page', async () => {
     wrapper();
-    expect(await screen.findByText('Account')).toBeInTheDocument();
+    expect(await screen.findByText('Profile')).toBeInTheDocument();
   });
 
   it('renders delete data info', async () => {
@@ -78,12 +78,12 @@ describe('Account view', () => {
     );
   });
 
-  it('displays Account as window title', async () => {
+  it('displays Profile as window title', async () => {
     wrapper();
 
     await waitFor(() => {
       const helmet = Helmet.peek();
-      expect(helmet.title).toEqual('Account');
+      expect(helmet.title).toEqual('Profile');
     });
   });
 
@@ -93,9 +93,7 @@ describe('Account view', () => {
 
       const userProfile = await screen.findByRole('main');
 
-      expect(
-        within(userProfile).getByText(/Personal Profile/),
-      ).toBeInTheDocument();
+      expect(within(userProfile).getByText(/Personal/)).toBeInTheDocument();
       expect(within(userProfile).getByText(/Name:/)).toBeInTheDocument();
       expect(
         await within(userProfile).findByText(/Bob Wick/),
@@ -174,9 +172,7 @@ describe('Account view', () => {
 
       const userProfile = await screen.findByRole('main');
 
-      expect(
-        within(userProfile).getByText(/Personal Profile/),
-      ).toBeInTheDocument();
+      expect(within(userProfile).getByText(/Personal/)).toBeInTheDocument();
       expect(
         within(userProfile).getByText(/Unique access code:/),
       ).toBeInTheDocument();
@@ -187,9 +183,7 @@ describe('Account view', () => {
   describe('Organization Profile', () => {
     it('renders my organization section', async () => {
       wrapper();
-      expect(
-        await screen.findByText(/Organization Profile/),
-      ).toBeInTheDocument();
+      expect(await screen.findByText(/Organization/)).toBeInTheDocument();
       expect(await screen.findByText(/Elephant Academy/)).toBeInTheDocument();
       expect(await screen.findByText(/Created on/)).toBeInTheDocument();
       expect(await screen.findByText(/March 2024/)).toBeInTheDocument();
@@ -212,7 +206,7 @@ describe('Account view', () => {
         },
       });
       wrapper(classroomUser);
-      expect(await screen.findByText(/School Profile/)).toBeInTheDocument();
+      expect(await screen.findByText(/School/)).toBeInTheDocument();
       expect(await screen.findByText(/Owl Academy/)).toBeInTheDocument();
       expect(await screen.findByText(/Created on/)).toBeInTheDocument();
       expect(await screen.findByText(/March 2024/)).toBeInTheDocument();

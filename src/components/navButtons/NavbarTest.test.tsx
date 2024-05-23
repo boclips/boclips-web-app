@@ -59,7 +59,7 @@ describe(`Navbar test`, () => {
     await waitFor(() => navbar.getByTestId('account-modal'));
 
     await waitFor(() => {
-      expect(navbar.getByText('Account')).toBeInTheDocument();
+      expect(navbar.getByText('Profile')).toBeInTheDocument();
       expect(navbar.getByText('Order History')).toBeInTheDocument();
       expect(navbar.getByText('Platform guide')).toBeInTheDocument();
       expect(navbar.getByText('Team')).toBeInTheDocument();
