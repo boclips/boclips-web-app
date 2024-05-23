@@ -71,7 +71,7 @@ const HomeView = () => {
             width="48%"
             height="48px"
             onClick={() => navigate('/playlists')}
-            text="View My Playlists"
+            text="View Playlists"
             icon={<YourLibraryIcon />}
           />
         </div>

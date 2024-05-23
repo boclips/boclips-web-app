@@ -82,7 +82,7 @@ describe('HomeView', () => {
   it('loads the home view buttons', async () => {
     const wrapper = renderWrapper();
     expect(await wrapper.findByText('Browse All Videos')).toBeInTheDocument();
-    expect(await wrapper.findByText('View My Playlists')).toBeInTheDocument();
+    expect(await wrapper.findByText('View Playlists')).toBeInTheDocument();
   });
 
   it('displays Home as window title', async () => {

@@ -180,7 +180,7 @@ export const AccountButton = () => {
             <div className="pt-2">
               <Link to="/playlists" tabIndex={-1}>
                 <Typography.Body size="small" as="button">
-                  My playlists
+                  Playlists
                 </Typography.Body>
               </Link>
             </div>

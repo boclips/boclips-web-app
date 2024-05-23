@@ -116,124 +116,116 @@ describe('PlaylistsView', () => {
       client.collections.bookmark(boclipsPlaylist);
     });
 
-    describe('BO_WEB_APP_DEV feature enabled', () => {
-      beforeEach(() => {
-        client.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
-      });
+    it('renders playlists tabs', async () => {
+      const wrapper = renderPlaylistsView(client);
 
-      it('renders playlists tabs', async () => {
-        const wrapper = renderPlaylistsView(client);
+      expect(await wrapper.findByText('My playlists')).toBeVisible();
+      expect(await wrapper.findByText('Shared with you')).toBeVisible();
+      expect(await wrapper.findByText('Boclips featured')).toBeVisible();
+    });
 
-        expect(await wrapper.findByText('My playlists')).toBeVisible();
-        expect(await wrapper.findByText('Shared with you')).toBeVisible();
-        expect(await wrapper.findByText('Boclips featured')).toBeVisible();
-      });
+    it('renders playlists created by the user', async () => {
+      const wrapper = renderPlaylistsView(client);
 
-      it('renders playlists created by the user', async () => {
-        const wrapper = renderPlaylistsView(client);
+      fireEvent.click(await wrapper.findByText('My playlists'));
+      expect(await wrapper.findByText('Playlist 1')).toBeVisible();
+      expect(await wrapper.findByText('Playlist 2')).toBeVisible();
+      expect(wrapper.queryByText('Bob made this Playlist')).toBeNull();
+      expect(wrapper.queryByText('Boclips made this Playlist')).toBeNull();
 
-        fireEvent.click(await wrapper.findByText('My playlists'));
-        expect(await wrapper.findByText('Playlist 1')).toBeVisible();
-        expect(await wrapper.findByText('Playlist 2')).toBeVisible();
-        expect(wrapper.queryByText('Bob made this Playlist')).toBeNull();
-        expect(wrapper.queryByText('Boclips made this Playlist')).toBeNull();
+      expect(await wrapper.findAllByText('By: You')).toHaveLength(2);
+    });
 
-        expect(await wrapper.findAllByText('By: You')).toHaveLength(2);
-      });
+    it('displays shared playlists', async () => {
+      const wrapper = renderPlaylistsView(client);
 
-      it('displays shared playlists', async () => {
-        const wrapper = renderPlaylistsView(client);
+      fireEvent.mouseDown(
+        await wrapper.findByRole('tab', { name: 'Shared with you' }),
+      );
+      expect(await wrapper.findByText('Bob made this Playlist')).toBeVisible();
+      expect(await wrapper.findByText('By: Bob')).toBeVisible();
+      expect(wrapper.queryByText('Playlist 1')).toBeNull();
+      expect(wrapper.queryByText('Boclips made this Playlist')).toBeNull();
+    });
 
-        fireEvent.mouseDown(
-          await wrapper.findByRole('tab', { name: 'Shared with you' }),
-        );
-        expect(
-          await wrapper.findByText('Bob made this Playlist'),
-        ).toBeVisible();
-        expect(await wrapper.findByText('By: Bob')).toBeVisible();
-        expect(wrapper.queryByText('Playlist 1')).toBeNull();
-        expect(wrapper.queryByText('Boclips made this Playlist')).toBeNull();
-      });
+    it('displays Boclips playlists and their owner as Boclips for external users', async () => {
+      client.users.insertCurrentUser(
+        UserFactory.sample({
+          account: {
+            id: 'acc-12',
+            name: 'External Account',
+            type: AccountType.STANDARD,
+            products: [Product.B2B],
+            createdAt: new Date(),
+          },
+        }),
+      );
+      const wrapper = renderPlaylistsView(client);
 
-      it('displays Boclips playlists and their owner as Boclips for external users', async () => {
-        client.users.insertCurrentUser(
-          UserFactory.sample({
-            account: {
-              id: 'acc-12',
-              name: 'External Account',
-              type: AccountType.STANDARD,
-              products: [Product.B2B],
-              createdAt: new Date(),
-            },
-          }),
-        );
-        const wrapper = renderPlaylistsView(client);
+      fireEvent.mouseDown(
+        await wrapper.findByRole('tab', { name: 'Boclips featured' }),
+      );
+      expect(
+        await wrapper.findByText('Boclips made this Playlist'),
+      ).toBeVisible();
+      expect(await wrapper.findByText('By: Boclips')).toBeVisible();
+      expect(wrapper.queryByText('Playlist 1')).toBeNull();
+      expect(wrapper.queryByText('Bob made this Playlist')).toBeNull();
+    });
 
-        fireEvent.mouseDown(
-          await wrapper.findByRole('tab', { name: 'Boclips featured' }),
-        );
-        expect(
-          await wrapper.findByText('Boclips made this Playlist'),
-        ).toBeVisible();
-        expect(await wrapper.findByText('By: Boclips')).toBeVisible();
-        expect(wrapper.queryByText('Playlist 1')).toBeNull();
-        expect(wrapper.queryByText('Bob made this Playlist')).toBeNull();
-      });
+    it('displays Boclips playlists and their owner as ownerName (Boclips) for internal users', async () => {
+      client.users.insertCurrentUser(
+        UserFactory.sample({
+          account: {
+            id: 'acc-1',
+            name: 'Boclips',
+            type: AccountType.STANDARD,
+            products: [Product.B2B],
+            createdAt: new Date(),
+          },
+        }),
+      );
+      const wrapper = renderPlaylistsView(client);
 
-      it('displays Boclips playlists and their owner as ownerName (Boclips) for internal users', async () => {
-        client.users.insertCurrentUser(
-          UserFactory.sample({
-            account: {
-              id: 'acc-1',
-              name: 'Boclips',
-              type: AccountType.STANDARD,
-              products: [Product.B2B],
-              createdAt: new Date(),
-            },
-          }),
-        );
-        const wrapper = renderPlaylistsView(client);
+      fireEvent.mouseDown(
+        await wrapper.findByRole('tab', { name: 'Boclips featured' }),
+      );
+      expect(
+        await wrapper.findByText('Boclips made this Playlist'),
+      ).toBeVisible();
+      expect(await wrapper.findByText('By: Eve (Boclips)')).toBeVisible();
+      expect(wrapper.queryByText('Playlist 1')).toBeNull();
+      expect(wrapper.queryByText('Bob made this Playlist')).toBeNull();
+    });
 
-        fireEvent.mouseDown(
-          await wrapper.findByRole('tab', { name: 'Boclips featured' }),
-        );
-        expect(
-          await wrapper.findByText('Boclips made this Playlist'),
-        ).toBeVisible();
-        expect(await wrapper.findByText('By: Eve (Boclips)')).toBeVisible();
-        expect(wrapper.queryByText('Playlist 1')).toBeNull();
-        expect(wrapper.queryByText('Bob made this Playlist')).toBeNull();
-      });
+    it(`emits events when clicking shared, boclips and my playlists tabs`, async () => {
+      const wrapper = renderPlaylistsView(client);
 
-      it(`emits events when clicking shared, boclips and my playlists tabs`, async () => {
-        const wrapper = renderPlaylistsView(client);
+      fireEvent.mouseDown(
+        await wrapper.findByRole('tab', { name: 'Boclips featured' }),
+      );
 
-        fireEvent.mouseDown(
-          await wrapper.findByRole('tab', { name: 'Boclips featured' }),
-        );
+      expect(
+        await wrapper.findByText('Boclips made this Playlist'),
+      ).toBeVisible();
 
-        expect(
-          await wrapper.findByText('Boclips made this Playlist'),
-        ).toBeVisible();
-
-        await waitFor(() => {
-          expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({
-            type: 'PLATFORM_INTERACTED_WITH',
-            subtype: 'BOCLIPS_SHARED_PLAYLISTS_TAB_OPENED',
-            anonymous: false,
-          });
+      await waitFor(() => {
+        expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({
+          type: 'PLATFORM_INTERACTED_WITH',
+          subtype: 'BOCLIPS_SHARED_PLAYLISTS_TAB_OPENED',
+          anonymous: false,
         });
+      });
 
-        fireEvent.mouseDown(
-          await wrapper.findByRole('tab', { name: 'Shared with you' }),
-        );
+      fireEvent.mouseDown(
+        await wrapper.findByRole('tab', { name: 'Shared with you' }),
+      );
 
-        await waitFor(() => {
-          expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({
-            type: 'PLATFORM_INTERACTED_WITH',
-            subtype: 'USER_SHARED_PLAYLISTS_TAB_OPENED',
-            anonymous: false,
-          });
+      await waitFor(() => {
+        expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({
+          type: 'PLATFORM_INTERACTED_WITH',
+          subtype: 'USER_SHARED_PLAYLISTS_TAB_OPENED',
+          anonymous: false,
         });
       });
     });
