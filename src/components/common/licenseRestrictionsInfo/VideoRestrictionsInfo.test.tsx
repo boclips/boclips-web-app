@@ -39,7 +39,7 @@ describe('video license restrictions', () => {
     ).toBeVisible();
     expect(
       await wrapper.findByText(
-        /Click on the video title you want to review before checking out./,
+        /Click on the video title you want to review before proceeding with billing./,
       ),
     ).toBeVisible();
   });

@@ -66,7 +66,7 @@ export const CartOrderSummary = ({ cart }: Props) => {
               setDisplayErrorMessage(!isCartValid);
               setModalOpen(isCartValid);
             }}
-            text="Place order"
+            text="Submit Order"
             height="44px"
             width="100%"
           />

@@ -96,7 +96,7 @@ describe('Order Modal', () => {
     ).toBeInTheDocument();
     expect(
       wrapper.queryByText(
-        'Click on the video title you want to review before checking out.',
+        'Click on the video title you want to review before proceeding with billing.',
       ),
     ).not.toBeInTheDocument();
   });
@@ -126,7 +126,7 @@ describe('Order Modal', () => {
     ).not.toBeInTheDocument();
     expect(
       wrapper.queryByText(
-        'Click on the video title you want to review before checking out.',
+        'Click on the video title you want to review before proceeding with billing.',
       ),
     ).not.toBeInTheDocument();
   });

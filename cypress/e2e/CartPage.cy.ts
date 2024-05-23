@@ -36,7 +36,7 @@ context('Cart page -- feature flags off', () => {
 
     cy.percySnapshot('Cart view -- without feature flags');
 
-    cy.contains('Place order').click();
+    cy.contains('Submit Order').click();
     cy.get('[data-qa="order-modal"]').contains('Total').should('not.exist');
 
     cy.percySnapshot('Order confirmation modal');
@@ -91,7 +91,7 @@ context('Cart page -- feature flags on', () => {
 
     cy.percySnapshot('Cart view -- with feature flags');
 
-    cy.contains('Place order').click();
+    cy.contains('Submit Order').click();
     cy.get('[data-qa="order-modal"]').contains('Total').should('exist');
 
     cy.percySnapshot('Order confirmation modal');
