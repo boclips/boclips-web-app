@@ -61,7 +61,7 @@ describe('Remove Team member modal', () => {
         account: {
           ...UserFactory.sample().account,
           id: 'account-id',
-          name: 'My Team Account',
+          name: 'Team Account',
           type: AccountType.STANDARD,
         },
       }),

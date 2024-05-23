@@ -18,8 +18,8 @@ import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
 import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { Helmet } from 'react-helmet';
 
-describe('My Team view', () => {
-  it('renders my team page', async () => {
+describe('Team view', () => {
+  it('renders Team page', async () => {
     const wrapper = render(
       <MemoryRouter initialEntries={['/team']}>
         <App
@@ -30,7 +30,7 @@ describe('My Team view', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByText('My team')).toBeInTheDocument();
+    expect(await wrapper.findByText('Team')).toBeInTheDocument();
     expect(
       wrapper.getByRole('button', { name: 'Add member' }),
     ).toBeInTheDocument();
@@ -496,7 +496,7 @@ describe('My Team view', () => {
     expect(await wrapper.findByText('Joe Biden')).toBeVisible();
   });
 
-  it('displays My Team as window title', async () => {
+  it('displays Team as window title', async () => {
     render(
       <MemoryRouter initialEntries={['/team']}>
         <App
@@ -508,7 +508,7 @@ describe('My Team view', () => {
 
     await waitFor(() => {
       const helmet = Helmet.peek();
-      expect(helmet.title).toEqual('My Team');
+      expect(helmet.title).toEqual('Team');
     });
   });
 });
