@@ -24,7 +24,7 @@ const LicenseRestrictionsInfo = ({
             <span>
               {' '}
               Click on the video title you want to review before proceeding with
-              billing..
+              billing.
             </span>
           )}
         </Typography.Body>
