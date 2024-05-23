@@ -95,7 +95,7 @@ const MyAccountView = lazyWithRetry(
   () => import('src/views/account/AccountView'),
 );
 
-const MyTeamView = lazyWithRetry(() => import('src/views/team/MyTeamView'));
+const MyTeamView = lazyWithRetry(() => import('src/views/team/TeamView'));
 
 interface Props {
   apiClient: BoclipsClient;

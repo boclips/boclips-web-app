@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet';
 import { RemoveTeamMemberModal } from 'src/components/teamModal/RemoveTeamMemberModal';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 
-const MyTeamView = () => {
+const TeamView = () => {
   const [isNewUserModalOpen, setIsNewUserModalOpen] = React.useState(false);
   const [accountUserToEdit, setAccountUserToEdit] = React.useState(undefined);
   const [accountUserToRemove, setAccountUserToRemove] =
@@ -20,11 +20,11 @@ const MyTeamView = () => {
 
   return (
     <>
-      <Helmet title="My Team" />
+      <Helmet title="Team" />
       <Layout rowsSetup="my-team-view" responsiveLayout>
         <Navbar />
         <PageHeader
-          title="My team"
+          title="Team"
           button={
             <FeatureGate fallback={null} linkName="createUser">
               <Button
@@ -68,4 +68,4 @@ const MyTeamView = () => {
   );
 };
 
-export default MyTeamView;
+export default TeamView;

@@ -62,7 +62,7 @@ describe(`Navbar test`, () => {
       expect(navbar.getByText('Account')).toBeInTheDocument();
       expect(navbar.getByText('Order History')).toBeInTheDocument();
       expect(navbar.getByText('Platform guide')).toBeInTheDocument();
-      expect(navbar.getByText('My team')).toBeInTheDocument();
+      expect(navbar.getByText('Team')).toBeInTheDocument();
       expect(navbar.getByText('Log out')).toBeInTheDocument();
     });
   });

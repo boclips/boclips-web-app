@@ -13,7 +13,7 @@ import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/Create
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
-describe('My Team modal', () => {
+describe('Team modal', () => {
   it('renders teams modal', () => {
     const wrapper = render(
       <BoclipsClientProvider client={new FakeBoclipsClient()}>
