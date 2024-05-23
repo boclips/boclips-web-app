@@ -62,9 +62,7 @@ const SideMenu = ({ hasSearchInNavbar = true }: Props) => {
         <Link to="/account">My account</Link>
         <Link to="/alignments">Alignments</Link>
         <Link to="/playlists">Playlists</Link>
-        <FeatureGate feature="BO_WEB_APP_DEV">
-          <Link to="/content">My content</Link>
-        </FeatureGate>
+        <Link to="/content">My content</Link>
         <FeatureGate linkName="userOrders">
           <Link to="/orders">My orders</Link>
         </FeatureGate>

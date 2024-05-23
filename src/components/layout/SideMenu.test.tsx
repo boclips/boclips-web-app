@@ -76,12 +76,8 @@ describe('Side Menu', () => {
     ).toBeVisible();
   });
 
-  it(`displays my content when user has dev flag`, async () => {
-    const fakeClient = new FakeBoclipsClient();
-    fakeClient.users.insertCurrentUser(
-      UserFactory.sample({ features: { BO_WEB_APP_DEV: true } }),
-    );
-    const wrapper = renderSideMenu(fakeClient);
+  it(`displays my content`, async () => {
+    const wrapper = renderSideMenu(new FakeBoclipsClient());
 
     expect(
       await wrapper.findByRole('link', { name: 'My content' }),
