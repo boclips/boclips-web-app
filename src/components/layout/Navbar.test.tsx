@@ -243,7 +243,7 @@ describe(`Navbar`, () => {
     );
   });
 
-  describe('My account in Navbar - mobile', () => {
+  describe('Account in Navbar - mobile', () => {
     const client = new FakeBoclipsClient();
     let wrapper;
 
@@ -266,7 +266,7 @@ describe(`Navbar`, () => {
       resize();
 
       fireEvent.click(await wrapper.findByLabelText('Menu'));
-      expect(wrapper.getByText('My account')).toBeVisible();
+      expect(wrapper.getByText('Account')).toBeVisible();
     });
   });
 

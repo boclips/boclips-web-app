@@ -92,7 +92,7 @@ const ClassroomRegisterView = lazyWithRetry(
 );
 
 const MyAccountView = lazyWithRetry(
-  () => import('src/views/account/MyAccountView'),
+  () => import('src/views/account/AccountView'),
 );
 
 const MyTeamView = lazyWithRetry(() => import('src/views/team/MyTeamView'));

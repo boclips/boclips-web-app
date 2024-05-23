@@ -91,7 +91,7 @@ export const AccountButton = () => {
           text={
             user.firstName && user.firstName.trim().length > 0
               ? `${user.firstName}`
-              : 'My Account'
+              : 'Account'
           }
           height="45px"
         />
@@ -146,7 +146,7 @@ export const AccountButton = () => {
             <div className="pt-2">
               <Link onClick={accountOpenedEvent} to="/account" tabIndex={-1}>
                 <Typography.Body size="small" as="button">
-                  My account
+                  Account
                 </Typography.Body>
               </Link>
             </div>

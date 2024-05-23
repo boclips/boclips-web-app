@@ -35,11 +35,11 @@ describe(`Navbar test`, () => {
       </Router>,
     );
 
-  it(`text is my account if name is blank`, async () => {
+  it(`text is Account if name is blank`, async () => {
     fakeClient.users.insertCurrentUser(UserFactory.sample({ firstName: ' ' }));
     const wrapper = renderAccountButton();
 
-    expect(await wrapper.findByText('My Account')).toBeInTheDocument();
+    expect(await wrapper.findByText('Account')).toBeInTheDocument();
   });
   let fakeClient: FakeBoclipsClient;
 
@@ -59,7 +59,7 @@ describe(`Navbar test`, () => {
     await waitFor(() => navbar.getByTestId('account-modal'));
 
     await waitFor(() => {
-      expect(navbar.getByText('My account')).toBeInTheDocument();
+      expect(navbar.getByText('Account')).toBeInTheDocument();
       expect(navbar.getByText('My orders')).toBeInTheDocument();
       expect(navbar.getByText('Platform guide')).toBeInTheDocument();
       expect(navbar.getByText('My team')).toBeInTheDocument();

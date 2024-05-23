@@ -17,7 +17,7 @@ import { FeatureGate } from 'src/components/common/FeatureGate';
 import getFormattedDate from 'src/services/getFormattedDate';
 import s from './style.module.less';
 
-const MyAccountView = () => {
+const AccountView = () => {
   const { data: user, isLoading: userIsLoading } = useGetUserQuery();
   const [openEditProfileModal, setOpenEditProfileModal] =
     useState<boolean>(false);
@@ -28,10 +28,10 @@ const MyAccountView = () => {
 
   return (
     <>
-      <Helmet title="My Account" />
+      <Helmet title="Account" />
       <Layout rowsSetup="grid-rows-my-account-view" responsiveLayout>
         <Navbar />
-        <PageHeader title="My Account" />
+        <PageHeader title="Account" />
         <main tabIndex={-1} className={s.profileSection}>
           <Typography.H2 size="sm" className="mb-4">
             Personal Profile
@@ -148,4 +148,4 @@ const MyAccountView = () => {
   );
 };
 
-export default MyAccountView;
+export default AccountView;

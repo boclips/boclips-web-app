@@ -15,12 +15,12 @@ import {
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('Side Menu', () => {
-  it('displays Home, All Videos, My Account, Alignments and Playlist buttons', () => {
+  it('displays Home, All Videos, Account, Alignments and Playlist buttons', () => {
     const wrapper = renderSideMenu();
 
     expect(wrapper.getByRole('link', { name: 'Home' })).toBeVisible();
     expect(wrapper.getByRole('link', { name: 'All videos' })).toBeVisible();
-    expect(wrapper.getByRole('link', { name: 'My account' })).toBeVisible();
+    expect(wrapper.getByRole('link', { name: 'Account' })).toBeVisible();
     expect(wrapper.getByRole('link', { name: 'Alignments' })).toBeVisible();
     expect(wrapper.getByRole('link', { name: 'Playlists' })).toBeVisible();
     expect(wrapper.getByRole('button', { name: 'Log out' })).toBeVisible();
@@ -64,7 +64,7 @@ describe('Side Menu', () => {
           id: 'acc-1',
           type: AccountType.STANDARD,
           products: [Product.B2B],
-          name: 'My account',
+          name: 'Account',
           createdAt: new Date(),
         },
       }),

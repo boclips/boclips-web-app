@@ -21,7 +21,7 @@ import {
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import userEvent from '@testing-library/user-event';
 
-describe('My Account view', () => {
+describe('Account view', () => {
   const boclipsClient = new FakeBoclipsClient();
 
   const user = UserFactory.sample({
@@ -57,9 +57,9 @@ describe('My Account view', () => {
     boclipsClient.users.clear();
   });
 
-  it('renders my account page', async () => {
+  it('renders account page', async () => {
     wrapper();
-    expect(await screen.findByText('My Account')).toBeInTheDocument();
+    expect(await screen.findByText('Account')).toBeInTheDocument();
   });
 
   it('renders delete data info', async () => {
@@ -78,12 +78,12 @@ describe('My Account view', () => {
     );
   });
 
-  it('displays My Account as window title', async () => {
+  it('displays Account as window title', async () => {
     wrapper();
 
     await waitFor(() => {
       const helmet = Helmet.peek();
-      expect(helmet.title).toEqual('My Account');
+      expect(helmet.title).toEqual('Account');
     });
   });
 
