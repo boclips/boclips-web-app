@@ -13,7 +13,7 @@ interface Props {
   isLoading: boolean;
 }
 
-const MyContentArea = ({
+const LicensesArea = ({
   licensedContentPage,
   onPageChange,
   isLoading,
@@ -77,4 +77,4 @@ const MyContentArea = ({
   );
 };
 
-export default MyContentArea;
+export default LicensesArea;

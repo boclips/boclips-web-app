@@ -4,7 +4,6 @@ import App from 'src/App';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import React from 'react';
-import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import dayjs from 'dayjs';
 import { Link } from 'boclips-api-client/dist/types';
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
@@ -12,23 +11,18 @@ import userEvent from '@testing-library/user-event';
 import { createBrowserHistory } from 'history';
 import { lastEvent } from 'src/testSupport/lastEvent';
 
-describe('ContentView', () => {
+describe('Licenses view', () => {
   it('loads the no content view (for now)', async () => {
     const apiClient = new FakeBoclipsClient();
-    apiClient.users.insertCurrentUser(
-      UserFactory.sample({
-        features: { BO_WEB_APP_DEV: true },
-      }),
-    );
 
     const wrapper = render(
-      <MemoryRouter initialEntries={['/content']}>
+      <MemoryRouter initialEntries={['/licenses']}>
         <App apiClient={apiClient} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
 
     expect(
-      await wrapper.findByText('No results found for My Content Area.'),
+      await wrapper.findByText('No results found for Licenses.'),
     ).toBeVisible();
 
     expect(
@@ -46,7 +40,7 @@ describe('ContentView', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByText('My Content Area')).toBeVisible();
+    expect(await wrapper.findByText('My Licenses')).toBeVisible();
     expect(
       await wrapper.findByText(
         /Your Licenses from 31 March 2023 are available here. For any order prior to 31 March 2023 please reach out to/,
@@ -69,19 +63,13 @@ describe('ContentView', () => {
       apiClient.licenses.insert(contentItem(`video-${videoNo}`));
     }
 
-    apiClient.users.insertCurrentUser(
-      UserFactory.sample({
-        features: { BO_WEB_APP_DEV: true },
-      }),
-    );
-
     const wrapper = render(
       <MemoryRouter initialEntries={['/content']}>
         <App apiClient={apiClient} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByText('My Content Area')).toBeVisible();
+    expect(await wrapper.findByText('My Licenses')).toBeVisible();
 
     expect(await wrapper.findByText('video-1')).toBeVisible();
     expect(await wrapper.findByText('video-10')).toBeVisible();
@@ -110,19 +98,13 @@ describe('ContentView', () => {
       apiClient.licenses.insert(contentItem(`video-${videoNo}`));
     }
 
-    apiClient.users.insertCurrentUser(
-      UserFactory.sample({
-        features: { BO_WEB_APP_DEV: true },
-      }),
-    );
-
     const wrapper = render(
       <Router location={history.location} navigator={history}>
         <App apiClient={apiClient} boclipsSecurity={stubBoclipsSecurity} />
       </Router>,
     );
 
-    expect(await wrapper.findByText('My Content Area')).toBeVisible();
+    expect(await wrapper.findByText('My Licenses')).toBeVisible();
 
     await userEvent.click(wrapper.getByText('Next'));
     expect(history.location.search).toContain('?page=1');
@@ -140,7 +122,7 @@ describe('ContentView', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByText('My Content Area')).toBeVisible();
+    expect(await wrapper.findByText('My Licenses')).toBeVisible();
     await userEvent.hover(wrapper.getByTestId('content-info'));
 
     await waitFor(() => {
@@ -190,11 +172,6 @@ describe('ContentView', () => {
       },
     });
 
-    apiClient.users.insertCurrentUser(
-      UserFactory.sample({
-        features: { BO_WEB_APP_DEV: true },
-      }),
-    );
     return apiClient;
   };
 });

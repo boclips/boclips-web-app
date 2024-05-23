@@ -152,9 +152,9 @@ export const AccountButton = () => {
             </div>
             <FeatureGate feature="BO_WEB_APP_DEV">
               <div className="pt-2">
-                <Link onClick={contentOpenedEvent} to="/content" tabIndex={-1}>
+                <Link onClick={contentOpenedEvent} to="/licenses" tabIndex={-1}>
                   <Typography.Body size="small" as="button">
-                    My content
+                    Licenses
                   </Typography.Body>
                 </Link>
               </div>

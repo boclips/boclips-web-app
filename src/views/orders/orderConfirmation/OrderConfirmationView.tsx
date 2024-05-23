@@ -27,7 +27,7 @@ const OrderConfirmationView = () => {
 
   const viewMyContentLink = () => (
     <Link className="ml-6" to="/content" data-qa="view-orders">
-      <Typography.Body weight="medium">View my content</Typography.Body>
+      <Typography.Body weight="medium">View licenses</Typography.Body>
     </Link>
   );
 
