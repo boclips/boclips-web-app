@@ -60,7 +60,7 @@ describe(`Navbar test`, () => {
 
     await waitFor(() => {
       expect(navbar.getByText('Account')).toBeInTheDocument();
-      expect(navbar.getByText('My orders')).toBeInTheDocument();
+      expect(navbar.getByText('Order History')).toBeInTheDocument();
       expect(navbar.getByText('Platform guide')).toBeInTheDocument();
       expect(navbar.getByText('My team')).toBeInTheDocument();
       expect(navbar.getByText('Log out')).toBeInTheDocument();
@@ -111,7 +111,7 @@ describe(`Navbar test`, () => {
     await waitFor(() => wrapper.getByTestId('account-modal'));
 
     await waitFor(() => {
-      expect(wrapper.queryByText('My orders')).toBeNull();
+      expect(wrapper.queryByText('Order History')).toBeNull();
       expect(wrapper.getByText('Log out')).toBeInTheDocument();
     });
   });
