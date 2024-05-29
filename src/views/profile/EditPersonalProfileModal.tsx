@@ -1,5 +1,5 @@
 import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
-import { useUpdateUser } from 'src/hooks/api/userQuery';
+import { useUpdateSelfUser } from 'src/hooks/api/userQuery';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import React, { useEffect, useRef, useState } from 'react';
 import {
@@ -42,16 +42,16 @@ const EditPersonalProfileModal = ({ userToUpdate, closeModal }: Props) => {
     lastName: userToUpdate.lastName,
   });
   const {
-    mutate: updateUser,
-    isLoading: isEditUserLoading,
-    isSuccess: isEditUserSuccess,
-  } = useUpdateUser();
+    mutate: updateSelfUser,
+    isLoading: isEditSelfUserLoading,
+    isSuccess: isEditSelfUserSuccess,
+  } = useUpdateSelfUser();
 
   useEffect(() => {
-    if (isEditUserSuccess) {
+    if (isEditSelfUserSuccess) {
       closeModal();
     }
-  }, [closeModal, isEditUserSuccess]);
+  }, [closeModal, isEditSelfUserSuccess]);
   const formIsValid = () => Object.values(isError).every((e) => !e);
   const handleConfirm = () => {
     if (!formIsValid()) {
@@ -64,16 +64,12 @@ const EditPersonalProfileModal = ({ userToUpdate, closeModal }: Props) => {
       type: UserType.b2bUser,
     };
 
-    updateUser(
+    updateSelfUser(
       { user: userToUpdate, request },
       {
-        onSuccess: (isSuccessfullyEdited: boolean) => {
-          if (isSuccessfullyEdited) {
-            successNotification(userToUpdate);
-            closeModal();
-          } else {
-            errorNotification('Unknown error', userToUpdate);
-          }
+        onSuccess: (updatedUser: User) => {
+          successNotification(updatedUser);
+          closeModal();
         },
         onError: (error: Error) => {
           errorNotification(error.message, userToUpdate);
@@ -99,7 +95,7 @@ const EditPersonalProfileModal = ({ userToUpdate, closeModal }: Props) => {
       onConfirm={handleConfirm}
       onCancel={closeModal}
       confirmButtonText="Save"
-      isLoading={isEditUserLoading}
+      isLoading={isEditSelfUserLoading}
     >
       <InputText
         ref={firstInputRef}
