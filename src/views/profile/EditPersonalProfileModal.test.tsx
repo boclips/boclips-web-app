@@ -42,7 +42,7 @@ describe('Edit Personal Profile modal', () => {
 
   it('updates the user', async () => {
     const client = new FakeBoclipsClient();
-    client.users.updateUser = jest.fn();
+    client.users.updateSelf = jest.fn();
 
     const wrapper = render(
       <BoclipsClientProvider client={client}>
@@ -68,7 +68,7 @@ describe('Edit Personal Profile modal', () => {
     await userEvent.click(wrapper.getByRole('button', { name: 'Save' }));
 
     await waitFor(() =>
-      expect(client.users.updateUser).toHaveBeenCalledWith('user-id-123', {
+      expect(client.users.updateSelf).toHaveBeenCalledWith(user, {
         firstName: 'Andrzej',
         lastName: 'Moussa',
         type: UserType.b2bUser,
