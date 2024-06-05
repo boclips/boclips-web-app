@@ -148,21 +148,21 @@ const RegistrationForm = ({
   const callbackRef = useRef<() => void>();
   callbackRef.current = handleUserCreation;
 
-  useEffect(() => {
-    const handleEvent = (e: KeyboardEvent<HTMLDivElement>) => {
-      if (e.key === 'Enter') {
-        callbackRef.current?.();
-      }
-    };
-
-    if (mainRef?.current) {
-      // @ts-ignore | not sure what going on here with the type
-      mainRef.current.addEventListener('keydown', handleEvent);
-    }
-
-    // @ts-ignore
-    return () => mainRef.current?.addEventListener('keydown', handleEvent);
-  }, [mainRef]);
+  // useEffect(() => {
+  //   const handleEvent = (e: KeyboardEvent<HTMLDivElement>) => {
+  //     if (e.key === 'Enter') {
+  //       // callbackRef.current?.();
+  //     }
+  //   };
+  //
+  //   // if (mainRef?.current) {
+  //   //   // @ts-ignore | not sure what going on here with the type
+  //   //   mainRef.current.addEventListener('keydown', handleEvent);
+  //   // }
+  //
+  //   // @ts-ignore
+  //   return () => mainRef.current?.addEventListener('keydown', handleEvent);
+  // }, [mainRef]);
 
   return (
     <main ref={mainRef} tabIndex={-1} className={s.formInputsWrapper}>
