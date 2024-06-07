@@ -14,15 +14,15 @@ describe(`PromotedPlaylists`, () => {
     const fakeApiClient = new FakeBoclipsClient();
     fakeApiClient.collections.addToFake(
       CollectionFactory.sample({
-        promotedFor: [PromotedForProduct.LIBRARY, PromotedForProduct.TEACHERS],
-        title: 'my promoted for library and teachers playlist',
+        promotedFor: [PromotedForProduct.LIBRARY, PromotedForProduct.CLASSROOM],
+        title: 'my promoted for library and classroom playlist',
         videos: [VideoFactory.sample({})],
       }),
     );
     fakeApiClient.collections.addToFake(
       CollectionFactory.sample({
-        promotedFor: [PromotedForProduct.TEACHERS],
-        title: 'my promoted for teachers playlist',
+        promotedFor: [PromotedForProduct.CLASSROOM],
+        title: 'my promoted for classroom playlist',
         videos: [VideoFactory.sample({})],
       }),
     );
@@ -46,10 +46,12 @@ describe(`PromotedPlaylists`, () => {
 
     expect(await wrapper.findByText('Featured Playlists')).toBeInTheDocument();
     expect(
-      await wrapper.findByText('my promoted for library and teachers playlist'),
+      await wrapper.findByText(
+        'my promoted for library and classroom playlist',
+      ),
     ).toBeInTheDocument();
     expect(
-      wrapper.queryByText('my promoted for teachers playlist'),
+      wrapper.queryByText('my promoted for classroom playlist'),
     ).not.toBeInTheDocument();
     expect(wrapper.queryByText('my regular playlist')).not.toBeInTheDocument();
   });
