@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
-import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
+import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
 import EditPersonalProfileModal from 'src/views/profile/EditPersonalProfileModal';
 
 describe('Edit Personal Profile modal', () => {

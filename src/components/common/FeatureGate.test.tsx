@@ -235,7 +235,7 @@ describe(`FeatureGate`, () => {
         <BoclipsClientProvider client={fakeClient}>
           <QueryClientProvider client={client}>
             <div>hi</div>
-            <FeatureGate product={Product.B2B}>
+            <FeatureGate product={Product.LIBRARY}>
               <div>I am hidden</div>
             </FeatureGate>
           </QueryClientProvider>
@@ -256,7 +256,7 @@ describe(`FeatureGate`, () => {
             ...UserFactory.sample().account,
             id: 'acc-1',
             name: 'Ren',
-            products: [Product.B2B],
+            products: [Product.LIBRARY],
             type: AccountType.STANDARD,
           },
         }),
@@ -268,7 +268,7 @@ describe(`FeatureGate`, () => {
         <BoclipsClientProvider client={fakeClient}>
           <QueryClientProvider client={client}>
             <div>hi</div>
-            <FeatureGate product={Product.B2B}>
+            <FeatureGate product={Product.LIBRARY}>
               <div>I am not hidden</div>
             </FeatureGate>
           </QueryClientProvider>

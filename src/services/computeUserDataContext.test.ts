@@ -21,7 +21,7 @@ describe('compute user data context', () => {
       const user = UserFactory.sample({
         account: {
           ...UserFactory.sample().account,
-          products: [Product.B2B],
+          products: [Product.LIBRARY],
         },
       });
       expect(computeUserDataContext(user).isClassroomUser).toBeFalsy();

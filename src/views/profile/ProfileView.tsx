@@ -59,7 +59,7 @@ const ProfileView = () => {
               >{`${user?.email}`}</Typography.Body>
             </div>
             {user?.jobTitle && (
-              <FeatureGate product={Product.B2B}>
+              <FeatureGate product={Product.LIBRARY}>
                 <div>
                   <Typography.Body>Job Title:</Typography.Body>
                   <Typography.Body

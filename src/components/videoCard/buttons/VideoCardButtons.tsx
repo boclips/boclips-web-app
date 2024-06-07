@@ -57,13 +57,13 @@ export const VideoCardButtons = ({
         <FeatureGate feature="BO_WEB_APP_COPY_VIDEO_ID_BUTTON">
           <CopyVideoIdButton video={video} />
         </FeatureGate>
-        <FeatureGate product={Product.B2B}>
+        <FeatureGate product={Product.LIBRARY}>
           <CopyVideoLinkButton video={video} onClick={trackCopyVideoLink} />
         </FeatureGate>
         {additionalSecondaryButtons}
       </div>
 
-      <FeatureGate product={Product.B2B}>
+      <FeatureGate product={Product.LIBRARY}>
         {video.links.createEmbedCode ? (
           <EmbedButton video={video} iconOnly={iconOnly} />
         ) : (

@@ -44,7 +44,7 @@ const PlaylistHeader = ({ playlist, showButtons = true }: Props) => {
       </div>
       {showButtons && (
         <div className={s.playlistButtons}>
-          <FeatureGate product={Product.B2B}>
+          <FeatureGate product={Product.LIBRARY}>
             <PlaylistShareButton playlist={playlist} />
           </FeatureGate>
           <FeatureGate product={Product.CLASSROOM}>

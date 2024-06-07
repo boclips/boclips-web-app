@@ -1,4 +1,4 @@
-import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
+import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
 import { useUpdateSelfUser } from 'src/hooks/api/userQuery';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import React, { useEffect, useRef, useState } from 'react';

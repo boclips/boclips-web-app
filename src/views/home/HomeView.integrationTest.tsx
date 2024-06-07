@@ -39,7 +39,7 @@ describe('HomeView', () => {
     );
   };
 
-  it('displays Library title if product is B2B', async () => {
+  it('displays Library title if product is LIBRARY', async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.users.insertCurrentUser(
       UserFactory.sample({
@@ -47,7 +47,7 @@ describe('HomeView', () => {
           ...UserFactory.sample().account,
           id: 'acc-1',
           name: 'Ren',
-          products: [Product.B2B],
+          products: [Product.LIBRARY],
           type: AccountType.STANDARD,
         },
       }),
@@ -339,7 +339,7 @@ describe('HomeView', () => {
           ...UserFactory.sample().account,
           id: 'LAL',
           name: 'LA Lakers',
-          products: [Product.B2B],
+          products: [Product.LIBRARY],
           type: AccountType.STANDARD,
         },
         audiences: null,
@@ -376,7 +376,7 @@ describe('HomeView', () => {
           ...UserFactory.sample().account,
           id: 'LAL',
           name: 'LA Lakers',
-          products: [Product.B2B],
+          products: [Product.LIBRARY],
           type: AccountType.STANDARD,
         },
         audiences: null,

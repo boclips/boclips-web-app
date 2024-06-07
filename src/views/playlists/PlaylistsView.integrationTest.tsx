@@ -155,7 +155,7 @@ describe('PlaylistsView', () => {
             id: 'acc-12',
             name: 'External Account',
             type: AccountType.STANDARD,
-            products: [Product.B2B],
+            products: [Product.LIBRARY],
             createdAt: new Date(),
           },
         }),
@@ -180,7 +180,7 @@ describe('PlaylistsView', () => {
             id: 'acc-1',
             name: 'Boclips',
             type: AccountType.STANDARD,
-            products: [Product.B2B],
+            products: [Product.LIBRARY],
             createdAt: new Date(),
           },
         }),
@@ -307,7 +307,7 @@ describe('PlaylistsView', () => {
   });
 
   describe('share playlists', () => {
-    it('has a share button that copies playlist link to clipboard only for B2B', async () => {
+    it('has a share button that copies playlist link to clipboard only for LIBRARY', async () => {
       Object.assign(navigator, {
         clipboard: {
           writeText: () => Promise.resolve(),
@@ -317,7 +317,7 @@ describe('PlaylistsView', () => {
       jest.spyOn(navigator.clipboard, 'writeText');
 
       const client = new FakeBoclipsClient();
-      insertUser(client, Product.B2B);
+      insertUser(client, Product.LIBRARY);
 
       const playlists = [
         CollectionFactory.sample({ id: '1', title: 'Playlist 1' }),

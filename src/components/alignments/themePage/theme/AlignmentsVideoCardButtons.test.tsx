@@ -39,7 +39,7 @@ describe('AlignmentsVideoCardButtons', () => {
         UserFactory.sample({
           account: {
             ...UserFactory.sample({}).account,
-            products: [Product.B2B],
+            products: [Product.LIBRARY],
           },
         }),
       );

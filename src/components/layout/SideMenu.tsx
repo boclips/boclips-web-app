@@ -72,7 +72,7 @@ const SideMenu = ({ hasSearchInNavbar = true }: Props) => {
         <FeatureGate linkName="cart">
           <Link to="/cart">Cart</Link>
         </FeatureGate>
-        <FeatureGate product={Product.B2B}>
+        <FeatureGate product={Product.LIBRARY}>
           <a
             target="_blank"
             href="https://www.boclips.com/boclips-platform-guide"

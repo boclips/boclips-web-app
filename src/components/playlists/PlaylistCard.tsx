@@ -39,7 +39,7 @@ const PlaylistCard: React.FC<PlaylistCardProps> = ({ playlist }) => {
         }
         footer={
           <>
-            <FeatureGate product={Product.B2B}>
+            <FeatureGate product={Product.LIBRARY}>
               <div className="p-2 items-end flex">
                 <CopyButton
                   ariaLabel="Copy playlist link"

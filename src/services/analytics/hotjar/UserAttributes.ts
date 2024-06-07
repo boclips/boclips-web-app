@@ -1,4 +1,4 @@
-import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
+import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
 
 const enum Attributes {
   OrganisationId = 'organisation_id',

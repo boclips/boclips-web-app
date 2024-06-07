@@ -26,7 +26,7 @@ describe('logo', () => {
           ...UserFactory.sample().account,
           id: 'account-id',
           name: 'Account name',
-          products: [Product.B2B],
+          products: [Product.LIBRARY],
           type: AccountType.STANDARD,
         },
       }),

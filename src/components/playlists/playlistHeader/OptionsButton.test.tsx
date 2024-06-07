@@ -302,13 +302,13 @@ describe('OptionsButton', () => {
       ).toBeVisible();
     });
 
-    it('is not available for B2B users', async () => {
+    it('is not available for LIBRARY users', async () => {
       apiClient.users.insertCurrentUser(
         UserFactory.sample({
           account: {
             id: 'acc-1',
             name: 'Crazy Account',
-            products: [Product.B2B],
+            products: [Product.LIBRARY],
             createdAt: new Date(),
             type: AccountType.STANDARD,
           },

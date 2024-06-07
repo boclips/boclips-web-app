@@ -11,7 +11,7 @@ import {
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
-describe('VideoHeader B2B', () => {
+describe('VideoHeader', () => {
   it('should render without crashing if links are null', () => {
     const wrapper = render(
       <BoclipsClientProvider client={new FakeBoclipsClient()}>
@@ -49,7 +49,7 @@ describe('VideoHeader B2B', () => {
           ...UserFactory.sample().account,
           id: 'acc-1',
           name: 'Ren',
-          products: [Product.B2B],
+          products: [Product.LIBRARY],
           type: AccountType.STANDARD,
         },
       }),
@@ -73,7 +73,7 @@ describe('VideoHeader B2B', () => {
           ...UserFactory.sample().account,
           id: 'acc-1',
           name: 'Ren',
-          products: [Product.B2B],
+          products: [Product.LIBRARY],
           type: AccountType.STANDARD,
         },
       }),

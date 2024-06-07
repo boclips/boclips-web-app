@@ -11,7 +11,7 @@ interface Props {
 
 export const AlignmentVideoCardButtons = ({ video }: Props) => {
   const secondaryButton = video.links.transcript && (
-    <FeatureGate product={Product.B2B}>
+    <FeatureGate product={Product.LIBRARY}>
       <DownloadTranscriptButton video={video} />
     </FeatureGate>
   );

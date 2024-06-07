@@ -2,7 +2,7 @@ import {
   AccountType,
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
+import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
 
 interface ComputeUserDataContextProps {
   isUserInTrial: boolean;

@@ -97,7 +97,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
       UserFactory.sample({
         account: {
           ...UserFactory.sample().account,
-          products: [Product.B2B],
+          products: [Product.LIBRARY],
         },
       }),
     );

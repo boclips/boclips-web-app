@@ -56,14 +56,14 @@ describe('Side Menu', () => {
     expect(await wrapper.findByRole('link', { name: 'Team' })).toBeVisible();
   });
 
-  it(`displays platform guide when user has product B2B`, async () => {
+  it(`displays platform guide when user has product LIBRARY`, async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.users.insertCurrentUser(
       UserFactory.sample({
         account: {
           id: 'acc-1',
           type: AccountType.STANDARD,
-          products: [Product.B2B],
+          products: [Product.LIBRARY],
           name: 'Account',
           createdAt: new Date(),
         },
@@ -122,7 +122,7 @@ describe('Side Menu', () => {
           ...UserFactory.sample().account,
           id: 'acc-1',
           name: 'Ren',
-          products: [Product.B2B],
+          products: [Product.LIBRARY],
           type: AccountType.STANDARD,
         },
         shareCode: '12AB',

@@ -3,7 +3,7 @@ import { Typography } from '@boclips-ui/typography';
 import { useAddNewTrialUser } from 'src/hooks/api/userQuery';
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
-import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
+import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import RegistrationFormFields from 'src/components/registration/registrationForm/registrationFormFields/RegistrationFormFields';
 import CreateAccountButton from 'src/components/registration/registrationForm/createAccountButton/CreateAccountButton';

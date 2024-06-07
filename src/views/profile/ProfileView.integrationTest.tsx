@@ -14,7 +14,7 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { Helmet } from 'react-helmet';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
-import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
+import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
 import {
   AccountType,
   Product,
@@ -33,7 +33,7 @@ describe('Profile view', () => {
     account: {
       id: 'acc-1',
       name: 'Elephant Academy',
-      products: [Product.B2B],
+      products: [Product.LIBRARY],
       type: AccountType.STANDARD,
       createdAt: new Date('2024-03-05T08:38:50.971544Z'),
     },

@@ -14,7 +14,7 @@ import {
 
 describe('VideoCardButtons', () => {
   describe(`create embed code button`, () => {
-    it(`renders embed code button when user has video embed link and B2B product`, async () => {
+    it(`renders embed code button when user has video embed link and LIBRARY product`, async () => {
       const video = VideoFactory.sample({
         links: {
           self: new Link({ href: '', templated: false }),
@@ -29,7 +29,7 @@ describe('VideoCardButtons', () => {
         UserFactory.sample({
           account: {
             ...UserFactory.sample().account,
-            products: [Product.B2B],
+            products: [Product.LIBRARY],
           },
         }),
       );
@@ -67,7 +67,7 @@ describe('VideoCardButtons', () => {
   });
 
   describe(`copy video link button`, () => {
-    it(`renders copy video link button when B2B user`, async () => {
+    it(`renders copy video link button when LIBRARY user`, async () => {
       const fakeClient = new FakeBoclipsClient();
       fakeClient.users.insertCurrentUser(
         UserFactory.sample({
@@ -75,7 +75,7 @@ describe('VideoCardButtons', () => {
             ...UserFactory.sample().account,
             id: 'acc-1',
             name: 'Ren',
-            products: [Product.B2B],
+            products: [Product.LIBRARY],
             type: AccountType.STANDARD,
           },
         }),

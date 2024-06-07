@@ -1,7 +1,7 @@
 import { BoclipsClient } from 'boclips-api-client';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
-import { User } from 'boclips-api-client/dist/sub-clients/organisations/model/User';
+import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
 import {
   CreateClassroomUserRequest,
   CreateTrialUserRequest,

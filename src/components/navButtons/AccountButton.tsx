@@ -184,7 +184,7 @@ export const AccountButton = () => {
                 </Typography.Body>
               </Link>
             </div>
-            <FeatureGate product={Product.B2B}>
+            <FeatureGate product={Product.LIBRARY}>
               <div className="pt-2">
                 <a
                   target="_blank"

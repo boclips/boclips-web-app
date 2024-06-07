@@ -70,19 +70,19 @@ export const VideoHeader = ({ video }: Props) => {
       <div className={s.descriptionAndButtons}>
         <div>
           <VideoBadges video={video} />
-          <FeatureGate product={Product.B2B} fallback={null}>
+          <FeatureGate product={Product.LIBRARY} fallback={null}>
             {showLicensingDetails && <VideoLicensingDetails video={video} />}
           </FeatureGate>
         </div>
         <div className={(s.sticky, s.buttons)}>
           <div className={s.iconButtons}>
             {isAuthenticated && <AddToPlaylistButton videoId={video?.id} />}
-            <FeatureGate product={Product.B2B}>
+            <FeatureGate product={Product.LIBRARY}>
               <CopyVideoLinkButton video={video} onClick={trackVideoCopy} />
             </FeatureGate>
             {videoHasTranscript && <DownloadTranscriptButton video={video} />}
           </div>
-          <FeatureGate product={Product.B2B}>
+          <FeatureGate product={Product.LIBRARY}>
             {video?.links?.createEmbedCode ? (
               <EmbedButton video={video} iconOnly={false} />
             ) : (

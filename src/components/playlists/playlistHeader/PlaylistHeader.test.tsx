@@ -85,7 +85,7 @@ describe('Playlist Header', () => {
     expect(wrapper.getByText('By: The Owner')).toBeVisible();
   });
 
-  describe('share button for B2B', () => {
+  describe('share button for LIBRARY', () => {
     it('view-only playlist has a view-only share button for non-owner', async () => {
       const playlist = CollectionFactory.sample({
         id: '123',
@@ -281,7 +281,7 @@ describe('Playlist Header', () => {
     );
   });
 
-  it('has an options button for B2B', async () => {
+  it('has an options button for LIBRARY', async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.users.insertCurrentUser(
       UserFactory.sample({
@@ -289,7 +289,7 @@ describe('Playlist Header', () => {
           ...UserFactory.sample().account,
           id: 'acc-1',
           name: 'Ren',
-          products: [Product.B2B],
+          products: [Product.LIBRARY],
           type: AccountType.STANDARD,
         },
       }),

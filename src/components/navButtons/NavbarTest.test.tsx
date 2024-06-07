@@ -275,7 +275,7 @@ describe(`Navbar test`, () => {
           ...UserFactory.sample().account,
           id: 'acc-1',
           name: 'Ren',
-          products: [Product.B2B],
+          products: [Product.LIBRARY],
           type: AccountType.STANDARD,
         },
         shareCode: '12AB',
