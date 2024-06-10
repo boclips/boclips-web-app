@@ -10,14 +10,14 @@ import s from './style.module.less';
 const Logo = (): ReactElement => {
   const { data: user } = useGetUserQuery();
 
-  const logoTitle = user?.organisation?.logoUrl
-    ? `${user.organisation.name} logo - Go to homepage`
+  const logoTitle = user?.account?.logoUrl
+    ? `${user.account.name} logo - Go to homepage`
     : 'Boclips logo - Go to homepage';
 
   return (
     <Link to="/" reloadDocument aria-label={logoTitle} className={s.logo}>
-      {user?.organisation?.logoUrl ? (
-        <img alt={logoTitle} src={user?.organisation?.logoUrl} />
+      {user?.account?.logoUrl ? (
+        <img alt={logoTitle} src={user?.account?.logoUrl} />
       ) : (
         <FeatureGate
           product={Product.CLASSROOM}
