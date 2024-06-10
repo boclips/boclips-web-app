@@ -1,8 +1,8 @@
 import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
 
 const enum Attributes {
-  OrganisationId = 'organisation_id',
-  OrganisationName = 'organisation_name',
+  AccountId = 'account_id',
+  AccountName = 'account_name',
 }
 
 export default class UserAttributes {
@@ -15,9 +15,8 @@ export default class UserAttributes {
   public attributes(): object {
     const attributes = {};
 
-    attributes[Attributes.OrganisationId] = this.user.organisation?.id || null;
-    attributes[Attributes.OrganisationName] =
-      this.user.organisation?.name || null;
+    attributes[Attributes.AccountId] = this.user.account?.id || null;
+    attributes[Attributes.AccountName] = this.user.account?.name || null;
 
     return attributes;
   }

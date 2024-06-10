@@ -2,6 +2,7 @@ import Hotjar from 'src/services/analytics/hotjar/Hotjar';
 import HotjarService from 'src/services/analytics/hotjar/HotjarService';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import UserAttributes from 'src/services/analytics/hotjar/UserAttributes';
+import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 
 describe('HotjarService', () => {
   let hotjar: Hotjar;
@@ -26,29 +27,32 @@ describe('HotjarService', () => {
 
   it('user id is not sent with user attributes', () => {
     const user = {
+      ...UserFactory.sample(),
       id: 'user-998',
       firstName: 'Jack',
       lastName: 'Sparrow',
       email: 'jack@voclips.com',
-      organisation: undefined,
+      account: undefined,
     };
     const attributes = new UserAttributes(user);
 
     hotjarService.userAttributes(attributes);
 
     expect(hotjar.identify).toHaveBeenCalledWith(null, {
-      organisation_id: null,
-      organisation_name: null,
+      account_id: null,
+      account_name: null,
     });
   });
 
-  it('sends user organisation as user attributes', () => {
+  it('sends user account as user attributes', () => {
     const user = {
+      ...UserFactory.sample(),
       id: 'user-998',
       firstName: 'Jack',
       lastName: 'Sparrow',
       email: 'jack@voclips.com',
-      organisation: {
+      account: {
+        ...UserFactory.sample().account,
         id: 'org-09',
         name: 'Org 09',
       },
@@ -58,8 +62,8 @@ describe('HotjarService', () => {
     hotjarService.userAttributes(attributes);
 
     expect(hotjar.identify).toHaveBeenCalledWith(null, {
-      organisation_id: user.organisation.id,
-      organisation_name: user.organisation.name,
+      account_id: user.account.id,
+      account_name: user.account.name,
     });
   });
 });
