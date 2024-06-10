@@ -17,17 +17,13 @@ describe('logo', () => {
 
     apiClient.users.insertCurrentUser(
       UserFactory.sample({
-        organisation: {
-          id: 'org-id',
-          name: 'org name',
-          logoUrl: null,
-        },
         account: {
           ...UserFactory.sample().account,
           id: 'account-id',
           name: 'Account name',
           products: [Product.LIBRARY],
           type: AccountType.STANDARD,
+          logoUrl: null,
         },
       }),
     );
@@ -52,17 +48,13 @@ describe('logo', () => {
 
     apiClient.users.insertCurrentUser(
       UserFactory.sample({
-        organisation: {
-          id: 'org-id',
-          name: 'org name',
-          logoUrl: null,
-        },
         account: {
           ...UserFactory.sample().account,
           id: 'account-id',
           name: 'Account name',
           products: [Product.CLASSROOM],
           type: AccountType.STANDARD,
+          logoUrl: null,
         },
       }),
     );
@@ -82,12 +74,13 @@ describe('logo', () => {
     expect(await navbar.findByTestId('classroom-logo')).toBeVisible();
   });
 
-  it('does renders the organisation logo if logo url is provided', async () => {
+  it('does renders the accounts logo if logo url is provided', async () => {
     const apiClient = new FakeBoclipsClient();
 
     apiClient.users.insertCurrentUser(
       UserFactory.sample({
-        organisation: {
+        account: {
+          ...UserFactory.sample().account,
           id: '1',
           name: 'Pearson',
           logoUrl: 'this is a logo url',
