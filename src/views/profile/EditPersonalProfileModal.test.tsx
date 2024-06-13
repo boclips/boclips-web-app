@@ -13,7 +13,6 @@ import EditPersonalProfileModal from 'src/views/profile/EditPersonalProfileModal
 describe('Edit Personal Profile modal', () => {
   const user: User = {
     email: 'v@doe.com',
-    organisation: { id: 'org-1', name: '' },
     id: 'user-id-123',
     firstName: 'Vincent',
     lastName: 'Doe',

@@ -12,8 +12,7 @@ interface Props {
 export const PriceBadge = ({ price }: Props) => {
   const { data: user } = useGetUserQuery();
 
-  const userIsPearson =
-    user?.organisation?.id === Constants.PEARSON_ORGANISATION_ID;
+  const userIsPearson = user?.account?.id === Constants.PEARSON_ACCOUNT_ID;
 
   const shouldShowPriceUnavailableBadge =
     userIsPearson && (!price || price.amount === 0);
