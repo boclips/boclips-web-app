@@ -58,12 +58,13 @@ describe('PriceBadgeWrapper', () => {
 
   it('shows a price unavailable badge when user is from specified org and video is $0', async () => {
     window.Environment = {
-      PEARSON_ORGANISATION_ID: '123',
+      PEARSON_ACCOUNT_ID: '123',
     };
 
     const apiClient = new FakeBoclipsClient();
     const user = UserFactory.sample({
-      organisation: {
+      account: {
+        ...UserFactory.sample().account,
         id: '123',
         name: 'Specified org',
       },
@@ -85,12 +86,13 @@ describe('PriceBadgeWrapper', () => {
 
   it('shows a price unavailable badge when user is from specified org and video has no price', async () => {
     window.Environment = {
-      PEARSON_ORGANISATION_ID: '123',
+      PEARSON_ACCOUNT_ID: '123',
     };
 
     const apiClient = new FakeBoclipsClient();
     const user = UserFactory.sample({
-      organisation: {
+      account: {
+        ...UserFactory.sample().account,
         id: '123',
         name: 'Specified org',
       },
