@@ -49,7 +49,6 @@ describe(`Navbar test`, () => {
         firstName: 'Eddie',
         lastName: 'Bravo',
         email: 'eddie@10thplanetjj.com',
-        features: { BO_WEB_APP_DEV: true },
       }),
     );
     const navbar = renderAccountButton();
@@ -62,6 +61,7 @@ describe(`Navbar test`, () => {
       expect(navbar.getByText('Profile')).toBeInTheDocument();
       expect(navbar.getByText('Order History')).toBeInTheDocument();
       expect(navbar.getByText('Platform guide')).toBeInTheDocument();
+      expect(navbar.getByText('Licenses')).toBeInTheDocument();
       expect(navbar.getByText('Team')).toBeInTheDocument();
       expect(navbar.getByText('Log out')).toBeInTheDocument();
     });
@@ -116,13 +116,15 @@ describe(`Navbar test`, () => {
     });
   });
 
-  it('does not contain your content link in tooltip when user does not have BWA_DEV feature enabled', async () => {
-    fakeClient.users.insertCurrentUser(
-      UserFactory.sample({
-        firstName: 'yo',
-        features: { BO_WEB_APP_DEV: false },
-      }),
-    );
+  it('does not contain your content link in tooltip when user does not have myLicensedContent link', async () => {
+    const user = UserFactory.sample({
+      id: '123',
+      firstName: 'yo',
+      lastName: 'yo',
+      email: 'yoyo@ma.com',
+    });
+    fakeClient.users.insertCurrentUser(user);
+    fakeClient.links.myLicensedContent = null;
 
     const wrapper = renderAccountButton();
     expect(await wrapper.findByText('yo')).toBeInTheDocument();
