@@ -172,6 +172,7 @@ const WelcomeModal = ({ showPopup, isAdmin, isClassroomUser }: Props) => {
       {!isAdmin && (
         <div className="mt-3">
           <TermsAndConditionsCheckbox
+            isClassroomUser={isClassroomUser}
             handleChange={setTermsAndConditionsChecked}
             isInvalid={errors.termsAndConditionsNotAccepted}
           />
