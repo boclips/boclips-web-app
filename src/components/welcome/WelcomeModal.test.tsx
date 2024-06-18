@@ -89,6 +89,9 @@ describe('Trial Welcome Modal', () => {
       ).toBeVisible();
 
       expect(wrapper.getByRole('button', { name: "Let's Go!" })).toBeVisible();
+      expect(
+        wrapper.getByRole('link', { name: 'Boclips Terms & Conditions' }),
+      ).toHaveProperty('href', 'https://www.boclips.com/mlsa');
     });
 
     it('updates user but not account when button clicked and form filled out', async () => {
@@ -253,6 +256,9 @@ describe('Trial Welcome Modal', () => {
       ).toBeVisible();
 
       expect(wrapper.getByText('School:')).toBeVisible();
+      expect(
+        wrapper.getByRole('link', { name: 'Boclips Terms & Conditions' }),
+      ).toHaveProperty('href', 'https://www.boclips.com/mlsa-classroom');
     });
 
     it('updates user but not account when button clicked and form filled out', async () => {

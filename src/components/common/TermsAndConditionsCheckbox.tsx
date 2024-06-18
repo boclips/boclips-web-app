@@ -5,11 +5,13 @@ import { Typography } from '@boclips-ui/typography';
 interface Props {
   handleChange: (value: boolean) => void;
   isInvalid: boolean;
+  isClassroomUser: boolean;
 }
 
 export const TermsAndConditionsCheckbox = ({
   handleChange,
   isInvalid,
+  isClassroomUser,
 }: Props) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
@@ -18,7 +20,11 @@ export const TermsAndConditionsCheckbox = ({
       I understand that by checking this box, I am agreeing to the <br />
       <a
         rel="noopener noreferrer"
-        href="https://www.boclips.com/mlsa"
+        href={
+          isClassroomUser
+            ? 'https://www.boclips.com/mlsa-classroom'
+            : 'https://www.boclips.com/mlsa'
+        }
         target="_blank"
       >
         <Typography.Link type="inline-blue">

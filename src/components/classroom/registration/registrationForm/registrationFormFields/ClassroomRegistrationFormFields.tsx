@@ -70,7 +70,7 @@ const ClassroomRegistrationFormFields = ({
       I understand that by checking this box, I am agreeing to the{' '}
       <a
         rel="noopener noreferrer"
-        href="https://www.boclips.com/mlsa"
+        href="https://www.boclips.com/mlsa-classroom"
         target="_blank"
       >
         <Typography.Link type="inline-blue">
