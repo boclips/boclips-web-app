@@ -1,6 +1,8 @@
 import React from 'react';
 import { Typography } from '@boclips-ui/typography';
 import c from 'classnames';
+import { FeatureGate } from 'src/components/common/FeatureGate';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import s from './footer.module.less';
 
 interface Props {
@@ -18,18 +20,12 @@ const Footer = ({ className }: Props) => {
         className="flex flex-row items-center"
       >
         Copyright © {currentDate.getFullYear()} Boclips. All rights reserved.
-        <a
-          rel="noopener noreferrer"
-          className={s.link}
-          href="https://www.boclips.com/mlsa"
-          target="_blank"
+        <FeatureGate
+          product={Product.CLASSROOM}
+          fallback={getTermsAndConditionsLink('https://www.boclips.com/mlsa')}
         >
-          <Typography.Body size="small" weight="medium">
-            <Typography.Link type="inline-blue">
-              Terms &amp; Conditions
-            </Typography.Link>
-          </Typography.Body>
-        </a>
+          {getTermsAndConditionsLink('https://www.boclips.com/mlsa-classroom')}
+        </FeatureGate>
         <a
           rel="noopener noreferrer"
           className={s.link}
@@ -50,5 +46,15 @@ const Footer = ({ className }: Props) => {
     </footer>
   );
 };
+
+const getTermsAndConditionsLink = (link: string) => (
+  <a rel="noopener noreferrer" className={s.link} href={link} target="_blank">
+    <Typography.Body size="small" weight="medium">
+      <Typography.Link type="inline-blue">
+        Terms &amp; Conditions
+      </Typography.Link>
+    </Typography.Body>
+  </a>
+);
 
 export default Footer;
