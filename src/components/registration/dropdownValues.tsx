@@ -55,6 +55,7 @@ const CLASSROOM_JOB_TITLE = createDropdownOptions([
 ]);
 
 const DISCOVERY_METHOD = createDropdownOptions([
+  'CCC - Copyright Clearance Center',
   'Search Engine (Google, Bing etc)',
   'Industry newsletter',
   'Blog or Publication',

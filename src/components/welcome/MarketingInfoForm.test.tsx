@@ -77,7 +77,7 @@ describe('MarketingInfoForm', () => {
       />,
     );
 
-    expect(await wrapper.queryByText('I heard about Boclips')).toBeNull();
+    expect(wrapper.queryByText('I heard about Boclips')).toBeNull();
   });
 
   it('all discovery methods are available when dropdown clicked', async () => {
@@ -90,6 +90,7 @@ describe('MarketingInfoForm', () => {
 
     fireEvent.click(dropdown);
 
+    expect(wrapper.getByText('CCC - Copyright Clearance Center')).toBeVisible();
     expect(wrapper.getByText('Search Engine (Google, Bing etc)')).toBeVisible();
     expect(wrapper.getByText('Industry newsletter')).toBeVisible();
     expect(wrapper.getByText('Blog or Publication')).toBeVisible();
