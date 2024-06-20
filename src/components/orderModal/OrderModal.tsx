@@ -12,7 +12,6 @@ import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { PriceBadge } from 'src/components/common/price/PriceBadge';
 import { getTotalPrice } from 'src/services/getTotalPrice';
-import LicenseRestrictionsInfo from 'src/components/common/licenseRestrictionsInfo/LicenseRestrictionsInfo';
 import s from './style.module.less';
 import { trackOrderConfirmed } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
@@ -101,7 +100,6 @@ export const OrderModal = ({ setModalOpen, videos, cart }: Props) => {
             </div>
           </Typography.Title1>
         </FeatureGate>
-        <LicenseRestrictionsInfo />
         {additionalServicesRequested && (
           <AdditionalServicesPricingMessage
             captionsOrTranscriptsRequested={captionsOrTranscriptsRequested}
