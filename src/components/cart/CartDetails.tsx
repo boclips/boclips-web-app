@@ -4,7 +4,6 @@ import { TextAreaWithDebounce } from 'src/components/cart/TextAreaWithDebounce';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { useMutation } from '@tanstack/react-query';
 import { Cart as ApiCart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
-import LicenseRestrictionsInfo from 'src/components/common/licenseRestrictionsInfo/LicenseRestrictionsInfo';
 import CartItem from './CartItem/CartItem';
 
 interface Props {
@@ -24,7 +23,6 @@ export const CartDetails = ({ cart }: Props) => {
         onUpdate={onUpdateNote}
         placeholder="Add a note about this order"
       />
-      <LicenseRestrictionsInfo displayCTAText />
       <div className="pt-4 col-start-1 col-span-20">
         {cart.items.map((item) => (
           <CartItem key={item.videoId} cartItem={item} />

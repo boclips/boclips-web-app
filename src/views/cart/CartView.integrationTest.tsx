@@ -75,16 +75,6 @@ describe('CartView', () => {
 
     expect(await wrapper.findByText('Shopping cart')).toBeInTheDocument();
     expect(await wrapper.findByText('(1 item)')).toBeInTheDocument();
-    expect(
-      await wrapper.findByText(
-        /Videos have restrictions associated with their license./,
-      ),
-    ).toBeVisible();
-    expect(
-      await wrapper.findByText(
-        /Click on the video title you want to review before proceeding with billing./,
-      ),
-    ).toBeVisible();
     expect(await wrapper.findByText('news video')).toBeInTheDocument();
     expect(await wrapper.findByText('video-id')).toBeInTheDocument();
     expect(await wrapper.findByText('Additional services')).toBeInTheDocument();
