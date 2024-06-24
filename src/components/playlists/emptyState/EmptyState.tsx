@@ -15,15 +15,17 @@ interface EmptyStateProps {
   text: string;
   description?: string;
   button?: ReactElement;
+  dataQa?: string;
 }
 
-const EmptyState = ({ text, description, button }: EmptyStateProps) => {
+const EmptyState = ({ text, description, button, dataQa }: EmptyStateProps) => {
   const { data: user } = useGetUserQuery();
 
   return (
     <main
       tabIndex={-1}
       className={`${s.heroWrapper} text-blue-800 flex flex-row justify-center`}
+      data-qa={dataQa}
     >
       <section className={`${s.svgWrapper} flex justify-center items-center`}>
         {user?.account?.products?.includes(Product.CLASSROOM) ? (
@@ -76,6 +78,7 @@ const PlaylistBodyEmptyState = () => {
 
   return (
     <EmptyState
+      dataQa="playlist-empty-state"
       text="No videos here yet."
       description="You can see videos here once you add some."
       button={
