@@ -1,7 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import {
-  useSearchQuery,
-} from 'src/hooks/api/useSearchQuery';
+import { useSearchQuery } from 'src/hooks/api/useSearchQuery';
 import {
   SearchFilters,
   useSearchQueryLocationParams,
