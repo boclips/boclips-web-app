@@ -1,8 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import {
-  prefetchSearchQuery,
-  useSearchQuery,
-} from 'src/hooks/api/useSearchQuery';
+import React, { useCallback, useState } from 'react';
+import { useSearchQuery } from 'src/hooks/api/useSearchQuery';
 import {
   SearchFilters,
   useSearchQueryLocationParams,
@@ -12,8 +9,6 @@ import { FilterPanel } from 'src/components/filterPanel/FilterPanel';
 import { SearchResults } from 'src/components/searchResults/SearchResults';
 import Footer from 'src/components/layout/Footer';
 import { FilterKey } from 'src/types/search/FilterKey';
-import { useQueryClient } from '@tanstack/react-query';
-import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { NoSearchResults } from 'src/components/noResults/NoSearchResults';
 import { Loading } from 'src/components/common/Loading';
 import { useDebounce } from 'src/hooks/useDebounce';
@@ -28,7 +23,6 @@ import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 export const PAGE_SIZE = 30;
 
 const SearchResultsView = () => {
-  const queryClient = useQueryClient();
   const [searchLocation, setSearchLocation] = useSearchQueryLocationParams();
   const {
     query,
@@ -44,8 +38,6 @@ const SearchResultsView = () => {
   const { data: disciplines, isLoading: disciplinesLoading } =
     useGetDisciplinesQuery();
 
-  const boclipsClient = useBoclipsClient();
-
   const { data, isInitialLoading, isFetching, isPreviousData } = useSearchQuery(
     {
       query,
@@ -55,33 +47,6 @@ const SearchResultsView = () => {
       filters: { ...debouncedFilters, topics: filtersFromURL.topics },
     },
   );
-
-  const hasNextPage = currentPage < data?.pageSpec?.totalPages;
-
-  useEffect(() => {
-    // Prefetch the next page of data
-    if (hasNextPage) {
-      prefetchSearchQuery(
-        queryClient,
-        {
-          query,
-          pageSize: PAGE_SIZE,
-          page: currentPage,
-          filters: debouncedFilters,
-          contentPackage,
-        },
-        boclipsClient,
-      );
-    }
-  }, [
-    currentPage,
-    query,
-    debouncedFilters,
-    queryClient,
-    boclipsClient,
-    hasNextPage,
-    contentPackage,
-  ]);
 
   const handlePageChange = (page: number) => {
     window.scrollTo({ top: 0 });

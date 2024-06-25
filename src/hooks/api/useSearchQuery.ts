@@ -1,4 +1,4 @@
-import { QueryClient, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { VideoSearchResults } from 'boclips-api-client/dist/sub-clients/videos/model/VideoSearchResults';
 import { DEFAULT_DURATIONS } from 'src/types/DefaultDurations';
 import { BoclipsClient } from 'boclips-api-client';
@@ -70,11 +70,3 @@ export const useSearchQuery = (searchQuery: SearchQuery) => {
     },
   );
 };
-export const prefetchSearchQuery = (
-  queryClient: QueryClient,
-  searchQuery: SearchQuery,
-  boclipsClient: BoclipsClient,
-) =>
-  queryClient.prefetchQuery(generateSearchKey(searchQuery), () =>
-    doSearch(searchQuery, boclipsClient),
-  );

@@ -219,7 +219,7 @@ describe('SearchResults', () => {
 
     fireEvent.click(wrapper.getByLabelText('Page 2 out of 2'));
 
-    expect(wrapper.getByTestId('NEWS-checkbox')).toHaveProperty(
+    expect(await wrapper.findByTestId('NEWS-checkbox')).toHaveProperty(
       'checked',
       true,
     );
