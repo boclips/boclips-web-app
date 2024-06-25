@@ -70,11 +70,3 @@ export const useSearchQuery = (searchQuery: SearchQuery) => {
     },
   );
 };
-export const prefetchSearchQuery = (
-  queryClient: QueryClient,
-  searchQuery: SearchQuery,
-  boclipsClient: BoclipsClient,
-) =>
-  queryClient.prefetchQuery(generateSearchKey(searchQuery), () =>
-    doSearch(searchQuery, boclipsClient),
-  );
