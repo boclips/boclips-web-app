@@ -7,9 +7,9 @@ import { Integration } from '@sentry/types';
 import BoclipsSecurity from 'boclips-js-security';
 import { ApiBoclipsClient } from 'boclips-api-client';
 import axios from 'axios';
-import { ExtraErrorData } from '@sentry/integrations';
+import { extraErrorDataIntegration } from '@sentry/integrations';
 import * as Sentry from '@sentry/react';
-import { BrowserTracing } from '@sentry/react';
+import { browserTracingIntegration } from '@sentry/react';
 import AppUnauthenticated from 'src/AppUnauthenticated';
 import { FallbackApp } from 'src/FallbackApp';
 import App from './App';
@@ -39,7 +39,10 @@ const initializeSentry = () => {
     release: sentryRelease,
     environment,
     dsn: 'https://50de7aa7ec43491d9c7140376d0bf128@o236297.ingest.sentry.io/5633299',
-    integrations: [new BrowserTracing() as Integration, new ExtraErrorData()],
+    integrations: [
+      browserTracingIntegration() as Integration,
+      extraErrorDataIntegration(),
+    ],
     tracesSampleRate: 1.0,
     denyUrls: [
       // Chrome extensions
