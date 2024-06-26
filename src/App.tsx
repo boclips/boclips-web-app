@@ -113,15 +113,14 @@ const App = ({
   const currentLocation = useLocation();
 
   useEffect(() => {
-    apiClient.users
-      .getCurrentUser()
-      .then((user) => {
+    try {
+      apiClient.users.getCurrentUser().then((user) => {
         AnalyticsFactory.pendo().identify(user);
         AnalyticsFactory.hotjar().userAttributes(new UserAttributes(user));
-      })
-      .catch((error) => {
-        console.error('Error fetching user', error);
       });
+    } catch (e) {
+      console.error('Error fetching user for analytics:', e);
+    }
   }, []);
 
   useEffect(() => {
