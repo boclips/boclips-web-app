@@ -38,7 +38,7 @@ const LicensedContentPrimaryButton = ({ licensedContent }: Props) => {
           iconOnly={false}
           width="155px"
           height="48px"
-          label="Embed Code"
+          label="Embed Video"
           onClick={() =>
             trackPlatformInteractedWithEvent({
               subtype: 'MY_CONTENT_EMBED_BUTTON_CLICKED',

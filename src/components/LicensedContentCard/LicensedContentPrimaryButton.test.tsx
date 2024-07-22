@@ -13,7 +13,7 @@ import { lastEvent } from 'src/testSupport/lastEvent';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 describe('LicensedContentCard', () => {
-  describe('Embed code button', () => {
+  describe('Embed video button', () => {
     function renderEmbedButton(apiClient: FakeBoclipsClient) {
       const licensedContent = LicensedContentFactory.sample({
         videoId: 'video-id',

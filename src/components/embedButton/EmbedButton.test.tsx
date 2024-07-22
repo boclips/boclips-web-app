@@ -16,7 +16,7 @@ describe(`embed button`, () => {
     },
   });
 
-  it(`copies the embed code to clipboard on click when video passed in`, async () => {
+  it(`copies the embed video to clipboard on click when video passed in`, async () => {
     jest.spyOn(navigator.clipboard, 'writeText');
 
     const video = VideoFactory.sample({});
@@ -41,7 +41,9 @@ describe(`embed button`, () => {
       );
     });
     const notification = await wrapper.findByRole('alert');
-    expect(within(notification).getByText('Embed code copied!')).toBeVisible();
+    expect(
+      within(notification).getByText('Embed video code is copied!'),
+    ).toBeVisible();
   });
 
   it(`calls onClick when clicked`, async () => {
@@ -70,7 +72,9 @@ describe(`embed button`, () => {
       );
     });
     const notification = await wrapper.findByRole('alert');
-    expect(within(notification).getByText('Embed code copied!')).toBeVisible();
+    expect(
+      within(notification).getByText('Embed video code is copied!'),
+    ).toBeVisible();
     expect(onClickSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -108,7 +112,9 @@ describe(`embed button`, () => {
       expect(navigator.clipboard.writeText).toHaveBeenCalledWith('embed');
     });
     const notification = await wrapper.findByRole('alert');
-    expect(within(notification).getByText('Embed code copied!')).toBeVisible();
+    expect(
+      within(notification).getByText('Embed video code is copied!'),
+    ).toBeVisible();
   });
 
   it(`shows tooltip when hovering on button and no label`, async () => {
@@ -125,7 +131,7 @@ describe(`embed button`, () => {
 
     await waitFor(() => {
       expect(wrapper.getByRole('tooltip')).toBeInTheDocument();
-      expect(wrapper.getAllByText('Get embed code')).toHaveLength(2);
+      expect(wrapper.getAllByText('Embed video')).toHaveLength(2);
     });
   });
 });

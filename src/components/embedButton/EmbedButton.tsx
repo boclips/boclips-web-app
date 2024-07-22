@@ -23,7 +23,7 @@ export const EmbedButton = ({
   width,
   height,
   iconOnly = true,
-  label = 'Get embed code',
+  label = 'Embed video',
   onClick,
 }: Props) => {
   const client = useBoclipsClient();
@@ -42,9 +42,9 @@ export const EmbedButton = ({
     await navigator.clipboard.writeText(link.embed);
     displayNotification(
       'success',
-      'Embed code copied!',
+      'Embed video code is copied!',
       'You can now embed this video in your LMS',
-      'embed-code-copied-to-clipboard-notificaiton',
+      'embed-code-copied-to-clipboard-notification',
     );
   };
 
