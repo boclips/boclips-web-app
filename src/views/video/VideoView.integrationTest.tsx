@@ -155,7 +155,7 @@ describe('Video View', () => {
       expect(
         await wrapper.findByRole('button', { name: 'embed' }),
       ).toBeVisible();
-      expect(wrapper.getByText('Get embed code')).toBeVisible();
+      expect(wrapper.getByText('Embed video')).toBeVisible();
       expect(wrapper.queryByText('Add to cart')).not.toBeInTheDocument();
     });
 

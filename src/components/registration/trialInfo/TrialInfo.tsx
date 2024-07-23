@@ -22,8 +22,7 @@ const features = [
   },
   {
     title: 'No Commitment Invoice Payment for Instant Takeaway',
-    description:
-      'Pay via invoice, copy your embed code and get immediate access to your videos.',
+    description: 'Pay via invoice and get immediate access to embed videos.',
   },
 ];
 

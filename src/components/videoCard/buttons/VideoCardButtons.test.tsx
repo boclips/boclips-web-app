@@ -13,8 +13,8 @@ import {
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('VideoCardButtons', () => {
-  describe(`create embed code button`, () => {
-    it(`renders embed code button when user has video embed link and LIBRARY product`, async () => {
+  describe(`create embed video button`, () => {
+    it(`renders embed video button when user has video embed link and LIBRARY product`, async () => {
       const video = VideoFactory.sample({
         links: {
           self: new Link({ href: '', templated: false }),
@@ -47,7 +47,7 @@ describe('VideoCardButtons', () => {
       ).toBeVisible();
     });
 
-    it(`does not render embed code button when user doesn't have video embed link`, () => {
+    it(`does not render embed video button when user doesn't have video embed link`, () => {
       const video = VideoFactory.sample({
         links: {
           self: new Link({ href: '', templated: false }),
