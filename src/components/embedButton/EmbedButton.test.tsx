@@ -30,7 +30,7 @@ describe(`embed button`, () => {
       </BoclipsClientProvider>,
     );
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'embed' }));
+    fireEvent.click(wrapper.getByRole('button', { name: 'Embed' }));
 
     expect(createCodeSpy).toHaveBeenCalledWith(video);
 
@@ -61,7 +61,7 @@ describe(`embed button`, () => {
       </BoclipsClientProvider>,
     );
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'embed' }));
+    fireEvent.click(wrapper.getByRole('button', { name: 'Embed' }));
 
     expect(createCodeSpy).toHaveBeenCalledWith(video);
 
@@ -104,7 +104,7 @@ describe(`embed button`, () => {
       </BoclipsClientProvider>,
     );
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'embed' }));
+    fireEvent.click(wrapper.getByRole('button', { name: 'Embed' }));
 
     expect(createCodeSpy).toHaveBeenCalledWith(licensedContent);
 
@@ -127,7 +127,7 @@ describe(`embed button`, () => {
       </BoclipsClientProvider>,
     );
 
-    await userEvent.hover(wrapper.getByRole('button', { name: 'embed' }));
+    await userEvent.hover(wrapper.getByRole('button', { name: 'Embed' }));
 
     await waitFor(() => {
       expect(wrapper.getByRole('tooltip')).toBeInTheDocument();

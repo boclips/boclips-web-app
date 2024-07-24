@@ -153,7 +153,7 @@ describe('Video View', () => {
       await userEvent.click(await wrapper.findByText(exampleVideo.title));
 
       expect(
-        await wrapper.findByRole('button', { name: 'embed' }),
+        await wrapper.findByRole('button', { name: 'Embed' }),
       ).toBeVisible();
       expect(wrapper.getByText('Embed video')).toBeVisible();
       expect(wrapper.queryByText('Add to cart')).not.toBeInTheDocument();
@@ -188,7 +188,7 @@ describe('Video View', () => {
       ).toBeVisible();
 
       expect(
-        wrapper.queryByRole('button', { name: 'embed' }),
+        wrapper.queryByRole('button', { name: 'Embed' }),
       ).not.toBeInTheDocument();
     });
 

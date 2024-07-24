@@ -381,7 +381,7 @@ describe('SearchResults', () => {
       );
 
       expect(
-        await wrapper.findByRole('button', { name: 'embed' }),
+        await wrapper.findByRole('button', { name: 'Embed' }),
       ).toBeVisible();
 
       expect(await wrapper.queryByText('Add to cart')).not.toBeInTheDocument();

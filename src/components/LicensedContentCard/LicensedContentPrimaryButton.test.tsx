@@ -45,7 +45,7 @@ describe('LicensedContentCard', () => {
       const apiClient = new FakeBoclipsClient();
       const wrapper = renderEmbedButton(apiClient);
 
-      expect(wrapper.getByRole('button', { name: 'embed' })).toBeVisible();
+      expect(wrapper.getByRole('button', { name: 'Embed' })).toBeVisible();
     });
 
     it('fires platform interacted with event when clicked', async () => {
@@ -56,7 +56,7 @@ describe('LicensedContentCard', () => {
       });
       const apiClient = new FakeBoclipsClient();
       const wrapper = renderEmbedButton(apiClient);
-      userEvent.click(wrapper.getByRole('button', { name: 'embed' }));
+      userEvent.click(wrapper.getByRole('button', { name: 'Embed' }));
 
       await waitFor(() => {
         expect(lastEvent(apiClient, 'PLATFORM_INTERACTED_WITH')).toEqual({

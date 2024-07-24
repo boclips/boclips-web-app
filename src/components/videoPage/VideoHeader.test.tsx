@@ -10,6 +10,7 @@ import {
   AccountType,
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { Link } from 'boclips-api-client/dist/types';
 
 describe('VideoHeader', () => {
   it('should render without crashing if links are null', () => {
@@ -166,6 +167,42 @@ describe('VideoHeader', () => {
     );
 
     expect(await wrapper.findByRole('button', { name: 'Share' })).toBeVisible();
+  });
+
+  it('should render share and embed video button if product is CLASSROOM and embed link present', async () => {
+    const client = new FakeBoclipsClient();
+    client.users.insertCurrentUser(
+      UserFactory.sample({
+        account: {
+          ...UserFactory.sample().account,
+          id: 'acc-1',
+          name: 'Ren',
+          products: [Product.CLASSROOM],
+          type: AccountType.STANDARD,
+        },
+      }),
+    );
+
+    const wrapper = render(
+      <BoclipsClientProvider client={client}>
+        <QueryClientProvider client={new QueryClient()}>
+          <VideoHeader
+            video={VideoFactory.sample({
+              links: {
+                ...VideoFactory.sample({}).links,
+                createEmbedCode: new Link({
+                  href: 'createEmbed',
+                  templated: false,
+                }),
+              },
+            })}
+          />
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
+    );
+
+    expect(await wrapper.findByRole('button', { name: 'Share' })).toBeVisible();
+    expect(await wrapper.findByRole('button', { name: 'Embed' })).toBeVisible();
   });
 });
 

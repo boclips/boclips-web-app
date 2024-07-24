@@ -43,7 +43,44 @@ describe('VideoCardButtons', () => {
       );
 
       expect(
-        await wrapper.findByRole('button', { name: 'embed' }),
+        await wrapper.findByRole('button', { name: 'Embed' }),
+      ).toBeVisible();
+    });
+
+    it(`renders embed and share buttons when user has video embed link and CLASSROOM product`, async () => {
+      const video = VideoFactory.sample({
+        links: {
+          self: new Link({ href: '', templated: false }),
+          logInteraction: new Link({ href: '', templated: false }),
+          createEmbedCode: new Link({ href: 'embed', templated: false }),
+        },
+      });
+
+      const apiClient = new FakeBoclipsClient();
+
+      apiClient.users.insertCurrentUser(
+        UserFactory.sample({
+          account: {
+            ...UserFactory.sample().account,
+            products: [Product.CLASSROOM],
+          },
+        }),
+      );
+
+      const wrapper = render(
+        <BoclipsClientProvider client={apiClient}>
+          <QueryClientProvider client={new QueryClient()}>
+            <VideoCardButtons video={video} />
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      expect(
+        await wrapper.findByRole('button', { name: 'Embed' }),
+      ).toBeVisible();
+
+      expect(
+        await wrapper.findByRole('button', { name: 'Share' }),
       ).toBeVisible();
     });
 
@@ -62,7 +99,7 @@ describe('VideoCardButtons', () => {
         </BoclipsClientProvider>,
       );
 
-      expect(wrapper.queryByRole('button', { name: 'embed' })).toBeNull();
+      expect(wrapper.queryByRole('button', { name: 'Embed' })).toBeNull();
     });
   });
 

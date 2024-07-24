@@ -62,8 +62,10 @@ export const VideoCardButtons = ({
         </FeatureGate>
         {additionalSecondaryButtons}
       </div>
-
-      <FeatureGate product={Product.LIBRARY}>
+      <div className="flex justify-between gap-2">
+        <FeatureGate product={Product.CLASSROOM}>
+          <VideoShareCodeButton iconOnly={iconOnly} video={video} />
+        </FeatureGate>
         {video.links.createEmbedCode ? (
           <EmbedButton video={video} iconOnly={iconOnly} />
         ) : (
@@ -77,10 +79,7 @@ export const VideoCardButtons = ({
             />
           </FeatureGate>
         )}
-      </FeatureGate>
-      <FeatureGate product={Product.CLASSROOM}>
-        <VideoShareCodeButton iconOnly={iconOnly} video={video} />
-      </FeatureGate>
+      </div>
     </div>
   );
 };

@@ -75,14 +75,18 @@ export const VideoHeader = ({ video }: Props) => {
           </FeatureGate>
         </div>
         <div className={(s.sticky, s.buttons)}>
-          <div className={s.iconButtons}>
+          <div className={s.buttonsGroup}>
             {isAuthenticated && <AddToPlaylistButton videoId={video?.id} />}
             <FeatureGate product={Product.LIBRARY}>
               <CopyVideoLinkButton video={video} onClick={trackVideoCopy} />
             </FeatureGate>
             {videoHasTranscript && <DownloadTranscriptButton video={video} />}
           </div>
-          <FeatureGate product={Product.LIBRARY}>
+
+          <div className={s.buttonsGroup}>
+            <FeatureGate product={Product.CLASSROOM}>
+              <VideoShareCodeButton video={video} />
+            </FeatureGate>
             {video?.links?.createEmbedCode ? (
               <EmbedButton video={video} iconOnly={false} />
             ) : (
@@ -98,10 +102,7 @@ export const VideoHeader = ({ video }: Props) => {
                 />
               </FeatureGate>
             )}
-          </FeatureGate>
-          <FeatureGate product={Product.CLASSROOM}>
-            <VideoShareCodeButton video={video} />
-          </FeatureGate>
+          </div>
         </div>
       </div>
     </>
