@@ -7,8 +7,9 @@ import s from './style.module.less';
 
 const features = [
   {
-    title: '60-day free access ',
-    description: 'Explore, collaborate and share freely for 60 days.',
+    title: 'Free access for teachers',
+    description:
+      'Explore, collaborate, and share with students and colleagues.',
   },
   {
     title: 'Curriculum-aligned',
@@ -38,9 +39,8 @@ const ClassroomInfo = () => {
       <div className={s.classroomInfo}>
         <Typography.H1 size="lg">Welcome to Boclips Classroom!</Typography.H1>
         <Typography.Body as="div" size="small" className="mt-3 mb-3">
-          Enhance your classroom experience with over 2.2 million Ed-Ready
-          videos thoughtfully selected to facilitate dynamic, focused learning
-          without distractions.
+          Enhance your classroom experience with over 200,000 instructional
+          videos in a safe, educational alternative to YouTube.
         </Typography.Body>
         {features.map(({ title, description }) => {
           return (
