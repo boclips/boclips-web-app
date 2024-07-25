@@ -133,7 +133,6 @@ describe('Create new playlist modal', () => {
         title: 'Original playlist',
         description: 'Description of original playlist',
         videos: [...videos.map((v) => v.id)],
-        origin: 'BO_WEB_APP',
       }),
     );
   });

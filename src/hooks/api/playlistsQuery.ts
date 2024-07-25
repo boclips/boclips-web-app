@@ -37,7 +37,6 @@ export const useOwnPlaylistsQuery = (page: number, query?: string) => {
         partialTitleMatch: true,
         page: backendPageNumber,
         size: PLAYLISTS_PAGE_SIZE,
-        origin: 'BO_WEB_APP',
       })
       .then((playlists) => playlists),
   );
@@ -53,7 +52,6 @@ export const useSavedPlaylistsQuery = (page: number, query?: string) => {
         partialTitleMatch: true,
         page: backendPageNumber,
         size: PLAYLISTS_PAGE_SIZE,
-        origin: 'BO_WEB_APP',
       })
       .then((playlists) => playlists),
   );
@@ -68,7 +66,6 @@ export const useBoclipsPlaylistsQuery = (page: number, query?: string) => {
         partialTitleMatch: true,
         page: backendPageNumber,
         size: PLAYLISTS_PAGE_SIZE,
-        origin: 'BO_WEB_APP',
       })
       .then((playlists) => playlists),
   );
@@ -78,7 +75,7 @@ export const useGetPromotedPlaylistsQuery = (product: PromotedForProduct) => {
   const client = useBoclipsClient();
   return useQuery(['promoted'], () =>
     client.collections
-      .getPromotedForCollections({ promotedFor: product, origin: 'BO_WEB_APP' })
+      .getPromotedForCollections({ promotedFor: product })
       .then((playlists) => playlists),
   );
 };
@@ -88,7 +85,6 @@ export const useOwnAndEditableSharedPlaylistsQuery = () => {
   return useQuery(playlistKeys.ownAndEditable, () =>
     client.collections
       .getMySavedAndEditableCollectionsWithoutDetails({
-        origin: 'BO_WEB_APP',
         size: 100,
       })
       .then((playlists) => {
