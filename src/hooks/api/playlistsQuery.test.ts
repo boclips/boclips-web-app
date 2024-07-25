@@ -36,7 +36,6 @@ describe('playlistsQuery', () => {
     expect(collectionsSpy).toBeCalledWith({
       page: 0,
       size: PLAYLISTS_PAGE_SIZE,
-      origin: 'BO_WEB_APP',
       partialTitleMatch: true,
       query: 'bla',
     });
@@ -109,7 +108,6 @@ describe('playlistsQuery', () => {
       expect(playlistHook.result.current.isSuccess).toBeTruthy(),
     );
     expect(collectionsSpy).toBeCalledWith({
-      origin: 'BO_WEB_APP',
       size: 100,
     });
   });
@@ -196,7 +194,6 @@ describe('playlistsQuery', () => {
     );
     expect(collectionsSpy).toBeCalledWith({
       promotedFor: PromotedForProduct.CLASSROOM,
-      origin: 'BO_WEB_APP',
     });
   });
 });

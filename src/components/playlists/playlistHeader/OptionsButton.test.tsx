@@ -198,7 +198,6 @@ describe('OptionsButton', () => {
         title: 'Copy of Original playlist',
         description: 'Description of original playlist',
         videos: [...videos.map((v) => v.id)],
-        origin: 'BO_WEB_APP',
       });
     });
 

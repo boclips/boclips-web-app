@@ -62,7 +62,6 @@ export const CreatePlaylistModal = ({
     createPlaylist({
       title: playlistTitle,
       description: playlistDescription,
-      origin: 'BO_WEB_APP',
       videos,
     });
   };
