@@ -75,9 +75,15 @@ describe('playlist share code button', () => {
   });
 
   it(`copies share link but doesn't close modal on clicking main button`, async () => {
+    const apiClient = new FakeBoclipsClient();
     jest.spyOn(navigator.clipboard, 'writeText');
-
-    const wrapper = renderShareButton();
+    const trackCollectionShareCodeSpy = jest.spyOn(
+      apiClient.shareCodes,
+      'trackCollectionShareCode',
+    );
+    // @ts-ignore
+    apiClient.shareCodes.trackCollectionShareCode = trackCollectionShareCodeSpy;
+    const wrapper = renderShareButton(apiClient);
     await openShareModal(wrapper);
 
     expect(wrapper.getByRole('dialog')).toBeInTheDocument();
@@ -88,6 +94,8 @@ describe('playlist share code button', () => {
     await userEvent.click(
       await wrapper.findByRole('button', { name: 'Copy link' }),
     );
+
+    expect(trackCollectionShareCodeSpy).toHaveBeenCalledWith('playlist-id');
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
       getShareablePlaylistLink('playlist-id', 'user-id'),

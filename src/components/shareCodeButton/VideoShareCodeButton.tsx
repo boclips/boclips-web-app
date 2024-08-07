@@ -16,6 +16,7 @@ import { Typography } from '@boclips-ui/typography';
 import { GoogleClassroomShareLink } from 'src/components/shareCodeButton/googleClassroom/GoogleClassroomShareLink';
 import { getShareableVideoLink } from 'src/components/shareCodeButton/getShareableLink';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
+import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import s from './shareCodeButton.module.less';
 
 interface VideoShareCodeButtonProps {
@@ -27,6 +28,8 @@ export const VideoShareCodeButton = ({
   iconOnly = false,
   video,
 }: VideoShareCodeButtonProps) => {
+  const client = useBoclipsClient();
+
   const { data: user } = useGetUserQuery();
   const videoDuration = video.playback.duration.format('mm:ss');
 
@@ -104,6 +107,7 @@ export const VideoShareCodeButton = ({
     if (!startDurationValid || !endDurationValid) {
       return;
     }
+    client.shareCodes.trackVideoShareCode(video.id);
 
     navigator.clipboard.writeText(shareLink).then(() => {
       displayNotification(
