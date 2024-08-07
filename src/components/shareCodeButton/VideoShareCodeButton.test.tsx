@@ -45,7 +45,7 @@ describe('video share code button', () => {
     expect(wrapper.queryByText('Share')).toBeNull();
   });
 
-  it('displays playlist share code modal on click', async () => {
+  it('displays share code modal on click', async () => {
     const wrapper = renderShareButton();
     await openShareModal(wrapper);
 
@@ -160,9 +160,16 @@ describe('video share code button', () => {
   });
 
   it(`copies share link but doesn't close modal on clicking main button`, async () => {
-    jest.spyOn(navigator.clipboard, 'writeText');
+    const apiClient = new FakeBoclipsClient();
 
-    const wrapper = renderShareButton();
+    jest.spyOn(navigator.clipboard, 'writeText');
+    const trackVideoSpy = jest.spyOn(
+      apiClient.shareCodes,
+      'trackVideoShareCode',
+    );
+    // @ts-ignore
+    apiClient.shareCodes.trackVideoShareCode = trackVideoSpy;
+    const wrapper = renderShareButton(apiClient);
     await openShareModal(wrapper);
 
     expect(
@@ -198,6 +205,7 @@ describe('video share code button', () => {
     await userEvent.click(
       await wrapper.findByRole('button', { name: 'Copy link' }),
     );
+    expect(trackVideoSpy).toHaveBeenCalledWith('video-1');
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
       getShareableVideoLink('video-1', 'user-1', 10, 32),
@@ -235,8 +243,9 @@ describe('video share code button', () => {
   });
 });
 
-const renderShareButton = () => {
-  const apiClient = new FakeBoclipsClient();
+const renderShareButton = (
+  apiClient: FakeBoclipsClient = new FakeBoclipsClient(),
+) => {
   apiClient.users.insertCurrentUser(
     UserFactory.sample({
       id: 'user-1',

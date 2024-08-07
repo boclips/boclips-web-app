@@ -9,6 +9,7 @@ import { GoogleClassroomShareLink } from 'src/components/shareCodeButton/googleC
 import { getShareablePlaylistLink } from 'src/components/shareCodeButton/getShareableLink';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
+import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import s from './shareCodeButton.module.less';
 
 interface PlaylistShareCodeButtonProps {
@@ -25,6 +26,8 @@ export const PlaylistShareCodeButton = ({
   shareButtonHeight,
   playlist,
 }: PlaylistShareCodeButtonProps) => {
+  const client = useBoclipsClient();
+
   const { data: user, isLoading: userIsLoading } = useGetUserQuery();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const shareLink = getShareablePlaylistLink(playlist.id, user?.id);
@@ -51,6 +54,9 @@ export const PlaylistShareCodeButton = ({
     trackPlatformInteraction({
       subtype: 'PLAYLIST_SHARE_CODE_LINK_COPIED',
     });
+
+    client.shareCodes.trackCollectionShareCode(playlist.id);
+
     navigator.clipboard.writeText(shareLink).then(() => {
       displayNotification(
         'success',
