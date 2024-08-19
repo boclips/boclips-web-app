@@ -91,6 +91,7 @@ describe('MarketingInfoForm', () => {
     fireEvent.click(dropdown);
 
     expect(wrapper.getByText('CCC - Copyright Clearance Center')).toBeVisible();
+    expect(wrapper.getByText('Edcuration/GG4L')).toBeVisible();
     expect(wrapper.getByText('Search Engine (Google, Bing etc)')).toBeVisible();
     expect(wrapper.getByText('Industry newsletter')).toBeVisible();
     expect(wrapper.getByText('Blog or Publication')).toBeVisible();
