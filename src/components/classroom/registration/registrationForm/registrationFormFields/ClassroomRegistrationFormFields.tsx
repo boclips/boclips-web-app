@@ -81,6 +81,20 @@ const ClassroomRegistrationFormFields = ({
   );
   return (
     <>
+      <InputText
+        id="input-schoolName"
+        onFocus={() => onFieldSelected('schoolName')}
+        onChange={(value) => handleChange('schoolName', value)}
+        inputType="text"
+        placeholder="Your school name"
+        className={s.input}
+        labelText="School name"
+        height="48px"
+        isError={!!validationErrors.schoolName}
+        errorMessage={validationErrors.schoolName}
+        errorMessagePlacement="bottom"
+      />
+
       <div className="flex flex-row items-start">
         <InputText
           id="input-firstName"
@@ -138,20 +152,6 @@ const ClassroomRegistrationFormFields = ({
         fitWidth
         isError={!!validationErrors.country}
         errorMessage={validationErrors.country}
-        errorMessagePlacement="bottom"
-      />
-
-      <InputText
-        id="input-schoolName"
-        onFocus={() => onFieldSelected('schoolName')}
-        onChange={(value) => handleChange('schoolName', value)}
-        inputType="text"
-        placeholder="Your school name"
-        className={s.input}
-        labelText="School name"
-        height="48px"
-        isError={!!validationErrors.schoolName}
-        errorMessage={validationErrors.schoolName}
         errorMessagePlacement="bottom"
       />
 
