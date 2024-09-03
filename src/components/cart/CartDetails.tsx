@@ -23,6 +23,8 @@ export const CartDetails = ({ cart }: Props) => {
         onUpdate={onUpdateNote}
         placeholder="Add a note about this order"
       />
+
+      <p>Maty interview this is a paragraph</p>
       <div className="pt-4 col-start-1 col-span-20">
         {cart.items.map((item) => (
           <CartItem key={item.videoId} cartItem={item} />
