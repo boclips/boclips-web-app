@@ -3,11 +3,12 @@ import { InputText } from '@boclips-ui/input';
 import s from 'src/components/classroom/registration/style.module.less';
 import c from 'classnames';
 import Dropdown from '@boclips-ui/dropdown';
-import { LIST_OF_COUNTRIES } from 'src/components/classroom/registration/dropdownValues';
 import RegistrationPageCheckbox from 'src/components/common/input/RegistrationPageCheckbox';
 import { ClassroomRegistrationData } from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
 import PasswordValidattor from 'react-password-validattor';
 import { Typography } from '@boclips-ui/typography';
+import { countries } from 'src/components/classroom/registration/dropdownValues';
+import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 
 const passwordConfig = {
   classNames: {
@@ -52,6 +53,7 @@ const ClassroomRegistrationFormFields = ({
   validationErrors,
   registrationData,
 }: ClassroomRegistrationFormProps) => {
+  const boclipsClient = useBoclipsClient();
   const educationalUseTermsLabel = (
     <>
       <Typography.Body size="small" weight="medium">
@@ -144,7 +146,7 @@ const ClassroomRegistrationFormFields = ({
         placeholder="Select country"
         onFocused={() => onFieldSelected('country')}
         onUpdate={(value) => handleChange('country', value)}
-        options={LIST_OF_COUNTRIES}
+        options={countries(boclipsClient)}
         dataQa="input-dropdown-country"
         labelText="Country"
         showSearch
