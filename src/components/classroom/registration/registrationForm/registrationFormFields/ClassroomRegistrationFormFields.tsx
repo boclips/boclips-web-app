@@ -7,7 +7,10 @@ import RegistrationPageCheckbox from 'src/components/common/input/RegistrationPa
 import { ClassroomRegistrationData } from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
 import PasswordValidattor from 'react-password-validattor';
 import { Typography } from '@boclips-ui/typography';
-import { countries } from 'src/components/classroom/registration/dropdownValues';
+import {
+  countries,
+  states,
+} from 'src/components/classroom/registration/dropdownValues';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 
 const passwordConfig = {
@@ -81,6 +84,12 @@ const ClassroomRegistrationFormFields = ({
       </a>
     </Typography.Body>
   );
+
+  const handleCountryUpdate = (value) => {
+    handleChange('state', '');
+    handleChange('country', value);
+  };
+
   return (
     <>
       <InputText
@@ -141,21 +150,43 @@ const ClassroomRegistrationFormFields = ({
         errorMessagePlacement="bottom"
       />
 
-      <Dropdown
-        mode="single"
-        placeholder="Select country"
-        onFocused={() => onFieldSelected('country')}
-        onUpdate={(value) => handleChange('country', value)}
-        options={countries(boclipsClient)}
-        dataQa="input-dropdown-country"
-        labelText="Country"
-        showSearch
-        showLabel
-        fitWidth
-        isError={!!validationErrors.country}
-        errorMessage={validationErrors.country}
-        errorMessagePlacement="bottom"
-      />
+      <div className={c(s.input, 'flex flex-row w-full')}>
+        <Dropdown
+          mode="single"
+          placeholder="Select country"
+          onFocused={() => onFieldSelected('country')}
+          onUpdate={handleCountryUpdate}
+          options={countries(boclipsClient)}
+          dataQa="input-dropdown-country"
+          labelText="Country"
+          showSearch
+          showLabel
+          fitWidth
+          isError={!!validationErrors.country}
+          errorMessage={validationErrors.country}
+          errorMessagePlacement="bottom"
+        />
+
+        {states(registrationData.country, boclipsClient) && (
+          <div className="flex flex-row w-full ml-4">
+            <Dropdown
+              mode="single"
+              placeholder="Select state"
+              onFocused={() => onFieldSelected('state')}
+              onUpdate={(value) => handleChange('state', value)}
+              options={states(registrationData.country, boclipsClient)}
+              dataQa="input-dropdown-state"
+              labelText="State"
+              showSearch
+              showLabel
+              fitWidth
+              isError={!!validationErrors.state}
+              errorMessage={validationErrors.state}
+              errorMessagePlacement="bottom"
+            />
+          </div>
+        )}
+      </div>
 
       <div className="flex flex-col items-start mt-4">
         <div className="flex flex-row w-full">

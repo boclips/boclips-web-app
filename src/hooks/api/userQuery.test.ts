@@ -88,6 +88,7 @@ describe('userQuery', () => {
       schoolName: 'Los Angeles Lakers',
       hasAcceptedEducationalUseTerms: true,
       country: 'country',
+      state: 'state',
       hasAcceptedTermsAndConditions: true,
     };
 

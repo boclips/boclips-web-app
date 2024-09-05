@@ -30,6 +30,8 @@ export function fillRegistrationForm(
 
   setDropdownValue(wrapper, 'input-dropdown-country', data.country);
 
+  setDropdownValue(wrapper, 'input-dropdown-state', data.state);
+
   if (data.hasAcceptedEducationalUseTerms) {
     checkEducationalUseAgreement(wrapper);
   }
@@ -39,7 +41,7 @@ export function fillRegistrationForm(
   }
 }
 
-function setDropdownValue(
+export function setDropdownValue(
   wrapper: RenderResult,
   dropdownId: string,
   value: string,

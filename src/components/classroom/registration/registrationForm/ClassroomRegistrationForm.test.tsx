@@ -15,7 +15,10 @@ import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/Create
 import { ToastContainer } from 'react-toastify';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
-import { fillRegistrationForm } from 'src/components/classroom/registration/classroomRegistrationFormTestHelpers';
+import {
+  fillRegistrationForm,
+  setDropdownValue,
+} from 'src/components/classroom/registration/classroomRegistrationFormTestHelpers';
 import { BrowserRouter as Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
@@ -47,6 +50,7 @@ describe('ClassroomRegistration Form', () => {
       confirmPassword: 'p@ss1234',
       schoolName: 'Los Angeles Lakers',
       country: 'Poland',
+      state: '',
       hasAcceptedEducationalUseTerms: true,
       hasAcceptedTermsAndConditions: true,
     };
@@ -78,6 +82,8 @@ describe('ClassroomRegistration Form', () => {
 
     expect(wrapper.getByTestId('input-dropdown-country')).toBeVisible();
 
+    expect(wrapper.queryByTestId('input-dropdown-state')).toBeNull();
+
     expect(
       wrapper.getByTestId('input-checkbox-educational-use-agreement'),
     ).toBeVisible();
@@ -89,6 +95,21 @@ describe('ClassroomRegistration Form', () => {
     expect(
       wrapper.getByRole('button', { name: 'Create Account' }),
     ).toBeVisible();
+  });
+
+  it('displays the state drop down on selecting USA', async () => {
+    const wrapper = renderRegistrationForm();
+
+    expect(wrapper.getByTestId('input-dropdown-country')).toBeVisible();
+    expect(wrapper.queryByTestId('input-dropdown-state')).toBeNull();
+
+    setDropdownValue(
+      wrapper,
+      'input-dropdown-country',
+      'United States of America',
+    );
+
+    expect(wrapper.getByTestId('input-dropdown-state')).toBeVisible();
   });
 
   function renderRegistrationForm(
@@ -110,7 +131,7 @@ describe('ClassroomRegistration Form', () => {
     );
   }
 
-  it('renders log in  link', async () => {
+  it('renders log in link', async () => {
     const wrapper = renderRegistrationForm();
 
     expect(wrapper.getByText('Have an account?')).toBeVisible();
@@ -154,6 +175,75 @@ describe('ClassroomRegistration Form', () => {
         type: UserType.classroomUser,
         schoolName: 'Los Angeles Lakers',
         country: 'POL',
+        state: '',
+        hasAcceptedEducationalUseTerms: true,
+        hasAcceptedTermsAndConditions: true,
+      });
+    });
+  });
+
+  it('sends through the state when USA is selected and then state is selected', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const createClassroomUserSpy = jest.spyOn(
+      fakeClient.users,
+      'createClassroomUser',
+    );
+
+    const wrapper = renderRegistrationForm(fakeClient);
+
+    await fillTheForm(wrapper, {
+      country: 'United States of America',
+      state: 'Arkansas',
+    });
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+
+    await waitFor(() => {
+      expect(createClassroomUserSpy).toBeCalledWith({
+        firstName: 'LeBron',
+        lastName: 'James',
+        email: 'lj@nba.com',
+        password: 'p@ss1234',
+        recaptchaToken: 'token_baby',
+        type: UserType.classroomUser,
+        schoolName: 'Los Angeles Lakers',
+        country: 'USA',
+        state: 'AR',
+        hasAcceptedEducationalUseTerms: true,
+        hasAcceptedTermsAndConditions: true,
+      });
+    });
+  });
+
+  it('does not send through the state when USA is selected, then state is selected and then a different country is selected', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const createClassroomUserSpy = jest.spyOn(
+      fakeClient.users,
+      'createClassroomUser',
+    );
+
+    const wrapper = renderRegistrationForm(fakeClient);
+
+    await fillTheForm(wrapper, {
+      country: 'United States of America',
+      state: 'Arkansas',
+    });
+
+    setDropdownValue(wrapper, 'input-dropdown-country', 'Sri Lanka');
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+
+    await waitFor(() => {
+      expect(createClassroomUserSpy).toBeCalledWith({
+        firstName: 'LeBron',
+        lastName: 'James',
+        email: 'lj@nba.com',
+        password: 'p@ss1234',
+        recaptchaToken: 'token_baby',
+        type: UserType.classroomUser,
+        schoolName: 'Los Angeles Lakers',
+        country: 'LKA',
+        state: '',
         hasAcceptedEducationalUseTerms: true,
         hasAcceptedTermsAndConditions: true,
       });

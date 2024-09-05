@@ -104,6 +104,19 @@ const FormValidator: FormValidatorClass = class
     return true;
   }
 
+  checkStateIsNotEmptyIfUSA(errorMessage: string): boolean {
+    if (
+      this.registrationData.country === 'USA' &&
+      !this.registrationData.state
+    ) {
+      this.setError('state', errorMessage);
+      return false;
+    }
+
+    this.setError('state', '');
+    return true;
+  }
+
   isValid(): boolean {
     const checks = [
       this.checkIsNotEmpty('firstName', 'First name is required'),
@@ -115,6 +128,7 @@ const FormValidator: FormValidatorClass = class
         this.checkPasswordIsStrong() &&
         this.checkPasswordConfirmed(),
       this.checkIsNotEmpty('country', 'Please select a country'),
+      this.checkStateIsNotEmptyIfUSA('Please select a state'),
       this.checkEducationalUseAgreementValid(),
       this.checkTermsAndConditionsAgreementValid(),
     ];

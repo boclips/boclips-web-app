@@ -20,6 +20,7 @@ export interface ClassroomRegistrationData {
   confirmPassword: string;
   schoolName: string;
   country: string;
+  state: string;
   hasAcceptedEducationalUseTerms: boolean;
   hasAcceptedTermsAndConditions: boolean;
 }
@@ -33,6 +34,7 @@ const emptyRegistrationData = (): ClassroomRegistrationData => {
     confirmPassword: '',
     schoolName: '',
     country: '',
+    state: '',
     hasAcceptedEducationalUseTerms: false,
     hasAcceptedTermsAndConditions: false,
   };
@@ -108,6 +110,7 @@ const ClassroomRegistrationForm = ({
           type: UserType.classroomUser,
           schoolName: registrationData.schoolName,
           country: registrationData.country,
+          state: registrationData.state,
           hasAcceptedEducationalUseTerms:
             registrationData.hasAcceptedEducationalUseTerms,
           hasAcceptedTermsAndConditions:

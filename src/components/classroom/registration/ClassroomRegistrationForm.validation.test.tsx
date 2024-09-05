@@ -13,7 +13,10 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
-import { fillRegistrationForm } from 'src/components/classroom/registration/classroomRegistrationFormTestHelpers';
+import {
+  fillRegistrationForm,
+  setDropdownValue,
+} from 'src/components/classroom/registration/classroomRegistrationFormTestHelpers';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 describe('ClassroomRegistration Form Validation', () => {
@@ -51,31 +54,36 @@ describe('ClassroomRegistration Form Validation', () => {
     });
   });
 
-  it('email cannot be empty', async () => {
-    const wrapper = renderRegistrationForm();
+  describe('email', () => {
+    it('email cannot be empty', async () => {
+      const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { email: '' });
+      fillTheForm(wrapper, { email: '' });
 
-    await checkErrorIsNotVisible(wrapper, 'Email is required');
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
-    await checkErrorIsVisible(wrapper, 'Email is required');
+      await checkErrorIsNotVisible(wrapper, 'Email is required');
+      fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+      await checkErrorIsVisible(wrapper, 'Email is required');
 
-    await waitFor(() => {
-      expect(createClassroomUserSpy).not.toBeCalled();
+      await waitFor(() => {
+        expect(createClassroomUserSpy).not.toBeCalled();
+      });
     });
-  });
 
-  it('email must have correct format', async () => {
-    const wrapper = renderRegistrationForm();
+    it('email must have correct format', async () => {
+      const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { email: 'wrong@' });
+      fillTheForm(wrapper, { email: 'wrong@' });
 
-    await checkErrorIsNotVisible(wrapper, 'Please enter a valid email address');
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
-    await checkErrorIsVisible(wrapper, 'Please enter a valid email address');
+      await checkErrorIsNotVisible(
+        wrapper,
+        'Please enter a valid email address',
+      );
+      fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+      await checkErrorIsVisible(wrapper, 'Please enter a valid email address');
 
-    await waitFor(() => {
-      expect(createClassroomUserSpy).not.toBeCalled();
+      await waitFor(() => {
+        expect(createClassroomUserSpy).not.toBeCalled();
+      });
     });
   });
 
@@ -93,64 +101,89 @@ describe('ClassroomRegistration Form Validation', () => {
     });
   });
 
-  it('password cannot be empty', async () => {
-    const wrapper = renderRegistrationForm();
+  describe('password', () => {
+    it('password cannot be empty', async () => {
+      const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { password: '' });
+      fillTheForm(wrapper, { password: '' });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
-    await checkErrorIsVisible(wrapper, '8 characters');
+      fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+      await checkErrorIsVisible(wrapper, '8 characters');
 
-    await waitFor(() => {
-      expect(createClassroomUserSpy).not.toBeCalled();
+      await waitFor(() => {
+        expect(createClassroomUserSpy).not.toBeCalled();
+      });
+    });
+
+    it('password must be strong', async () => {
+      const wrapper = renderRegistrationForm();
+
+      fillTheForm(wrapper, { password: 'pass' });
+
+      fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+
+      await checkErrorIsVisible(wrapper, '8 characters');
+      await checkErrorIsVisible(wrapper, '1 capital letter');
+      await checkErrorIsVisible(wrapper, "Password doesn't match");
+      await checkErrorIsVisible(wrapper, '1 special character');
+      await checkErrorIsVisible(wrapper, '1 number');
+
+      await waitFor(() => {
+        expect(createClassroomUserSpy).not.toBeCalled();
+      });
+    });
+
+    it('passwords must match ', async () => {
+      const wrapper = renderRegistrationForm();
+
+      fillTheForm(wrapper, {
+        password: 'abc@5678',
+        confirmPassword: 'def',
+      });
+
+      fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+      await checkErrorIsVisible(wrapper, "Password doesn't match");
+
+      await waitFor(() => {
+        expect(createClassroomUserSpy).not.toBeCalled();
+      });
     });
   });
 
-  it('password must be strong', async () => {
-    const wrapper = renderRegistrationForm();
+  describe('country and state', () => {
+    it('country cannot be empty', async () => {
+      const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { password: 'pass' });
+      fillTheForm(wrapper, { country: '' });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+      await checkErrorIsNotVisible(wrapper, 'Please select a country');
+      fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+      await checkErrorIsVisible(wrapper, 'Please select a country');
 
-    await checkErrorIsVisible(wrapper, '8 characters');
-    await checkErrorIsVisible(wrapper, '1 capital letter');
-    await checkErrorIsVisible(wrapper, "Password doesn't match");
-    await checkErrorIsVisible(wrapper, '1 special character');
-    await checkErrorIsVisible(wrapper, '1 number');
-
-    await waitFor(() => {
-      expect(createClassroomUserSpy).not.toBeCalled();
-    });
-  });
-
-  it('passwords must match ', async () => {
-    const wrapper = renderRegistrationForm();
-
-    fillTheForm(wrapper, {
-      password: 'abc@5678',
-      confirmPassword: 'def',
+      await waitFor(() => {
+        expect(createClassroomUserSpy).not.toBeCalled();
+      });
     });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
-    await checkErrorIsVisible(wrapper, "Password doesn't match");
+    it('states cannot be empty when country is USA', async () => {
+      const wrapper = renderRegistrationForm();
 
-    await waitFor(() => {
-      expect(createClassroomUserSpy).not.toBeCalled();
-    });
-  });
+      fillTheForm(wrapper, { country: '' });
 
-  it('country cannot be empty', async () => {
-    const wrapper = renderRegistrationForm();
+      await checkErrorIsNotVisible(wrapper, 'Please select a country');
+      setDropdownValue(
+        wrapper,
+        'input-dropdown-country',
+        'United States of America',
+      );
+      await checkErrorIsNotVisible(wrapper, 'Please select a state');
 
-    fillTheForm(wrapper, { country: '' });
+      fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+      await checkErrorIsVisible(wrapper, 'Please select a state');
 
-    await checkErrorIsNotVisible(wrapper, 'Please select a country');
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
-    await checkErrorIsVisible(wrapper, 'Please select a country');
-
-    await waitFor(() => {
-      expect(createClassroomUserSpy).not.toBeCalled();
+      await waitFor(() => {
+        expect(createClassroomUserSpy).not.toBeCalled();
+      });
     });
   });
 
@@ -304,6 +337,7 @@ describe('ClassroomRegistration Form Validation', () => {
       confirmPassword: 'p@ssw0rd',
       schoolName: 'Los Angeles Lakers',
       country: 'Poland',
+      state: '',
       hasAcceptedEducationalUseTerms: true,
       hasAcceptedTermsAndConditions: true,
     };

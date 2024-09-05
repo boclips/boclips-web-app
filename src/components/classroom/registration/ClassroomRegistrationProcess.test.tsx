@@ -27,6 +27,7 @@ describe('registration process', () => {
       confirmPassword: 'p@ss1234',
       schoolName: 'Los Angeles Lakers',
       country: 'Poland',
+      state: '',
       hasAcceptedEducationalUseTerms: true,
       hasAcceptedTermsAndConditions: true,
     };
