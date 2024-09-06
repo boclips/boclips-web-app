@@ -157,7 +157,7 @@ const ClassroomRegistrationForm = ({
   return (
     <main ref={mainRef} tabIndex={-1} className={s.formInputsWrapper}>
       <section className={s.formHeader}>
-        <Typography.H2>Create your account</Typography.H2>
+        <Typography.H2>Create your free account</Typography.H2>
       </section>
 
       <ClassroomRegistrationFormFields

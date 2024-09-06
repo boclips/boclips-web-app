@@ -61,7 +61,7 @@ describe('ClassroomRegistration Form', () => {
   it('renders the form', async () => {
     const wrapper = renderRegistrationForm();
 
-    expect(wrapper.getByText('Create your account')).toBeVisible();
+    expect(wrapper.getByText('Create your free account')).toBeVisible();
     expect(wrapper.getByLabelText('First name')).toBeVisible();
     expect(wrapper.getByLabelText('Last name')).toBeVisible();
     expect(wrapper.getByLabelText('Email Address')).toBeVisible();

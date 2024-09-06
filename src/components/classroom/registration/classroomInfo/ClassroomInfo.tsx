@@ -39,8 +39,8 @@ const ClassroomInfo = () => {
       <div className={s.classroomInfo}>
         <Typography.H1 size="lg">Welcome to Boclips Classroom!</Typography.H1>
         <Typography.Body as="div" size="small" className="mt-3 mb-3">
-          Enhance your classroom experience with over 200,000 instructional
-          videos in a safe, educational alternative to YouTube.
+          Enhance your classroom experience with over 1.7M videos in a safe,
+          educational alternative to YouTube.
         </Typography.Body>
         {features.map(({ title, description }) => {
           return (

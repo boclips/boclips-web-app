@@ -318,7 +318,9 @@ describe('App', () => {
         </MemoryRouter>,
       );
 
-      expect(await wrapper.findByText('Create your account')).toBeVisible();
+      expect(
+        await wrapper.findByText('Create your free account'),
+      ).toBeVisible();
     });
 
     it('will not redirect to Licenses page when hitting /classroom/register url without BWA_DEV feature', async () => {

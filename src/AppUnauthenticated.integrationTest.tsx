@@ -30,7 +30,9 @@ describe('Unauthenticated app', () => {
         </MemoryRouter>,
       );
 
-      expect(await wrapper.findByText('Create your account')).toBeVisible();
+      expect(
+        await wrapper.findByText('Create your free account'),
+      ).toBeVisible();
     });
   });
 
