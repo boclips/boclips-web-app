@@ -71,7 +71,7 @@ describe('order table', () => {
         captionStatus: OrderCaptionStatus.PROCESSING,
         maxResolutionAvailable: true,
         videoReference: 'video-ref',
-        types: ['I am a type', 'me too!'],
+        type: 'STOCK',
         _links: {
           fullProjection: new Link({ href: 'fullprojection', templated: true }),
           videoUpload: new Link({ href: 'videoUpload', templated: true }),
@@ -185,7 +185,7 @@ describe('order table', () => {
         captionStatus: OrderCaptionStatus.PROCESSING,
         maxResolutionAvailable: true,
         videoReference: 'video-ref',
-        types: ['I am a type', 'me too!'],
+        type: 'NEWS',
         _links: {
           fullProjection: new Link({ href: 'fullprojection', templated: true }),
           videoUpload: new Link({ href: 'videoUpload', templated: true }),

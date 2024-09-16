@@ -190,7 +190,7 @@ describe('SearchResults', () => {
         VideoFactory.sample({
           id: `video ${i}`,
           title: `video ${i}`,
-          types: [{ id: 1, name: 'NEWS' }],
+          type: 'NEWS',
         }),
       );
     }
