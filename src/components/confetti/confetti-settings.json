@@ -19,7 +19,7 @@
       "count": 1
     }
   },
-  "retina_detect": true,
+  "detectRetina": true,
   "particles": {
     "rotate": {
       "value": {
