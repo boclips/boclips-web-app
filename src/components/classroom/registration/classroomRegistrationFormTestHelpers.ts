@@ -1,36 +1,41 @@
 import { fireEvent, RenderResult, within } from '@testing-library/react';
 import { ClassroomRegistrationData } from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
+import userEvent from '@testing-library/user-event';
 
-export function fillRegistrationForm(
+export async function fillRegistrationForm(
   wrapper: RenderResult,
   data: ClassroomRegistrationData,
 ) {
-  fireEvent.change(wrapper.container.querySelector('[id="input-firstName"]'), {
-    target: { value: data.firstName },
-  });
-
-  fireEvent.change(wrapper.container.querySelector('[id="input-lastName"]'), {
-    target: { value: data.lastName },
-  });
-  fireEvent.change(wrapper.container.querySelector('[id="input-email"]'), {
-    target: { value: data.email },
-  });
-  fireEvent.change(wrapper.container.querySelector('[id="input-password"]'), {
-    target: { value: data.password },
-  });
-  fireEvent.change(
-    wrapper.container.querySelector('[id="input-confirmPassword"]'),
-    {
-      target: { value: data.confirmPassword },
-    },
+  await userEvent.type(
+    wrapper.container.querySelector('[id="input-firstName"]'),
+    data.firstName,
   );
-  fireEvent.change(wrapper.container.querySelector('[id="input-schoolName"]'), {
-    target: { value: data.schoolName },
-  });
 
-  setDropdownValue(wrapper, 'input-dropdown-country', data.country);
+  await userEvent.type(
+    wrapper.container.querySelector('[id="input-lastName"]'),
+    data.lastName,
+  );
+  await userEvent.type(
+    wrapper.container.querySelector('[id="input-email"]'),
+    data.email,
+  );
+  await userEvent.type(
+    wrapper.container.querySelector('[id="input-password"]'),
+    data.password,
+  );
+  await userEvent.type(
+    wrapper.container.querySelector('[id="input-confirmPassword"]'),
+    data.confirmPassword,
+  );
 
-  setDropdownValue(wrapper, 'input-dropdown-state', data.state);
+  await setDropdownValue(wrapper, 'input-dropdown-country', data.country);
+
+  await setDropdownValue(wrapper, 'input-dropdown-state', data.state);
+
+  await userEvent.type(
+    wrapper.container.querySelector('[id="input-schoolName"]'),
+    data.schoolName,
+  );
 
   if (data.hasAcceptedEducationalUseTerms) {
     checkEducationalUseAgreement(wrapper);
@@ -41,17 +46,17 @@ export function fillRegistrationForm(
   }
 }
 
-export function setDropdownValue(
+export async function setDropdownValue(
   wrapper: RenderResult,
   dropdownId: string,
   value: string,
 ) {
   if (value) {
     const dropdown = wrapper.getByTestId(dropdownId);
-    fireEvent.click(within(dropdown).getByTestId('select'));
-    const option = within(dropdown).getByText(value);
+    await userEvent.type(within(dropdown).getByRole('combobox'), value);
+    const option = wrapper.getByText(value);
     expect(option).toBeVisible();
-    fireEvent.click(option);
+    await userEvent.click(option);
   }
 }
 

@@ -39,6 +39,7 @@ interface BaseComboboxProps {
   isError?: boolean;
   errorMessage?: string;
   errorMessagePlacement?: Placement;
+  dataQa?: string;
 }
 
 interface FilterComboboxProps extends BaseComboboxProps {
@@ -66,6 +67,7 @@ export const Combobox = ({
   errorMessagePlacement = Placement.BOTTOM,
   mode = ComboboxMode.FILTER,
   fetchFunction,
+  dataQa,
 }: ComboboxProps) => {
   const [query, setQuery] = useState('');
   const [filteredItems, setFilteredItems] = useState<ComboboxItem[]>(items);
@@ -100,7 +102,7 @@ export const Combobox = ({
   }, [query, fetchFunction, mode]);
 
   return (
-    <Field className="flex flex-col w-full space-y-2">
+    <Field className="flex flex-col w-full space-y-2" data-qa={dataQa}>
       {isError && errorMessage && errorMessagePlacement === Placement.TOP && (
         <div className="flex text-[#DF0000] space-x-1 text-sm" role="alert">
           <span>
@@ -128,6 +130,7 @@ export const Combobox = ({
             displayValue={(item: ComboboxItem) => item?.label ?? ''}
             onChange={(event) => setQuery(event.target.value)}
             placeholder={placeholder}
+            data-qa="select"
           />
           <ComboboxButton className="group absolute inset-y-0 right-0 px-2.5">
             <ChevronDownIcon />

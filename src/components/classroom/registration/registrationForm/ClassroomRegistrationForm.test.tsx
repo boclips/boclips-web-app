@@ -67,7 +67,6 @@ describe('ClassroomRegistration Form', () => {
     expect(wrapper.getByLabelText('Email Address')).toBeVisible();
     expect(wrapper.getByLabelText('Password')).toBeVisible();
     expect(wrapper.getByLabelText('Confirm password')).toBeVisible();
-    expect(wrapper.getByLabelText('School name')).toBeVisible();
     expect(
       wrapper.getByLabelText(
         /I certify that I am accessing this service solely for Educational Use./,
@@ -103,7 +102,7 @@ describe('ClassroomRegistration Form', () => {
     expect(wrapper.getByTestId('input-dropdown-country')).toBeVisible();
     expect(wrapper.queryByTestId('input-dropdown-state')).toBeNull();
 
-    setDropdownValue(
+    await setDropdownValue(
       wrapper,
       'input-dropdown-country',
       'United States of America',
@@ -111,25 +110,6 @@ describe('ClassroomRegistration Form', () => {
 
     expect(wrapper.getByTestId('input-dropdown-state')).toBeVisible();
   });
-
-  function renderRegistrationForm(
-    apiClient: FakeBoclipsClient = new FakeBoclipsClient(),
-    registrationFormSpy: (userEmail: string) => void = jest.fn(),
-  ) {
-    return render(
-      <Router>
-        <QueryClientProvider client={new QueryClient()}>
-          <BoclipsClientProvider client={apiClient}>
-            <GoogleReCaptchaProvider reCaptchaKey="123">
-              <ClassroomRegistrationForm
-                onRegistrationFinished={registrationFormSpy}
-              />
-            </GoogleReCaptchaProvider>
-          </BoclipsClientProvider>
-        </QueryClientProvider>
-      </Router>,
-    );
-  }
 
   it('renders log in link', async () => {
     const wrapper = renderRegistrationForm();
@@ -250,6 +230,54 @@ describe('ClassroomRegistration Form', () => {
     });
   });
 
+  it('renders usa schools when country usa and a state are selected', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const createClassroomUserSpy = jest.spyOn(
+      fakeClient.users,
+      'createClassroomUser',
+    );
+    fakeClient.schools.setUsaSchools({
+      AR: [
+        {
+          externalId: 'school-1',
+          name: 'Lincoln High School',
+          city: 'Little Rock',
+        },
+        {
+          externalId: 'school-2',
+          name: 'Harris Elementary School',
+          city: 'Hot Springs',
+        },
+      ],
+    });
+
+    const wrapper = renderRegistrationForm(fakeClient);
+
+    await fillTheForm(wrapper, {
+      country: 'United States of America',
+      state: 'Arkansas',
+      schoolName: 'Lincoln High School',
+    });
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+
+    await waitFor(() => {
+      expect(createClassroomUserSpy).toBeCalledWith({
+        firstName: 'LeBron',
+        lastName: 'James',
+        email: 'lj@nba.com',
+        password: 'p@ss1234',
+        recaptchaToken: 'token_baby',
+        type: UserType.classroomUser,
+        schoolName: 'Lincoln High School',
+        country: 'USA',
+        state: 'AR',
+        hasAcceptedEducationalUseTerms: true,
+        hasAcceptedTermsAndConditions: true,
+      });
+    });
+  });
+
   it('error notification is displayed when classroom user creation fails, inputs are not cleared', async () => {
     const fakeClient = new FakeBoclipsClient();
     jest
@@ -356,4 +384,23 @@ describe('ClassroomRegistration Form', () => {
 
     expect(wrapper.queryByText('First name is required')).toBeNull();
   });
+
+  function renderRegistrationForm(
+    apiClient: FakeBoclipsClient = new FakeBoclipsClient(),
+    registrationFormSpy: (userEmail: string) => void = jest.fn(),
+  ) {
+    return render(
+      <Router>
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={apiClient}>
+            <GoogleReCaptchaProvider reCaptchaKey="123">
+              <ClassroomRegistrationForm
+                onRegistrationFinished={registrationFormSpy}
+              />
+            </GoogleReCaptchaProvider>
+          </BoclipsClientProvider>
+        </QueryClientProvider>
+      </Router>,
+    );
+  }
 });

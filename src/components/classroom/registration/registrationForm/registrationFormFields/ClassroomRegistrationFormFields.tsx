@@ -172,6 +172,7 @@ const ClassroomRegistrationFormFields = ({
           placeholder="Select country"
           isError={!!validationErrors.country}
           errorMessage={validationErrors.country}
+          dataQa="input-dropdown-country"
         />
 
         {!!getCountry(registrationData.country, boclipsClient)?.states
@@ -183,6 +184,7 @@ const ClassroomRegistrationFormFields = ({
             placeholder="Select state"
             isError={!!validationErrors.state}
             errorMessage={validationErrors.state}
+            dataQa="input-dropdown-state"
           />
         )}
       </div>

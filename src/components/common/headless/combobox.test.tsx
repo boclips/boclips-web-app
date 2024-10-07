@@ -18,13 +18,10 @@ const fakeItems: ComboboxItem[] = [
   },
 ];
 
-const mockFetchFunction = (query: string): Promise<ComboboxItem[]> =>
-  Promise.resolve(fakeItems.filter((item) => item.label.includes(query)));
-
 describe('Combobox', () => {
   const fakeCallback = jest.fn();
 
-  it('Should render the Combobox in implicit FILTER mode and filter the items properly', async () => {
+  it('should render the Combobox in implicit FILTER mode and filter the items properly', async () => {
     const combobox = render(
       <Combobox onChange={fakeCallback} items={fakeItems} />,
     );
@@ -41,7 +38,7 @@ describe('Combobox', () => {
     expect(combobox.queryByText('something_else')).not.toBeInTheDocument();
   });
 
-  it('Should allow creation of custom items', async () => {
+  it('should allow creation of custom items', async () => {
     const combobox = render(
       <Combobox onChange={fakeCallback} items={fakeItems} allowCustom />,
     );
@@ -58,7 +55,10 @@ describe('Combobox', () => {
     expect(fakeCallback).toHaveBeenCalledWith('newItem');
   });
 
-  it('Should fetch items in the FETCH mode', async () => {
+  it('should fetch items in the FETCH mode', async () => {
+    const mockFetchFunction = jest.fn((_: string) =>
+      Promise.resolve([{ label: 'my-queried-item', value: 'item-1' }]),
+    );
     const combobox = render(
       <Combobox
         onChange={fakeCallback}
@@ -67,11 +67,9 @@ describe('Combobox', () => {
       />,
     );
 
-    const textInput = combobox.container.querySelector('input');
-    await userEvent.type(textInput, 'something_else');
+    await userEvent.type(combobox.container.querySelector('input'), 'quer');
 
-    const newItem = await combobox.findByText('something_else');
-
-    expect(newItem).toBeInTheDocument();
+    expect(await combobox.findByText('my-queried-item')).toBeInTheDocument();
+    expect(mockFetchFunction).toHaveBeenCalledWith('quer');
   });
 });
