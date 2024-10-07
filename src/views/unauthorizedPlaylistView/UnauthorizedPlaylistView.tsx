@@ -1,48 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Layout } from 'src/components/layout/Layout';
-import { useGetPlaylistWithShareCode } from 'src/hooks/api/playlistsQuery';
+import { useGetPlaylistWithReferer } from 'src/hooks/api/playlistsQuery';
 import { useLocation } from 'react-router-dom';
 import Footer from 'src/components/layout/Footer';
 import PlaylistHeader from 'src/components/playlists/playlistHeader/PlaylistHeader';
 import SkeletonPage from 'src/components/skeleton/SkeletonPage';
 import { Helmet } from 'react-helmet';
 import UnauthorizedNavbar from 'src/components/layout/UnauthorizedNavbar';
-import ShareCodeModal from 'src/components/shareCodeModal/ShareCodeModal';
 import {
   useGetAnyParamFromLocation,
   useGetIdFromLocation,
 } from 'src/hooks/useLocationParams';
 import { PageNotFoundError } from 'src/components/common/errors/pageNotFound/PageNotFoundError';
 import PlaylistBody from 'src/components/playlists/playlistBody/PlaylistBody';
+import ErrorView from 'src/views/error/ErrorView';
+import { BoclipsApiError } from 'boclips-api-client/dist/types/BoclipsApiError';
 
 const UnauthorizedPlaylistView = () => {
   const playlistId = useGetIdFromLocation('shared');
   const title = useLocation().state?.name || 'Playlist';
   const referer = useGetAnyParamFromLocation('referer');
-  const [isModalOpen, setIsModalOpen] = useState(true);
-  const [code, setCode] = useState(null);
 
   const {
     data: playlist,
-    isSuccess,
     isFetching,
     isError,
-    refetch: getPlaylistWithShareCode,
-  } = useGetPlaylistWithShareCode(playlistId, referer, code);
+    error,
+  } = useGetPlaylistWithReferer(playlistId, referer);
 
-  useEffect(() => {
-    if (code) {
-      getPlaylistWithShareCode().then();
-    }
-  }, [code]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      setIsModalOpen(false);
-    }
-  }, [isSuccess]);
-
-  if (!referer) {
+  const isUnauthorized = (error as BoclipsApiError)?.status === 403;
+  if (!referer || isUnauthorized) {
     return (
       <>
         <Helmet title={title} />
@@ -55,23 +42,16 @@ const UnauthorizedPlaylistView = () => {
     );
   }
 
+  if (isError || !playlist) {
+    return <ErrorView />;
+  }
+
   return (
     <>
       <Helmet title={title} />
       <Layout rowsSetup="grid-rows-playlist-view" responsiveLayout>
         <UnauthorizedNavbar />
-        {isModalOpen && (
-          <ShareCodeModal
-            assetId={playlistId}
-            referer={referer}
-            fetchAssetWithCode={({ shareCode }) => {
-              setCode(shareCode);
-            }}
-            isFetching={isFetching}
-            isError={isError}
-          />
-        )}
-        {!playlist ? (
+        {isFetching ? (
           <SkeletonPage
             title="playlist skeleton unauthorized"
             animated={false}

@@ -1,35 +1,15 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { MemoryRouter } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
 import UnauthorizedPlaylistView from 'src/views/unauthorizedPlaylistView/UnauthorizedPlaylistView';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 
 describe('Playlist View', () => {
-  it('should display the share code modal for classroom playlist page', async () => {
-    const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <MemoryRouter
-            initialEntries={['/playlists/shared/playlist-id?referer=id']}
-          >
-            <UnauthorizedPlaylistView />
-          </MemoryRouter>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
-    );
-
-    expect(await wrapper.findByRole('dialog')).toBeVisible();
-    expect(wrapper.getByText('Enter code to watch videos')).toBeVisible();
-    expect(wrapper.getByPlaceholderText('Unique access code')).toBeVisible();
-    expect(wrapper.getByText('Watch Video')).toBeVisible();
-  });
-
-  it('should display playlist when correct share code is provided', async () => {
+  it('should display playlist when valid referer is provided', async () => {
     const apiClient = new FakeBoclipsClient();
     const playlist = CollectionFactory.sample({
       id: 'playlist-id',
@@ -45,8 +25,7 @@ describe('Playlist View', () => {
       ownerName: 'fckinfreddy',
     });
     apiClient.collections.addToFake(playlist);
-
-    apiClient.collections.addValidShareCode('pl123', '1234');
+    apiClient.collections.addValidReferer('pl123');
 
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
@@ -60,23 +39,8 @@ describe('Playlist View', () => {
       </QueryClientProvider>,
     );
 
-    expect(await wrapper.findByRole('dialog')).toBeVisible();
-
-    const input = wrapper.getByPlaceholderText('Unique access code');
-    const button = wrapper.getByRole('button', { name: 'Watch Video' });
-
-    expect(button).toHaveAttribute('disabled');
-
-    await userEvent.type(input, '1234');
-
-    expect(button).not.toHaveAttribute('disabled');
-
-    await userEvent.click(wrapper.getByRole('button', { name: 'Watch Video' }));
-
-    await waitForElementToBeRemoved(() => wrapper.getByRole('dialog'));
-    expect(wrapper.queryByRole('dialog')).not.toBeInTheDocument();
     expect(
-      wrapper.getAllByText('You got mud on your face, you big disgrace'),
+      await wrapper.findAllByText('You got mud on your face, you big disgrace'),
     ).toHaveLength(2);
     expect(
       wrapper.getByText('We will, we will rock you, we will, we will rock you'),
@@ -87,7 +51,7 @@ describe('Playlist View', () => {
     ).toBeInTheDocument();
   });
 
-  it('should display error message when used share code is ivalid', async () => {
+  it('should display page not found when referer invalid', async () => {
     const apiClient = new FakeBoclipsClient();
     const playlist = CollectionFactory.sample({
       id: 'playlist-id',
@@ -104,7 +68,7 @@ describe('Playlist View', () => {
     });
     apiClient.collections.addToFake(playlist);
 
-    apiClient.collections.addValidShareCode('pl123', '1234');
+    apiClient.collections.addValidReferer('another-referer');
 
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
@@ -118,15 +82,38 @@ describe('Playlist View', () => {
       </QueryClientProvider>,
     );
 
-    expect(await wrapper.findByRole('dialog')).toBeVisible();
+    expect(await wrapper.findByText('Page not found!')).toBeVisible();
+  });
 
-    expect(wrapper.queryByText('Invalid code')).toBeNull();
+  it('should display page not found when referer not present', async () => {
+    const apiClient = new FakeBoclipsClient();
+    const playlist = CollectionFactory.sample({
+      id: 'playlist-id',
+      title: 'You got mud on your face, you big disgrace',
+      description: 'We will, we will rock you, we will, we will rock you',
+      videos: [
+        VideoFactory.sample({
+          id: 'video1',
+          title: 'Somebody better put you back into your place',
+        }),
+      ],
+      mine: false,
+      ownerName: 'fckinfreddy',
+    });
+    apiClient.collections.addToFake(playlist);
 
-    const input = wrapper.getByPlaceholderText('Unique access code');
-    await userEvent.type(input, 'abcd');
+    apiClient.collections.addValidReferer('another-referer');
 
-    await userEvent.click(wrapper.getByRole('button', { name: 'Watch Video' }));
+    const wrapper = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={apiClient}>
+          <MemoryRouter initialEntries={['/playlists/shared/playlist-id']}>
+            <UnauthorizedPlaylistView />
+          </MemoryRouter>
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
 
-    expect(await wrapper.findByText('Invalid code')).toBeVisible();
+    expect(await wrapper.findByText('Page not found!')).toBeVisible();
   });
 });

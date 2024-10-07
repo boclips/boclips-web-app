@@ -101,17 +101,13 @@ export const usePlaylistQuery = (id: string) => {
   );
 };
 
-export const useGetPlaylistWithShareCode = (
-  id: string,
-  referer?: string,
-  shareCode?: string,
-) => {
+export const useGetPlaylistWithReferer = (id: string, referer?: string) => {
   const client = useBoclipsClient();
 
   return useQuery(
     playlistKeys.detail(id),
-    () => client.collections.get(id, 'details', referer, shareCode),
-    { enabled: false, refetchOnWindowFocus: false },
+    () => client.collections.get(id, 'details', referer),
+    { enabled: !!id && !!referer, refetchOnWindowFocus: false },
   );
 };
 

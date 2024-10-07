@@ -89,26 +89,11 @@ export const PlaylistShareCodeButton = ({
           footerClass={s.bodalButtons}
           onConfirm={handleCopyLink}
           smallSize={false}
-          footerText={
-            !userIsLoading && (
-              <Typography.Body
-                as="div"
-                className="text-center pt-4 pb-6 text-gray-800"
-                data-qa="share-code-footer"
-              >
-                {`Your unique access code is `}
-                <Typography.Body weight="medium">
-                  {user.shareCode}
-                </Typography.Body>
-              </Typography.Body>
-            )
-          }
           extraButton={
             !userIsLoading && (
               <GoogleClassroomShareLink
                 link={shareLink}
                 postTitle={playlist.title}
-                postBody={`Use code ${user.shareCode} to view this.`}
                 onClick={() => {}}
               />
             )
@@ -120,10 +105,7 @@ export const PlaylistShareCodeButton = ({
               currently have set.
             </p>
             <br />
-            <p>
-              Students need both the link and your unique access code to access
-              and play video(s).
-            </p>
+            <p>Students only need the link to access and play video(s).</p>
           </Typography.Body>
         </Bodal>
       )}

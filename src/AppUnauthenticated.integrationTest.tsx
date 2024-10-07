@@ -3,6 +3,7 @@ import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import AppUnauthenticated from 'src/AppUnauthenticated';
+import { CollectionFactory } from 'boclips-api-client/dist/test-support/CollectionsFactory';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 
 describe('Unauthenticated app', () => {
@@ -43,6 +44,7 @@ describe('Unauthenticated app', () => {
       apiClient.videos.insertVideo(
         VideoFactory.sample({ id: 'video-id', title: 'Awesome video' }),
       );
+      apiClient.videos.addValidReferer('some-referer');
 
       const wrapper = render(
         <MemoryRouter
@@ -60,6 +62,14 @@ describe('Unauthenticated app', () => {
     it('renders playlist page view', async () => {
       const apiClient = new FakeBoclipsClient();
 
+      apiClient.collections.addToFake(
+        CollectionFactory.sample({
+          id: 'playlist-id',
+          title: 'Awesome playlist',
+        }),
+      );
+      apiClient.collections.addValidReferer('some-referer');
+
       const wrapper = render(
         <MemoryRouter
           initialEntries={[
@@ -70,9 +80,9 @@ describe('Unauthenticated app', () => {
         </MemoryRouter>,
       );
 
-      expect(
-        await wrapper.findByTitle('playlist skeleton unauthorized'),
-      ).toBeVisible();
+      expect(await wrapper.findAllByText('Awesome playlist')).not.toHaveLength(
+        0,
+      );
     });
 
     it('renders page not found when there is no referer', async () => {

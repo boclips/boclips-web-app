@@ -1,64 +1,56 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Footer from 'src/components/layout/Footer';
 import {
   useGetAnyParamFromLocation,
   useGetIdFromLocation,
   useGetNumberParamFromLocation,
 } from 'src/hooks/useLocationParams';
-import {
-  useGetVideoWithReferer,
-  useGetVideoWithShareCode,
-} from 'src/hooks/api/videoQuery';
+import { useGetVideoWithReferer } from 'src/hooks/api/videoQuery';
 import { Loading } from 'src/components/common/Loading';
 import { Helmet } from 'react-helmet';
 import { Layout } from 'src/components/layout/Layout';
-import { BoclipsApiError } from 'boclips-api-client/dist/types';
 import { VideoPage } from 'src/components/videoPage/VideoPage';
 import ErrorView from 'src/views/error/ErrorView';
 import UnauthorizedNavbar from 'src/components/layout/UnauthorizedNavbar';
-import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import ShareCodeModal from 'src/components/shareCodeModal/ShareCodeModal';
+import { PageNotFoundError } from 'src/components/common/errors/pageNotFound/PageNotFoundError';
+import { BoclipsApiError } from 'boclips-api-client/dist/types/BoclipsApiError';
 
 const UnauthorizedVideoView = () => {
   const videoId = useGetIdFromLocation('shared');
   const referer = useGetAnyParamFromLocation('referer');
   const start = useGetNumberParamFromLocation('segmentStart');
   const end = useGetNumberParamFromLocation('segmentEnd');
-  const [isModalOpen, setIsModalOpen] = useState(true);
-  const [video, setVideo] = useState<Video | undefined>();
 
   const {
-    data: limitedVideo,
-    isLoading,
+    data: video,
+    isFetching,
+    isError,
     error,
   } = useGetVideoWithReferer(videoId, referer);
 
-  const {
-    mutate: getVideoWithShareCode,
-    isSuccess,
-    isLoading: isVideoLoading,
-    isError,
-  } = useGetVideoWithShareCode();
-
-  useEffect(() => {
-    if (limitedVideo) {
-      setVideo(limitedVideo);
-    }
-  }, [limitedVideo]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      setIsModalOpen(false);
-    }
-  }, [isSuccess]);
-
-  if (isLoading) {
+  if (isFetching) {
     return <Loading />;
   }
 
   const isVideoNotFound = (error as BoclipsApiError)?.status === 404;
 
-  if (isVideoNotFound || !video) {
+  if (!referer || isVideoNotFound) {
+    return (
+      <>
+        <Helmet title="Shared Video" />
+        <Layout
+          rowsSetup="lg:grid-rows-large-screen-video-view grid-rows-video-view auto-rows-min"
+          responsiveLayout
+        >
+          <UnauthorizedNavbar />
+          <PageNotFoundError />
+          <Footer className="row-start-last row-end-last" />
+        </Layout>
+      </>
+    );
+  }
+
+  if (isError || !video) {
     return <ErrorView />;
   }
 
@@ -70,17 +62,6 @@ const UnauthorizedVideoView = () => {
     >
       {video?.title && <Helmet title={video.title} />}
       <UnauthorizedNavbar />
-      {isModalOpen && (
-        <ShareCodeModal
-          assetId={videoId}
-          referer={referer}
-          fetchAssetWithCode={({ assetId, referer: ref, shareCode }) =>
-            getVideoWithShareCode({ videoId: assetId, referer: ref, shareCode })
-          }
-          isFetching={isVideoLoading}
-          isError={isError}
-        />
-      )}
       <VideoPage video={video} start={start} end={end} />
       <Footer className="row-start-last row-end-last" />
     </Layout>
