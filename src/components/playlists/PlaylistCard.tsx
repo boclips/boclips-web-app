@@ -10,7 +10,7 @@ import { FeatureGate } from 'src/components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { CopyButton } from 'src/components/common/copyLinkButton/CopyButton';
 import { Constants } from 'src/AppConstants';
-import { PlaylistShareCodeButton } from 'src/components/shareCodeButton/PlaylistShareCodeButton';
+import { PlaylistShareLinkButton } from 'src/components/shareLinkButton/PlaylistShareLinkButton';
 import s from './style.module.less';
 
 interface PlaylistCardProps {
@@ -51,7 +51,7 @@ const PlaylistCard: React.FC<PlaylistCardProps> = ({ playlist }) => {
             </FeatureGate>
             <FeatureGate product={Product.CLASSROOM}>
               <div className="p-2 items-end flex justify-end">
-                <PlaylistShareCodeButton
+                <PlaylistShareLinkButton
                   iconOnly
                   playlist={playlist}
                   shareButtonHeight="40px"

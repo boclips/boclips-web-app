@@ -1,5 +1,5 @@
 import { render, RenderResult, waitFor, within } from '@testing-library/react';
-import { VideoShareCodeButton } from 'src/components/shareCodeButton/VideoShareCodeButton';
+import { VideoShareLinkButton } from 'src/components/shareLinkButton/VideoShareLinkButton';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
@@ -9,10 +9,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import dayjs from 'src/day-js';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
-import { getShareableVideoLink } from 'src/components/shareCodeButton/getShareableLink';
+import { getShareableVideoLink } from 'src/components/shareLinkButton/getShareableLink';
 import { ToastContainer } from 'react-toastify';
 
-describe('video share code button', () => {
+describe('video share link button', () => {
   Object.assign(navigator, {
     clipboard: {
       writeText: () => Promise.resolve(),
@@ -23,7 +23,7 @@ describe('video share code button', () => {
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <VideoShareCodeButton video={VideoFactory.sample({})} />
+          <VideoShareLinkButton video={VideoFactory.sample({})} />
         </BoclipsClientProvider>
       </QueryClientProvider>,
     );
@@ -36,7 +36,7 @@ describe('video share code button', () => {
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <VideoShareCodeButton iconOnly video={VideoFactory.sample({})} />
+          <VideoShareLinkButton iconOnly video={VideoFactory.sample({})} />
         </BoclipsClientProvider>
       </QueryClientProvider>,
     );
@@ -245,7 +245,6 @@ const renderShareButton = (
   apiClient.users.insertCurrentUser(
     UserFactory.sample({
       id: 'user-1',
-      shareCode: '1739',
     }),
   );
 
@@ -254,7 +253,7 @@ const renderShareButton = (
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={apiClient}>
           <ToastContainer />
-          <VideoShareCodeButton
+          <VideoShareLinkButton
             iconOnly
             video={VideoFactory.sample({
               id: 'video-1',

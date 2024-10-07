@@ -1,19 +1,19 @@
 import React from 'react';
 import { render, RenderResult, waitFor, within } from '@testing-library/react';
-import { PlaylistShareCodeButton } from 'src/components/shareCodeButton/PlaylistShareCodeButton';
+import { PlaylistShareLinkButton } from 'src/components/shareLinkButton/PlaylistShareLinkButton';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import userEvent from '@testing-library/user-event';
-import { getShareablePlaylistLink } from 'src/components/shareCodeButton/getShareableLink';
+import { getShareablePlaylistLink } from 'src/components/shareLinkButton/getShareableLink';
 import { ToastContainer } from 'react-toastify';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { lastEvent } from 'src/testSupport/lastEvent';
 import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 
-describe('playlist share code button', () => {
+describe('playlist share link button', () => {
   Object.assign(navigator, {
     clipboard: {
       writeText: () => Promise.resolve(),
@@ -24,7 +24,7 @@ describe('playlist share code button', () => {
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <PlaylistShareCodeButton playlist={CollectionFactory.sample({})} />
+          <PlaylistShareLinkButton playlist={CollectionFactory.sample({})} />
         </BoclipsClientProvider>
       </QueryClientProvider>,
     );
@@ -37,7 +37,7 @@ describe('playlist share code button', () => {
     const wrapper = render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <PlaylistShareCodeButton
+          <PlaylistShareLinkButton
             iconOnly
             playlist={CollectionFactory.sample({})}
           />
@@ -141,7 +141,7 @@ describe('playlist share code button', () => {
     await waitFor(() => {
       expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({
         type: 'PLATFORM_INTERACTED_WITH',
-        subtype: 'PLAYLIST_SHARE_CODE_MODAL_OPENED',
+        subtype: 'PLAYLIST_SHARE_LINK_MODAL_OPENED',
         anonymous: false,
       });
     });
@@ -164,7 +164,7 @@ describe('playlist share code button', () => {
     await waitFor(() => {
       expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({
         type: 'PLATFORM_INTERACTED_WITH',
-        subtype: 'PLAYLIST_SHARE_CODE_LINK_COPIED',
+        subtype: 'PLAYLIST_SHARE_LINK_COPIED',
         anonymous: false,
       });
     });
@@ -174,7 +174,6 @@ describe('playlist share code button', () => {
     apiClient.users.insertCurrentUser(
       UserFactory.sample({
         id: 'user-id',
-        shareCode: '1739',
       }),
     );
 
@@ -184,7 +183,7 @@ describe('playlist share code button', () => {
           <QueryClientProvider client={new QueryClient()}>
             <BoclipsClientProvider client={apiClient}>
               <ToastContainer />
-              <PlaylistShareCodeButton
+              <PlaylistShareLinkButton
                 iconOnly
                 playlist={{ id: 'playlist-id', title: 'My Playlist' }}
               />

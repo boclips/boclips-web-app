@@ -1,4 +1,4 @@
-import formatDuration from 'src/components/shareCodeButton/playlistsBookmark/helpers/formatDuration';
+import formatDuration from 'src/components/shareLinkButton/playlistsBookmark/helpers/formatDuration';
 
 describe('formatDuration', () => {
   it('correctly formats seconds under one minute', () => {

@@ -5,14 +5,14 @@ import Button from '@boclips-ui/button';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import { Typography } from '@boclips-ui/typography';
-import { GoogleClassroomShareLink } from 'src/components/shareCodeButton/googleClassroom/GoogleClassroomShareLink';
-import { getShareablePlaylistLink } from 'src/components/shareCodeButton/getShareableLink';
+import { GoogleClassroomShareLink } from 'src/components/shareLinkButton/googleClassroom/GoogleClassroomShareLink';
+import { getShareablePlaylistLink } from 'src/components/shareLinkButton/getShareableLink';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
-import s from './shareCodeButton.module.less';
+import s from './shareLinkButton.module.less';
 
-interface PlaylistShareCodeButtonProps {
+interface PlaylistShareLinkButtonProps {
   iconOnly?: boolean;
   shareButtonHeight?: string;
   playlist: {
@@ -21,11 +21,11 @@ interface PlaylistShareCodeButtonProps {
   };
 }
 
-export const PlaylistShareCodeButton = ({
+export const PlaylistShareLinkButton = ({
   iconOnly = false,
   shareButtonHeight,
   playlist,
-}: PlaylistShareCodeButtonProps) => {
+}: PlaylistShareLinkButtonProps) => {
   const client = useBoclipsClient();
 
   const { data: user, isLoading: userIsLoading } = useGetUserQuery();
@@ -34,8 +34,8 @@ export const PlaylistShareCodeButton = ({
   const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
 
   const toggleModalVisibility = async () => {
-    await trackPlatformInteraction({
-      subtype: 'PLAYLIST_SHARE_CODE_MODAL_OPENED',
+    trackPlatformInteraction({
+      subtype: 'PLAYLIST_SHARE_LINK_MODAL_OPENED',
     });
     setIsModalVisible(!isModalVisible);
   };
@@ -52,7 +52,7 @@ export const PlaylistShareCodeButton = ({
 
   const handleCopyLink = () => {
     trackPlatformInteraction({
-      subtype: 'PLAYLIST_SHARE_CODE_LINK_COPIED',
+      subtype: 'PLAYLIST_SHARE_LINK_COPIED',
     });
 
     client.shareCodes.trackCollectionShareCode(playlist.id);

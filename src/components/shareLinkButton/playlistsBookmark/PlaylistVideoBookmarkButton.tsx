@@ -7,12 +7,12 @@ import {
   usePlaylistQuery,
 } from 'src/hooks/api/playlistsQuery';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
-import BookmarkModal from 'src/components/shareCodeButton/playlistsBookmark/bookmarkModal/BookmarkModal';
+import BookmarkModal from 'src/components/shareLinkButton/playlistsBookmark/bookmarkModal/BookmarkModal';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 import { Segment } from 'boclips-api-client/dist/sub-clients/collections/model/Segment';
 import s from './style.module.less';
 
-interface VideoShareCodeButtonProps {
+interface PlaylistVideoShareButtonProps {
   video: Video;
   playlistId: string;
 }
@@ -20,7 +20,7 @@ interface VideoShareCodeButtonProps {
 const PlaylistVideoBookmarkButton = ({
   video,
   playlistId,
-}: VideoShareCodeButtonProps) => {
+}: PlaylistVideoShareButtonProps) => {
   const { data: playlist } = usePlaylistQuery(playlistId);
   const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
   const { mutate: updatePlaylist } = useEditPlaylistMutation(playlist);

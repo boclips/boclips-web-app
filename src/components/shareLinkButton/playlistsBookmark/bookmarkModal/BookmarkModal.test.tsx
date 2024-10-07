@@ -14,7 +14,7 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import dayjs from 'src/day-js';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { ToastContainer } from 'react-toastify';
-import PlaylistVideoBookmarkButton from 'src/components/shareCodeButton/playlistsBookmark/PlaylistVideoBookmarkButton';
+import PlaylistVideoBookmarkButton from 'src/components/shareLinkButton/playlistsBookmark/PlaylistVideoBookmarkButton';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { lastEvent } from 'src/testSupport/lastEvent';

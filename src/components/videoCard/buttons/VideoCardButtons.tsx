@@ -7,7 +7,7 @@ import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { EmbedButton } from 'src/components/embedButton/EmbedButton';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import { VideoShareCodeButton } from 'src/components/shareCodeButton/VideoShareCodeButton';
+import { VideoShareLinkButton } from 'src/components/shareLinkButton/VideoShareLinkButton';
 import { DownloadTranscriptButton } from 'src/components/downloadTranscriptButton/DownloadTranscriptButton';
 import s from './style.module.less';
 import { CopyVideoLinkButton } from './CopyVideoLinkButton';
@@ -64,7 +64,7 @@ export const VideoCardButtons = ({
       </div>
       <div className="flex justify-between gap-2">
         <FeatureGate product={Product.CLASSROOM}>
-          <VideoShareCodeButton iconOnly={iconOnly} video={video} />
+          <VideoShareLinkButton iconOnly={iconOnly} video={video} />
         </FeatureGate>
         {video.links.createEmbedCode ? (
           <EmbedButton video={video} iconOnly={iconOnly} />

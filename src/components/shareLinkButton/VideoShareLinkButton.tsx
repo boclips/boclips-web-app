@@ -13,21 +13,21 @@ import {
   isTrimToValid,
 } from 'src/components/cart/AdditionalServices/Trim/trimValidation';
 import { Typography } from '@boclips-ui/typography';
-import { GoogleClassroomShareLink } from 'src/components/shareCodeButton/googleClassroom/GoogleClassroomShareLink';
-import { getShareableVideoLink } from 'src/components/shareCodeButton/getShareableLink';
+import { GoogleClassroomShareLink } from 'src/components/shareLinkButton/googleClassroom/GoogleClassroomShareLink';
+import { getShareableVideoLink } from 'src/components/shareLinkButton/getShareableLink';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
-import s from './shareCodeButton.module.less';
+import s from './shareLinkButton.module.less';
 
-interface VideoShareCodeButtonProps {
+interface VideoShareLinkButtonProps {
   iconOnly?: boolean;
   video: Video;
 }
 
-export const VideoShareCodeButton = ({
+export const VideoShareLinkButton = ({
   iconOnly = false,
   video,
-}: VideoShareCodeButtonProps) => {
+}: VideoShareLinkButtonProps) => {
   const client = useBoclipsClient();
 
   const { data: user } = useGetUserQuery();

@@ -9,7 +9,7 @@ import PlaylistLastUpdatedBadge from 'src/components/playlists/playlistHeader/Pl
 import PlaylistOwnerBadge from 'src/components/playlists/playlistHeader/PlaylistOwnerBadge';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import { PlaylistShareCodeButton } from 'src/components/shareCodeButton/PlaylistShareCodeButton';
+import { PlaylistShareLinkButton } from 'src/components/shareLinkButton/PlaylistShareLinkButton';
 import { OptionsButton } from './OptionsButton';
 import s from './style.module.less';
 
@@ -49,7 +49,7 @@ const PlaylistHeader = ({ playlist, showButtons = true }: Props) => {
           </FeatureGate>
           <FeatureGate product={Product.CLASSROOM}>
             <div className={s.playlistButton}>
-              <PlaylistShareCodeButton iconOnly={false} playlist={playlist} />
+              <PlaylistShareLinkButton iconOnly={false} playlist={playlist} />
             </div>
           </FeatureGate>
           <OptionsButton playlist={playlist} />
