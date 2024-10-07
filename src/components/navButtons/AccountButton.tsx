@@ -103,33 +103,6 @@ export const AccountButton = () => {
           className={s.tooltip}
           onBlur={handleDialogBlur}
         >
-          <FeatureGate product={Product.CLASSROOM}>
-            <div className="w-full">
-              {user.accessExpiresOn && (
-                <Typography.Body
-                  size="small"
-                  as="div"
-                  weight="medium"
-                  className={s.expiryDate}
-                  aria-label={`Free access until ${getFormattedDate(
-                    user.accessExpiresOn,
-                    {
-                      monthFormat: 'long',
-                    },
-                  )}`}
-                >
-                  <div className="py-3 pl-4 text-gray-800 flex flex-col">
-                    <span className="mb-1">Free access until</span>
-                    <span>
-                      {getFormattedDate(user.accessExpiresOn, {
-                        monthFormat: 'long',
-                      })}
-                    </span>
-                  </div>
-                </Typography.Body>
-              )}
-            </div>
-          </FeatureGate>
           <div role="menu" className={s.menu} aria-label="Account menu">
             <div className="pt-2">
               <Link onClick={accountOpenedEvent} to="/profile" tabIndex={-1}>
