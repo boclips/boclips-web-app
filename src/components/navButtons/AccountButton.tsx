@@ -105,18 +105,6 @@ export const AccountButton = () => {
         >
           <FeatureGate product={Product.CLASSROOM}>
             <div className="w-full">
-              <Typography.Body
-                size="small"
-                as="div"
-                weight="medium"
-                aria-label={`Your unique access code is ${user.shareCode}`}
-                className="bg-gray-100"
-              >
-                <div className="py-3 pl-4 text-gray-800 flex flex-col">
-                  <span className="mb-1">Unique access code</span>
-                  <span>{user.shareCode}</span>
-                </div>
-              </Typography.Body>
               {user.accessExpiresOn && (
                 <Typography.Body
                   size="small"

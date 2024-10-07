@@ -29,7 +29,6 @@ describe('Profile view', () => {
     lastName: 'Wick',
     email: 'bob@wick.com',
     jobTitle: 'Engineer',
-    shareCode: 'not-visible-for-b2b',
     account: {
       id: 'acc-1',
       name: 'Elephant Academy',
@@ -102,7 +101,6 @@ describe('Profile view', () => {
       expect(within(userProfile).getByText(/bob@wick.com/)).toBeInTheDocument();
       expect(within(userProfile).getByText(/Job Title:/)).toBeInTheDocument();
       expect(within(userProfile).getByText(/Engineer/)).toBeInTheDocument();
-      expect(within(userProfile).queryByText(/Unique access code:/)).toBeNull();
     });
 
     it('edit my profile section', async () => {
@@ -157,9 +155,8 @@ describe('Profile view', () => {
   });
 
   describe('User Profile for Classroom', () => {
-    it('renders unique access code and hides job title', async () => {
+    it('hides job title', async () => {
       const classroomUser = UserFactory.sample({
-        shareCode: 'DIBS',
         account: {
           id: 'acc-2',
           name: 'Owl Academy',
@@ -174,9 +171,8 @@ describe('Profile view', () => {
 
       expect(within(userProfile).getByText(/Personal/)).toBeInTheDocument();
       expect(
-        within(userProfile).getByText(/Unique access code:/),
-      ).toBeInTheDocument();
-      expect(within(userProfile).getByText(/DIBS/)).toBeInTheDocument();
+        within(userProfile).queryByText(/Job Title:/),
+      ).not.toBeInTheDocument();
     });
   });
 

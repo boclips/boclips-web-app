@@ -23,16 +23,6 @@ const SideMenu = ({ hasSearchInNavbar = true }: Props) => {
         <FeatureGate product={Product.CLASSROOM}>
           {user && !isLoading && (
             <div className="pl-4 flex flex-col">
-              <Typography.Body
-                as="div"
-                aria-label={`Your unique access code code is ${user.shareCode}`}
-                className={s.shareCode}
-              >
-                <div className="flex flex-col">
-                  <span className="mb-1">Unique access code</span>
-                  <span>{user.shareCode}</span>
-                </div>
-              </Typography.Body>
               {user.accessExpiresOn && (
                 <Typography.Body
                   as="div"

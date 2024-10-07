@@ -68,16 +68,6 @@ const ProfileView = () => {
                 </div>
               </FeatureGate>
             )}
-            {user?.shareCode && (
-              <FeatureGate product={Product.CLASSROOM}>
-                <div>
-                  <Typography.Body>Unique access code:</Typography.Body>
-                  <Typography.Body
-                    className={s.info}
-                  >{`${user?.shareCode}`}</Typography.Body>
-                </div>
-              </FeatureGate>
-            )}
             <span className={s.profileIcon}>
               <div className={s.circle}>
                 <span className={s.userIcon}>

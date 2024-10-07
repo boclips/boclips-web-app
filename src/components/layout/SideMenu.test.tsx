@@ -84,60 +84,6 @@ describe('Side Menu', () => {
     ).toBeVisible();
   });
 
-  it('shows unique access code for classroom user', async () => {
-    const fakeClient = new FakeBoclipsClient();
-    fakeClient.users.insertCurrentUser(
-      UserFactory.sample({
-        firstName: 'Eddie',
-        lastName: 'Bravo',
-        email: 'eddie@10thplanetjj.com',
-        account: {
-          ...UserFactory.sample().account,
-          id: 'acc-1',
-          name: 'Ren',
-          products: [Product.CLASSROOM],
-          type: AccountType.STANDARD,
-        },
-        shareCode: '12AB',
-        accessExpiresOn: new Date('2024-04-13'),
-      }),
-    );
-    const navbar = renderSideMenu(fakeClient);
-
-    expect(await navbar.findByText('Unique access code')).toBeVisible();
-    expect(navbar.getByText('12AB')).toBeVisible();
-
-    expect(navbar.getByText('Free access until')).toBeVisible();
-    expect(navbar.getByText('13 April 2024')).toBeVisible();
-  });
-
-  it('does not show unique access code for non-classroom user', async () => {
-    const fakeClient = new FakeBoclipsClient();
-    fakeClient.users.insertCurrentUser(
-      UserFactory.sample({
-        firstName: 'Eddie',
-        lastName: 'Bravo',
-        email: 'eddie@10thplanetjj.com',
-        account: {
-          ...UserFactory.sample().account,
-          id: 'acc-1',
-          name: 'Ren',
-          products: [Product.LIBRARY],
-          type: AccountType.STANDARD,
-        },
-        shareCode: '12AB',
-        accessExpiresOn: new Date('2024-04-04T10:04:31.362Z'),
-      }),
-    );
-    const navbar = renderSideMenu(fakeClient);
-
-    expect(navbar.queryByText('Unique access code')).toBeNull();
-    expect(navbar.queryByText('12AB')).toBeNull();
-
-    expect(navbar.queryByText('Free access until')).toBeNull();
-    expect(navbar.queryByText('04 April 2024')).toBeNull();
-  });
-
   const renderSideMenu = (fakeClient = new FakeBoclipsClient()) => {
     return render(
       <BrowserRouter>
