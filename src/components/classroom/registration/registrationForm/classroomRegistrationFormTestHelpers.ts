@@ -2,28 +2,34 @@ import { fireEvent, RenderResult, within } from '@testing-library/react';
 import { ClassroomRegistrationData } from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
 import userEvent from '@testing-library/user-event';
 
+export enum SchoolMode {
+  FREE_TEXT,
+  DROPDOWN_VALUE,
+  CUSTOM_VALUE,
+}
+
 export async function fillRegistrationForm(
   wrapper: RenderResult,
   data: ClassroomRegistrationData,
+  schoolMode: SchoolMode,
 ) {
-  await userEvent.type(
+  await setTextFieldValue(
     wrapper.container.querySelector('[id="input-firstName"]'),
     data.firstName,
   );
-
-  await userEvent.type(
+  await setTextFieldValue(
     wrapper.container.querySelector('[id="input-lastName"]'),
     data.lastName,
   );
-  await userEvent.type(
+  await setTextFieldValue(
     wrapper.container.querySelector('[id="input-email"]'),
     data.email,
   );
-  await userEvent.type(
+  await setTextFieldValue(
     wrapper.container.querySelector('[id="input-password"]'),
     data.password,
   );
-  await userEvent.type(
+  await setTextFieldValue(
     wrapper.container.querySelector('[id="input-confirmPassword"]'),
     data.confirmPassword,
   );
@@ -32,10 +38,24 @@ export async function fillRegistrationForm(
 
   await setDropdownValue(wrapper, 'input-dropdown-state', data.state);
 
-  await userEvent.type(
-    wrapper.container.querySelector('[id="input-schoolName"]'),
-    data.schoolName,
-  );
+  switch (schoolMode) {
+    case SchoolMode.FREE_TEXT:
+      await setTextFieldValue(
+        wrapper.container.querySelector('[id="input-schoolName"]'),
+        data.schoolName,
+      );
+      break;
+    case SchoolMode.DROPDOWN_VALUE:
+      await setDropdownValue(
+        wrapper,
+        'input-dropdown-schoolName',
+        data.schoolName,
+      );
+      break;
+    case SchoolMode.CUSTOM_VALUE:
+      break;
+    default:
+  }
 
   if (data.hasAcceptedEducationalUseTerms) {
     checkEducationalUseAgreement(wrapper);
@@ -52,8 +72,12 @@ export async function setDropdownValue(
   value: string,
 ) {
   if (value) {
-    const dropdown = wrapper.getByTestId(dropdownId);
-    await userEvent.type(within(dropdown).getByRole('combobox'), value);
+    const combobox = within(wrapper.getByTestId(dropdownId)).getByRole(
+      'combobox',
+    );
+    await userEvent.clear(combobox);
+    await userEvent.type(combobox, value);
+
     const option = wrapper.getByText(value);
     expect(option).toBeVisible();
     await userEvent.click(option);
@@ -74,4 +98,11 @@ const checkTermsAndConditions = (wrapper: RenderResult) => {
       /I understand that by checking this box, I am agreeing to the Boclips Terms & Conditions/,
     ),
   );
+};
+
+const setTextFieldValue = async (field: Element, text: string) => {
+  if (text !== '') {
+    await userEvent.clear(field);
+    await userEvent.type(field, text);
+  }
 };

@@ -67,9 +67,9 @@ describe('Combobox', () => {
       />,
     );
 
-    await userEvent.type(combobox.container.querySelector('input'), 'quer');
+    await userEvent.type(combobox.container.querySelector('input'), 'que');
 
     expect(await combobox.findByText('my-queried-item')).toBeInTheDocument();
-    expect(mockFetchFunction).toHaveBeenCalledWith('quer');
+    expect(mockFetchFunction).toHaveBeenCalledWith('que');
   });
 });

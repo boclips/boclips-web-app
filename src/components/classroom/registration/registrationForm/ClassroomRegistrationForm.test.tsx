@@ -17,8 +17,9 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import {
   fillRegistrationForm,
+  SchoolMode,
   setDropdownValue,
-} from 'src/components/classroom/registration/classroomRegistrationFormTestHelpers';
+} from 'src/components/classroom/registration/registrationForm/classroomRegistrationFormTestHelpers';
 import { BrowserRouter as Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
@@ -41,6 +42,7 @@ describe('ClassroomRegistration Form', () => {
   async function fillTheForm(
     wrapper: RenderResult,
     change?: Partial<ClassroomRegistrationData>,
+    schoolMode: SchoolMode = SchoolMode.FREE_TEXT,
   ) {
     const defaults: ClassroomRegistrationData = {
       firstName: 'LeBron',
@@ -55,7 +57,7 @@ describe('ClassroomRegistration Form', () => {
       hasAcceptedTermsAndConditions: true,
     };
 
-    fillRegistrationForm(wrapper, { ...defaults, ...change });
+    await fillRegistrationForm(wrapper, { ...defaults, ...change }, schoolMode);
   }
 
   it('renders the form', async () => {
@@ -169,14 +171,31 @@ describe('ClassroomRegistration Form', () => {
       'createClassroomUser',
     );
 
-    const wrapper = renderRegistrationForm(fakeClient);
-
-    await fillTheForm(wrapper, {
-      country: 'United States of America',
-      state: 'Arkansas',
+    fakeClient.schools.setUsaSchools({
+      AR: [
+        {
+          externalId: 'external-id',
+          name: 'Lakers Institute',
+          city: 'Los Angeles',
+        },
+      ],
     });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    const wrapper = renderRegistrationForm(fakeClient);
+
+    await fillTheForm(
+      wrapper,
+      {
+        country: 'United States of America',
+        state: 'Arkansas',
+        schoolName: 'Lakers Institute, Los Angeles',
+      },
+      SchoolMode.DROPDOWN_VALUE,
+    );
+
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     await waitFor(() => {
       expect(createClassroomUserSpy).toBeCalledWith({
@@ -186,7 +205,7 @@ describe('ClassroomRegistration Form', () => {
         password: 'p@ss1234',
         recaptchaToken: 'token_baby',
         type: UserType.classroomUser,
-        schoolName: 'Los Angeles Lakers',
+        schoolName: 'Lakers Institute, Los Angeles',
         country: 'USA',
         state: 'AR',
         hasAcceptedEducationalUseTerms: true,
@@ -204,14 +223,21 @@ describe('ClassroomRegistration Form', () => {
 
     const wrapper = renderRegistrationForm(fakeClient);
 
-    await fillTheForm(wrapper, {
-      country: 'United States of America',
-      state: 'Arkansas',
-    });
+    await fillTheForm(
+      wrapper,
+      {
+        country: 'United States of America',
+        state: 'Arkansas',
+        schoolName: '',
+      },
+      SchoolMode.DROPDOWN_VALUE,
+    );
 
-    setDropdownValue(wrapper, 'input-dropdown-country', 'Sri Lanka');
+    await setDropdownValue(wrapper, 'input-dropdown-country', 'Sri Lanka');
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     await waitFor(() => {
       expect(createClassroomUserSpy).toBeCalledWith({
@@ -256,10 +282,12 @@ describe('ClassroomRegistration Form', () => {
     await fillTheForm(wrapper, {
       country: 'United States of America',
       state: 'Arkansas',
-      schoolName: 'Lincoln High School',
+      schoolName: 'Lincoln High School, Little Rock',
     });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     await waitFor(() => {
       expect(createClassroomUserSpy).toBeCalledWith({
@@ -269,7 +297,7 @@ describe('ClassroomRegistration Form', () => {
         password: 'p@ss1234',
         recaptchaToken: 'token_baby',
         type: UserType.classroomUser,
-        schoolName: 'Lincoln High School',
+        schoolName: 'Lincoln High School, Little Rock',
         country: 'USA',
         state: 'AR',
         hasAcceptedEducationalUseTerms: true,

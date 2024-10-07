@@ -16,7 +16,7 @@ describe('Video card', () => {
     const video = VideoFactory.sample({
       title: 'hello i am a title',
       description: 'wow what a video hansen',
-      types: [{ id: 0, name: 'Stock' }],
+      type: 'STOCK',
       ageRange: {
         min: 7,
         max: 9,

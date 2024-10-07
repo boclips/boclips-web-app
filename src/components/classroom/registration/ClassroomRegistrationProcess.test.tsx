@@ -8,7 +8,10 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { ToastContainer } from 'react-toastify';
 import { ClassroomRegistrationData } from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
 import React from 'react';
-import { fillRegistrationForm } from 'src/components/classroom/registration/classroomRegistrationFormTestHelpers';
+import {
+  fillRegistrationForm,
+  SchoolMode,
+} from 'src/components/classroom/registration/registrationForm/classroomRegistrationFormTestHelpers';
 import { ClassroomRegistration } from 'src/components/classroom/registration/ClassroomRegistration';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
@@ -18,6 +21,7 @@ describe('registration process', () => {
   async function fillTheForm(
     wrapper: RenderResult,
     change?: Partial<ClassroomRegistrationData>,
+    schoolMode: SchoolMode = SchoolMode.FREE_TEXT,
   ) {
     const defaults: ClassroomRegistrationData = {
       firstName: 'LeBron',
@@ -32,7 +36,7 @@ describe('registration process', () => {
       hasAcceptedTermsAndConditions: true,
     };
 
-    await fillRegistrationForm(wrapper, { ...defaults, ...change });
+    await fillRegistrationForm(wrapper, { ...defaults, ...change }, schoolMode);
   }
 
   it('displays "check your email" view after successful registration', async () => {

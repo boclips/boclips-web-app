@@ -202,6 +202,7 @@ const ClassroomRegistrationFormFields = ({
                 errorMessage={validationErrors.schoolName}
                 mode={ComboboxMode.FETCH}
                 fetchFunction={handleSchoolSearch}
+                dataQa="input-dropdown-schoolName"
               />
             </div>
           ) : null
