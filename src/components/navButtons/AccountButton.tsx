@@ -11,7 +11,6 @@ import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import LogoutButton from 'src/components/layout/logoutButton/LogoutButton';
-import getFormattedDate from 'src/services/getFormattedDate';
 import { Link } from '../common/Link';
 import s from './newstyle.module.less';
 
