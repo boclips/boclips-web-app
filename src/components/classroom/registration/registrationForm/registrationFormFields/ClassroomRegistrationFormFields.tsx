@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { InputText } from '@boclips-ui/input';
 import s from 'src/components/classroom/registration/style.module.less';
 import c from 'classnames';
-import Dropdown from '@boclips-ui/dropdown';
 import RegistrationPageCheckbox from 'src/components/common/input/RegistrationPageCheckbox';
 import { ClassroomRegistrationData } from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
 import PasswordValidattor from 'react-password-validattor';
 import { Typography } from '@boclips-ui/typography';
 import {
-  countries,
-  states,
+  getCountries,
+  getCountry,
+  getCountryStates,
 } from 'src/components/classroom/registration/dropdownValues';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
+
+import {
+  Combobox,
+  ComboboxItem,
+  ComboboxMode,
+} from 'src/components/common/headless/combobox';
 
 const passwordConfig = {
   classNames: {
@@ -57,6 +63,28 @@ const ClassroomRegistrationFormFields = ({
   registrationData,
 }: ClassroomRegistrationFormProps) => {
   const boclipsClient = useBoclipsClient();
+
+  const countries: ComboboxItem[] = useMemo(
+    () =>
+      getCountries(boclipsClient).map((country) => ({
+        value: country.code,
+        label: country.name,
+        dropdownLabel: country.label,
+      })),
+    [boclipsClient],
+  );
+
+  const handleSchoolSearch = async (query: string): Promise<ComboboxItem[]> => {
+    const schools = await boclipsClient.schools.searchUsaSchools(
+      registrationData.state,
+      query,
+    );
+
+    return schools.map((school) => ({
+      label: `${school.name}, ${school.city}`,
+      value: school.externalId,
+    }));
+  };
   const educationalUseTermsLabel = (
     <>
       <Typography.Body size="small" weight="medium">
@@ -85,7 +113,7 @@ const ClassroomRegistrationFormFields = ({
     </Typography.Body>
   );
 
-  const handleCountryUpdate = (value) => {
+  const handleCountryUpdate = (value: string) => {
     handleChange('state', '');
     handleChange('country', value);
   };
@@ -136,57 +164,61 @@ const ClassroomRegistrationFormFields = ({
         errorMessagePlacement="bottom"
       />
 
-      <div className={c(s.input, 'flex flex-row w-full')}>
-        <Dropdown
-          mode="single"
+      <div className={c(s.input, 'flex flex-row w-full space-x-4')}>
+        <Combobox
+          items={countries}
+          onChange={handleCountryUpdate}
+          label="Country"
           placeholder="Select country"
-          onFocused={() => onFieldSelected('country')}
-          onUpdate={handleCountryUpdate}
-          options={countries(boclipsClient)}
-          dataQa="input-dropdown-country"
-          labelText="Country"
-          showSearch
-          showLabel
-          fitWidth
           isError={!!validationErrors.country}
           errorMessage={validationErrors.country}
-          errorMessagePlacement="bottom"
         />
 
-        {states(registrationData.country, boclipsClient) && (
-          <div className="flex flex-row w-full ml-4">
-            <Dropdown
-              mode="single"
-              placeholder="Select state"
-              onFocused={() => onFieldSelected('state')}
-              onUpdate={(value) => handleChange('state', value)}
-              options={states(registrationData.country, boclipsClient)}
-              dataQa="input-dropdown-state"
-              labelText="State"
-              showSearch
-              showLabel
-              fitWidth
-              isError={!!validationErrors.state}
-              errorMessage={validationErrors.state}
-              errorMessagePlacement="bottom"
-            />
-          </div>
+        {!!getCountry(registrationData.country, boclipsClient)?.states
+          .length && (
+          <Combobox
+            items={getCountryStates(registrationData.country, boclipsClient)}
+            onChange={(value) => handleChange('state', value)}
+            label="State"
+            placeholder="Select state"
+            isError={!!validationErrors.state}
+            errorMessage={validationErrors.state}
+          />
         )}
       </div>
 
-      <InputText
-        id="input-schoolName"
-        onFocus={() => onFieldSelected('schoolName')}
-        onChange={(value) => handleChange('schoolName', value)}
-        inputType="text"
-        placeholder="Your school name"
-        className={s.input}
-        labelText="School name"
-        height="48px"
-        isError={!!validationErrors.schoolName}
-        errorMessage={validationErrors.schoolName}
-        errorMessagePlacement="bottom"
-      />
+      {registrationData.country &&
+        (registrationData.country === 'USA' ? (
+          registrationData.state ? (
+            <div className="mb-6">
+              <Combobox
+                allowCustom
+                onChange={(value) => handleChange('schoolName', value)}
+                label="School Name"
+                placeholder="Search for school or add manually"
+                isError={!!validationErrors.schoolName}
+                errorMessage={validationErrors.schoolName}
+                mode={ComboboxMode.FETCH}
+                fetchFunction={handleSchoolSearch}
+              />
+            </div>
+          ) : null
+        ) : (
+          <InputText
+            id="input-schoolName"
+            onFocus={() => onFieldSelected('schoolName')}
+            onChange={(value) => handleChange('schoolName', value)}
+            inputType="text"
+            placeholder="Your school name"
+            className={s.input}
+            labelText="School name"
+            height="48px"
+            isError={!!validationErrors.schoolName}
+            errorMessage={validationErrors.schoolName}
+            errorMessagePlacement="bottom"
+          />
+        ))}
+      {/* </FeatureGate> */}
 
       <div className="flex flex-col items-start">
         <div className="flex flex-row w-full">
