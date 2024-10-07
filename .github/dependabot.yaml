@@ -11,3 +11,8 @@ updates:
   ignore:
   - dependency-name: "*"
     update-types: ["version-update:semver-patch"]
+  groups:
+    sentry:
+      applies-to: version-updates
+      patterns:
+      - "@sentry/*"
