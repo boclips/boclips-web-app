@@ -1,10 +1,5 @@
-import './mockRecaptcha';
-import {
-  fireEvent,
-  render,
-  RenderResult,
-  waitFor,
-} from '@testing-library/react';
+import '../mockRecaptcha';
+import { render, RenderResult, waitFor } from '@testing-library/react';
 import React from 'react';
 import ClassroomRegistrationForm, {
   ClassroomRegistrationData,
@@ -15,9 +10,11 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import {
   fillRegistrationForm,
+  SchoolMode,
   setDropdownValue,
-} from 'src/components/classroom/registration/classroomRegistrationFormTestHelpers';
+} from 'src/components/classroom/registration/registrationForm/classroomRegistrationFormTestHelpers';
 import { BrowserRouter as Router } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 
 describe('ClassroomRegistration Form Validation', () => {
   const fakeClient = new FakeBoclipsClient();
@@ -29,10 +26,12 @@ describe('ClassroomRegistration Form Validation', () => {
   it('first name cannot be empty', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { firstName: '' });
+    await fillTheForm(wrapper, { firstName: '' });
 
     await checkErrorIsNotVisible(wrapper, 'First name is required');
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
     await checkErrorIsVisible(wrapper, 'First name is required');
 
     await waitFor(() => {
@@ -43,10 +42,12 @@ describe('ClassroomRegistration Form Validation', () => {
   it('last name cannot be empty', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { lastName: '' });
+    await fillTheForm(wrapper, { lastName: '' });
 
     await checkErrorIsNotVisible(wrapper, 'Last name is required');
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
     await checkErrorIsVisible(wrapper, 'Last name is required');
 
     await waitFor(() => {
@@ -58,10 +59,12 @@ describe('ClassroomRegistration Form Validation', () => {
     it('email cannot be empty', async () => {
       const wrapper = renderRegistrationForm();
 
-      fillTheForm(wrapper, { email: '' });
+      await fillTheForm(wrapper, { email: '' });
 
       await checkErrorIsNotVisible(wrapper, 'Email is required');
-      fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+      await userEvent.click(
+        wrapper.getByRole('button', { name: 'Create Account' }),
+      );
       await checkErrorIsVisible(wrapper, 'Email is required');
 
       await waitFor(() => {
@@ -72,13 +75,16 @@ describe('ClassroomRegistration Form Validation', () => {
     it('email must have correct format', async () => {
       const wrapper = renderRegistrationForm();
 
-      fillTheForm(wrapper, { email: 'wrong@' });
-
       await checkErrorIsNotVisible(
         wrapper,
         'Please enter a valid email address',
       );
-      fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+
+      await fillTheForm(wrapper, { email: 'wrong@' });
+      await userEvent.click(
+        wrapper.getByRole('button', { name: 'Create Account' }),
+      );
+
       await checkErrorIsVisible(wrapper, 'Please enter a valid email address');
 
       await waitFor(() => {
@@ -90,10 +96,12 @@ describe('ClassroomRegistration Form Validation', () => {
   it('account name cannot be empty', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { schoolName: '' });
+    await fillTheForm(wrapper, { schoolName: '' });
 
     await checkErrorIsNotVisible(wrapper, 'School name is required');
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
     await checkErrorIsVisible(wrapper, 'School name is required');
 
     await waitFor(() => {
@@ -105,9 +113,11 @@ describe('ClassroomRegistration Form Validation', () => {
     it('password cannot be empty', async () => {
       const wrapper = renderRegistrationForm();
 
-      fillTheForm(wrapper, { password: '' });
+      await fillTheForm(wrapper, { password: '' });
 
-      fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+      await userEvent.click(
+        wrapper.getByRole('button', { name: 'Create Account' }),
+      );
       await checkErrorIsVisible(wrapper, '8 characters');
 
       await waitFor(() => {
@@ -118,9 +128,11 @@ describe('ClassroomRegistration Form Validation', () => {
     it('password must be strong', async () => {
       const wrapper = renderRegistrationForm();
 
-      fillTheForm(wrapper, { password: 'pass' });
+      await fillTheForm(wrapper, { password: 'pass' });
 
-      fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+      await userEvent.click(
+        wrapper.getByRole('button', { name: 'Create Account' }),
+      );
 
       await checkErrorIsVisible(wrapper, '8 characters');
       await checkErrorIsVisible(wrapper, '1 capital letter');
@@ -136,12 +148,14 @@ describe('ClassroomRegistration Form Validation', () => {
     it('passwords must match ', async () => {
       const wrapper = renderRegistrationForm();
 
-      fillTheForm(wrapper, {
+      await fillTheForm(wrapper, {
         password: 'abc@5678',
         confirmPassword: 'def',
       });
 
-      fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+      await userEvent.click(
+        wrapper.getByRole('button', { name: 'Create Account' }),
+      );
       await checkErrorIsVisible(wrapper, "Password doesn't match");
 
       await waitFor(() => {
@@ -154,10 +168,12 @@ describe('ClassroomRegistration Form Validation', () => {
     it('country cannot be empty', async () => {
       const wrapper = renderRegistrationForm();
 
-      fillTheForm(wrapper, { country: '' });
+      await fillTheForm(wrapper, { country: '', schoolName: '' });
 
       await checkErrorIsNotVisible(wrapper, 'Please select a country');
-      fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+      await userEvent.click(
+        wrapper.getByRole('button', { name: 'Create Account' }),
+      );
       await checkErrorIsVisible(wrapper, 'Please select a country');
 
       await waitFor(() => {
@@ -168,17 +184,16 @@ describe('ClassroomRegistration Form Validation', () => {
     it('states cannot be empty when country is USA', async () => {
       const wrapper = renderRegistrationForm();
 
-      fillTheForm(wrapper, { country: '' });
-
-      await checkErrorIsNotVisible(wrapper, 'Please select a country');
-      setDropdownValue(
+      await setDropdownValue(
         wrapper,
         'input-dropdown-country',
         'United States of America',
       );
       await checkErrorIsNotVisible(wrapper, 'Please select a state');
 
-      fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+      await userEvent.click(
+        wrapper.getByRole('button', { name: 'Create Account' }),
+      );
       await checkErrorIsVisible(wrapper, 'Please select a state');
 
       await waitFor(() => {
@@ -190,9 +205,11 @@ describe('ClassroomRegistration Form Validation', () => {
   it('prompts user to check educational use checkbox if not checked and user clicks submit', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { hasAcceptedEducationalUseTerms: false });
+    await fillTheForm(wrapper, { hasAcceptedEducationalUseTerms: false });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     expect(
       await wrapper.findByText('Educational use agreement is required'),
@@ -204,9 +221,11 @@ describe('ClassroomRegistration Form Validation', () => {
   it('prompts user to check boclips Ts and Cs checkbox if not checked and user clicks submit', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, { hasAcceptedTermsAndConditions: false });
+    await fillTheForm(wrapper, { hasAcceptedTermsAndConditions: false });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     expect(
       await wrapper.findByText(
@@ -225,9 +244,11 @@ describe('ClassroomRegistration Form Validation', () => {
       );
 
     const wrapper = renderRegistrationForm();
-    fillTheForm(wrapper, { email: 'existing@email.com' });
+    await fillTheForm(wrapper, { email: 'existing@email.com' });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     expect(await wrapper.findByText('Email already exists')).toBeVisible();
   });
@@ -240,9 +261,11 @@ describe('ClassroomRegistration Form Validation', () => {
       );
 
     const wrapper = renderRegistrationForm();
-    fillTheForm(wrapper, { schoolName: 'Boclips' });
+    await fillTheForm(wrapper, { schoolName: 'Boclips' });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     expect(
       await wrapper.findByText(
@@ -254,7 +277,7 @@ describe('ClassroomRegistration Form Validation', () => {
   it('errors disappear when form is fixed', async () => {
     const wrapper = renderRegistrationForm();
 
-    fillTheForm(wrapper, {
+    await fillTheForm(wrapper, {
       firstName: '',
       lastName: '',
       password: '',
@@ -266,12 +289,13 @@ describe('ClassroomRegistration Form Validation', () => {
       hasAcceptedTermsAndConditions: false,
     });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     await checkErrorIsVisible(wrapper, 'First name is required');
     await checkErrorIsVisible(wrapper, 'Last name is required');
     await checkErrorIsVisible(wrapper, 'Email is required');
-    await checkErrorIsVisible(wrapper, 'School name is required');
     await checkErrorIsVisible(wrapper, '8 characters');
     await checkErrorIsVisible(wrapper, '1 capital letter');
     await checkErrorIsVisible(wrapper, "Password doesn't match");
@@ -284,8 +308,10 @@ describe('ClassroomRegistration Form Validation', () => {
       'Boclips Terms and Conditions agreement is required',
     );
 
-    fillTheForm(wrapper, {});
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await fillTheForm(wrapper, {});
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     await checkErrorIsNotVisible(wrapper, 'First name is required');
     await checkErrorIsNotVisible(wrapper, 'Last name is required');
@@ -325,9 +351,10 @@ describe('ClassroomRegistration Form Validation', () => {
     );
   }
 
-  function fillTheForm(
+  async function fillTheForm(
     wrapper: RenderResult,
     change?: Partial<ClassroomRegistrationData>,
+    schoolMode: SchoolMode = SchoolMode.FREE_TEXT,
   ) {
     const defaults: ClassroomRegistrationData = {
       firstName: 'Lebron',
@@ -342,7 +369,7 @@ describe('ClassroomRegistration Form Validation', () => {
       hasAcceptedTermsAndConditions: true,
     };
 
-    fillRegistrationForm(wrapper, { ...defaults, ...change });
+    await fillRegistrationForm(wrapper, { ...defaults, ...change }, schoolMode);
   }
 
   async function checkErrorIsNotVisible(

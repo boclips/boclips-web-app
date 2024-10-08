@@ -17,8 +17,10 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import {
   fillRegistrationForm,
+  SchoolMode,
   setDropdownValue,
-} from 'src/components/classroom/registration/classroomRegistrationFormTestHelpers';
+  setTextFieldValue,
+} from 'src/components/classroom/registration/registrationForm/classroomRegistrationFormTestHelpers';
 import { BrowserRouter as Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
@@ -41,6 +43,7 @@ describe('ClassroomRegistration Form', () => {
   async function fillTheForm(
     wrapper: RenderResult,
     change?: Partial<ClassroomRegistrationData>,
+    schoolMode: SchoolMode = SchoolMode.FREE_TEXT,
   ) {
     const defaults: ClassroomRegistrationData = {
       firstName: 'LeBron',
@@ -55,7 +58,7 @@ describe('ClassroomRegistration Form', () => {
       hasAcceptedTermsAndConditions: true,
     };
 
-    fillRegistrationForm(wrapper, { ...defaults, ...change });
+    await fillRegistrationForm(wrapper, { ...defaults, ...change }, schoolMode);
   }
 
   it('renders the form', async () => {
@@ -67,7 +70,6 @@ describe('ClassroomRegistration Form', () => {
     expect(wrapper.getByLabelText('Email Address')).toBeVisible();
     expect(wrapper.getByLabelText('Password')).toBeVisible();
     expect(wrapper.getByLabelText('Confirm password')).toBeVisible();
-    expect(wrapper.getByLabelText('School name')).toBeVisible();
     expect(
       wrapper.getByLabelText(
         /I certify that I am accessing this service solely for Educational Use./,
@@ -103,7 +105,7 @@ describe('ClassroomRegistration Form', () => {
     expect(wrapper.getByTestId('input-dropdown-country')).toBeVisible();
     expect(wrapper.queryByTestId('input-dropdown-state')).toBeNull();
 
-    setDropdownValue(
+    await setDropdownValue(
       wrapper,
       'input-dropdown-country',
       'United States of America',
@@ -111,25 +113,6 @@ describe('ClassroomRegistration Form', () => {
 
     expect(wrapper.getByTestId('input-dropdown-state')).toBeVisible();
   });
-
-  function renderRegistrationForm(
-    apiClient: FakeBoclipsClient = new FakeBoclipsClient(),
-    registrationFormSpy: (userEmail: string) => void = jest.fn(),
-  ) {
-    return render(
-      <Router>
-        <QueryClientProvider client={new QueryClient()}>
-          <BoclipsClientProvider client={apiClient}>
-            <GoogleReCaptchaProvider reCaptchaKey="123">
-              <ClassroomRegistrationForm
-                onRegistrationFinished={registrationFormSpy}
-              />
-            </GoogleReCaptchaProvider>
-          </BoclipsClientProvider>
-        </QueryClientProvider>
-      </Router>,
-    );
-  }
 
   it('renders log in link', async () => {
     const wrapper = renderRegistrationForm();
@@ -182,39 +165,6 @@ describe('ClassroomRegistration Form', () => {
     });
   });
 
-  it('sends through the state when USA is selected and then state is selected', async () => {
-    const fakeClient = new FakeBoclipsClient();
-    const createClassroomUserSpy = jest.spyOn(
-      fakeClient.users,
-      'createClassroomUser',
-    );
-
-    const wrapper = renderRegistrationForm(fakeClient);
-
-    await fillTheForm(wrapper, {
-      country: 'United States of America',
-      state: 'Arkansas',
-    });
-
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
-
-    await waitFor(() => {
-      expect(createClassroomUserSpy).toBeCalledWith({
-        firstName: 'LeBron',
-        lastName: 'James',
-        email: 'lj@nba.com',
-        password: 'p@ss1234',
-        recaptchaToken: 'token_baby',
-        type: UserType.classroomUser,
-        schoolName: 'Los Angeles Lakers',
-        country: 'USA',
-        state: 'AR',
-        hasAcceptedEducationalUseTerms: true,
-        hasAcceptedTermsAndConditions: true,
-      });
-    });
-  });
-
   it('does not send through the state when USA is selected, then state is selected and then a different country is selected', async () => {
     const fakeClient = new FakeBoclipsClient();
     const createClassroomUserSpy = jest.spyOn(
@@ -224,14 +174,25 @@ describe('ClassroomRegistration Form', () => {
 
     const wrapper = renderRegistrationForm(fakeClient);
 
-    await fillTheForm(wrapper, {
-      country: 'United States of America',
-      state: 'Arkansas',
-    });
+    await fillTheForm(
+      wrapper,
+      {
+        country: 'United States of America',
+        state: 'Arkansas',
+        schoolName: '',
+      },
+      SchoolMode.DROPDOWN_VALUE,
+    );
 
-    setDropdownValue(wrapper, 'input-dropdown-country', 'Sri Lanka');
+    await setDropdownValue(wrapper, 'input-dropdown-country', 'Sri Lanka');
+    await setTextFieldValue(
+      wrapper.container.querySelector('[id="input-schoolName"]'),
+      'Los Angeles Lakers',
+    );
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     await waitFor(() => {
       expect(createClassroomUserSpy).toBeCalledWith({
@@ -244,6 +205,114 @@ describe('ClassroomRegistration Form', () => {
         schoolName: 'Los Angeles Lakers',
         country: 'LKA',
         state: '',
+        hasAcceptedEducationalUseTerms: true,
+        hasAcceptedTermsAndConditions: true,
+      });
+    });
+  });
+
+  it('sends selected usa school when country usa and a state are selected', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const createClassroomUserSpy = jest.spyOn(
+      fakeClient.users,
+      'createClassroomUser',
+    );
+    fakeClient.schools.setUsaSchools({
+      AR: [
+        {
+          externalId: 'school-1',
+          name: 'Lincoln High School',
+          city: 'Little Rock',
+        },
+        {
+          externalId: 'school-2',
+          name: 'Harris Elementary School',
+          city: 'Hot Springs',
+        },
+      ],
+    });
+
+    const wrapper = renderRegistrationForm(fakeClient);
+
+    await fillTheForm(
+      wrapper,
+      {
+        country: 'United States of America',
+        state: 'Arkansas',
+        schoolName: 'Lincoln High School, Little Rock',
+      },
+      SchoolMode.DROPDOWN_VALUE,
+    );
+
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
+
+    await waitFor(() => {
+      expect(createClassroomUserSpy).toBeCalledWith({
+        firstName: 'LeBron',
+        lastName: 'James',
+        email: 'lj@nba.com',
+        password: 'p@ss1234',
+        recaptchaToken: 'token_baby',
+        type: UserType.classroomUser,
+        schoolName: 'Lincoln High School, Little Rock',
+        country: 'USA',
+        state: 'AR',
+        hasAcceptedEducationalUseTerms: true,
+        hasAcceptedTermsAndConditions: true,
+      });
+    });
+  });
+
+  it('sends manually added school when country usa and a state are selected', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const createClassroomUserSpy = jest.spyOn(
+      fakeClient.users,
+      'createClassroomUser',
+    );
+    fakeClient.schools.setUsaSchools({
+      AR: [
+        {
+          externalId: 'school-1',
+          name: 'Lincoln High School',
+          city: 'Little Rock',
+        },
+        {
+          externalId: 'school-2',
+          name: 'Harris Elementary School',
+          city: 'Hot Springs',
+        },
+      ],
+    });
+
+    const wrapper = renderRegistrationForm(fakeClient);
+
+    await fillTheForm(
+      wrapper,
+      {
+        country: 'United States of America',
+        state: 'Arkansas',
+        schoolName: 'Laker Institute, Anytown',
+      },
+      SchoolMode.CUSTOM_VALUE,
+    );
+
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
+
+    await waitFor(() => {
+      expect(createClassroomUserSpy).toBeCalledWith({
+        firstName: 'LeBron',
+        lastName: 'James',
+        email: 'lj@nba.com',
+        password: 'p@ss1234',
+        recaptchaToken: 'token_baby',
+        type: UserType.classroomUser,
+        schoolName: 'Laker Institute, Anytown',
+        country: 'USA',
+        state: 'AR',
         hasAcceptedEducationalUseTerms: true,
         hasAcceptedTermsAndConditions: true,
       });
@@ -356,4 +425,23 @@ describe('ClassroomRegistration Form', () => {
 
     expect(wrapper.queryByText('First name is required')).toBeNull();
   });
+
+  function renderRegistrationForm(
+    apiClient: FakeBoclipsClient = new FakeBoclipsClient(),
+    registrationFormSpy: (userEmail: string) => void = jest.fn(),
+  ) {
+    return render(
+      <Router>
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={apiClient}>
+            <GoogleReCaptchaProvider reCaptchaKey="123">
+              <ClassroomRegistrationForm
+                onRegistrationFinished={registrationFormSpy}
+              />
+            </GoogleReCaptchaProvider>
+          </BoclipsClientProvider>
+        </QueryClientProvider>
+      </Router>,
+    );
+  }
 });
