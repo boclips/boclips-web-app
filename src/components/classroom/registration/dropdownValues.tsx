@@ -13,7 +13,15 @@ export const getCountries = (client: BoclipsClient): Country[] =>
     name: country.name,
     label: (
       <>
-        <ReactCountryFlag countryCode={country.alpha2} /> {country.name}
+        <ReactCountryFlag
+          countryCode={country.alpha2}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            marginRight: '0.25rem',
+          }}
+        />{' '}
+        {country.name}
       </>
     ),
     code: country.alpha3,
