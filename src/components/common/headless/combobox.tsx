@@ -124,10 +124,7 @@ export const Combobox = ({
         <div className="relative">
           <ComboboxInput
             aria-label={label}
-            className={c(
-              isError && 'border-[#DF0000] border-[3px]',
-              'rounded padding-2 h-12 w-full border-gray-600 border-2 focus-visible:border-4 focus-visible:border-blue-700',
-            )}
+            className={c(s.combobox, isError && s.error)}
             displayValue={(item: ComboboxItem) => item?.label ?? ''}
             onChange={(event) => setQuery(event.target.value)}
             placeholder={placeholder}
