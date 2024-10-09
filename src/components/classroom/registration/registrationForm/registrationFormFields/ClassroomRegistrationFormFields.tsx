@@ -117,6 +117,7 @@ const ClassroomRegistrationFormFields = ({
   const handleCountryUpdate = (selectedCountry: ComboboxItem) => {
     handleChange('state', '');
     handleChange('country', selectedCountry?.value || '');
+    validationErrors.country = '';
   };
 
   return (
@@ -180,9 +181,10 @@ const ClassroomRegistrationFormFields = ({
           .length && (
           <Combobox
             items={getCountryStates(registrationData.country, boclipsClient)}
-            onChange={(selectedItem) =>
-              handleChange('state', selectedItem.value)
-            }
+            onChange={(selectedItem) => {
+              handleChange('state', selectedItem.value);
+              validationErrors.state = '';
+            }}
             label="State"
             placeholder="Select state"
             isError={!!validationErrors.state}
@@ -198,7 +200,10 @@ const ClassroomRegistrationFormFields = ({
             <div className="mb-6">
               <Combobox
                 allowCustom
-                onChange={(value) => handleChange('schoolName', value.label)}
+                onChange={(value) => {
+                  handleChange('schoolName', value.label);
+                  validationErrors.schoolName = '';
+                }}
                 label="School Name"
                 placeholder="Search for school or add manually"
                 isError={!!validationErrors.schoolName}
