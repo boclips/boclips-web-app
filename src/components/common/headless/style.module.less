@@ -1,3 +1,5 @@
+@import '@boclips-ui/styles/src/colors';
+
 .chevron {
   @apply absolute inset-y-0 right-0;
   margin-right: 1rem;
@@ -5,4 +7,24 @@
 
 .comboboxDropdownOptions {
   @apply border empty:invisible bg-white w-[var(--input-width)];
+  border-color: @gray-500;
+  border-radius: 0.25rem;
+  border-width: 2px;
+}
+
+.combobox {
+  @apply h-12 w-full;
+  border-radius: 4px;
+  border: var(--bo-ui-input-text-border, 2px solid @gray-500);
+  padding: 0.5rem;
+
+  &:focus-visible {
+    outline: var(--bo-ui-focus-outline, 4px solid @blue-700);
+    outline-offset: var(--bo-ui-focus-outline-offset, 2px);
+    border-radius: 0.25rem;
+  }
+}
+
+.error {
+  border: 3px solid #DF0000;
 }
