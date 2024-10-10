@@ -93,19 +93,69 @@ describe('ClassroomRegistration Form Validation', () => {
     });
   });
 
-  it('account name cannot be empty', async () => {
-    const wrapper = renderRegistrationForm();
+  describe('school name', () => {
+    it('school name cannot be empty', async () => {
+      const wrapper = renderRegistrationForm();
 
-    await fillTheForm(wrapper, { schoolName: '' });
+      await fillTheForm(wrapper, { schoolName: '' });
 
-    await checkErrorIsNotVisible(wrapper, 'School name is required');
-    await userEvent.click(
-      wrapper.getByRole('button', { name: 'Create Account' }),
-    );
-    await checkErrorIsVisible(wrapper, 'School name is required');
+      await checkErrorIsNotVisible(wrapper, 'School name is required');
+      await userEvent.click(
+        wrapper.getByRole('button', { name: 'Create Account' }),
+      );
+      await checkErrorIsVisible(wrapper, 'School name is required');
 
-    await waitFor(() => {
-      expect(createClassroomUserSpy).not.toBeCalled();
+      await waitFor(() => {
+        expect(createClassroomUserSpy).not.toBeCalled();
+      });
+    });
+
+    it('clears error when school name is filled', async () => {
+      fakeClient.schools.setUsaSchools({
+        AR: [
+          {
+            externalId: 'school-1',
+            name: 'Lincoln High School',
+            city: 'Little Rock',
+          },
+          {
+            externalId: 'school-2',
+            name: 'Harris Elementary School',
+            city: 'Hot Springs',
+          },
+        ],
+      });
+      const wrapper = renderRegistrationForm();
+      await userEvent.click(
+        wrapper.getByRole('button', { name: 'Create Account' }),
+      );
+      await fillTheForm(
+        wrapper,
+        {
+          country: 'United States of America',
+          state: 'Arkansas',
+          schoolName: '',
+        },
+        SchoolMode.DROPDOWN_VALUE,
+      );
+
+      await checkErrorIsVisible(wrapper, 'School name is required');
+
+      await fillTheForm(
+        wrapper,
+        {
+          country: 'United States of America',
+          state: 'Arkansas',
+          schoolName: 'Lincoln High School, Little Rock',
+        },
+        SchoolMode.DROPDOWN_VALUE,
+      );
+
+      await checkErrorIsNotVisible(wrapper, 'School name is required');
+
+      await waitFor(() => {
+        expect(createClassroomUserSpy).not.toBeCalled();
+      });
     });
   });
 
@@ -181,6 +231,22 @@ describe('ClassroomRegistration Form Validation', () => {
       });
     });
 
+    it('clears error when country is filled', async () => {
+      const wrapper = renderRegistrationForm();
+      await userEvent.click(
+        wrapper.getByRole('button', { name: 'Create Account' }),
+      );
+
+      await checkErrorIsVisible(wrapper, 'Please select a country');
+
+      await fillTheForm(wrapper, {
+        country: 'India',
+        schoolName: '',
+      });
+
+      await checkErrorIsNotVisible(wrapper, 'Please select a country');
+    });
+
     it('states cannot be empty when country is USA', async () => {
       const wrapper = renderRegistrationForm();
 
@@ -199,6 +265,29 @@ describe('ClassroomRegistration Form Validation', () => {
       await waitFor(() => {
         expect(createClassroomUserSpy).not.toBeCalled();
       });
+    });
+
+    it('clears states error when filled', async () => {
+      const wrapper = renderRegistrationForm();
+
+      await fillTheForm(wrapper, {
+        country: 'United States of America',
+        state: '',
+        schoolName: '',
+      });
+
+      await userEvent.click(
+        wrapper.getByRole('button', { name: 'Create Account' }),
+      );
+      await checkErrorIsVisible(wrapper, 'Please select a state');
+
+      await fillTheForm(wrapper, {
+        country: 'United States of America',
+        state: 'Florida',
+        schoolName: '',
+      });
+
+      await checkErrorIsNotVisible(wrapper, 'Please select a state');
     });
   });
 
