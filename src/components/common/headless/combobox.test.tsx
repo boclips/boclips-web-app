@@ -28,7 +28,6 @@ describe('Combobox', () => {
 
     const textInput = combobox.container.querySelector('input');
     await userEvent.type(textInput, 'label');
-    // await userEvent.change(textInput, { target: { value: 'label' } });
 
     expect(combobox.queryByText('dropdownLabel1')).toBeInTheDocument();
 
