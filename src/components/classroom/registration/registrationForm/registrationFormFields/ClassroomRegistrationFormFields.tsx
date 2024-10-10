@@ -51,14 +51,12 @@ const passwordConfig = {
 
 interface ClassroomRegistrationFormProps {
   handleChange: (name: string, value: string | string[] | boolean) => void;
-  onFieldSelected: (name: string) => void;
   validationErrors: ClassroomRegistrationData;
   registrationData: ClassroomRegistrationData;
 }
 
 const ClassroomRegistrationFormFields = ({
   handleChange,
-  onFieldSelected,
   validationErrors,
   registrationData,
 }: ClassroomRegistrationFormProps) => {
@@ -117,7 +115,6 @@ const ClassroomRegistrationFormFields = ({
   const handleCountryUpdate = (selectedCountry: ComboboxItem) => {
     handleChange('state', '');
     handleChange('country', selectedCountry?.value || '');
-    validationErrors.country = '';
   };
 
   return (
@@ -126,7 +123,6 @@ const ClassroomRegistrationFormFields = ({
         <InputText
           id="input-firstName"
           aria-label="input-firstName"
-          onFocus={() => onFieldSelected('firstName')}
           onChange={(value) => handleChange('firstName', value)}
           inputType="text"
           placeholder="John"
@@ -139,7 +135,6 @@ const ClassroomRegistrationFormFields = ({
         />
         <InputText
           id="input-lastName"
-          onFocus={() => onFieldSelected('lastName')}
           onChange={(value) => handleChange('lastName', value)}
           inputType="text"
           placeholder="Smith"
@@ -154,7 +149,6 @@ const ClassroomRegistrationFormFields = ({
 
       <InputText
         id="input-email"
-        onFocus={() => onFieldSelected('email')}
         onChange={(value) => handleChange('email', value)}
         inputType="text"
         placeholder="your@email.com"
@@ -183,7 +177,6 @@ const ClassroomRegistrationFormFields = ({
             items={getCountryStates(registrationData.country, boclipsClient)}
             onChange={(selectedItem) => {
               handleChange('state', selectedItem.value);
-              validationErrors.state = '';
             }}
             label="State"
             placeholder="Select state"
@@ -202,7 +195,6 @@ const ClassroomRegistrationFormFields = ({
                 allowCustom
                 onChange={(value) => {
                   handleChange('schoolName', value.label);
-                  validationErrors.schoolName = '';
                 }}
                 label="School Name"
                 placeholder="Search for school or add manually"
@@ -217,7 +209,6 @@ const ClassroomRegistrationFormFields = ({
         ) : (
           <InputText
             id="input-schoolName"
-            onFocus={() => onFieldSelected('schoolName')}
             onChange={(value) => handleChange('schoolName', value)}
             inputType="text"
             placeholder="Your school name"
@@ -234,10 +225,6 @@ const ClassroomRegistrationFormFields = ({
         <div className="flex flex-row w-full">
           <InputText
             id="input-password"
-            onFocus={() => {
-              onFieldSelected('password');
-              onFieldSelected('confirmPassword');
-            }}
             onChange={(value) => handleChange('password', value)}
             inputType="password"
             placeholder="*********"
@@ -250,10 +237,6 @@ const ClassroomRegistrationFormFields = ({
 
           <InputText
             id="input-confirmPassword"
-            onFocus={() => {
-              onFieldSelected('password');
-              onFieldSelected('confirmPassword');
-            }}
             onChange={(value) => handleChange('confirmPassword', value)}
             inputType="password"
             placeholder="*********"
@@ -284,7 +267,6 @@ const ClassroomRegistrationFormFields = ({
       </div>
       <div>
         <RegistrationPageCheckbox
-          onFocus={() => onFieldSelected('hasAcceptedEducationalUseTerms')}
           onChange={(event) =>
             handleChange('hasAcceptedEducationalUseTerms', event.target.checked)
           }
@@ -300,7 +282,6 @@ const ClassroomRegistrationFormFields = ({
           label={educationalUseTermsLabel}
         />
         <RegistrationPageCheckbox
-          onFocus={() => onFieldSelected('hasAcceptedTermsAndConditions')}
           onChange={(event) =>
             handleChange('hasAcceptedTermsAndConditions', event.target.checked)
           }
