@@ -406,7 +406,7 @@ describe('ClassroomRegistration Form', () => {
     ).toBeVisible();
   });
 
-  it('validation errors are cleared on reselecting field', async () => {
+  it('validation errors are cleared on filling in the field', async () => {
     const wrapper = renderRegistrationForm(new FakeBoclipsClient());
 
     await fillTheForm(wrapper, { firstName: '' });
@@ -421,6 +421,11 @@ describe('ClassroomRegistration Form', () => {
       wrapper.getByRole('textbox', {
         name: 'First name First name is required',
       }),
+    );
+
+    await setTextFieldValue(
+      wrapper.container.querySelector('[id="input-firstName"]'),
+      'Martha',
     );
 
     expect(wrapper.queryByText('First name is required')).toBeNull();

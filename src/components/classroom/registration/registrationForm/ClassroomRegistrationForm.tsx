@@ -72,6 +72,7 @@ const ClassroomRegistrationForm = ({
       ...prevState,
       [fieldName]: value,
     }));
+    clearError(fieldName);
   };
 
   async function tryHandleReCaptchaVerify() {
@@ -162,7 +163,6 @@ const ClassroomRegistrationForm = ({
 
       <ClassroomRegistrationFormFields
         handleChange={handleChange}
-        onFieldSelected={clearError}
         validationErrors={validationErrors}
         registrationData={registrationData}
       />
