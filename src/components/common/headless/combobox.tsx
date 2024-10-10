@@ -11,13 +11,7 @@ import React, { useEffect, useState } from 'react';
 import ChevronDownIcon from 'src/resources/icons/chevron-down.svg';
 import ErrorIcon from 'src/resources/icons/error-icon.svg';
 import PlusIcon from 'src/resources/icons/plus-sign.svg';
-import c from 'classnames';
 import s from './style.module.less';
-
-export enum Placement {
-  TOP = 'UP',
-  BOTTOM = 'DOWN',
-}
 
 export enum ComboboxMode {
   FILTER = 'FILTER',
@@ -39,7 +33,6 @@ interface BaseComboboxProps {
   placeholder?: string;
   isError?: boolean;
   errorMessage?: string;
-  errorMessagePlacement?: Placement;
   dataQa?: string;
 }
 
@@ -65,7 +58,6 @@ export const Combobox = ({
   placeholder,
   isError,
   errorMessage,
-  errorMessagePlacement = Placement.BOTTOM,
   mode = ComboboxMode.FILTER,
   fetchFunction,
   dataQa,
@@ -77,41 +69,28 @@ export const Combobox = ({
     value: '',
   });
 
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
-    // eslint-disable-next-line consistent-return
-    function handleSearch() {
-      if (mode === ComboboxMode.FETCH) {
-        const timer = setTimeout(async () => {
-          if (fetchFunction && query.length >= MINIMUM_SEARCH_LENGTH) {
-            const newFilteredItems = await fetchFunction(query);
-            setFilteredItems(newFilteredItems);
-          }
-        }, 300);
-        return () => clearTimeout(timer);
-      }
-
-      const newFilteredItems =
-        query === ''
-          ? items
-          : items.filter((item) => {
-              return item.label.toLowerCase().includes(query.toLowerCase());
-            });
-      setFilteredItems(newFilteredItems);
+    if (mode === ComboboxMode.FETCH) {
+      setTimeout(async () => {
+        if (fetchFunction && query.length >= MINIMUM_SEARCH_LENGTH) {
+          const newFilteredItems = await fetchFunction(query);
+          setFilteredItems(newFilteredItems);
+        }
+      }, 300);
     }
 
-    handleSearch();
+    setFilteredItems(
+      query === ''
+        ? items
+        : items.filter((item) => {
+            return item.label.toLowerCase().includes(query.toLowerCase());
+          }),
+    );
   }, [query, fetchFunction, mode]);
 
   return (
     <Field className="flex flex-col w-full space-y-2" data-qa={dataQa}>
-      {isError && errorMessage && errorMessagePlacement === Placement.TOP && (
-        <div className="flex text-[#DF0000] space-x-1 text-sm" role="alert">
-          <span>
-            <ErrorIcon />
-          </span>
-          <span>{errorMessage}</span>
-        </div>
-      )}
       {label && <Label>{label}</Label>}
       <HeadlessCombobox
         value={selectedItem}
@@ -124,7 +103,7 @@ export const Combobox = ({
         <div className="relative">
           <ComboboxInput
             aria-label={label}
-            className={c(s.combobox, isError && s.error)}
+            className={`${s.combobox} ${isError ? s.error : ''}`}
             displayValue={(item: ComboboxItem) => item?.label ?? ''}
             onChange={(event) => setQuery(event.target.value)}
             placeholder={placeholder}
@@ -142,7 +121,7 @@ export const Combobox = ({
           {allowCustom && query.length > 0 && (
             <ComboboxOption
               value={{ label: query, value: query }}
-              className="data-[focus]:bg-blue-100 flex items-center p-2 space-x-1"
+              className={s.comboboxOption}
               data-qa={`${dataQa}-custom-option`}
             >
               <div className="bg-blue-700 rounded p-1">
@@ -157,23 +136,21 @@ export const Combobox = ({
             <ComboboxOption
               key={item.value}
               value={item}
-              className="data-[focus]:bg-blue-100 flex p-2"
+              className={s.comboboxOption}
             >
               {item.dropdownLabel ?? item.label}
             </ComboboxOption>
           ))}
         </ComboboxOptions>
       </HeadlessCombobox>
-      {isError &&
-        errorMessage &&
-        errorMessagePlacement === Placement.BOTTOM && (
-          <div className="flex text-[#DF0000] space-x-1 text-sm" role="alert">
-            <span>
-              <ErrorIcon />
-            </span>
-            <span>{errorMessage}</span>
-          </div>
-        )}
+      {isError && errorMessage && (
+        <div className={s.errorAlert} role="alert">
+          <span>
+            <ErrorIcon />
+          </span>
+          <span>{errorMessage}</span>
+        </div>
+      )}
     </Field>
   );
 };

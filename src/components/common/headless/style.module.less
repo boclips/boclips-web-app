@@ -12,6 +12,14 @@
   border-width: 2px;
 }
 
+.comboboxOption {
+  @apply flex items-center p-2 space-x-1;
+
+  &[data-focus] {
+    background-color: @blue-400;
+  }
+}
+
 .combobox {
   @apply h-12 w-full;
   border-radius: 4px;
@@ -23,8 +31,13 @@
     outline-offset: var(--bo-ui-focus-outline-offset, 2px);
     border-radius: 0.25rem;
   }
+
+  &.error {
+    border: 3px solid #DF0000;
+  }
 }
 
-.error {
-  border: 3px solid #DF0000;
+.errorAlert {
+  @apply flex space-x-1 text-sm;
+  color: @error;
 }
