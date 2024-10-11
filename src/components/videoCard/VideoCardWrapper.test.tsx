@@ -30,7 +30,7 @@ describe('Video card', () => {
         },
       ],
       playback: PlaybackFactory.sample({
-        type: 'YOUTUBE',
+        type: 'STREAM',
       }),
       price: {
         amount: 100,

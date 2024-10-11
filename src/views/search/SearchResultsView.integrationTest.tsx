@@ -50,7 +50,7 @@ describe('SearchResults', () => {
           },
         ],
         playback: PlaybackFactory.sample({
-          type: 'YOUTUBE',
+          type: 'STREAM',
         }),
       }),
     ];

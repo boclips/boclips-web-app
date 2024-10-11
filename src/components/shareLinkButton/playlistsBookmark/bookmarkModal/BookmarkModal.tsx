@@ -111,7 +111,7 @@ const BookmarkModal = ({
       <Typography.Body
         as="div"
         className="mb-14 text-gray-800"
-        data-qa="share-code-body"
+        data-qa="share-link-body"
       >
         Set custom start and end times to bookmark a specific section of the
         video for students to focus on.

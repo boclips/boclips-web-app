@@ -346,7 +346,7 @@ describe('OptionsButton', () => {
       });
     });
 
-    it('emits event when Share code link is copied', async () => {
+    it('emits event when share link link is copied', async () => {
       Object.assign(navigator, {
         clipboard: {
           writeText: () => Promise.resolve(),

@@ -49,7 +49,7 @@ describe('playlist share link button', () => {
     expect(wrapper.queryByText('Share')).toBeNull();
   });
 
-  it('displays playlist share code modal on click', async () => {
+  it('displays playlist share link modal on click', async () => {
     const wrapper = renderShareButton();
     await openShareModal(wrapper);
 
@@ -73,12 +73,12 @@ describe('playlist share link button', () => {
   it(`copies share link but doesn't close modal on clicking main button`, async () => {
     const apiClient = new FakeBoclipsClient();
     jest.spyOn(navigator.clipboard, 'writeText');
-    const trackCollectionShareCodeSpy = jest.spyOn(
-      apiClient.shareCodes,
-      'trackCollectionShareCode',
+    const trackCollectionShareLinkSpy = jest.spyOn(
+      apiClient.shareLinks,
+      'trackCollectionShareLink',
     );
     // @ts-ignore
-    apiClient.shareCodes.trackCollectionShareCode = trackCollectionShareCodeSpy;
+    apiClient.shareLinks.trackCollectionShareLink = trackCollectionShareLinkSpy;
     const wrapper = renderShareButton(apiClient);
     await openShareModal(wrapper);
 
@@ -91,7 +91,7 @@ describe('playlist share link button', () => {
       await wrapper.findByRole('button', { name: 'Copy link' }),
     );
 
-    expect(trackCollectionShareCodeSpy).toHaveBeenCalledWith('playlist-id');
+    expect(trackCollectionShareLinkSpy).toHaveBeenCalledWith('playlist-id');
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
       getShareablePlaylistLink('playlist-id', 'user-id'),
@@ -128,7 +128,7 @@ describe('playlist share link button', () => {
     );
   });
 
-  it('emits events when share code modal opened', async () => {
+  it('emits events when share link modal opened', async () => {
     const client = new FakeBoclipsClient();
     const wrapper = renderShareButton(client);
     await openShareModal(wrapper);
@@ -147,7 +147,7 @@ describe('playlist share link button', () => {
     });
   });
 
-  it('emits events when share code link is copied', async () => {
+  it('emits events when share link link is copied', async () => {
     const client = new FakeBoclipsClient();
     const wrapper = renderShareButton(client);
     await openShareModal(wrapper);

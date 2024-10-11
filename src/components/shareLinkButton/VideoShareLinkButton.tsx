@@ -107,7 +107,7 @@ export const VideoShareLinkButton = ({
     if (!startDurationValid || !endDurationValid) {
       return;
     }
-    client.shareCodes.trackVideoShareCode(video.id);
+    client.shareLinks.trackVideoShareLink(video.id);
 
     navigator.clipboard.writeText(shareLink).then(() => {
       displayNotification(
@@ -152,7 +152,7 @@ export const VideoShareLinkButton = ({
           <Typography.Body
             as="div"
             className="mb-14 text-gray-800"
-            data-qa="share-code-body"
+            data-qa="share-link-body"
           >
             Students only need the link to access and play the video{' '}
             <Typography.Body weight="medium">{video.title}</Typography.Body>
