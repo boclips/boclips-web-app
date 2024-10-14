@@ -24,7 +24,7 @@ export const GoogleClassroomShareLink = ({
     .build();
 
   return (
-    <Typography.Link className="font-medium !no-underline" type="inline-blue">
+    <Typography.Link className={s.googleClassroomLink} type="inline-blue">
       <a
         href={url}
         target="_blank"
