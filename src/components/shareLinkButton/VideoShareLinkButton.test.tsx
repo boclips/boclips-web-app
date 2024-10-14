@@ -45,14 +45,14 @@ describe('video share link button', () => {
     expect(wrapper.queryByText('Share')).toBeNull();
   });
 
-  it('displays share code modal on click', async () => {
+  it('displays share link modal on click', async () => {
     const wrapper = renderShareButton();
     await openShareModal(wrapper);
 
     expect(wrapper.getByRole('dialog')).toBeInTheDocument();
     expect(wrapper.getByText('Share this video with students')).toBeVisible();
 
-    const body = wrapper.getByTestId('share-code-body');
+    const body = wrapper.getByTestId('share-link-body');
     expect(body).toBeVisible();
     expect(body.textContent).toEqual(
       'Students only need the link to access and play the video Tractor Video',
@@ -160,11 +160,11 @@ describe('video share link button', () => {
 
     jest.spyOn(navigator.clipboard, 'writeText');
     const trackVideoSpy = jest.spyOn(
-      apiClient.shareCodes,
-      'trackVideoShareCode',
+      apiClient.shareLinks,
+      'trackVideoShareLink',
     );
     // @ts-ignore
-    apiClient.shareCodes.trackVideoShareCode = trackVideoSpy;
+    apiClient.shareLinks.trackVideoShareLink = trackVideoSpy;
     const wrapper = renderShareButton(apiClient);
     await openShareModal(wrapper);
 

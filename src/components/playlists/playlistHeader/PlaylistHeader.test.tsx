@@ -191,7 +191,7 @@ describe('Playlist Header', () => {
       ).toBeNull();
     });
 
-    it('shows share code button', async () => {
+    it('shows share link button', async () => {
       const fakeClient = new FakeBoclipsClient();
       fakeClient.users.insertCurrentUser(
         UserFactory.sample({

@@ -55,7 +55,7 @@ export const PlaylistShareLinkButton = ({
       subtype: 'PLAYLIST_SHARE_LINK_COPIED',
     });
 
-    client.shareCodes.trackCollectionShareCode(playlist.id);
+    client.shareLinks.trackCollectionShareLink(playlist.id);
 
     navigator.clipboard.writeText(shareLink).then(() => {
       displayNotification(
