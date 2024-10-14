@@ -109,6 +109,7 @@ export const VideoShareLinkButton = ({
     }
     client.shareLinks.trackVideoShareLink(video.id);
 
+    toggleModalVisibility();
     navigator.clipboard.writeText(shareLink).then(() => {
       displayNotification(
         'success',
