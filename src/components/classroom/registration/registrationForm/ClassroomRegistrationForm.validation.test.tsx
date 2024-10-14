@@ -126,9 +126,6 @@ describe('ClassroomRegistration Form Validation', () => {
         ],
       });
       const wrapper = renderRegistrationForm();
-      await userEvent.click(
-        wrapper.getByRole('button', { name: 'Create Account' }),
-      );
       await fillTheForm(
         wrapper,
         {
@@ -137,6 +134,9 @@ describe('ClassroomRegistration Form Validation', () => {
           schoolName: '',
         },
         SchoolMode.DROPDOWN_VALUE,
+      );
+      await userEvent.click(
+        wrapper.getByRole('button', { name: 'Create Account' }),
       );
 
       await checkErrorIsVisible(wrapper, 'School name is required');
