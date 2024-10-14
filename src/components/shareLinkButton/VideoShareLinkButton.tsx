@@ -151,13 +151,13 @@ export const VideoShareLinkButton = ({
         >
           <Typography.Body
             as="div"
-            className="mb-14 text-gray-800"
+            className="mb-10 text-gray-800"
             data-qa="share-link-body"
           >
             Students only need the link to access and play the video{' '}
             <Typography.Body weight="medium">{video.title}</Typography.Body>
           </Typography.Body>
-          <div className="flex justify-center mb-10">
+          <div className="flex justify-center mb-16">
             <div className="flex items-center">
               <BoCheckbox
                 checked={startTimeEnabled}
