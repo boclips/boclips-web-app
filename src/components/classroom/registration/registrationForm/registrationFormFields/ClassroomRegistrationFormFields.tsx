@@ -113,8 +113,26 @@ const ClassroomRegistrationFormFields = ({
   );
 
   const handleCountryUpdate = (selectedCountry: ComboboxItem) => {
-    handleChange('state', '');
     handleChange('country', selectedCountry?.value || '');
+    handleChange('state', '');
+    handleChange('schoolName', '');
+    handleChange('ncesSchoolId', undefined);
+  };
+
+  const handleStateUpdate = (selectedState: ComboboxItem) => {
+    handleChange('state', selectedState.value);
+    handleChange('schoolName', '');
+    handleChange('ncesSchoolId', undefined);
+  };
+
+  const handleSchoolDropdownUpdate = (selectedSchool: ComboboxItem) => {
+    handleChange('schoolName', selectedSchool.label);
+    handleChange('ncesSchoolId', selectedSchool.value);
+  };
+
+  const handleSchoolTextUpdate = (schoolName: string) => {
+    handleChange('schoolName', schoolName);
+    handleChange('ncesSchoolId', undefined);
   };
 
   return (
@@ -175,9 +193,7 @@ const ClassroomRegistrationFormFields = ({
           .length && (
           <Combobox
             items={getCountryStates(registrationData.country, boclipsClient)}
-            onChange={(selectedItem) => {
-              handleChange('state', selectedItem.value);
-            }}
+            onChange={handleStateUpdate}
             label="State"
             placeholder="Select state"
             isError={!!validationErrors.state}
@@ -193,9 +209,7 @@ const ClassroomRegistrationFormFields = ({
             <div className="mb-6">
               <Combobox
                 allowCustom
-                onChange={(value) => {
-                  handleChange('schoolName', value.label);
-                }}
+                onChange={handleSchoolDropdownUpdate}
                 label="School Name"
                 placeholder="Search for school or add manually"
                 isError={!!validationErrors.schoolName}
@@ -209,7 +223,7 @@ const ClassroomRegistrationFormFields = ({
         ) : (
           <InputText
             id="input-schoolName"
-            onChange={(value) => handleChange('schoolName', value)}
+            onChange={handleSchoolTextUpdate}
             inputType="text"
             placeholder="Your school name"
             className={s.input}

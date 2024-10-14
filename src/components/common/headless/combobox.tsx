@@ -120,7 +120,7 @@ export const Combobox = ({
         >
           {allowCustom && query.length > 0 && (
             <ComboboxOption
-              value={{ label: query, value: query }}
+              value={{ label: query }}
               className={s.comboboxOption}
               data-qa={`${dataQa}-custom-option`}
             >

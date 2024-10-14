@@ -165,12 +165,26 @@ describe('ClassroomRegistration Form', () => {
     });
   });
 
-  it('does not send through the state when USA is selected, then state is selected and then a different country is selected', async () => {
+  it('does not send through the state or nces school ID when USA, state and school dropdown are selected and then a different country is selected', async () => {
     const fakeClient = new FakeBoclipsClient();
     const createClassroomUserSpy = jest.spyOn(
       fakeClient.users,
       'createClassroomUser',
     );
+    fakeClient.schools.setUsaSchools({
+      AR: [
+        {
+          externalId: 'school-1',
+          name: 'Lincoln High School',
+          city: 'Little Rock',
+        },
+        {
+          externalId: 'school-2',
+          name: 'Harris Elementary School',
+          city: 'Hot Springs',
+        },
+      ],
+    });
 
     const wrapper = renderRegistrationForm(fakeClient);
 
@@ -179,7 +193,7 @@ describe('ClassroomRegistration Form', () => {
       {
         country: 'United States of America',
         state: 'Arkansas',
-        schoolName: '',
+        schoolName: 'Lincoln High School, Little Rock',
       },
       SchoolMode.DROPDOWN_VALUE,
     );
@@ -205,13 +219,14 @@ describe('ClassroomRegistration Form', () => {
         schoolName: 'Los Angeles Lakers',
         country: 'LKA',
         state: '',
+        ncesSchoolId: undefined,
         hasAcceptedEducationalUseTerms: true,
         hasAcceptedTermsAndConditions: true,
       });
     });
   });
 
-  it('sends selected usa school when country usa and a state are selected', async () => {
+  it('sends selected usa school and id when country usa and a state are selected', async () => {
     const fakeClient = new FakeBoclipsClient();
     const createClassroomUserSpy = jest.spyOn(
       fakeClient.users,
@@ -259,6 +274,7 @@ describe('ClassroomRegistration Form', () => {
         schoolName: 'Lincoln High School, Little Rock',
         country: 'USA',
         state: 'AR',
+        ncesSchoolId: 'school-1',
         hasAcceptedEducationalUseTerms: true,
         hasAcceptedTermsAndConditions: true,
       });

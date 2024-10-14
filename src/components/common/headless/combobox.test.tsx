@@ -53,7 +53,6 @@ describe('Combobox', () => {
 
     expect(fakeCallback).toHaveBeenCalledWith({
       label: 'newItem',
-      value: 'newItem',
     });
   });
 

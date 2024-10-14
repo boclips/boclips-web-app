@@ -23,6 +23,7 @@ export interface ClassroomRegistrationData {
   state: string;
   hasAcceptedEducationalUseTerms: boolean;
   hasAcceptedTermsAndConditions: boolean;
+  ncesSchoolId?: string;
 }
 
 const emptyRegistrationData = (): ClassroomRegistrationData => {
@@ -66,7 +67,7 @@ const ClassroomRegistrationForm = ({
 
   const handleChange = (
     fieldName: string,
-    value: string | boolean | string[],
+    value?: string | boolean | string[],
   ) => {
     setRegistrationData((prevState) => ({
       ...prevState,
@@ -116,6 +117,7 @@ const ClassroomRegistrationForm = ({
             registrationData.hasAcceptedEducationalUseTerms,
           hasAcceptedTermsAndConditions:
             registrationData.hasAcceptedTermsAndConditions,
+          ncesSchoolId: registrationData.ncesSchoolId,
         },
         {
           onSuccess: (user: User) => {
