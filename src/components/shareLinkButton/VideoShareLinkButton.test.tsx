@@ -155,7 +155,7 @@ describe('video share link button', () => {
     ).toBeVisible();
   });
 
-  it(`copies share link but doesn't close modal on clicking main button`, async () => {
+  it(`copies share link and closes modal on clicking main button`, async () => {
     const apiClient = new FakeBoclipsClient();
 
     jest.spyOn(navigator.clipboard, 'writeText');
@@ -202,6 +202,7 @@ describe('video share link button', () => {
       await wrapper.findByRole('button', { name: 'Copy link' }),
     );
     expect(trackVideoSpy).toHaveBeenCalledWith('video-1');
+    expect(wrapper.queryByText('Share this video with students')).toBeNull();
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
       getShareableVideoLink('video-1', 'user-1', 10, 32),
@@ -209,10 +210,6 @@ describe('video share link button', () => {
 
     const notification = await wrapper.findByRole('alert');
     expect(within(notification).getByText('Share link copied!')).toBeVisible();
-
-    expect(
-      await wrapper.findByText('Share this video with students'),
-    ).toBeVisible();
   });
 
   it(`includes a link to google classroom`, async () => {
