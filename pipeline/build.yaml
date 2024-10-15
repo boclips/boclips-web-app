@@ -2,7 +2,7 @@
 platform: linux
 
 image_resource:
-  type: docker-image
+  type: registry-image
   source:
     repository: cypress/browsers
     tag: 'node16.16.0-chrome107-ff107'
