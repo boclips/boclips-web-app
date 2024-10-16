@@ -14,9 +14,15 @@ interface Props {
   video: Video;
   start?: number;
   end?: number;
+  skipMetadataAndRecommendations?: boolean;
 }
 
-export const VideoPage = ({ video, start = null, end = null }: Props) => {
+export const VideoPage = ({
+  video,
+  start = null,
+  end = null,
+  skipMetadataAndRecommendations = false,
+}: Props) => {
   const navigate = useNavigate();
   const userNavigatedToPageViaApp = useLocation().state?.userNavigated;
 
@@ -51,8 +57,12 @@ export const VideoPage = ({ video, start = null, end = null }: Props) => {
       </section>
 
       <VideoDescription video={video} />
-      <VideoAiMetadata video={video} />
-      <VideoRecommendations video={video} />
+      {!skipMetadataAndRecommendations && (
+        <>
+          <VideoAiMetadata video={video} />
+          <VideoRecommendations video={video} />
+        </>
+      )}
     </>
   );
 };

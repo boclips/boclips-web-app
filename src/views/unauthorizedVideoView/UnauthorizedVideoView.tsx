@@ -62,7 +62,12 @@ const UnauthorizedVideoView = () => {
     >
       {video?.title && <Helmet title={video.title} />}
       <UnauthorizedNavbar />
-      <VideoPage video={video} start={start} end={end} />
+      <VideoPage
+        video={video}
+        start={start}
+        end={end}
+        skipMetadataAndRecommendations
+      />
       <Footer className="row-start-last row-end-last" />
     </Layout>
   );
