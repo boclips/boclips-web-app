@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  CollectionAssetFactory,
   CollectionFactory,
   FakeBoclipsClient,
 } from 'boclips-api-client/dist/test-support';
@@ -13,15 +14,18 @@ import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import userEvent from '@testing-library/user-event';
 
-const createVideoWithThumbnail = (id: string, videoTitle: string) => {
-  return VideoFactory.sample({
+const createAssetWithThumbnail = (id: string, videoTitle: string) => {
+  return CollectionAssetFactory.sample({
     id,
-    title: `${videoTitle} ${id}`,
-    playback: PlaybackFactory.sample({
-      links: {
-        thumbnail: new Link({ href: 'http://thumbnail.jpg' }),
-        createPlayerInteractedWithEvent: new Link({ href: 'todo' }),
-      },
+    video: VideoFactory.sample({
+      id,
+      title: `${videoTitle} ${id}`,
+      playback: PlaybackFactory.sample({
+        links: {
+          thumbnail: new Link({ href: 'http://thumbnail.jpg' }),
+          createPlayerInteractedWithEvent: new Link({ href: 'todo' }),
+        },
+      }),
     }),
   });
 };
@@ -29,19 +33,19 @@ const createVideoWithThumbnail = (id: string, videoTitle: string) => {
 describe('Playlist view - reorder', () => {
   const client = new FakeBoclipsClient();
 
-  const videos = [
-    createVideoWithThumbnail('111', 'Video One'),
-    createVideoWithThumbnail('222', 'Video Two'),
-    createVideoWithThumbnail('333', 'Video Three'),
-    createVideoWithThumbnail('444', 'Video Four'),
-    createVideoWithThumbnail('555', 'Video Five'),
+  const assets = [
+    createAssetWithThumbnail('111', 'Video One'),
+    createAssetWithThumbnail('222', 'Video Two'),
+    createAssetWithThumbnail('333', 'Video Three'),
+    createAssetWithThumbnail('444', 'Video Four'),
+    createAssetWithThumbnail('555', 'Video Five'),
   ];
 
   const playlist1 = CollectionFactory.sample({
     id: '123',
     title: 'Hello there',
     description: 'Very nice description',
-    videos,
+    assets,
     owner: 'myuserid',
     mine: true,
   });
@@ -50,13 +54,13 @@ describe('Playlist view - reorder', () => {
     id: '321',
     title: 'Hello there',
     description: 'Very nice description',
-    videos,
+    assets,
     owner: 'myuserid',
     mine: false,
   });
 
   beforeEach(() => {
-    videos.forEach((it) => client.videos.insertVideo(it));
+    assets.forEach((it) => client.videos.insertVideo(it.video));
     client.collections.setCurrentUser('myuserid');
     client.users.insertCurrentUser(
       UserFactory.sample({
