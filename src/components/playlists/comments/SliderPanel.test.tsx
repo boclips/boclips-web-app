@@ -1,5 +1,8 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import {
+  CollectionAssetFactory,
+  FakeBoclipsClient,
+} from 'boclips-api-client/dist/test-support';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { render, waitFor, within } from '@testing-library/react';
@@ -23,9 +26,10 @@ describe('slider panel', () => {
 
     const collection = CollectionFactory.sample({
       id: 'collection-id',
-      comments: {
-        videos: {
-          [video.id]: [
+      assets: [
+        CollectionAssetFactory.sample({
+          id: video.id,
+          comments: [
             {
               id: 'id-123',
               userId: user.id,
@@ -35,8 +39,8 @@ describe('slider panel', () => {
               createdAt: Date.now().toString(),
             },
           ],
-        },
-      },
+        }),
+      ],
     });
 
     const wrapper = render(
@@ -47,7 +51,10 @@ describe('slider panel', () => {
               closeSliderOnClick={null}
               videoId={video.id}
               collection={collection}
-              comments={collection.comments.videos[video.id]}
+              comments={
+                collection.assets.find((asset) => asset.id === video.id)
+                  .comments
+              }
             />
           </QueryClientProvider>
         </BoclipsClientProvider>
@@ -70,9 +77,10 @@ describe('slider panel', () => {
 
     const collection = CollectionFactory.sample({
       id: 'collection-id',
-      comments: {
-        videos: {
-          [video.id]: [
+      assets: [
+        CollectionAssetFactory.sample({
+          id: video.id,
+          comments: [
             {
               id: 'id-123',
               userId: user.id,
@@ -82,8 +90,8 @@ describe('slider panel', () => {
               createdAt: Date.now().toString(),
             },
           ],
-        },
-      },
+        }),
+      ],
     });
 
     const wrapper = render(
@@ -94,7 +102,10 @@ describe('slider panel', () => {
               closeSliderOnClick={null}
               videoId={video.id}
               collection={collection}
-              comments={collection.comments.videos[video.id]}
+              comments={
+                collection.assets.find((asset) => asset.id === video.id)
+                  .comments
+              }
             />
           </QueryClientProvider>
         </BoclipsClientProvider>
@@ -129,9 +140,10 @@ describe('slider panel', () => {
 
     const collection = CollectionFactory.sample({
       id: 'collection-id',
-      comments: {
-        videos: {
-          [video.id]: [
+      assets: [
+        CollectionAssetFactory.sample({
+          id: video.id,
+          comments: [
             {
               id: 'id-123',
               userId: user.id,
@@ -149,8 +161,8 @@ describe('slider panel', () => {
               createdAt: Date.now().toString(),
             },
           ],
-        },
-      },
+        }),
+      ],
     });
 
     const wrapper = render(
@@ -161,7 +173,10 @@ describe('slider panel', () => {
               closeSliderOnClick={null}
               videoId={video.id}
               collection={collection}
-              comments={collection.comments.videos[video.id]}
+              comments={
+                collection.assets.find((asset) => asset.id === video.id)
+                  .comments
+              }
             />
           </QueryClientProvider>
         </BoclipsClientProvider>

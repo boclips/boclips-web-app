@@ -3,7 +3,10 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import {
+  CollectionAssetFactory,
+  FakeBoclipsClient,
+} from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { lastEvent } from 'src/testSupport/lastEvent';
@@ -42,11 +45,13 @@ describe('Reorder modal', () => {
             confirmButtonText="Update"
             onCancel={jest.fn()}
             playlist={CollectionFactory.sample({
-              videos: [
-                VideoFactory.sample({
-                  title: 'video-1',
-                  bestFor: [{ label: 'bestForTag' }],
-                  createdBy: 'By your aunt',
+              assets: [
+                CollectionAssetFactory.sample({
+                  video: VideoFactory.sample({
+                    title: 'video-1',
+                    bestFor: [{ label: 'bestForTag' }],
+                    createdBy: 'By your aunt',
+                  }),
                 }),
               ],
               mine: true,

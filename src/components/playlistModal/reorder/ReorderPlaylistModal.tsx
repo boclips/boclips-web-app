@@ -7,6 +7,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import PlaylistVideosListDraggable from 'src/components/playlistModal/reorder/PlaylistVideosListDraggable';
 import { useReorderPlaylist } from 'src/hooks/api/playlistsQuery';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
+import { CollectionAsset } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
 import s from './style.module.less';
 
 interface Props {
@@ -16,8 +17,8 @@ interface Props {
 }
 
 const ReorderModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
-  const [reorderedVideos, setReorderedVideos] = useState<Video[]>([
-    ...playlist.videos,
+  const [reorderedAssets, setReorderedAssets] = useState<CollectionAsset[]>([
+    ...playlist.assets,
   ]);
 
   const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
@@ -25,7 +26,7 @@ const ReorderModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
   const { mutate: reorderPlaylist } = useReorderPlaylist(playlist);
 
   const onConfirm = () => {
-    reorderPlaylist(reorderedVideos);
+    reorderPlaylist(reorderedAssets);
     trackPlatformInteraction({ subtype: 'PLAYLIST_REORDERED' });
     onCancel();
   };
@@ -44,12 +45,12 @@ const ReorderModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
     }
 
     const items = reorder(
-      reorderedVideos,
+      reorderedAssets,
       result.source.index,
       result.destination.index,
     );
 
-    setReorderedVideos(items);
+    setReorderedAssets(items);
   };
 
   return (
@@ -73,10 +74,10 @@ const ReorderModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
               ref={provided.innerRef}
               className={s.listWrapper}
             >
-              {reorderedVideos.map((video, index) => (
+              {reorderedAssets.map((asset, index) => (
                 <PlaylistVideosListDraggable
-                  key={video.id}
-                  video={video}
+                  key={asset.id}
+                  video={asset.video}
                   index={index}
                 />
               ))}

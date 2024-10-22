@@ -8,6 +8,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import {
+  CollectionAssetFactory,
   CollectionFactory,
   FakeBoclipsClient,
 } from 'boclips-api-client/dist/test-support';
@@ -24,7 +25,7 @@ describe('Playlist Body', () => {
     fakeClient = new FakeBoclipsClient(),
     playlist = CollectionFactory.sample({
       id: '123',
-      videos: [],
+      assets: [],
     }),
   ) => {
     fakeClient.videos.insertVideo(VideoFactory.sample({}));
@@ -42,13 +43,18 @@ describe('Playlist Body', () => {
   };
 
   it('has add to playlist button when playlist has one video', async () => {
-    const videos = [VideoFactory.sample({ id: 'video-1', title: 'Video One' })];
+    const assets = [
+      CollectionAssetFactory.sample({
+        id: 'video-1',
+        video: VideoFactory.sample({ id: 'video-1', title: 'Video One' }),
+      }),
+    ];
 
     const wrapper = getWrapper(
       undefined,
       CollectionFactory.sample({
         id: '123',
-        videos,
+        assets,
       }),
     );
 
@@ -60,8 +66,13 @@ describe('Playlist Body', () => {
   });
 
   it('has no buttons when requested', async () => {
-    const videos = [VideoFactory.sample({ id: 'video-1', title: 'Video One' })];
-    const playlist = CollectionFactory.sample({ id: '123', videos });
+    const assets = [
+      CollectionAssetFactory.sample({
+        id: 'video-1',
+        video: VideoFactory.sample({ id: 'video-1', title: 'Video One' }),
+      }),
+    ];
+    const playlist = CollectionFactory.sample({ id: '123', assets });
 
     const wrapper = renderWithClients(
       <PlaylistBody playlist={playlist} showButtons={false} />,
@@ -85,22 +96,24 @@ describe('Playlist Body', () => {
   });
 
   it('playlist card has price info', async () => {
-    const videoWithPrice = VideoFactory.sample({
-      title: 'video with price',
-      price: {
-        currency: 'USD',
-        amount: 150,
-      },
+    const assetWithPrice = CollectionAssetFactory.sample({
+      video: VideoFactory.sample({
+        title: 'video with price',
+        price: {
+          currency: 'USD',
+          amount: 150,
+        },
+      }),
     });
 
     const playlist = CollectionFactory.sample({
       id: '123',
-      videos: [videoWithPrice],
+      assets: [assetWithPrice],
     });
 
     const wrapper = getWrapper(undefined, playlist);
 
-    expect(wrapper.getByText(videoWithPrice.title)).toBeInTheDocument();
+    expect(wrapper.getByText(assetWithPrice.video.title)).toBeInTheDocument();
     expect(wrapper.getByText('$150')).toBeInTheDocument();
   });
 });
@@ -109,12 +122,12 @@ describe('focus', () => {
   it('focuses on the main after removing the last video of a playlist', async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.collections.setCurrentUser('user-123');
-    const video = VideoFactory.sample({});
+    const asset = CollectionAssetFactory.sample({});
     const playlist = CollectionFactory.sample({
       id: '321111',
       owner: 'user-123',
       mine: true,
-      videos: [video],
+      assets: [asset],
       title: 'Courage the Cowardly Dog',
     });
     fakeClient.collections.addToFake(playlist);
@@ -149,14 +162,14 @@ describe('focus', () => {
   it('focuses on main after removing a video from a playlist that has more', async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.collections.setCurrentUser('user-123');
-    const video1 = VideoFactory.sample({});
-    const video2 = VideoFactory.sample({});
+    const asset1 = CollectionAssetFactory.sample({});
+    const asset2 = CollectionAssetFactory.sample({});
 
     const playlist = CollectionFactory.sample({
       id: '123',
       owner: 'user-123',
       mine: true,
-      videos: [video1, video2],
+      assets: [asset1, asset2],
       title: 'Courage the Cowardly Dog',
     });
     fakeClient.collections.addToFake(playlist);

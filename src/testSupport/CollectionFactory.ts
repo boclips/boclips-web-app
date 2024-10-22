@@ -9,7 +9,7 @@ export class CollectionFactory {
       owner: 'owner',
       ownerName: 'Owner Name',
       title: 'title',
-      videos: [],
+      assets: [],
       updatedAt: new Date(),
       discoverable: true,
       mine: true,

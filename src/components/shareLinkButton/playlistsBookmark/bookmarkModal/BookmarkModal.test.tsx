@@ -8,7 +8,10 @@ import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import {
+  CollectionAssetFactory,
+  FakeBoclipsClient,
+} from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import dayjs from 'src/day-js';
@@ -20,7 +23,10 @@ import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { lastEvent } from 'src/testSupport/lastEvent';
 
 describe('Bookmark modal for playlists', () => {
-  const video = VideoFactory.sample({ id: 'video-id' });
+  const asset = CollectionAssetFactory.sample({
+    id: 'video-id',
+    video: VideoFactory.sample({ id: 'video-id' }),
+  });
   const nonBookmarkedCollectionId = 'non-segment';
   const bookmarkedCollectionId = 'has-segments';
   const apiClient = new FakeBoclipsClient();
@@ -29,27 +35,24 @@ describe('Bookmark modal for playlists', () => {
     apiClient.videos.clear();
     apiClient.collections.clear();
 
-    apiClient.videos.insertVideo(video);
+    apiClient.videos.insertVideo(asset.video);
     apiClient.collections.addToFake(
       CollectionFactory.sample({
         id: nonBookmarkedCollectionId,
-        videos: [video],
+        assets: [asset],
       }),
     );
     apiClient.collections.addToFake(
       CollectionFactory.sample({
         id: bookmarkedCollectionId,
-        videos: [video],
-        segments: {
-          'video-id': { start: 10, end: 11 },
-        },
+        assets: [{ ...asset, segment: { start: 10, end: 11 } }],
       }),
     );
   });
 
   it(`allows setting start and end time for video`, async () => {
     const wrapper = renderBookmarkButton(
-      video,
+      asset.video,
       nonBookmarkedCollectionId,
       apiClient,
     );
@@ -98,8 +101,11 @@ describe('Bookmark modal for playlists', () => {
     );
 
     await waitFor(() => {
-      expect(updatedPlaylist.segments[video.id].start).toEqual(32);
-      expect(updatedPlaylist.segments[video.id].end).toEqual(55);
+      const updatedSegment = updatedPlaylist.assets.find(
+        (updatedAsset) => updatedAsset.id === asset.id,
+      ).segment;
+      expect(updatedSegment.start).toEqual(32);
+      expect(updatedSegment.end).toEqual(55);
       expect(
         wrapper.getByText('Video bookmark has been updated'),
       ).toBeInTheDocument();
@@ -108,7 +114,7 @@ describe('Bookmark modal for playlists', () => {
 
   it(`allows removing start and end time for video`, async () => {
     const wrapper = renderBookmarkButton(
-      video,
+      asset.video,
       bookmarkedCollectionId,
       apiClient,
     );
@@ -145,7 +151,11 @@ describe('Bookmark modal for playlists', () => {
     );
 
     await waitFor(() => {
-      expect(updatedPlaylist.segments[video.id]).toBeUndefined();
+      expect(
+        updatedPlaylist.assets.find(
+          (updatedAsset) => updatedAsset.id === asset.id,
+        ).segment,
+      ).toBeUndefined();
       expect(
         wrapper.getByText('Video bookmark has been updated'),
       ).toBeInTheDocument();
@@ -199,7 +209,7 @@ describe('Bookmark modal for playlists', () => {
 
   it(`sends a platform interaction event when set bookmark modal is opened`, async () => {
     const wrapper = renderBookmarkButton(
-      video,
+      asset.video,
       nonBookmarkedCollectionId,
       apiClient,
     );
@@ -220,7 +230,7 @@ describe('Bookmark modal for playlists', () => {
 
   it(`sends a platform interaction event when update bookmark modal is opened`, async () => {
     const wrapper = renderBookmarkButton(
-      video,
+      asset.video,
       bookmarkedCollectionId,
       apiClient,
     );
@@ -242,7 +252,7 @@ describe('Bookmark modal for playlists', () => {
 
   it(`sends a platform interaction event when bookmark is set`, async () => {
     const wrapper = renderBookmarkButton(
-      video,
+      asset.video,
       nonBookmarkedCollectionId,
       apiClient,
     );
@@ -280,8 +290,11 @@ describe('Bookmark modal for playlists', () => {
     );
 
     await waitFor(() => {
-      expect(updatedPlaylist?.segments[video.id].start).toEqual(32);
-      expect(updatedPlaylist?.segments[video.id].end).toEqual(55);
+      const updatedSegment = updatedPlaylist.assets.find(
+        (updatedAsset) => updatedAsset.id === asset.id,
+      ).segment;
+      expect(updatedSegment.start).toEqual(32);
+      expect(updatedSegment.end).toEqual(55);
       expect(lastEvent(apiClient, 'PLATFORM_INTERACTED_WITH')).toEqual({
         type: 'PLATFORM_INTERACTED_WITH',
         subtype: 'SET_BOOKMARK_MODAL_SUBMITTED',
@@ -291,7 +304,7 @@ describe('Bookmark modal for playlists', () => {
   });
   it(`sends a platform interaction event when bookmark is updated`, async () => {
     const wrapper = renderBookmarkButton(
-      video,
+      asset.video,
       bookmarkedCollectionId,
       apiClient,
     );
@@ -314,8 +327,11 @@ describe('Bookmark modal for playlists', () => {
     );
 
     await waitFor(() => {
-      expect(updatedPlaylist?.segments[video.id].start).toEqual(32);
-      expect(updatedPlaylist?.segments[video.id].end).toEqual(55);
+      const updatedSegment = updatedPlaylist.assets.find(
+        (updatedAsset) => updatedAsset.id === asset.id,
+      ).segment;
+      expect(updatedSegment.start).toEqual(32);
+      expect(updatedSegment.end).toEqual(55);
       expect(
         wrapper.getByText('Video bookmark has been updated'),
       ).toBeInTheDocument();
@@ -345,7 +361,7 @@ describe('Bookmark modal for playlists', () => {
       .mockRejectedValue(new Error('Network Error'));
 
     const wrapper = renderBookmarkButton(
-      video,
+      asset.video,
       nonBookmarkedCollectionId,
       apiClient,
     );

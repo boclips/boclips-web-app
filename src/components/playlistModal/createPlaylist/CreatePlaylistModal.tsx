@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { usePlaylistMutation } from 'src/hooks/api/playlistsQuery';
 import {
   PlaylistFormProps,
@@ -35,7 +35,7 @@ export const CreatePlaylistModal = ({
     PlaylistFormProps | undefined
   >(undefined);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isError) {
       onError(playlistFormUsedInMutation?.title);
     }
@@ -54,7 +54,7 @@ export const CreatePlaylistModal = ({
     });
     let videos = [];
     if (playlist) {
-      videos = playlist.videos.map((video) => video.id);
+      videos = playlist.assets.map((video) => video.id);
     } else if (videoId) {
       videos = [videoId];
     }

@@ -9,7 +9,10 @@ import {
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
-import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import {
+  CollectionAssetFactory,
+  FakeBoclipsClient,
+} from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { BoclipsClient } from 'boclips-api-client';
@@ -361,21 +364,21 @@ describe('PlaylistsView', () => {
       const client = new FakeBoclipsClient();
       insertUser(client);
 
-      const videos = [
-        createVideoWithThumbnail('1'),
-        createVideoWithThumbnail('2'),
-        createVideoWithThumbnail('3'),
-        createVideoWithThumbnail('4'),
+      const assets = [
+        createAssetWithThumbnail('1'),
+        createAssetWithThumbnail('2'),
+        createAssetWithThumbnail('3'),
+        createAssetWithThumbnail('4'),
       ];
 
       const playlist = CollectionFactory.sample({
         id: '1',
         title: 'My collection about cats',
-        videos,
+        assets,
       });
 
       client.collections.addToFake(playlist);
-      videos.forEach((it) => client.videos.insertVideo(it));
+      assets.forEach((it) => client.videos.insertVideo(it.video));
 
       const wrapper = renderPlaylistsView(client);
 
@@ -394,19 +397,19 @@ describe('PlaylistsView', () => {
       const client = new FakeBoclipsClient();
       insertUser(client);
 
-      const videos = [
-        createVideoWithThumbnail('1'),
-        createVideoWithThumbnail('2'),
+      const assets = [
+        createAssetWithThumbnail('1'),
+        createAssetWithThumbnail('2'),
       ];
 
       const playlist = CollectionFactory.sample({
         id: '1',
         title: 'My collection about cats',
-        videos,
+        assets,
       });
 
       client.collections.addToFake(playlist);
-      videos.forEach((it) => client.videos.insertVideo(it));
+      assets.forEach((it) => client.videos.insertVideo(it.video));
 
       const wrapper = renderPlaylistsView(client);
 
@@ -419,8 +422,8 @@ describe('PlaylistsView', () => {
       expect(wrapper.getByTestId('default-thumbnail-2')).toBeVisible();
     });
 
-    const createVideoWithThumbnail = (id: string) => {
-      return VideoFactory.sample({
+    const createAssetWithThumbnail = (id: string) => {
+      const video = VideoFactory.sample({
         id,
         title: `Title ${id}`,
         playback: PlaybackFactory.sample({
@@ -430,6 +433,7 @@ describe('PlaylistsView', () => {
           },
         }),
       });
+      return CollectionAssetFactory.sample({ id, video });
     };
   });
 

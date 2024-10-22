@@ -2,7 +2,10 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter, Router } from 'react-router-dom';
 import App from 'src/App';
-import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import {
+  CollectionAssetFactory,
+  FakeBoclipsClient,
+} from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { Helmet } from 'react-helmet';
 import { createBrowserHistory } from 'history';
@@ -126,7 +129,7 @@ describe('HomeView', () => {
     fakeBoclipsClient.collections.addToFake(
       CollectionFactory.sample({
         title: 'my promoted playlist',
-        videos: [VideoFactory.sample({})],
+        assets: [CollectionAssetFactory.sample({})],
         promotedFor: [PromotedForProduct.LIBRARY, PromotedForProduct.CLASSROOM],
       }),
     );
@@ -150,21 +153,21 @@ describe('HomeView', () => {
     fakeBoclipsClient.collections.addToFake(
       CollectionFactory.sample({
         title: 'my promoted playlist',
-        videos: [VideoFactory.sample({})],
+        assets: [CollectionAssetFactory.sample({})],
         promotedFor: [PromotedForProduct.LIBRARY, PromotedForProduct.CLASSROOM],
       }),
     );
     fakeBoclipsClient.collections.addToFake(
       CollectionFactory.sample({
         title: 'my promoted playlist 1',
-        videos: [VideoFactory.sample({})],
+        assets: [CollectionAssetFactory.sample({})],
         promotedFor: [PromotedForProduct.LIBRARY, PromotedForProduct.CLASSROOM],
       }),
     );
     fakeBoclipsClient.collections.addToFake(
       CollectionFactory.sample({
         title: 'my promoted playlist 2',
-        videos: [VideoFactory.sample({})],
+        assets: [CollectionAssetFactory.sample({})],
         promotedFor: [PromotedForProduct.LIBRARY, PromotedForProduct.CLASSROOM],
       }),
     );

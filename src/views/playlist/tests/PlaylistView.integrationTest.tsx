@@ -11,6 +11,7 @@ import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import React from 'react';
 import {
+  CollectionAssetFactory,
   CollectionFactory,
   FakeBoclipsClient,
 } from 'boclips-api-client/dist/test-support';
@@ -28,8 +29,8 @@ import { CollectionFactory as collectionFactory } from 'src/testSupport/Collecti
 import { sleep } from 'src/testSupport/sleep';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 
-const createVideoWithThumbnail = (id: string, videoTitle: string) => {
-  return VideoFactory.sample({
+const createAssetWithThumbnail = (id: string, videoTitle: string) => {
+  const video = VideoFactory.sample({
     id,
     title: `${videoTitle} ${id}`,
     playback: PlaybackFactory.sample({
@@ -39,31 +40,33 @@ const createVideoWithThumbnail = (id: string, videoTitle: string) => {
       },
     }),
   });
+
+  return CollectionAssetFactory.sample({ id, video });
 };
 
 describe('Playlist view', () => {
   const client = new FakeBoclipsClient();
 
-  const videos = [
-    createVideoWithThumbnail('111', 'Video One'),
-    createVideoWithThumbnail('222', 'Video Two'),
-    createVideoWithThumbnail('333', 'Video Three'),
-    createVideoWithThumbnail('444', 'Video Four'),
-    createVideoWithThumbnail('555', 'Video Five'),
+  const assets = [
+    createAssetWithThumbnail('111', 'Video One'),
+    createAssetWithThumbnail('222', 'Video Two'),
+    createAssetWithThumbnail('333', 'Video Three'),
+    createAssetWithThumbnail('444', 'Video Four'),
+    createAssetWithThumbnail('555', 'Video Five'),
   ];
 
   const playlist = CollectionFactory.sample({
     id: '123',
     title: 'Hello there',
     description: 'Very nice description',
-    videos,
+    assets,
     owner: 'myuserid',
     mine: true,
     permissions: { anyone: CollectionPermission.VIEW_ONLY },
   });
 
   beforeEach(() => {
-    videos.forEach((it) => client.videos.insertVideo(it));
+    assets.forEach((it) => client.videos.insertVideo(it.video));
     client.collections.setCurrentUser('myuserid');
     client.users.insertCurrentUser(
       UserFactory.sample({
@@ -114,11 +117,11 @@ describe('Playlist view', () => {
       </MemoryRouter>,
     );
 
-    expect(await screen.findByTestId(videos[0].id)).toBeVisible();
-    expect(await screen.findByTestId(videos[1].id)).toBeVisible();
-    expect(await screen.findByTestId(videos[2].id)).toBeVisible();
-    expect(await screen.findByTestId(videos[3].id)).toBeVisible();
-    expect(await screen.findByTestId(videos[4].id)).toBeVisible();
+    expect(await screen.findByTestId(assets[0].id)).toBeVisible();
+    expect(await screen.findByTestId(assets[1].id)).toBeVisible();
+    expect(await screen.findByTestId(assets[2].id)).toBeVisible();
+    expect(await screen.findByTestId(assets[3].id)).toBeVisible();
+    expect(await screen.findByTestId(assets[4].id)).toBeVisible();
   });
 
   it('playlist item has valid href for redirection', async () => {
@@ -140,9 +143,9 @@ describe('Playlist view', () => {
   it('video can be added to cart by clicking the button', async () => {
     client.carts.clear();
     client.collections.clear();
-    const video = createVideoWithThumbnail('111', 'Video One');
-    client.videos.insertVideo(video);
-    client.collections.addToFake({ ...playlist, videos: [video] });
+    const asset = createAssetWithThumbnail('111', 'Video One');
+    client.videos.insertVideo(asset.video);
+    client.collections.addToFake({ ...playlist, assets: [asset] });
 
     render(
       <MemoryRouter initialEntries={['/playlists/123']}>
@@ -159,7 +162,9 @@ describe('Playlist view', () => {
 
   it('video can be removed from cart by clicking the button', async () => {
     client.videos.clear();
-    client.videos.insertVideo(createVideoWithThumbnail('111', 'Video One'));
+    client.videos.insertVideo(
+      createAssetWithThumbnail('111', 'Video One').video,
+    );
     await client.carts.addItemToCart(await client.carts.getCart(), '111');
 
     render(
@@ -281,7 +286,7 @@ describe('Playlist view', () => {
         id: '111',
         title: 'Hello test',
         description: 'Very nice description',
-        videos,
+        assets,
         owner: 'myuserid',
         mine: false,
         links: collectionFactory.sampleLinks({}),
@@ -308,7 +313,7 @@ describe('Playlist view', () => {
         id: '222',
         title: 'Hello test',
         description: 'Very nice description',
-        videos,
+        assets,
         owner: 'myuserid',
         mine: false,
         links: collectionFactory.sampleLinks({

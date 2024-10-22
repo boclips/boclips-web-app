@@ -3,9 +3,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Thumbnail from 'src/components/playlists/thumbnails/Thumbnail';
 import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
+import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 
-export const PlaylistSlide = ({ playlist }) => {
-  const videoId = playlist.videos[0].id;
+interface Props {
+  playlist: Collection;
+}
+
+export const PlaylistSlide = ({ playlist }: Props) => {
+  const videoId = playlist.assets[0].id;
   const { data: video } = useFindOrGetVideo(videoId);
 
   return (
@@ -19,7 +24,7 @@ export const PlaylistSlide = ({ playlist }) => {
         <Thumbnail video={video} />
         <div className="m-3 flex justify-between h-24 flex-col">
           <Typography.H4 className="truncate">{playlist.title}</Typography.H4>
-          <Typography.Body>{playlist.videos.length} videos</Typography.Body>
+          <Typography.Body>{playlist.assets.length} videos</Typography.Body>
         </div>
       </div>
     </Link>

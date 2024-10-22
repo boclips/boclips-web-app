@@ -2,7 +2,10 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { render } from '@testing-library/react';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import {
+  CollectionAssetFactory,
+  FakeBoclipsClient,
+} from 'boclips-api-client/dist/test-support';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { MemoryRouter } from 'react-router-dom';
 import UnauthorizedPlaylistView from 'src/views/unauthorizedPlaylistView/UnauthorizedPlaylistView';
@@ -15,10 +18,13 @@ describe('Playlist View', () => {
       id: 'playlist-id',
       title: 'You got mud on your face, you big disgrace',
       description: 'We will, we will rock you, we will, we will rock you',
-      videos: [
-        VideoFactory.sample({
+      assets: [
+        CollectionAssetFactory.sample({
           id: 'video1',
-          title: 'Somebody better put you back into your place',
+          video: VideoFactory.sample({
+            id: 'video1',
+            title: 'Somebody better put you back into your place',
+          }),
         }),
       ],
       mine: false,
@@ -57,10 +63,13 @@ describe('Playlist View', () => {
       id: 'playlist-id',
       title: 'You got mud on your face, you big disgrace',
       description: 'We will, we will rock you, we will, we will rock you',
-      videos: [
-        VideoFactory.sample({
+      assets: [
+        CollectionAssetFactory.sample({
           id: 'video1',
-          title: 'Somebody better put you back into your place',
+          video: VideoFactory.sample({
+            id: 'video1',
+            title: 'Somebody better put you back into your place',
+          }),
         }),
       ],
       mine: false,
@@ -91,10 +100,13 @@ describe('Playlist View', () => {
       id: 'playlist-id',
       title: 'You got mud on your face, you big disgrace',
       description: 'We will, we will rock you, we will, we will rock you',
-      videos: [
-        VideoFactory.sample({
+      assets: [
+        CollectionAssetFactory.sample({
           id: 'video1',
-          title: 'Somebody better put you back into your place',
+          video: VideoFactory.sample({
+            id: 'video1',
+            title: 'Somebody better put you back into your place',
+          }),
         }),
       ],
       mine: false,

@@ -1,22 +1,22 @@
-import { ListViewVideo } from 'boclips-api-client/dist/sub-clients/videos/model/ListViewVideo';
+import { ListViewAsset } from 'boclips-api-client/dist/sub-clients/videos/model/ListViewVideo';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import React from 'react';
 import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import s from './style.module.less';
 
 interface Props {
-  videos: ListViewVideo[];
+  assets: ListViewAsset[];
 }
 
-const Thumbnails = ({ videos }: Props) => {
+const Thumbnails = ({ assets }: Props) => {
   const { data: firstVideo, isLoading: firstLoading } = useFindOrGetVideo(
-    videos[0]?.id,
+    assets[0]?.id,
   );
   const { data: secondVideo, isLoading: secondLoading } = useFindOrGetVideo(
-    videos[1]?.id,
+    assets[1]?.id,
   );
   const { data: thirdVideo, isLoading: thirdLoading } = useFindOrGetVideo(
-    videos[2]?.id,
+    assets[2]?.id,
   );
 
   const loading = [firstLoading, secondLoading, thirdLoading];

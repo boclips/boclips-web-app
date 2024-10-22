@@ -11,10 +11,10 @@ import {
 } from 'src/hooks/api/playlistsQuery';
 import { QueryClient } from '@tanstack/react-query';
 import {
+  CollectionAssetFactory,
   CollectionFactory,
   FakeBoclipsClient,
 } from 'boclips-api-client/dist/test-support';
-import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForProduct';
 import { PLAYLISTS_PAGE_SIZE } from 'src/components/playlists/playlistList/PlaylistList';
@@ -42,11 +42,11 @@ describe('playlistsQuery', () => {
   });
 
   it('safely reorders playlists', async () => {
-    const [video1, video2] = [
-      VideoFactory.sample({ id: 'video-1' }),
-      VideoFactory.sample({ id: 'video-2' }),
+    const [asset1, asset2] = [
+      CollectionAssetFactory.sample({ id: 'video-1' }),
+      CollectionAssetFactory.sample({ id: 'video-2' }),
     ];
-    const collection = CollectionFactory.sample({ videos: [video1, video2] });
+    const collection = CollectionFactory.sample({ assets: [asset1, asset2] });
     const apiClient = new FakeBoclipsClient();
     const collectionsSpy = jest.spyOn(apiClient.collections, 'safeUpdate');
     // @ts-ignore
@@ -55,11 +55,11 @@ describe('playlistsQuery', () => {
       wrapper: wrapperWithClients(apiClient, new QueryClient()),
     });
 
-    act(() => result.current.mutate([video2, video1]));
+    act(() => result.current.mutate([asset2, asset1]));
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(collectionsSpy).toBeCalledWith(collection, {
-      videos: [video2.id, video1.id],
+      videos: [asset2.id, asset1.id],
     });
   });
 
@@ -137,9 +137,10 @@ describe('playlistsQuery', () => {
 
   it('will remove comment from a playlist video', async () => {
     const collection = CollectionFactory.sample({
-      comments: {
-        videos: {
-          'video-id': [
+      assets: [
+        CollectionAssetFactory.sample({
+          id: 'video-id',
+          comments: [
             {
               id: 'comment-id',
               userId: 'user-id',
@@ -149,8 +150,8 @@ describe('playlistsQuery', () => {
               createdAt: 'now',
             },
           ],
-        },
-      },
+        }),
+      ],
     });
 
     const apiClient = new FakeBoclipsClient();

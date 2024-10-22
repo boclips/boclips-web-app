@@ -4,7 +4,10 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import React from 'react';
 import { VideoCardButtons } from 'src/components/videoCard/buttons/VideoCardButtons';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import {
+  CollectionAssetFactory,
+  FakeBoclipsClient,
+} from 'boclips-api-client/dist/test-support';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import userEvent from '@testing-library/user-event';
@@ -56,9 +59,10 @@ describe('comment button', () => {
 
     const collection = CollectionFactory.sample({
       id: 'collection-id',
-      comments: {
-        videos: {
-          [video.id]: [
+      assets: [
+        CollectionAssetFactory.sample({
+          id: video.id,
+          comments: [
             {
               id: 'id-123',
               userId: user.id,
@@ -76,8 +80,8 @@ describe('comment button', () => {
               createdAt: Date.now().toString(),
             },
           ],
-        },
-      },
+        }),
+      ],
     });
 
     const wrapper = render(
@@ -117,9 +121,10 @@ describe('comment button', () => {
       id: 'collection-id',
       mine: true,
       owner: user.id,
-      comments: {
-        videos: {
-          [video.id]: [
+      assets: [
+        CollectionAssetFactory.sample({
+          id: video.id,
+          comments: [
             {
               id: 'id-1234',
               userId: user.id,
@@ -129,8 +134,8 @@ describe('comment button', () => {
               createdAt: '2023-01-11 15:46',
             },
           ],
-        },
-      },
+        }),
+      ],
     });
 
     const wrapper = render(
@@ -178,9 +183,12 @@ describe('comment button', () => {
       id: 'collection-id',
       mine: true,
       owner: user.id,
-      comments: {
-        videos: {},
-      },
+      assets: [
+        CollectionAssetFactory.sample({
+          id: video.id,
+          comments: null,
+        }),
+      ],
     });
 
     const wrapper = render(
@@ -235,10 +243,11 @@ describe('comment button', () => {
       id: 'collection-id',
       mine: true,
       owner: user.id,
-      videos: [video],
-      comments: {
-        videos: {
-          [video.id]: [
+      assets: [
+        CollectionAssetFactory.sample({
+          id: video.id,
+          video,
+          comments: [
             {
               id: 'id-1234',
               userId: user.id,
@@ -248,8 +257,8 @@ describe('comment button', () => {
               createdAt: '2023-01-04 14:46',
             },
           ],
-        },
-      },
+        }),
+      ],
     });
 
     const wrapper = render(
@@ -295,9 +304,12 @@ describe('comment button', () => {
       id: 'collection-id',
       mine: true,
       owner: user.id,
-      comments: {
-        videos: {},
-      },
+      assets: [
+        CollectionAssetFactory.sample({
+          id: video.id,
+          comments: null,
+        }),
+      ],
     });
 
     const wrapper = render(
@@ -357,9 +369,12 @@ describe('comment button', () => {
       permissions: {
         anyone: CollectionPermission.EDIT,
       },
-      comments: {
-        videos: {},
-      },
+      assets: [
+        CollectionAssetFactory.sample({
+          id: video.id,
+          comments: null,
+        }),
+      ],
     });
 
     const wrapper = render(

@@ -26,7 +26,7 @@ const FeaturedPlaylists = ({ product }: Props) => {
     useGetPromotedPlaylistsQuery(promotedFor);
 
   const nonEmptyPlaylists = useMemo(
-    () => retrievedPlaylists?.filter((playlist) => playlist.videos.length > 0),
+    () => retrievedPlaylists?.filter((playlist) => playlist.assets.length > 0),
     [retrievedPlaylists],
   );
 

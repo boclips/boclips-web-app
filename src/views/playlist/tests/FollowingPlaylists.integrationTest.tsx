@@ -17,31 +17,31 @@ import { Link } from 'boclips-api-client/dist/types';
 import { sleep } from 'src/testSupport/sleep';
 import React from 'react';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
-import { createVideoWithThumbnail } from 'src/testSupport/createVideoWithTumbnail';
+import { createAssetWithThumbnail } from 'src/testSupport/createAssetWithTumbnail';
 
 describe('following a playlist', () => {
   let client = null;
 
-  const videos = [
-    createVideoWithThumbnail('111', 'Video One'),
-    createVideoWithThumbnail('222', 'Video Two'),
-    createVideoWithThumbnail('333', 'Video Three'),
-    createVideoWithThumbnail('444', 'Video Four'),
-    createVideoWithThumbnail('555', 'Video Five'),
+  const assets = [
+    createAssetWithThumbnail('111', 'Video One'),
+    createAssetWithThumbnail('222', 'Video Two'),
+    createAssetWithThumbnail('333', 'Video Three'),
+    createAssetWithThumbnail('444', 'Video Four'),
+    createAssetWithThumbnail('555', 'Video Five'),
   ];
 
   const playlist = CollectionFactory.sample({
     id: '123',
     title: 'Hello there',
     description: 'Very nice description',
-    videos,
+    assets,
     owner: 'myuserid',
     mine: true,
   });
 
   beforeEach(() => {
     client = new FakeBoclipsClient();
-    videos.forEach((it) => client.videos.insertVideo(it));
+    assets.forEach((it) => client.videos.insertVideo(it.video));
     client.collections.setCurrentUser('myuserid');
     client.users.insertCurrentUser(
       UserFactory.sample({
@@ -91,7 +91,7 @@ describe('following a playlist', () => {
       id: '111',
       title: 'Hello test',
       description: 'Very nice description',
-      videos,
+      assets,
       owner: 'myuserid',
       mine: false,
       links: collectionFactory.sampleLinks({}),
@@ -118,7 +118,7 @@ describe('following a playlist', () => {
       id: '222',
       title: 'Hello test',
       description: 'Very nice description',
-      videos,
+      assets,
       owner: 'myuserid',
       mine: false,
       links: collectionFactory.sampleLinks({

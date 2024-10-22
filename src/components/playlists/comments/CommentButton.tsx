@@ -15,7 +15,9 @@ type CommentButtonProps = {
 };
 const CommentButton = ({ videoId, collection }: CommentButtonProps) => {
   const [isSliderOpen, setIsSliderOpen] = useState<boolean>(false);
-  const numberOfComments = collection.comments?.videos[videoId]?.length;
+  const numberOfComments = collection.assets.find(
+    (asset) => asset.id === videoId,
+  )?.comments?.length;
 
   return (
     (collection?.permissions.anyone === CollectionPermission.EDIT ||
@@ -38,7 +40,10 @@ const CommentButton = ({ videoId, collection }: CommentButtonProps) => {
         {isSliderOpen && (
           <SliderPanel
             comments={
-              numberOfComments ? collection.comments.videos[videoId] : []
+              numberOfComments
+                ? collection.assets.find((asset) => asset.id === videoId)
+                    .comments
+                : []
             }
             closeSliderOnClick={() => setIsSliderOpen(false)}
             videoId={videoId}

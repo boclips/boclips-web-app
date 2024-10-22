@@ -10,7 +10,10 @@ import { OptionsButton } from 'src/components/playlists/playlistHeader/OptionsBu
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import userEvent from '@testing-library/user-event';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import {
+  CollectionAssetFactory,
+  FakeBoclipsClient,
+} from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
@@ -164,16 +167,25 @@ describe('OptionsButton', () => {
         .spyOn(apiClient.collections, 'create')
         .mockImplementation(() => Promise.resolve('playlist-id'));
 
-      const videos = [
-        VideoFactory.sample({ id: 'video1' }),
-        VideoFactory.sample({ id: 'video2' }),
-        VideoFactory.sample({ id: 'video3' }),
+      const assets = [
+        CollectionAssetFactory.sample({
+          id: 'video1',
+          video: VideoFactory.sample({ id: 'video1' }),
+        }),
+        CollectionAssetFactory.sample({
+          id: 'video2',
+          video: VideoFactory.sample({ id: 'video2' }),
+        }),
+        CollectionAssetFactory.sample({
+          id: 'video3',
+          video: VideoFactory.sample({ id: 'video3' }),
+        }),
       ];
 
       const playlist = CollectionFactory.sample({
         title: 'Original playlist',
         description: 'Description of original playlist',
-        videos,
+        assets,
         mine: false,
       });
       const wrapper = renderOptionsButton(playlist, apiClient);
@@ -197,7 +209,7 @@ describe('OptionsButton', () => {
       expect(copyPlaylistSpy).toHaveBeenCalledWith({
         title: 'Copy of Original playlist',
         description: 'Description of original playlist',
-        videos: [...videos.map((v) => v.id)],
+        videos: [...assets.map((v) => v.id)],
       });
     });
 

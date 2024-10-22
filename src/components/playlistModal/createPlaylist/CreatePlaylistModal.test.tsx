@@ -1,4 +1,7 @@
-import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import {
+  CollectionAssetFactory,
+  FakeBoclipsClient,
+} from 'boclips-api-client/dist/test-support';
 import { render } from 'src/testSupport/render';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import React from 'react';
@@ -103,16 +106,25 @@ describe('Create new playlist modal', () => {
       .spyOn(apiClient.collections, 'create')
       .mockImplementation(() => Promise.resolve('playlist-id'));
 
-    const videos = [
-      VideoFactory.sample({ id: 'video1' }),
-      VideoFactory.sample({ id: 'video2' }),
-      VideoFactory.sample({ id: 'video3' }),
+    const assets = [
+      CollectionAssetFactory.sample({
+        id: 'video1',
+        video: VideoFactory.sample({ id: 'video1' }),
+      }),
+      CollectionAssetFactory.sample({
+        id: 'video2',
+        video: VideoFactory.sample({ id: 'video2' }),
+      }),
+      CollectionAssetFactory.sample({
+        id: 'video3',
+        video: VideoFactory.sample({ id: 'video3' }),
+      }),
     ];
 
     const playlist = CollectionFactory.sample({
       title: 'Original playlist',
       description: 'Description of original playlist',
-      videos,
+      assets,
       mine: false,
     });
 
@@ -132,7 +144,7 @@ describe('Create new playlist modal', () => {
       expect(createPlaylistSpy).toHaveBeenCalledWith({
         title: 'Original playlist',
         description: 'Description of original playlist',
-        videos: [...videos.map((v) => v.id)],
+        videos: [...assets.map((a) => a.id)],
       }),
     );
   });

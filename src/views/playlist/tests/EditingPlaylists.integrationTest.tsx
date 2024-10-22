@@ -10,7 +10,7 @@ import { MemoryRouter, Router } from 'react-router-dom';
 import App from 'src/App';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import React from 'react';
-import { createVideoWithThumbnail } from 'src/testSupport/createVideoWithTumbnail';
+import { createAssetWithThumbnail } from 'src/testSupport/createAssetWithTumbnail';
 import {
   CollectionFactory,
   FakeBoclipsClient,
@@ -24,17 +24,17 @@ import { lastEvent } from 'src/testSupport/lastEvent';
 describe('editing a playlist', () => {
   let client = null;
 
-  const videos = [
-    createVideoWithThumbnail('111', 'Video One'),
-    createVideoWithThumbnail('222', 'Video Two'),
-    createVideoWithThumbnail('333', 'Video Three'),
-    createVideoWithThumbnail('444', 'Video Four'),
-    createVideoWithThumbnail('555', 'Video Five'),
+  const assets = [
+    createAssetWithThumbnail('111', 'Video One'),
+    createAssetWithThumbnail('222', 'Video Two'),
+    createAssetWithThumbnail('333', 'Video Three'),
+    createAssetWithThumbnail('444', 'Video Four'),
+    createAssetWithThumbnail('555', 'Video Five'),
   ];
 
   beforeEach(() => {
     client = new FakeBoclipsClient();
-    videos.forEach((it) => client.videos.insertVideo(it));
+    assets.forEach((it) => client.videos.insertVideo(it.video));
     client.collections.setCurrentUser('myuserid');
     client.users.insertCurrentUser(
       UserFactory.sample({
@@ -48,7 +48,7 @@ describe('editing a playlist', () => {
       id: '123',
       title: 'Hello there',
       description: 'Very nice description',
-      videos,
+      assets,
       owner: 'myuserid',
       mine: true,
     });
@@ -94,7 +94,7 @@ describe('editing a playlist', () => {
       id: '123',
       title: 'Hello there',
       description: 'Very nice description',
-      videos,
+      assets,
       owner: 'myuserid',
       mine: true,
     });
@@ -129,7 +129,7 @@ describe('editing a playlist', () => {
       id: '123',
       title: 'Hello there',
       description: 'Very nice description',
-      videos,
+      assets,
       owner: 'myuserid',
       mine: true,
     });
@@ -198,7 +198,7 @@ describe('editing a playlist', () => {
       id: '123',
       title: 'Hello there',
       description: 'Very nice description',
-      videos,
+      assets,
       owner: 'myuserid',
       mine: true,
     });
@@ -254,7 +254,7 @@ describe('editing a playlist', () => {
       id: '32221',
       title: 'Hello there',
       description: 'Very nice description',
-      videos,
+      assets,
       owner: 'myuserid',
       mine: true,
     });
@@ -301,7 +301,7 @@ describe('editing a playlist', () => {
       id: '333333',
       title: 'Hello there',
       description: 'Very nice description',
-      videos,
+      assets,
       owner: 'myuserid',
       mine: true,
     });
@@ -349,7 +349,7 @@ describe('editing a playlist', () => {
       id: 'remmm',
       title: 'Hello there',
       description: 'Very nice description',
-      videos,
+      assets,
       owner: 'myuserid',
       mine: true,
     });
@@ -393,7 +393,7 @@ describe('editing a playlist', () => {
       id: 'remmm01',
       title: 'Hello there',
       description: 'Very nice description',
-      videos,
+      assets,
       owner: 'myuserid',
       mine: true,
     });

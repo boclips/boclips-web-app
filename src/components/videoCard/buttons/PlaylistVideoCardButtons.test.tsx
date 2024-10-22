@@ -1,6 +1,9 @@
 import React from 'react';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import {
+  CollectionAssetFactory,
+  FakeBoclipsClient,
+} from 'boclips-api-client/dist/test-support';
 import { Link, Video } from 'boclips-api-client/dist/types';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { render } from '@testing-library/react';
@@ -23,7 +26,12 @@ describe('Playlist Video Card Buttons', () => {
       },
     });
     const collection = CollectionFactory.sample({
-      videos: [VideoFactory.sample({ id: video.id })],
+      assets: [
+        CollectionAssetFactory.sample({
+          id: video.id,
+          video: VideoFactory.sample({ id: video.id }),
+        }),
+      ],
       id: '123',
     });
 
@@ -60,10 +68,14 @@ describe('Playlist Video Card Buttons', () => {
       },
     });
     const collection = CollectionFactory.sample({
-      videos: [VideoFactory.sample({ id: video.id })],
       id: '123',
+      assets: [
+        CollectionAssetFactory.sample({
+          id: video.id,
+          video: VideoFactory.sample({ id: video.id }),
+        }),
+      ],
     });
-
     const fakeClient = new FakeBoclipsClient();
     fakeClient.collections.addToFake(collection);
     fakeClient.videos.insertVideo(video);
@@ -95,7 +107,12 @@ describe('Playlist Video Card Buttons', () => {
       },
     });
     const collection = CollectionFactory.sample({
-      videos: [VideoFactory.sample({ id: video.id })],
+      assets: [
+        CollectionAssetFactory.sample({
+          id: video.id,
+          video: VideoFactory.sample({ id: video.id }),
+        }),
+      ],
       id: '123',
     });
 
@@ -128,7 +145,12 @@ describe('Playlist Video Card Buttons', () => {
   it('should display bookmark button', async () => {
     const video = VideoFactory.sample({});
     const collection = CollectionFactory.sample({
-      videos: [VideoFactory.sample({ id: video.id })],
+      assets: [
+        CollectionAssetFactory.sample({
+          id: video.id,
+          video: VideoFactory.sample({ id: video.id }),
+        }),
+      ],
       id: '123',
     });
 

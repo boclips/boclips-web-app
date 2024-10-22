@@ -1,6 +1,8 @@
-import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
-import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import {
+  CollectionAssetFactory,
+  FakeBoclipsClient,
+} from 'boclips-api-client/dist/test-support';
 import { render, RenderResult, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
@@ -13,7 +15,7 @@ describe('Duplicate playlist', () => {
     id: 'pl123',
     title: 'Original playlist',
     description: 'Description of original playlist',
-    videos: [VideoFactory.sample({ id: 'video1' })],
+    assets: [CollectionAssetFactory.sample({ id: 'video1' })],
     mine: false,
   });
 
@@ -42,7 +44,7 @@ describe('Duplicate playlist', () => {
     expect(myPlaylists.page[0].description).toBe(
       'Description of original playlist',
     );
-    expect(myPlaylists.page[0].videos[0].id).toBe('video1');
+    expect(myPlaylists.page[0].assets[0].id).toBe('video1');
   });
 
   it('failure in duplicating playlist will show error details in a toast', async () => {

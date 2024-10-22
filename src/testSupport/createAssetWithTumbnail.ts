@@ -1,9 +1,10 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { Link } from 'boclips-api-client/dist/types';
+import { CollectionAssetFactory } from 'boclips-api-client/dist/test-support';
 
-export const createVideoWithThumbnail = (id: string, videoTitle: string) => {
-  return VideoFactory.sample({
+export const createAssetWithThumbnail = (id: string, videoTitle: string) => {
+  const video = VideoFactory.sample({
     id,
     title: `${videoTitle} ${id}`,
     playback: PlaybackFactory.sample({
@@ -13,4 +14,5 @@ export const createVideoWithThumbnail = (id: string, videoTitle: string) => {
       },
     }),
   });
+  return CollectionAssetFactory.sample({ id, video });
 };

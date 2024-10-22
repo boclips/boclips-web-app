@@ -1,11 +1,13 @@
-import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import {
+  CollectionAssetFactory,
+  FakeBoclipsClient,
+} from 'boclips-api-client/dist/test-support';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { render } from '@testing-library/react';
 import React from 'react';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForProduct';
 import FeaturedPlaylists from 'src/components/carousel/FeaturedPlaylists';
 
@@ -16,21 +18,21 @@ describe(`PromotedPlaylists`, () => {
       CollectionFactory.sample({
         promotedFor: [PromotedForProduct.LIBRARY, PromotedForProduct.CLASSROOM],
         title: 'my promoted for library and classroom playlist',
-        videos: [VideoFactory.sample({})],
+        assets: [CollectionAssetFactory.sample({})],
       }),
     );
     fakeApiClient.collections.addToFake(
       CollectionFactory.sample({
         promotedFor: [PromotedForProduct.CLASSROOM],
         title: 'my promoted for classroom playlist',
-        videos: [VideoFactory.sample({})],
+        assets: [CollectionAssetFactory.sample({})],
       }),
     );
     fakeApiClient.collections.addToFake(
       CollectionFactory.sample({
         promotedFor: [],
         title: 'my regular playlist',
-        videos: [VideoFactory.sample({})],
+        assets: [CollectionAssetFactory.sample({})],
       }),
     );
 
@@ -62,14 +64,14 @@ describe(`PromotedPlaylists`, () => {
       CollectionFactory.sample({
         promotedFor: [PromotedForProduct.CLASSROOM],
         title: 'my promoted playlist with videos',
-        videos: [VideoFactory.sample({})],
+        assets: [CollectionAssetFactory.sample({})],
       }),
     );
     fakeApiClient.collections.addToFake(
       CollectionFactory.sample({
         promotedFor: [PromotedForProduct.CLASSROOM],
         title: 'my promoted empty playlist',
-        videos: [],
+        assets: [],
       }),
     );
 

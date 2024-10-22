@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@boclips-ui/button';
 import { Video } from 'boclips-api-client/dist/types';
 import TimerSVG from 'src/resources/icons/timer.svg';
@@ -10,6 +10,7 @@ import { displayNotification } from 'src/components/common/notification/displayN
 import BookmarkModal from 'src/components/shareLinkButton/playlistsBookmark/bookmarkModal/BookmarkModal';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 import { Segment } from 'boclips-api-client/dist/sub-clients/collections/model/Segment';
+import { Segments } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';
 import s from './style.module.less';
 
 interface PlaylistVideoShareButtonProps {
@@ -24,8 +25,20 @@ const PlaylistVideoBookmarkButton = ({
   const { data: playlist } = usePlaylistQuery(playlistId);
   const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
   const { mutate: updatePlaylist } = useEditPlaylistMutation(playlist);
-  const hasBookmark = !!playlist?.segments && !!playlist.segments[video.id];
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [segments, setSegments] = useState<Segments>();
+  const hasBookmark = !!segments && !!segments[video.id];
+  useEffect(() => {
+    if (!playlist) return;
+    setSegments(
+      playlist.assets.reduce((accum, asset) => {
+        if (asset.segment) {
+          accum[asset.id] = asset.segment;
+        }
+        return accum;
+      }, {}),
+    );
+  }, [playlist]);
   const analyticsType: string = hasBookmark
     ? 'UPDATE_BOOKMARK'
     : 'SET_BOOKMARK';
@@ -40,15 +53,10 @@ const PlaylistVideoBookmarkButton = ({
   };
 
   const onConfirm = (videoId: string, segment: Segment) => {
-    if (!playlist.segments) {
-      playlist.segments = {};
-    }
-
-    playlist.segments[videoId] = segment;
-    const updatedSegments = playlist.segments;
+    segments[videoId] = segment;
 
     updatePlaylist(
-      { segments: updatedSegments },
+      { segments },
       {
         onSuccess: () => {
           trackPlatformInteraction({
@@ -98,7 +106,7 @@ const PlaylistVideoBookmarkButton = ({
           onCancel={toggleModalVisibility}
           title={modalTitle}
           video={video}
-          initialSegment={hasBookmark && playlist.segments[video.id]}
+          initialSegment={hasBookmark && segments[video.id]}
           onConfirm={onConfirm}
         />
       )}

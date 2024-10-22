@@ -1,6 +1,9 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
-import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import {
+  CollectionAssetFactory,
+  FakeBoclipsClient,
+} from 'boclips-api-client/dist/test-support';
 import { render, RenderResult, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'src/App';
@@ -13,7 +16,12 @@ describe('Unfollow playlist', () => {
     id: 'pl123',
     title: 'Original playlist',
     description: 'Description of original playlist',
-    videos: [VideoFactory.sample({ id: 'video1' })],
+    assets: [
+      CollectionAssetFactory.sample({
+        id: 'video1',
+        video: VideoFactory.sample({ id: 'video1' }),
+      }),
+    ],
     mine: false,
     owner: 'itsmeluigi',
   });

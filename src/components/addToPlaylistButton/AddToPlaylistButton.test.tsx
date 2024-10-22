@@ -1,4 +1,7 @@
-import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import {
+  CollectionAssetFactory,
+  FakeBoclipsClient,
+} from 'boclips-api-client/dist/test-support';
 import { render } from 'src/testSupport/render';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import {
@@ -17,8 +20,8 @@ import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 
 describe('Add to playlist button', () => {
-  const video = VideoFactory.sample({
-    title: 'video killed the radio star',
+  const asset = CollectionAssetFactory.sample({
+    video: VideoFactory.sample({ title: 'video killed the radio star' }),
   });
 
   it('displays info if there is no playlists', async () => {
@@ -26,7 +29,7 @@ describe('Add to playlist button', () => {
 
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
-        <AddToPlaylistButton videoId={video.id} />
+        <AddToPlaylistButton videoId={asset.id} />
       </BoclipsClientProvider>,
     );
 
@@ -56,7 +59,7 @@ describe('Add to playlist button', () => {
 
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
-        <AddToPlaylistButton videoId={video.id} />
+        <AddToPlaylistButton videoId={asset.id} />
       </BoclipsClientProvider>,
     );
 
@@ -73,7 +76,7 @@ describe('Add to playlist button', () => {
 
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
-        <AddToPlaylistButton videoId={video.id} />
+        <AddToPlaylistButton videoId={asset.id} />
       </BoclipsClientProvider>,
     );
 
@@ -113,7 +116,7 @@ describe('Add to playlist button', () => {
 
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
-        <AddToPlaylistButton videoId={video.id} />
+        <AddToPlaylistButton videoId={asset.id} />
       </BoclipsClientProvider>,
     );
 
@@ -134,13 +137,13 @@ describe('Add to playlist button', () => {
         title: 'Playlist 6777',
         owner: 'user-123',
         mine: true,
-        videos: [video],
+        assets: [asset],
       });
       fakeClient.collections.addToFake(playlist);
 
       const wrapper = render(
         <BoclipsClientProvider client={fakeClient}>
-          <AddToPlaylistButton videoId={video.id} />
+          <AddToPlaylistButton videoId={asset.id} />
         </BoclipsClientProvider>,
       );
 
@@ -181,7 +184,7 @@ describe('Add to playlist button', () => {
 
       const wrapper = render(
         <BoclipsClientProvider client={fakeClient}>
-          <AddToPlaylistButton videoId={video.id} />
+          <AddToPlaylistButton videoId={asset.id} />
         </BoclipsClientProvider>,
       );
 
@@ -211,7 +214,7 @@ describe('Add to playlist button', () => {
 
       const wrapper = render(
         <BoclipsClientProvider client={fakeClient}>
-          <AddToPlaylistButton videoId={video.id} />
+          <AddToPlaylistButton videoId={asset.id} />
         </BoclipsClientProvider>,
       );
 
@@ -277,7 +280,7 @@ describe('Add to playlist button', () => {
       title: 'Playlist 6777',
       owner: userId,
       mine: true,
-      videos: [video],
+      assets: [asset],
     });
 
     fakeClient.collections.setCurrentUser(userId);
@@ -315,7 +318,7 @@ describe('Add to playlist button', () => {
         id: '123',
         owner: 'user-123',
         mine: true,
-        videos: [video],
+        assets: [asset],
         title: 'Courage the Cowardly Dog',
       }),
     );
@@ -324,7 +327,7 @@ describe('Add to playlist button', () => {
 
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
-        <AddToPlaylistButton videoId={video.id} onCleanup={mock} />
+        <AddToPlaylistButton videoId={asset.id} onCleanup={mock} />
       </BoclipsClientProvider>,
     );
 
@@ -476,7 +479,7 @@ describe('Add to playlist button', () => {
     return render(
       <BoclipsClientProvider client={fakeClient}>
         <ToastContainer />
-        <AddToPlaylistButton videoId={video.id} />
+        <AddToPlaylistButton videoId={asset.id} />
       </BoclipsClientProvider>,
     );
   };

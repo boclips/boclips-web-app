@@ -29,7 +29,7 @@ const PlaylistCard: React.FC<PlaylistCardProps> = ({ playlist }) => {
         name={playlist.title}
         header={
           <Link tabIndex={-1} to={`/playlists/${playlist.id}`} aria-hidden>
-            <Thumbnails videos={playlist.videos} />
+            <Thumbnails assets={playlist.assets} />
           </Link>
         }
         subheader={

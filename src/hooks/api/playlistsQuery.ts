@@ -11,10 +11,10 @@ import { displayNotification } from 'src/components/common/notification/displayN
 import { CollectionsClient } from 'boclips-api-client/dist/sub-clients/collections/client/CollectionsClient';
 import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collections/model/ListViewCollection';
 import { useNavigate } from 'react-router-dom';
-import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForProduct';
 import { PLAYLISTS_PAGE_SIZE } from 'src/components/playlists/playlistList/PlaylistList';
+import { CollectionAsset } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
 import { playlistKeys } from './playlistKeys';
 
 interface UpdatePlaylistProps {
@@ -401,12 +401,12 @@ export const useReorderPlaylist = (playlist: Collection) => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    (videos: Video[]) =>
+    (assets: CollectionAsset[]) =>
       client.collections.safeUpdate(playlist, {
-        videos: videos.map((it) => it.id),
+        videos: assets.map((it) => it.id),
       }),
     {
-      onMutate: async (videos: Video[]) => {
+      onMutate: async (assets: CollectionAsset[]) => {
         await queryClient.cancelQueries({
           queryKey: ['playlists', playlist.id],
         });
@@ -419,7 +419,7 @@ export const useReorderPlaylist = (playlist: Collection) => {
         queryClient.setQueryData(['playlists', playlist.id], () => {
           const newVideosList = { ...(previousPlaylist as Collection) };
 
-          newVideosList.videos = videos;
+          newVideosList.assets = assets;
 
           return newVideosList;
         });

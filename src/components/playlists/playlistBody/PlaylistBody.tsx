@@ -13,6 +13,7 @@ import { VideoCardButtons } from 'src/components/videoCard/buttons/VideoCardButt
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import CommentButton from 'src/components/playlists/comments/CommentButton';
+import { CollectionAsset } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
 import s from '../style.module.less';
 
 interface Props {
@@ -31,7 +32,7 @@ const PlaylistBody = ({
   const [searchLocation, setSearchLocation] = useSearchQueryLocationParams();
   const { filters: filtersFromURL } = searchLocation;
 
-  const isEmptyPlaylist = playlist.videos && playlist.videos.length === 0;
+  const isEmptyPlaylist = playlist.assets && playlist.assets.length === 0;
 
   const shouldRemoveVideoCardFromView = (
     playlistId: string,
@@ -111,23 +112,25 @@ const PlaylistBody = ({
         {isEmptyPlaylist ? (
           <PlaylistBodyEmptyState />
         ) : (
-          playlist?.videos?.map((video: Video) =>
+          playlist?.assets?.map((asset: CollectionAsset) =>
             mode === 'LIST' ? (
               <VideoCardWrapper
-                key={video.id}
-                video={video}
+                key={asset.id}
+                video={asset.video}
                 handleFilterChange={handleFilterChange}
                 disableTitleLink={disableLinks}
-                buttonsRow={showButtons && classroomVideoCardButtons(video)}
-                segment={playlist.segments?.[video.id]}
+                buttonsRow={
+                  showButtons && classroomVideoCardButtons(asset.video)
+                }
+                segment={asset.segment}
               />
             ) : (
               <VideoGridCard
-                key={video.id}
-                video={video}
+                key={asset.id}
+                video={asset.video}
                 handleFilterChange={handleFilterChange}
                 disableLink={disableLinks}
-                buttonsRow={showButtons && videoCardButtons(video, true)}
+                buttonsRow={showButtons && videoCardButtons(asset.video, true)}
               />
             ),
           )
