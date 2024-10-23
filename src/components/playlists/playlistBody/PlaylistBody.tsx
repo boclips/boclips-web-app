@@ -57,7 +57,7 @@ const PlaylistBody = ({
     });
   };
 
-  const classroomVideoCardButtons = (video: Video) => {
+  const listViewVideoCardButtons = (video: Video) => {
     return (
       <PlaylistVideoCardButtons
         video={video}
@@ -127,7 +127,7 @@ const PlaylistBody = ({
                   handleFilterChange={handleFilterChange}
                   disableTitleLink={disableLinks}
                   buttonsRow={
-                    showButtons && classroomVideoCardButtons(asset.video)
+                    showButtons && listViewVideoCardButtons(asset.video)
                   }
                   segment={asset.segment}
                 />

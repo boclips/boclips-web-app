@@ -6,6 +6,7 @@ import { FeatureGate } from 'src/components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { DownloadTranscriptButton } from 'src/components/downloadTranscriptButton/DownloadTranscriptButton';
 import PlaylistVideoBookmarkButton from 'src/components/playlists/buttons/playlistBookmark/PlaylistVideoBookmarkButton';
+import PlaylistVideoNoteButton from 'src/components/playlists/buttons/playlistNote/PlaylistVideoNoteButton';
 
 interface PlaylistVideoCardButtonsProps {
   video: Video;
@@ -40,7 +41,10 @@ const PlaylistVideoCardButtons = ({
         {additionalSecondaryButtons}
       </div>
 
-      <PlaylistVideoBookmarkButton video={video} playlistId={playlistId} />
+      <div className="flex justify-between gap-2">
+        <PlaylistVideoNoteButton video={video} playlistId={playlistId} />
+        <PlaylistVideoBookmarkButton video={video} playlistId={playlistId} />
+      </div>
     </div>
   );
 };

@@ -56,7 +56,7 @@ describe('Bookmark modal for playlists', () => {
       nonBookmarkedCollectionId,
       apiClient,
     );
-    await openShareModal(wrapper);
+    await openBookmarkModal(wrapper);
 
     expect(
       await wrapper.findByText('Bookmark custom timings for this video'),
@@ -119,7 +119,7 @@ describe('Bookmark modal for playlists', () => {
       apiClient,
     );
 
-    await openShareModal(wrapper);
+    await openBookmarkModal(wrapper);
 
     const endCheckbox = wrapper.getByRole('checkbox', {
       name: 'End time enabled',
@@ -164,7 +164,7 @@ describe('Bookmark modal for playlists', () => {
 
   it(`validates start time > end time`, async () => {
     const wrapper = renderBookmarkButton();
-    await openShareModal(wrapper);
+    await openBookmarkModal(wrapper);
 
     expect(
       await wrapper.findByText('Bookmark custom timings for this video'),
@@ -213,7 +213,7 @@ describe('Bookmark modal for playlists', () => {
       nonBookmarkedCollectionId,
       apiClient,
     );
-    await openShareModal(wrapper);
+    await openBookmarkModal(wrapper);
 
     expect(
       await wrapper.findByText('Bookmark custom timings for this video'),
@@ -234,7 +234,7 @@ describe('Bookmark modal for playlists', () => {
       bookmarkedCollectionId,
       apiClient,
     );
-    await openShareModal(wrapper);
+    await openBookmarkModal(wrapper);
     await waitFor(() => {
       expect(
         wrapper.getByText('Update bookmarked timings for this video'),
@@ -256,7 +256,7 @@ describe('Bookmark modal for playlists', () => {
       nonBookmarkedCollectionId,
       apiClient,
     );
-    await openShareModal(wrapper);
+    await openBookmarkModal(wrapper);
 
     expect(
       await wrapper.findByText('Bookmark custom timings for this video'),
@@ -308,7 +308,7 @@ describe('Bookmark modal for playlists', () => {
       bookmarkedCollectionId,
       apiClient,
     );
-    await openShareModal(wrapper);
+    await openBookmarkModal(wrapper);
 
     expect(
       await wrapper.findByText('Update bookmarked timings for this video'),
@@ -348,7 +348,7 @@ describe('Bookmark modal for playlists', () => {
 
     expect(wrapper.getByRole('main')).toHaveAttribute('tabIndex', '-1');
 
-    await openShareModal(wrapper);
+    await openBookmarkModal(wrapper);
 
     await waitFor(() =>
       expect(wrapper.getByRole('main')).not.toHaveAttribute('tabIndex'),
@@ -365,7 +365,7 @@ describe('Bookmark modal for playlists', () => {
       nonBookmarkedCollectionId,
       apiClient,
     );
-    await openShareModal(wrapper);
+    await openBookmarkModal(wrapper);
 
     const endCheckbox = wrapper.getByRole('checkbox', {
       name: 'End time enabled',
@@ -429,7 +429,7 @@ const renderBookmarkButton = (
   );
 };
 
-const openShareModal = async (wrapper: RenderResult) => {
+const openBookmarkModal = async (wrapper: RenderResult) => {
   const button = await wrapper.findByRole('button', { name: 'Bookmark' });
   await userEvent.click(button);
 };
