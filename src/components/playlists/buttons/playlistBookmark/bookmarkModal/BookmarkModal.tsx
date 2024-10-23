@@ -11,6 +11,7 @@ import { Typography } from '@boclips-ui/typography';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import BoCheckbox from 'src/components/common/input/BoCheckbox';
 import { DurationInput } from 'src/components/cart/AdditionalServices/Trim/DurationInput';
+import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 
 interface BookmarkModalProps {
   onCancel: () => void;
@@ -116,6 +117,16 @@ const BookmarkModal = ({
         Set custom start and end times to bookmark a specific section of the
         video for students to focus on.
       </Typography.Body>
+      <div className="mb-8">
+        <VideoPlayer
+          video={video}
+          showDurationBadge
+          segment={{
+            start: durationInSeconds(startDuration),
+            end: durationInSeconds(endDuration),
+          }}
+        />
+      </div>
       <div className="flex justify-center mb-10">
         <div className="flex items-center">
           <BoCheckbox
