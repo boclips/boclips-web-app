@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { Typography } from '@boclips-ui/typography';
-import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import PlaylistVideosListDraggable from 'src/components/playlistModal/reorder/PlaylistVideosListDraggable';
 import { useReorderPlaylist } from 'src/hooks/api/playlistsQuery';
