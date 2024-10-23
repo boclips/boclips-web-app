@@ -42,7 +42,7 @@ const UnauthorizedPlaylistView = () => {
     );
   }
 
-  if (isError || !playlist) {
+  if (isError || (!playlist && !isFetching)) {
     return <ErrorView />;
   }
 
