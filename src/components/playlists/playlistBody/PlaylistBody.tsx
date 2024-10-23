@@ -114,16 +114,24 @@ const PlaylistBody = ({
         ) : (
           playlist?.assets?.map((asset: CollectionAsset) =>
             mode === 'LIST' ? (
-              <VideoCardWrapper
-                key={asset.id}
-                video={asset.video}
-                handleFilterChange={handleFilterChange}
-                disableTitleLink={disableLinks}
-                buttonsRow={
-                  showButtons && classroomVideoCardButtons(asset.video)
-                }
-                segment={asset.segment}
-              />
+              <>
+                {asset.note && (
+                  <div className={c(s.playlistAssetNote)}>
+                    <Typography.H5 className="mb-2">Notes</Typography.H5>
+                    <Typography.Body>{asset.note}</Typography.Body>
+                  </div>
+                )}
+                <VideoCardWrapper
+                  key={asset.id}
+                  video={asset.video}
+                  handleFilterChange={handleFilterChange}
+                  disableTitleLink={disableLinks}
+                  buttonsRow={
+                    showButtons && classroomVideoCardButtons(asset.video)
+                  }
+                  segment={asset.segment}
+                />
+              </>
             ) : (
               <VideoGridCard
                 key={asset.id}

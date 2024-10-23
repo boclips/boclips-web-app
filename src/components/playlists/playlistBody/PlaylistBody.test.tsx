@@ -27,6 +27,7 @@ describe('Playlist Body', () => {
       id: '123',
       assets: [],
     }),
+    mode: 'GRID' | 'LIST' = 'GRID',
   ) => {
     fakeClient.videos.insertVideo(VideoFactory.sample({}));
     return render(
@@ -34,7 +35,7 @@ describe('Playlist Body', () => {
         <BoclipsClientProvider client={fakeClient}>
           <QueryClientProvider client={new QueryClient()}>
             <MemoryRouter>
-              <PlaylistBody playlist={playlist} />
+              <PlaylistBody playlist={playlist} mode={mode} />
             </MemoryRouter>
           </QueryClientProvider>
         </BoclipsClientProvider>
@@ -115,6 +116,61 @@ describe('Playlist Body', () => {
 
     expect(wrapper.getByText(assetWithPrice.video.title)).toBeInTheDocument();
     expect(wrapper.getByText('$150')).toBeInTheDocument();
+  });
+
+  it('playlist displays collection notes', async () => {
+    const assetWithPrice = CollectionAssetFactory.sample({
+      video: VideoFactory.sample({
+        title: 'video with price',
+      }),
+      note: 'Test note',
+    });
+
+    const playlist = CollectionFactory.sample({
+      id: '123',
+      assets: [assetWithPrice],
+    });
+
+    const wrapper = getWrapper(undefined, playlist, 'LIST');
+
+    expect(wrapper.getByText('Notes')).toBeVisible();
+    expect(wrapper.getByText('Test note')).toBeVisible();
+  });
+
+  it('does not display notes header if there are no notes', async () => {
+    const assetWithPrice = CollectionAssetFactory.sample({
+      video: VideoFactory.sample({
+        title: 'video with price',
+      }),
+      note: undefined,
+    });
+
+    const playlist = CollectionFactory.sample({
+      id: '123',
+      assets: [assetWithPrice],
+    });
+
+    const wrapper = getWrapper(undefined, playlist, 'LIST');
+
+    expect(wrapper.queryByText('Notes')).toBeNull();
+  });
+
+  it('does not display notes header for GRID mode', async () => {
+    const assetWithPrice = CollectionAssetFactory.sample({
+      video: VideoFactory.sample({
+        title: 'video with price',
+      }),
+      note: 'Test note',
+    });
+
+    const playlist = CollectionFactory.sample({
+      id: '123',
+      assets: [assetWithPrice],
+    });
+
+    const wrapper = getWrapper(undefined, playlist, 'GRID');
+
+    expect(wrapper.queryByText('Notes')).toBeNull();
   });
 });
 
