@@ -7,7 +7,7 @@ import {
   usePlaylistQuery,
 } from 'src/hooks/api/playlistsQuery';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
-import BookmarkModal from 'src/components/shareLinkButton/playlistsBookmark/bookmarkModal/BookmarkModal';
+import BookmarkModal from 'src/components/playlists/buttons/playlistBookmark/bookmarkModal/BookmarkModal';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 import { Segment } from 'boclips-api-client/dist/sub-clients/collections/model/Segment';
 import { Segments } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';

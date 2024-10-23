@@ -5,7 +5,7 @@ import { Layout } from 'src/components/layout/Layout';
 import Playlists from 'src/components/playlists/Playlists';
 import { Helmet } from 'react-helmet';
 import PageHeader from 'src/components/pageTitle/PageHeader';
-import CreateNewPlaylistButton from 'src/components/playlists/buttons/CreateNewPlaylistButton';
+import CreateNewPlaylistButton from 'src/components/playlists/buttons/createPlaylist/CreateNewPlaylistButton';
 
 const PlaylistsView = () => {
   return (

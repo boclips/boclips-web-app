@@ -1,6 +1,6 @@
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { Segment } from 'boclips-api-client/dist/sub-clients/collections/model/Segment';
-import formatDuration from 'src/components/shareLinkButton/playlistsBookmark/helpers/formatDuration';
+import formatDuration from 'src/components/playlists/buttons/playlistBookmark/helpers/formatDuration';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import {
   durationInSeconds,

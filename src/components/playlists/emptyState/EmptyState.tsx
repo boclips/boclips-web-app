@@ -5,7 +5,7 @@ import EmptyStateClassroomSVG from 'resources/icons/emptyPlaylistClassroom.svg';
 import EmptyStateLibrarySVG from 'resources/icons/emptyPlaylistLibrary.svg';
 import { Typography } from '@boclips-ui/typography';
 import c from 'classnames';
-import CreateNewPlaylistButton from 'src/components/playlists/buttons/CreateNewPlaylistButton';
+import CreateNewPlaylistButton from 'src/components/playlists/buttons/createPlaylist/CreateNewPlaylistButton';
 import Button from '@boclips-ui/button';
 import PlusSign from 'src/resources/icons/plus-sign.svg';
 import { useNavigate } from 'react-router-dom';

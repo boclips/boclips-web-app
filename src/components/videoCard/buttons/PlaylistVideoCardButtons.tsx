@@ -5,7 +5,7 @@ import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPla
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { DownloadTranscriptButton } from 'src/components/downloadTranscriptButton/DownloadTranscriptButton';
-import PlaylistVideoBookmarkButton from 'src/components/shareLinkButton/playlistsBookmark/PlaylistVideoBookmarkButton';
+import PlaylistVideoBookmarkButton from 'src/components/playlists/buttons/playlistBookmark/PlaylistVideoBookmarkButton';
 
 interface PlaylistVideoCardButtonsProps {
   video: Video;
