@@ -146,7 +146,7 @@
     "babel-loader": "^9.1.0",
     "boclips-js-security": "^12.0.1",
     "boclips-player": "^7.14.0",
-    "boclips-player-react": "^3.2.1",
+    "boclips-player-react": "^3.3.0",
     "copy-webpack-plugin": "^11.0.0",
     "core-js": "^3.37.0",
     "dateformat": "^4.4.1",
