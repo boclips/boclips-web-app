@@ -67,12 +67,13 @@ export const VideoShareLinkButton = ({
         aria-label="Share"
         icon={<ShareSVG />}
         height="40px"
-        className={s.shareButton}
+        className={s.shareLinkButton}
         iconOnly={iconOnly}
       />
       {isModalVisible && (
         <SegmentBodal
-          makeModalVisible={isModalVisible}
+          isModalVisible={isModalVisible}
+          setIsModalVisible={setIsModalVisible}
           bodalTitle="Share this video with students"
           bodalDescription={
             <>
@@ -90,7 +91,7 @@ export const VideoShareLinkButton = ({
             />
           }
           handleConfirm={handleCopyLink}
-          video={video}
+          duration={video.playback.duration}
           startDuration={startDuration}
           setStartDuration={setStartDuration}
           endDuration={endDuration}

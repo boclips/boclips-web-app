@@ -163,8 +163,7 @@ describe('video share link button', () => {
       apiClient.shareLinks,
       'trackVideoShareLink',
     );
-    // @ts-ignore
-    apiClient.shareLinks.trackVideoShareLink = trackVideoSpy;
+
     const wrapper = renderShareButton(apiClient);
     await openShareModal(wrapper);
 
@@ -180,7 +179,6 @@ describe('video share link button', () => {
         checked: false,
       }),
     );
-    await userEvent.type(startTimeInput, '00:10');
 
     const endTimeInput = wrapper.getByRole('textbox', {
       name: 'End time:',
@@ -201,6 +199,7 @@ describe('video share link button', () => {
     await userEvent.click(
       await wrapper.findByRole('button', { name: 'Copy link' }),
     );
+
     expect(trackVideoSpy).toHaveBeenCalledWith('video-1');
     expect(wrapper.queryByText('Share this video with students')).toBeNull();
 

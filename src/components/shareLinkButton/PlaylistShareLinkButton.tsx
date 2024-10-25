@@ -76,7 +76,7 @@ export const PlaylistShareLinkButton = ({
         aria-label="Share"
         icon={<ShareSVG />}
         height={shareButtonHeight}
-        className={s.shareButton}
+        className={s.shareLinkButton}
         iconOnly={iconOnly}
       />
       {isModalVisible && (
@@ -86,7 +86,7 @@ export const PlaylistShareLinkButton = ({
           displayCancelButton={false}
           confirmButtonText="Copy link"
           confirmButtonIcon={<CopyLinkIcon />}
-          footerClass={s.bodalButtons}
+          footerClass={s.shareLinkBodalButtons}
           onConfirm={handleCopyLink}
           smallSize={false}
           extraButton={

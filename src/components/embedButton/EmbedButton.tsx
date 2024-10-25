@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import Button from '@boclips-ui/button';
 import EmbedIcon from 'src/resources/icons/embed-icon.svg';
 import Tooltip from '@boclips-ui/tooltip';
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
-import s from './EmbedButton.module.less';
+import { SegmentBodal } from 'src/components/segmentBodal/SegmentBodal';
+import { durationInSeconds } from 'src/components/cart/AdditionalServices/Trim/trimValidation';
+import c from "classnames";
 import { displayNotification } from '../common/notification/displayNotification';
+import s from './EmbedButton.module.less';
 
 interface Props {
   video?: Video;
@@ -17,6 +20,7 @@ interface Props {
   height?: string;
   onClick?: () => void;
 }
+
 export const EmbedButton = ({
   video,
   licensedContent,
@@ -27,18 +31,36 @@ export const EmbedButton = ({
   onClick,
 }: Props) => {
   const client = useBoclipsClient();
-  const onClickEvent = async () => {
+  const duration =
+    video?.playback?.duration ?? licensedContent?.videoMetadata?.duration;
+  const videoDuration = duration.format('mm:ss');
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [startDuration, setStartDuration] = useState('00:00');
+  const [endDuration, setEndDuration] = useState(videoDuration);
+  const [isError, setIsError] = useState(false);
+
+  const toggleModalVisibility = () => setIsModalVisible(!isModalVisible);
+  const handleEmbedCopy = async () => {
     if (onClick) {
       onClick();
     }
 
-    if (!video && !licensedContent) {
+    if ((!video && !licensedContent) || isError) {
       return;
     }
     const link = video
-      ? await client.videos.createEmbedCode(video)
-      : await client.licenses.createEmbedCode(licensedContent);
-
+      ? await client.videos.createEmbedCode(
+          video,
+          durationInSeconds(startDuration),
+          durationInSeconds(endDuration),
+        )
+      : await client.licenses.createEmbedCode(
+          licensedContent,
+          durationInSeconds(startDuration),
+          durationInSeconds(endDuration),
+        );
+    toggleModalVisibility();
     await navigator.clipboard.writeText(link.embed);
     displayNotification(
       'success',
@@ -56,12 +78,34 @@ export const EmbedButton = ({
       icon={<EmbedIcon />}
       name="Embed"
       aria-label="Embed"
-      onClick={onClickEvent}
+      onClick={toggleModalVisibility}
       width={width || defaultWidth}
       height={height || '40px'}
       text={!iconOnly && label}
     />
   );
 
-  return iconOnly ? <Tooltip text={label}>{button}</Tooltip> : button;
+  const element = iconOnly ? <Tooltip text={label}>{button}</Tooltip> : button;
+  return (
+    <>
+      {element}
+      {isModalVisible && (
+        <SegmentBodal
+          isModalVisible={isModalVisible}
+          setIsModalVisible={setIsModalVisible}
+          bodalTitle="Copy embed code"
+          confirmButtonText="Copy embed"
+          confirmButtonIcon={<EmbedIcon />}
+          handleConfirm={handleEmbedCopy}
+          duration={duration}
+          startDuration={startDuration}
+          setStartDuration={setStartDuration}
+          endDuration={endDuration}
+          setEndDuration={setEndDuration}
+          setIsError={setIsError}
+          footerClass={c(s.embedButton, s.embedModalButton)}
+        />
+      )}
+    </>
+  );
 };

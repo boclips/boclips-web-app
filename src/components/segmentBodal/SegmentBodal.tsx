@@ -1,49 +1,53 @@
-import s from 'src/components/shareLinkButton/shareLinkButton.module.less';
 import { Typography } from '@boclips-ui/typography';
 import BoCheckbox from 'src/components/common/input/BoCheckbox';
 import React, { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 import { DurationInput } from 'src/components/cart/AdditionalServices/Trim/DurationInput';
 import { Bodal } from 'src/components/common/bodal/Bodal';
-import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import {
   isTrimFromValid,
   isTrimToValid,
 } from 'src/components/cart/AdditionalServices/Trim/trimValidation';
+import { Duration } from 'dayjs/plugin/duration';
+import c from 'classnames';
+import s from './style.module.less';
 
 interface Props {
-  makeModalVisible?: boolean;
+  isModalVisible: boolean;
+  setIsModalVisible: (_: boolean) => void;
   bodalTitle: string;
   bodalDescription?: ReactElement;
   confirmButtonText: string;
   confirmButtonIcon: ReactElement;
   extraButton?: ReactElement;
   handleConfirm: () => void;
-  video: Video;
+  duration: Duration;
   startDuration: string;
   setStartDuration: (duration: string) => void;
   endDuration: string;
   setEndDuration: (duration: string) => void;
   setIsError: (isError: boolean) => void;
+  footerClass?: string;
 }
+
 export const SegmentBodal = ({
-  makeModalVisible,
+  isModalVisible,
+  setIsModalVisible,
   bodalTitle,
   bodalDescription,
   confirmButtonText,
   confirmButtonIcon,
   extraButton,
   handleConfirm,
-  video,
+  duration,
   startDuration,
   setStartDuration,
   endDuration,
   setEndDuration,
   setIsError,
+  footerClass,
 }: Props) => {
   const toggleModalVisibility = () => setIsModalVisible(!isModalVisible);
-  const videoDuration = video.playback.duration.format('mm:ss');
 
-  const [isModalVisible, setIsModalVisible] = useState(makeModalVisible);
   const [startTimeEnabled, setStartTimeEnabled] = useState(false);
   const [startDurationValid, setStartDurationValid] = useState(true);
   const [endTimeEnabled, setEndTimeEnabled] = useState(false);
@@ -52,7 +56,6 @@ export const SegmentBodal = ({
   useEffect(() => {
     if (startDuration.length === 5) validateFields();
     if (endDuration.length === 5) validateFields();
-    setIsError(!startDuration || !startDuration);
   }, [startDuration, endDuration]);
 
   useEffect(() => {
@@ -85,21 +88,17 @@ export const SegmentBodal = ({
   const validateFields = () => {
     if (startTimeEnabled) {
       setStartDurationValid(
-        isTrimFromValid(
-          { from: startDuration, to: endDuration },
-          video.playback.duration,
-        ),
+        isTrimFromValid({ from: startDuration, to: endDuration }, duration),
       );
     }
 
     if (endTimeEnabled) {
       setEndDurationValid(
-        isTrimToValid(
-          { from: startDuration, to: endDuration },
-          video.playback.duration,
-        ),
+        isTrimToValid({ from: startDuration, to: endDuration }, duration),
       );
     }
+
+    setIsError(!startDurationValid || !endDurationValid);
   };
 
   return (
@@ -109,7 +108,7 @@ export const SegmentBodal = ({
       displayCancelButton={false}
       confirmButtonText={confirmButtonText}
       confirmButtonIcon={confirmButtonIcon}
-      footerClass={s.bodalButtons}
+      footerClass={c(s.segmentBodalButtons, footerClass)}
       onConfirm={handleConfirm}
       smallSize={false}
       extraButton={extraButton}
@@ -120,10 +119,10 @@ export const SegmentBodal = ({
           className="mb-10 text-gray-800"
           data-qa="share-link-body"
         >
-          bodalDescription
+          {bodalDescription}
         </Typography.Body>
       )}
-      <div className="flex justify-center mb-16">
+      <div className="flex justify-center mb-8">
         <div className="flex items-center">
           <BoCheckbox
             checked={startTimeEnabled}
@@ -162,7 +161,7 @@ export const SegmentBodal = ({
             onChange={handleEndTimeChange}
             isError={!endDurationValid}
             onBlur={validateFields}
-            placeholder={videoDuration}
+            placeholder={duration.format('mm:ss')}
           />
         </div>
       </div>
