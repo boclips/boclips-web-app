@@ -104,6 +104,9 @@ export const EmbedButton = ({
           setEndDuration={setEndDuration}
           setIsError={setIsError}
           footerClass={c(s.embedButton, s.embedModalButton)}
+          videoLink={
+            video?.links?.self ?? licensedContent?.videoMetadata?.links?.self
+          }
         />
       )}
     </>
