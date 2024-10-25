@@ -7,7 +7,7 @@ import Tooltip from '@boclips-ui/tooltip';
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
 import { SegmentBodal } from 'src/components/segmentBodal/SegmentBodal';
 import { durationInSeconds } from 'src/components/cart/AdditionalServices/Trim/trimValidation';
-import c from "classnames";
+import c from 'classnames';
 import { displayNotification } from '../common/notification/displayNotification';
 import s from './EmbedButton.module.less';
 
