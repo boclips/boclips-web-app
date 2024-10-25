@@ -41,6 +41,7 @@ describe('LicensedContentCard', () => {
         </BoclipsSecurityProvider>,
       );
     }
+
     it('displays embed button when embed link available', async () => {
       const apiClient = new FakeBoclipsClient();
       const wrapper = renderEmbedButton(apiClient);
@@ -56,7 +57,13 @@ describe('LicensedContentCard', () => {
       });
       const apiClient = new FakeBoclipsClient();
       const wrapper = renderEmbedButton(apiClient);
-      userEvent.click(wrapper.getByRole('button', { name: 'Embed' }));
+      await userEvent.click(wrapper.getByRole('button', { name: 'Embed' }));
+
+      expect(await wrapper.findByText('Copy embed code')).toBeVisible();
+
+      await userEvent.click(
+        await wrapper.findByRole('button', { name: 'Copy embed' }),
+      );
 
       await waitFor(() => {
         expect(lastEvent(apiClient, 'PLATFORM_INTERACTED_WITH')).toEqual({
@@ -99,6 +106,7 @@ describe('LicensedContentCard', () => {
         </BoclipsSecurityProvider>,
       );
     };
+
     it('displays download button when download link available and clicking triggers download', async () => {
       const downloadFileSpy = jest.spyOn(
         DownloadFileFromUrl,
