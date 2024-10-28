@@ -4,11 +4,14 @@ import React, { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 import { DurationInput } from 'src/components/cart/AdditionalServices/Trim/DurationInput';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import {
+  durationInSeconds,
   isTrimFromValid,
   isTrimToValid,
 } from 'src/components/cart/AdditionalServices/Trim/trimValidation';
 import { Duration } from 'dayjs/plugin/duration';
 import c from 'classnames';
+import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
+import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
 import s from './style.module.less';
 
 interface Props {
@@ -27,6 +30,7 @@ interface Props {
   setEndDuration: (duration: string) => void;
   setIsError: (isError: boolean) => void;
   footerClass?: string;
+  videoLink?: Link;
 }
 
 export const SegmentBodal = ({
@@ -45,6 +49,7 @@ export const SegmentBodal = ({
   setEndDuration,
   setIsError,
   footerClass,
+  videoLink,
 }: Props) => {
   const toggleModalVisibility = () => setIsModalVisible(!isModalVisible);
 
@@ -121,6 +126,18 @@ export const SegmentBodal = ({
         >
           {bodalDescription}
         </Typography.Body>
+      )}
+      {videoLink && (
+        <div className="mb-8">
+          <VideoPlayer
+            videoLink={videoLink}
+            showDurationBadge
+            segment={{
+              start: durationInSeconds(startDuration),
+              end: durationInSeconds(endDuration),
+            }}
+          />
+        </div>
       )}
       <div className="flex justify-center mb-8">
         <div className="flex items-center">

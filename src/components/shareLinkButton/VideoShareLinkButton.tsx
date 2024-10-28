@@ -97,6 +97,7 @@ export const VideoShareLinkButton = ({
           endDuration={endDuration}
           setEndDuration={setEndDuration}
           setIsError={setIsError}
+          videoLink={video.links.self}
         />
       )}
     </>
