@@ -128,7 +128,7 @@ export const SegmentBodal = ({
         </Typography.Body>
       )}
       {videoLink && (
-        <div className="mb-8">
+        <div className={c(s.segmentBodalPlayer, 'mb-8')}>
           <VideoPlayer
             videoLink={videoLink}
             showDurationBadge
