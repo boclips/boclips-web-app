@@ -148,7 +148,7 @@
     "boclips-player": "^7.14.0",
     "boclips-player-react": "^3.3.0",
     "copy-webpack-plugin": "^11.0.0",
-    "core-js": "^3.37.0",
+    "core-js": "^3.39.0",
     "dateformat": "^4.4.1",
     "dayjs": "^1.9.7",
     "email-validator": "^2.0.4",
