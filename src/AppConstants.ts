@@ -41,6 +41,12 @@ export class AppConstants {
     return this.window.Environment.PEARSON_ACCOUNT_ID;
   }
 
+  public get REGISTRATION_REQUIRE_EMAIL_VERIFICATION(): boolean {
+    return (
+      this.window.Environment.REGISTRATION_REQUIRE_EMAIL_VERIFICATION === 'true'
+    );
+  }
+
   public get HOST(): string {
     return `${this.window.location.protocol}//${this.window.location.hostname}${
       this.window.location.port ? `:${this.window.location.port}` : ''

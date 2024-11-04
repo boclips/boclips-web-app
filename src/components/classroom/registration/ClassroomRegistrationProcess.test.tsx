@@ -39,7 +39,11 @@ describe('registration process', () => {
     await fillRegistrationForm(wrapper, { ...defaults, ...change }, schoolMode);
   }
 
-  it('displays "check your email" view after successful registration', async () => {
+  it('displays "check your email" view after successful registration when email validation required', async () => {
+    window.Environment = {
+      REGISTRATION_REQUIRE_EMAIL_VERIFICATION: 'true',
+    };
+
     const fakeClient = new FakeBoclipsClient();
     jest.spyOn(fakeClient.users, 'createClassroomUser').mockImplementation(() =>
       Promise.resolve(
@@ -81,5 +85,53 @@ describe('registration process', () => {
       ),
     ).toBeVisible();
     expect(wrapper.getByText('test@boclips.com.')).toBeVisible();
+  });
+
+  it('displays "ready to start" view after successful registration when email validation not required', async () => {
+    window.Environment = {
+      REGISTRATION_REQUIRE_EMAIL_VERIFICATION: 'false',
+    };
+
+    const fakeClient = new FakeBoclipsClient();
+    jest.spyOn(fakeClient.users, 'createClassroomUser').mockImplementation(() =>
+      Promise.resolve(
+        UserFactory.sample({
+          email: 'test@boclips.com',
+          account: {
+            ...UserFactory.sample().account,
+            name: 'BoAccount',
+            id: '1',
+            type: AccountType.STANDARD,
+          },
+        }),
+      ),
+    );
+    const history = createBrowserHistory();
+
+    const wrapper = render(
+      <QueryClientProvider client={new QueryClient()}>
+        <BoclipsClientProvider client={fakeClient}>
+          <Router location={history.location} navigator={history}>
+            <ToastContainer />
+            <GoogleReCaptchaProvider reCaptchaKey="123">
+              <ClassroomRegistration />
+            </GoogleReCaptchaProvider>
+          </Router>
+        </BoclipsClientProvider>
+      </QueryClientProvider>,
+    );
+
+    await fillTheForm(wrapper, {});
+
+    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+
+    expect(await wrapper.findByText(`You're ready to start!`)).toBeVisible();
+
+    expect(
+      wrapper.getByText(
+        'Congratulations! You’ve successfully created your CLASSROOM account.',
+      ),
+    ).toBeVisible();
+    expect(wrapper.queryByText('test@boclips.com.')).toBeNull();
   });
 });

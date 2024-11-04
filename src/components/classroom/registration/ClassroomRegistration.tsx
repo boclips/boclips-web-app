@@ -5,6 +5,7 @@ import ClassroomRegistrationForm from 'src/components/classroom/registration/reg
 import ClassroomEmailVerificationPrompt from 'src/components/classroom/registration/ClassroomEmailVerificationPrompt';
 import ClassroomInfo from 'src/components/classroom/registration/classroomInfo/ClassroomInfo';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import ClassroomLoginPrompt from 'src/components/classroom/registration/ClassroomLoginPrompt';
 
 const CAPTCHA_TOKEN = Constants.CAPTCHA_TOKEN;
 
@@ -25,8 +26,10 @@ export const ClassroomRegistration = () => {
             }
           />
         </>
-      ) : (
+      ) : Constants.REGISTRATION_REQUIRE_EMAIL_VERIFICATION ? (
         <ClassroomEmailVerificationPrompt userEmail={userEmailCreated} />
+      ) : (
+        <ClassroomLoginPrompt />
       )}
     </GoogleReCaptchaProvider>
   );
