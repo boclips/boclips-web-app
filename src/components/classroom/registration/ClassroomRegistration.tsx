@@ -26,7 +26,7 @@ export const ClassroomRegistration = () => {
             }
           />
         </>
-      ) : Constants.REGISTRATION_REQUIRE_EMAIL_VERIFICATION ? (
+      ) : Constants.REGISTRATION_CLASSROOM_REQUIRE_EMAIL_VERIFICATION ? (
         <ClassroomEmailVerificationPrompt userEmail={userEmailCreated} />
       ) : (
         <ClassroomLoginPrompt />

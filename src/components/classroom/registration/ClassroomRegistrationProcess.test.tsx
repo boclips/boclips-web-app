@@ -41,7 +41,7 @@ describe('registration process', () => {
 
   it('displays "check your email" view after successful registration when email validation required', async () => {
     window.Environment = {
-      REGISTRATION_REQUIRE_EMAIL_VERIFICATION: 'true',
+      REGISTRATION_CLASSROOM_REQUIRE_EMAIL_VERIFICATION: 'true',
     };
 
     const fakeClient = new FakeBoclipsClient();
@@ -89,7 +89,7 @@ describe('registration process', () => {
 
   it('displays "ready to start" view after successful registration when email validation not required', async () => {
     window.Environment = {
-      REGISTRATION_REQUIRE_EMAIL_VERIFICATION: 'false',
+      REGISTRATION_CLASSROOM_REQUIRE_EMAIL_VERIFICATION: 'false',
     };
 
     const fakeClient = new FakeBoclipsClient();

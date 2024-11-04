@@ -41,9 +41,10 @@ export class AppConstants {
     return this.window.Environment.PEARSON_ACCOUNT_ID;
   }
 
-  public get REGISTRATION_REQUIRE_EMAIL_VERIFICATION(): boolean {
+  public get REGISTRATION_CLASSROOM_REQUIRE_EMAIL_VERIFICATION(): boolean {
     return (
-      this.window.Environment.REGISTRATION_REQUIRE_EMAIL_VERIFICATION === 'true'
+      this.window.Environment
+        .REGISTRATION_CLASSROOM_REQUIRE_EMAIL_VERIFICATION === 'true'
     );
   }
 
