@@ -4,7 +4,6 @@ import { Layout } from 'src/components/layout/Layout';
 import { Search } from 'src/components/searchBar/SearchBar';
 import Button from '@boclips-ui/button';
 import HomeSearchHero from 'src/resources/icons/home-illustration.svg';
-import HomeSearchHeroClassroom from 'src/resources/icons/classroom/home-search-hero.svg';
 import { useNavigate } from 'react-router-dom';
 import NewNavbar from 'src/components/layout/Navbar';
 import FeaturedVideos from 'src/components/carousel/FeaturedVideos';
@@ -15,6 +14,9 @@ import WelcomeModal from 'src/components/welcome/WelcomeModal';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import FeaturedPlaylists from 'src/components/carousel/FeaturedPlaylists';
+import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
+import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
+import { Constants } from 'src/AppConstants';
 import FilmIcon from '../../resources/icons/film-icon.svg';
 import YourLibraryIcon from '../../resources/icons/your-library.svg';
 import s from './style.module.less';
@@ -27,6 +29,10 @@ const HomeView = () => {
   const [showTrialPopUp, setShowTrialPopUp] = useState<boolean>(false);
   const [isAdmin, setIsAdmin] = useState<boolean>();
   const [isClassroomUser, setIsClassroomUser] = useState<boolean>();
+
+  const { data: videoId } = useFindOrGetVideo(
+    Constants.CLASSROOM_ONBOARDING_VIDEO_ID,
+  );
 
   useShowTrialWelcomeModal({
     showPopup: setShowTrialPopUp,
@@ -78,16 +84,18 @@ const HomeView = () => {
       </div>
       {!isMobileView && (
         <div
-          className="row-start-2 row-end-2 col-start-17 mt-14 w-96 h-96"
+          className="row-start-2 row-end-2 col-start-15 col-end-26 inline-grid items-center"
           data-qa="home-search-hero"
         >
           <FeatureGate
             product={Product.CLASSROOM}
-            fallback={<HomeSearchHero />}
+            fallback={
+              <div className="mt-14 w-96 h-96">
+                <HomeSearchHero />
+              </div>
+            }
           >
-            <div className={s.classroomHero}>
-              <HomeSearchHeroClassroom />
-            </div>
+            <VideoPlayer video={videoId} />
           </FeatureGate>
         </div>
       )}

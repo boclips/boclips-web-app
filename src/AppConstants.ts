@@ -21,6 +21,10 @@ export class AppConstants {
     return this.window.Environment.IS_HOTJAR_ENABLED === 'true';
   }
 
+  public get CLASSROOM_ONBOARDING_VIDEO_ID(): string {
+    return this.window.Environment.CLASSROOM_ONBOARDING_VIDEO_ID;
+  }
+
   public get IS_PENDO_ENABLED(): boolean {
     return this.window.Environment.IS_PENDO_ENABLED === 'true';
   }
