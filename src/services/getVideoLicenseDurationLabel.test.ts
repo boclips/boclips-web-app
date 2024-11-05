@@ -7,9 +7,9 @@ describe('Get video license duration label', () => {
       expect(label).toEqual('1 year');
     });
 
-    it('displays 10+ years', () => {
+    it('displays 13 years', () => {
       const label = getVideoPageLicenseDurationLabel(13);
-      expect(label).toEqual('10+ years');
+      expect(label).toEqual('13 years');
     });
 
     it('displays 10+ years if maxDuration is null', () => {
