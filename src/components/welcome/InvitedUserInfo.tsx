@@ -5,35 +5,43 @@ import { FeatureGate } from 'src/components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import s from './style.module.less';
 
+const UserInfoItem = ({
+  label,
+  value,
+}: {
+  label: string | React.ReactNode;
+  value: string;
+}) => (
+  <div className="grid grid-cols-6">
+    <Typography.Body className="mr-4 col-span-1">{label}</Typography.Body>
+    <Typography.Body weight="medium" className="col-span-5">
+      {value}
+    </Typography.Body>
+  </div>
+);
+
 const InvitedUserInfo = () => {
   const { data: user } = useGetUserQuery();
 
   return (
     user && (
       <section id="one" className={s.userInfo}>
-        <div className="flex flex-row">
-          <Typography.Body className="mr-2">Name:</Typography.Body>
-          <Typography.Body weight="medium">
-            {user.firstName} {user.lastName}
-          </Typography.Body>
-        </div>
-        <div className="flex flex-row">
-          <FeatureGate
-            product={Product.CLASSROOM}
-            fallback={
-              <Typography.Body className="mr-2">Organization:</Typography.Body>
-            }
-          >
-            <Typography.Body className="mr-2">School:</Typography.Body>
-          </FeatureGate>
-          <Typography.Body weight="medium">
-            {user.account?.name}
-          </Typography.Body>
-        </div>
-        <div className="flex flex-row">
-          <Typography.Body className="mr-2">Email:</Typography.Body>
-          <Typography.Body weight="medium">{user.email}</Typography.Body>
-        </div>
+        <UserInfoItem
+          label="Name:"
+          value={`${user.firstName} ${user.lastName}`}
+        />
+        <UserInfoItem
+          label={
+            <FeatureGate
+              product={Product.CLASSROOM}
+              fallback={<span>Organization:</span>}
+            >
+              <span>School:</span>
+            </FeatureGate>
+          }
+          value={user.account?.name}
+        />
+        <UserInfoItem label="Email:" value={user.email} />
       </section>
     )
   );
