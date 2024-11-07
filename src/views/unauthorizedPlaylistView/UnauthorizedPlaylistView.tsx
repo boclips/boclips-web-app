@@ -3,7 +3,6 @@ import { Layout } from 'src/components/layout/Layout';
 import { useGetPlaylistWithReferer } from 'src/hooks/api/playlistsQuery';
 import { useLocation } from 'react-router-dom';
 import Footer from 'src/components/layout/Footer';
-import PlaylistHeader from 'src/components/playlists/playlistHeader/PlaylistHeader';
 import SkeletonPage from 'src/components/skeleton/SkeletonPage';
 import { Helmet } from 'react-helmet';
 import UnauthorizedNavbar from 'src/components/layout/UnauthorizedNavbar';
@@ -15,6 +14,8 @@ import { PageNotFoundError } from 'src/components/common/errors/pageNotFound/Pag
 import PlaylistBody from 'src/components/playlists/playlistBody/PlaylistBody';
 import ErrorView from 'src/views/error/ErrorView';
 import { BoclipsApiError } from 'boclips-api-client/dist/types/BoclipsApiError';
+import { Constants } from 'src/AppConstants';
+import UnauthorizedPlaylistHeader from 'src/components/playlists/playlistHeader/UnauthorizedPlaylistHeader';
 
 const UnauthorizedPlaylistView = () => {
   const playlistId = useGetIdFromLocation('shared');
@@ -36,7 +37,12 @@ const UnauthorizedPlaylistView = () => {
         <Layout rowsSetup="grid-rows-playlist-view" responsiveLayout>
           <UnauthorizedNavbar />
           <PageNotFoundError />
-          <Footer className="col-start-2 col-end-26" />
+          <Footer
+            className="col-start-2 col-end-26"
+            termsAndConditionsLink={
+              Constants.CLASSROOM_TERMS_AND_CONDITIONS_LINK
+            }
+          />
         </Layout>
       </>
     );
@@ -58,7 +64,7 @@ const UnauthorizedPlaylistView = () => {
           />
         ) : (
           <>
-            <PlaylistHeader playlist={playlist} showButtons={false} />
+            <UnauthorizedPlaylistHeader playlist={playlist} />
             <PlaylistBody
               playlist={playlist}
               showButtons={false}
@@ -67,7 +73,10 @@ const UnauthorizedPlaylistView = () => {
             />
           </>
         )}
-        <Footer className="col-start-2 col-end-26" />
+        <Footer
+          className="col-start-2 col-end-26"
+          termsAndConditionsLink={Constants.CLASSROOM_TERMS_AND_CONDITIONS_LINK}
+        />
       </Layout>
     </>
   );

@@ -54,4 +54,28 @@ describe(`footer`, () => {
       await wrapper.findByRole('link', { name: 'Terms & Conditions' }),
     ).toHaveProperty('href', 'https://www.boclips.com/mlsa-classroom');
   });
+
+  it(`renders passed terms and conditions link`, async () => {
+    const apiClient = new FakeBoclipsClient();
+    apiClient.users.insertCurrentUser(
+      UserFactory.sample({
+        account: {
+          ...UserFactory.sample().account,
+          products: [Product.LIBRARY],
+        },
+      }),
+    );
+
+    const wrapper = render(
+      <BoclipsClientProvider client={apiClient}>
+        <QueryClientProvider client={new QueryClient()}>
+          <Footer termsAndConditionsLink="https://blah.com/" />
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
+    );
+
+    expect(
+      await wrapper.findByRole('link', { name: 'Terms & Conditions' }),
+    ).toHaveProperty('href', 'https://blah.com/');
+  });
 });

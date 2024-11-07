@@ -11,7 +11,7 @@ import { MemoryRouter } from 'react-router-dom';
 import UnauthorizedPlaylistView from 'src/views/unauthorizedPlaylistView/UnauthorizedPlaylistView';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 
-describe('Playlist View', () => {
+describe('Unauthorized Playlist View', () => {
   it('should display playlist when valid referer is provided', async () => {
     const apiClient = new FakeBoclipsClient();
     const playlist = CollectionFactory.sample({
@@ -46,8 +46,8 @@ describe('Playlist View', () => {
     );
 
     expect(
-      await wrapper.findAllByText('You got mud on your face, you big disgrace'),
-    ).toHaveLength(2);
+      await wrapper.findByText('You got mud on your face, you big disgrace'),
+    ).toBeInTheDocument();
     expect(
       wrapper.getByText('We will, we will rock you, we will, we will rock you'),
     ).toBeInTheDocument();

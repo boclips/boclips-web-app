@@ -8,6 +8,7 @@ import VideoRecommendations from 'src/components/videoPage/VideoRecommendations'
 import VideoAiMetadata from 'src/components/videoPage/videoMetadata/ai/VideoAiMetadata';
 import VideoDescription from 'src/components/videoPage/videoMetadata/VideoDescription';
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
+import { UnauthorizedVideoHeader } from 'src/components/videoPage/UnauthorizedVideoHeader';
 import s from './videoPage.module.less';
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
   start?: number;
   end?: number;
   skipMetadataAndRecommendations?: boolean;
+  isAuthenticated?: boolean;
 }
 
 export const VideoPage = ({
@@ -22,6 +24,7 @@ export const VideoPage = ({
   start = null,
   end = null,
   skipMetadataAndRecommendations = false,
+  isAuthenticated = true,
 }: Props) => {
   const navigate = useNavigate();
   const userNavigatedToPageViaApp = useLocation().state?.userNavigated;
@@ -53,7 +56,11 @@ export const VideoPage = ({
         )}
       </main>
       <section className={s.headerSection} aria-labelledby="video-title">
-        <VideoHeader video={video} />
+        {isAuthenticated ? (
+          <VideoHeader video={video} />
+        ) : (
+          <UnauthorizedVideoHeader video={video} />
+        )}
       </section>
 
       <VideoDescription video={video} />

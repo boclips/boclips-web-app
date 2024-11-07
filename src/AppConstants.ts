@@ -61,6 +61,11 @@ export class AppConstants {
   public get CAPTCHA_TOKEN(): string {
     return this.window.Environment.CAPTCHA_TOKEN ?? null;
   }
+
+  public CLASSROOM_TERMS_AND_CONDITIONS_LINK =
+    'https://www.boclips.com/mlsa-classroom';
+
+  public LIBRARY_TERMS_AND_CONDITIONS_LINK = 'https://www.boclips.com/mlsa';
 }
 
 export const Constants = new AppConstants(window);

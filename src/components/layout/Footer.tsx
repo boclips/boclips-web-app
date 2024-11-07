@@ -3,13 +3,15 @@ import { Typography } from '@boclips-ui/typography';
 import c from 'classnames';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { Constants } from 'src/AppConstants';
 import s from './footer.module.less';
 
 interface Props {
   className?: string;
+  termsAndConditionsLink?: string;
 }
 
-const Footer = ({ className }: Props) => {
+const Footer = ({ className, termsAndConditionsLink }: Props) => {
   const currentDate = new Date();
 
   return (
@@ -20,12 +22,20 @@ const Footer = ({ className }: Props) => {
         className="flex flex-row items-center"
       >
         Copyright © {currentDate.getFullYear()} Boclips. All rights reserved.
-        <FeatureGate
-          product={Product.CLASSROOM}
-          fallback={getTermsAndConditionsLink('https://www.boclips.com/mlsa')}
-        >
-          {getTermsAndConditionsLink('https://www.boclips.com/mlsa-classroom')}
-        </FeatureGate>
+        {termsAndConditionsLink ? (
+          getTermsAndConditionsLink(termsAndConditionsLink)
+        ) : (
+          <FeatureGate
+            product={Product.CLASSROOM}
+            fallback={getTermsAndConditionsLink(
+              Constants.LIBRARY_TERMS_AND_CONDITIONS_LINK,
+            )}
+          >
+            {getTermsAndConditionsLink(
+              Constants.CLASSROOM_TERMS_AND_CONDITIONS_LINK,
+            )}
+          </FeatureGate>
+        )}
         <a
           rel="noopener noreferrer"
           className={s.link}

@@ -14,6 +14,7 @@ import ErrorView from 'src/views/error/ErrorView';
 import UnauthorizedNavbar from 'src/components/layout/UnauthorizedNavbar';
 import { PageNotFoundError } from 'src/components/common/errors/pageNotFound/PageNotFoundError';
 import { BoclipsApiError } from 'boclips-api-client/dist/types/BoclipsApiError';
+import { Constants } from 'src/AppConstants';
 
 const UnauthorizedVideoView = () => {
   const videoId = useGetIdFromLocation('shared');
@@ -67,8 +68,12 @@ const UnauthorizedVideoView = () => {
         start={start}
         end={end}
         skipMetadataAndRecommendations
+        isAuthenticated={false}
       />
-      <Footer className="row-start-last row-end-last" />
+      <Footer
+        className="row-start-last row-end-last"
+        termsAndConditionsLink={Constants.CLASSROOM_TERMS_AND_CONDITIONS_LINK}
+      />
     </Layout>
   );
 };
