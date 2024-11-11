@@ -68,12 +68,12 @@ describe('SearchBar', () => {
       fakeBoclipsClient.suggestions.populate({
         channels: [],
         subjects: [],
-        suggestionTerm: 'U',
+        suggestionTerm: 'U.S.',
         phrases: ['U.S. Senate', 'U.S. Government'],
       });
     });
 
-    it('display search suggestions on search change if user has feature', async () => {
+    it('display search suggestions on search change', async () => {
       const wrapper = render(
         <MemoryRouter>
           <BoclipsClientProvider client={fakeBoclipsClient}>
@@ -87,14 +87,14 @@ describe('SearchBar', () => {
       const searchInput = wrapper.getByPlaceholderText(
         'Search for videos',
       ) as HTMLInputElement;
-      fireEvent.change(searchInput, { target: { value: 'U' } });
+      fireEvent.change(searchInput, { target: { value: 'U.S' } });
       fireEvent.focus(searchInput);
 
-      expect(await wrapper.findByText('.S. Government')).toBeInTheDocument();
-      expect(await wrapper.findByText('.S. Senate')).toBeInTheDocument();
+      expect(await wrapper.findByText('. Government')).toBeInTheDocument();
+      expect(await wrapper.findByText('. Senate')).toBeInTheDocument();
     });
 
-    it('display search suggestions on search change for minimum of 1 character in query', async () => {
+    it('display search suggestions on search change for minimum of 3 characters in query', async () => {
       const wrapper = render(
         <MemoryRouter>
           <BoclipsClientProvider client={fakeBoclipsClient}>
@@ -108,11 +108,33 @@ describe('SearchBar', () => {
       const searchInput = wrapper.getByPlaceholderText(
         'Search for videos',
       ) as HTMLInputElement;
-      fireEvent.change(searchInput, { target: { value: 'U' } });
+      fireEvent.change(searchInput, { target: { value: 'U.S' } });
       fireEvent.focus(searchInput);
 
-      expect(await wrapper.findByText('.S. Government')).toBeInTheDocument();
-      expect(await wrapper.findByText('.S. Senate')).toBeInTheDocument();
+      expect(await wrapper.findByText('. Government')).toBeInTheDocument();
+      expect(await wrapper.findByText('. Senate')).toBeInTheDocument();
+    });
+
+    it('does not display search suggestions when suggestions query failed', async () => {
+      fakeBoclipsClient.suggestions.suggest = jest.fn(() => Promise.reject());
+
+      const wrapper = render(
+        <MemoryRouter>
+          <BoclipsClientProvider client={fakeBoclipsClient}>
+            <QueryClientProvider client={new QueryClient(queryClientConfig)}>
+              <Search showIconOnly={false} />
+            </QueryClientProvider>
+          </BoclipsClientProvider>
+        </MemoryRouter>,
+      );
+
+      const searchInput = wrapper.getByPlaceholderText(
+        'Search for videos',
+      ) as HTMLInputElement;
+      fireEvent.change(searchInput, { target: { value: 'U.S' } });
+      fireEvent.focus(searchInput);
+
+      expect(wrapper.queryByText('. Government')).toBeNull();
     });
 
     it('sends an event when auto-suggest displayed', async () => {
@@ -129,7 +151,7 @@ describe('SearchBar', () => {
       const searchInput = wrapper.getByPlaceholderText(
         'Search for videos',
       ) as HTMLInputElement;
-      fireEvent.change(searchInput, { target: { value: 'U' } });
+      fireEvent.change(searchInput, { target: { value: 'U.S' } });
       fireEvent.focus(searchInput);
 
       await waitFor(() => {
@@ -141,7 +163,7 @@ describe('SearchBar', () => {
           'U.S. Senate',
           'U.S. Government',
         ]);
-        expect(suggestEvent?.searchQuery).toEqual('U');
+        expect(suggestEvent?.searchQuery).toEqual('U.S');
       });
     });
 
@@ -159,18 +181,18 @@ describe('SearchBar', () => {
       const searchInput = wrapper.getByPlaceholderText(
         'Search for videos',
       ) as HTMLInputElement;
-      fireEvent.change(searchInput, { target: { value: 'U' } });
+      fireEvent.change(searchInput, { target: { value: 'U.S' } });
       fireEvent.focus(searchInput);
 
-      expect(await wrapper.findByText('.S. Senate')).toBeInTheDocument();
-      fireEvent.click(await wrapper.findByText('.S. Senate'));
+      expect(await wrapper.findByText('. Senate')).toBeInTheDocument();
+      fireEvent.click(await wrapper.findByText('. Senate'));
 
       await waitFor(() => {
         const events: any[] = fakeBoclipsClient.events.getEvents();
         const searchRelatedEvent: SearchQueryCompletionsSuggestedRequest =
           events.find((e) => e.searchUrl);
 
-        expect(searchRelatedEvent.searchQuery).toEqual('U');
+        expect(searchRelatedEvent.searchQuery).toEqual('U.S');
         expect(searchRelatedEvent.impressions).toEqual([
           'U.S. Senate',
           'U.S. Government',

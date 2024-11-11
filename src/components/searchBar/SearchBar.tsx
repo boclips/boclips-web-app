@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { trackSearchCompletionsSuggested } from 'src/components/common/analytics/Analytics';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { Constants } from 'src/AppConstants';
+import { useDebounce } from 'src/hooks/useDebounce';
 import s from './style.module.less';
 
 interface Props {
@@ -27,7 +28,9 @@ export const Search = ({ showIconOnly, onSearch }: Props) => {
   const [completionId, setCompletionId] = useState<string>(uuidv4());
   const [componentId] = useState<string>(uuidv4());
 
-  const { data: suggestions } = useGetSuggestionsQuery(searchTerm);
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
+  const { data: suggestions, isError: isSuggestionsError } =
+    useGetSuggestionsQuery(debouncedSearchTerm);
 
   const emitSuggestionCompletionsEvent = (searchUrl?: string) => {
     trackSearchCompletionsSuggested(
@@ -87,7 +90,10 @@ export const Search = ({ showIconOnly, onSearch }: Props) => {
         data-qa="search-input"
         onChange={searchBarChanged}
         suggestions={
-          searchTerm && searchTerm.length > 0 && suggestions?.phrases
+          searchTerm &&
+          searchTerm.length > 0 &&
+          !isSuggestionsError &&
+          suggestions?.phrases
         }
       />
     </div>
