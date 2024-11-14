@@ -1,7 +1,7 @@
 {
-  "name": "publishers",
+  "name": "boclips-web-app",
   "version": "1.0.0",
-  "description": "The publishers frontend app, v2",
+  "description": "The boclips-web-app frontend app",
   "main": "index.tsx",
   "scripts": {
     "audit": "check-audit",
@@ -24,14 +24,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/boclips/publishers.git"
+    "url": "git+https://github.com/boclips/boclips-web-app.git"
   },
   "author": "avrono",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/boclips/publishers/issues"
+    "url": "https://github.com/boclips/boclips-web-app/issues"
   },
-  "homepage": "https://github.com/boclips/publishers#readme",
+  "homepage": "https://github.com/boclips/boclips-web-app#readme",
   "engines": {
     "node": ">=20.17.0 <21"
   },
