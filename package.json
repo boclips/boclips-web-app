@@ -132,7 +132,6 @@
     "@tsparticles/preset-confetti": "^3.1.0",
     "@tsparticles/react": "^3.0.0",
     "@types/jest": "^29.5.14",
-    "@types/mixpanel": "^2.14.4",
     "@types/pendo-io-browser": "^2.19.0",
     "@types/react": "^18.3.12",
     "@types/react-beautiful-dnd": "^13.1.8",
