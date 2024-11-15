@@ -1,19 +1,19 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import Navbar from 'src/components/layout/Navbar';
-import Footer from 'src/components/layout/Footer';
-import { Layout } from 'src/components/layout/Layout';
-import { ThemeList } from 'src/components/alignments/explore/themeList/ThemeList';
-import { TypesMenu } from 'src/components/alignments/explore/explorePageMenu/TypesMenu';
+import Navbar from '@src/components/layout/Navbar';
+import Footer from '@src/components/layout/Footer';
+import { Layout } from '@src/components/layout/Layout';
+import { ThemeList } from '@src/components/alignments/explore/themeList/ThemeList';
+import { TypesMenu } from '@src/components/alignments/explore/explorePageMenu/TypesMenu';
 import {
   useGetProvidersQuery,
   useGetThemesByProviderQuery,
-} from 'src/hooks/api/alignmentsQuery';
-import ProviderPageHeader from 'src/components/alignments/explore/explorePageHeader/ProviderPageHeader';
+} from '@src/hooks/api/alignmentsQuery';
+import ProviderPageHeader from '@src/components/alignments/explore/explorePageHeader/ProviderPageHeader';
 import { useParams } from 'react-router';
-import NotFound from 'src/views/notFound/NotFound';
-import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
+import NotFound from '@src/views/notFound/NotFound';
+import { AlignmentContextProvider } from '@src/components/common/providers/AlignmentContextProvider';
 import { Helmet } from 'react-helmet';
-import { ExploreViewSkeleton } from 'src/views/alignments/explore/ExploreViewSkeleton';
+import { ExploreViewSkeleton } from '@src/views/alignments/explore/ExploreViewSkeleton';
 
 const ExploreView = () => {
   const ALL = 'All';

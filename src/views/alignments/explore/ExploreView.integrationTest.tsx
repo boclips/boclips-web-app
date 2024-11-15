@@ -3,15 +3,15 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { QueryClient } from '@tanstack/react-query';
 import { MemoryRouter } from 'react-router-dom';
-import App from 'src/App';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import App from '@src/App';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import userEvent from '@testing-library/user-event';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
-import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
+import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
 import {
   createTheme,
   setUpClientWithTheme,
-} from 'src/views/alignments/theme/ThemeTestSupport';
+} from '@src/views/alignments/theme/ThemeTestSupport';
 
 describe(`Explore view`, () => {
   it('renders loading skeletons before data is loaded', async () => {

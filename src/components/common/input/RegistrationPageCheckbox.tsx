@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
 import { Typography } from '@boclips-ui/typography';
-import ErrorIcon from 'src/resources/icons/error-icon.svg';
+import ErrorIcon from '@src/resources/icons/error-icon.svg';
 import c from 'classnames';
 import s from './style.module.less';
 

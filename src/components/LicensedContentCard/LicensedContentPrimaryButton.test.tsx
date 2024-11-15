@@ -2,14 +2,14 @@ import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 import LicensedContentFactory from 'boclips-api-client/dist/test-support/LicensedContentFactory';
 import { Link } from 'boclips-api-client/dist/types';
-import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import userEvent from '@testing-library/user-event';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import * as DownloadFileFromUrl from 'src/services/downloadFileFromUrl';
-import LicensedContentPrimaryButton from 'src/components/LicensedContentCard/LicensedContentPrimaryButton';
-import { lastEvent } from 'src/testSupport/lastEvent';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import * as DownloadFileFromUrl from '@src/services/downloadFileFromUrl';
+import LicensedContentPrimaryButton from '@src/components/LicensedContentCard/LicensedContentPrimaryButton';
+import { lastEvent } from '@src/testSupport/lastEvent';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 describe('LicensedContentCard', () => {

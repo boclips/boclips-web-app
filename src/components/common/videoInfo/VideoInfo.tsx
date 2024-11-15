@@ -2,7 +2,7 @@ import ReleasedOn from '@boclips-ui/released-on';
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import getFormattedDuration from 'src/services/getFormattedDuration';
+import getFormattedDuration from '@src/services/getFormattedDuration';
 import s from './style.module.less';
 
 interface Props {

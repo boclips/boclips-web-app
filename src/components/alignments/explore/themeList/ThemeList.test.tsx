@@ -1,10 +1,10 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { render } from 'src/testSupport/render';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { render } from '@src/testSupport/render';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import React from 'react';
-import { ThemeList } from 'src/components/alignments/explore/themeList/ThemeList';
-import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
-import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
+import { ThemeList } from '@src/components/alignments/explore/themeList/ThemeList';
+import { AlignmentContextProvider } from '@src/components/common/providers/AlignmentContextProvider';
+import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe('Theme list', () => {

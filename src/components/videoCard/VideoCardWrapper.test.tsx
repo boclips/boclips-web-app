@@ -1,10 +1,10 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import React from 'react';
-import { VideoCardWrapper } from 'src/components/videoCard/VideoCardWrapper';
+import { VideoCardWrapper } from '@src/components/videoCard/VideoCardWrapper';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
-import { render } from 'src/testSupport/render';
+import { render } from '@src/testSupport/render';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { VideoInteractedWith } from 'boclips-api-client/dist/sub-clients/events/model/EventRequest';
 import { act, fireEvent } from '@testing-library/react';
 import Button from '@boclips-ui/button';

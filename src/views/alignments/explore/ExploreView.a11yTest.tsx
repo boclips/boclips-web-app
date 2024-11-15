@@ -3,11 +3,11 @@ import { render } from '@testing-library/react';
 import React from 'react';
 import { QueryClient } from '@tanstack/react-query';
 import { MemoryRouter } from 'react-router-dom';
-import App from 'src/App';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import App from '@src/App';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { axe } from 'jest-axe';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
-import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
+import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
 
 describe(`Explore view`, () => {
   it(`has no violations`, async () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { act, render } from '@testing-library/react';
-import SkipLink from 'src/components/skipLink/SkipLink';
+import SkipLink from '@src/components/skipLink/SkipLink';
 
 describe('skip link', () => {
   it('adds class on focus', async () => {

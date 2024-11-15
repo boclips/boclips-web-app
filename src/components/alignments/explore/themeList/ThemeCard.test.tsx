@@ -1,18 +1,18 @@
-import { ThemeCard } from 'src/components/alignments/explore/themeList/ThemeCard';
+import { ThemeCard } from '@src/components/alignments/explore/themeList/ThemeCard';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
-import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
+import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
+import { AlignmentContextProvider } from '@src/components/common/providers/AlignmentContextProvider';
 import {
   TargetFactory,
   ThemeFactory,
   TopicFactory,
 } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 describe('ThemeCard', () => {

@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { SearchTopics } from 'src/components/searchResults/SearchTopics';
+import { SearchTopics } from '@src/components/searchResults/SearchTopics';
 import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
 import { FacetFactory } from 'boclips-api-client/dist/test-support/FacetsFactory';

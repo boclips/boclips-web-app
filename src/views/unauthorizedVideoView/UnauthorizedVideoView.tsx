@@ -1,20 +1,20 @@
 import React from 'react';
-import Footer from 'src/components/layout/Footer';
+import Footer from '@src/components/layout/Footer';
 import {
   useGetAnyParamFromLocation,
   useGetIdFromLocation,
   useGetNumberParamFromLocation,
-} from 'src/hooks/useLocationParams';
-import { useGetVideoWithReferer } from 'src/hooks/api/videoQuery';
-import { Loading } from 'src/components/common/Loading';
+} from '@src/hooks/useLocationParams';
+import { useGetVideoWithReferer } from '@src/hooks/api/videoQuery';
+import { Loading } from '@src/components/common/Loading';
 import { Helmet } from 'react-helmet';
-import { Layout } from 'src/components/layout/Layout';
-import { VideoPage } from 'src/components/videoPage/VideoPage';
-import ErrorView from 'src/views/error/ErrorView';
-import UnauthorizedNavbar from 'src/components/layout/UnauthorizedNavbar';
-import { PageNotFoundError } from 'src/components/common/errors/pageNotFound/PageNotFoundError';
+import { Layout } from '@src/components/layout/Layout';
+import { VideoPage } from '@src/components/videoPage/VideoPage';
+import ErrorView from '@src/views/error/ErrorView';
+import UnauthorizedNavbar from '@src/components/layout/UnauthorizedNavbar';
+import { PageNotFoundError } from '@src/components/common/errors/pageNotFound/PageNotFoundError';
 import { BoclipsApiError } from 'boclips-api-client/dist/types/BoclipsApiError';
-import { Constants } from 'src/AppConstants';
+import { Constants } from '@src/AppConstants';
 
 const UnauthorizedVideoView = () => {
   const videoId = useGetIdFromLocation('shared');

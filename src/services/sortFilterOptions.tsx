@@ -1,7 +1,7 @@
 import React from 'react';
-import { getFacetSorter } from 'src/services/sortFacets';
-import { SortBy } from 'src/types/SortBy';
-import { FilterOption } from 'src/types/FilterOption';
+import { getFacetSorter } from '@src/services/sortFacets';
+import { SortBy } from '@src/types/SortBy';
+import { FilterOption } from '@src/types/FilterOption';
 
 export const sortFilterOptions = (
   options: FilterOption[],

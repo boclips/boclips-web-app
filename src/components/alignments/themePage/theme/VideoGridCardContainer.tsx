@@ -1,8 +1,8 @@
 import { Video } from 'boclips-api-client/dist/types';
-import VideoGridCard from 'src/components/videoCard/VideoGridCard';
+import VideoGridCard from '@src/components/videoCard/VideoGridCard';
 import React from 'react';
-import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
-import { FilterKey } from 'src/types/search/FilterKey';
+import { useSearchQueryLocationParams } from '@src/hooks/useLocationParams';
+import { FilterKey } from '@src/types/search/FilterKey';
 import s from './VideoGridCardContainer.module.less';
 import { AlignmentVideoCardButtons } from './AlignmentVideoCardButtons';
 

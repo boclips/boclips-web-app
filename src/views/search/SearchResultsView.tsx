@@ -1,24 +1,24 @@
 import React, { useCallback, useState } from 'react';
-import { useSearchQuery } from 'src/hooks/api/useSearchQuery';
+import { useSearchQuery } from '@src/hooks/api/useSearchQuery';
 import {
   SearchFilters,
   useSearchQueryLocationParams,
-} from 'src/hooks/useLocationParams';
-import Navbar from 'src/components/layout/Navbar';
-import { FilterPanel } from 'src/components/filterPanel/FilterPanel';
-import { SearchResults } from 'src/components/searchResults/SearchResults';
-import Footer from 'src/components/layout/Footer';
-import { FilterKey } from 'src/types/search/FilterKey';
-import { NoSearchResults } from 'src/components/noResults/NoSearchResults';
-import { Loading } from 'src/components/common/Loading';
-import { useDebounce } from 'src/hooks/useDebounce';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { ErrorBoundary } from 'src/components/common/errors/ErrorBoundary';
-import RefreshPageError from 'src/components/common/errors/refreshPageError/RefreshPageError';
-import { Layout } from 'src/components/layout/Layout';
-import { ContentPackagePreviewBanner } from 'src/components/contentPackagePreviewBanner/ContentPackagePreviewBanner';
-import { useGetDisciplinesQuery } from 'src/hooks/api/disciplinesQuery';
-import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+} from '@src/hooks/useLocationParams';
+import Navbar from '@src/components/layout/Navbar';
+import { FilterPanel } from '@src/components/filterPanel/FilterPanel';
+import { SearchResults } from '@src/components/searchResults/SearchResults';
+import Footer from '@src/components/layout/Footer';
+import { FilterKey } from '@src/types/search/FilterKey';
+import { NoSearchResults } from '@src/components/noResults/NoSearchResults';
+import { Loading } from '@src/components/common/Loading';
+import { useDebounce } from '@src/hooks/useDebounce';
+import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
+import { ErrorBoundary } from '@src/components/common/errors/ErrorBoundary';
+import RefreshPageError from '@src/components/common/errors/refreshPageError/RefreshPageError';
+import { Layout } from '@src/components/layout/Layout';
+import { ContentPackagePreviewBanner } from '@src/components/contentPackagePreviewBanner/ContentPackagePreviewBanner';
+import { useGetDisciplinesQuery } from '@src/hooks/api/disciplinesQuery';
+import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 
 export const PAGE_SIZE = 30;
 

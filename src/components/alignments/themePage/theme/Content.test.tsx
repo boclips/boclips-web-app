@@ -1,14 +1,14 @@
 import React from 'react';
-import { renderWithClients } from 'src/testSupport/render';
-import { Content } from 'src/components/alignments/themePage/theme/Content';
-import { ThemeMobileMenuProvider } from 'src/components/common/providers/ThemeMobileMenuProvider';
+import { renderWithClients } from '@src/testSupport/render';
+import { Content } from '@src/components/alignments/themePage/theme/Content';
+import { ThemeMobileMenuProvider } from '@src/components/common/providers/ThemeMobileMenuProvider';
 import {
   chapterTitle,
   navigateTo,
-} from 'src/views/alignments/theme/ThemeTestSupport';
-import PaginationPanel from 'src/components/alignments/themePage/theme/pagination/PaginationPanel';
-import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
-import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
+} from '@src/views/alignments/theme/ThemeTestSupport';
+import PaginationPanel from '@src/components/alignments/themePage/theme/pagination/PaginationPanel';
+import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
+import { AlignmentContextProvider } from '@src/components/common/providers/AlignmentContextProvider';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 

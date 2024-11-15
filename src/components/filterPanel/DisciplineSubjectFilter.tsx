@@ -2,11 +2,11 @@ import React, { useMemo, useState } from 'react';
 import {
   DisciplinesWithSubjectsCheckboxFilter,
   HierarchicalFilterOption,
-} from 'src/components/filterPanel/filter/disciplineSubjectFilter/DisciplinesWithSubjectsCheckboxFilter';
-import { FilterOption } from 'src/types/FilterOption';
-import { searchFilterOptions } from 'src/services/sortFilterOptions';
-import { FilterSearch } from 'src/components/filterPanel/filter/FilterSearch';
-import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
+} from '@src/components/filterPanel/filter/disciplineSubjectFilter/DisciplinesWithSubjectsCheckboxFilter';
+import { FilterOption } from '@src/types/FilterOption';
+import { searchFilterOptions } from '@src/services/sortFilterOptions';
+import { FilterSearch } from '@src/components/filterPanel/filter/FilterSearch';
+import { useSearchQueryLocationParams } from '@src/hooks/useLocationParams';
 import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
 
 interface Props {

@@ -1,16 +1,16 @@
 import { Typography } from '@boclips-ui/typography';
-import BoCheckbox from 'src/components/common/input/BoCheckbox';
+import BoCheckbox from '@src/components/common/input/BoCheckbox';
 import React, { ChangeEvent, ReactElement, useEffect, useState } from 'react';
-import { DurationInput } from 'src/components/cart/AdditionalServices/Trim/DurationInput';
-import { Bodal } from 'src/components/common/bodal/Bodal';
+import { DurationInput } from '@src/components/cart/AdditionalServices/Trim/DurationInput';
+import { Bodal } from '@src/components/common/bodal/Bodal';
 import {
   durationInSeconds,
   isTrimFromValid,
   isTrimToValid,
-} from 'src/components/cart/AdditionalServices/Trim/trimValidation';
+} from '@src/components/cart/AdditionalServices/Trim/trimValidation';
 import { Duration } from 'dayjs/plugin/duration';
 import c from 'classnames';
-import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
+import { VideoPlayer } from '@src/components/videoCard/VideoPlayer';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
 import s from './style.module.less';
 

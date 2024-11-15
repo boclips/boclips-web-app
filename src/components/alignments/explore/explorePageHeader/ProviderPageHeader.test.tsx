@@ -1,8 +1,8 @@
 import React from 'react';
-import ProviderPageHeader from 'src/components/alignments/explore/explorePageHeader/ProviderPageHeader';
+import ProviderPageHeader from '@src/components/alignments/explore/explorePageHeader/ProviderPageHeader';
 import { fireEvent, render } from '@testing-library/react';
-import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
-import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
+import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
+import { AlignmentContextProvider } from '@src/components/common/providers/AlignmentContextProvider';
 import * as router from 'react-router';
 
 describe('Provider Page page Header', () => {

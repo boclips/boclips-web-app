@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { usePlaylistMutation } from 'src/hooks/api/playlistsQuery';
+import { usePlaylistMutation } from '@src/hooks/api/playlistsQuery';
 import {
   PlaylistFormProps,
   PlaylistModal,
-} from 'src/components/playlistModal/PlaylistModal';
+} from '@src/components/playlistModal/PlaylistModal';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 
 export interface Props {

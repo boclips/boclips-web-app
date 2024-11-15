@@ -1,7 +1,7 @@
 import React from 'react';
-import TypeMenuItemSkeleton from 'src/components/alignments/explore/explorePageMenu/TypeMenuItemSkeleton';
-import ThemeCardSkeleton from 'src/components/alignments/explore/themeList/ThemeCardSkeleton';
-import ProviderPageHeaderSkeleton from 'src/components/alignments/explore/explorePageHeader/ProviderPageHeaderSkeleton';
+import TypeMenuItemSkeleton from '@src/components/alignments/explore/explorePageMenu/TypeMenuItemSkeleton';
+import ThemeCardSkeleton from '@src/components/alignments/explore/themeList/ThemeCardSkeleton';
+import ProviderPageHeaderSkeleton from '@src/components/alignments/explore/explorePageHeader/ProviderPageHeaderSkeleton';
 
 export const ExploreViewSkeleton = () => {
   return (

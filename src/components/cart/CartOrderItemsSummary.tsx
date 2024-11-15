@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
-import { getTotalPrice } from 'src/services/getTotalPrice';
+import { getTotalPrice } from '@src/services/getTotalPrice';
 import { Cart as ApiCart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
-import { useGetVideos } from 'src/hooks/api/videoQuery';
+import { useGetVideos } from '@src/hooks/api/videoQuery';
 import { Typography } from '@boclips-ui/typography';
-import DisplayPrice from 'src/components/common/price/DisplayPrice';
+import DisplayPrice from '@src/components/common/price/DisplayPrice';
 import s from './style.module.less';
 
 interface Props {

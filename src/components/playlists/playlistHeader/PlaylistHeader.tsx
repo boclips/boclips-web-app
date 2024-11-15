@@ -1,15 +1,15 @@
 import React from 'react';
-import { PlaylistShareButton } from 'src/components/playlists/playlistHeader/shareButton/PlaylistShareButton';
+import { PlaylistShareButton } from '@src/components/playlists/playlistHeader/shareButton/PlaylistShareButton';
 import c from 'classnames';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
-import PlaylistDescription from 'src/components/playlists/PlaylistDescription';
+import PlaylistDescription from '@src/components/playlists/PlaylistDescription';
 import { Typography } from '@boclips-ui/typography';
-import PlaylistNavigation from 'src/components/playlists/PlaylistNavigation';
-import PlaylistLastUpdatedBadge from 'src/components/playlists/playlistHeader/PlaylistLastUpdatedBadge';
-import PlaylistOwnerBadge from 'src/components/playlists/playlistHeader/PlaylistOwnerBadge';
-import { FeatureGate } from 'src/components/common/FeatureGate';
+import PlaylistNavigation from '@src/components/playlists/PlaylistNavigation';
+import PlaylistLastUpdatedBadge from '@src/components/playlists/playlistHeader/PlaylistLastUpdatedBadge';
+import PlaylistOwnerBadge from '@src/components/playlists/playlistHeader/PlaylistOwnerBadge';
+import { FeatureGate } from '@src/components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import { PlaylistShareLinkButton } from 'src/components/shareLinkButton/PlaylistShareLinkButton';
+import { PlaylistShareLinkButton } from '@src/components/shareLinkButton/PlaylistShareLinkButton';
 import { OptionsButton } from './OptionsButton';
 import s from './style.module.less';
 

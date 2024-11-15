@@ -1,9 +1,9 @@
 import React from 'react';
-import { VideoAIMetadata } from 'src/components/videoPage/videoMetadata/types/VideoAIMetadata';
+import { VideoAIMetadata } from '@src/components/videoPage/videoMetadata/types/VideoAIMetadata';
 import c from 'classnames';
-import { useGetVideoLearningOutcomes } from 'src/hooks/api/videoAIMetadataQuery';
+import { useGetVideoLearningOutcomes } from '@src/hooks/api/videoAIMetadataQuery';
 import { Video } from 'boclips-api-client/dist/types';
-import AiMetadata from 'src/components/videoPage/videoMetadata/ai/AiMetadata';
+import AiMetadata from '@src/components/videoPage/videoMetadata/ai/AiMetadata';
 import s from '../style.module.less';
 
 interface Props {

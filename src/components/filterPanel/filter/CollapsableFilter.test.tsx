@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import React from 'react';
-import { CollapsableFilter } from 'src/components/filterPanel/filter/CollapsableFilter';
+import { CollapsableFilter } from '@src/components/filterPanel/filter/CollapsableFilter';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 

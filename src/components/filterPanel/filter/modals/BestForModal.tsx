@@ -1,7 +1,7 @@
-import { Bodal } from 'src/components/common/bodal/Bodal';
+import { Bodal } from '@src/components/common/bodal/Bodal';
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
-import { bestForInfo } from 'src/resources/bestFor';
+import { bestForInfo } from '@src/resources/bestFor';
 import s from './style.module.less';
 
 const BestForModal = ({ setOpen }) => {

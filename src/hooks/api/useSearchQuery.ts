@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { VideoSearchResults } from 'boclips-api-client/dist/sub-clients/videos/model/VideoSearchResults';
-import { DEFAULT_DURATIONS } from 'src/types/DefaultDurations';
+import { DEFAULT_DURATIONS } from '@src/types/DefaultDurations';
 import { BoclipsClient } from 'boclips-api-client';
-import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
+import { useBoclipsClient } from '@components/common/providers/BoclipsClientProvider';
 import { FilterKey } from 'src/types/search/FilterKey';
 import dayjs from 'dayjs';
 

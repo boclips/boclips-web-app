@@ -1,17 +1,17 @@
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import App from 'src/App';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import App from '@src/App';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import React from 'react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { resizeToDesktop } from 'src/testSupport/resizeTo';
+import { resizeToDesktop } from '@src/testSupport/resizeTo';
 import {
   chapterTitle,
   navigateTo,
   sectionTitle,
   setUpClientWithTheme,
   validateVisibleHeadings,
-} from 'src/views/alignments/theme/ThemeTestSupport';
+} from '@src/views/alignments/theme/ThemeTestSupport';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 
 describe('Openstax book view pagination buttons', () => {

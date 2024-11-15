@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import BoCheckbox from 'src/components/common/input/BoCheckbox';
+import BoCheckbox from '@src/components/common/input/BoCheckbox';
 
 describe('BoCheckbox', () => {
   it('renders label over name', () => {

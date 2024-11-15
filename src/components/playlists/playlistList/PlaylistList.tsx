@@ -5,8 +5,8 @@ import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable'
 import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collections/model/ListViewCollection';
 import React from 'react';
 import c from 'classnames';
-import PlaylistCard from 'src/components/playlists/PlaylistCard';
-import { PlaylistEmptyState } from 'src/components/playlists/emptyState/EmptyState';
+import PlaylistCard from '@src/components/playlists/PlaylistCard';
+import { PlaylistEmptyState } from '@src/components/playlists/emptyState/EmptyState';
 import s from '../style.module.less';
 import paginationStyles from '../../common/pagination/pagination.module.less';
 

@@ -1,26 +1,26 @@
 import Tooltip from '@boclips-ui/tooltip';
 import Button from '@boclips-ui/button';
-import PlaylistAddIcon from 'src/resources/icons/playlist-add.svg';
-import PlaylistAddAlreadyAddedIcon from 'src/resources/icons/playlist-add-already-added.svg';
+import PlaylistAddIcon from '@src/resources/icons/playlist-add.svg';
+import PlaylistAddAlreadyAddedIcon from '@src/resources/icons/playlist-add-already-added.svg';
 import React, { useRef, useState } from 'react';
-import CloseButton from 'src/resources/icons/cross-icon.svg';
+import CloseButton from '@src/resources/icons/cross-icon.svg';
 import {
   useAddToPlaylistMutation,
   useOwnAndEditableSharedPlaylistsQuery,
   useRemoveFromPlaylistMutation,
-} from 'src/hooks/api/playlistsQuery';
+} from '@src/hooks/api/playlistsQuery';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import c from 'classnames';
-import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
-import BoCheckbox from 'src/components/common/input/BoCheckbox';
+import CloseOnClickOutside from '@src/hooks/closeOnClickOutside';
+import BoCheckbox from '@src/components/common/input/BoCheckbox';
 import FocusTrap from 'focus-trap-react';
-import { handleEscapeKeyEvent } from 'src/services/handleKeyEvent';
-import { CreatePlaylistModal } from 'src/components/playlistModal/createPlaylist/CreatePlaylistModal';
-import { displayNotification } from 'src/components/common/notification/displayNotification';
-import PlusIcon from 'src/resources/icons/plus-sign.svg';
+import { handleEscapeKeyEvent } from '@src/services/handleKeyEvent';
+import { CreatePlaylistModal } from '@src/components/playlistModal/createPlaylist/CreatePlaylistModal';
+import { displayNotification } from '@src/components/common/notification/displayNotification';
+import PlusIcon from '@src/resources/icons/plus-sign.svg';
 import { Typography } from '@boclips-ui/typography';
-import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
+import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
 import { LoadingOutlined } from '@ant-design/icons';
 import s from './style.module.less';
 

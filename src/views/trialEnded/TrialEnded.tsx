@@ -1,12 +1,12 @@
-import { Layout } from 'src/components/layout/Layout';
-import { EmptyNavbar } from 'src/components/layout/EmptyNavbar';
-import Footer from 'src/components/layout/Footer';
+import { Layout } from '@src/components/layout/Layout';
+import { EmptyNavbar } from '@src/components/layout/EmptyNavbar';
+import Footer from '@src/components/layout/Footer';
 import React, { useEffect } from 'react';
-import { Hero } from 'src/components/hero/Hero';
-import TrialEndedSVG from 'src/resources/icons/trial-ended.svg';
+import { Hero } from '@src/components/hero/Hero';
+import TrialEndedSVG from '@src/resources/icons/trial-ended.svg';
 import Button from '@boclips-ui/button';
 import { Helmet } from 'react-helmet';
-import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
+import { usePlatformInteractedWithEvent } from '@src/hooks/usePlatformInteractedWithEvent';
 
 const TrialEnded = () => {
   const { mutate: trackEvent } = usePlatformInteractedWithEvent();

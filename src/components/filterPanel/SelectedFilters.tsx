@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import FilterBadge from '@boclips-ui/filter-badge';
-import { FilterKey } from 'src/types/search/FilterKey';
-import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
-import { getFilterLabel } from 'src/services/convertFacetsToFilterOptions';
-import { useGetChannelsQuery } from 'src/hooks/api/channelQuery';
-import { useGetSubjectsQuery } from 'src/hooks/api/subjectQuery';
-import { useGetEducationLevelsQuery } from 'src/hooks/api/educationLevelQuery';
+import { FilterKey } from '@src/types/search/FilterKey';
+import { useSearchQueryLocationParams } from '@src/hooks/useLocationParams';
+import { getFilterLabel } from '@src/services/convertFacetsToFilterOptions';
+import { useGetChannelsQuery } from '@src/hooks/api/channelQuery';
+import { useGetSubjectsQuery } from '@src/hooks/api/subjectQuery';
+import { useGetEducationLevelsQuery } from '@src/hooks/api/educationLevelQuery';
 import { VideoFacets } from 'boclips-api-client/dist/sub-clients/videos/model/VideoFacets';
 
 interface Props {

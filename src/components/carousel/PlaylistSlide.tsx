@@ -1,8 +1,8 @@
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Thumbnail from 'src/components/playlists/thumbnails/Thumbnail';
-import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
+import Thumbnail from '@src/components/playlists/thumbnails/Thumbnail';
+import { useFindOrGetVideo } from '@src/hooks/api/videoQuery';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 
 interface Props {

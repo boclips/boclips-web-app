@@ -10,8 +10,8 @@ import axios from 'axios';
 import { extraErrorDataIntegration } from '@sentry/integrations';
 import * as Sentry from '@sentry/react';
 import { browserTracingIntegration } from '@sentry/react';
-import AppUnauthenticated from 'src/AppUnauthenticated';
-import { FallbackApp } from 'src/FallbackApp';
+import { FallbackApp } from './FallbackApp';
+import AppUnauthenticated from './AppUnauthenticated';
 import App from './App';
 import { Constants } from './AppConstants';
 

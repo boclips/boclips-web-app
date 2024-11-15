@@ -1,6 +1,6 @@
 import { Typography } from '@boclips-ui/typography';
 import c from 'classnames';
-import s from 'src/components/classroom/registration/style.module.less';
+import s from '@src/components/classroom/registration/style.module.less';
 import React from 'react';
 
 interface Props {

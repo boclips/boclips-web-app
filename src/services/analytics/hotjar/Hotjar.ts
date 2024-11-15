@@ -1,4 +1,4 @@
-import { Constants } from 'src/AppConstants';
+import { Constants } from '@src/AppConstants';
 
 export default class Hotjar {
   private static readonly default: (

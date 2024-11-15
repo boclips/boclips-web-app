@@ -14,7 +14,6 @@ module.exports = merge(common, {
   },
   devServer: {
     static: path.join(__dirname, '../src/resources/'),
-    port: 9000,
     host: 'localhost',
     hot: true,
     historyApiFallback: true,

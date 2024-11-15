@@ -1,11 +1,11 @@
-import s from 'src/components/layout/navbar.module.less';
-import { FeatureGate } from 'src/components/common/FeatureGate';
-import { Link } from 'src/components/common/Link';
-import ExternalLinkIcon from 'src/resources/icons/external-link-icon.svg';
+import s from '@src/components/layout/navbar.module.less';
+import { FeatureGate } from '@src/components/common/FeatureGate';
+import { Link } from '@src/components/common/Link';
+import ExternalLinkIcon from '@src/resources/icons/external-link-icon.svg';
 import React from 'react';
 import c from 'classnames';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import LogoutButton from 'src/components/layout/logoutButton/LogoutButton';
+import LogoutButton from '@src/components/layout/logoutButton/LogoutButton';
 
 interface Props {
   hasSearchInNavbar?: boolean;

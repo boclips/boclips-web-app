@@ -1,16 +1,16 @@
 import { render, waitFor } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
-import { ROLES } from 'src/types/Roles';
+import { ROLES } from '@src/types/Roles';
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
-import EditTeamMemberModal from 'src/components/teamModal/EditTeamMemberModal';
+import EditTeamMemberModal from '@src/components/teamModal/EditTeamMemberModal';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 

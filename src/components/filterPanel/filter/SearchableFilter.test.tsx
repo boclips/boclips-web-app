@@ -1,9 +1,9 @@
-import { renderWithLocation } from 'src/testSupport/renderWithLocation';
+import { renderWithLocation } from '@src/testSupport/renderWithLocation';
 import { fireEvent, RenderResult } from '@testing-library/react';
 import React from 'react';
-import { SearchableFilter } from 'src/components/filterPanel/filter/SearchableFilter';
-import { FilterOption } from 'src/types/FilterOption';
-import { FilterOptionFactory } from 'src/testSupport/FilterOptionFactory';
+import { SearchableFilter } from '@src/components/filterPanel/filter/SearchableFilter';
+import { FilterOption } from '@src/types/FilterOption';
+import { FilterOptionFactory } from '@src/testSupport/FilterOptionFactory';
 
 describe('searchableFilter', () => {
   const channels: FilterOption[] = [

@@ -1,11 +1,11 @@
 import React from 'react';
-import { trackPageRendered } from 'src/components/common/analytics/Analytics';
+import { trackPageRendered } from '@src/components/common/analytics/Analytics';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { PageRenderedRequest } from 'boclips-api-client/dist/sub-clients/events/model/PageRenderedRequest';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import App from 'src/App';
+import App from '@src/App';
 
 describe('track page render event', () => {
   it('trackPageRendered calls ApiClient with url', () => {

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Header } from 'src/components/alignments/themePage/theme/Header';
+import { Header } from '@src/components/alignments/themePage/theme/Header';
 import { useLocation } from 'react-router-dom';
 import {
   getSelectedTarget,
   getSelectedTopic,
-} from 'src/components/alignments/themePage/helpers/themeNavigationHelpers';
+} from '@src/components/alignments/themePage/helpers/themeNavigationHelpers';
 import {
   TargetDetails,
   TargetInfo,
-} from 'src/components/alignments/themePage/theme/TargetDetails';
+} from '@src/components/alignments/themePage/theme/TargetDetails';
 import {
   Theme,
   Topic,

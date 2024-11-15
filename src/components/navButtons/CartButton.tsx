@@ -1,9 +1,9 @@
 import React from 'react';
-import { useCartQuery } from 'src/hooks/api/cartQuery';
+import { useCartQuery } from '@src/hooks/api/cartQuery';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import c from 'classnames';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
 import s from './style.module.less';
 import CartIcon from '../../resources/icons/cart-icon.svg';
 

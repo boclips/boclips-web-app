@@ -1,16 +1,16 @@
-import MyAccountSVG from 'src/resources/icons/user-icon.svg';
-import ExternalLinkIcon from 'src/resources/icons/external-link-icon.svg';
+import MyAccountSVG from '@src/resources/icons/user-icon.svg';
+import ExternalLinkIcon from '@src/resources/icons/external-link-icon.svg';
 import React, { useRef, useState } from 'react';
 import c from 'classnames';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { FeatureGate } from 'src/components/common/FeatureGate';
-import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
+import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
+import { FeatureGate } from '@src/components/common/FeatureGate';
+import CloseOnClickOutside from '@src/hooks/closeOnClickOutside';
 import { Typography } from '@boclips-ui/typography';
 import Button from '@boclips-ui/button';
-import { useGetUserQuery } from 'src/hooks/api/userQuery';
-import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import { useGetUserQuery } from '@src/hooks/api/userQuery';
+import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import LogoutButton from 'src/components/layout/logoutButton/LogoutButton';
+import LogoutButton from '@src/components/layout/logoutButton/LogoutButton';
 import { Link } from '../common/Link';
 import s from './newstyle.module.less';
 

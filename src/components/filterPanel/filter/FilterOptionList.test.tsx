@@ -1,9 +1,9 @@
 import React from 'react';
-import { renderWithLocation } from 'src/testSupport/renderWithLocation';
-import { FilterOptionFactory } from 'src/testSupport/FilterOptionFactory';
-import { FilterOptionList } from 'src/components/filterPanel/filter/FilterOptionList';
+import { renderWithLocation } from '@src/testSupport/renderWithLocation';
+import { FilterOptionFactory } from '@src/testSupport/FilterOptionFactory';
+import { FilterOptionList } from '@src/components/filterPanel/filter/FilterOptionList';
 import { fireEvent } from '@testing-library/react';
-import { FilterOption } from 'src/types/FilterOption';
+import { FilterOption } from '@src/types/FilterOption';
 
 describe('FilterOptionList', () => {
   const createFixtures = (fixturesToCreate: number) => {

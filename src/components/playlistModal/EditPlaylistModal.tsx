@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useEditPlaylistMutation } from 'src/hooks/api/playlistsQuery';
+import { useEditPlaylistMutation } from '@src/hooks/api/playlistsQuery';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import {
   PlaylistFormProps,
   PlaylistModal,
-} from 'src/components/playlistModal/PlaylistModal';
-import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
+} from '@src/components/playlistModal/PlaylistModal';
+import { usePlatformInteractedWithEvent } from '@src/hooks/usePlatformInteractedWithEvent';
 
 export interface Props {
   playlist: Collection;

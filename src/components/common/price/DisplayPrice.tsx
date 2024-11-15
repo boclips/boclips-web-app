@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import { Typography } from '@boclips-ui/typography';
 import { Price } from 'boclips-api-client/dist/sub-clients/videos/model/Price';
-import { createPriceDisplayValue } from 'src/services/createPriceDisplayValue';
-import { getBrowserLocale } from 'src/services/getBrowserLocale';
-import CreditsSVG from 'src/resources/icons/credits.svg';
+import { createPriceDisplayValue } from '@src/services/createPriceDisplayValue';
+import { getBrowserLocale } from '@src/services/getBrowserLocale';
+import CreditsSVG from '@src/resources/icons/credits.svg';
 import c from 'classnames';
 
 interface Props {

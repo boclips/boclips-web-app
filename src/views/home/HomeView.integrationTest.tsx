@@ -1,18 +1,18 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter, Router } from 'react-router-dom';
-import App from 'src/App';
+import App from '@src/App';
 import {
   CollectionAssetFactory,
   FakeBoclipsClient,
 } from 'boclips-api-client/dist/test-support';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { Helmet } from 'react-helmet';
 import { createBrowserHistory } from 'history';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { resizeToDesktop } from 'src/testSupport/resizeTo';
-import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
-import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+import { resizeToDesktop } from '@src/testSupport/resizeTo';
+import { createReactQueryClient } from '@src/testSupport/createReactQueryClient';
+import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';

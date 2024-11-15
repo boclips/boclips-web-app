@@ -1,9 +1,9 @@
 import React from 'react';
 import { Typography } from '@boclips-ui/typography';
 import c from 'classnames';
-import { FeatureGate } from 'src/components/common/FeatureGate';
+import { FeatureGate } from '@src/components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import { Constants } from 'src/AppConstants';
+import { Constants } from '@src/AppConstants';
 import s from './footer.module.less';
 
 interface Props {

@@ -1,13 +1,13 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import React from 'react';
-import { Search } from 'src/components/searchBar/SearchBar';
+import { Search } from '@src/components/searchBar/SearchBar';
 import { MemoryRouter, Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import { lastEvent } from 'src/testSupport/lastEvent';
+import { lastEvent } from '@src/testSupport/lastEvent';
 import { SearchQueryCompletionsSuggestedRequest } from 'boclips-api-client/dist/sub-clients/events/model/SearchQueryCompletionsSuggestedRequest';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
+import { queryClientConfig } from '@src/hooks/api/queryClientConfig';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 
 describe('SearchBar', () => {

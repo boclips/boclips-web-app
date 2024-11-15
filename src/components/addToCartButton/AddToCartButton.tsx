@@ -3,20 +3,20 @@ import {
   doAddToCart,
   doDeleteFromCart,
   useCartQuery,
-} from 'src/hooks/api/cartQuery';
+} from '@src/hooks/api/cartQuery';
 import { Cart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
 import Button from '@boclips-ui/button';
 import React from 'react';
 import c from 'classnames';
 import CartIcon from 'resources/icons/cart-icon.svg';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
 import {
   trackVideoAddedToCart,
   trackVideoRemovedFromCart,
-} from 'src/components/common/analytics/Analytics';
+} from '@src/components/common/analytics/Analytics';
 import { Video } from 'boclips-api-client/dist/types';
-import { displayNotification } from 'src/components/common/notification/displayNotification';
-import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import { displayNotification } from '@src/components/common/notification/displayNotification';
+import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import Tooltip from '@boclips-ui/tooltip';
 import s from './style.module.less';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';

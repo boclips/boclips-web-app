@@ -1,5 +1,5 @@
-import { useLocationParams } from 'src/hooks/useLocationParams';
-import { displayNotification } from 'src/components/common/notification/displayNotification';
+import { useLocationParams } from '@src/hooks/useLocationParams';
+import { displayNotification } from '@src/components/common/notification/displayNotification';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 

@@ -1,10 +1,10 @@
 import { render, waitFor } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { MemoryRouter, Router } from 'react-router-dom';
-import App from 'src/App';
+import App from '@src/App';
 import { createBrowserHistory } from 'history';
 
 describe('OrderConfirmationView', () => {

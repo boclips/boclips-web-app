@@ -1,10 +1,10 @@
 import React from 'react';
-import { renderWithClients } from 'src/testSupport/render';
-import { Header } from 'src/components/alignments/themePage/theme/Header';
+import { renderWithClients } from '@src/testSupport/render';
+import { Header } from '@src/components/alignments/themePage/theme/Header';
 import { RenderResult } from '@testing-library/react';
-import { ThemeMobileMenuProvider } from 'src/components/common/providers/ThemeMobileMenuProvider';
-import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
-import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
+import { ThemeMobileMenuProvider } from '@src/components/common/providers/ThemeMobileMenuProvider';
+import { AlignmentContextProvider } from '@src/components/common/providers/AlignmentContextProvider';
+import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
 
 describe('Theme Header', () => {
   it('shows theme and topic title', () => {

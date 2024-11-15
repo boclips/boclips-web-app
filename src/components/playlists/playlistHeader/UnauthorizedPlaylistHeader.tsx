@@ -1,9 +1,9 @@
 import React from 'react';
 import c from 'classnames';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
-import PlaylistDescription from 'src/components/playlists/PlaylistDescription';
+import PlaylistDescription from '@src/components/playlists/PlaylistDescription';
 import { Typography } from '@boclips-ui/typography';
-import PlaylistLastUpdatedBadge from 'src/components/playlists/playlistHeader/PlaylistLastUpdatedBadge';
+import PlaylistLastUpdatedBadge from '@src/components/playlists/playlistHeader/PlaylistLastUpdatedBadge';
 import s from './style.module.less';
 
 interface Props {

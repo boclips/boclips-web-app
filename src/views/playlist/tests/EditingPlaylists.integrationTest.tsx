@@ -7,10 +7,10 @@ import {
   within,
 } from '@testing-library/react';
 import { MemoryRouter, Router } from 'react-router-dom';
-import App from 'src/App';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import App from '@src/App';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import React from 'react';
-import { createAssetWithThumbnail } from 'src/testSupport/createAssetWithTumbnail';
+import { createAssetWithThumbnail } from '@src/testSupport/createAssetWithTumbnail';
 import {
   CollectionFactory,
   FakeBoclipsClient,
@@ -18,8 +18,8 @@ import {
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import userEvent from '@testing-library/user-event';
 import { QueryClient } from '@tanstack/react-query';
-import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
-import { lastEvent } from 'src/testSupport/lastEvent';
+import { createReactQueryClient } from '@src/testSupport/createReactQueryClient';
+import { lastEvent } from '@src/testSupport/lastEvent';
 
 describe('editing a playlist', () => {
   let client = null;

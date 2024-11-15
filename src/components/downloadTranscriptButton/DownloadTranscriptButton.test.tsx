@@ -2,11 +2,11 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import React from 'react';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { ToastContainer } from 'react-toastify';
-import { DownloadTranscriptButton } from 'src/components/downloadTranscriptButton/DownloadTranscriptButton';
+import { DownloadTranscriptButton } from '@src/components/downloadTranscriptButton/DownloadTranscriptButton';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
-import { sleep } from 'src/testSupport/sleep';
+import { sleep } from '@src/testSupport/sleep';
 import userEvent from '@testing-library/user-event';
 
 describe(`download transcript button`, () => {

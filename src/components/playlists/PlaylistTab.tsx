@@ -1,6 +1,6 @@
-import s from 'src/components/playlists/style.module.less';
-import SkeletonTiles from 'src/components/skeleton/Skeleton';
-import PlaylistList from 'src/components/playlists/playlistList/PlaylistList';
+import s from '@src/components/playlists/style.module.less';
+import SkeletonTiles from '@src/components/skeleton/Skeleton';
+import PlaylistList from '@src/components/playlists/playlistList/PlaylistList';
 import React, { useState } from 'react';
 import { Content } from '@radix-ui/react-tabs';
 

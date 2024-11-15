@@ -11,11 +11,11 @@
     "test-visual": "percy exec -- ./node_modules/.bin/cypress run",
     "test-visual:open": "start-server-and-test fake http://localhost:9000/ 'percy exec -- ./node_modules/.bin/cypress open'",
     "test-visual:wait": "percy build:wait -f --project f10a8acf/boclips-web-app --commit HEAD",
-    "dev": "NODE_ENV=development TAILWIND_MODE=watch webpack serve --config webpack/webpack.dev.js",
-    "local": "NODE_ENV=development TAILWIND_MODE=watch webpack serve --config webpack/webpack.local.js",
-    "fake": "NODE_ENV=development TAILWIND_MODE=watch webpack serve --config webpack/webpack.fake.js",
+    "dev": "NODE_ENV=development TAILWIND_MODE=watch vite serve --config vite/vite.dev.js -d",
+    "local": "NODE_ENV=development TAILWIND_MODE=watch vite serve --config webpack/webpack.local.js",
+    "fake": "NODE_ENV=development TAILWIND_MODE=watch vite serve --config webpack/webpack.fake.js",
     "compile": "tsc -p . --noEmit",
-    "build": "NODE_ENV=production webpack --config webpack/webpack.prod.js",
+    "build": "vite build",
     "analyse": "NODE_ENV=production webpack --config webpack/webpack.analyse.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --quiet",
     "lint:errors": "npm run lint --",
@@ -83,9 +83,9 @@
     "tailwindcss": "^3.4.15",
     "tailwindcss-debug-screens": "^2.2.1",
     "type-fest": "^4.18.2",
-    "webpack": "^5.96.1",
+    "vite-plugin-html": "^3.2.2",
+    "vite-plugin-html-purgecss": "^0.1.1",
     "webpack-bundle-analyzer": "^4.10.2",
-    "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
     "webpack-merge": "^5.10.0"
   },
@@ -124,6 +124,7 @@
     "@radix-ui/react-radio-group": "^1.2.1",
     "@radix-ui/react-tabs": "^1.1.1",
     "@radix-ui/react-tooltip": "^1.1.4",
+    "@rollup/plugin-image": "^3.0.3",
     "@sentry/integrations": "^7.114.0",
     "@sentry/react": "^7.111.0",
     "@sentry/tracing": "^7.114.0",
@@ -142,6 +143,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
+    "@vitejs/plugin-react": "^4.3.3",
     "antd": "4.20.0",
     "axios": "^0.28.1",
     "babel-loader": "^9.2.1",
@@ -181,6 +183,7 @@
     "ts-loader": "^9.5.0",
     "tsparticles": "^3.5.0",
     "typescript": "^5.6.3",
-    "urijs": "^1.19.11"
+    "urijs": "^1.19.11",
+    "vite": "^5.4.11"
   }
 }

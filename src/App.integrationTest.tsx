@@ -1,18 +1,18 @@
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { render, waitFor } from '@testing-library/react';
-import App from 'src/App';
+import App from '@src/App';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import React from 'react';
 import { MemoryRouter, Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import { AdminLinksFactory } from 'boclips-api-client/dist/test-support/AdminLinksFactory';
-import { lastEvent } from 'src/testSupport/lastEvent';
+import { lastEvent } from '@src/testSupport/lastEvent';
 
 describe('App', () => {
   const security: BoclipsSecurity = {

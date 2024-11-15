@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Bodal } from 'src/components/common/bodal/Bodal';
+import { Bodal } from '@src/components/common/bodal/Bodal';
 import { Typography } from '@boclips-ui/typography';
 import { Link } from 'boclips-api-client/dist/types';
-import BoCheckbox from 'src/components/common/input/BoCheckbox';
-import DownloadSVG from 'src/resources/icons/download-icon.svg';
-import { fetchFile } from 'src/services/downloadFileFromUrl';
+import BoCheckbox from '@src/components/common/input/BoCheckbox';
+import DownloadSVG from '@src/resources/icons/download-icon.svg';
+import { fetchFile } from '@src/services/downloadFileFromUrl';
 import s from './captions.module.less';
 
 interface Props {

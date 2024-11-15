@@ -5,13 +5,13 @@ import {
   convertToURLSearchParams,
   useLocationParams,
   useSearchQueryLocationParams,
-} from 'src/hooks/useLocationParams';
-import { useGetSuggestionsQuery } from 'src/hooks/api/suggestionsQuery';
+} from '@src/hooks/useLocationParams';
+import { useGetSuggestionsQuery } from '@src/hooks/api/suggestionsQuery';
 import { v4 as uuidv4 } from 'uuid';
-import { trackSearchCompletionsSuggested } from 'src/components/common/analytics/Analytics';
-import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
-import { Constants } from 'src/AppConstants';
-import { useDebounce } from 'src/hooks/useDebounce';
+import { trackSearchCompletionsSuggested } from '@src/components/common/analytics/Analytics';
+import { useBoclipsClient } from '@src/components/common/providers/BoclipsClientProvider';
+import { Constants } from '@src/AppConstants';
+import { useDebounce } from '@src/hooks/useDebounce';
 import s from './style.module.less';
 
 interface Props {

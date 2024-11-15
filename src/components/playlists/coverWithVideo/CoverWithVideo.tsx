@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
-import s from 'src/components/playlists/style.module.less';
+import { VideoPlayer } from '@src/components/videoCard/VideoPlayer';
+import s from '@src/components/playlists/style.module.less';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { Video as PlayerVideo } from 'boclips-player/dist/types/Video';
 import { BoclipsPlayer } from 'boclips-player/dist/BoclipsPlayer/BoclipsPlayer';
-import { handleEnterKeyEvent } from 'src/services/handleKeyEvent';
+import { handleEnterKeyEvent } from '@src/services/handleKeyEvent';
 
 export type OnSegmentPlayedEvent = (start: number, end: number) => void;
 

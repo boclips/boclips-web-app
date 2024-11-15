@@ -1,13 +1,13 @@
 import React, { ReactElement, useState } from 'react';
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
-import s from 'src/components/LicensedContentCard/styles.module.less';
-import { EmbedButton } from 'src/components/embedButton/EmbedButton';
+import s from '@src/components/LicensedContentCard/styles.module.less';
+import { EmbedButton } from '@src/components/embedButton/EmbedButton';
 import Button from '@boclips-ui/button';
-import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
-import { downloadFileFromUrl } from 'src/services/downloadFileFromUrl';
-import { displayNotification } from 'src/components/common/notification/displayNotification';
+import { useBoclipsClient } from '@src/components/common/providers/BoclipsClientProvider';
+import { downloadFileFromUrl } from '@src/services/downloadFileFromUrl';
+import { displayNotification } from '@src/components/common/notification/displayNotification';
 import { LoadingOutlined } from '@ant-design/icons';
-import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
+import { usePlatformInteractedWithEvent } from '@src/hooks/usePlatformInteractedWithEvent';
 import DownloadIconSVG from '../../resources/icons/download-icon.svg';
 
 interface Props {

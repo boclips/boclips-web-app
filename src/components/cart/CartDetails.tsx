@@ -1,7 +1,7 @@
 import React from 'react';
-import { doUpdateCartNote } from 'src/hooks/api/cartQuery';
-import { TextAreaWithDebounce } from 'src/components/cart/TextAreaWithDebounce';
-import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
+import { doUpdateCartNote } from '@src/hooks/api/cartQuery';
+import { TextAreaWithDebounce } from '@src/components/cart/TextAreaWithDebounce';
+import { useBoclipsClient } from '@src/components/common/providers/BoclipsClientProvider';
 import { useMutation } from '@tanstack/react-query';
 import { Cart as ApiCart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
 import CartItem from './CartItem/CartItem';

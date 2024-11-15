@@ -7,8 +7,8 @@ import {
 } from 'boclips-api-client/dist/test-support/CartsFactory';
 import { render } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import { OrderModal } from 'src/components/orderModal/OrderModal';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { OrderModal } from '@src/components/orderModal/OrderModal';
 import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
 

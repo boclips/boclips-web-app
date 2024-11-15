@@ -1,11 +1,11 @@
 import React from 'react';
-import { useCartQuery } from 'src/hooks/api/cartQuery';
+import { useCartQuery } from '@src/hooks/api/cartQuery';
 import { Video } from 'boclips-api-client/dist/types';
 import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
-import { AdditionalServicesSummaryPreview } from 'src/components/cart/AdditionalServices/AdditionalServicesSummaryPreview';
+import { AdditionalServicesSummaryPreview } from '@src/components/cart/AdditionalServices/AdditionalServicesSummaryPreview';
 import c from 'classnames';
 import { Typography } from '@boclips-ui/typography';
-import { PriceBadge } from 'src/components/common/price/PriceBadge';
+import { PriceBadge } from '@src/components/common/price/PriceBadge';
 import s from './style.module.less';
 
 interface Props {

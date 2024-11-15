@@ -1,17 +1,17 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
+import { queryClientConfig } from '@src/hooks/api/queryClientConfig';
 import React, { Suspense, useEffect, useState } from 'react';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { ApiBoclipsClient, BoclipsClient } from 'boclips-api-client';
 import { Route, Routes } from 'react-router-dom';
-import { lazyWithRetry } from 'src/services/lazyWithRetry';
+import { lazyWithRetry } from '@src/services/lazyWithRetry';
 import axios from 'axios';
-import { Constants } from 'src/AppConstants';
-import FallbackView from 'src/views/fallback/FallbackView';
+import { Constants } from '@src/AppConstants';
+import FallbackView from '@src/views/fallback/FallbackView';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { Loading } from 'src/components/common/Loading';
+import { Loading } from '@src/components/common/Loading';
 import { Helmet } from 'react-helmet';
-import NotFound from 'src/views/notFound/NotFound';
+import NotFound from '@src/views/notFound/NotFound';
 
 interface Props {
   reactQueryClient?: QueryClient;
@@ -19,19 +19,19 @@ interface Props {
 }
 
 const RegisterView = lazyWithRetry(
-  () => import('src/views/register/RegisterView'),
+  () => import('@src/views/register/RegisterView'),
 );
 
 const ClassroomRegisterView = lazyWithRetry(
-  () => import('src/views/classroom/register/ClassroomRegisterView'),
+  () => import('@src/views/classroom/register/ClassroomRegisterView'),
 );
 
 const UnauthorizedVideoView = lazyWithRetry(
-  () => import('src/views/unauthorizedVideoView/UnauthorizedVideoView'),
+  () => import('@src/views/unauthorizedVideoView/UnauthorizedVideoView'),
 );
 
 const UnauthorizedPlaylistView = lazyWithRetry(
-  () => import('src/views/unauthorizedPlaylistView/UnauthorizedPlaylistView'),
+  () => import('@src/views/unauthorizedPlaylistView/UnauthorizedPlaylistView'),
 );
 
 const queryClient = new QueryClient(queryClientConfig);

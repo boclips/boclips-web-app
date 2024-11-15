@@ -1,5 +1,5 @@
 import c from 'classnames';
-import s from 'src/components/playlists/comments/style.module.less';
+import s from '@src/components/playlists/comments/style.module.less';
 import React from 'react';
 
 const Bubble = ({

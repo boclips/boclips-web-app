@@ -7,8 +7,8 @@ import {
   within,
 } from '@testing-library/react';
 import { MemoryRouter, Route, Router, Routes } from 'react-router-dom';
-import App from 'src/App';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import App from '@src/App';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import React from 'react';
 import {
   CollectionAssetFactory,
@@ -20,13 +20,13 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { Link } from 'boclips-api-client/dist/types';
 import { createBrowserHistory, createMemoryHistory } from 'history';
-import PlaylistView from 'src/views/playlist/PlaylistView';
-import { FollowPlaylist } from 'src/services/followPlaylist';
+import PlaylistView from '@src/views/playlist/PlaylistView';
+import { FollowPlaylist } from '@src/services/followPlaylist';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
-import { CollectionFactory as collectionFactory } from 'src/testSupport/CollectionFactory';
-import { sleep } from 'src/testSupport/sleep';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
+import { CollectionFactory as collectionFactory } from '@src/testSupport/CollectionFactory';
+import { sleep } from '@src/testSupport/sleep';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 
 const createAssetWithThumbnail = (id: string, videoTitle: string) => {

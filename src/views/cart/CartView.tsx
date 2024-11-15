@@ -1,12 +1,12 @@
-import Navbar from 'src/components/layout/Navbar';
-import Footer from 'src/components/layout/Footer';
+import Navbar from '@src/components/layout/Navbar';
+import Footer from '@src/components/layout/Footer';
 import React from 'react';
-import { useCartQuery } from 'src/hooks/api/cartQuery';
-import { Cart } from 'src/components/cart/Cart';
-import { Loading } from 'src/components/common/Loading';
-import { EmptyCart } from 'src/components/cart/EmptyCart';
-import { Layout } from 'src/components/layout/Layout';
-import PageHeader from 'src/components/pageTitle/PageHeader';
+import { useCartQuery } from '@src/hooks/api/cartQuery';
+import { Cart } from '@src/components/cart/Cart';
+import { Loading } from '@src/components/common/Loading';
+import { EmptyCart } from '@src/components/cart/EmptyCart';
+import { Layout } from '@src/components/layout/Layout';
+import PageHeader from '@src/components/pageTitle/PageHeader';
 
 const CartView = () => {
   const { data: cart, isInitialLoading: isCartLoading } = useCartQuery();

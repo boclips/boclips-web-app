@@ -1,12 +1,12 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import App from 'src/App';
+import App from '@src/App';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { BoclipsClient } from 'boclips-api-client';
-import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import { QueryClient } from '@tanstack/react-query';
 import { Link } from 'boclips-api-client/dist/types';
 

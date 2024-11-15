@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import YesNo from 'src/components/common/yesNo/YesNo';
+import YesNo from '@src/components/common/yesNo/YesNo';
 import userEvent from '@testing-library/user-event';
 
 describe('YesNo', () => {

@@ -1,11 +1,11 @@
-import { render } from 'src/testSupport/render';
-import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { render } from '@src/testSupport/render';
+import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import React from 'react';
-import Logo from 'src/components/logo/Logo';
+import Logo from '@src/components/logo/Logo';
 import {
   AccountType,
   Product,

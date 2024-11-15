@@ -1,8 +1,8 @@
 import React from 'react';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
-import { Bodal } from 'src/components/common/bodal/Bodal';
+import { Bodal } from '@src/components/common/bodal/Bodal';
 import { Typography } from '@boclips-ui/typography';
-import { useUnfollowPlaylistMutation } from 'src/hooks/api/playlistsQuery';
+import { useUnfollowPlaylistMutation } from '@src/hooks/api/playlistsQuery';
 import s from './style.module.less';
 
 export interface Props {

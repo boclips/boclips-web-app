@@ -1,5 +1,5 @@
 import React from 'react';
-import InfoSVG from 'src/resources/icons/info.svg';
+import InfoSVG from '@src/resources/icons/info.svg';
 import Tooltip from '@boclips-ui/tooltip';
 
 interface Props {

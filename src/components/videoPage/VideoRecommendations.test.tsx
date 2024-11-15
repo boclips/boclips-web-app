@@ -2,11 +2,11 @@ import { fireEvent, waitFor } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import React from 'react';
-import VideoRecommendations from 'src/components/videoPage/VideoRecommendations';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { render } from 'src/testSupport/render';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
-import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import VideoRecommendations from '@src/components/videoPage/VideoRecommendations';
+import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
+import { render } from '@src/testSupport/render';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
+import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
 

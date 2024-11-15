@@ -1,6 +1,6 @@
-import { VideoCardButtons } from 'src/components/videoCard/buttons/VideoCardButtons';
+import { VideoCardButtons } from '@src/components/videoCard/buttons/VideoCardButtons';
 import React from 'react';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { Link } from 'boclips-api-client/dist/types';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';

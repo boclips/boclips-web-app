@@ -3,7 +3,7 @@ import { Cart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
 import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
 import { AdditionalServices } from 'boclips-api-client/dist/sub-clients/carts/model/AdditionalServices';
 import { BoclipsClient } from 'boclips-api-client';
-import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
+import { useBoclipsClient } from '@components/common/providers/BoclipsClientProvider';
 import { Video } from 'boclips-api-client/dist/types';
 
 const doGetCart = (client: BoclipsClient) => client.carts.getCart();

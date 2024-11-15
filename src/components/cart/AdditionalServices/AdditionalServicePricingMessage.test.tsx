@@ -1,8 +1,8 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { render } from '@testing-library/react';
 import React from 'react';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import { AdditionalServicesPricingMessage } from 'src/components/cart/AdditionalServices/AdditionalServicesPricingMessage';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { AdditionalServicesPricingMessage } from '@src/components/cart/AdditionalServices/AdditionalServicesPricingMessage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 describe(`AdditionalServicePricingMessage`, () => {

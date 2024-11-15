@@ -1,6 +1,6 @@
 import React from 'react';
 import { Cart as ApiCart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
-import { CartValidationProvider } from 'src/components/common/providers/CartValidationProvider';
+import { CartValidationProvider } from '@src/components/common/providers/CartValidationProvider';
 import { CartOrderSummary } from './CartOrderSummary';
 import { CartDetails } from './CartDetails';
 

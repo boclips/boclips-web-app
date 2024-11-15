@@ -1,7 +1,7 @@
 import { VideoFacets } from 'boclips-api-client/dist/sub-clients/videos/model/VideoFacets';
-import { FilterOption } from 'src/types/FilterOption';
-import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
-import { convertFacetsToFilterOptions } from 'src/services/convertFacetsToFilterOptions';
+import { FilterOption } from '@src/types/FilterOption';
+import { useSearchQueryLocationParams } from '@src/hooks/useLocationParams';
+import { convertFacetsToFilterOptions } from '@src/services/convertFacetsToFilterOptions';
 
 export interface Filters {
   subjects: FilterOption[];

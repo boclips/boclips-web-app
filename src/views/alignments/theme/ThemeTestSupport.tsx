@@ -4,7 +4,7 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { v4 as uuidv4 } from 'uuid';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
-import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
+import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
 
 export const getTableOfContent = (theme: Theme, wrapper: RenderResult) =>
   wrapper.queryByLabelText(`Table of contents of ${theme.title}`);

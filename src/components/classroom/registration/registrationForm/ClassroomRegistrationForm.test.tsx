@@ -7,8 +7,8 @@ import {
 import React from 'react';
 import ClassroomRegistrationForm, {
   ClassroomRegistrationData,
-} from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+} from '@src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
@@ -20,7 +20,7 @@ import {
   SchoolMode,
   setDropdownValue,
   setTextFieldValue,
-} from 'src/components/classroom/registration/registrationForm/classroomRegistrationFormTestHelpers';
+} from '@src/components/classroom/registration/registrationForm/classroomRegistrationFormTestHelpers';
 import { BrowserRouter as Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 

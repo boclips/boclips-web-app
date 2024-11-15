@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
+import { useBoclipsClient } from '@components/common/providers/BoclipsClientProvider';
 
 export const usePlatformInteractedWithEvent = () => {
   const client = useBoclipsClient();

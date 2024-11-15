@@ -1,15 +1,15 @@
 import React from 'react';
-import Navbar from 'src/components/layout/Navbar';
-import Footer from 'src/components/layout/Footer';
-import { useGetIdFromLocation } from 'src/hooks/useLocationParams';
-import { useFindOrGetOrder } from 'src/hooks/api/orderQuery';
-import { Loading } from 'src/components/common/Loading';
-import { OrderPage } from 'src/components/orderPage/OrderPage';
-import { ErrorBoundary } from 'src/components/common/errors/ErrorBoundary';
-import RefreshPageError from 'src/components/common/errors/refreshPageError/RefreshPageError';
-import { OrderHeader } from 'src/components/orderPage/OrderHeader';
+import Navbar from '@src/components/layout/Navbar';
+import Footer from '@src/components/layout/Footer';
+import { useGetIdFromLocation } from '@src/hooks/useLocationParams';
+import { useFindOrGetOrder } from '@src/hooks/api/orderQuery';
+import { Loading } from '@src/components/common/Loading';
+import { OrderPage } from '@src/components/orderPage/OrderPage';
+import { ErrorBoundary } from '@src/components/common/errors/ErrorBoundary';
+import RefreshPageError from '@src/components/common/errors/refreshPageError/RefreshPageError';
+import { OrderHeader } from '@src/components/orderPage/OrderHeader';
 import { Helmet } from 'react-helmet';
-import { Layout } from 'src/components/layout/Layout';
+import { Layout } from '@src/components/layout/Layout';
 
 const OrderHelmet = ({ orderId }: { orderId?: string }) => {
   return <>{orderId && <Helmet title={`Order ${orderId}`} />}</>;

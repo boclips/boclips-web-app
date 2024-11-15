@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { Bodal } from 'src/components/common/bodal/Bodal';
-import MarketingInfoForm from 'src/components/welcome/MarketingInfoForm';
-import InvitedUserInfo from 'src/components/welcome/InvitedUserInfo';
-import { useGetUserQuery, useUpdateSelfUser } from 'src/hooks/api/userQuery';
+import { Bodal } from '@src/components/common/bodal/Bodal';
+import MarketingInfoForm from '@src/components/welcome/MarketingInfoForm';
+import InvitedUserInfo from '@src/components/welcome/InvitedUserInfo';
+import { useGetUserQuery, useUpdateSelfUser } from '@src/hooks/api/userQuery';
 import {
   UpdateUserRequest,
   UserType,
 } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
-import { displayNotification } from 'src/components/common/notification/displayNotification';
-import { useUpdateAccount } from 'src/hooks/api/accountQuery';
+import { displayNotification } from '@src/components/common/notification/displayNotification';
+import { useUpdateAccount } from '@src/hooks/api/accountQuery';
 import { UpdateAccountRequest } from 'boclips-api-client/dist/sub-clients/accounts/model/UpdateAccountRequest';
-import { TermsAndConditionsCheckbox } from 'src/components/common/TermsAndConditionsCheckbox';
+import { TermsAndConditionsCheckbox } from '@src/components/common/TermsAndConditionsCheckbox';
 
 export interface MarketingInfo {
   audiences: string[];

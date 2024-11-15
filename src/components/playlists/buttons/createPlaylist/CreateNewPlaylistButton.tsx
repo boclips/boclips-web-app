@@ -1,11 +1,11 @@
 import Button from '@boclips-ui/button';
-import PlusSign from 'src/resources/icons/plus-sign.svg';
+import PlusSign from '@src/resources/icons/plus-sign.svg';
 import React, { useState } from 'react';
-import { CreatePlaylistModal } from 'src/components/playlistModal/createPlaylist/CreatePlaylistModal';
+import { CreatePlaylistModal } from '@src/components/playlistModal/createPlaylist/CreatePlaylistModal';
 import { useNavigate } from 'react-router-dom';
-import { displayNotification } from 'src/components/common/notification/displayNotification';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import { displayNotification } from '@src/components/common/notification/displayNotification';
+import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
+import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 
 const CreateNewPlaylistButton = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);

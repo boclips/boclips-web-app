@@ -6,10 +6,10 @@ import {
   CollectionAssetFactory,
   FakeBoclipsClient,
 } from 'boclips-api-client/dist/test-support';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { MemoryRouter } from 'react-router-dom';
-import UnauthorizedPlaylistView from 'src/views/unauthorizedPlaylistView/UnauthorizedPlaylistView';
-import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+import UnauthorizedPlaylistView from '@src/views/unauthorizedPlaylistView/UnauthorizedPlaylistView';
+import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 
 describe('Unauthorized Playlist View', () => {
   it('should display playlist when valid referer is provided', async () => {

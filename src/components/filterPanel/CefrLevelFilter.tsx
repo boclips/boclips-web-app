@@ -1,7 +1,7 @@
 import React from 'react';
-import { FilterOption } from 'src/types/FilterOption';
-import { CheckboxFilter } from 'src/components/filterPanel/filter/CheckboxFilter';
-import { sortFilterOptions } from 'src/services/sortFilterOptions';
+import { FilterOption } from '@src/types/FilterOption';
+import { CheckboxFilter } from '@src/components/filterPanel/filter/CheckboxFilter';
+import { sortFilterOptions } from '@src/services/sortFilterOptions';
 
 interface Props {
   options: FilterOption[];

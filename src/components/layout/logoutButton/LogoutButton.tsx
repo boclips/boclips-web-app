@@ -1,5 +1,5 @@
-import { Constants } from 'src/AppConstants';
-import { useBoclipsSecurity } from 'src/components/common/providers/BoclipsSecurityProvider';
+import { Constants } from '@src/AppConstants';
+import { useBoclipsSecurity } from '@src/components/common/providers/BoclipsSecurityProvider';
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
 

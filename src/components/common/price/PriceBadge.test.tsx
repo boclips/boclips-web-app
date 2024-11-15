@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import { PriceBadge } from 'src/components/common/price/PriceBadge';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { PriceBadge } from '@src/components/common/price/PriceBadge';
 import React from 'react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';

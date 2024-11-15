@@ -1,5 +1,5 @@
 import React from 'react';
-import { FilterOption } from 'src/types/FilterOption';
+import { FilterOption } from '@src/types/FilterOption';
 
 export class FilterOptionFactory {
   static sample(option: Partial<FilterOption>): FilterOption {

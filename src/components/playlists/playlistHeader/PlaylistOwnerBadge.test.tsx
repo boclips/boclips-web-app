@@ -1,10 +1,10 @@
 import { render, RenderResult } from '@testing-library/react';
 import React from 'react';
-import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import { MemoryRouter } from 'react-router-dom';
-import PlaylistOwnerBadge from 'src/components/playlists/playlistHeader/PlaylistOwnerBadge';
+import PlaylistOwnerBadge from '@src/components/playlists/playlistHeader/PlaylistOwnerBadge';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';

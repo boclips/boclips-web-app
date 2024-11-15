@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react';
-import { CheckboxFilter } from 'src/components/filterPanel/filter/CheckboxFilter';
-import { FilterSearch } from 'src/components/filterPanel/filter/FilterSearch';
-import { FilterOption } from 'src/types/FilterOption';
-import { searchFilterOptions } from 'src/services/sortFilterOptions';
+import { CheckboxFilter } from '@src/components/filterPanel/filter/CheckboxFilter';
+import { FilterSearch } from '@src/components/filterPanel/filter/FilterSearch';
+import { FilterOption } from '@src/types/FilterOption';
+import { searchFilterOptions } from '@src/services/sortFilterOptions';
 
 interface Props {
   title: string;

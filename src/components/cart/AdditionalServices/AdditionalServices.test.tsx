@@ -1,12 +1,12 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import AdditionalServices from 'src/components/cart/AdditionalServices/AdditionalServices';
+import AdditionalServices from '@src/components/cart/AdditionalServices/AdditionalServices';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { CartItemFactory } from 'boclips-api-client/dist/test-support/CartsFactory';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { CartValidationProvider } from 'src/components/common/providers/CartValidationProvider';
+import { CartValidationProvider } from '@src/components/common/providers/CartValidationProvider';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 
 describe('AdditionalServices component', () => {

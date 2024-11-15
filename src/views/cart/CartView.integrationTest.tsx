@@ -8,18 +8,18 @@ import {
   cleanup,
 } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import App from 'src/App';
+import App from '@src/App';
 import React from 'react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { BoclipsApiErrorFactory } from 'boclips-api-client/dist/test-support/BoclipsApiErrorFactory';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
-import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
+import { queryClientConfig } from '@src/hooks/api/queryClientConfig';
 import { QueryClient } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet';
 import userEvent from '@testing-library/user-event';
-import { lastEvent } from 'src/testSupport/lastEvent';
+import { lastEvent } from '@src/testSupport/lastEvent';
 
 afterEach(cleanup);
 

@@ -8,9 +8,9 @@ import {
   Label,
 } from '@headlessui/react';
 import React, { useEffect, useState } from 'react';
-import ChevronDownIcon from 'src/resources/icons/chevron-down.svg';
-import ErrorIcon from 'src/resources/icons/error-icon.svg';
-import PlusIcon from 'src/resources/icons/plus-sign.svg';
+import ChevronDownIcon from '@src/resources/icons/chevron-down.svg';
+import ErrorIcon from '@src/resources/icons/error-icon.svg';
+import PlusIcon from '@src/resources/icons/plus-sign.svg';
 import s from './style.module.less';
 
 export enum ComboboxMode {

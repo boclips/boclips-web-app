@@ -1,9 +1,9 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
+import { useBoclipsClient } from '@components/common/providers/BoclipsClientProvider';
 import { BoclipsClient } from 'boclips-api-client';
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
-import { SEARCH_BASE_KEY } from 'src/hooks/api/useSearchQuery';
+import { SEARCH_BASE_KEY } from '@src/hooks/api/useSearchQuery';
 
 export const doGetVideos = (videoIds: string[], apiClient: BoclipsClient) => {
   return apiClient.videos

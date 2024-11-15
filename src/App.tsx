@@ -2,24 +2,24 @@ import React, { Suspense, useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { BoclipsClient } from 'boclips-api-client';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { Loading } from 'src/components/common/Loading';
+import { Loading } from '@src/components/common/Loading';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
-import { trackPageRendered } from 'src/components/common/analytics/Analytics';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import ScrollToTop from 'src/hooks/scrollToTop';
+import { queryClientConfig } from '@src/hooks/api/queryClientConfig';
+import { trackPageRendered } from '@src/components/common/analytics/Analytics';
+import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
+import ScrollToTop from '@src/hooks/scrollToTop';
 import { Helmet } from 'react-helmet';
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
-import { lazyWithRetry } from 'src/services/lazyWithRetry';
-import { FollowPlaylist } from 'src/services/followPlaylist';
-import UserAttributes from 'src/services/analytics/hotjar/UserAttributes';
-import { FeatureGate } from 'src/components/common/FeatureGate';
-import FallbackView from 'src/views/fallback/FallbackView';
-import { RedirectFromExploreToAlignments } from 'src/components/alignments/RedirectFromExploreToAlignments';
+import { lazyWithRetry } from '@src/services/lazyWithRetry';
+import { FollowPlaylist } from '@src/services/followPlaylist';
+import UserAttributes from '@src/services/analytics/hotjar/UserAttributes';
+import { FeatureGate } from '@src/components/common/FeatureGate';
+import FallbackView from '@src/views/fallback/FallbackView';
+import { RedirectFromExploreToAlignments } from '@src/components/alignments/RedirectFromExploreToAlignments';
 import * as Sentry from '@sentry/browser';
 import { ToastContainer } from 'react-toastify';
-import { RedirectFromSparksToAlignments } from 'src/components/alignments/RedirectFromSparksToAlignments';
-import { AccessGate } from 'src/components/common/errors/AccessGate';
+import { RedirectFromSparksToAlignments } from '@src/components/alignments/RedirectFromSparksToAlignments';
+import { AccessGate } from '@src/components/common/errors/AccessGate';
 import { BoclipsClientProvider } from './components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSecurityProvider';
 import { GlobalQueryErrorProvider } from './components/common/providers/GlobalQueryErrorProvider';
@@ -39,63 +39,63 @@ const SearchResultsView = lazyWithRetry(
 
 const HomeView = lazyWithRetry(() => import('./views/home/HomeView'));
 
-const CartView = lazyWithRetry(() => import('src/views/cart/CartView'));
+const CartView = lazyWithRetry(() => import('@src/views/cart/CartView'));
 
-const OrdersView = lazyWithRetry(() => import('src/views/orders/OrdersView'));
+const OrdersView = lazyWithRetry(() => import('@src/views/orders/OrdersView'));
 
 const ContentView = lazyWithRetry(
-  () => import('src/views/licenses/LicensesView'),
+  () => import('@src/views/licenses/LicensesView'),
 );
 
-const OrderView = lazyWithRetry(() => import('src/views/order/OrderView'));
+const OrderView = lazyWithRetry(() => import('@src/views/order/OrderView'));
 
-const VideoView = lazyWithRetry(() => import('src/views/video/VideoView'));
+const VideoView = lazyWithRetry(() => import('@src/views/video/VideoView'));
 
 const OrderConfirmationView = lazyWithRetry(
-  () => import('src/views/orders/orderConfirmation/OrderConfirmationView'),
+  () => import('@src/views/orders/orderConfirmation/OrderConfirmationView'),
 );
 
-const ErrorView = lazyWithRetry(() => import('src/views/error/ErrorView'));
+const ErrorView = lazyWithRetry(() => import('@src/views/error/ErrorView'));
 
-const NotFound = lazyWithRetry(() => import('src/views/notFound/NotFound'));
+const NotFound = lazyWithRetry(() => import('@src/views/notFound/NotFound'));
 
 const AccessDeniedView = lazyWithRetry(
-  () => import('src/views/accessDenied/AccessDenied'),
+  () => import('@src/views/accessDenied/AccessDenied'),
 );
 
 const PlaylistsView = lazyWithRetry(
-  () => import('src/views/playlists/PlaylistsView'),
+  () => import('@src/views/playlists/PlaylistsView'),
 );
 
 const PlaylistView = lazyWithRetry(
-  () => import('src/views/playlist/PlaylistView'),
+  () => import('@src/views/playlist/PlaylistView'),
 );
 
 const ExploreView = lazyWithRetry(
-  () => import('src/views/alignments/explore/ExploreView'),
+  () => import('@src/views/alignments/explore/ExploreView'),
 );
 
 const AlignmentsView = lazyWithRetry(
-  () => import('src/views/alignments/AlignmentsView'),
+  () => import('@src/views/alignments/AlignmentsView'),
 );
 
 const ThemeView = lazyWithRetry(
-  () => import('src/views/alignments/theme/ThemeView'),
+  () => import('@src/views/alignments/theme/ThemeView'),
 );
 
 const RegisterView = lazyWithRetry(
-  () => import('src/views/register/RegisterView'),
+  () => import('@src/views/register/RegisterView'),
 );
 
 const ClassroomRegisterView = lazyWithRetry(
-  () => import('src/views/classroom/register/ClassroomRegisterView'),
+  () => import('@src/views/classroom/register/ClassroomRegisterView'),
 );
 
 const MyProfileView = lazyWithRetry(
-  () => import('src/views/profile/ProfileView'),
+  () => import('@src/views/profile/ProfileView'),
 );
 
-const MyTeamView = lazyWithRetry(() => import('src/views/team/TeamView'));
+const MyTeamView = lazyWithRetry(() => import('@src/views/team/TeamView'));
 
 interface Props {
   apiClient: BoclipsClient;
@@ -113,6 +113,7 @@ const App = ({
   const currentLocation = useLocation();
 
   useEffect(() => {
+    console.log(apiClient.users.getCurrentUser());
     apiClient.users.getCurrentUser().then((user) => {
       AnalyticsFactory.pendo().identify(user);
       AnalyticsFactory.hotjar().userAttributes(new UserAttributes(user));

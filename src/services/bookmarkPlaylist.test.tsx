@@ -1,6 +1,6 @@
-import { FollowPlaylist } from 'src/services/followPlaylist';
+import { FollowPlaylist } from '@src/services/followPlaylist';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
 
 describe('bookmark playlist', () => {

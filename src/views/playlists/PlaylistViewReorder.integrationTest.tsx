@@ -10,8 +10,8 @@ import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFa
 import { Link } from 'boclips-api-client/dist/types';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import App from 'src/App';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import App from '@src/App';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import userEvent from '@testing-library/user-event';
 
 const createAssetWithThumbnail = (id: string, videoTitle: string) => {

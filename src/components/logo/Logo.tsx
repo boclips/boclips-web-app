@@ -1,9 +1,9 @@
-import { useGetUserQuery } from 'src/hooks/api/userQuery';
-import LibraryLogoSVG from 'src/resources/icons/library-logo.svg';
-import ClassroomLogoSVG from 'src/resources/icons/classroom-logo.svg';
+import { useGetUserQuery } from '@src/hooks/api/userQuery';
+import LibraryLogoSVG from '@src/resources/icons/library-logo.svg';
+import ClassroomLogoSVG from '@src/resources/icons/classroom-logo.svg';
 import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-import { FeatureGate } from 'src/components/common/FeatureGate';
+import { FeatureGate } from '@src/components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import s from './style.module.less';
 

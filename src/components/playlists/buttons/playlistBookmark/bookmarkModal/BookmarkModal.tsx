@@ -1,17 +1,17 @@
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { Segment } from 'boclips-api-client/dist/sub-clients/collections/model/Segment';
-import formatDuration from 'src/components/playlists/buttons/playlistBookmark/helpers/formatDuration';
+import formatDuration from '@src/components/playlists/buttons/playlistBookmark/helpers/formatDuration';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import {
   durationInSeconds,
   isTrimFromValid,
   isTrimToValid,
-} from 'src/components/cart/AdditionalServices/Trim/trimValidation';
+} from '@src/components/cart/AdditionalServices/Trim/trimValidation';
 import { Typography } from '@boclips-ui/typography';
-import { Bodal } from 'src/components/common/bodal/Bodal';
-import BoCheckbox from 'src/components/common/input/BoCheckbox';
-import { DurationInput } from 'src/components/cart/AdditionalServices/Trim/DurationInput';
-import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
+import { Bodal } from '@src/components/common/bodal/Bodal';
+import BoCheckbox from '@src/components/common/input/BoCheckbox';
+import { DurationInput } from '@src/components/cart/AdditionalServices/Trim/DurationInput';
+import { VideoPlayer } from '@src/components/videoCard/VideoPlayer';
 
 interface BookmarkModalProps {
   onCancel: () => void;

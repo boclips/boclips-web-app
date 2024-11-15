@@ -1,8 +1,8 @@
 import { fireEvent, render } from '@testing-library/react';
-import { CaptionsModal } from 'src/components/LicensedContentCard/CaptionsModal';
+import { CaptionsModal } from '@src/components/LicensedContentCard/CaptionsModal';
 import React from 'react';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
-import * as DownloadFileFromUrl from 'src/services/downloadFileFromUrl';
+import * as DownloadFileFromUrl from '@src/services/downloadFileFromUrl';
 
 describe(`captions modal`, () => {
   it(`displays info about captions processing when no link provided`, () => {

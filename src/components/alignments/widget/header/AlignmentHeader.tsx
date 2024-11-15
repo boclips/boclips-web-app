@@ -1,7 +1,7 @@
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
-import SparksLeftSVG from 'src/resources/sparks/sparks-left.svg';
-import SparksRightSVG from 'src/resources/sparks/sparks-right.svg';
+import SparksLeftSVG from '@src/resources/sparks/sparks-left.svg';
+import SparksRightSVG from '@src/resources/sparks/sparks-right.svg';
 import c from 'classnames';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import s from './alignmentHeader.module.less';

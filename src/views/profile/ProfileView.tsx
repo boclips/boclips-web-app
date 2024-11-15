@@ -1,20 +1,20 @@
-import { Layout } from 'src/components/layout/Layout';
-import Navbar from 'src/components/layout/Navbar';
+import { Layout } from '@src/components/layout/Layout';
+import Navbar from '@src/components/layout/Navbar';
 import React, { useState } from 'react';
-import PageHeader from 'src/components/pageTitle/PageHeader';
-import Footer from 'src/components/layout/Footer';
+import PageHeader from '@src/components/pageTitle/PageHeader';
+import Footer from '@src/components/layout/Footer';
 import { Helmet } from 'react-helmet';
 import { Typography } from '@boclips-ui/typography';
-import { useGetUserQuery } from 'src/hooks/api/userQuery';
-import UserIcon from 'src/resources/icons/user-icon.svg';
-import HomeIcon from 'src/resources/icons/home-icon.svg';
+import { useGetUserQuery } from '@src/hooks/api/userQuery';
+import UserIcon from '@src/resources/icons/user-icon.svg';
+import HomeIcon from '@src/resources/icons/home-icon.svg';
 import c from 'classnames';
 import Button from '@boclips-ui/button';
-import PencilSVG from 'src/resources/icons/pencil.svg';
-import EditPersonalProfileModal from 'src/views/profile/EditPersonalProfileModal';
+import PencilSVG from '@src/resources/icons/pencil.svg';
+import EditPersonalProfileModal from '@src/views/profile/EditPersonalProfileModal';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import { FeatureGate } from 'src/components/common/FeatureGate';
-import getFormattedDate from 'src/services/getFormattedDate';
+import { FeatureGate } from '@src/components/common/FeatureGate';
+import getFormattedDate from '@src/services/getFormattedDate';
 import s from './style.module.less';
 
 const ProfileView = () => {

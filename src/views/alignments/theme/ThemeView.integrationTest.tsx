@@ -6,9 +6,9 @@ import {
   within,
 } from '@testing-library/react';
 import { MemoryRouter, Router } from 'react-router-dom';
-import App from 'src/App';
+import App from '@src/App';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import React from 'react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { createBrowserHistory } from 'history';
@@ -16,13 +16,13 @@ import {
   resizeToDesktop,
   resizeToMobile,
   resizeToTablet,
-} from 'src/testSupport/resizeTo';
+} from '@src/testSupport/resizeTo';
 import {
   createTheme,
   getTableOfContent,
   setUpClientWithTheme,
   validateVisibleHeadings,
-} from 'src/views/alignments/theme/ThemeTestSupport';
+} from '@src/views/alignments/theme/ThemeTestSupport';
 import { v4 as uuidv4 } from 'uuid';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import {
@@ -30,7 +30,7 @@ import {
   ThemeFactory,
 } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import userEvent from '@testing-library/user-event';
-import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
+import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
 
 describe('ThemeView', () => {
   it('renders loading skeletons before data is loaded', async () => {

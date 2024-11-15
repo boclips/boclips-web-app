@@ -1,4 +1,4 @@
-import { useGetUserQuery } from 'src/hooks/api/userQuery';
+import { useGetUserQuery } from '@src/hooks/api/userQuery';
 import { FeatureKey } from 'boclips-api-client/dist/sub-clients/common/model/FeatureKey';
 
 type UserFeatures = {

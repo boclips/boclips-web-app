@@ -6,10 +6,10 @@ import {
   within,
 } from '@testing-library/react';
 import React from 'react';
-import { OptionsButton } from 'src/components/playlists/playlistHeader/OptionsButton';
-import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+import { OptionsButton } from '@src/components/playlists/playlistHeader/OptionsButton';
+import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import userEvent from '@testing-library/user-event';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import {
   CollectionAssetFactory,
   FakeBoclipsClient,
@@ -24,7 +24,7 @@ import {
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 import { MemoryRouter } from 'react-router-dom';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
-import { lastEvent } from 'src/testSupport/lastEvent';
+import { lastEvent } from '@src/testSupport/lastEvent';
 
 describe('OptionsButton', () => {
   it('emits event when Options button is clicked', async () => {

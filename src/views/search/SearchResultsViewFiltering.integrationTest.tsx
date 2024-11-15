@@ -3,7 +3,7 @@ import {
   FakeBoclipsClient,
   SubjectFactory,
 } from 'boclips-api-client/dist/test-support';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import {
   FacetFactory,
   FacetsFactory,
@@ -18,9 +18,9 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
-import App from 'src/App';
+import App from '@src/App';
 import React from 'react';
-import dayjs from 'src/day-js';
+import dayjs from '@src/day-js';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
 import { QueryClient } from '@tanstack/react-query';

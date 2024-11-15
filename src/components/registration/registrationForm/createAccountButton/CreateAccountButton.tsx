@@ -1,4 +1,4 @@
-import s from 'src/components/registration/style.module.less';
+import s from '@src/components/registration/style.module.less';
 import Button from '@boclips-ui/button';
 import React, { ReactElement } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';

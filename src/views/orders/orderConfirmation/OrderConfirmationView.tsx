@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
-import Navbar from 'src/components/layout/Navbar';
-import Footer from 'src/components/layout/Footer';
+import Navbar from '@src/components/layout/Navbar';
+import Footer from '@src/components/layout/Footer';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Layout } from 'src/components/layout/Layout';
+import { Layout } from '@src/components/layout/Layout';
 import Button from '@boclips-ui/button';
-import { Hero } from 'src/components/hero/Hero';
-import OrderConfirmedSVG from 'src/resources/icons/order-confirmed.svg';
+import { Hero } from '@src/components/hero/Hero';
+import OrderConfirmedSVG from '@src/resources/icons/order-confirmed.svg';
 import { Typography } from '@boclips-ui/typography';
 import { Helmet } from 'react-helmet';
-import useFeatureFlags from 'src/hooks/useFeatureFlags';
-import { FeatureGate } from 'src/components/common/FeatureGate';
+import useFeatureFlags from '@src/hooks/useFeatureFlags';
+import { FeatureGate } from '@src/components/common/FeatureGate';
 
 const OrderConfirmationView = () => {
   const { features, isLoading } = useFeatureFlags();

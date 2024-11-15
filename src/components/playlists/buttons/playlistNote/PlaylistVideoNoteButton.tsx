@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@boclips-ui/button';
 import { Video } from 'boclips-api-client/dist/types';
-import PencilSVG from 'src/resources/icons/pencil.svg';
+import PencilSVG from '@src/resources/icons/pencil.svg';
 import {
   useEditPlaylistMutation,
   usePlaylistQuery,
-} from 'src/hooks/api/playlistsQuery';
-import { displayNotification } from 'src/components/common/notification/displayNotification';
-import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
-import NoteModal from 'src/components/playlists/buttons/playlistNote/noteModal/NoteModal';
+} from '@src/hooks/api/playlistsQuery';
+import { displayNotification } from '@src/components/common/notification/displayNotification';
+import { usePlatformInteractedWithEvent } from '@src/hooks/usePlatformInteractedWithEvent';
+import NoteModal from '@src/components/playlists/buttons/playlistNote/noteModal/NoteModal';
 import { Notes } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';
 import s from '../style.module.less';
 

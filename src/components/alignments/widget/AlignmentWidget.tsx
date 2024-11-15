@@ -1,8 +1,8 @@
 import React from 'react';
-import { AlignmentHeader } from 'src/components/alignments/widget/header/AlignmentHeader';
-import AlignmentCard from 'src/components/alignments/widget/card/AlignmentCard';
-import { useGetProvidersQuery } from 'src/hooks/api/alignmentsQuery';
-import { AlignmentWidgetSkeleton } from 'src/components/alignments/widget/AlignmentWidgetSkeleton';
+import { AlignmentHeader } from '@src/components/alignments/widget/header/AlignmentHeader';
+import AlignmentCard from '@src/components/alignments/widget/card/AlignmentCard';
+import { useGetProvidersQuery } from '@src/hooks/api/alignmentsQuery';
+import { AlignmentWidgetSkeleton } from '@src/components/alignments/widget/AlignmentWidgetSkeleton';
 import s from './alignmentWidget.module.less';
 
 export const AlignmentWidget = () => {

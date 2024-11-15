@@ -3,10 +3,10 @@ import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/
 import { Typography } from '@boclips-ui/typography';
 import c from 'classnames';
 import Button from '@boclips-ui/button';
-import PencilSVG from 'src/resources/icons/pencil.svg';
+import PencilSVG from '@src/resources/icons/pencil.svg';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import BinSVG from 'src/resources/icons/bin.svg';
-import { FeatureGate } from 'src/components/common/FeatureGate';
+import BinSVG from '@src/resources/icons/bin.svg';
+import { FeatureGate } from '@src/components/common/FeatureGate';
 import s from './style.module.less';
 
 interface UserInformationFieldProps {

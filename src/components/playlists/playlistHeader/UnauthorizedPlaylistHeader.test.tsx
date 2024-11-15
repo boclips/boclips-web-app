@@ -1,12 +1,12 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import { MemoryRouter } from 'react-router-dom';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
-import UnauthorizedPlaylistHeader from 'src/components/playlists/playlistHeader/UnauthorizedPlaylistHeader';
+import UnauthorizedPlaylistHeader from '@src/components/playlists/playlistHeader/UnauthorizedPlaylistHeader';
 
 describe('Unauthorized Playlist Header', () => {
   Object.assign(navigator, {

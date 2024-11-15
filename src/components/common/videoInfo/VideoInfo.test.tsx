@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import { VideoInfo } from 'src/components/common/videoInfo/VideoInfo';
+import { VideoInfo } from '@src/components/common/videoInfo/VideoInfo';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import dayjs from 'dayjs';

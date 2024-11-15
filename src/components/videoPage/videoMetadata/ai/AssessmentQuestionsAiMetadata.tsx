@@ -1,10 +1,10 @@
 import React from 'react';
-import { VideoAIMetadata } from 'src/components/videoPage/videoMetadata/types/VideoAIMetadata';
+import { VideoAIMetadata } from '@src/components/videoPage/videoMetadata/types/VideoAIMetadata';
 import c from 'classnames';
-import { useGetVideoAssessmentQuestions } from 'src/hooks/api/videoAIMetadataQuery';
+import { useGetVideoAssessmentQuestions } from '@src/hooks/api/videoAIMetadataQuery';
 import { Video } from 'boclips-api-client/dist/types';
-import AiMetadata from 'src/components/videoPage/videoMetadata/ai/AiMetadata';
-import { FeatureGate } from 'src/components/common/FeatureGate';
+import AiMetadata from '@src/components/videoPage/videoMetadata/ai/AiMetadata';
+import { FeatureGate } from '@src/components/common/FeatureGate';
 import s from '../style.module.less';
 
 interface Props {

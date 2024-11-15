@@ -4,7 +4,7 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { Link } from 'boclips-api-client/dist/types';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { AlignmentVideoCardButtons } from './AlignmentVideoCardButtons';

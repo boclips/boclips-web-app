@@ -1,9 +1,9 @@
 import React from 'react';
 import { fireEvent, waitFor } from '@testing-library/react';
-import { CheckboxFilter } from 'src/components/filterPanel/filter/CheckboxFilter';
-import { renderWithLocation } from 'src/testSupport/renderWithLocation';
-import { FilterOption } from 'src/types/FilterOption';
-import { FilterOptionFactory } from 'src/testSupport/FilterOptionFactory';
+import { CheckboxFilter } from '@src/components/filterPanel/filter/CheckboxFilter';
+import { renderWithLocation } from '@src/testSupport/renderWithLocation';
+import { FilterOption } from '@src/types/FilterOption';
+import { FilterOptionFactory } from '@src/testSupport/FilterOptionFactory';
 
 describe('filterPanel', () => {
   const generateOptions = (optionNumber: number): FilterOption[] => {

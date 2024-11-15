@@ -1,9 +1,9 @@
 import React from 'react';
-import { Layout } from 'src/components/layout/Layout';
+import { Layout } from '@src/components/layout/Layout';
 import { Helmet } from 'react-helmet';
-import { ClassroomRegistration } from 'src/components/classroom/registration/ClassroomRegistration';
+import { ClassroomRegistration } from '@src/components/classroom/registration/ClassroomRegistration';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
-import InvisibleNavbar from 'src/components/common/invisibleNavbar/InvisibleNavbar';
+import InvisibleNavbar from '@src/components/common/invisibleNavbar/InvisibleNavbar';
 
 const ClassroomRegistrationView = () => {
   const breakpoints = useMediaBreakPoint();

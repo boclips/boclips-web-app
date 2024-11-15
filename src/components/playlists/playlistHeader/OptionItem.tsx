@@ -1,6 +1,6 @@
 import React from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import s from 'src/components/playlists/playlistHeader/style.module.less';
+import s from '@src/components/playlists/playlistHeader/style.module.less';
 import { Typography } from '@boclips-ui/typography';
 
 interface Props {

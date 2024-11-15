@@ -2,8 +2,8 @@ import {
   CollectionAssetFactory,
   FakeBoclipsClient,
 } from 'boclips-api-client/dist/test-support';
-import { render } from 'src/testSupport/render';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { render } from '@src/testSupport/render';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import {
   fireEvent,
   RenderResult,
@@ -12,12 +12,12 @@ import {
 } from '@testing-library/react';
 import React from 'react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
-import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+import { AddToPlaylistButton } from '@src/components/addToPlaylistButton/AddToPlaylistButton';
+import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import userEvent from '@testing-library/user-event';
 import { ToastContainer } from 'react-toastify';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
+import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 
 describe('Add to playlist button', () => {
   const asset = CollectionAssetFactory.sample({

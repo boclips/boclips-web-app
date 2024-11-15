@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FilterHeader } from 'src/components/filterPanel/filter/FilterHeader';
+import { FilterHeader } from '@src/components/filterPanel/filter/FilterHeader';
 
 interface Props {
   title: string;

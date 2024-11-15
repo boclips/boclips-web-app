@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import React, { ReactElement } from 'react';
-import AppInitializer from 'src/index';
+import AppInitializer from '@src/index';
 import MockedBoclipsSecurity from 'boclips-js-security';
 
 jest.mock('boclips-js-security', () => ({

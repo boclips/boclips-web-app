@@ -1,13 +1,13 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import {
   CollectionAssetFactory,
   FakeBoclipsClient,
 } from 'boclips-api-client/dist/test-support';
 import { render, RenderResult, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import App from 'src/App';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import App from '@src/App';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 

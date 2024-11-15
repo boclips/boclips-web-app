@@ -1,14 +1,14 @@
 import { Video } from 'boclips-api-client/dist/types';
 import List from 'antd/lib/list';
-import { PAGE_SIZE } from 'src/views/search/SearchResultsView';
+import { PAGE_SIZE } from '@src/views/search/SearchResultsView';
 import React from 'react';
-import { VideoCardWrapper } from 'src/components/videoCard/VideoCardWrapper';
+import { VideoCardWrapper } from '@src/components/videoCard/VideoCardWrapper';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import Pagination from '@boclips-ui/pagination';
 import c from 'classnames';
-import { VideoCardButtons } from 'src/components/videoCard/buttons/VideoCardButtons';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import { VideoCardButtons } from '@src/components/videoCard/buttons/VideoCardButtons';
+import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
+import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import s from '../common/pagination/pagination.module.less';
 
 interface Props {

@@ -1,13 +1,13 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { MemoryRouter, Router } from 'react-router-dom';
-import App from 'src/App';
+import App from '@src/App';
 import { QueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { createBrowserHistory } from 'history';
 import { Helmet } from 'react-helmet';
-import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
+import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
 
 describe('Alignments landing page', () => {
   it('renders loading skeletons before data is loaded', async () => {

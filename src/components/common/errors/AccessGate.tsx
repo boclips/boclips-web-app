@@ -1,13 +1,13 @@
 import React from 'react';
-import { AdminLinksKey, FeatureGate } from 'src/components/common/FeatureGate';
-import { lazyWithRetry } from 'src/services/lazyWithRetry';
+import { lazyWithRetry } from '@src/services/lazyWithRetry';
+import { AdminLinksKey, FeatureGate } from '@src/components/common/FeatureGate';
 
 const AccessDeniedView = lazyWithRetry(
-  () => import('src/views/accessDenied/AccessDenied'),
+  () => import('@src/views/accessDenied/AccessDenied'),
 );
 
 const TrialEndedView = lazyWithRetry(
-  () => import('src/views/trialEnded/TrialEnded'),
+  () => import('@src/views/trialEnded/TrialEnded'),
 );
 
 interface Props {

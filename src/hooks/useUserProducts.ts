@@ -1,4 +1,4 @@
-import { useGetUserQuery } from 'src/hooks/api/userQuery';
+import { useGetUserQuery } from '@src/hooks/api/userQuery';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 type Products = {

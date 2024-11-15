@@ -2,14 +2,14 @@ import {
   CollectionAssetFactory,
   FakeBoclipsClient,
 } from 'boclips-api-client/dist/test-support';
-import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import { render } from '@testing-library/react';
 import React from 'react';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForProduct';
-import FeaturedPlaylists from 'src/components/carousel/FeaturedPlaylists';
+import FeaturedPlaylists from '@src/components/carousel/FeaturedPlaylists';
 
 describe(`PromotedPlaylists`, () => {
   it(`renders all playlists promoted for product`, async () => {

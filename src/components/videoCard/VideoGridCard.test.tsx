@@ -1,11 +1,11 @@
-import VideoGridCard from 'src/components/videoCard/VideoGridCard';
+import VideoGridCard from '@src/components/videoCard/VideoGridCard';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { fireEvent, render, waitFor, within } from '@testing-library/react';
 import React from 'react';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { MemoryRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import userEvent from '@testing-library/user-event';

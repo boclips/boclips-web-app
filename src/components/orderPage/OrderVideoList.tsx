@@ -1,4 +1,4 @@
-import { OrderItemCard } from 'src/components/orderPage/OrderItemCard';
+import { OrderItemCard } from '@src/components/orderPage/OrderItemCard';
 import React from 'react';
 import { Order } from 'boclips-api-client/dist/sub-clients/orders/model/Order';
 

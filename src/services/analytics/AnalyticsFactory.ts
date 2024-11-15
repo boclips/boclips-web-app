@@ -1,6 +1,6 @@
-import HotjarService from 'src/services/analytics/hotjar/HotjarService';
-import Hotjar from 'src/services/analytics/hotjar/Hotjar';
-import { PendoService } from 'src/services/analytics/pendo/PendoService';
+import HotjarService from '@src/services/analytics/hotjar/HotjarService';
+import Hotjar from '@src/services/analytics/hotjar/Hotjar';
+import { PendoService } from '@src/services/analytics/pendo/PendoService';
 
 export default class AnalyticsFactory {
   private static pendoService: PendoService;

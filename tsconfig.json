@@ -16,7 +16,9 @@
     "paths": {
       "src/*": ["*"],
       "resources/*": ["../resources/*"],
-      "test-support/*": ["../test-support/*"]
+      "components/*": ["../components/*"],
+      "test-support/*": ["../test-support/*"],
+      "@src/*": ["./*"],
     }
   },
   "exclude": ["cypress", "node_modules", "dist"]

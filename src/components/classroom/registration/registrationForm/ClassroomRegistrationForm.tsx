@@ -1,15 +1,15 @@
 import React, { useRef, useState } from 'react';
 import { Typography } from '@boclips-ui/typography';
-import { useAddNewClassroomUser } from 'src/hooks/api/userQuery';
+import { useAddNewClassroomUser } from '@src/hooks/api/userQuery';
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
-import { displayNotification } from 'src/components/common/notification/displayNotification';
+import { displayNotification } from '@src/components/common/notification/displayNotification';
 import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
-import ClassroomRegistrationFormFields from 'src/components/classroom/registration/registrationForm/registrationFormFields/ClassroomRegistrationFormFields';
-import CreateAccountButton from 'src/components/classroom/registration/registrationForm/createAccountButton/CreateAccountButton';
-import FormValidator from 'src/components/classroom/registration/registrationForm/validation/validation';
+import ClassroomRegistrationFormFields from '@src/components/classroom/registration/registrationForm/registrationFormFields/ClassroomRegistrationFormFields';
+import CreateAccountButton from '@src/components/classroom/registration/registrationForm/createAccountButton/CreateAccountButton';
+import FormValidator from '@src/components/classroom/registration/registrationForm/validation/validation';
 import { Link } from 'react-router-dom';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
 import s from '../style.module.less';
 
 export interface ClassroomRegistrationData {

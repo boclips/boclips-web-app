@@ -2,7 +2,7 @@ import React from 'react';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { Typography } from '@boclips-ui/typography';
 import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collections/model/ListViewCollection';
-import { useGetUserQuery } from 'src/hooks/api/userQuery';
+import { useGetUserQuery } from '@src/hooks/api/userQuery';
 import s from './style.module.less';
 
 interface Props {

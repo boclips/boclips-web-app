@@ -1,15 +1,15 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import React from 'react';
-import { render } from 'src/testSupport/render';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
-import NavbarResponsive from 'src/components/layout/Navbar';
+import { render } from '@src/testSupport/render';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
+import NavbarResponsive from '@src/components/layout/Navbar';
 import { fireEvent, waitFor } from '@testing-library/react';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import {
   resizeToDesktop,
   resizeToMobile,
   resizeToTablet,
-} from 'src/testSupport/resizeTo';
+} from '@src/testSupport/resizeTo';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 import {
   AccountStatus,

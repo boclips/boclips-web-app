@@ -2,10 +2,10 @@ import React from 'react';
 import {
   DisciplinesWithSubjectsCheckboxFilter,
   HierarchicalFilterOption,
-} from 'src/components/filterPanel/filter/disciplineSubjectFilter/DisciplinesWithSubjectsCheckboxFilter';
-import { renderWithLocation } from 'src/testSupport/renderWithLocation';
-import { FilterOption } from 'src/types/FilterOption';
-import { FilterOptionFactory } from 'src/testSupport/FilterOptionFactory';
+} from '@src/components/filterPanel/filter/disciplineSubjectFilter/DisciplinesWithSubjectsCheckboxFilter';
+import { renderWithLocation } from '@src/testSupport/renderWithLocation';
+import { FilterOption } from '@src/types/FilterOption';
+import { FilterOptionFactory } from '@src/testSupport/FilterOptionFactory';
 import { fireEvent } from '@testing-library/react';
 
 describe('DisciplinesWithSubjectsCheckboxFilter', () => {

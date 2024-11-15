@@ -7,10 +7,10 @@ import {
   within,
 } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import App from 'src/App';
-import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
+import App from '@src/App';
+import { createReactQueryClient } from '@src/testSupport/createReactQueryClient';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import userEvent from '@testing-library/user-event';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';

@@ -1,9 +1,9 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { render } from 'src/testSupport/render';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { render } from '@src/testSupport/render';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import React from 'react';
-import { CollectionFactory } from 'src/testSupport/CollectionFactory';
-import { UnfollowPlaylistModal } from 'src/components/playlistModal/UnfollowPlaylistModal';
+import { CollectionFactory } from '@src/testSupport/CollectionFactory';
+import { UnfollowPlaylistModal } from '@src/components/playlistModal/UnfollowPlaylistModal';
 
 describe('Unfollow playlist modal', () => {
   it('displays a confirmation about playlist unfollow', async () => {

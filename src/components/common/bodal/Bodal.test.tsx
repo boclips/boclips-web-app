@@ -1,6 +1,6 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
-import { Bodal } from 'src/components/common/bodal/Bodal';
+import { Bodal } from '@src/components/common/bodal/Bodal';
 import { InputText } from '@boclips-ui/input';
 import userEvent from '@testing-library/user-event';
 

@@ -1,7 +1,7 @@
 import { ListViewAsset } from 'boclips-api-client/dist/sub-clients/videos/model/ListViewVideo';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import React from 'react';
-import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
+import { useFindOrGetVideo } from '@src/hooks/api/videoQuery';
 import s from './style.module.less';
 
 interface Props {

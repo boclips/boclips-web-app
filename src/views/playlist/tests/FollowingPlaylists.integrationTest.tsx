@@ -1,23 +1,23 @@
-import { FollowPlaylist } from 'src/services/followPlaylist';
+import { FollowPlaylist } from '@src/services/followPlaylist';
 import { createBrowserHistory, createMemoryHistory } from 'history';
 import { render, waitFor } from '@testing-library/react';
-import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Route, Router, Routes } from 'react-router-dom';
-import PlaylistView from 'src/views/playlist/PlaylistView';
+import PlaylistView from '@src/views/playlist/PlaylistView';
 import {
   CollectionFactory,
   FakeBoclipsClient,
 } from 'boclips-api-client/dist/test-support';
-import { CollectionFactory as collectionFactory } from 'src/testSupport/CollectionFactory';
-import App from 'src/App';
+import { CollectionFactory as collectionFactory } from '@src/testSupport/CollectionFactory';
+import App from '@src/App';
 import { Link } from 'boclips-api-client/dist/types';
-import { sleep } from 'src/testSupport/sleep';
+import { sleep } from '@src/testSupport/sleep';
 import React from 'react';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
-import { createAssetWithThumbnail } from 'src/testSupport/createAssetWithTumbnail';
+import { createAssetWithThumbnail } from '@src/testSupport/createAssetWithTumbnail';
 
 describe('following a playlist', () => {
   let client = null;

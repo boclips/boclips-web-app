@@ -1,5 +1,5 @@
 import queryString from 'querystring';
-import { Constants } from 'src/AppConstants';
+import { Constants } from '@src/AppConstants';
 
 export const getShareableVideoLink = (
   videoId: string,

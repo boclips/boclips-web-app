@@ -2,11 +2,11 @@ import React from 'react';
 import { Video } from 'boclips-api-client/dist/types';
 
 import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
-import { TrimService } from 'src/components/cart/AdditionalServices/Trim/Trim';
-import AdditionalServiceCheckbox from 'src/components/cart/AdditionalServices/AdditionalServiceCheckbox';
-import { EditRequest } from 'src/components/cart/AdditionalServices/editRequest/editRequest';
+import { TrimService } from '@src/components/cart/AdditionalServices/Trim/Trim';
+import AdditionalServiceCheckbox from '@src/components/cart/AdditionalServices/AdditionalServiceCheckbox';
+import { EditRequest } from '@src/components/cart/AdditionalServices/editRequest/editRequest';
 import { Typography } from '@boclips-ui/typography';
-import { FeatureGate } from 'src/components/common/FeatureGate';
+import { FeatureGate } from '@src/components/common/FeatureGate';
 
 interface Props {
   videoItem: Video;

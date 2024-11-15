@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGetContentPackage } from 'src/hooks/api/contentPackageQuery';
+import { useGetContentPackage } from '@src/hooks/api/contentPackageQuery';
 
 interface Props {
   packageId: string;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Facet } from 'boclips-api-client/dist/sub-clients/videos/model/VideoFacets';
-import { useSearchQueryLocationParams } from 'src/hooks/useLocationParams';
-import { Bubble } from 'src/components/searchResults/Bubble';
-import { FilterKey } from 'src/types/search/FilterKey';
+import { useSearchQueryLocationParams } from '@src/hooks/useLocationParams';
+import { Bubble } from '@src/components/searchResults/Bubble';
+import { FilterKey } from '@src/types/search/FilterKey';
 
 interface Props {
   topics: Facet[];

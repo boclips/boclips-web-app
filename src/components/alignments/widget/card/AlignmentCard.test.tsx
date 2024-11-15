@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import AlignmentCard from 'src/components/alignments/widget/card/AlignmentCard';
-import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
+import AlignmentCard from '@src/components/alignments/widget/card/AlignmentCard';
+import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
 import { MemoryRouter, Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 

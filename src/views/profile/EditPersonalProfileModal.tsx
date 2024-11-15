@@ -1,12 +1,12 @@
 import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
-import { useUpdateSelfUser } from 'src/hooks/api/userQuery';
-import { displayNotification } from 'src/components/common/notification/displayNotification';
+import { useUpdateSelfUser } from '@src/hooks/api/userQuery';
+import { displayNotification } from '@src/components/common/notification/displayNotification';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   UpdateUserRequest,
   UserType,
 } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
-import { Bodal } from 'src/components/common/bodal/Bodal';
+import { Bodal } from '@src/components/common/bodal/Bodal';
 import { InputText } from '@boclips-ui/input';
 
 type Props = {

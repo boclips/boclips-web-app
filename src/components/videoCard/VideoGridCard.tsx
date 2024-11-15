@@ -1,12 +1,12 @@
 import CoverWithVideo, {
   OnSegmentPlayedEvent,
-} from 'src/components/playlists/coverWithVideo/CoverWithVideo';
-import GridCard from 'src/components/common/gridCard/GridCard';
+} from '@src/components/playlists/coverWithVideo/CoverWithVideo';
+import GridCard from '@src/components/common/gridCard/GridCard';
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import { FilterKey } from 'src/types/search/FilterKey';
-import GridCardSubHeader from 'src/components/videoCard/GridCardSubHeader';
-import DisplayPrice from 'src/components/common/price/DisplayPrice';
+import { FilterKey } from '@src/types/search/FilterKey';
+import GridCardSubHeader from '@src/components/videoCard/GridCardSubHeader';
+import DisplayPrice from '@src/components/common/price/DisplayPrice';
 
 interface Props {
   video: Video;

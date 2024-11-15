@@ -8,20 +8,20 @@ import {
 } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import App from 'src/App';
+import App from '@src/App';
 import {
   CollectionAssetFactory,
   FakeBoclipsClient,
 } from 'boclips-api-client/dist/test-support';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { BoclipsClient } from 'boclips-api-client';
 import userEvent from '@testing-library/user-event';
-import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import { QueryClient } from '@tanstack/react-query';
-import { Constants } from 'src/AppConstants';
-import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { Constants } from '@src/AppConstants';
+import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
+import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
 import {
   AccountType,
@@ -29,7 +29,7 @@ import {
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
-import { lastEvent } from 'src/testSupport/lastEvent';
+import { lastEvent } from '@src/testSupport/lastEvent';
 
 const insertUser = (client: FakeBoclipsClient, product?: Product) => {
   const user = UserFactory.sample({

@@ -2,7 +2,7 @@ import { QueryClient } from '@tanstack/react-query';
 import { renderHook, waitFor } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
-import { wrapperWithClients } from 'src/testSupport/wrapper';
+import { wrapperWithClients } from '@src/testSupport/wrapper';
 import { useGetDisciplinesQuery } from './disciplinesQuery';
 
 describe('discipline query', () => {

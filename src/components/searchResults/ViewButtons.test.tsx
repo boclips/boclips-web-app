@@ -1,12 +1,12 @@
 import ViewButtons, {
   VIEW_TYPE_ITEM,
-} from 'src/components/searchResults/ViewButtons';
+} from '@src/components/searchResults/ViewButtons';
 
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { lastEvent } from 'src/testSupport/lastEvent';
+import { lastEvent } from '@src/testSupport/lastEvent';
 
 describe('Layout buttons', () => {
   beforeEach(() => {

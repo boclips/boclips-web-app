@@ -6,7 +6,7 @@ import {
   LIBRARY_JOB_TITLE,
   CLASSROOM_JOB_TITLE,
   ORGANIZATION_TYPE,
-} from 'src/components/registration/dropdownValues';
+} from '@src/components/registration/dropdownValues';
 import { InputText } from '@boclips-ui/input';
 import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';

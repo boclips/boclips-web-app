@@ -1,16 +1,16 @@
-import { Layout } from 'src/components/layout/Layout';
-import Navbar from 'src/components/layout/Navbar';
+import { Layout } from '@src/components/layout/Layout';
+import Navbar from '@src/components/layout/Navbar';
 import React from 'react';
-import PageHeader from 'src/components/pageTitle/PageHeader';
+import PageHeader from '@src/components/pageTitle/PageHeader';
 import Button from '@boclips-ui/button';
-import AddNewTeamMemberModal from 'src/components/teamModal/AddNewTeamMemberModal';
-import Footer from 'src/components/layout/Footer';
+import AddNewTeamMemberModal from '@src/components/teamModal/AddNewTeamMemberModal';
+import Footer from '@src/components/layout/Footer';
 import PlusSign from 'resources/icons/plus-sign.svg';
-import { UsersList } from 'src/components/usersList/UsersList';
-import EditTeamMemberModal from 'src/components/teamModal/EditTeamMemberModal';
+import { UsersList } from '@src/components/usersList/UsersList';
+import EditTeamMemberModal from '@src/components/teamModal/EditTeamMemberModal';
 import { Helmet } from 'react-helmet';
-import { RemoveTeamMemberModal } from 'src/components/teamModal/RemoveTeamMemberModal';
-import { FeatureGate } from 'src/components/common/FeatureGate';
+import { RemoveTeamMemberModal } from '@src/components/teamModal/RemoveTeamMemberModal';
+import { FeatureGate } from '@src/components/common/FeatureGate';
 
 const TeamView = () => {
   const [isNewUserModalOpen, setIsNewUserModalOpen] = React.useState(false);

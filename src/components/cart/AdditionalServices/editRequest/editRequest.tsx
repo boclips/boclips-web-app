@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useCartItemAdditionalServicesMutation } from 'src/hooks/api/cartQuery';
+import { useCartItemAdditionalServicesMutation } from '@src/hooks/api/cartQuery';
 import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
-import { TextAreaWithDebounce } from 'src/components/cart/TextAreaWithDebounce';
-import { useCartValidation } from 'src/components/common/providers/CartValidationProvider';
-import BoCheckbox from 'src/components/common/input/BoCheckbox';
+import { TextAreaWithDebounce } from '@src/components/cart/TextAreaWithDebounce';
+import { useCartValidation } from '@src/components/common/providers/CartValidationProvider';
+import BoCheckbox from '@src/components/common/input/BoCheckbox';
 import { Typography } from '@boclips-ui/typography';
 
 interface Props {

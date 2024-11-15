@@ -1,4 +1,4 @@
-import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
+import { useBoclipsClient } from '@components/common/providers/BoclipsClientProvider';
 import { useQuery } from '@tanstack/react-query';
 import { BoclipsClient } from 'boclips-api-client';
 

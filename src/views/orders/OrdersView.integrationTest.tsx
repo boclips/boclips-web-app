@@ -1,19 +1,19 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import App from 'src/App';
+import App from '@src/App';
 import {
   FakeBoclipsClient,
   OrderItemFactory,
   OrdersFactory,
 } from 'boclips-api-client/dist/test-support';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { OrderStatus } from 'boclips-api-client/dist/sub-clients/orders/model/Order';
 import { Link } from 'boclips-api-client/dist/types';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { Helmet } from 'react-helmet';
-import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
+import { createReactQueryClient } from '@src/testSupport/createReactQueryClient';
 
 describe('OrderView', () => {
   it('loads the no orders view when there are no orders', async () => {

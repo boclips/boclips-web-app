@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import useFeatureFlags from 'src/hooks/useFeatureFlags';
+import useFeatureFlags from '@src/hooks/useFeatureFlags';
 
 interface Props {
   children: React.ReactNode;

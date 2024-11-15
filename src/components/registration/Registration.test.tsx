@@ -3,14 +3,14 @@ import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { render } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import React from 'react';
-import { Registration } from 'src/components/registration/Registration';
+import { Registration } from '@src/components/registration/Registration';
 import {
   resizeToDesktop,
   resizeToMobile,
   resizeToTablet,
-} from 'src/testSupport/resizeTo';
+} from '@src/testSupport/resizeTo';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 describe('registration', () => {

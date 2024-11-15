@@ -1,5 +1,5 @@
 import React from 'react';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import {
   CollectionAssetFactory,
   FakeBoclipsClient,
@@ -13,8 +13,8 @@ import {
   AccountType,
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import PlaylistVideoCardButtons from 'src/components/videoCard/buttons/PlaylistVideoCardButtons';
-import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+import PlaylistVideoCardButtons from '@src/components/videoCard/buttons/PlaylistVideoCardButtons';
+import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 
 describe('Playlist Video Card Buttons', () => {
   it('transcript button present', async () => {

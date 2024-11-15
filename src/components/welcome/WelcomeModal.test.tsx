@@ -7,12 +7,12 @@ import {
 } from '@testing-library/react';
 import React from 'react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { QueryClient } from '@tanstack/react-query';
 import { MemoryRouter } from 'react-router-dom';
-import App from 'src/App';
-import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
+import App from '@src/App';
+import { queryClientConfig } from '@src/hooks/api/queryClientConfig';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 import {
   AccountType,

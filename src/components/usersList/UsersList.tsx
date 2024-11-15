@@ -1,18 +1,18 @@
 import React from 'react';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
 import List from 'antd/lib/list';
-import { UsersListItem } from 'src/components/usersList/UsersListItem';
+import { UsersListItem } from '@src/components/usersList/UsersListItem';
 import {
   useFindAccountUsers,
   useGetAccount,
   useGetUserQuery,
-} from 'src/hooks/api/userQuery';
+} from '@src/hooks/api/userQuery';
 import Pagination from '@boclips-ui/pagination';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import c from 'classnames';
-import s from 'src/components/common/pagination/pagination.module.less';
+import s from '@src/components/common/pagination/pagination.module.less';
 import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import { FeatureGate } from 'src/components/common/FeatureGate';
+import { FeatureGate } from '@src/components/common/FeatureGate';
 
 const SKELETON_LIST_ITEMS = new Array(3).fill('');
 const PAGE_SIZE = 25;

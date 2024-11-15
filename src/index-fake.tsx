@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import ReactDom from 'react-dom';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
-import { Bo, bo } from 'src/testSupport/bo';
+import { Bo, bo } from '@src/testSupport/bo';
 import App from './App';
 
 const apiClient = new FakeBoclipsClient();

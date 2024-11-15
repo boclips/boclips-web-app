@@ -1,6 +1,6 @@
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { CollectionsClient } from 'boclips-api-client/dist/sub-clients/collections/client/CollectionsClient';
-import { doFollowPlaylist } from 'src/hooks/api/playlistsQuery';
+import { doFollowPlaylist } from '@src/hooks/api/playlistsQuery';
 
 export class FollowPlaylist {
   private client: CollectionsClient;

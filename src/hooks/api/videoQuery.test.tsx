@@ -1,12 +1,12 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
+import { useFindOrGetVideo } from '@src/hooks/api/videoQuery';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { QueryClient } from '@tanstack/react-query';
-import { SEARCH_BASE_KEY } from 'src/hooks/api/useSearchQuery';
+import { SEARCH_BASE_KEY } from '@src/hooks/api/useSearchQuery';
 import { PageableFactory } from 'boclips-api-client/dist/sub-clients/common/model/PageableFactory';
 import { Video } from 'boclips-api-client/dist/types';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { wrapperWithClients } from 'src/testSupport/wrapper';
+import { wrapperWithClients } from '@src/testSupport/wrapper';
 
 describe('VideoQuery', () => {
   it('load initial data from search cache', async () => {

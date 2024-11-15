@@ -3,14 +3,14 @@ import {
   getAllTargetsInTopic,
   getSelectedTarget,
   getSelectedTopic,
-} from 'src/components/alignments/themePage/helpers/themeNavigationHelpers';
+} from '@src/components/alignments/themePage/helpers/themeNavigationHelpers';
 import { useLocation } from 'react-router-dom';
 import {
   NextTopicButton,
   NextTargetButton,
   PreviousTopicButton,
   PreviousSectionButton,
-} from 'src/components/alignments/themePage/theme/pagination/PaginationButton';
+} from '@src/components/alignments/themePage/theme/pagination/PaginationButton';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import s from './style.module.less';
 

@@ -1,20 +1,20 @@
 import React from 'react';
-import { Layout } from 'src/components/layout/Layout';
-import Navbar from 'src/components/layout/Navbar';
-import Footer from 'src/components/layout/Footer';
+import { Layout } from '@src/components/layout/Layout';
+import Navbar from '@src/components/layout/Navbar';
+import Footer from '@src/components/layout/Footer';
 import { useParams } from 'react-router';
 import {
   useGetProvidersQuery,
   useGetThemeByProviderAndId,
-} from 'src/hooks/api/alignmentsQuery';
-import { Content } from 'src/components/alignments/themePage/theme/Content';
-import { NavigationPanel } from 'src/components/alignments/themePage/navigationPanel/NavigationPanel';
-import { ThemeMobileMenuProvider } from 'src/components/common/providers/ThemeMobileMenuProvider';
-import ThemeSkeletonPage from 'src/components/skeleton/theme/ThemeSkeletonPage';
+} from '@src/hooks/api/alignmentsQuery';
+import { Content } from '@src/components/alignments/themePage/theme/Content';
+import { NavigationPanel } from '@src/components/alignments/themePage/navigationPanel/NavigationPanel';
+import { ThemeMobileMenuProvider } from '@src/components/common/providers/ThemeMobileMenuProvider';
+import ThemeSkeletonPage from '@src/components/skeleton/theme/ThemeSkeletonPage';
 import { Helmet } from 'react-helmet';
-import PaginationPanel from 'src/components/alignments/themePage/theme/pagination/PaginationPanel';
-import NotFound from 'src/views/notFound/NotFound';
-import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
+import PaginationPanel from '@src/components/alignments/themePage/theme/pagination/PaginationPanel';
+import NotFound from '@src/views/notFound/NotFound';
+import { AlignmentContextProvider } from '@src/components/common/providers/AlignmentContextProvider';
 
 const ThemeView = () => {
   const { id, provider: providerNavigationPath } = useParams();

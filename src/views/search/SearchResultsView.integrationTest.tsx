@@ -7,19 +7,19 @@ import {
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
-import App from 'src/App';
+import App from '@src/App';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import {
   FacetFactory,
   FacetsFactory,
 } from 'boclips-api-client/dist/test-support/FacetsFactory';
-import Navbar from 'src/components/layout/Navbar';
+import Navbar from '@src/components/layout/Navbar';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
+import { queryClientConfig } from '@src/hooks/api/queryClientConfig';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
 import { Helmet } from 'react-helmet';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { Link } from 'boclips-api-client/dist/types';

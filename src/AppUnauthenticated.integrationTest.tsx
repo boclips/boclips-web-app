@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import AppUnauthenticated from 'src/AppUnauthenticated';
+import AppUnauthenticated from '@src/AppUnauthenticated';
 import { CollectionFactory } from 'boclips-api-client/dist/test-support/CollectionsFactory';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 

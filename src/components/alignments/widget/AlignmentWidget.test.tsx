@@ -1,11 +1,11 @@
 import { render, waitFor } from '@testing-library/react';
 import React from 'react';
-import { AlignmentWidget } from 'src/components/alignments/widget/AlignmentWidget';
+import { AlignmentWidget } from '@src/components/alignments/widget/AlignmentWidget';
 import { MemoryRouter } from 'react-router-dom';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
+import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
 
 describe('Alignment page header', () => {
   it('displays alignments page header and description', async () => {

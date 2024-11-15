@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGetUserQuery } from 'src/hooks/api/userQuery';
-import computeUserDataContext from 'src/services/computeUserDataContext';
+import { useGetUserQuery } from '@src/hooks/api/userQuery';
+import computeUserDataContext from '@src/services/computeUserDataContext';
 
 interface Props {
   showPopup: (arg: boolean) => void;

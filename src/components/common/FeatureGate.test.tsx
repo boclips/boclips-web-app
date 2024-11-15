@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
-import { AdminLinksKey, FeatureGate } from 'src/components/common/FeatureGate';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { AdminLinksKey, FeatureGate } from '@src/components/common/FeatureGate';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';

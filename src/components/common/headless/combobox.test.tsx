@@ -3,7 +3,7 @@ import {
   Combobox,
   ComboboxItem,
   ComboboxMode,
-} from 'src/components/common/headless/combobox';
+} from '@src/components/common/headless/combobox';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/types';
-import LearningOutcomesAiMetadata from 'src/components/videoPage/videoMetadata/ai/LearningOutcomesAiMetadata';
-import AssessmentQuestionsAiMetadata from 'src/components/videoPage/videoMetadata/ai/AssessmentQuestionsAiMetadata';
-import { FeatureGate } from 'src/components/common/FeatureGate';
+import LearningOutcomesAiMetadata from '@src/components/videoPage/videoMetadata/ai/LearningOutcomesAiMetadata';
+import AssessmentQuestionsAiMetadata from '@src/components/videoPage/videoMetadata/ai/AssessmentQuestionsAiMetadata';
+import { FeatureGate } from '@src/components/common/FeatureGate';
 
 interface Props {
   video: Video;

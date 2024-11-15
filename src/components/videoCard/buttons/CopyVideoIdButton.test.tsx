@@ -3,8 +3,8 @@ import { fireEvent, within } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
-import { render } from 'src/testSupport/render';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { render } from '@src/testSupport/render';
 import { ToastContainer } from 'react-toastify';
 import { CopyVideoIdButton } from './CopyVideoIdButton';
 

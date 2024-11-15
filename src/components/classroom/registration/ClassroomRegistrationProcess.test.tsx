@@ -4,15 +4,15 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { ToastContainer } from 'react-toastify';
-import { ClassroomRegistrationData } from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
+import { ClassroomRegistrationData } from '@src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
 import React from 'react';
 import {
   fillRegistrationForm,
   SchoolMode,
-} from 'src/components/classroom/registration/registrationForm/classroomRegistrationFormTestHelpers';
-import { ClassroomRegistration } from 'src/components/classroom/registration/ClassroomRegistration';
+} from '@src/components/classroom/registration/registrationForm/classroomRegistrationFormTestHelpers';
+import { ClassroomRegistration } from '@src/components/classroom/registration/ClassroomRegistration';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';

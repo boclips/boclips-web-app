@@ -1,10 +1,10 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { createBrowserHistory } from 'history';
 import { render } from '@testing-library/react';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import { Router } from 'react-router-dom';
 import React from 'react';
-import { RedirectFromExploreToAlignments } from 'src/components/alignments/RedirectFromExploreToAlignments';
+import { RedirectFromExploreToAlignments } from '@src/components/alignments/RedirectFromExploreToAlignments';
 
 describe('RedirectFromExploreToAlignments', () => {
   it(`doesn't redirect for non-explore paths`, () => {

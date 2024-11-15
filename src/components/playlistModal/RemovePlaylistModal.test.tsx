@@ -1,9 +1,9 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { render } from 'src/testSupport/render';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { render } from '@src/testSupport/render';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import React from 'react';
-import { RemovePlaylistModal } from 'src/components/playlistModal/RemovePlaylistModal';
-import { CollectionFactory } from 'src/testSupport/CollectionFactory';
+import { RemovePlaylistModal } from '@src/components/playlistModal/RemovePlaylistModal';
+import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 
 describe('Remove playlist modal', () => {
   it('displays a warning about playlist deletion', async () => {

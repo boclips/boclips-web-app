@@ -7,20 +7,20 @@ import {
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import {
   CollectionAssetFactory,
   FakeBoclipsClient,
 } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
-import dayjs from 'src/day-js';
+import dayjs from '@src/day-js';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { ToastContainer } from 'react-toastify';
-import PlaylistVideoBookmarkButton from 'src/components/playlists/buttons/playlistBookmark/PlaylistVideoBookmarkButton';
+import PlaylistVideoBookmarkButton from '@src/components/playlists/buttons/playlistBookmark/PlaylistVideoBookmarkButton';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import { CollectionFactory } from 'src/testSupport/CollectionFactory';
-import { lastEvent } from 'src/testSupport/lastEvent';
+import { CollectionFactory } from '@src/testSupport/CollectionFactory';
+import { lastEvent } from '@src/testSupport/lastEvent';
 
 describe('Bookmark modal for playlists', () => {
   const asset = CollectionAssetFactory.sample({

@@ -1,6 +1,6 @@
 import React from 'react';
 import List from 'antd/lib/list';
-import { OrdersCard } from 'src/components/ordersTable/OrdersCard';
+import { OrdersCard } from '@src/components/ordersTable/OrdersCard';
 import { Order } from 'boclips-api-client/dist/sub-clients/orders/model/Order';
 import c from 'classnames';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';

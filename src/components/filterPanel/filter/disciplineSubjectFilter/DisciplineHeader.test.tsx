@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { DisciplineHeader } from 'src/components/filterPanel/filter/disciplineSubjectFilter/DisciplineHeader';
+import { DisciplineHeader } from '@src/components/filterPanel/filter/disciplineSubjectFilter/DisciplineHeader';
 
 describe('DisciplineHeader', () => {
   it('displays the number of selected subjects if greater than 0', () => {

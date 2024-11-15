@@ -1,4 +1,4 @@
-import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
+import { useBoclipsClient } from '@src/components/common/providers/BoclipsClientProvider';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { BoclipsClient } from 'boclips-api-client';
 import {
@@ -7,13 +7,13 @@ import {
   UpdateCollectionRequest,
 } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
-import { displayNotification } from 'src/components/common/notification/displayNotification';
+import { displayNotification } from '@src/components/common/notification/displayNotification';
 import { CollectionsClient } from 'boclips-api-client/dist/sub-clients/collections/client/CollectionsClient';
 import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collections/model/ListViewCollection';
 import { useNavigate } from 'react-router-dom';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForProduct';
-import { PLAYLISTS_PAGE_SIZE } from 'src/components/playlists/playlistList/PlaylistList';
+import { PLAYLISTS_PAGE_SIZE } from '@src/components/playlists/playlistList/PlaylistList';
 import { CollectionAsset } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
 import { playlistKeys } from './playlistKeys';
 

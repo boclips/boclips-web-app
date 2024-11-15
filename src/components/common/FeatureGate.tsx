@@ -1,11 +1,11 @@
 import React from 'react';
-import useFeatureFlags from 'src/hooks/useFeatureFlags';
-import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
+import useFeatureFlags from '@src/hooks/useFeatureFlags';
+import { useBoclipsClient } from '@src/components/common/providers/BoclipsClientProvider';
 import { AdminLinks } from 'boclips-api-client/dist/types';
-import { Loading } from 'src/components/common/Loading';
+import { Loading } from '@src/components/common/Loading';
 import { FeatureKey } from 'boclips-api-client/dist/sub-clients/common/model/FeatureKey';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import useUserProducts from 'src/hooks/useUserProducts';
+import useUserProducts from '@src/hooks/useUserProducts';
 
 interface FeatureGateProps {
   children: React.ReactElement | React.ReactElement[];

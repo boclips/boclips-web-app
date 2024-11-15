@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import SpinnerButton from 'src/components/common/spinnerButton/SpinnerButton';
+import SpinnerButton from '@src/components/common/spinnerButton/SpinnerButton';
 
 describe('Spinner Button', () => {
   it('renders button with text, no spinner', () => {

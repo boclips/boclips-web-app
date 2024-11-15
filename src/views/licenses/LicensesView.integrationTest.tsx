@@ -1,15 +1,15 @@
 import { render, waitFor } from '@testing-library/react';
 import { MemoryRouter, Router } from 'react-router-dom';
-import App from 'src/App';
+import App from '@src/App';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import React from 'react';
 import dayjs from 'dayjs';
 import { Link } from 'boclips-api-client/dist/types';
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
 import userEvent from '@testing-library/user-event';
 import { createBrowserHistory } from 'history';
-import { lastEvent } from 'src/testSupport/lastEvent';
+import { lastEvent } from '@src/testSupport/lastEvent';
 
 describe('Licenses view', () => {
   it('loads the no content view (for now)', async () => {

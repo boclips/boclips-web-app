@@ -1,6 +1,6 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import App from 'src/App';
+import App from '@src/App';
 import React from 'react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 
@@ -8,12 +8,12 @@ import {
   FakeBoclipsClient,
   SubjectFactory,
 } from 'boclips-api-client/dist/test-support';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { Helmet } from 'react-helmet';
 import { CartItemFactory } from 'boclips-api-client/dist/test-support/CartsFactory';
-import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
+import { createReactQueryClient } from '@src/testSupport/createReactQueryClient';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
-import { sleep } from 'src/testSupport/sleep';
+import { sleep } from '@src/testSupport/sleep';
 import userEvent from '@testing-library/user-event';
 import { Link } from 'boclips-api-client/dist/types';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
@@ -22,8 +22,8 @@ import {
   ThemeFactory,
   TopicFactory,
 } from 'boclips-api-client/dist/test-support/ThemeFactory';
-import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
-import { VideoAIMetadata } from 'src/components/videoPage/videoMetadata/types/VideoAIMetadata';
+import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
+import { VideoAIMetadata } from '@src/components/videoPage/videoMetadata/types/VideoAIMetadata';
 
 describe('Video View', () => {
   let fakeClient;

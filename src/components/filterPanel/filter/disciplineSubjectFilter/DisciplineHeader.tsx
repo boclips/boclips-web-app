@@ -1,6 +1,6 @@
-import FilterArrow from 'src/resources/icons/blue-arrow.svg';
+import FilterArrow from '@src/resources/icons/blue-arrow.svg';
 import React from 'react';
-import Bubble from 'src/components/playlists/comments/Bubble';
+import Bubble from '@src/components/playlists/comments/Bubble';
 
 interface Props {
   name: string;

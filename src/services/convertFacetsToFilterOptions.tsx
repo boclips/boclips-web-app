@@ -3,11 +3,11 @@ import {
   VideoFacets,
 } from 'boclips-api-client/dist/sub-clients/videos/model/VideoFacets';
 import React from 'react';
-import { Filters } from 'src/hooks/useFilterOptions';
-import { SearchFilters } from 'src/hooks/useLocationParams';
-import { DEFAULT_DURATIONS } from 'src/types/DefaultDurations';
-import { FilterOption } from 'src/types/FilterOption';
-import { FilterKey } from 'src/types/search/FilterKey';
+import { Filters } from '@src/hooks/useFilterOptions';
+import { SearchFilters } from '@src/hooks/useLocationParams';
+import { DEFAULT_DURATIONS } from '@src/types/DefaultDurations';
+import { FilterOption } from '@src/types/FilterOption';
+import { FilterKey } from '@src/types/search/FilterKey';
 import { Channel } from 'boclips-api-client/dist/sub-clients/channels/model/Channel';
 import { Subject } from 'boclips-api-client/dist/sub-clients/subjects/model/Subject';
 import dayjs from 'dayjs';

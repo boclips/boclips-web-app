@@ -1,7 +1,7 @@
 import { Typography } from '@boclips-ui/typography';
 import React from 'react';
-import NextArrow from 'src/resources/icons/next-section-arrow.svg';
-import PreviousArrow from 'src/resources/icons/prev-section-arrow.svg';
+import NextArrow from '@src/resources/icons/next-section-arrow.svg';
+import PreviousArrow from '@src/resources/icons/prev-section-arrow.svg';
 import {
   getNextTargetInfo,
   getNextTopicId,
@@ -9,8 +9,8 @@ import {
   getPreviousTopicId,
   getSelectedTarget,
   getSelectedTopic,
-} from 'src/components/alignments/themePage/helpers/themeNavigationHelpers';
-import { PaginationLink } from 'src/components/alignments/themePage/theme/pagination/PaginationLink';
+} from '@src/components/alignments/themePage/helpers/themeNavigationHelpers';
+import { PaginationLink } from '@src/components/alignments/themePage/theme/pagination/PaginationLink';
 import c from 'classnames';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import s from './style.module.less';

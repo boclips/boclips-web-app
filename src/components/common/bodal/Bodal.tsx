@@ -5,13 +5,13 @@ import React, {
   useRef,
 } from 'react';
 import Button from '@boclips-ui/button';
-import CloseIconSVG from 'src/resources/icons/cross-icon.svg';
+import CloseIconSVG from '@src/resources/icons/cross-icon.svg';
 import { LoadingOutlined } from '@ant-design/icons';
-import { TextButton } from 'src/components/common/textButton/TextButton';
-import { handleEscapeKeyEvent } from 'src/services/handleKeyEvent';
+import { TextButton } from '@src/components/common/textButton/TextButton';
+import { handleEscapeKeyEvent } from '@src/services/handleKeyEvent';
 import FocusTrap from 'focus-trap-react';
 import { Typography } from '@boclips-ui/typography';
-import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
+import CloseOnClickOutside from '@src/hooks/closeOnClickOutside';
 import c from 'classnames';
 import s from './style.module.less';
 

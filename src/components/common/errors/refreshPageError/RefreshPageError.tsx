@@ -1,7 +1,7 @@
 import React from 'react';
-import ErrorEngineer from 'resources/icons/errro-engineer.svg';
+import ErrorEngineer from '@src/resources/icons/errro-engineer.svg';
 import Button from '@boclips-ui/button';
-import { Hero } from 'src/components/hero/Hero';
+import { Hero } from '@src/components/hero/Hero';
 import { Typography } from '@boclips-ui/typography';
 
 interface Props {

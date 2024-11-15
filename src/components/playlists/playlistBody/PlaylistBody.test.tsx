@@ -6,19 +6,19 @@ import {
 } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
 import {
   CollectionAssetFactory,
   CollectionFactory,
   FakeBoclipsClient,
 } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import PlaylistBody from 'src/components/playlists/playlistBody/PlaylistBody';
+import PlaylistBody from '@src/components/playlists/playlistBody/PlaylistBody';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import userEvent from '@testing-library/user-event';
-import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
-import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
-import { renderWithClients } from 'src/testSupport/render';
+import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
+import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
+import { renderWithClients } from '@src/testSupport/render';
 
 describe('Playlist Body', () => {
   const getWrapper = (

@@ -2,17 +2,17 @@ import { Collection } from 'boclips-api-client/dist/sub-clients/collections/mode
 import {
   useAddCommentToVideo,
   useRemoveCommentFromPlaylistVideo,
-} from 'src/hooks/api/playlistsQuery';
-import { useGetUserQuery } from 'src/hooks/api/userQuery';
+} from '@src/hooks/api/playlistsQuery';
+import { useGetUserQuery } from '@src/hooks/api/userQuery';
 import React, { useRef, useState } from 'react';
-import s from 'src/components/playlists/comments/style.module.less';
+import s from '@src/components/playlists/comments/style.module.less';
 import { Typography } from '@boclips-ui/typography';
 import Button from '@boclips-ui/button';
-import CloseSVG from 'src/resources/icons/cross-icon.svg';
+import CloseSVG from '@src/resources/icons/cross-icon.svg';
 import { InputText } from '@boclips-ui/input';
-import AccountSVG from 'src/resources/icons/account-icon.svg';
-import BinSVG from 'src/resources/icons/bin.svg';
-import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
+import AccountSVG from '@src/resources/icons/account-icon.svg';
+import BinSVG from '@src/resources/icons/bin.svg';
+import CloseOnClickOutside from '@src/hooks/closeOnClickOutside';
 import c from 'classnames';
 import Tooltip from '@boclips-ui/tooltip';
 import Bubble from './Bubble';

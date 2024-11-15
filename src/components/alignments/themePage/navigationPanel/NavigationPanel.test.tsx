@@ -1,15 +1,15 @@
-import { render } from 'src/testSupport/render';
+import { render } from '@src/testSupport/render';
 import React from 'react';
-import { NavigationPanel } from 'src/components/alignments/themePage/navigationPanel/NavigationPanel';
+import { NavigationPanel } from '@src/components/alignments/themePage/navigationPanel/NavigationPanel';
 import { fireEvent, waitFor } from '@testing-library/react';
-import { ThemeMobileMenuProvider } from 'src/components/common/providers/ThemeMobileMenuProvider';
+import { ThemeMobileMenuProvider } from '@src/components/common/providers/ThemeMobileMenuProvider';
 import {
   resizeToDesktop,
   resizeToMobile,
   resizeToTablet,
-} from 'src/testSupport/resizeTo';
-import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
-import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
+} from '@src/testSupport/resizeTo';
+import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
+import { AlignmentContextProvider } from '@src/components/common/providers/AlignmentContextProvider';
 import {
   TargetFactory,
   ThemeFactory,

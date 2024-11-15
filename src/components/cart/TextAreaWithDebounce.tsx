@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDebounce } from 'src/hooks/useDebounce';
+import { useDebounce } from '@src/hooks/useDebounce';
 import { InputText } from '@boclips-ui/input';
 
 interface Props {

@@ -1,8 +1,8 @@
 import { render, within } from '@testing-library/react';
 import React from 'react';
-import { CefrLevelFilter } from 'src/components/filterPanel/CefrLevelFilter';
-import { FilterOptionFactory } from 'src/testSupport/FilterOptionFactory';
-import { renderWithLocation } from 'src/testSupport/renderWithLocation';
+import { CefrLevelFilter } from '@src/components/filterPanel/CefrLevelFilter';
+import { FilterOptionFactory } from '@src/testSupport/FilterOptionFactory';
+import { renderWithLocation } from '@src/testSupport/renderWithLocation';
 
 describe('CEFR level filter', () => {
   it('renders filter options in alphabetical order', () => {

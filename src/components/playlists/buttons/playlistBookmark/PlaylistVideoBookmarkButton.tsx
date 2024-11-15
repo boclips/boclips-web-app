@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@boclips-ui/button';
 import { Video } from 'boclips-api-client/dist/types';
-import TimerSVG from 'src/resources/icons/timer.svg';
+import TimerSVG from '@src/resources/icons/timer.svg';
 import {
   useEditPlaylistMutation,
   usePlaylistQuery,
-} from 'src/hooks/api/playlistsQuery';
-import { displayNotification } from 'src/components/common/notification/displayNotification';
-import BookmarkModal from 'src/components/playlists/buttons/playlistBookmark/bookmarkModal/BookmarkModal';
-import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
+} from '@src/hooks/api/playlistsQuery';
+import { displayNotification } from '@src/components/common/notification/displayNotification';
+import BookmarkModal from '@src/components/playlists/buttons/playlistBookmark/bookmarkModal/BookmarkModal';
+import { usePlatformInteractedWithEvent } from '@src/hooks/usePlatformInteractedWithEvent';
 import { Segment } from 'boclips-api-client/dist/sub-clients/collections/model/Segment';
 import { Segments } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';
 import s from '../style.module.less';
