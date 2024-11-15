@@ -3,7 +3,7 @@
     "jsx": "react",
     "esModuleInterop": true,
     "sourceMap": true,
-    "target": "ES2017",
+    "target": "ES2019",
     "lib": ["dom", "dom.iterable", "esnext"],
     "noUnusedLocals": true,
     "noUnusedParameters": true,
