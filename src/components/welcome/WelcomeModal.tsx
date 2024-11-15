@@ -160,7 +160,7 @@ const WelcomeModal = ({ showPopup, isAdmin, isClassroomUser }: Props) => {
           ? 'Your colleague has invited you to Boclips Classroom!'
           : 'Your colleague has invited you to Boclips Library!'
       }
-      confirmButtonText={"Let's Go!"}
+      confirmButtonText="Let's Go!"
     >
       <InvitedUserInfo />
       <MarketingInfoForm
