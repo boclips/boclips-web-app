@@ -19,12 +19,17 @@ const CoverWithVideo = ({ video, onSegmentPlayed }: Props) => {
 
   useEffect(() => {
     if (ref) {
-      // @ts-ignore
-      ref.container?.querySelector('video').oncanplay = () => {
-        ref.play();
-        // @ts-ignore
-        ref.container?.style.zIndex = '1';
-      };
+      const videoElement = ref.container?.querySelector(
+        'video',
+      ) as HTMLVideoElement | null;
+      if (videoElement) {
+        videoElement.oncanplay = () => {
+          ref.play();
+          if (ref.container) {
+            ref.container.style.zIndex = '1';
+          }
+        };
+      }
     }
   }, [ref]);
 

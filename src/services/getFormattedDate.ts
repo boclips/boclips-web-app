@@ -1,4 +1,4 @@
-import { getBrowserLocale } from 'src/services/getBrowserLocale';
+import { getBrowserLocale } from '@src/services/getBrowserLocale';
 
 export interface DateFormatProps {
   monthFormat?: 'numeric' | '2-digit' | 'long' | 'short' | 'narrow';

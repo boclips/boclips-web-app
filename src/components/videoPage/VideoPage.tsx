@@ -1,14 +1,14 @@
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/types';
 import { useLocation, useNavigate } from 'react-router-dom';
-import BackArrow from 'resources/icons/back-arrow.svg';
-import { TextButton } from '@src/components/common/textButton/TextButton';
-import { VideoHeader } from '@src/components/videoPage/VideoHeader';
-import VideoRecommendations from '@src/components/videoPage/VideoRecommendations';
-import VideoAiMetadata from '@src/components/videoPage/videoMetadata/ai/VideoAiMetadata';
-import VideoDescription from '@src/components/videoPage/videoMetadata/VideoDescription';
-import { VideoPlayer } from '@src/components/videoCard/VideoPlayer';
-import { UnauthorizedVideoHeader } from '@src/components/videoPage/UnauthorizedVideoHeader';
+import BackArrow from '@resources/icons/back-arrow.svg';
+import { TextButton } from '@components/common/textButton/TextButton';
+import { VideoHeader } from '@components/videoPage/VideoHeader';
+import VideoRecommendations from '@components/videoPage/VideoRecommendations';
+import VideoAiMetadata from '@components/videoPage/videoMetadata/ai/VideoAiMetadata';
+import VideoDescription from '@components/videoPage/videoMetadata/VideoDescription';
+import { VideoPlayer } from '@components/videoCard/VideoPlayer';
+import { UnauthorizedVideoHeader } from '@components/videoPage/UnauthorizedVideoHeader';
 import s from './videoPage.module.less';
 
 interface Props {

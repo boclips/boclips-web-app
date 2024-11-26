@@ -1,5 +1,5 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
+import { useBoclipsClient } from '@components/common/providers/BoclipsClientProvider';
 import { BoclipsClient } from 'boclips-api-client';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import { Provider } from 'boclips-api-client/dist/sub-clients/alignments/model/provider/Provider';

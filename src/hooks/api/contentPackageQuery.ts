@@ -1,6 +1,6 @@
 import { BoclipsClient } from 'boclips-api-client';
 import { ContentPackage } from 'boclips-api-client/dist/sub-clients/contentPackages/model/ContentPackage';
-import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
+import { useBoclipsClient } from '@components/common/providers/BoclipsClientProvider';
 import { useQuery } from '@tanstack/react-query';
 
 export const doGetContentPackage = (

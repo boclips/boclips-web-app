@@ -1,6 +1,6 @@
 import { BoclipsClient } from 'boclips-api-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
+import { useBoclipsClient } from '@components/common/providers/BoclipsClientProvider';
 import { Account } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { UpdateAccountRequest } from 'boclips-api-client/dist/sub-clients/accounts/model/UpdateAccountRequest';
 import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';

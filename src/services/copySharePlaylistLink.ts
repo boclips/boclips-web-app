@@ -1,8 +1,8 @@
-import { Constants } from 'src/AppConstants';
+import { Constants } from '@src/AppConstants';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
-import { displayNotification } from 'src/components/common/notification/displayNotification';
+import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
+import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
+import { displayNotification } from '@components/common/notification/displayNotification';
 
 const linkCopiedHotjarEvent = () =>
   AnalyticsFactory.hotjar().event(HotjarEvents.PlaylistShareableLinkCopied);

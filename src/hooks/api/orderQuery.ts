@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { OrdersPage } from 'boclips-api-client/dist/sub-clients/orders/model/OrdersPage';
 import { PlaceOrderRequest } from 'boclips-api-client/dist/sub-clients/orders/model/PlaceOrderRequest';
 import { BoclipsClient } from 'boclips-api-client';
-import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
+import { useBoclipsClient } from '@components/common/providers/BoclipsClientProvider';
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
 import { Order } from 'boclips-api-client/dist/sub-clients/orders/model/Order';
 
