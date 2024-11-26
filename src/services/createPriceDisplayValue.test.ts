@@ -53,17 +53,17 @@ describe('get price display value', () => {
     });
     it('converts 300.5 GBP', () => {
       expect(createPriceDisplayValue(300.5, 'GBP', 'de-DE')).toEqual(
-        '300,50 £',
+        '300,50 £',
       );
     });
     it('converts 300.5 USD', () => {
       expect(createPriceDisplayValue(300.5, 'USD', 'de-DE')).toEqual(
-        '300,50 $',
+        '300,50 $',
       );
     });
     it('converts 300.5 EUR', () => {
       expect(createPriceDisplayValue(300.5, 'EUR', 'de-DE')).toEqual(
-        '300,50 €',
+        '300,50 €',
       );
     });
   });
@@ -74,7 +74,7 @@ describe('get price display value', () => {
     it(`throws an error if currency is unknown`, () => {
       expect(() => {
         createPriceDisplayValue(300.5, '!G%', 'de-DE');
-      }).toThrow('Currency !G% not found');
+      }).toThrow('Invalid currency code : !G%');
     });
   });
 });
