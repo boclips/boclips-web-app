@@ -1,7 +1,7 @@
 export const createPriceDisplayValue = (
   amount?: number,
-  currency?: any,
-  language?: any,
+  currency?: string,
+  language?: string,
 ): string => {
   if (!currency) {
     return null;
