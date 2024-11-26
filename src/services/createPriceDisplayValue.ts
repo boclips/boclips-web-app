@@ -1,5 +1,3 @@
-import { currencyFormat } from 'simple-currency-format';
-
 export const createPriceDisplayValue = (
   amount?: number,
   currency?: any,
@@ -14,18 +12,20 @@ export const createPriceDisplayValue = (
     const creditAmount = isDecimal ? amount.toFixed(2) : amount;
     return creditAmount.toString();
   }
+  const formatter = new Intl.NumberFormat(language || 'en-US', {
+    style: 'currency',
+    currency,
+    currencyDisplay: 'narrowSymbol',
+    minimumFractionDigits: !isDecimal ? 0 : 2,
+    maximumFractionDigits: 2,
+  });
 
   try {
-    return currencyFormat(
-      amount,
-      language || 'en-US',
-      currency,
-      isDecimal ? 2 : 0,
-    );
+    return formatter.format(amount);
   } catch (error) {
     if (error.indexOf('Currency') > 0) {
       throw error;
     }
-    return currencyFormat(amount, 'en-US', currency, isDecimal ? 2 : 0);
+    return formatter.format(amount);
   }
 };
