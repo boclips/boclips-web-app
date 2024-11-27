@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import image from '@rollup/plugin-image';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import path from 'path';
+import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
   root: '../',
@@ -64,6 +65,7 @@ export default defineConfig({
         },
       ],
     }),
+    svgr(),
   ],
   server: {
     port: 9000,
