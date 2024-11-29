@@ -9,9 +9,11 @@
   overflow: auto;
   top: 0;
   left: 0;
+  @apply bg-white;
 
   .modal {
     overflow-y: auto;
+    @apply bg-white rounded m-auto;
 
     &::-webkit-scrollbar {
       width: 7px;
@@ -30,7 +32,6 @@
 
   .modalContent {
     @apply p-4;
-    margin-bottom: 5rem;
   }
 
   .modalHeader {
@@ -64,9 +65,8 @@
     display: flex;
     overflow: auto;
     background: rgba(black, 0.5);
-
     .modal {
-      @apply p-8 bg-white rounded m-auto;
+      @apply p-8;
       position: relative;
       width: 764px;
       max-width: 85vw;
@@ -83,7 +83,6 @@
     .modalContent {
       @apply p-0;
       height: fit-content;
-      margin-bottom: 0;
     }
 
     .modalHeader {
