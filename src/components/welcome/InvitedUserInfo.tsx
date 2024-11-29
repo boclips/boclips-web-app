@@ -14,7 +14,7 @@ const UserInfoItem = ({
 }) => (
   <div className="grid grid-cols-6">
     <Typography.Body className="mr-4 col-span-1">{label}</Typography.Body>
-    <Typography.Body weight="medium" className="col-span-5">
+    <Typography.Body weight="medium" className="ml-8 col-span-5">
       {value}
     </Typography.Body>
   </div>
