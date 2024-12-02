@@ -7,7 +7,7 @@ import {
   UserType,
 } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
 import { Bodal } from '@src/components/common/bodal/Bodal';
-import { InputText } from '@boclips-ui/input';
+import { InputText } from 'boclips-ui';
 
 type Props = {
   userToUpdate: User;

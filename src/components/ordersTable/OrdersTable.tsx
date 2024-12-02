@@ -3,9 +3,8 @@ import List from 'antd/lib/list';
 import { OrdersCard } from '@src/components/ordersTable/OrdersCard';
 import { Order } from 'boclips-api-client/dist/sub-clients/orders/model/Order';
 import c from 'classnames';
-import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import Pagination, { useMediaBreakPoint } from 'boclips-ui';
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
-import Pagination from '@boclips-ui/pagination';
 import s from '../common/pagination/pagination.module.less';
 
 interface Props {

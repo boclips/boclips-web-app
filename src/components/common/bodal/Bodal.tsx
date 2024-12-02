@@ -4,13 +4,12 @@ import React, {
   useEffect,
   useRef,
 } from 'react';
-import Button from '@boclips-ui/button';
+import Button, { Typography } from 'boclips-ui';
 import CloseIconSVG from '@src/resources/icons/cross-icon.svg';
 import { LoadingOutlined } from '@ant-design/icons';
 import { TextButton } from '@src/components/common/textButton/TextButton';
 import { handleEscapeKeyEvent } from '@src/services/handleKeyEvent';
 import FocusTrap from 'focus-trap-react';
-import { Typography } from '@boclips-ui/typography';
 import CloseOnClickOutside from '@src/hooks/closeOnClickOutside';
 import c from 'classnames';
 import s from './style.module.less';

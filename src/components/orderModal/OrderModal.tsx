@@ -6,7 +6,7 @@ import { useGetUserQuery } from '@src/hooks/api/userQuery';
 import { useNavigate } from 'react-router-dom';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
 import { Cart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { AdditionalServicesPricingMessage } from '@src/components/cart/AdditionalServices/AdditionalServicesPricingMessage';
 import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import { FeatureGate } from '@src/components/common/FeatureGate';

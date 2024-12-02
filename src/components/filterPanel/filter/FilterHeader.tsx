@@ -1,4 +1,4 @@
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import React, { useState } from 'react';
 import { handleEnterKeyEvent } from '@src/services/handleKeyEvent';
 import InfoSVG from '@src/resources/icons/info.svg';

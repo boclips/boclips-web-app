@@ -1,7 +1,7 @@
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import React, { useEffect, useState } from 'react';
 import { Bodal } from '@src/components/common/bodal/Bodal';
-import { InputText } from '@boclips-ui/input';
+import { InputText } from 'boclips-ui';
 
 interface NoteModalProps {
   onCancel: () => void;

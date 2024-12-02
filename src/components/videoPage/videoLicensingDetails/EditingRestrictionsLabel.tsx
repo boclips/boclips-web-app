@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 
 interface Props {
   permission: string;

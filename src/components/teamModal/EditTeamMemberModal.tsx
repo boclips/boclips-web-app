@@ -7,7 +7,7 @@ import {
 } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
 import { displayNotification } from '@src/components/common/notification/displayNotification';
 import YesNo from '@src/components/common/yesNo/YesNo';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
 import { FeatureGate } from '@src/components/common/FeatureGate';
 

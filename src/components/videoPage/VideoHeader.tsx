@@ -3,7 +3,7 @@ import AddToCartButton from '@src/components/addToCartButton/AddToCartButton';
 import React from 'react';
 import { FeatureGate } from '@src/components/common/FeatureGate';
 import { AddToPlaylistButton } from '@src/components/addToPlaylistButton/AddToPlaylistButton';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { VideoInfo } from '@src/components/common/videoInfo/VideoInfo';
 import { VideoBadges } from '@src/components/videoPage/VideoBadges';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';

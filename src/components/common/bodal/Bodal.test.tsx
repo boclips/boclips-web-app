@@ -1,7 +1,7 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { Bodal } from '@src/components/common/bodal/Bodal';
-import { InputText } from '@boclips-ui/input';
+import { InputText } from 'boclips-ui';
 import userEvent from '@testing-library/user-event';
 
 describe('The mighty Bodal', () => {

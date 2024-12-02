@@ -6,7 +6,7 @@ import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartIt
 import { useCartValidation } from '@src/components/common/providers/CartValidationProvider';
 import { useDebounce } from '@src/hooks/useDebounce';
 import BoCheckbox from '@src/components/common/input/BoCheckbox';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { DurationInput } from './DurationInput';
 import { isTrimFromValid, isTrimToValid } from './trimValidation';
 

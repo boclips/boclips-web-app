@@ -1,6 +1,5 @@
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import SubjectBadge from '@boclips-ui/subject-badge';
-import EducationLevelBadge from '@boclips-ui/education-level-badge';
+import { SubjectBadge, EducationLevelBadge } from 'boclips-ui';
 import React from 'react';
 import s from './style.module.less';
 

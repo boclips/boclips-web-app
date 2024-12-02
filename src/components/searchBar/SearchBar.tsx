@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import SearchBar from '@boclips-ui/search-bar';
+import SearchBar from 'boclips-ui';
 import { useNavigate } from 'react-router-dom';
 import {
   convertToURLSearchParams,

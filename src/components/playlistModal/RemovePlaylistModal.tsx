@@ -1,7 +1,7 @@
 import React from 'react';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { Bodal } from '@src/components/common/bodal/Bodal';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { useRemovePlaylistMutation } from '@src/hooks/api/playlistsQuery';
 import { usePlatformInteractedWithEvent } from '@src/hooks/usePlatformInteractedWithEvent';
 import s from './style.module.less';

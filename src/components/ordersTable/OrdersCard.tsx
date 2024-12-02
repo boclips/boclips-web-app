@@ -1,7 +1,7 @@
 import { Order } from 'boclips-api-client/dist/sub-clients/orders/model/Order';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from '@boclips-ui/button';
+import Button from 'boclips-ui';
 import { OrderThumbnail } from '@src/components/ordersTable/OrderThumbnail';
 import { OrderStatusField } from '@src/components/ordersTable/OrderStatusField';
 import { OrderDateField } from '@src/components/ordersTable/OrderDateField';

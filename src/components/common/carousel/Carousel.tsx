@@ -7,8 +7,7 @@ import {
 } from 'pure-react-carousel';
 import ChevronSVG from '@src/resources/icons/chevron.svg';
 import React, { ReactElement } from 'react';
-import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
-import { Typography } from '@boclips-ui/typography';
+import { useMediaBreakPoint, Typography } from 'boclips-ui';
 
 interface Props {
   slides: ReactElement[];

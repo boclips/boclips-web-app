@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@boclips-ui/button';
+import Button from 'boclips-ui';
 import CopyLinkIcon from '@src/resources/icons/copy-link-icon.svg';
 import c from 'classnames';
 import s from '../style.module.less';

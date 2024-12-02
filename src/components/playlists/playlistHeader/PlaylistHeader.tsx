@@ -3,7 +3,7 @@ import { PlaylistShareButton } from '@src/components/playlists/playlistHeader/sh
 import c from 'classnames';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import PlaylistDescription from '@src/components/playlists/PlaylistDescription';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import PlaylistNavigation from '@src/components/playlists/PlaylistNavigation';
 import PlaylistLastUpdatedBadge from '@src/components/playlists/playlistHeader/PlaylistLastUpdatedBadge';
 import PlaylistOwnerBadge from '@src/components/playlists/playlistHeader/PlaylistOwnerBadge';

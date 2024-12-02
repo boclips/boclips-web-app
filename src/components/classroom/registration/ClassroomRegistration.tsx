@@ -4,7 +4,7 @@ import { Constants } from '@src/AppConstants';
 import ClassroomRegistrationForm from '@src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
 import ClassroomEmailVerificationPrompt from '@src/components/classroom/registration/ClassroomEmailVerificationPrompt';
 import ClassroomInfo from '@src/components/classroom/registration/classroomInfo/ClassroomInfo';
-import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import { useMediaBreakPoint } from 'boclips-ui';
 import ClassroomLoginPrompt from '@src/components/classroom/registration/ClassroomLoginPrompt';
 
 const CAPTCHA_TOKEN = Constants.CAPTCHA_TOKEN;

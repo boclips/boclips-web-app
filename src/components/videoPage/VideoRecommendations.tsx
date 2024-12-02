@@ -1,4 +1,4 @@
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import s from '@src/components/videoPage/videoPage.module.less';
 import React from 'react';
 import { useGetVideoRecommendations } from '@src/hooks/api/videoQuery';

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { Bodal } from '@src/components/common/bodal/Bodal';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
 import { EditUserRequest, useUpdateUser } from '@src/hooks/api/userQuery';

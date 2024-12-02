@@ -4,7 +4,7 @@ import Footer from '@src/components/layout/Footer';
 import React, { useEffect } from 'react';
 import { Hero } from '@src/components/hero/Hero';
 import TrialEndedSVG from '@src/resources/icons/trial-ended.svg';
-import Button from '@boclips-ui/button';
+import Button from 'boclips-ui';
 import { Helmet } from 'react-helmet';
 import { usePlatformInteractedWithEvent } from '@src/hooks/usePlatformInteractedWithEvent';
 

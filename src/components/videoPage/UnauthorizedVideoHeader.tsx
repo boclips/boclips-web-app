@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { VideoInfo } from '@src/components/common/videoInfo/VideoInfo';
 import { VideoBadges } from '@src/components/videoPage/VideoBadges';
 import { DownloadTranscriptButton } from '@src/components/downloadTranscriptButton/DownloadTranscriptButton';

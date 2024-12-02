@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { Price } from 'boclips-api-client/dist/sub-clients/videos/model/Price';
 import { createPriceDisplayValue } from '@src/services/createPriceDisplayValue';
 import { getBrowserLocale } from '@src/services/getBrowserLocale';

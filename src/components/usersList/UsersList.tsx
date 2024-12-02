@@ -7,8 +7,7 @@ import {
   useGetAccount,
   useGetUserQuery,
 } from '@src/hooks/api/userQuery';
-import Pagination from '@boclips-ui/pagination';
-import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import Pagination, { useMediaBreakPoint } from 'boclips-ui';
 import c from 'classnames';
 import s from '@src/components/common/pagination/pagination.module.less';
 import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';

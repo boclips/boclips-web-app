@@ -1,4 +1,4 @@
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import Checkmark from '@src/resources/icons/checkmark.svg';
 import React from 'react';
 import TrailBackground from '@src/resources/icons/trial-bg.svg';

@@ -1,7 +1,7 @@
 import React from 'react';
 import c from 'classnames';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import VideoGridCard from '@src/components/videoCard/VideoGridCard';
 import { FilterKey } from '@src/types/search/FilterKey';

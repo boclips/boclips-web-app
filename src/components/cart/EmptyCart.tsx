@@ -1,7 +1,7 @@
 import EmptyCartCharacter from '@src/resources/icons/empty-cart-character.svg';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
-import Button from '@boclips-ui/button';
+import Button from 'boclips-ui';
 import { Hero } from '@src/components/hero/Hero';
 
 export const EmptyCart = () => {

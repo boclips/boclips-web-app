@@ -1,4 +1,4 @@
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import c from 'classnames';
 import s from '@src/components/registration/style.module.less';
 import React from 'react';

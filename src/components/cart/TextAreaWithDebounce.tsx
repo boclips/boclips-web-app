@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDebounce } from '@src/hooks/useDebounce';
-import { InputText } from '@boclips-ui/input';
+import { InputText } from 'boclips-ui';
 
 interface Props {
   currentValue?: string;

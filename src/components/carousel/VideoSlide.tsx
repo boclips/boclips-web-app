@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import Thumbnail from '@src/components/playlists/thumbnails/Thumbnail';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/types';
 import s from './styles.module.less';

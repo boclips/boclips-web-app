@@ -1,9 +1,8 @@
 import s from '@src/components/common/gridCard/style.module.less';
-import Badge from '@boclips-ui/badge';
-import { Typography } from '@boclips-ui/typography';
+import Badge, { Typography } from 'boclips-ui';
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import Tooltip from '@boclips-ui/tooltip';
+import Tooltip from 'boclips-ui';
 import { bestForInfo } from '@src/resources/bestFor';
 import getFormattedDuration from '@src/services/getFormattedDuration';
 

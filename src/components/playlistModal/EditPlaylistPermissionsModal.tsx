@@ -1,10 +1,9 @@
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import s from '@src/components/playlistModal/style.module.less';
 import { Bodal } from '@src/components/common/bodal/Bodal';
-import { Typography } from '@boclips-ui/typography';
+import Dropdown, { Typography } from 'boclips-ui';
 import CopyLinkIcon from '@src/resources/icons/copy-link-icon.svg';
 import React from 'react';
-import Dropdown from '@boclips-ui/dropdown';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 import { useUpdatePlaylistPermissionsMutation } from '@src/hooks/api/playlistsQuery';
 

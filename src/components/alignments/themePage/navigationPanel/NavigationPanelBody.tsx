@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as Accordion from '@radix-ui/react-accordion';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import ChevronDownIcon from '@src/resources/icons/chevron-down.svg';
 import { getVideoCountLabel } from '@src/services/getVideoCountLabel';
 import { HashLink } from 'react-router-hash-link';

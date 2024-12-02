@@ -2,7 +2,7 @@ import { SearchResultsSummary } from '@src/components/searchResults/SearchResult
 import React, { useState } from 'react';
 import { VideoSearchResults } from 'boclips-api-client/dist/sub-clients/videos/model/VideoSearchResults';
 import { VideosListView } from '@src/components/searchResults/VideosListView';
-import VideoCardPlaceholder from '@boclips-ui/video-card-placeholder';
+import VideoCardPlaceholder from 'boclips-ui';
 import { Helmet } from 'react-helmet';
 import ViewButtons, {
   ViewType,

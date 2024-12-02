@@ -1,12 +1,11 @@
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import { VideoCard } from '@boclips-ui/video-card';
 import { PriceBadge } from '@src/components/common/price/PriceBadge';
 import { VideoPlayer } from '@src/components/videoCard/VideoPlayer';
 import { Link } from 'react-router-dom';
 import { trackNavigateToVideoDetails } from '@src/components/common/analytics/Analytics';
 import { useBoclipsClient } from '@src/components/common/providers/BoclipsClientProvider';
-import { Typography } from '@boclips-ui/typography';
+import { Typography, VideoCard } from 'boclips-ui';
 import { FilterKey } from '@src/types/search/FilterKey';
 import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import { Segment } from 'boclips-api-client/dist/sub-clients/collections/model/Segment';

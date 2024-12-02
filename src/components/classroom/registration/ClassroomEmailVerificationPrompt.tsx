@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import ScrollToTop from '@src/hooks/scrollToTop';
 import Confetti from '@src/components/confetti/Confetti';
 import s from './style.module.less';

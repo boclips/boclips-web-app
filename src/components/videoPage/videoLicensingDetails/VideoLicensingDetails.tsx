@@ -1,7 +1,7 @@
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import React from 'react';
 import c from 'classnames';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { VideoLicensingDetail } from '@src/components/videoPage/videoLicensingDetails/VideoLicensingDetail';
 import { getVideoPageLicenseDurationLabel } from '@src/services/getVideoLicenseDurationLabel';
 import { EditingRestrictionsLabel } from '@src/components/videoPage/videoLicensingDetails/EditingRestrictionsLabel';

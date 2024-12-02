@@ -1,4 +1,4 @@
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import React from 'react';
 import { VideoAIMetadata } from '@src/components/videoPage/videoMetadata/types/VideoAIMetadata';
 import s from '../style.module.less';

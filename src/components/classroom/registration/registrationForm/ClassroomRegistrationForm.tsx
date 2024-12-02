@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { useAddNewClassroomUser } from '@src/hooks/api/userQuery';
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
 import { displayNotification } from '@src/components/common/notification/displayNotification';

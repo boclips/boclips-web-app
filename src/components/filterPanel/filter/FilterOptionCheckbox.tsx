@@ -1,7 +1,7 @@
 import React from 'react';
 import { FilterOption } from '@src/types/FilterOption';
 import BoCheckbox from '@src/components/common/input/BoCheckbox';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import s from './FilterOptionList.module.less';
 
 interface Props {

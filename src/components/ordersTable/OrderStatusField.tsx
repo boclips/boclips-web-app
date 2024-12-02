@@ -3,7 +3,7 @@ import { OrderStatus } from 'boclips-api-client/dist/sub-clients/orders/model/Or
 import { orderDeliveryStatus } from '@src/components/ordersTable/OrderDeliveryStatus';
 import c from 'classnames';
 import { OrderInformationField } from '@src/components/ordersTable/OrderInformationField';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 
 interface Props {
   status: OrderStatus;

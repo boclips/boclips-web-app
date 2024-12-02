@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Button from '@boclips-ui/button';
+import Button from 'boclips-ui';
 import ShareIcon from '@src/resources/icons/share.svg';
 import c from 'classnames';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';

@@ -2,7 +2,7 @@ import React from 'react';
 import NavigationPanelHeader from '@src/components/alignments/themePage/navigationPanel/NavigationPanelHeader';
 import NavigationPanelBody from '@src/components/alignments/themePage/navigationPanel/NavigationPanelBody';
 import { useThemeMobileMenuContext } from '@src/components/common/providers/ThemeMobileMenuProvider';
-import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import { useMediaBreakPoint } from 'boclips-ui';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import s from './style.module.less';
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { InputText } from '@boclips-ui/input';
+import { InputText } from 'boclips-ui';
 import { Bodal } from '@src/components/common/bodal/Bodal';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 

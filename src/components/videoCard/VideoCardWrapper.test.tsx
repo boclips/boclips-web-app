@@ -7,7 +7,7 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { VideoInteractedWith } from 'boclips-api-client/dist/sub-clients/events/model/EventRequest';
 import { act, fireEvent } from '@testing-library/react';
-import Button from '@boclips-ui/button';
+import Button from 'boclips-ui';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
 

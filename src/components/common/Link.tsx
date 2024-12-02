@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 
 type TypographyLinkProps = React.ComponentProps<typeof Typography.Link>;
 

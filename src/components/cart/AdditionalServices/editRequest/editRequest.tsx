@@ -4,7 +4,7 @@ import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartIt
 import { TextAreaWithDebounce } from '@src/components/cart/TextAreaWithDebounce';
 import { useCartValidation } from '@src/components/common/providers/CartValidationProvider';
 import BoCheckbox from '@src/components/common/input/BoCheckbox';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 
 interface Props {
   label: string;

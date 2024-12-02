@@ -4,7 +4,7 @@ import { Constants } from '@src/AppConstants';
 import RegistrationForm from '@src/components/registration/registrationForm/RegistrationForm';
 import EmailVerificationPrompt from '@src/components/registration/EmailVerificationPrompt';
 import TrialInfo from '@src/components/registration/trialInfo/TrialInfo';
-import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import { useMediaBreakPoint } from 'boclips-ui';
 
 const CAPTCHA_TOKEN = Constants.CAPTCHA_TOKEN;
 

@@ -1,4 +1,4 @@
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import React from 'react';
 import NextArrow from '@src/resources/icons/next-section-arrow.svg';
 import PreviousArrow from '@src/resources/icons/prev-section-arrow.svg';

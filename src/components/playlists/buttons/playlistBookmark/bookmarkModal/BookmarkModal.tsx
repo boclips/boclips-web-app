@@ -7,7 +7,7 @@ import {
   isTrimFromValid,
   isTrimToValid,
 } from '@src/components/cart/AdditionalServices/Trim/trimValidation';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { Bodal } from '@src/components/common/bodal/Bodal';
 import BoCheckbox from '@src/components/common/input/BoCheckbox';
 import { DurationInput } from '@src/components/cart/AdditionalServices/Trim/DurationInput';

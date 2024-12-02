@@ -1,13 +1,12 @@
 import React from 'react';
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
 import s from '@src/components/LicensedContentCard/styles.module.less';
-import Button from '@boclips-ui/button';
+import Button, { Typography } from 'boclips-ui';
 import { useBoclipsClient } from '@src/components/common/providers/BoclipsClientProvider';
 import { downloadFileFromUrl } from '@src/services/downloadFileFromUrl';
 import { displayNotification } from '@src/components/common/notification/displayNotification';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import DownloadSVG from '@src/resources/icons/download.svg';
-import { Typography } from '@boclips-ui/typography';
 import OptionsDotsSVG from '@src/resources/icons/options-dots.svg';
 import { CaptionsModal } from '@src/components/LicensedContentCard/CaptionsModal';
 import { usePlatformInteractedWithEvent } from '@src/hooks/usePlatformInteractedWithEvent';

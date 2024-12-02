@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { InputText } from '@boclips-ui/input';
+import { InputText } from 'boclips-ui';
 import s from './style.module.less';
 
 interface Props {

@@ -6,15 +6,14 @@ import {
 import { useGetUserQuery } from '@src/hooks/api/userQuery';
 import React, { useRef, useState } from 'react';
 import s from '@src/components/playlists/comments/style.module.less';
-import { Typography } from '@boclips-ui/typography';
-import Button from '@boclips-ui/button';
+import Button, { Typography } from 'boclips-ui';
 import CloseSVG from '@src/resources/icons/cross-icon.svg';
-import { InputText } from '@boclips-ui/input';
+import { InputText } from 'boclips-ui';
 import AccountSVG from '@src/resources/icons/account-icon.svg';
 import BinSVG from '@src/resources/icons/bin.svg';
 import CloseOnClickOutside from '@src/hooks/closeOnClickOutside';
 import c from 'classnames';
-import Tooltip from '@boclips-ui/tooltip';
+import Tooltip from 'boclips-ui';
 import Bubble from './Bubble';
 
 type Props = {

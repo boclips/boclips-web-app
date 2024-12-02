@@ -5,7 +5,7 @@ import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartIt
 import { TrimService } from '@src/components/cart/AdditionalServices/Trim/Trim';
 import AdditionalServiceCheckbox from '@src/components/cart/AdditionalServices/AdditionalServiceCheckbox';
 import { EditRequest } from '@src/components/cart/AdditionalServices/editRequest/editRequest';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { FeatureGate } from '@src/components/common/FeatureGate';
 
 interface Props {

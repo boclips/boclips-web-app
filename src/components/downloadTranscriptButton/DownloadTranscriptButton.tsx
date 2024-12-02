@@ -1,9 +1,9 @@
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { useBoclipsClient } from '@src/components/common/providers/BoclipsClientProvider';
-import Button from '@boclips-ui/button';
+import Button from 'boclips-ui';
 import TranscriptIcon from '@src/resources/icons/transcript-icon.svg';
-import Tooltip from '@boclips-ui/tooltip';
+import Tooltip from 'boclips-ui';
 import { displayNotification } from '@src/components/common/notification/displayNotification';
 import s from './downloadTranscriptButton.module.less';
 

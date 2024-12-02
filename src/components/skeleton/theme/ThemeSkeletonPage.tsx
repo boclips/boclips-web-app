@@ -1,7 +1,7 @@
 import React from 'react';
 import c from 'classnames';
 import SkeletonTiles from '@src/components/skeleton/Skeleton';
-import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import { useMediaBreakPoint } from 'boclips-ui';
 import s from '../style.module.less';
 import o from './themeSkeletonPage.module.less';
 

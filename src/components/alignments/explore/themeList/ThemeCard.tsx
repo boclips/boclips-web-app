@@ -1,6 +1,6 @@
 import ArrowIconSVG from '@src/resources/icons/arrow-no-size.svg';
 import React from 'react';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { useNavigate } from 'react-router-dom';
 import { getVideoCountLabel } from '@src/services/getVideoCountLabel';
 import { ThemeLogo } from '@src/components/alignments/themePage/themeLogo/ThemeLogo';

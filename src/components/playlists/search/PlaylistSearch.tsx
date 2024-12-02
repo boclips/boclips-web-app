@@ -1,5 +1,5 @@
 import SearchIcon from '@resources/icons/search-icon.svg';
-import { InputText } from '@boclips-ui/input';
+import { InputText } from 'boclips-ui';
 import React from 'react';
 
 interface PlaylistSearchProps {

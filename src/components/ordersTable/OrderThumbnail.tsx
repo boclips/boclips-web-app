@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFindOrGetVideo } from '@src/hooks/api/videoQuery';
 import { OrderItem } from 'boclips-api-client/dist/sub-clients/orders/model/OrderItem';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import s from './style.module.less';
 
 interface Props {

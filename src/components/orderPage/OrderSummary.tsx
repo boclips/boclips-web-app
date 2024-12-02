@@ -5,7 +5,7 @@ import { OrderDateField } from '@src/components/ordersTable/OrderDateField';
 import { OrderStatusField } from '@src/components/ordersTable/OrderStatusField';
 import { OrderInformationField } from '@src/components/ordersTable/OrderInformationField';
 import { OrderVideoQuantity } from '@src/components/ordersTable/OrderVideoQuantityField';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { OrderTotalValueField } from '../ordersTable/OrderTotalValueField';
 import { Link } from '../common/Link';
 import s from './style.module.less';

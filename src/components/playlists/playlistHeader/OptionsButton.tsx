@@ -9,7 +9,7 @@ import CrossSVG from '@src/resources/icons/cross-icon.svg';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { displayNotification } from '@src/components/common/notification/displayNotification';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import Button from '@boclips-ui/button';
+import Button from 'boclips-ui';
 import { OptionItem } from '@src/components/playlists/playlistHeader/OptionItem';
 import { CopyPlaylistModal } from '@src/components/playlistModal/CopyPlaylistModal';
 import ReorderModal from '@src/components/playlistModal/reorder/ReorderPlaylistModal';

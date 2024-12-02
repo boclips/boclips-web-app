@@ -2,7 +2,7 @@ import { OrderItem } from 'boclips-api-client/dist/sub-clients/orders/model/Orde
 import React from 'react';
 import { useFindOrGetVideo } from '@src/hooks/api/videoQuery';
 import { AdditionalServicesSummaryPreview } from '@src/components/cart/AdditionalServices/AdditionalServicesSummaryPreview';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { PriceBadge } from '@src/components/common/price/PriceBadge';
 import s from './style.module.less';
 import { Link } from '../common/Link';

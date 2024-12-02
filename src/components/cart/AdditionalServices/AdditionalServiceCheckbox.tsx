@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useCartItemAdditionalServicesMutation } from '@src/hooks/api/cartQuery';
 import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
 import BoCheckbox from '@src/components/common/input/BoCheckbox';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 
 interface Props {
   label: string;

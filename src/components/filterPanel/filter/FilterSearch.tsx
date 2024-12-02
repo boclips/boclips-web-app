@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { InputText } from '@boclips-ui/input';
+import { InputText } from 'boclips-ui';
 import SearchIcon from '@resources/icons/search-icon.svg';
 import s from './FilterSearch.module.less';
 

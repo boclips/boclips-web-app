@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { useAlignmentProvider } from '@src/components/common/providers/AlignmentContextProvider';
 import { TextButton } from '@src/components/common/textButton/TextButton';
 import BackArrow from '@src/resources/icons/back-arrow.svg';

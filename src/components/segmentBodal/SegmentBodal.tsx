@@ -1,4 +1,4 @@
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import BoCheckbox from '@src/components/common/input/BoCheckbox';
 import React, { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 import { DurationInput } from '@src/components/cart/AdditionalServices/Trim/DurationInput';

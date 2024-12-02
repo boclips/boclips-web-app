@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import ShareSVG from '@src/resources/icons/white-share.svg';
-import Button from '@boclips-ui/button';
+import Button, { Typography } from 'boclips-ui';
 import { Video } from 'boclips-api-client/dist/types';
 import CopyLinkIcon from '@src/resources/icons/copy-link-icon.svg';
 import { useGetUserQuery } from '@src/hooks/api/userQuery';
 import { durationInSeconds } from '@src/components/cart/AdditionalServices/Trim/trimValidation';
-import { Typography } from '@boclips-ui/typography';
 import { GoogleClassroomShareLink } from '@src/components/shareLinkButton/googleClassroom/GoogleClassroomShareLink';
 import { SegmentBodal } from '@src/components/segmentBodal/SegmentBodal';
 import { getShareableVideoLink } from '@src/components/shareLinkButton/getShareableLink';

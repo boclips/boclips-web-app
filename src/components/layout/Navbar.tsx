@@ -5,7 +5,7 @@ import CrossIconSVG from '@src/resources/icons/cross-icon.svg';
 import { FeatureGate } from '@src/components/common/FeatureGate';
 import CartButton from '@src/components/navButtons/CartButton';
 import { useGetUserQuery } from '@src/hooks/api/userQuery';
-import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import { useMediaBreakPoint } from 'boclips-ui';
 import PlaylistsButton from '@src/components/navButtons/PlaylistsButton';
 import SkipLink from '@src/components/skipLink/SkipLink';
 import AlignmentsButton from '@src/components/navButtons/AlignmentsButton';

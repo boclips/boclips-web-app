@@ -7,7 +7,7 @@ import { useFilterOptions } from '@src/hooks/useFilterOptions';
 import c from 'classnames';
 import { DateFilter } from '@src/components/filterPanel/DateFilter';
 import { BestForFilter } from '@src/components/filterPanel/BestForFilter';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { EducationLevelFilter } from '@src/components/filterPanel/EducationLevelFilter';
 import { TextButton } from '@src/components/common/textButton/TextButton';
 import { LanguageFilter } from '@src/components/filterPanel/LanguageFilter';

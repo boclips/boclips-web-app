@@ -2,7 +2,7 @@ import React from 'react';
 import c from 'classnames';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import PlaylistDescription from '@src/components/playlists/PlaylistDescription';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import PlaylistLastUpdatedBadge from '@src/components/playlists/playlistHeader/PlaylistLastUpdatedBadge';
 import s from './style.module.less';
 

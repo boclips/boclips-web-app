@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import c from 'classnames';
 import { FeatureGate } from '@src/components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';

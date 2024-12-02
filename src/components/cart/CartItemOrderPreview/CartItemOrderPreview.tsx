@@ -4,7 +4,7 @@ import { Video } from 'boclips-api-client/dist/types';
 import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
 import { AdditionalServicesSummaryPreview } from '@src/components/cart/AdditionalServices/AdditionalServicesSummaryPreview';
 import c from 'classnames';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { PriceBadge } from '@src/components/common/price/PriceBadge';
 import s from './style.module.less';
 

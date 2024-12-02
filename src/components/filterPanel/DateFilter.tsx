@@ -1,7 +1,7 @@
 import React from 'react';
 import { DateFilters } from '@src/components/filterPanel/FilterPanel';
 import { FilterKey } from '@src/types/search/FilterKey';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import ReleaseDateFilter from '@src/components/filterPanel/filter/releaseDateFilter/ReleaseDateFilter';
 import { CollapsableFilter } from './filter/CollapsableFilter';
 

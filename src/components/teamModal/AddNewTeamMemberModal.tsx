@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Bodal } from '@src/components/common/bodal/Bodal';
-import { InputText } from '@boclips-ui/input';
+import { InputText, Typography } from 'boclips-ui';
 import { useAddNewUser, useGetUserQuery } from '@src/hooks/api/userQuery';
 import {
   CreateUserRequest,
@@ -9,7 +9,6 @@ import {
 import { displayNotification } from '@src/components/common/notification/displayNotification';
 import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
 import YesNo from '@src/components/common/yesNo/YesNo';
-import { Typography } from '@boclips-ui/typography';
 import { FeatureGate } from '@src/components/common/FeatureGate';
 
 type Props = {

@@ -1,4 +1,4 @@
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import React, { useState } from 'react';
 import { FilterOptionList } from '@src/components/filterPanel/filter/FilterOptionList';
 import { useSearchQueryLocationParams } from '@src/hooks/useLocationParams';

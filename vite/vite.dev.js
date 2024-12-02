@@ -14,6 +14,7 @@ export default defineConfig({
     },
   },
   resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.less'],
     alias: [
       {
         find: '@src',
@@ -39,7 +40,7 @@ export default defineConfig({
     },
   },
   plugins: [
-    react(),
+    react({ include: /\.(js|jsx|ts|tsx|less)$/ }),
     image(),
     createHtmlPlugin({
       inject: false,

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import Dropdown from '@boclips-ui/dropdown';
+import Dropdown, { Typography, InputText } from 'boclips-ui';
 import {
   AUDIENCE,
   DISCOVERY_METHOD,
@@ -7,8 +7,6 @@ import {
   CLASSROOM_JOB_TITLE,
   ORGANIZATION_TYPE,
 } from '@src/components/registration/dropdownValues';
-import { InputText } from '@boclips-ui/input';
-import { Typography } from '@boclips-ui/typography';
 import s from './style.module.less';
 
 interface Props {

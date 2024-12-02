@@ -1,4 +1,4 @@
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import React, { ReactElement } from 'react';
 
 interface ItemProps {

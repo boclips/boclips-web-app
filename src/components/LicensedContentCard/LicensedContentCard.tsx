@@ -1,6 +1,6 @@
 import React from 'react';
 import { VideoPlayer } from '@src/components/videoCard/VideoPlayer';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
 import getFormattedDate from '@src/services/getFormattedDate';
 import getFormattedDuration from '@src/services/getFormattedDuration';

@@ -1,5 +1,5 @@
-import Tooltip from '@boclips-ui/tooltip';
-import Button from '@boclips-ui/button';
+import Tooltip from 'boclips-ui';
+import Button from 'boclips-ui';
 import PlaylistAddIcon from '@src/resources/icons/playlist-add.svg';
 import PlaylistAddAlreadyAddedIcon from '@src/resources/icons/playlist-add-already-added.svg';
 import React, { useRef, useState } from 'react';
@@ -18,7 +18,7 @@ import { handleEscapeKeyEvent } from '@src/services/handleKeyEvent';
 import { CreatePlaylistModal } from '@src/components/playlistModal/createPlaylist/CreatePlaylistModal';
 import { displayNotification } from '@src/components/common/notification/displayNotification';
 import PlusIcon from '@src/resources/icons/plus-sign.svg';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
 import { LoadingOutlined } from '@ant-design/icons';

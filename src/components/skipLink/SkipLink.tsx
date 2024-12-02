@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import c from 'classnames';
-import Button from '@boclips-ui/button';
+import Button from 'boclips-ui';
 import s from './style.module.less';
 
 const SkipLink = () => {

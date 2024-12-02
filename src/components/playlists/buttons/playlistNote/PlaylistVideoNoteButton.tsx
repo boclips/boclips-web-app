@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Button from '@boclips-ui/button';
+import Button from 'boclips-ui';
 import { Video } from 'boclips-api-client/dist/types';
 import PencilSVG from '@src/resources/icons/pencil.svg';
 import {

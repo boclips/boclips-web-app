@@ -1,8 +1,7 @@
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import s from 'src/components/playlistModal/reorder/style.module.less';
-import DragSVG from 'src/resources/icons/drag.svg';
-import { Typography } from '@boclips-ui/typography';
-import Badge from '@boclips-ui/badge';
+import s from '@components/playlistModal/reorder/style.module.less';
+import DragSVG from '@resources/icons/drag.svg';
+import { Badge, Typography } from 'boclips-ui';
 import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';

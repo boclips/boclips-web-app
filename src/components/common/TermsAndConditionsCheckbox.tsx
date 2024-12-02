@@ -1,6 +1,6 @@
 import RegistrationPageCheckbox from '@src/components/common/input/RegistrationPageCheckbox';
 import React, { useState } from 'react';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 
 interface Props {
   handleChange: (value: boolean) => void;
