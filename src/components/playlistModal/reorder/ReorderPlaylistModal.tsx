@@ -2,11 +2,16 @@ import React, { useState } from 'react';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { Typography } from '@boclips-ui/typography';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import PlaylistVideosListDraggable from 'src/components/playlistModal/reorder/PlaylistVideosListDraggable';
 import { useReorderPlaylist } from 'src/hooks/api/playlistsQuery';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 import { CollectionAsset } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { closestCenter, DndContext } from '@dnd-kit/core';
 import s from './style.module.less';
 
 interface Props {
@@ -21,7 +26,6 @@ const ReorderModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
   ]);
 
   const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
-
   const { mutate: reorderPlaylist } = useReorderPlaylist(playlist);
 
   const onConfirm = () => {
@@ -30,26 +34,20 @@ const ReorderModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
     onCancel();
   };
 
-  const reorder = (array, startIndex, endIndex) => {
-    const result = [...array];
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
+  const onDragEnd = (event) => {
+    const { active, over } = event;
 
-    return result;
-  };
+    if (active.id !== over?.id) {
+      const oldIndex = reorderedAssets.findIndex(
+        (item) => item.id === active.id,
+      );
+      const newIndex = reorderedAssets.findIndex(
+        (item) => item.id === over?.id,
+      );
 
-  const onDragEnd = (result) => {
-    if (!result.destination) {
-      return;
+      const newOrder = arrayMove(reorderedAssets, oldIndex, newIndex);
+      setReorderedAssets(newOrder);
     }
-
-    const items = reorder(
-      reorderedAssets,
-      result.source.index,
-      result.destination.index,
-    );
-
-    setReorderedAssets(items);
   };
 
   return (
@@ -64,27 +62,22 @@ const ReorderModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
       <Typography.Body as="span">
         Drag & drop video titles to put them in your desired order:
       </Typography.Body>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="droppable" direction="vertical">
-          {(provided) => (
-            <ul
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              className={s.listWrapper}
-            >
-              {reorderedAssets.map((asset, index) => (
-                <PlaylistVideosListDraggable
-                  key={asset.id}
-                  video={asset.video}
-                  index={index}
-                />
-              ))}
-              {provided.placeholder}
-            </ul>
-          )}
-        </Droppable>
-      </DragDropContext>
+      <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd}>
+        <SortableContext
+          items={reorderedAssets.map((asset) => asset.id)}
+          strategy={verticalListSortingStrategy}
+        >
+          <ul className={s.listWrapper}>
+            {reorderedAssets.map((asset) => (
+              <PlaylistVideosListDraggable
+                key={asset.id}
+                id={asset.id} // Pass the unique identifier
+                video={asset.video}
+              />
+            ))}
+          </ul>
+        </SortableContext>
+      </DndContext>
     </Bodal>
   );
 };
