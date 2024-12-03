@@ -10,15 +10,15 @@ import axios from 'axios';
 import { extraErrorDataIntegration } from '@sentry/integrations';
 import * as Sentry from '@sentry/react';
 import { browserTracingIntegration } from '@sentry/react';
-import { FallbackApp } from './FallbackApp';
-import AppUnauthenticated from './AppUnauthenticated';
-import App from './App';
-import { Constants } from './AppConstants';
+import { FallbackApp } from '@src/FallbackApp';
+import AppUnauthenticated from '@src/AppUnauthenticated';
+import App from '@src/App';
+import { Constants } from '@src/AppConstants';
 
 // eslint-disable-next-line import/extensions
-import { loadHotjar } from './thirdParty/loadHotjar.js';
+import { loadHotjar } from '@src/thirdParty/loadHotjar.js';
 // eslint-disable-next-line import/extensions
-import { loadPendo } from './thirdParty/loadPendo.js';
+import { loadPendo } from '@src/thirdParty/loadPendo.js';
 
 const addHubspotScript = () => {
   const hubspotScript = document.createElement('script');
