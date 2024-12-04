@@ -1,6 +1,5 @@
-@import '@boclips-ui/styles/src/colors';
-@import '@boclips-ui/styles/src/focus';
-@import '@boclips-ui/styles/src/breakpoints';
+@import '@src/vars.less';
+@import 'boclips-ui/dist/style.css';
 
 .paginationPanel {
   display: flex;
@@ -9,7 +8,7 @@
   grid-row-end: 4;
 
   .targetLink {
-    #focus;
+    &:extend(#focus);
     display: flex;
     align-items: flex-start;
     justify-content: space-between;

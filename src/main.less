@@ -2,9 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import 'vars.less';
-@import '@boclips-ui/styles/src/colors';
-@import '@boclips-ui/styles/src/focus';
+@import '@src/vars.less';;
 
 @layer base {
   html,
@@ -32,7 +30,7 @@
   main,
   a,
   button {
-    #focus;
+    &:extend(#focus);
   }
 
   .container {

@@ -1,5 +1,5 @@
-@import '@boclips-ui/styles/src/colors';
-@import '@boclips-ui/styles/src/focus';
+@import '@src/vars.less';
+@import 'boclips-ui/dist/style.css';
 
 .viewButton {
   --bo-ui-button-outline-svg-fill: transparent;
@@ -34,7 +34,7 @@
   padding: 0.25rem 0.75rem;
   margin: 0.5rem 0.25rem 0;
 
-  #focus;
+  &:extend(#focus);
   &:focus {
     border-radius: 9999px;
   }
