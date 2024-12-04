@@ -1,7 +1,7 @@
 import React from 'react';
-import ErrorEngineer from '@src/resources/icons/errro-engineer.svg';
-import Button, { Typography } from 'boclips-ui';
-import { Hero } from '@src/components/hero/Hero';
+import ErrorEngineer from '@resources/icons/errro-engineer.svg?react';
+import { Button, Typography } from 'boclips-ui';
+import { Hero } from '@components/hero/Hero';
 
 interface Props {
   row?: string;

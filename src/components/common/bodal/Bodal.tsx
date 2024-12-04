@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useRef,
 } from 'react';
-import Button, { Typography } from 'boclips-ui';
+import { Button, Typography } from 'boclips-ui';
 import CloseIconSVG from '@src/resources/icons/cross-icon.svg';
 import { LoadingOutlined } from '@ant-design/icons';
 import { TextButton } from '@src/components/common/textButton/TextButton';

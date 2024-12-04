@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { useBoclipsClient } from '@src/components/common/providers/BoclipsClientProvider';
-import Button from 'boclips-ui';
+import Tooltip, { Button } from 'boclips-ui';
 import EmbedIcon from '@src/resources/icons/embed-icon.svg';
-import Tooltip from 'boclips-ui';
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
 import { SegmentBodal } from '@src/components/segmentBodal/SegmentBodal';
 import { durationInSeconds } from '@src/components/cart/AdditionalServices/Trim/trimValidation';

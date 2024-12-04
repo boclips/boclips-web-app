@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { InputText } from 'boclips-ui';
+import { Input } from 'boclips-ui';
 import { Bodal } from '@src/components/common/bodal/Bodal';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 
@@ -65,7 +65,7 @@ export const PlaylistModal = ({
       initialFocusRef={inputTextRef}
     >
       <div className="pb-6">
-        <InputText
+        <Input
           id="playlist-name"
           labelText="Playlist name"
           placeholder="Add name"
@@ -79,7 +79,7 @@ export const PlaylistModal = ({
           height="48px"
         />
       </div>
-      <InputText
+      <Input
         id="playlist-description"
         labelText="Description"
         placeholder="Add description"

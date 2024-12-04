@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
-import Button, { Typography } from 'boclips-ui';
+import { Button, Typography } from 'boclips-ui';
 import c from 'classnames';
 import PencilSVG from '@src/resources/icons/pencil.svg';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';

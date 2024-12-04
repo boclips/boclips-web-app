@@ -1,4 +1,4 @@
-import Button from 'boclips-ui';
+import { Button } from 'boclips-ui';
 import React, { ReactElement } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
 

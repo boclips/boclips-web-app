@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Button, { Typography } from 'boclips-ui';
+import { Button, Typography } from 'boclips-ui';
 import { getTotalPrice } from '@src/services/getTotalPrice';
 import { useCartValidation } from '@src/components/common/providers/CartValidationProvider';
 import { OrderModal } from '@src/components/orderModal/OrderModal';

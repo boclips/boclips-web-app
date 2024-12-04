@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ShareSVG from '@src/resources/icons/white-share.svg';
-import Button, { Typography } from 'boclips-ui';
+import { Button, Typography } from 'boclips-ui';
 import { Video } from 'boclips-api-client/dist/types';
 import CopyLinkIcon from '@src/resources/icons/copy-link-icon.svg';
 import { useGetUserQuery } from '@src/hooks/api/userQuery';

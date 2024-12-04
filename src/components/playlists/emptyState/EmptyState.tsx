@@ -3,7 +3,7 @@ import { useGetUserQuery } from '@src/hooks/api/userQuery';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import EmptyStateClassroomSVG from '@resources/icons/emptyPlaylistClassroom.svg';
 import EmptyStateLibrarySVG from '@resources/icons/emptyPlaylistLibrary.svg';
-import Button, { Typography } from 'boclips-ui';
+import { Button, Typography } from 'boclips-ui';
 import c from 'classnames';
 import CreateNewPlaylistButton from '@src/components/playlists/buttons/createPlaylist/CreateNewPlaylistButton';
 import PlusSign from '@resources/icons/plus-sign.svg';

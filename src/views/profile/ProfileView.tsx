@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import PageHeader from '@src/components/pageTitle/PageHeader';
 import Footer from '@src/components/layout/Footer';
 import { Helmet } from 'react-helmet';
-import Button, { Typography } from 'boclips-ui';
+import { Button, Typography } from 'boclips-ui';
 import { useGetUserQuery } from '@src/hooks/api/userQuery';
 import UserIcon from '@src/resources/icons/user-icon.svg';
 import HomeIcon from '@src/resources/icons/home-icon.svg';

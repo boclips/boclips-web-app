@@ -5,7 +5,7 @@ import c from 'classnames';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
 import { FeatureGate } from '@src/components/common/FeatureGate';
 import CloseOnClickOutside from '@src/hooks/closeOnClickOutside';
-import Button, { Typography } from 'boclips-ui';
+import { Button, Typography } from 'boclips-ui';
 import { useGetUserQuery } from '@src/hooks/api/userQuery';
 import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';

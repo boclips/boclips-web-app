@@ -1,5 +1,5 @@
 import s from '@src/components/classroom/registration/style.module.less';
-import Button from 'boclips-ui';
+import { Button } from 'boclips-ui';
 import React, { ReactElement } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
 

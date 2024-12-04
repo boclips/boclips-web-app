@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Button from 'boclips-ui';
+import { Button } from 'boclips-ui';
 import CommentSVG from '@src/resources/icons/comment-icon.svg';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import Bubble from '@src/components/playlists/comments/Bubble';

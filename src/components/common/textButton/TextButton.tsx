@@ -1,4 +1,4 @@
-import Button from 'boclips-ui';
+import { Button } from 'boclips-ui';
 import React from 'react';
 import c from 'classnames';
 import s from './style.module.less';

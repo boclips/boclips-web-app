@@ -1,4 +1,4 @@
-import Button from 'boclips-ui';
+import { Button } from 'boclips-ui';
 import PlusSign from '@src/resources/icons/plus-sign.svg';
 import React, { useState } from 'react';
 import { CreatePlaylistModal } from '@src/components/playlistModal/createPlaylist/CreatePlaylistModal';
