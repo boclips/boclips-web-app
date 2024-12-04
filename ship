@@ -4,9 +4,9 @@ set -e
 
 git pull -r
 
-npm run lint:errors
-npm run compile
-npm run test
-npm run build
+pnpm run lint:errors
+pnpm run compile
+pnpm run test
+pnpm run build
 
 git push

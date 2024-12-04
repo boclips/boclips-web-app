@@ -6,5 +6,5 @@
 To start the fake server and run the cypress integration tests, use this command:
 
 ```none
-npm run test-visual:open
+pnpm run test-visual:open
 ```
