@@ -113,7 +113,6 @@ const App = ({
   const currentLocation = useLocation();
 
   useEffect(() => {
-    console.log(apiClient.users.getCurrentUser());
     apiClient.users.getCurrentUser().then((user) => {
       AnalyticsFactory.pendo().identify(user);
       AnalyticsFactory.hotjar().userAttributes(new UserAttributes(user));
