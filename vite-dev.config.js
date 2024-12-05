@@ -5,6 +5,9 @@ import path from 'path';
 import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
+  define: {
+    global: {},
+  },
   root: path.resolve(__dirname, 'src'),
   build: {
     outDir: path.resolve(__dirname, 'dist'),
