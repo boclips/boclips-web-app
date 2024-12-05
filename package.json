@@ -130,7 +130,7 @@
     "babel-loader": "^9.2.1",
     "boclips-js-security": "^14.0.0",
     "boclips-player": "^7.16.0",
-    "boclips-player-react": "^4.0.7",
+    "boclips-player-react": "^4.0.8",
     "boclips-ui": "1.1.0",
     "copy-webpack-plugin": "^11.0.0",
     "core-js": "^3.39.0",

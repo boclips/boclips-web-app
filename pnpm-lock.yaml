@@ -135,8 +135,8 @@ importers:
         specifier: ^7.16.0
         version: 7.16.0(webpack@5.97.0)
       boclips-player-react:
-        specifier: ^4.0.7
-        version: 4.0.7(axios@1.7.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.97.0)
+        specifier: ^4.0.8
+        version: 4.0.8(axios@1.7.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.97.0)
       boclips-ui:
         specifier: 1.1.0
         version: 1.1.0(@types/react-dom@18.3.1)(@types/react@18.3.13)(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -308,10 +308,10 @@ importers:
         version: 8.57.1
       eslint-config-airbnb:
         specifier: ^19.0.4
-        version: 19.0.4(eslint-plugin-import@2.31.0)(eslint-plugin-jsx-a11y@6.10.2(eslint@8.57.1))(eslint-plugin-react-hooks@4.6.2(eslint@8.57.1))(eslint-plugin-react@7.37.2(eslint@8.57.1))(eslint@8.57.1)
+        version: 19.0.4(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1))(eslint-plugin-jsx-a11y@6.10.2(eslint@8.57.1))(eslint-plugin-react-hooks@4.6.2(eslint@8.57.1))(eslint-plugin-react@7.37.2(eslint@8.57.1))(eslint@8.57.1)
       eslint-config-airbnb-typescript:
         specifier: ^17.1.0
-        version: 17.1.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1)(typescript@5.7.2))(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint-plugin-import@2.31.0)(eslint@8.57.1)
+        version: 17.1.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1)(typescript@5.7.2))(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1))(eslint@8.57.1)
       eslint-config-boclips:
         specifier: ^1.0.15
         version: 1.0.15(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1)(typescript@5.7.2))(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1)
@@ -396,9 +396,6 @@ importers:
       type-fest:
         specifier: ^4.18.2
         version: 4.30.0
-      vite-plugin-html-purgecss:
-        specifier: ^0.1.1
-        version: 0.1.1(vite@6.0.2(@types/node@22.10.1)(jiti@1.21.6)(less@4.2.1)(sass@1.82.0)(terser@5.36.0)(yaml@2.6.1))
       webpack-bundle-analyzer:
         specifier: ^4.10.2
         version: 4.10.2
@@ -3407,11 +3404,6 @@ packages:
     resolution: {integrity: sha512-691btEsRchKKqRSlJm4954EatQmKU6LSHi8JbI4iM2eDYa7Pco58PPhuOHvGXLOcvUjfUmPqQSc4ssXLsFmvgg==}
     engines: {node: '>=20.18.0 <21'}
 
-  boclips-js-security@13.0.1:
-    resolution: {integrity: sha512-7s/YSUCJvKbzLp6uAc9TLsoFJbCDl3lLmcd1vpd1FZZMrMSJusN/P7vL8C0W5Gw+x3YWUPbOSuIuBSjD7Zu2xA==}
-    peerDependencies:
-      axios: '>=0.21.1 <1.0.0'
-
   boclips-js-security@14.0.0:
     resolution: {integrity: sha512-RbFAS6tjS53CXp763E0O2YNozzHhP/ZgvA2gkaEzdlVwc8ftTsYS1zkUVPienENOXVuiyTYorxINXg5Tvw6BxQ==}
     peerDependencies:
@@ -3421,8 +3413,8 @@ packages:
     resolution: {integrity: sha512-Y9xV1AH+AXB6Ym3J4EaF0Af9kf0zbebQeUt+q6wWRdV1dXSMkZKSHYuXd3CUcJfW7mmo7blS+sMAFobIHYsukg==}
     hasBin: true
 
-  boclips-player-react@4.0.7:
-    resolution: {integrity: sha512-EP1DcbCicZClRWMA0O1vU18TSFPDp1nZ8++W7MbpmYQp1QkdrfY3PgstZjZZ7a3fNUNvXCbxG52Bh572O1Qb2g==}
+  boclips-player-react@4.0.8:
+    resolution: {integrity: sha512-Y5auQ/XJufhQSfHKLlk4CpqDfHjAXqcpcTBE6MgBk88u3c7mn/AM/idzdEpjTX5Pg4OG5smZz94g7gBkbdv5jw==}
     peerDependencies:
       react: ^18.3.1
       react-dom: ^18.3.1
@@ -6704,10 +6696,6 @@ packages:
       react: 15.x || 16.x || 17.x || 18.x
       react-dom: 15.x || 16.x || 17.x || 18.x
 
-  purgecss@4.1.3:
-    resolution: {integrity: sha512-99cKy4s+VZoXnPxaoM23e5ABcP851nC2y2GROkkjS8eJaJtlciGavd7iYAw2V84WeBqggZ12l8ef44G99HmTaw==}
-    hasBin: true
-
   qs@6.13.0:
     resolution: {integrity: sha512-+38qI9SOr8tfZ4QmJNplMUxqjbe7LKvvZgWdExBOmd+egZTtjLB67Gu0HRX3u/XOq7UU2Nx6nsjvS16Z9uwfpg==}
     engines: {node: '>=0.6'}
@@ -8240,11 +8228,6 @@ packages:
   verror@1.10.0:
     resolution: {integrity: sha512-ZZKSmDAEFOijERBLkmYfJ+vmk3w+7hOLYDNkRCuRuMJGEmqYNCNLyBBFwWKVMhfwaEF3WOd0Zlw86U/WC/+nYw==}
     engines: {'0': node >=0.6.0}
-
-  vite-plugin-html-purgecss@0.1.1:
-    resolution: {integrity: sha512-/VJnN/CkUoXlgVCvIbFymfsW7hUEO2Dch5uWwiKJFTb4SLLNhTr/sPJfEUl1wTj5y3SwPXgPz002sQgXJj0mCw==}
-    peerDependencies:
-      vite: ^2.0.0
 
   vite-plugin-html@3.2.2:
     resolution: {integrity: sha512-vb9C9kcdzcIo/Oc3CLZVS03dL5pDlOFuhGlZYDCJ840BhWl/0nGeZWf3Qy7NlOayscY4Cm/QRgULCQkEZige5Q==}
@@ -12194,18 +12177,6 @@ snapshots:
       - debug
       - supports-color
 
-  boclips-js-security@13.0.1(axios@1.7.9):
-    dependencies:
-      axios: 1.7.9(debug@4.3.7)
-      jest-environment-jsdom: 29.7.0
-      jest-mock: 29.7.0
-      keycloak-js: 18.0.1
-    transitivePeerDependencies:
-      - bufferutil
-      - canvas
-      - supports-color
-      - utf-8-validate
-
   boclips-js-security@14.0.0(axios@1.7.9):
     dependencies:
       axios: 1.7.9(debug@4.3.7)
@@ -12224,9 +12195,9 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  boclips-player-react@4.0.7(axios@1.7.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.97.0):
+  boclips-player-react@4.0.8(axios@1.7.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.97.0):
     dependencies:
-      boclips-js-security: 13.0.1(axios@1.7.9)
+      boclips-js-security: 14.0.0(axios@1.7.9)
       boclips-player: 7.16.0(webpack@5.97.0)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -13238,7 +13209,7 @@ snapshots:
     optionalDependencies:
       source-map: 0.6.1
 
-  eslint-config-airbnb-base@15.0.0(eslint-plugin-import@2.31.0)(eslint@8.57.1):
+  eslint-config-airbnb-base@15.0.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       confusing-browser-globals: 1.0.11
       eslint: 8.57.1
@@ -13247,18 +13218,18 @@ snapshots:
       object.entries: 1.1.8
       semver: 6.3.1
 
-  eslint-config-airbnb-typescript@17.1.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1)(typescript@5.7.2))(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint-plugin-import@2.31.0)(eslint@8.57.1):
+  eslint-config-airbnb-typescript@17.1.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1)(typescript@5.7.2))(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint@8.57.1)(typescript@5.7.2)
       '@typescript-eslint/parser': 5.62.0(eslint@8.57.1)(typescript@5.7.2)
       eslint: 8.57.1
-      eslint-config-airbnb-base: 15.0.0(eslint-plugin-import@2.31.0)(eslint@8.57.1)
+      eslint-config-airbnb-base: 15.0.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1))(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1)
 
-  eslint-config-airbnb@19.0.4(eslint-plugin-import@2.31.0)(eslint-plugin-jsx-a11y@6.10.2(eslint@8.57.1))(eslint-plugin-react-hooks@4.6.2(eslint@8.57.1))(eslint-plugin-react@7.37.2(eslint@8.57.1))(eslint@8.57.1):
+  eslint-config-airbnb@19.0.4(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1))(eslint-plugin-jsx-a11y@6.10.2(eslint@8.57.1))(eslint-plugin-react-hooks@4.6.2(eslint@8.57.1))(eslint-plugin-react@7.37.2(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       eslint: 8.57.1
-      eslint-config-airbnb-base: 15.0.0(eslint-plugin-import@2.31.0)(eslint@8.57.1)
+      eslint-config-airbnb-base: 15.0.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1))(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.1)
       eslint-plugin-react: 7.37.2(eslint@8.57.1)
@@ -13300,7 +13271,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0)(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       debug: 3.2.7(supports-color@8.1.1)
     optionalDependencies:
@@ -13332,7 +13303,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0)(eslint@8.57.1))(eslint@8.57.1)
       hasown: 2.0.2
       is-core-module: 2.15.1
       is-glob: 4.0.3
@@ -16002,13 +15973,6 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  purgecss@4.1.3:
-    dependencies:
-      commander: 8.3.0
-      glob: 7.2.3
-      postcss: 8.4.49
-      postcss-selector-parser: 6.1.2
-
   qs@6.13.0:
     dependencies:
       side-channel: 1.0.6
@@ -17813,11 +17777,6 @@ snapshots:
       assert-plus: 1.0.0
       core-util-is: 1.0.2
       extsprintf: 1.3.0
-
-  vite-plugin-html-purgecss@0.1.1(vite@6.0.2(@types/node@22.10.1)(jiti@1.21.6)(less@4.2.1)(sass@1.82.0)(terser@5.36.0)(yaml@2.6.1)):
-    dependencies:
-      purgecss: 4.1.3
-      vite: 6.0.2(@types/node@22.10.1)(jiti@1.21.6)(less@4.2.1)(sass@1.82.0)(terser@5.36.0)(yaml@2.6.1)
 
   vite-plugin-html@3.2.2(vite@6.0.2(@types/node@22.10.1)(jiti@1.21.6)(less@4.2.1)(sass@1.82.0)(terser@5.36.0)(yaml@2.6.1)):
     dependencies:
