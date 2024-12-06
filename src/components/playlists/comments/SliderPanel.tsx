@@ -6,7 +6,7 @@ import {
 import { useGetUserQuery } from '@src/hooks/api/userQuery';
 import React, { useRef, useState } from 'react';
 import s from '@components/playlists/comments/style.module.less';
-import Tooltip, { Button, Typography, InputText } from 'boclips-ui';
+import { Button, Input, Tooltip, Typography } from 'boclips-ui';
 import CloseSVG from '@resources/icons/cross-icon.svg?react';
 import AccountSVG from '@resources/icons/account-icon.svg?react';
 import BinSVG from '@resources/icons/bin.svg?react';
@@ -83,7 +83,7 @@ const SliderPanel = ({
         <Typography.Body className={s.headerText} weight="medium">
           {collection.assets.find((it) => it.id === videoId)?.video?.title}
         </Typography.Body>
-        <InputText
+        <Input
           ref={textareaRef}
           id={`${videoId}-comment`}
           inputType="textarea"

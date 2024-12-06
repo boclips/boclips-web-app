@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDebounce } from '@src/hooks/useDebounce';
-import { InputText } from 'boclips-ui';
+import { Input } from 'boclips-ui';
 
 interface Props {
   currentValue?: string;
@@ -37,7 +37,7 @@ export const TextAreaWithDebounce = ({
   }, [debouncedValue]);
 
   return (
-    <InputText
+    <Input
       id="cart-note"
       onChange={handleOnChange}
       onFocus={() => enableValidation(false)}

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Bodal } from '@components/common/bodal/Bodal';
-import { InputText, Typography } from 'boclips-ui';
+import { Input, Typography } from 'boclips-ui';
 import { useAddNewUser, useGetUserQuery } from '@src/hooks/api/userQuery';
 import {
   CreateUserRequest,
@@ -112,7 +112,7 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
       isLoading={isLoadingUser || isCreateUserLoading}
       initialFocusRef={firstInputRef}
     >
-      <InputText
+      <Input
         ref={firstInputRef}
         showLabelText
         inputType="text"
@@ -125,7 +125,7 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
         onBlur={() => validateTextField('firstName')}
         errorMessage="Please enter a valid first name (2 characters or longer)"
       />
-      <InputText
+      <Input
         inputType="text"
         id="last-name"
         onChange={(e) => setForm({ ...form, lastName: e })}
@@ -137,7 +137,7 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
         onBlur={() => validateTextField('lastName')}
         errorMessage="Please enter a valid last name (2 characters or longer)"
       />
-      <InputText
+      <Input
         showLabelText
         labelText="Email address"
         className="mb-6"

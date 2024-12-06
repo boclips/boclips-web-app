@@ -1,5 +1,5 @@
 import React from 'react';
-import Tooltip from 'boclips-ui';
+import { Tooltip } from 'boclips-ui';
 
 export const PriceUnavailableBadge = () => (
   <Tooltip text="For pricing information contact your local Pearson R&P team">

@@ -1,4 +1,4 @@
-import Tooltip, { Button, Typography } from 'boclips-ui';
+import { Button, Tooltip, Typography } from 'boclips-ui';
 import PlaylistAddIcon from '@resources/icons/playlist-add.svg?react';
 import PlaylistAddAlreadyAddedIcon from '@resources/icons/playlist-add-already-added.svg?react';
 import React, { useRef, useState } from 'react';

@@ -11,7 +11,7 @@ import { useLicensedContentQuery } from '@src/hooks/api/licensedContentQuery';
 import LicensesArea from '@components/licensesArea/LicensesArea';
 import { useLocationParams } from '@src/hooks/useLocationParams';
 import { useNavigate } from 'react-router-dom';
-import Tooltip, { Typography } from 'boclips-ui';
+import { Tooltip, Typography } from 'boclips-ui';
 import { usePlatformInteractedWithEvent } from '@src/hooks/usePlatformInteractedWithEvent';
 import getFormattedDate from '@src/services/getFormattedDate';
 import { Warning } from '@components/common/warning/Warning';

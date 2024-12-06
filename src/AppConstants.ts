@@ -1,5 +1,3 @@
-import * as process from 'process';
-
 declare global {
   interface Window {
     Environment: any;

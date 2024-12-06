@@ -8,7 +8,7 @@ import c from 'classnames';
 import { TextButton } from '@components/common/textButton/TextButton';
 import { PriceBadge } from '@components/common/price/PriceBadge';
 import { useFindOrGetVideo } from '@src/hooks/api/videoQuery';
-import VideoCardPlaceholder, { Typography } from 'boclips-ui';
+import { Typography, VideoCardPlaceholder } from 'boclips-ui';
 import { VideoInfo } from '@components/common/videoInfo/VideoInfo';
 import { Link } from '@components/common/Link';
 import { HotjarEvents } from '@src/services/analytics/hotjar/Events';

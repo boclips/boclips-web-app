@@ -7,7 +7,7 @@ import {
   UserType,
 } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
 import { Bodal } from '@components/common/bodal/Bodal';
-import { InputText } from 'boclips-ui';
+import { Input } from 'boclips-ui';
 
 type Props = {
   userToUpdate: User;
@@ -97,7 +97,7 @@ const EditPersonalProfileModal = ({ userToUpdate, closeModal }: Props) => {
       confirmButtonText="Save"
       isLoading={isEditSelfUserLoading}
     >
-      <InputText
+      <Input
         ref={firstInputRef}
         showLabelText
         inputType="text"
@@ -111,7 +111,7 @@ const EditPersonalProfileModal = ({ userToUpdate, closeModal }: Props) => {
         onBlur={() => validateTextField('firstName')}
         errorMessage="Please enter a valid first name (2 characters or longer)"
       />
-      <InputText
+      <Input
         inputType="text"
         id="last-name"
         onChange={(e) => setForm({ ...form, lastName: e })}

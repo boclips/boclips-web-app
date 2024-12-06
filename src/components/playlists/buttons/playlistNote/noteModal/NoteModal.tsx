@@ -1,7 +1,7 @@
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import React, { useEffect, useState } from 'react';
 import { Bodal } from '@components/common/bodal/Bodal';
-import { InputText } from 'boclips-ui';
+import { Input } from 'boclips-ui';
 
 interface NoteModalProps {
   onCancel: () => void;
@@ -47,7 +47,7 @@ const NoteModal = ({
       onConfirm={handleConfirm}
     >
       <div className="justify-center mb-10">
-        <InputText
+        <Input
           id="playlist-asset-note"
           placeholder="Add note"
           constraints={{ minLength: 0 }}

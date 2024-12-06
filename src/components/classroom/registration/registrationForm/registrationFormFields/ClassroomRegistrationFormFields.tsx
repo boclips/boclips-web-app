@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { InputText, Typography } from 'boclips-ui';
+import { Input, Typography } from 'boclips-ui';
 import s from '@components/classroom/registration/style.module.less';
 import c from 'classnames';
 import RegistrationPageCheckbox from '@components/common/input/RegistrationPageCheckbox';
@@ -137,7 +137,7 @@ const ClassroomRegistrationFormFields = ({
   return (
     <>
       <div className="flex flex-row items-start">
-        <InputText
+        <Input
           id="input-firstName"
           aria-label="input-firstName"
           onChange={(value) => handleChange('firstName', value)}
@@ -150,7 +150,7 @@ const ClassroomRegistrationFormFields = ({
           errorMessage={validationErrors.firstName}
           errorMessagePlacement="bottom"
         />
-        <InputText
+        <Input
           id="input-lastName"
           onChange={(value) => handleChange('lastName', value)}
           inputType="text"
@@ -164,7 +164,7 @@ const ClassroomRegistrationFormFields = ({
         />
       </div>
 
-      <InputText
+      <Input
         id="input-email"
         onChange={(value) => handleChange('email', value)}
         inputType="text"
@@ -220,7 +220,7 @@ const ClassroomRegistrationFormFields = ({
             </div>
           ) : null
         ) : (
-          <InputText
+          <Input
             id="input-schoolName"
             onChange={handleSchoolTextUpdate}
             inputType="text"
@@ -236,7 +236,7 @@ const ClassroomRegistrationFormFields = ({
 
       <div className="flex flex-col items-start">
         <div className="flex flex-row w-full">
-          <InputText
+          <Input
             id="input-password"
             onChange={(value) => handleChange('password', value)}
             inputType="password"
@@ -248,7 +248,7 @@ const ClassroomRegistrationFormFields = ({
             errorMessagePlacement="bottom"
           />
 
-          <InputText
+          <Input
             id="input-confirmPassword"
             onChange={(value) => handleChange('confirmPassword', value)}
             inputType="password"

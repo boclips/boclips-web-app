@@ -3,7 +3,7 @@ import List from 'antd/lib/list';
 import { PAGE_SIZE } from '@src/views/search/SearchResultsView';
 import React from 'react';
 import { VideoCardWrapper } from '@components/videoCard/VideoCardWrapper';
-import Pagination, { useMediaBreakPoint } from 'boclips-ui';
+import { Pagination, useMediaBreakPoint } from 'boclips-ui';
 import c from 'classnames';
 import { VideoCardButtons } from '@components/videoCard/buttons/VideoCardButtons';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';

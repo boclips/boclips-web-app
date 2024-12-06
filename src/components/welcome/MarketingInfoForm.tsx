@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import Dropdown, { Typography, InputText } from 'boclips-ui';
+import { Dropdown, Typography, Input } from 'boclips-ui';
 import {
   AUDIENCE,
   DISCOVERY_METHOD,
@@ -99,7 +99,7 @@ const MarketingInfoForm = ({
           errorMessage="I heard about Boclips is required"
         />
       )}
-      <InputText
+      <Input
         id="input-desiredContent"
         aria-label="input-desiredContent"
         onChange={(value) => handleChange('desiredContent', value)}

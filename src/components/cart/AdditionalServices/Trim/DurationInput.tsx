@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { InputText } from 'boclips-ui';
+import { Input } from 'boclips-ui';
 import s from './style.module.less';
 
 interface Props {
@@ -52,7 +52,7 @@ export const DurationInput = ({
 
   return (
     <div className={s.durationInput}>
-      <InputText
+      <Input
         ref={inputRef}
         labelText={label}
         showLabelText

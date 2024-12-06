@@ -1,7 +1,7 @@
 import { Video } from 'boclips-api-client/dist/types';
 import { PAGE_SIZE } from '@src/views/search/SearchResultsView';
 import React from 'react';
-import Pagination, { useMediaBreakPoint } from 'boclips-ui';
+import { Pagination, useMediaBreakPoint } from 'boclips-ui';
 import c from 'classnames';
 import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import List from 'antd/lib/list';

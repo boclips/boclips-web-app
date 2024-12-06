@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Footer from '@components/layout/Footer';
 import { Layout } from '@components/layout/Layout';
 import { Search } from '@components/searchBar/SearchBar';
-import Button, { useMediaBreakPoint } from 'boclips-ui';
+import { Button, useMediaBreakPoint } from 'boclips-ui';
 import HomeSearchHero from '@resources/icons/home-illustration.svg?react';
 import { useNavigate } from 'react-router-dom';
 import NewNavbar from '@components/layout/Navbar';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { useBoclipsClient } from '@components/common/providers/BoclipsClientProvider';
-import Tooltip, { Button } from 'boclips-ui';
+import { Button, Tooltip } from 'boclips-ui';
 import TranscriptIcon from '@resources/icons/transcript-icon.svg?react';
 import { displayNotification } from '@components/common/notification/displayNotification';
 import s from './downloadTranscriptButton.module.less';

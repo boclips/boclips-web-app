@@ -1,6 +1,6 @@
 import React from 'react';
 import PageHeader from '@components/pageTitle/PageHeader';
-import Button, { Typography, useMediaBreakPoint } from 'boclips-ui';
+import { Button, Typography, useMediaBreakPoint } from 'boclips-ui';
 import OpenBookIcon from '@resources/icons/open-book.svg?react';
 import { useThemeMobileMenuContext } from '@components/common/providers/ThemeMobileMenuProvider';
 import { TextButton } from '@components/common/textButton/TextButton';

@@ -1,5 +1,5 @@
 import SearchIcon from '@resources/icons/search-icon.svg?react';
-import { InputText } from 'boclips-ui';
+import { Input } from 'boclips-ui';
 import React from 'react';
 
 interface PlaylistSearchProps {
@@ -9,7 +9,7 @@ interface PlaylistSearchProps {
 const PlaylistSearch: React.FC<PlaylistSearchProps> = ({ setQuery }) => {
   return (
     <div className="mb-6 w-80">
-      <InputText
+      <Input
         id="playlist-search"
         onChange={(text) => setQuery(text)}
         inputType="text"

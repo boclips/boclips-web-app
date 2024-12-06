@@ -1,7 +1,7 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { Bodal } from '@components/common/bodal/Bodal';
-import { InputText } from 'boclips-ui';
+import { Input } from 'boclips-ui';
 import userEvent from '@testing-library/user-event';
 
 describe('The mighty Bodal', () => {
@@ -173,13 +173,13 @@ describe('The mighty Bodal', () => {
     const wrapper = render(
       <Bodal title="test" initialFocusRef={inputRef}>
         <div>skip focus</div>
-        <InputText
+        <Input
           onChange={jest.fn()}
           id="no-focus-text"
           labelText="dont-focus-input"
           inputType="text"
         />
-        <InputText
+        <Input
           onChange={jest.fn()}
           id="focus-text"
           ref={inputRef}
@@ -198,7 +198,7 @@ describe('The mighty Bodal', () => {
 
     const wrapper = render(
       <div data-qa="main">
-        <InputText
+        <Input
           id="no-focus-text"
           labelText="Don't focus me"
           inputType="text"
@@ -210,7 +210,7 @@ describe('The mighty Bodal', () => {
           onCancel={jest.fn()}
           onConfirm={jest.fn()}
         >
-          <InputText
+          <Input
             onChange={jest.fn()}
             id="focus-text"
             ref={inputRef}

@@ -1,5 +1,5 @@
 import React from 'react';
-import Dropdown, { InputText, Typography } from 'boclips-ui';
+import { Dropdown, Input, Typography } from 'boclips-ui';
 import s from '@components/registration/style.module.less';
 import c from 'classnames';
 import { LIST_OF_COUNTRIES } from '@components/registration/dropdownValues';
@@ -79,7 +79,7 @@ const RegistrationFormFields = ({
   );
   return (
     <>
-      <InputText
+      <Input
         id="input-accountName"
         onFocus={() => onFieldSelected('schoolName')}
         onChange={(value) => handleChange('accountName', value)}
@@ -94,7 +94,7 @@ const RegistrationFormFields = ({
       />
 
       <div className="flex flex-row items-start">
-        <InputText
+        <Input
           id="input-firstName"
           aria-label="input-firstName"
           onFocus={() => onFieldSelected('firstName')}
@@ -108,7 +108,7 @@ const RegistrationFormFields = ({
           errorMessage={validationErrors.firstName}
           errorMessagePlacement="bottom"
         />
-        <InputText
+        <Input
           id="input-lastName"
           onFocus={() => onFieldSelected('lastName')}
           onChange={(value) => handleChange('lastName', value)}
@@ -123,7 +123,7 @@ const RegistrationFormFields = ({
         />
       </div>
 
-      <InputText
+      <Input
         id="input-email"
         onFocus={() => onFieldSelected('email')}
         onChange={(value) => handleChange('email', value)}
@@ -155,7 +155,7 @@ const RegistrationFormFields = ({
 
       <div className="flex flex-col items-start mt-4">
         <div className="flex flex-row w-full">
-          <InputText
+          <Input
             id="input-password"
             onFocus={() => {
               onFieldSelected('password');
@@ -171,7 +171,7 @@ const RegistrationFormFields = ({
             errorMessagePlacement="bottom"
           />
 
-          <InputText
+          <Input
             id="input-confirmPassword"
             onFocus={() => {
               onFieldSelected('password');

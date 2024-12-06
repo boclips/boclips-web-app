@@ -1,5 +1,5 @@
 import { LoadingOutlined } from '@ant-design/icons';
-import Badge, { Typography } from 'boclips-ui';
+import { Badge, Typography } from 'boclips-ui';
 import React from 'react';
 import { VideoAIMetadataContent } from '@components/videoPage/videoMetadata/ai/VideoAIMetadataContent';
 import { VideoAIMetadata } from '@components/videoPage/videoMetadata/types/VideoAIMetadata';
