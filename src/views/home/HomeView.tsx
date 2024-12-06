@@ -17,7 +17,7 @@ import { VideoPlayer } from '@components/videoCard/VideoPlayer';
 import { useFindOrGetVideo } from '@src/hooks/api/videoQuery';
 import { Constants } from '@src/AppConstants';
 import FilmIcon from '@resources/icons/film-icon.svg?react';
-import YourLibraryIcon from '@resources/icons/your-library.svg?react';
+import PlaylistsIcon from '@resources/icons/playlists.svg?react';
 import s from './style.module.less';
 
 const HomeView = () => {
@@ -77,7 +77,7 @@ const HomeView = () => {
             height="48px"
             onClick={() => navigate('/playlists')}
             text="View Playlists"
-            icon={<YourLibraryIcon />}
+            icon={<PlaylistsIcon />}
           />
         </div>
       </div>

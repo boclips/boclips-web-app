@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import c from 'classnames';
-import YourLibraryIcon from '@resources/icons/your-library.svg?react';
+import YourLibraryIcon from '@resources/icons/playlists.svg?react';
 import s from './style.module.less';
 
 const PlaylistsButton = () => {
