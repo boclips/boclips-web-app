@@ -1,7 +1,7 @@
 import React from 'react';
 import { OrderPrice } from 'boclips-api-client/dist/sub-clients/orders/model/OrderPrice';
 import { Typography } from 'boclips-ui';
-import { PriceBadge } from '@src/components/common/price/PriceBadge';
+import { PriceBadge } from '@components/common/price/PriceBadge';
 import { OrderInformationField } from './OrderInformationField';
 
 interface Props {

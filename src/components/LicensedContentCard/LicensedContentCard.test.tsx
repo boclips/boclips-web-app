@@ -1,4 +1,4 @@
-import LicensedContentCard from '@src/components/LicensedContentCard/LicensedContentCard';
+import LicensedContentCard from '@components/LicensedContentCard/LicensedContentCard';
 import React from 'react';
 import { Link } from 'boclips-api-client/dist/types';
 import dayjs from 'dayjs';
@@ -6,7 +6,7 @@ import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/mo
 import LicensedContentFactory from 'boclips-api-client/dist/test-support/LicensedContentFactory';
 import { render, renderWithClients } from '@src/testSupport/render';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
-import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
+import { BoclipsSecurityProvider } from '@components/common/providers/BoclipsSecurityProvider';
 import {
   fireEvent,
   RenderResult,
@@ -15,7 +15,7 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { lastEvent } from '@src/testSupport/lastEvent';
 
 describe('Licensed Content Card', () => {

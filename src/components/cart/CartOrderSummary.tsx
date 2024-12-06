@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Button, Typography } from 'boclips-ui';
 import { getTotalPrice } from '@src/services/getTotalPrice';
-import { useCartValidation } from '@src/components/common/providers/CartValidationProvider';
-import { OrderModal } from '@src/components/orderModal/OrderModal';
+import { useCartValidation } from '@components/common/providers/CartValidationProvider';
+import { OrderModal } from '@components/orderModal/OrderModal';
 import { Cart as ApiCart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
 import { useGetVideos } from '@src/hooks/api/videoQuery';
-import { AdditionalServicesPricingMessage } from '@src/components/cart/AdditionalServices/AdditionalServicesPricingMessage';
-import { CartOrderItemsSummary } from '@src/components/cart/CartOrderItemsSummary';
+import { AdditionalServicesPricingMessage } from '@components/cart/AdditionalServices/AdditionalServicesPricingMessage';
+import { CartOrderItemsSummary } from '@components/cart/CartOrderItemsSummary';
 import { trackOrderConfirmationModalOpened } from '../common/analytics/Analytics';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 

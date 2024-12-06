@@ -1,10 +1,10 @@
 import { fireEvent, RenderResult } from '@testing-library/react';
 import React from 'react';
-import { DisciplineSubjectFilter } from '@src/components/filterPanel/DisciplineSubjectFilter';
+import { DisciplineSubjectFilter } from '@components/filterPanel/DisciplineSubjectFilter';
 import { FilterOption } from '@src/types/FilterOption';
 import { FilterOptionFactory } from '@src/testSupport/FilterOptionFactory';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { renderWithLocation } from '@src/testSupport/renderWithLocation';
 import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';

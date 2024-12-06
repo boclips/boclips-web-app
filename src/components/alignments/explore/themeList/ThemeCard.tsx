@@ -3,9 +3,9 @@ import React from 'react';
 import { Typography } from 'boclips-ui';
 import { useNavigate } from 'react-router-dom';
 import { getVideoCountLabel } from '@src/services/getVideoCountLabel';
-import { ThemeLogo } from '@src/components/alignments/themePage/themeLogo/ThemeLogo';
+import { ThemeLogo } from '@components/alignments/themePage/themeLogo/ThemeLogo';
 import { handleEscapeKeyEvent } from '@src/services/handleKeyEvent';
-import { useAlignmentProvider } from '@src/components/common/providers/AlignmentContextProvider';
+import { useAlignmentProvider } from '@components/common/providers/AlignmentContextProvider';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import s from './style.module.less';
 

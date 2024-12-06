@@ -1,22 +1,22 @@
 import React, { useMemo } from 'react';
 import { InputText, Typography } from 'boclips-ui';
-import s from '@src/components/classroom/registration/style.module.less';
+import s from '@components/classroom/registration/style.module.less';
 import c from 'classnames';
-import RegistrationPageCheckbox from '@src/components/common/input/RegistrationPageCheckbox';
-import { ClassroomRegistrationData } from '@src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
+import RegistrationPageCheckbox from '@components/common/input/RegistrationPageCheckbox';
+import { ClassroomRegistrationData } from '@components/classroom/registration/registrationForm/ClassroomRegistrationForm';
 import PasswordValidattor from 'react-password-validattor';
 import {
   getCountries,
   getCountry,
   getCountryStates,
-} from '@src/components/classroom/registration/dropdownValues';
-import { useBoclipsClient } from '@src/components/common/providers/BoclipsClientProvider';
+} from '@components/classroom/registration/dropdownValues';
+import { useBoclipsClient } from '@components/common/providers/BoclipsClientProvider';
 
 import {
   Combobox,
   ComboboxItem,
   ComboboxMode,
-} from '@src/components/common/headless/combobox';
+} from '@components/common/headless/combobox';
 
 const passwordConfig = {
   classNames: {

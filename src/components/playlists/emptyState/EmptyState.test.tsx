@@ -1,13 +1,13 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
-import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
-import { PlaylistBodyEmptyState } from '@src/components/playlists/emptyState/EmptyState';
+import { BoclipsSecurityProvider } from '@components/common/providers/BoclipsSecurityProvider';
+import { PlaylistBodyEmptyState } from '@components/playlists/emptyState/EmptyState';
 
 describe('Empty State', () => {
   const getWrapper = (fakeClient = new FakeBoclipsClient()) => {

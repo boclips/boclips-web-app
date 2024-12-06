@@ -1,14 +1,14 @@
 import React from 'react';
-import { VideoPlayer } from '@src/components/videoCard/VideoPlayer';
+import { VideoPlayer } from '@components/videoCard/VideoPlayer';
 import { Typography } from 'boclips-ui';
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
 import getFormattedDate from '@src/services/getFormattedDate';
 import getFormattedDuration from '@src/services/getFormattedDuration';
 import c from 'classnames';
 import { Link } from 'react-router-dom';
-import LicensedContentPrimaryButton from '@src/components/LicensedContentCard/LicensedContentPrimaryButton';
-import LicensedContentAssetsButton from '@src/components/LicensedContentCard/LicensedContentAssetsButton';
-import LicensedContentTerritoryRestrictions from '@src/components/LicensedContentCard/LicensedContentTerritoryRestrictions';
+import LicensedContentPrimaryButton from '@components/LicensedContentCard/LicensedContentPrimaryButton';
+import LicensedContentAssetsButton from '@components/LicensedContentCard/LicensedContentAssetsButton';
+import LicensedContentTerritoryRestrictions from '@components/LicensedContentCard/LicensedContentTerritoryRestrictions';
 import { usePlatformInteractedWithEvent } from '@src/hooks/usePlatformInteractedWithEvent';
 import s from './styles.module.less';
 

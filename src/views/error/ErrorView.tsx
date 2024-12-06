@@ -1,8 +1,8 @@
-import Navbar from '@src/components/layout/Navbar';
-import Footer from '@src/components/layout/Footer';
+import Navbar from '@components/layout/Navbar';
+import Footer from '@components/layout/Footer';
 import React from 'react';
-import RefreshPageError from '@src/components/common/errors/refreshPageError/RefreshPageError';
-import { Layout } from '@src/components/layout/Layout';
+import RefreshPageError from '@components/common/errors/refreshPageError/RefreshPageError';
+import { Layout } from '@components/layout/Layout';
 import { useLocation } from 'react-router-dom';
 
 const ErrorView = () => {

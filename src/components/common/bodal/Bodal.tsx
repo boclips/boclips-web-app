@@ -7,7 +7,7 @@ import React, {
 import { Button, Typography } from 'boclips-ui';
 import CloseIconSVG from '@resources/icons/cross-icon.svg?react';
 import { LoadingOutlined } from '@ant-design/icons';
-import { TextButton } from '@src/components/common/textButton/TextButton';
+import { TextButton } from '@components/common/textButton/TextButton';
 import { handleEscapeKeyEvent } from '@src/services/handleKeyEvent';
 import FocusTrap from 'focus-trap-react';
 import CloseOnClickOutside from '@src/hooks/closeOnClickOutside';

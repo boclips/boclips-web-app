@@ -1,18 +1,18 @@
 import { render, waitFor, within } from '@testing-library/react';
-import CommentButton from '@src/components/playlists/comments/CommentButton';
+import CommentButton from '@components/playlists/comments/CommentButton';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import React from 'react';
-import { VideoCardButtons } from '@src/components/videoCard/buttons/VideoCardButtons';
+import { VideoCardButtons } from '@components/videoCard/buttons/VideoCardButtons';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
   CollectionAssetFactory,
   FakeBoclipsClient,
 } from 'boclips-api-client/dist/test-support';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import userEvent from '@testing-library/user-event';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
-import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
+import { BoclipsSecurityProvider } from '@components/common/providers/BoclipsSecurityProvider';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 

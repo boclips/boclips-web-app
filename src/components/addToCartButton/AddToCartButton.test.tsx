@@ -1,10 +1,10 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { render } from '@src/testSupport/render';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { fireEvent, waitFor } from '@testing-library/react';
 import React from 'react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import AddToCartButton from '@src/components/addToCartButton/AddToCartButton';
+import AddToCartButton from '@components/addToCartButton/AddToCartButton';
 import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
 

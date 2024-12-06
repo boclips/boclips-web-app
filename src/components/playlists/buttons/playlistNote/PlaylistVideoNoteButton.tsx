@@ -6,9 +6,9 @@ import {
   useEditPlaylistMutation,
   usePlaylistQuery,
 } from '@src/hooks/api/playlistsQuery';
-import { displayNotification } from '@src/components/common/notification/displayNotification';
+import { displayNotification } from '@components/common/notification/displayNotification';
 import { usePlatformInteractedWithEvent } from '@src/hooks/usePlatformInteractedWithEvent';
-import NoteModal from '@src/components/playlists/buttons/playlistNote/noteModal/NoteModal';
+import NoteModal from '@components/playlists/buttons/playlistNote/noteModal/NoteModal';
 import { Notes } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';
 import s from '../style.module.less';
 

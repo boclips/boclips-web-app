@@ -1,7 +1,7 @@
 import { BoclipsClient } from 'boclips-api-client';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { Constants } from '@src/AppConstants';
-import { ViewType } from '@src/components/searchResults/ViewButtons';
+import { ViewType } from '@components/searchResults/ViewButtons';
 import { SearchQueryCompletionsSuggestedRequest } from 'boclips-api-client/dist/sub-clients/events/model/SearchQueryCompletionsSuggestedRequest';
 
 export const trackPageRendered = (location, apiClient) => {

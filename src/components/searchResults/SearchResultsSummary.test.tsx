@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import { SearchResultsSummary } from '@src/components/searchResults/SearchResultsSummary';
+import { SearchResultsSummary } from '@components/searchResults/SearchResultsSummary';
 
 describe('SearchResultsSummary', () => {
   it("does not show the query if it's missing", () => {

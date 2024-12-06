@@ -1,7 +1,7 @@
 import React from 'react';
 import { Order } from 'boclips-api-client/dist/sub-clients/orders/model/Order';
-import { OrderSummary } from '@src/components/orderPage/OrderSummary';
-import { OrderVideoList } from '@src/components/orderPage/OrderVideoList';
+import { OrderSummary } from '@components/orderPage/OrderSummary';
+import { OrderVideoList } from '@components/orderPage/OrderVideoList';
 
 interface Props {
   order: Order;

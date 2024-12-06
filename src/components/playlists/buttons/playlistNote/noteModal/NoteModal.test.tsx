@@ -2,7 +2,7 @@ import { render, RenderResult, waitFor } from '@testing-library/react';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import {
   CollectionAssetFactory,
   FakeBoclipsClient,
@@ -15,7 +15,7 @@ import { ToastContainer } from 'react-toastify';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import { lastEvent } from '@src/testSupport/lastEvent';
-import PlaylistVideoNoteButton from '@src/components/playlists/buttons/playlistNote/PlaylistVideoNoteButton';
+import PlaylistVideoNoteButton from '@components/playlists/buttons/playlistNote/PlaylistVideoNoteButton';
 
 describe('Note modal for playlists', () => {
   const asset = CollectionAssetFactory.sample({

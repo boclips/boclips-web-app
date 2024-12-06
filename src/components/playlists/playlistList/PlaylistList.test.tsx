@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import PlaylistList from '@src/components/playlists/playlistList/PlaylistList';
+import PlaylistList from '@components/playlists/playlistList/PlaylistList';
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
 import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collections/model/ListViewCollection';
 import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import { MemoryRouter } from 'react-router-dom';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';

@@ -1,10 +1,10 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { createBrowserHistory } from 'history';
 import { render } from '@testing-library/react';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { Router } from 'react-router-dom';
 import React from 'react';
-import { RedirectFromSparksToAlignments } from '@src/components/alignments/RedirectFromSparksToAlignments';
+import { RedirectFromSparksToAlignments } from '@components/alignments/RedirectFromSparksToAlignments';
 
 describe('RedirectFromSparksToAlignments', () => {
   it.each([

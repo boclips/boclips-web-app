@@ -1,4 +1,4 @@
-import s from '@src/components/common/gridCard/style.module.less';
+import s from '@components/common/gridCard/style.module.less';
 import Badge, { Typography } from 'boclips-ui';
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';

@@ -3,12 +3,12 @@ import ShareSVG from '@resources/icons/white-share.svg?react';
 import CopyLinkIcon from '@resources/icons/copy-link-icon.svg?react';
 import { Button, Typography } from 'boclips-ui';
 import { useGetUserQuery } from '@src/hooks/api/userQuery';
-import { Bodal } from '@src/components/common/bodal/Bodal';
-import { GoogleClassroomShareLink } from '@src/components/shareLinkButton/googleClassroom/GoogleClassroomShareLink';
-import { getShareablePlaylistLink } from '@src/components/shareLinkButton/getShareableLink';
-import { displayNotification } from '@src/components/common/notification/displayNotification';
+import { Bodal } from '@components/common/bodal/Bodal';
+import { GoogleClassroomShareLink } from '@components/shareLinkButton/googleClassroom/GoogleClassroomShareLink';
+import { getShareablePlaylistLink } from '@components/shareLinkButton/getShareableLink';
+import { displayNotification } from '@components/common/notification/displayNotification';
 import { usePlatformInteractedWithEvent } from '@src/hooks/usePlatformInteractedWithEvent';
-import { useBoclipsClient } from '@src/components/common/providers/BoclipsClientProvider';
+import { useBoclipsClient } from '@components/common/providers/BoclipsClientProvider';
 import s from './shareLinkButton.module.less';
 
 interface PlaylistShareLinkButtonProps {

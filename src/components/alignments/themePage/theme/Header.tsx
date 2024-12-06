@@ -1,12 +1,12 @@
 import React from 'react';
-import PageHeader from '@src/components/pageTitle/PageHeader';
+import PageHeader from '@components/pageTitle/PageHeader';
 import Button, { Typography, useMediaBreakPoint } from 'boclips-ui';
 import OpenBookIcon from '@resources/icons/open-book.svg?react';
-import { useThemeMobileMenuContext } from '@src/components/common/providers/ThemeMobileMenuProvider';
-import { TextButton } from '@src/components/common/textButton/TextButton';
+import { useThemeMobileMenuContext } from '@components/common/providers/ThemeMobileMenuProvider';
+import { TextButton } from '@components/common/textButton/TextButton';
 import BackArrow from '@resources/icons/back-arrow.svg?react';
 import { useNavigate } from 'react-router-dom';
-import { useAlignmentProvider } from '@src/components/common/providers/AlignmentContextProvider';
+import { useAlignmentProvider } from '@components/common/providers/AlignmentContextProvider';
 import s from './style.module.less';
 
 interface Props {

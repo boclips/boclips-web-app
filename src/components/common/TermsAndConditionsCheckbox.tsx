@@ -1,4 +1,4 @@
-import RegistrationPageCheckbox from '@src/components/common/input/RegistrationPageCheckbox';
+import RegistrationPageCheckbox from '@components/common/input/RegistrationPageCheckbox';
 import React, { useState } from 'react';
 import { Typography } from 'boclips-ui';
 

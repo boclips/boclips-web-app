@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import InvisibleNavbar from '@src/components/common/invisibleNavbar/InvisibleNavbar';
+import InvisibleNavbar from '@components/common/invisibleNavbar/InvisibleNavbar';
 
 describe('invisible navbar', () => {
   it('displays the library logo by default', () => {

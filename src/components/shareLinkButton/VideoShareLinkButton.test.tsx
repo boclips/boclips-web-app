@@ -1,15 +1,15 @@
 import { render, RenderResult, waitFor, within } from '@testing-library/react';
-import { VideoShareLinkButton } from '@src/components/shareLinkButton/VideoShareLinkButton';
+import { VideoShareLinkButton } from '@components/shareLinkButton/VideoShareLinkButton';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import dayjs from '@src/day-js';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
-import { getShareableVideoLink } from '@src/components/shareLinkButton/getShareableLink';
+import { getShareableVideoLink } from '@components/shareLinkButton/getShareableLink';
 import { ToastContainer } from 'react-toastify';
 
 describe('video share link button', () => {

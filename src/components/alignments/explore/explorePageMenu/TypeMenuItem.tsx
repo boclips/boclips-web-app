@@ -1,6 +1,6 @@
 import React from 'react';
 import c from 'classnames';
-import { TypesMenuProps } from '@src/components/alignments/explore/explorePageMenu/TypesMenu';
+import { TypesMenuProps } from '@components/alignments/explore/explorePageMenu/TypesMenu';
 import s from './style.module.less';
 
 const TypeMenuItem = ({

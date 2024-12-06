@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import GridCard from '@src/components/common/gridCard/GridCard';
+import GridCard from '@components/common/gridCard/GridCard';
 import { MemoryRouter } from 'react-router-dom';
 
 describe('Playlist Card', () => {

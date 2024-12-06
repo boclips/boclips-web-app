@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, waitFor } from '@testing-library/react';
-import { CheckboxFilter } from '@src/components/filterPanel/filter/CheckboxFilter';
+import { CheckboxFilter } from '@components/filterPanel/filter/CheckboxFilter';
 import { renderWithLocation } from '@src/testSupport/renderWithLocation';
 import { FilterOption } from '@src/types/FilterOption';
 import { FilterOptionFactory } from '@src/testSupport/FilterOptionFactory';

@@ -3,7 +3,7 @@ import { Button } from 'boclips-ui';
 import ShareIcon from '@resources/icons/share.svg?react';
 import c from 'classnames';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
-import { EditPlaylistPermissionsModal } from '@src/components/playlistModal/EditPlaylistPermissionsModal';
+import { EditPlaylistPermissionsModal } from '@components/playlistModal/EditPlaylistPermissionsModal';
 import s from '../style.module.less';
 
 interface Props {

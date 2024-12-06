@@ -8,8 +8,8 @@ import {
 } from '@src/hooks/useLocationParams';
 import { useGetSuggestionsQuery } from '@src/hooks/api/suggestionsQuery';
 import { v4 as uuidv4 } from 'uuid';
-import { trackSearchCompletionsSuggested } from '@src/components/common/analytics/Analytics';
-import { useBoclipsClient } from '@src/components/common/providers/BoclipsClientProvider';
+import { trackSearchCompletionsSuggested } from '@components/common/analytics/Analytics';
+import { useBoclipsClient } from '@components/common/providers/BoclipsClientProvider';
 import { Constants } from '@src/AppConstants';
 import { useDebounce } from '@src/hooks/useDebounce';
 import s from './style.module.less';

@@ -6,7 +6,7 @@ import {
   LIBRARY_JOB_TITLE,
   CLASSROOM_JOB_TITLE,
   ORGANIZATION_TYPE,
-} from '@src/components/registration/dropdownValues';
+} from '@components/registration/dropdownValues';
 import s from './style.module.less';
 
 interface Props {

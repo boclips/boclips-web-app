@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Button } from 'boclips-ui';
 import CommentSVG from '@resources/icons/comment-icon.svg?react';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
-import Bubble from '@src/components/playlists/comments/Bubble';
-import SliderPanel from '@src/components/playlists/comments/SliderPanel';
+import Bubble from '@components/playlists/comments/Bubble';
+import SliderPanel from '@components/playlists/comments/SliderPanel';
 import c from 'classnames';
-import { FeatureGate } from '@src/components/common/FeatureGate';
+import { FeatureGate } from '@components/common/FeatureGate';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 import s from './style.module.less';
 

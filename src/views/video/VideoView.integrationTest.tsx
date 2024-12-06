@@ -23,7 +23,7 @@ import {
   TopicFactory,
 } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
-import { VideoAIMetadata } from '@src/components/videoPage/videoMetadata/types/VideoAIMetadata';
+import { VideoAIMetadata } from '@components/videoPage/videoMetadata/types/VideoAIMetadata';
 
 describe('Video View', () => {
   let fakeClient;

@@ -1,7 +1,7 @@
 import { Typography } from 'boclips-ui';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Thumbnail from '@src/components/playlists/thumbnails/Thumbnail';
+import Thumbnail from '@components/playlists/thumbnails/Thumbnail';
 import { useFindOrGetVideo } from '@src/hooks/api/videoQuery';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 

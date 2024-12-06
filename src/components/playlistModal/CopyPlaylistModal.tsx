@@ -1,4 +1,4 @@
-import { CreatePlaylistModal } from '@src/components/playlistModal/createPlaylist/CreatePlaylistModal';
+import { CreatePlaylistModal } from '@components/playlistModal/createPlaylist/CreatePlaylistModal';
 import React from 'react';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 

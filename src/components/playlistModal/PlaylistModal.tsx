@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Input } from 'boclips-ui';
-import { Bodal } from '@src/components/common/bodal/Bodal';
+import { Bodal } from '@components/common/bodal/Bodal';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 
 interface Props {

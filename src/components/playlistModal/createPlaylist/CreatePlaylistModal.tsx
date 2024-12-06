@@ -3,7 +3,7 @@ import { usePlaylistMutation } from '@src/hooks/api/playlistsQuery';
 import {
   PlaylistFormProps,
   PlaylistModal,
-} from '@src/components/playlistModal/PlaylistModal';
+} from '@components/playlistModal/PlaylistModal';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 
 export interface Props {

@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { Typography } from 'boclips-ui';
-import { Bodal } from '@src/components/common/bodal/Bodal';
+import { Bodal } from '@components/common/bodal/Bodal';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
 import { EditUserRequest, useUpdateUser } from '@src/hooks/api/userQuery';
 import {
   UpdateUserRequest,
   UserType,
 } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
-import { displayNotification } from '@src/components/common/notification/displayNotification';
+import { displayNotification } from '@components/common/notification/displayNotification';
 
 interface Props {
   user: AccountUser;

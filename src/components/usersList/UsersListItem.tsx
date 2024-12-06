@@ -5,7 +5,7 @@ import c from 'classnames';
 import PencilSVG from '@resources/icons/pencil.svg?react';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import BinSVG from '@resources/icons/bin.svg?react';
-import { FeatureGate } from '@src/components/common/FeatureGate';
+import { FeatureGate } from '@components/common/FeatureGate';
 import s from './style.module.less';
 
 interface UserInformationFieldProps {

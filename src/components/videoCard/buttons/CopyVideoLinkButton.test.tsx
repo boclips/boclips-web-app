@@ -1,5 +1,5 @@
 import React from 'react';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import {
   act,
   fireEvent,

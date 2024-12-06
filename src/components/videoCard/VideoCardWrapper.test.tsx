@@ -1,6 +1,6 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import React from 'react';
-import { VideoCardWrapper } from '@src/components/videoCard/VideoCardWrapper';
+import { VideoCardWrapper } from '@components/videoCard/VideoCardWrapper';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { render } from '@src/testSupport/render';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';

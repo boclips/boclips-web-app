@@ -1,4 +1,4 @@
-import ReorderModal from '@src/components/playlistModal/reorder/ReorderPlaylistModal';
+import ReorderModal from '@components/playlistModal/reorder/ReorderPlaylistModal';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { CollectionFactory } from '@src/testSupport/CollectionFactory';
@@ -8,7 +8,7 @@ import {
   FakeBoclipsClient,
 } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { lastEvent } from '@src/testSupport/lastEvent';
 
 describe('Reorder modal', () => {

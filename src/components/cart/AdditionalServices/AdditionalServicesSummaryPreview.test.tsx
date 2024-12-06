@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { AdditionalServicesSummaryPreview } from '@src/components/cart/AdditionalServices/AdditionalServicesSummaryPreview';
+import { AdditionalServicesSummaryPreview } from '@components/cart/AdditionalServices/AdditionalServicesSummaryPreview';
 
 describe('additional services summary preview', () => {
   it('should display all additional services', async () => {

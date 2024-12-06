@@ -1,7 +1,7 @@
 import React from 'react';
 import CopyLinkIcon from '@resources/icons/copy-link-icon.svg?react';
 import { Button, Tooltip } from 'boclips-ui';
-import { displayNotification } from '@src/components/common/notification/displayNotification';
+import { displayNotification } from '@components/common/notification/displayNotification';
 import s from './style.module.less';
 
 interface Props {

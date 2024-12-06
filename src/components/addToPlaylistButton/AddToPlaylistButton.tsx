@@ -11,11 +11,11 @@ import {
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import c from 'classnames';
 import CloseOnClickOutside from '@src/hooks/closeOnClickOutside';
-import BoCheckbox from '@src/components/common/input/BoCheckbox';
+import BoCheckbox from '@components/common/input/BoCheckbox';
 import FocusTrap from 'focus-trap-react';
 import { handleEscapeKeyEvent } from '@src/services/handleKeyEvent';
-import { CreatePlaylistModal } from '@src/components/playlistModal/createPlaylist/CreatePlaylistModal';
-import { displayNotification } from '@src/components/common/notification/displayNotification';
+import { CreatePlaylistModal } from '@components/playlistModal/createPlaylist/CreatePlaylistModal';
+import { displayNotification } from '@components/common/notification/displayNotification';
 import PlusIcon from '@resources/icons/plus-sign.svg?react';
 import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';

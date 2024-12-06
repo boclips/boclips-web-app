@@ -2,9 +2,9 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
-import CoverWithVideo from '@src/components/playlists/coverWithVideo/CoverWithVideo';
+import CoverWithVideo from '@components/playlists/coverWithVideo/CoverWithVideo';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
-import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
+import { BoclipsSecurityProvider } from '@components/common/providers/BoclipsSecurityProvider';
 
 describe('cover with video', () => {
   it('renders video cover instead of a player', () => {

@@ -1,8 +1,8 @@
-import { Layout } from '@src/components/layout/Layout';
-import Navbar from '@src/components/layout/Navbar';
+import { Layout } from '@components/layout/Layout';
+import Navbar from '@components/layout/Navbar';
 import React, { useState } from 'react';
-import PageHeader from '@src/components/pageTitle/PageHeader';
-import Footer from '@src/components/layout/Footer';
+import PageHeader from '@components/pageTitle/PageHeader';
+import Footer from '@components/layout/Footer';
 import { Helmet } from 'react-helmet';
 import { Button, Typography } from 'boclips-ui';
 import { useGetUserQuery } from '@src/hooks/api/userQuery';
@@ -12,7 +12,7 @@ import c from 'classnames';
 import PencilSVG from '@resources/icons/pencil.svg?react';
 import EditPersonalProfileModal from '@src/views/profile/EditPersonalProfileModal';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import { FeatureGate } from '@src/components/common/FeatureGate';
+import { FeatureGate } from '@components/common/FeatureGate';
 import getFormattedDate from '@src/services/getFormattedDate';
 import s from './style.module.less';
 

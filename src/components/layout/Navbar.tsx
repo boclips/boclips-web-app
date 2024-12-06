@@ -2,18 +2,18 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import c from 'classnames';
 import MenuIconSVG from '@resources/icons/menu-icon.svg?react';
 import CrossIconSVG from '@resources/icons/cross-icon.svg?react';
-import { FeatureGate } from '@src/components/common/FeatureGate';
-import CartButton from '@src/components/navButtons/CartButton';
+import { FeatureGate } from '@components/common/FeatureGate';
+import CartButton from '@components/navButtons/CartButton';
 import { useGetUserQuery } from '@src/hooks/api/userQuery';
 import { useMediaBreakPoint } from 'boclips-ui';
-import PlaylistsButton from '@src/components/navButtons/PlaylistsButton';
-import SkipLink from '@src/components/skipLink/SkipLink';
-import AlignmentsButton from '@src/components/navButtons/AlignmentsButton';
-import SideMenu from '@src/components/layout/SideMenu';
-import LibraryButton from '@src/components/navButtons/LibraryButton';
-import { HomeButton } from '@src/components/navButtons/HomeButton';
-import { AccountButton } from '@src/components/navButtons/AccountButton';
-import Logo from '@src/components/logo/Logo';
+import PlaylistsButton from '@components/navButtons/PlaylistsButton';
+import SkipLink from '@components/skipLink/SkipLink';
+import AlignmentsButton from '@components/navButtons/AlignmentsButton';
+import SideMenu from '@components/layout/SideMenu';
+import LibraryButton from '@components/navButtons/LibraryButton';
+import { HomeButton } from '@components/navButtons/HomeButton';
+import { AccountButton } from '@components/navButtons/AccountButton';
+import Logo from '@components/logo/Logo';
 import {
   AccountType,
   Product,

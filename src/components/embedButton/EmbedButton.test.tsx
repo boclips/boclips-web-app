@@ -1,9 +1,9 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { render, RenderResult, waitFor, within } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { EmbedButton } from '@src/components/embedButton/EmbedButton';
+import { EmbedButton } from '@components/embedButton/EmbedButton';
 import React from 'react';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { ToastContainer } from 'react-toastify';
 import userEvent from '@testing-library/user-event';
 import LicensedContentFactory from 'boclips-api-client/dist/test-support/LicensedContentFactory';

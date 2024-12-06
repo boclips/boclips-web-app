@@ -1,9 +1,9 @@
 import React from 'react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { render } from '@src/testSupport/render';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { CollectionFactory } from '@src/testSupport/CollectionFactory';
-import { EditPlaylistPermissionsModal } from '@src/components/playlistModal/EditPlaylistPermissionsModal';
+import { EditPlaylistPermissionsModal } from '@components/playlistModal/EditPlaylistPermissionsModal';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 
 describe('Edit playlist permissions modal', () => {

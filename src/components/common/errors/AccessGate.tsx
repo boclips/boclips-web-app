@@ -1,6 +1,6 @@
 import React from 'react';
 import { lazyWithRetry } from '@src/services/lazyWithRetry';
-import { AdminLinksKey, FeatureGate } from '@src/components/common/FeatureGate';
+import { AdminLinksKey, FeatureGate } from '@components/common/FeatureGate';
 
 const AccessDeniedView = lazyWithRetry(
   () => import('@src/views/accessDenied/AccessDenied'),

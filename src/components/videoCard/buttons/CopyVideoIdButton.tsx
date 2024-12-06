@@ -1,6 +1,6 @@
 import { Video } from 'boclips-api-client/dist/types';
 import React from 'react';
-import { CopyButton } from '@src/components/common/copyLinkButton/CopyButton';
+import { CopyButton } from '@components/common/copyLinkButton/CopyButton';
 
 interface Props {
   video: Video;

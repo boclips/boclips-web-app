@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Layout } from '@src/components/layout/Layout';
-import Navbar from '@src/components/layout/Navbar';
-import PageHeader from '@src/components/pageTitle/PageHeader';
-import { Hero as ContentEmptyPlaceholderState } from '@src/components/hero/Hero';
+import { Layout } from '@components/layout/Layout';
+import Navbar from '@components/layout/Navbar';
+import PageHeader from '@components/pageTitle/PageHeader';
+import { Hero as ContentEmptyPlaceholderState } from '@components/hero/Hero';
 import EmptyContentSVG from '@resources/icons/empty-content.svg?react';
 import InfoIcon from '@resources/icons/info.svg?react';
-import Footer from '@src/components/layout/Footer';
+import Footer from '@components/layout/Footer';
 import { Helmet } from 'react-helmet';
 import { useLicensedContentQuery } from '@src/hooks/api/licensedContentQuery';
-import LicensesArea from '@src/components/licensesArea/LicensesArea';
+import LicensesArea from '@components/licensesArea/LicensesArea';
 import { useLocationParams } from '@src/hooks/useLocationParams';
 import { useNavigate } from 'react-router-dom';
 import Tooltip, { Typography } from 'boclips-ui';
 import { usePlatformInteractedWithEvent } from '@src/hooks/usePlatformInteractedWithEvent';
 import getFormattedDate from '@src/services/getFormattedDate';
-import { Warning } from '@src/components/common/warning/Warning';
+import { Warning } from '@components/common/warning/Warning';
 import s from './style.module.less';
 
 const PAGE_SIZE = 10;

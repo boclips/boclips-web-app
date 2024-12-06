@@ -2,7 +2,7 @@ import React from 'react';
 import {
   DisciplinesWithSubjectsCheckboxFilter,
   HierarchicalFilterOption,
-} from '@src/components/filterPanel/filter/disciplineSubjectFilter/DisciplinesWithSubjectsCheckboxFilter';
+} from '@components/filterPanel/filter/disciplineSubjectFilter/DisciplinesWithSubjectsCheckboxFilter';
 import { renderWithLocation } from '@src/testSupport/renderWithLocation';
 import { FilterOption } from '@src/types/FilterOption';
 import { FilterOptionFactory } from '@src/testSupport/FilterOptionFactory';

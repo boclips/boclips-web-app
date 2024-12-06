@@ -1,5 +1,5 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { TargetDetails } from '@src/components/alignments/themePage/theme/TargetDetails';
+import { TargetDetails } from '@components/alignments/themePage/theme/TargetDetails';
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/types';
 import { renderWithClients } from '@src/testSupport/render';

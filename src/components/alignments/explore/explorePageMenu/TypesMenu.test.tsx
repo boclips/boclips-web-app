@@ -1,6 +1,6 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { render } from '@src/testSupport/render';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import React from 'react';
 import { TypesMenu } from './TypesMenu';
 

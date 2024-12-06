@@ -4,19 +4,19 @@ import {
   SearchFilters,
   useSearchQueryLocationParams,
 } from '@src/hooks/useLocationParams';
-import Navbar from '@src/components/layout/Navbar';
-import { FilterPanel } from '@src/components/filterPanel/FilterPanel';
-import { SearchResults } from '@src/components/searchResults/SearchResults';
-import Footer from '@src/components/layout/Footer';
+import Navbar from '@components/layout/Navbar';
+import { FilterPanel } from '@components/filterPanel/FilterPanel';
+import { SearchResults } from '@components/searchResults/SearchResults';
+import Footer from '@components/layout/Footer';
 import { FilterKey } from '@src/types/search/FilterKey';
-import { NoSearchResults } from '@src/components/noResults/NoSearchResults';
-import { Loading } from '@src/components/common/Loading';
+import { NoSearchResults } from '@components/noResults/NoSearchResults';
+import { Loading } from '@components/common/Loading';
 import { useDebounce } from '@src/hooks/useDebounce';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
-import { ErrorBoundary } from '@src/components/common/errors/ErrorBoundary';
-import RefreshPageError from '@src/components/common/errors/refreshPageError/RefreshPageError';
-import { Layout } from '@src/components/layout/Layout';
-import { ContentPackagePreviewBanner } from '@src/components/contentPackagePreviewBanner/ContentPackagePreviewBanner';
+import { ErrorBoundary } from '@components/common/errors/ErrorBoundary';
+import RefreshPageError from '@components/common/errors/refreshPageError/RefreshPageError';
+import { Layout } from '@components/layout/Layout';
+import { ContentPackagePreviewBanner } from '@components/contentPackagePreviewBanner/ContentPackagePreviewBanner';
 import { useGetDisciplinesQuery } from '@src/hooks/api/disciplinesQuery';
 import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 

@@ -2,11 +2,11 @@ import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import React from 'react';
 import c from 'classnames';
 import { Typography } from 'boclips-ui';
-import { VideoLicensingDetail } from '@src/components/videoPage/videoLicensingDetails/VideoLicensingDetail';
+import { VideoLicensingDetail } from '@components/videoPage/videoLicensingDetails/VideoLicensingDetail';
 import { getVideoPageLicenseDurationLabel } from '@src/services/getVideoLicenseDurationLabel';
-import { EditingRestrictionsLabel } from '@src/components/videoPage/videoLicensingDetails/EditingRestrictionsLabel';
-import { TerritoryRestrictionsLabel } from '@src/components/videoPage/videoLicensingDetails/TerritoryRestrictionsLabel';
-import { VideoRestrictionsLabel } from '@src/components/videoPage/videoLicensingDetails/VideoRestrictionsLabel';
+import { EditingRestrictionsLabel } from '@components/videoPage/videoLicensingDetails/EditingRestrictionsLabel';
+import { TerritoryRestrictionsLabel } from '@components/videoPage/videoLicensingDetails/TerritoryRestrictionsLabel';
+import { VideoRestrictionsLabel } from '@components/videoPage/videoLicensingDetails/VideoRestrictionsLabel';
 import s from './videoLicensingDetails.module.less';
 
 interface Props {

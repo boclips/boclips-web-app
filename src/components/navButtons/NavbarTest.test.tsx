@@ -1,12 +1,12 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import React from 'react';
-import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
+import { BoclipsSecurityProvider } from '@components/common/providers/BoclipsSecurityProvider';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { Constants } from '@src/AppConstants';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
-import NavbarResponsive from '@src/components/layout/Navbar';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
+import NavbarResponsive from '@components/layout/Navbar';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {

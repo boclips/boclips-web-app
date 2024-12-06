@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { queryClientConfig } from '@src/hooks/api/queryClientConfig';
 import React, { Suspense, useEffect, useState } from 'react';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { ApiBoclipsClient, BoclipsClient } from 'boclips-api-client';
 import { Route, Routes } from 'react-router-dom';
 import { lazyWithRetry } from '@src/services/lazyWithRetry';
@@ -9,7 +9,7 @@ import axios from 'axios';
 import { Constants } from '@src/AppConstants';
 import FallbackView from '@src/views/fallback/FallbackView';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { Loading } from '@src/components/common/Loading';
+import { Loading } from '@components/common/Loading';
 import { Helmet } from 'react-helmet';
 import NotFound from '@src/views/notFound/NotFound';
 

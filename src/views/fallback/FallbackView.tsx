@@ -1,8 +1,8 @@
 import React from 'react';
-import RefreshPageError from '@src/components/common/errors/refreshPageError/RefreshPageError';
-import Footer from '@src/components/layout/Footer';
-import { Layout } from '@src/components/layout/Layout';
-import { EmptyNavbar } from '@src/components/layout/EmptyNavbar';
+import RefreshPageError from '@components/common/errors/refreshPageError/RefreshPageError';
+import Footer from '@components/layout/Footer';
+import { Layout } from '@components/layout/Layout';
+import { EmptyNavbar } from '@components/layout/EmptyNavbar';
 
 const FallbackView = () => {
   return (

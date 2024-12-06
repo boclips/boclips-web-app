@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 import { useDebounce } from '@src/hooks/useDebounce';
 
-import PlaylistSearch from '@src/components/playlists/search/PlaylistSearch';
-import { PlaylistTabs } from '@src/components/playlists/PlaylistTabs';
+import PlaylistSearch from '@components/playlists/search/PlaylistSearch';
+import { PlaylistTabs } from '@components/playlists/PlaylistTabs';
 import s from './style.module.less';
 
 const Playlists = () => {

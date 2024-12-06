@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import React from 'react';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { UnauthorizedVideoHeader } from '@src/components/videoPage/UnauthorizedVideoHeader';
+import { UnauthorizedVideoHeader } from '@components/videoPage/UnauthorizedVideoHeader';
 
 describe('UnauthorizedVideoHeader', () => {
   it('should render without crashing if links are null', () => {

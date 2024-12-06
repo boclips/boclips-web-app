@@ -1,15 +1,15 @@
 import React from 'react';
-import Navbar from '@src/components/layout/Navbar';
-import Footer from '@src/components/layout/Footer';
+import Navbar from '@components/layout/Navbar';
+import Footer from '@components/layout/Footer';
 import { useGetIdFromLocation } from '@src/hooks/useLocationParams';
 import { useFindOrGetOrder } from '@src/hooks/api/orderQuery';
-import { Loading } from '@src/components/common/Loading';
-import { OrderPage } from '@src/components/orderPage/OrderPage';
-import { ErrorBoundary } from '@src/components/common/errors/ErrorBoundary';
-import RefreshPageError from '@src/components/common/errors/refreshPageError/RefreshPageError';
-import { OrderHeader } from '@src/components/orderPage/OrderHeader';
+import { Loading } from '@components/common/Loading';
+import { OrderPage } from '@components/orderPage/OrderPage';
+import { ErrorBoundary } from '@components/common/errors/ErrorBoundary';
+import RefreshPageError from '@components/common/errors/refreshPageError/RefreshPageError';
+import { OrderHeader } from '@components/orderPage/OrderHeader';
 import { Helmet } from 'react-helmet';
-import { Layout } from '@src/components/layout/Layout';
+import { Layout } from '@components/layout/Layout';
 
 const OrderHelmet = ({ orderId }: { orderId?: string }) => {
   return <>{orderId && <Helmet title={`Order ${orderId}`} />}</>;

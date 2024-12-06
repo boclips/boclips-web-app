@@ -9,8 +9,8 @@ import {
   getPreviousTopicId,
   getSelectedTarget,
   getSelectedTopic,
-} from '@src/components/alignments/themePage/helpers/themeNavigationHelpers';
-import { PaginationLink } from '@src/components/alignments/themePage/theme/pagination/PaginationLink';
+} from '@components/alignments/themePage/helpers/themeNavigationHelpers';
+import { PaginationLink } from '@components/alignments/themePage/theme/pagination/PaginationLink';
 import c from 'classnames';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import s from './style.module.less';

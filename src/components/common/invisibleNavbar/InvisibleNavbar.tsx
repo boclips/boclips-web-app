@@ -1,5 +1,5 @@
 import React from 'react';
-import SkipLink from '@src/components/skipLink/SkipLink';
+import SkipLink from '@components/skipLink/SkipLink';
 import LibraryLogoSVG from '@resources/icons/library-logo.svg?react';
 import ClassroomLogoSVG from '@resources/icons/classroom-logo.svg?react';
 import c from 'classnames';

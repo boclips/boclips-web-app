@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { MemoryRouter } from 'react-router-dom';
 
 describe('Video View', () => {

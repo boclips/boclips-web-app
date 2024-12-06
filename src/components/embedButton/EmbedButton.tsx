@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
-import { useBoclipsClient } from '@src/components/common/providers/BoclipsClientProvider';
+import { useBoclipsClient } from '@components/common/providers/BoclipsClientProvider';
 import Tooltip, { Button } from 'boclips-ui';
 import EmbedIcon from '@resources/icons/embed-icon.svg?react';
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
-import { SegmentBodal } from '@src/components/segmentBodal/SegmentBodal';
-import { durationInSeconds } from '@src/components/cart/AdditionalServices/Trim/trimValidation';
+import { SegmentBodal } from '@components/segmentBodal/SegmentBodal';
+import { durationInSeconds } from '@components/cart/AdditionalServices/Trim/trimValidation';
 import c from 'classnames';
 import { displayNotification } from '../common/notification/displayNotification';
 import s from './EmbedButton.module.less';

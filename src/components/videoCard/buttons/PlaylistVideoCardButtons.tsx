@@ -1,12 +1,12 @@
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import React from 'react';
-import s from '@src/components/videoCard/buttons/style.module.less';
-import { AddToPlaylistButton } from '@src/components/addToPlaylistButton/AddToPlaylistButton';
-import { FeatureGate } from '@src/components/common/FeatureGate';
+import s from '@components/videoCard/buttons/style.module.less';
+import { AddToPlaylistButton } from '@components/addToPlaylistButton/AddToPlaylistButton';
+import { FeatureGate } from '@components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import { DownloadTranscriptButton } from '@src/components/downloadTranscriptButton/DownloadTranscriptButton';
-import PlaylistVideoBookmarkButton from '@src/components/playlists/buttons/playlistBookmark/PlaylistVideoBookmarkButton';
-import PlaylistVideoNoteButton from '@src/components/playlists/buttons/playlistNote/PlaylistVideoNoteButton';
+import { DownloadTranscriptButton } from '@components/downloadTranscriptButton/DownloadTranscriptButton';
+import PlaylistVideoBookmarkButton from '@components/playlists/buttons/playlistBookmark/PlaylistVideoBookmarkButton';
+import PlaylistVideoNoteButton from '@components/playlists/buttons/playlistNote/PlaylistVideoNoteButton';
 
 interface PlaylistVideoCardButtonsProps {
   video: Video;

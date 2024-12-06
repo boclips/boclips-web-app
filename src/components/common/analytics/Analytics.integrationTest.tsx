@@ -1,5 +1,5 @@
 import React from 'react';
-import { trackPageRendered } from '@src/components/common/analytics/Analytics';
+import { trackPageRendered } from '@components/common/analytics/Analytics';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { PageRenderedRequest } from 'boclips-api-client/dist/sub-clients/events/model/PageRenderedRequest';

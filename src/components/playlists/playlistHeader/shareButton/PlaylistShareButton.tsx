@@ -1,8 +1,8 @@
 import React from 'react';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
-import { OwnOrEditablePlaylistShareButton } from '@src/components/playlists/playlistHeader/shareButton/OwnOrEditablePlaylistShareButton';
-import { ViewOnlyPlaylistShareButton } from '@src/components/playlists/playlistHeader/shareButton/ViewOnlyPlaylistShareButton';
+import { OwnOrEditablePlaylistShareButton } from '@components/playlists/playlistHeader/shareButton/OwnOrEditablePlaylistShareButton';
+import { ViewOnlyPlaylistShareButton } from '@components/playlists/playlistHeader/shareButton/ViewOnlyPlaylistShareButton';
 import { copySharePlaylistLink } from '@src/services/copySharePlaylistLink';
 
 interface Props {

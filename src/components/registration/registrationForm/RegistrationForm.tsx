@@ -2,12 +2,12 @@ import React, { useRef, useState } from 'react';
 import { Typography } from 'boclips-ui';
 import { useAddNewTrialUser } from '@src/hooks/api/userQuery';
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
-import { displayNotification } from '@src/components/common/notification/displayNotification';
+import { displayNotification } from '@components/common/notification/displayNotification';
 import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
-import RegistrationFormFields from '@src/components/registration/registrationForm/registrationFormFields/RegistrationFormFields';
-import CreateAccountButton from '@src/components/registration/registrationForm/createAccountButton/CreateAccountButton';
-import FormValidator from '@src/components/registration/registrationForm/validation/validation';
+import RegistrationFormFields from '@components/registration/registrationForm/registrationFormFields/RegistrationFormFields';
+import CreateAccountButton from '@components/registration/registrationForm/createAccountButton/CreateAccountButton';
+import FormValidator from '@components/registration/registrationForm/validation/validation';
 import { Link } from 'react-router-dom';
 import s from '../style.module.less';
 

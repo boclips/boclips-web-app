@@ -1,10 +1,10 @@
 import React from 'react';
-import { VideoPlayer } from '@src/components/videoCard/VideoPlayer';
+import { VideoPlayer } from '@components/videoCard/VideoPlayer';
 import { render } from '@testing-library/react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { Player, PlayerFactory } from 'boclips-player';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
-import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
+import { BoclipsSecurityProvider } from '@components/common/providers/BoclipsSecurityProvider';
 import mocked = jest.mocked;
 
 jest.mock('boclips-player');

@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, within } from '@testing-library/react';
-import { UsersListItem } from '@src/components/usersList/UsersListItem';
+import { UsersListItem } from '@components/usersList/UsersListItem';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 

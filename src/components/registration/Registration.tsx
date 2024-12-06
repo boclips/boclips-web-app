@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { Constants } from '@src/AppConstants';
-import RegistrationForm from '@src/components/registration/registrationForm/RegistrationForm';
-import EmailVerificationPrompt from '@src/components/registration/EmailVerificationPrompt';
-import TrialInfo from '@src/components/registration/trialInfo/TrialInfo';
+import RegistrationForm from '@components/registration/registrationForm/RegistrationForm';
+import EmailVerificationPrompt from '@components/registration/EmailVerificationPrompt';
+import TrialInfo from '@components/registration/trialInfo/TrialInfo';
 import { useMediaBreakPoint } from 'boclips-ui';
 
 const CAPTCHA_TOKEN = Constants.CAPTCHA_TOKEN;

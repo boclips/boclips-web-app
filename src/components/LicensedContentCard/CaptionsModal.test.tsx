@@ -1,5 +1,5 @@
 import { fireEvent, render } from '@testing-library/react';
-import { CaptionsModal } from '@src/components/LicensedContentCard/CaptionsModal';
+import { CaptionsModal } from '@components/LicensedContentCard/CaptionsModal';
 import React from 'react';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
 import * as DownloadFileFromUrl from '@src/services/downloadFileFromUrl';

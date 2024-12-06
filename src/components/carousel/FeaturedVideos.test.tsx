@@ -1,13 +1,13 @@
 import React from 'react';
-import FeaturedVideos from '@src/components/carousel/FeaturedVideos';
+import FeaturedVideos from '@components/carousel/FeaturedVideos';
 import { render, screen } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
-import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
+import { BoclipsSecurityProvider } from '@components/common/providers/BoclipsSecurityProvider';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 
 describe(`FeaturedVideos`, () => {

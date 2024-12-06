@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useGetVideos } from '@src/hooks/api/videoQuery';
-import { Carousel } from '@src/components/common/carousel/Carousel';
-import VideoSlide from '@src/components/carousel/VideoSlide';
+import { Carousel } from '@components/common/carousel/Carousel';
+import VideoSlide from '@components/carousel/VideoSlide';
 import s from './styles.module.less';
 
 const featuredLibraryVideoIds = [

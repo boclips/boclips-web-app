@@ -1,11 +1,11 @@
 import React from 'react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import SideMenu from '@src/components/layout/SideMenu';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import SideMenu from '@components/layout/SideMenu';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
+import { BoclipsSecurityProvider } from '@components/common/providers/BoclipsSecurityProvider';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { AdminLinksFactory } from 'boclips-api-client/dist/test-support/AdminLinksFactory';

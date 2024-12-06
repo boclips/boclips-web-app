@@ -1,10 +1,10 @@
 import { Typography } from 'boclips-ui';
-import s from '@src/components/videoPage/videoPage.module.less';
+import s from '@components/videoPage/videoPage.module.less';
 import React from 'react';
 import { useGetVideoRecommendations } from '@src/hooks/api/videoQuery';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
-import VideoGridCard from '@src/components/videoCard/VideoGridCard';
+import VideoGridCard from '@components/videoCard/VideoGridCard';
 import { useSearchQueryLocationParams } from '@src/hooks/useLocationParams';
 import { FilterKey } from '@src/types/search/FilterKey';
 import { HotjarEvents } from '@src/services/analytics/hotjar/Events';

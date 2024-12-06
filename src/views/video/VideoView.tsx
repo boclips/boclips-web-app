@@ -1,15 +1,15 @@
 import React from 'react';
-import Navbar from '@src/components/layout/Navbar';
-import Footer from '@src/components/layout/Footer';
+import Navbar from '@components/layout/Navbar';
+import Footer from '@components/layout/Footer';
 import { useGetIdFromLocation } from '@src/hooks/useLocationParams';
 import { useFindOrGetVideo } from '@src/hooks/api/videoQuery';
-import { Loading } from '@src/components/common/Loading';
+import { Loading } from '@components/common/Loading';
 import { Helmet } from 'react-helmet';
-import { Layout } from '@src/components/layout/Layout';
-import { ErrorBoundary } from '@src/components/common/errors/ErrorBoundary';
+import { Layout } from '@components/layout/Layout';
+import { ErrorBoundary } from '@components/common/errors/ErrorBoundary';
 import { BoclipsApiError } from 'boclips-api-client/dist/types';
 import { Fallback } from '@src/views/video/Fallback';
-import { VideoPage } from '@src/components/videoPage/VideoPage';
+import { VideoPage } from '@components/videoPage/VideoPage';
 
 const VideoView = () => {
   const videoId = useGetIdFromLocation('videos');

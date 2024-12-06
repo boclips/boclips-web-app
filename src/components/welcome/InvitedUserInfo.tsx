@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography } from 'boclips-ui';
 import { useGetUserQuery } from '@src/hooks/api/userQuery';
-import { FeatureGate } from '@src/components/common/FeatureGate';
+import { FeatureGate } from '@components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import s from './style.module.less';
 

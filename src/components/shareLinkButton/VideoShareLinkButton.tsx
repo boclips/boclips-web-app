@@ -4,12 +4,12 @@ import { Button, Typography } from 'boclips-ui';
 import { Video } from 'boclips-api-client/dist/types';
 import CopyLinkIcon from '@resources/icons/copy-link-icon.svg?react';
 import { useGetUserQuery } from '@src/hooks/api/userQuery';
-import { durationInSeconds } from '@src/components/cart/AdditionalServices/Trim/trimValidation';
-import { GoogleClassroomShareLink } from '@src/components/shareLinkButton/googleClassroom/GoogleClassroomShareLink';
-import { SegmentBodal } from '@src/components/segmentBodal/SegmentBodal';
-import { getShareableVideoLink } from '@src/components/shareLinkButton/getShareableLink';
-import { displayNotification } from '@src/components/common/notification/displayNotification';
-import { useBoclipsClient } from '@src/components/common/providers/BoclipsClientProvider';
+import { durationInSeconds } from '@components/cart/AdditionalServices/Trim/trimValidation';
+import { GoogleClassroomShareLink } from '@components/shareLinkButton/googleClassroom/GoogleClassroomShareLink';
+import { SegmentBodal } from '@components/segmentBodal/SegmentBodal';
+import { getShareableVideoLink } from '@components/shareLinkButton/getShareableLink';
+import { displayNotification } from '@components/common/notification/displayNotification';
+import { useBoclipsClient } from '@components/common/providers/BoclipsClientProvider';
 import s from './shareLinkButton.module.less';
 
 interface VideoShareLinkButtonProps {

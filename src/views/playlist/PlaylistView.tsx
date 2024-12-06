@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
-import Navbar from '@src/components/layout/Navbar';
-import { Layout } from '@src/components/layout/Layout';
+import Navbar from '@components/layout/Navbar';
+import { Layout } from '@components/layout/Layout';
 import { usePlaylistQuery } from '@src/hooks/api/playlistsQuery';
 import { useLocation, useParams } from 'react-router-dom';
-import Footer from '@src/components/layout/Footer';
-import PlaylistHeader from '@src/components/playlists/playlistHeader/PlaylistHeader';
-import PlaylistBody from '@src/components/playlists/playlistBody/PlaylistBody';
-import SkeletonPage from '@src/components/skeleton/SkeletonPage';
+import Footer from '@components/layout/Footer';
+import PlaylistHeader from '@components/playlists/playlistHeader/PlaylistHeader';
+import PlaylistBody from '@components/playlists/playlistBody/PlaylistBody';
+import SkeletonPage from '@components/skeleton/SkeletonPage';
 import { FollowPlaylist } from '@src/services/followPlaylist';
-import { displayNotification } from '@src/components/common/notification/displayNotification';
+import { displayNotification } from '@components/common/notification/displayNotification';
 import { Helmet } from 'react-helmet';
-import { FeatureGate } from '@src/components/common/FeatureGate';
+import { FeatureGate } from '@components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 interface Props {

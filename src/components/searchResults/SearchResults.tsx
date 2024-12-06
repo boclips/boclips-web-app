@@ -1,14 +1,14 @@
-import { SearchResultsSummary } from '@src/components/searchResults/SearchResultsSummary';
+import { SearchResultsSummary } from '@components/searchResults/SearchResultsSummary';
 import React, { useState } from 'react';
 import { VideoSearchResults } from 'boclips-api-client/dist/sub-clients/videos/model/VideoSearchResults';
-import { VideosListView } from '@src/components/searchResults/VideosListView';
+import { VideosListView } from '@components/searchResults/VideosListView';
 import VideoCardPlaceholder from 'boclips-ui';
 import { Helmet } from 'react-helmet';
 import ViewButtons, {
   ViewType,
-} from '@src/components/searchResults/ViewButtons';
-import { VideosGridView } from '@src/components/searchResults/VideosGridView';
-import { SearchTopics } from '@src/components/searchResults/SearchTopics';
+} from '@components/searchResults/ViewButtons';
+import { VideosGridView } from '@components/searchResults/VideosGridView';
+import { SearchTopics } from '@components/searchResults/SearchTopics';
 import { FilterKey } from '@src/types/search/FilterKey';
 import c from 'classnames';
 

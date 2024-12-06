@@ -3,9 +3,9 @@ import { useCartItemAdditionalServicesMutation } from '@src/hooks/api/cartQuery'
 import { AdditionalServices as AdditionalServicesApi } from 'boclips-api-client/dist/sub-clients/carts/model/AdditionalServices';
 import { Video } from 'boclips-api-client/dist/types';
 import { CartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
-import { useCartValidation } from '@src/components/common/providers/CartValidationProvider';
+import { useCartValidation } from '@components/common/providers/CartValidationProvider';
 import { useDebounce } from '@src/hooks/useDebounce';
-import BoCheckbox from '@src/components/common/input/BoCheckbox';
+import BoCheckbox from '@components/common/input/BoCheckbox';
 import { Typography } from 'boclips-ui';
 import { DurationInput } from './DurationInput';
 import { isTrimFromValid, isTrimToValid } from './trimValidation';

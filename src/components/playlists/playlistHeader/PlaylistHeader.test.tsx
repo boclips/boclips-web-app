@@ -1,6 +1,6 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
-import PlaylistHeader from '@src/components/playlists/playlistHeader/PlaylistHeader';
+import PlaylistHeader from '@components/playlists/playlistHeader/PlaylistHeader';
 import { Constants } from '@src/AppConstants';
 import { ToastContainer } from 'react-toastify';
 import { CollectionFactory } from '@src/testSupport/CollectionFactory';
@@ -8,7 +8,7 @@ import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
 import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';

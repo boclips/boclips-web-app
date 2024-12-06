@@ -1,4 +1,4 @@
-import { Bodal } from '@src/components/common/bodal/Bodal';
+import { Bodal } from '@components/common/bodal/Bodal';
 import { Typography } from 'boclips-ui';
 import React from 'react';
 import { bestForInfo } from '@resources/bestFor';

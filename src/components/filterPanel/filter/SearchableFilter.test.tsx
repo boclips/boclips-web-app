@@ -1,7 +1,7 @@
 import { renderWithLocation } from '@src/testSupport/renderWithLocation';
 import { fireEvent, RenderResult } from '@testing-library/react';
 import React from 'react';
-import { SearchableFilter } from '@src/components/filterPanel/filter/SearchableFilter';
+import { SearchableFilter } from '@components/filterPanel/filter/SearchableFilter';
 import { FilterOption } from '@src/types/FilterOption';
 import { FilterOptionFactory } from '@src/testSupport/FilterOptionFactory';
 

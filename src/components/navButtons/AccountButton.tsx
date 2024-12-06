@@ -3,13 +3,13 @@ import ExternalLinkIcon from '@resources/icons/external-link-icon.svg?react';
 import React, { useRef, useState } from 'react';
 import c from 'classnames';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
-import { FeatureGate } from '@src/components/common/FeatureGate';
+import { FeatureGate } from '@components/common/FeatureGate';
 import CloseOnClickOutside from '@src/hooks/closeOnClickOutside';
 import { Button, Typography } from 'boclips-ui';
 import { useGetUserQuery } from '@src/hooks/api/userQuery';
 import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import LogoutButton from '@src/components/layout/logoutButton/LogoutButton';
+import LogoutButton from '@components/layout/logoutButton/LogoutButton';
 import { Link } from '../common/Link';
 import s from './newstyle.module.less';
 

@@ -1,6 +1,6 @@
 import { Typography } from 'boclips-ui';
 import React from 'react';
-import { OrderInformationField } from '@src/components/ordersTable/OrderInformationField';
+import { OrderInformationField } from '@components/ordersTable/OrderInformationField';
 
 interface Props {
   videoQuantity: string;

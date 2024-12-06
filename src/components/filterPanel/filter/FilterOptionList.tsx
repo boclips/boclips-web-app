@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import c from 'classnames';
 import { FilterOption } from '@src/types/FilterOption';
-import { FilterOptionCheckbox } from '@src/components/filterPanel/filter/FilterOptionCheckbox';
-import { TextButton } from '@src/components/common/textButton/TextButton';
+import { FilterOptionCheckbox } from '@components/filterPanel/filter/FilterOptionCheckbox';
+import { TextButton } from '@components/common/textButton/TextButton';
 import s from './FilterOptionList.module.less';
 
 interface Props {

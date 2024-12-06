@@ -5,14 +5,14 @@ import ChevronDownIcon from '@resources/icons/chevron-down.svg?react';
 import { getVideoCountLabel } from '@src/services/getVideoCountLabel';
 import { HashLink } from 'react-router-hash-link';
 import c from 'classnames';
-import { useThemeMobileMenuContext } from '@src/components/common/providers/ThemeMobileMenuProvider';
+import { useThemeMobileMenuContext } from '@components/common/providers/ThemeMobileMenuProvider';
 import { useLocation } from 'react-router-dom';
 import {
   firstTargetInfo,
   getSelectedTopic,
   targetInfo,
-} from '@src/components/alignments/themePage/helpers/themeNavigationHelpers';
-import { useAlignmentProvider } from '@src/components/common/providers/AlignmentContextProvider';
+} from '@components/alignments/themePage/helpers/themeNavigationHelpers';
+import { useAlignmentProvider } from '@components/common/providers/AlignmentContextProvider';
 import {
   Theme,
   Topic,

@@ -1,6 +1,6 @@
 import { Typography } from 'boclips-ui';
 import React, { useState } from 'react';
-import { FilterOptionList } from '@src/components/filterPanel/filter/FilterOptionList';
+import { FilterOptionList } from '@components/filterPanel/filter/FilterOptionList';
 import { useSearchQueryLocationParams } from '@src/hooks/useLocationParams';
 import { FilterOption } from '@src/types/FilterOption';
 import { CollapsableFilter } from '../CollapsableFilter';

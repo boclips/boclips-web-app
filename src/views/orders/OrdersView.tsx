@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import Navbar from '@src/components/layout/Navbar';
-import Footer from '@src/components/layout/Footer';
-import { OrdersTable } from '@src/components/ordersTable/OrdersTable';
+import Navbar from '@components/layout/Navbar';
+import Footer from '@components/layout/Footer';
+import { OrdersTable } from '@components/ordersTable/OrdersTable';
 import { useGetOrdersQuery } from '@src/hooks/api/orderQuery';
-import { Loading } from '@src/components/common/Loading';
-import { ErrorBoundary } from '@src/components/common/errors/ErrorBoundary';
-import RefreshPageError from '@src/components/common/errors/refreshPageError/RefreshPageError';
+import { Loading } from '@components/common/Loading';
+import { ErrorBoundary } from '@components/common/errors/ErrorBoundary';
+import RefreshPageError from '@components/common/errors/refreshPageError/RefreshPageError';
 import EmptyOrdersSVG from '@resources/icons/empty-order-history.svg?react';
-import { Layout } from '@src/components/layout/Layout';
-import { Hero as OrdersEmptyState } from '@src/components/hero/Hero';
-import PageHeader from '@src/components/pageTitle/PageHeader';
+import { Layout } from '@components/layout/Layout';
+import { Hero as OrdersEmptyState } from '@components/hero/Hero';
+import PageHeader from '@components/pageTitle/PageHeader';
 
 export const PAGE_SIZE = 10;
 

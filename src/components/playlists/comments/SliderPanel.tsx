@@ -5,7 +5,7 @@ import {
 } from '@src/hooks/api/playlistsQuery';
 import { useGetUserQuery } from '@src/hooks/api/userQuery';
 import React, { useRef, useState } from 'react';
-import s from '@src/components/playlists/comments/style.module.less';
+import s from '@components/playlists/comments/style.module.less';
 import Tooltip, { Button, Typography, InputText } from 'boclips-ui';
 import CloseSVG from '@resources/icons/cross-icon.svg?react';
 import AccountSVG from '@resources/icons/account-icon.svg?react';

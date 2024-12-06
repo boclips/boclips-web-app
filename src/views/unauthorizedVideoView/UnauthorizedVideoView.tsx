@@ -1,18 +1,18 @@
 import React from 'react';
-import Footer from '@src/components/layout/Footer';
+import Footer from '@components/layout/Footer';
 import {
   useGetAnyParamFromLocation,
   useGetIdFromLocation,
   useGetNumberParamFromLocation,
 } from '@src/hooks/useLocationParams';
 import { useGetVideoWithReferer } from '@src/hooks/api/videoQuery';
-import { Loading } from '@src/components/common/Loading';
+import { Loading } from '@components/common/Loading';
 import { Helmet } from 'react-helmet';
-import { Layout } from '@src/components/layout/Layout';
-import { VideoPage } from '@src/components/videoPage/VideoPage';
+import { Layout } from '@components/layout/Layout';
+import { VideoPage } from '@components/videoPage/VideoPage';
 import ErrorView from '@src/views/error/ErrorView';
-import UnauthorizedNavbar from '@src/components/layout/UnauthorizedNavbar';
-import { PageNotFoundError } from '@src/components/common/errors/pageNotFound/PageNotFoundError';
+import UnauthorizedNavbar from '@components/layout/UnauthorizedNavbar';
+import { PageNotFoundError } from '@components/common/errors/pageNotFound/PageNotFoundError';
 import { BoclipsApiError } from 'boclips-api-client/dist/types/BoclipsApiError';
 import { Constants } from '@src/AppConstants';
 

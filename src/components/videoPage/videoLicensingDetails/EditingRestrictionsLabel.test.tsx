@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import { EditingRestrictionsLabel } from '@src/components/videoPage/videoLicensingDetails/EditingRestrictionsLabel';
+import { EditingRestrictionsLabel } from '@components/videoPage/videoLicensingDetails/EditingRestrictionsLabel';
 
 describe('Editing restrictions label', () => {
   it('displays ALLOWED editing restriction', async () => {

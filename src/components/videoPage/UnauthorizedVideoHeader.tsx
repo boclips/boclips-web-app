@@ -1,8 +1,8 @@
 import React from 'react';
 import { Typography } from 'boclips-ui';
-import { VideoInfo } from '@src/components/common/videoInfo/VideoInfo';
-import { VideoBadges } from '@src/components/videoPage/VideoBadges';
-import { DownloadTranscriptButton } from '@src/components/downloadTranscriptButton/DownloadTranscriptButton';
+import { VideoInfo } from '@components/common/videoInfo/VideoInfo';
+import { VideoBadges } from '@components/videoPage/VideoBadges';
+import { DownloadTranscriptButton } from '@components/downloadTranscriptButton/DownloadTranscriptButton';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import s from './style.module.less';
 

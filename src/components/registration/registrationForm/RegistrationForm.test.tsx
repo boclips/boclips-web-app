@@ -7,15 +7,15 @@ import {
 import React from 'react';
 import RegistrationForm, {
   RegistrationData,
-} from '@src/components/registration/registrationForm/RegistrationForm';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+} from '@components/registration/registrationForm/RegistrationForm';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
 import { ToastContainer } from 'react-toastify';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
-import { fillRegistrationForm } from '@src/components/registration/registrationFormTestHelpers';
+import { fillRegistrationForm } from '@components/registration/registrationFormTestHelpers';
 import { BrowserRouter as Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 

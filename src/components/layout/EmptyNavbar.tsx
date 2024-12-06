@@ -1,7 +1,7 @@
-import s from '@src/components/layout/navbar.module.less';
+import s from '@components/layout/navbar.module.less';
 import React from 'react';
 import c from 'classnames';
-import Logo from '@src/components/logo/Logo';
+import Logo from '@components/logo/Logo';
 
 export const EmptyNavbar = () => {
   return (

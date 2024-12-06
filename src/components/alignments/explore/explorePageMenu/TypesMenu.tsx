@@ -1,5 +1,5 @@
 import React from 'react';
-import TypeMenuItem from '@src/components/alignments/explore/explorePageMenu/TypeMenuItem';
+import TypeMenuItem from '@components/alignments/explore/explorePageMenu/TypeMenuItem';
 import s from './style.module.less';
 
 export interface TypesMenuProps {

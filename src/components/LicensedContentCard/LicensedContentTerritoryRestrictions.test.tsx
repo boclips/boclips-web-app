@@ -4,7 +4,7 @@ import LicensedContentFactory from 'boclips-api-client/dist/test-support/License
 import { Link } from 'boclips-api-client/dist/types';
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
 import dayjs from 'dayjs';
-import LicensedContentTerritoryRestrictions from '@src/components/LicensedContentCard/LicensedContentTerritoryRestrictions';
+import LicensedContentTerritoryRestrictions from '@components/LicensedContentCard/LicensedContentTerritoryRestrictions';
 import countries from 'iso-3166-1';
 
 describe('Licensed Content Territory restrictions', () => {

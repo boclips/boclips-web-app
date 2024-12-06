@@ -1,5 +1,5 @@
 import React from 'react';
-import { Hero } from '@src/components/hero/Hero';
+import { Hero } from '@components/hero/Hero';
 import { Button } from 'boclips-ui';
 import NotFoundSVG from '@resources/icons/not-found.svg?react';
 

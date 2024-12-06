@@ -1,12 +1,12 @@
 import React from 'react';
-import { TextButton } from '@src/components/common/textButton/TextButton';
+import { TextButton } from '@components/common/textButton/TextButton';
 import BackArrow from '@resources/icons/back-arrow.svg?react';
 import Button, { Typography, useMediaBreakPoint } from 'boclips-ui';
 import CloseButtonIcon from '@resources/icons/cross-icon.svg?react';
 import { useNavigate } from 'react-router-dom';
-import { useThemeMobileMenuContext } from '@src/components/common/providers/ThemeMobileMenuProvider';
-import { ThemeLogo } from '@src/components/alignments/themePage/themeLogo/ThemeLogo';
-import { useAlignmentProvider } from '@src/components/common/providers/AlignmentContextProvider';
+import { useThemeMobileMenuContext } from '@components/common/providers/ThemeMobileMenuProvider';
+import { ThemeLogo } from '@components/alignments/themePage/themeLogo/ThemeLogo';
+import { useAlignmentProvider } from '@components/common/providers/AlignmentContextProvider';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import s from './style.module.less';
 

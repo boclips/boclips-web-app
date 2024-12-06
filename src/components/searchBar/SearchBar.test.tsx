@@ -1,7 +1,7 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import React from 'react';
-import { Search } from '@src/components/searchBar/SearchBar';
+import { Search } from '@components/searchBar/SearchBar';
 import { MemoryRouter, Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { lastEvent } from '@src/testSupport/lastEvent';

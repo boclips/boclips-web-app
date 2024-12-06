@@ -2,7 +2,7 @@ import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
-import PlaylistLastUpdatedBadge from '@src/components/playlists/playlistHeader/PlaylistLastUpdatedBadge';
+import PlaylistLastUpdatedBadge from '@components/playlists/playlistHeader/PlaylistLastUpdatedBadge';
 
 describe('PlaylistLastUpdatedBadge', () => {
   it('shows last updated at date', async () => {

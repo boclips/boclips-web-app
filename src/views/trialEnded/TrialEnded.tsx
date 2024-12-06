@@ -1,8 +1,8 @@
-import { Layout } from '@src/components/layout/Layout';
-import { EmptyNavbar } from '@src/components/layout/EmptyNavbar';
-import Footer from '@src/components/layout/Footer';
+import { Layout } from '@components/layout/Layout';
+import { EmptyNavbar } from '@components/layout/EmptyNavbar';
+import Footer from '@components/layout/Footer';
 import React, { useEffect } from 'react';
-import { Hero } from '@src/components/hero/Hero';
+import { Hero } from '@components/hero/Hero';
 import TrialEndedSVG from '@resources/icons/trial-ended.svg?react';
 import { Button } from 'boclips-ui';
 import { Helmet } from 'react-helmet';

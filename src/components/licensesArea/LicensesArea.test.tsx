@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import LicensesArea from '@src/components/licensesArea/LicensesArea';
+import LicensesArea from '@components/licensesArea/LicensesArea';
 
 describe('Licenses', () => {
   it('displays licensed content card placeholder when still loading', () => {

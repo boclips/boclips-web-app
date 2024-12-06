@@ -2,7 +2,7 @@ import { fireEvent, waitFor } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import React from 'react';
-import VideoRecommendations from '@src/components/videoPage/VideoRecommendations';
+import VideoRecommendations from '@components/videoPage/VideoRecommendations';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
 import { render } from '@src/testSupport/render';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';

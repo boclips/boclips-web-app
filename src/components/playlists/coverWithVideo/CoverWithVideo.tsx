@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { VideoPlayer } from '@src/components/videoCard/VideoPlayer';
-import s from '@src/components/playlists/style.module.less';
+import { VideoPlayer } from '@components/videoCard/VideoPlayer';
+import s from '@components/playlists/style.module.less';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { Video as PlayerVideo } from 'boclips-player/dist/types/Video';
 import { BoclipsPlayer } from 'boclips-player/dist/BoclipsPlayer/BoclipsPlayer';

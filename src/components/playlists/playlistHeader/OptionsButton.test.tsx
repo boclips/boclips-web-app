@@ -6,10 +6,10 @@ import {
   within,
 } from '@testing-library/react';
 import React from 'react';
-import { OptionsButton } from '@src/components/playlists/playlistHeader/OptionsButton';
+import { OptionsButton } from '@components/playlists/playlistHeader/OptionsButton';
 import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import userEvent from '@testing-library/user-event';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import {
   CollectionAssetFactory,
   FakeBoclipsClient,

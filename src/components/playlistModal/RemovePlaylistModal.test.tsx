@@ -1,8 +1,8 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { render } from '@src/testSupport/render';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import React from 'react';
-import { RemovePlaylistModal } from '@src/components/playlistModal/RemovePlaylistModal';
+import { RemovePlaylistModal } from '@components/playlistModal/RemovePlaylistModal';
 import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 
 describe('Remove playlist modal', () => {

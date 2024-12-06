@@ -1,9 +1,9 @@
 import { FollowPlaylist } from '@src/services/followPlaylist';
 import { createBrowserHistory, createMemoryHistory } from 'history';
 import { render, waitFor } from '@testing-library/react';
-import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
+import { BoclipsSecurityProvider } from '@components/common/providers/BoclipsSecurityProvider';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Route, Router, Routes } from 'react-router-dom';
 import PlaylistView from '@src/views/playlist/PlaylistView';

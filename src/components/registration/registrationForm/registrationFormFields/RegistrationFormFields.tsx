@@ -1,10 +1,10 @@
 import React from 'react';
 import Dropdown, { InputText, Typography } from 'boclips-ui';
-import s from '@src/components/registration/style.module.less';
+import s from '@components/registration/style.module.less';
 import c from 'classnames';
-import { LIST_OF_COUNTRIES } from '@src/components/registration/dropdownValues';
-import RegistrationPageCheckbox from '@src/components/common/input/RegistrationPageCheckbox';
-import { RegistrationData } from '@src/components/registration/registrationForm/RegistrationForm';
+import { LIST_OF_COUNTRIES } from '@components/registration/dropdownValues';
+import RegistrationPageCheckbox from '@components/common/input/RegistrationPageCheckbox';
+import { RegistrationData } from '@components/registration/registrationForm/RegistrationForm';
 import PasswordValidattor from 'react-password-validattor';
 
 const passwordConfig = {

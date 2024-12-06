@@ -6,12 +6,12 @@ import {
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import { render, waitFor, within } from '@testing-library/react';
-import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
+import { BoclipsSecurityProvider } from '@components/common/providers/BoclipsSecurityProvider';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
-import SliderPanel from '@src/components/playlists/comments/SliderPanel';
+import SliderPanel from '@components/playlists/comments/SliderPanel';
 import userEvent from '@testing-library/user-event';
 
 describe('slider panel', () => {

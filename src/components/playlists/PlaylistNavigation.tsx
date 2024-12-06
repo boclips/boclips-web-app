@@ -1,7 +1,7 @@
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import c from 'classnames';
-import s from '@src/components/playlists/style.module.less';
-import { Link } from '@src/components/common/Link';
+import s from '@components/playlists/style.module.less';
+import { Link } from '@components/common/Link';
 import Arrow from '@resources/icons/grey-arrow.svg?react';
 import React from 'react';
 

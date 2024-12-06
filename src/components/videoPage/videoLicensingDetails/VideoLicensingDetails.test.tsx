@@ -1,7 +1,7 @@
 import { render, waitFor, within } from '@testing-library/react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import React from 'react';
-import { VideoLicensingDetails } from '@src/components/videoPage/videoLicensingDetails/VideoLicensingDetails';
+import { VideoLicensingDetails } from '@components/videoPage/videoLicensingDetails/VideoLicensingDetails';
 import userEvent from '@testing-library/user-event';
 
 describe('Video licensing details in video page', () => {

@@ -1,12 +1,12 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import AiMetadata from '@src/components/videoPage/videoMetadata/ai/AiMetadata';
-import { VideoAIMetadata } from '@src/components/videoPage/videoMetadata/types/VideoAIMetadata';
+import AiMetadata from '@components/videoPage/videoMetadata/ai/AiMetadata';
+import { VideoAIMetadata } from '@components/videoPage/videoMetadata/types/VideoAIMetadata';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import VideoAiMetadata from '@src/components/videoPage/videoMetadata/ai/VideoAiMetadata';
+import VideoAiMetadata from '@components/videoPage/videoMetadata/ai/VideoAiMetadata';
 
 describe('AiMetadata', () => {
   it('displays only the spinner when videoAIMetadata are loading', async () => {

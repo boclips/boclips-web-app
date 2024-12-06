@@ -1,5 +1,5 @@
 import React from 'react';
-import { SearchableFilter } from '@src/components/filterPanel/filter/SearchableFilter';
+import { SearchableFilter } from '@components/filterPanel/filter/SearchableFilter';
 import { FilterOption } from '@src/types/FilterOption';
 
 interface Props {

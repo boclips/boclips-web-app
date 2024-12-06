@@ -7,7 +7,7 @@ import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import List from 'antd/lib/list';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
 import { FilterKey } from '@src/types/search/FilterKey';
-import VideoGridCard from '@src/components/videoCard/VideoGridCard';
+import VideoGridCard from '@components/videoCard/VideoGridCard';
 import s from './styles.module.less';
 import paginationStyles from '../common/pagination/pagination.module.less';
 import { VideoCardButtons } from '../videoCard/buttons/VideoCardButtons';

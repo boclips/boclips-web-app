@@ -6,7 +6,7 @@ import {
   useSavedPlaylistsQuery,
 } from '@src/hooks/api/playlistsQuery';
 import { List, Root, Trigger } from '@radix-ui/react-tabs';
-import { PlaylistTab } from '@src/components/playlists/PlaylistTab';
+import { PlaylistTab } from '@components/playlists/PlaylistTab';
 import { usePlatformInteractedWithEvent } from '@src/hooks/usePlatformInteractedWithEvent';
 import s from './style.module.less';
 

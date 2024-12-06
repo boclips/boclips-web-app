@@ -1,6 +1,6 @@
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
-import s from '@src/components/playlistModal/style.module.less';
-import { Bodal } from '@src/components/common/bodal/Bodal';
+import s from '@components/playlistModal/style.module.less';
+import { Bodal } from '@components/common/bodal/Bodal';
 import Dropdown, { Typography } from 'boclips-ui';
 import CopyLinkIcon from '@resources/icons/copy-link-icon.svg?react';
 import React from 'react';

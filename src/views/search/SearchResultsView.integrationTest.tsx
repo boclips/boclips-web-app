@@ -13,13 +13,13 @@ import {
   FacetFactory,
   FacetsFactory,
 } from 'boclips-api-client/dist/test-support/FacetsFactory';
-import Navbar from '@src/components/layout/Navbar';
+import Navbar from '@components/layout/Navbar';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { queryClientConfig } from '@src/hooks/api/queryClientConfig';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
-import { BoclipsClientProvider } from '@src/components/common/providers/BoclipsClientProvider';
-import { BoclipsSecurityProvider } from '@src/components/common/providers/BoclipsSecurityProvider';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
+import { BoclipsSecurityProvider } from '@components/common/providers/BoclipsSecurityProvider';
 import { Helmet } from 'react-helmet';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { Link } from 'boclips-api-client/dist/types';
