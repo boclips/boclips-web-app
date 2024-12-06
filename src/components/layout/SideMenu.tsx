@@ -1,7 +1,7 @@
 import s from '@src/components/layout/navbar.module.less';
 import { FeatureGate } from '@src/components/common/FeatureGate';
 import { Link } from '@src/components/common/Link';
-import ExternalLinkIcon from '@src/resources/icons/external-link-icon.svg';
+import ExternalLinkIcon from '@resources/icons/external-link-icon.svg?react';
 import React from 'react';
 import c from 'classnames';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';

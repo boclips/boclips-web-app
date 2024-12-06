@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import c from 'classnames';
+import FilmIcon from '@resources/icons/film-icon.svg?react';
 import s from './newstyle.module.less';
-import FilmIcon from '../../resources/icons/film-icon.svg';
 
 const LibraryButton = () => {
   const navigate = useNavigate();

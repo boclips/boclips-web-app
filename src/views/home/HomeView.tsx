@@ -3,7 +3,7 @@ import Footer from '@src/components/layout/Footer';
 import { Layout } from '@src/components/layout/Layout';
 import { Search } from '@src/components/searchBar/SearchBar';
 import Button, { useMediaBreakPoint } from 'boclips-ui';
-import HomeSearchHero from '@src/resources/icons/home-illustration.svg';
+import HomeSearchHero from '@resources/icons/home-illustration.svg?react';
 import { useNavigate } from 'react-router-dom';
 import NewNavbar from '@src/components/layout/Navbar';
 import FeaturedVideos from '@src/components/carousel/FeaturedVideos';
@@ -16,8 +16,8 @@ import FeaturedPlaylists from '@src/components/carousel/FeaturedPlaylists';
 import { VideoPlayer } from '@src/components/videoCard/VideoPlayer';
 import { useFindOrGetVideo } from '@src/hooks/api/videoQuery';
 import { Constants } from '@src/AppConstants';
-import FilmIcon from '../../resources/icons/film-icon.svg';
-import YourLibraryIcon from '../../resources/icons/your-library.svg';
+import FilmIcon from '@resources/icons/film-icon.svg?react';
+import YourLibraryIcon from '@resources/icons/your-library.svg?react';
 import s from './style.module.less';
 
 const HomeView = () => {

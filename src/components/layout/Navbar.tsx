@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import c from 'classnames';
-import MenuIconSVG from '@src/resources/icons/menu-icon.svg';
-import CrossIconSVG from '@src/resources/icons/cross-icon.svg';
+import MenuIconSVG from '@resources/icons/menu-icon.svg?react';
+import CrossIconSVG from '@resources/icons/cross-icon.svg?react';
 import { FeatureGate } from '@src/components/common/FeatureGate';
 import CartButton from '@src/components/navButtons/CartButton';
 import { useGetUserQuery } from '@src/hooks/api/userQuery';

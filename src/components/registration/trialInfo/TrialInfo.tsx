@@ -1,8 +1,8 @@
 import { Typography } from 'boclips-ui';
-import Checkmark from '@src/resources/icons/checkmark.svg';
+import Checkmark from '@resources/icons/checkmark.svg?react';
 import React from 'react';
-import TrailBackground from '@src/resources/icons/trial-bg.svg';
-import BlobSVG from '@src/resources/icons/blob.svg';
+import TrailBackground from '@resources/icons/trial-bg.svg?react';
+import BlobSVG from '@resources/icons/blob.svg?react';
 import s from './style.module.less';
 
 const features = [

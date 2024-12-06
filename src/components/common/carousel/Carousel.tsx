@@ -5,7 +5,7 @@ import {
   Slide,
   Slider,
 } from 'pure-react-carousel';
-import ChevronSVG from '@src/resources/icons/chevron.svg';
+import ChevronSVG from '@resources/icons/chevron.svg?react';
 import React, { ReactElement } from 'react';
 import { useMediaBreakPoint, Typography } from 'boclips-ui';
 

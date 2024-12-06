@@ -1,4 +1,4 @@
-import ArrowIconSVG from '@src/resources/icons/arrow-no-size.svg';
+import ArrowIconSVG from '@resources/icons/arrow-no-size.svg?react';
 import React from 'react';
 import { Typography } from 'boclips-ui';
 import { useNavigate } from 'react-router-dom';

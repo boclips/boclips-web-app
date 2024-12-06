@@ -1,7 +1,7 @@
-import HomeSVG from '@src/resources/icons/home-icon.svg';
+import HomeSVG from '@resources/icons/home-icon.svg?react';
 import React from 'react';
 import c from 'classnames';
-import s from '@src/components/navButtons/style.module.less';
+import s from '@components/navButtons/style.module.less';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export const HomeButton = () => {

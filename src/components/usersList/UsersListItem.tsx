@@ -2,9 +2,9 @@ import React, { ReactElement } from 'react';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
 import { Button, Typography } from 'boclips-ui';
 import c from 'classnames';
-import PencilSVG from '@src/resources/icons/pencil.svg';
+import PencilSVG from '@resources/icons/pencil.svg?react';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import BinSVG from '@src/resources/icons/bin.svg';
+import BinSVG from '@resources/icons/bin.svg?react';
 import { FeatureGate } from '@src/components/common/FeatureGate';
 import s from './style.module.less';
 

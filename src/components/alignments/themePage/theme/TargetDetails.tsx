@@ -2,7 +2,7 @@ import { Typography } from 'boclips-ui';
 import React from 'react';
 import c from 'classnames';
 import s from '@src/components/alignments/themePage/theme/style.module.less';
-import NotFound from '@src/resources/icons/not-found.svg';
+import NotFound from '@resources/icons/not-found.svg?react';
 import { getVideoCountLabel } from '@src/services/getVideoCountLabel';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { VideoGridCardContainer } from './VideoGridCardContainer';

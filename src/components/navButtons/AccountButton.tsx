@@ -1,5 +1,5 @@
-import MyAccountSVG from '@src/resources/icons/user-icon.svg';
-import ExternalLinkIcon from '@src/resources/icons/external-link-icon.svg';
+import MyAccountSVG from '@resources/icons/user-icon.svg?react';
+import ExternalLinkIcon from '@resources/icons/external-link-icon.svg?react';
 import React, { useRef, useState } from 'react';
 import c from 'classnames';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';

@@ -4,8 +4,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import c from 'classnames';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
+import CartIcon from '@resources/icons/cart-icon.svg?react';
 import s from './style.module.less';
-import CartIcon from '../../resources/icons/cart-icon.svg';
 
 const CartButton = () => {
   const { data: cart } = useCartQuery();

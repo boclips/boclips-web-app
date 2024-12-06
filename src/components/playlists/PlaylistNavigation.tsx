@@ -2,7 +2,7 @@ import { Collection } from 'boclips-api-client/dist/sub-clients/collections/mode
 import c from 'classnames';
 import s from '@src/components/playlists/style.module.less';
 import { Link } from '@src/components/common/Link';
-import Arrow from '@src/resources/icons/grey-arrow.svg';
+import Arrow from '@resources/icons/grey-arrow.svg?react';
 import React from 'react';
 
 interface Props {

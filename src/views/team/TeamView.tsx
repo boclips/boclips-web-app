@@ -5,7 +5,7 @@ import PageHeader from '@components/pageTitle/PageHeader';
 import { Button } from 'boclips-ui';
 import AddNewTeamMemberModal from '@components/teamModal/AddNewTeamMemberModal';
 import Footer from '@components/layout/Footer';
-import PlusSign from '@resources/icons/plus-sign.svg';
+import PlusSign from '@resources/icons/plus-sign.svg?react';
 import { UsersList } from '@components/usersList/UsersList';
 import EditTeamMemberModal from '@components/teamModal/EditTeamMemberModal';
 import { Helmet } from 'react-helmet';

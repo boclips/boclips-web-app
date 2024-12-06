@@ -1,4 +1,4 @@
-import SearchIcon from '@resources/icons/search-icon.svg';
+import SearchIcon from '@resources/icons/search-icon.svg?react';
 import { InputText } from 'boclips-ui';
 import React from 'react';
 

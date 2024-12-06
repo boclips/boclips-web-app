@@ -8,7 +8,7 @@ import { downloadFileFromUrl } from '@src/services/downloadFileFromUrl';
 import { displayNotification } from '@src/components/common/notification/displayNotification';
 import { LoadingOutlined } from '@ant-design/icons';
 import { usePlatformInteractedWithEvent } from '@src/hooks/usePlatformInteractedWithEvent';
-import DownloadIconSVG from '../../resources/icons/download-icon.svg';
+import DownloadIconSVG from '@resources/icons/download-icon.svg?react';
 
 interface Props {
   licensedContent: LicensedContent;

@@ -1,12 +1,12 @@
 import React, { ReactElement } from 'react';
 import { useGetUserQuery } from '@src/hooks/api/userQuery';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import EmptyStateClassroomSVG from '@resources/icons/emptyPlaylistClassroom.svg';
-import EmptyStateLibrarySVG from '@resources/icons/emptyPlaylistLibrary.svg';
+import EmptyStateClassroomSVG from '@resources/icons/emptyPlaylistClassroom.svg?react';
+import EmptyStateLibrarySVG from '@resources/icons/emptyPlaylistLibrary.svg?react';
 import { Button, Typography } from 'boclips-ui';
 import c from 'classnames';
 import CreateNewPlaylistButton from '@src/components/playlists/buttons/createPlaylist/CreateNewPlaylistButton';
-import PlusSign from '@resources/icons/plus-sign.svg';
+import PlusSign from '@resources/icons/plus-sign.svg?react';
 import { useNavigate } from 'react-router-dom';
 import s from './style.module.less';
 

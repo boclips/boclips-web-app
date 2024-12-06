@@ -1,5 +1,5 @@
 import React from 'react';
-import CopyLinkIcon from '@src/resources/icons/copy-link-icon.svg';
+import CopyLinkIcon from '@resources/icons/copy-link-icon.svg?react';
 import { Button, Tooltip } from 'boclips-ui';
 import { displayNotification } from '@src/components/common/notification/displayNotification';
 import s from './style.module.less';

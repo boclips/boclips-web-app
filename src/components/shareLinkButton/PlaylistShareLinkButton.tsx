@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import ShareSVG from '@src/resources/icons/white-share.svg';
-import CopyLinkIcon from '@src/resources/icons/copy-link-icon.svg';
+import ShareSVG from '@resources/icons/white-share.svg?react';
+import CopyLinkIcon from '@resources/icons/copy-link-icon.svg?react';
 import { Button, Typography } from 'boclips-ui';
 import { useGetUserQuery } from '@src/hooks/api/userQuery';
 import { Bodal } from '@src/components/common/bodal/Bodal';

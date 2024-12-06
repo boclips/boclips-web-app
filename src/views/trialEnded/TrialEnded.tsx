@@ -3,7 +3,7 @@ import { EmptyNavbar } from '@src/components/layout/EmptyNavbar';
 import Footer from '@src/components/layout/Footer';
 import React, { useEffect } from 'react';
 import { Hero } from '@src/components/hero/Hero';
-import TrialEndedSVG from '@src/resources/icons/trial-ended.svg';
+import TrialEndedSVG from '@resources/icons/trial-ended.svg?react';
 import { Button } from 'boclips-ui';
 import { Helmet } from 'react-helmet';
 import { usePlatformInteractedWithEvent } from '@src/hooks/usePlatformInteractedWithEvent';

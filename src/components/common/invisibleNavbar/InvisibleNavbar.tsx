@@ -1,7 +1,7 @@
 import React from 'react';
 import SkipLink from '@src/components/skipLink/SkipLink';
-import LibraryLogoSVG from '@src/resources/icons/library-logo.svg';
-import ClassroomLogoSVG from '@src/resources/icons/classroom-logo.svg';
+import LibraryLogoSVG from '@resources/icons/library-logo.svg?react';
+import ClassroomLogoSVG from '@resources/icons/classroom-logo.svg?react';
 import c from 'classnames';
 import s from './style.module.less';
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import GridViewIcon from '@resources/icons/grid-view-icon.svg';
-import ListViewIcon from '@resources/icons/list-view-icon.svg';
+import GridViewIcon from '@resources/icons/grid-view-icon.svg?react';
+import ListViewIcon from '@resources/icons/list-view-icon.svg?react';
 import Tooltip, { Button } from 'boclips-ui';
 import { useBoclipsClient } from '@components/common/providers/BoclipsClientProvider';
 import { trackViewTypeChangedTo } from '@components/common/analytics/Analytics';

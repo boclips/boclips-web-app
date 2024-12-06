@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { VideoPlayer } from '@src/components/videoCard/VideoPlayer';
 import AdditionalServices from '@src/components/cart/AdditionalServices/AdditionalServices';
 import { CartItem as ApiCartItem } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
-import RemoveFromCartIcon from '@src/resources/icons/bin.svg';
+import RemoveFromCartIcon from '@resources/icons/bin.svg?react';
 import { useCartMutation } from '@src/hooks/api/cartQuery';
 import c from 'classnames';
 import { TextButton } from '@src/components/common/textButton/TextButton';

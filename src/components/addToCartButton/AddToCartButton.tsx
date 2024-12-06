@@ -8,7 +8,7 @@ import { Cart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
 import Tooltip, { Button } from 'boclips-ui';
 import React from 'react';
 import c from 'classnames';
-import CartIcon from '@resources/icons/cart-icon.svg';
+import CartIcon from '@resources/icons/cart-icon.svg?react';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
 import {
   trackVideoAddedToCart,

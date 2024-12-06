@@ -3,8 +3,8 @@ import { Typography } from 'boclips-ui';
 import ScrollToTop from '@src/hooks/scrollToTop';
 import Confetti from '@src/components/confetti/Confetti';
 import { Constants } from '@src/AppConstants';
+import VerifyEmailIllustration from '@resources/icons/classroom-registration-verify-email-illustration.svg?react';
 import s from './style.module.less';
-import VerifyEmailIllustration from '../../../resources/icons/classroom-registration-verify-email-illustration.svg';
 
 const ClassroomEmailVerificationPrompt = () => {
   return (

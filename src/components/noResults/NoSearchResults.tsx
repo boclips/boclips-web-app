@@ -1,5 +1,5 @@
 import React from 'react';
-import NoResultsIcon from '../../resources/icons/no-search-results.svg';
+import NoResultsIcon from '@resources/icons/no-search-results.svg?react';
 
 interface Props {
   areFiltersApplied: boolean;

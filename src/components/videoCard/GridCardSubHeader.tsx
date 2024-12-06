@@ -3,7 +3,7 @@ import Badge, { Typography } from 'boclips-ui';
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import Tooltip from 'boclips-ui';
-import { bestForInfo } from '@src/resources/bestFor';
+import { bestForInfo } from '@resources/bestFor';
 import getFormattedDuration from '@src/services/getFormattedDuration';
 
 const GridCardSubHeader = ({

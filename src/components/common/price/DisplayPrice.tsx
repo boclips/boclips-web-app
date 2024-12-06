@@ -3,7 +3,7 @@ import { Typography } from 'boclips-ui';
 import { Price } from 'boclips-api-client/dist/sub-clients/videos/model/Price';
 import { createPriceDisplayValue } from '@src/services/createPriceDisplayValue';
 import { getBrowserLocale } from '@src/services/getBrowserLocale';
-import CreditsSVG from '@src/resources/icons/credits.svg';
+import CreditsSVG from '@resources/icons/credits.svg?react';
 import c from 'classnames';
 
 interface Props {

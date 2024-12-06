@@ -5,7 +5,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Layout } from '@src/components/layout/Layout';
 import { Button, Typography } from 'boclips-ui';
 import { Hero } from '@src/components/hero/Hero';
-import OrderConfirmedSVG from '@src/resources/icons/order-confirmed.svg';
+import OrderConfirmedSVG from '@resources/icons/order-confirmed.svg?react';
 import { Helmet } from 'react-helmet';
 import useFeatureFlags from '@src/hooks/useFeatureFlags';
 import { FeatureGate } from '@src/components/common/FeatureGate';

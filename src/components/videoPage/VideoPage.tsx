@@ -1,7 +1,7 @@
 import React from 'react';
 import { Video } from 'boclips-api-client/dist/types';
 import { useLocation, useNavigate } from 'react-router-dom';
-import BackArrow from '@resources/icons/back-arrow.svg';
+import BackArrow from '@resources/icons/back-arrow.svg?react';
 import { TextButton } from '@components/common/textButton/TextButton';
 import { VideoHeader } from '@components/videoPage/VideoHeader';
 import VideoRecommendations from '@components/videoPage/VideoRecommendations';

@@ -1,7 +1,7 @@
 import { Typography } from 'boclips-ui';
 import React from 'react';
-import NextArrow from '@src/resources/icons/next-section-arrow.svg';
-import PreviousArrow from '@src/resources/icons/prev-section-arrow.svg';
+import NextArrow from '@resources/icons/next-section-arrow.svg?react';
+import PreviousArrow from '@resources/icons/prev-section-arrow.svg?react';
 import {
   getNextTargetInfo,
   getNextTopicId,

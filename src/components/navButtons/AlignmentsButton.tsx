@@ -1,8 +1,8 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import c from 'classnames';
+import AlignmentsIcon from '@resources/icons/alignments.svg?react';
 import s from './style.module.less';
-import AlignmentsIcon from '../../resources/icons/alignments.svg';
 
 const AlignmentsButton = () => {
   const navigate = useNavigate();

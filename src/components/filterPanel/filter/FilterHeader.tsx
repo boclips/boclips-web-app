@@ -1,10 +1,10 @@
 import { Typography } from 'boclips-ui';
 import React, { useState } from 'react';
 import { handleEnterKeyEvent } from '@src/services/handleKeyEvent';
-import InfoSVG from '@src/resources/icons/info.svg';
+import InfoSVG from '@resources/icons/info.svg?react';
 import BestForModal from '@src/components/filterPanel/filter/modals/BestForModal';
 import c from 'classnames';
-import FilterArrow from '../../../resources/icons/blue-arrow.svg';
+import FilterArrow from '@resources/icons/blue-arrow.svg?react';
 import s from './filterHeader.module.less';
 
 interface Props {

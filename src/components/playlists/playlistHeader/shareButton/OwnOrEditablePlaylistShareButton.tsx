@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from 'boclips-ui';
-import ShareIcon from '@src/resources/icons/share.svg';
+import ShareIcon from '@resources/icons/share.svg?react';
 import c from 'classnames';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { EditPlaylistPermissionsModal } from '@src/components/playlistModal/EditPlaylistPermissionsModal';

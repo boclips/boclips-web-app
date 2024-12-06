@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'boclips-ui';
 import { Video } from 'boclips-api-client/dist/types';
-import TimerSVG from '@src/resources/icons/timer.svg';
+import TimerSVG from '@resources/icons/timer.svg?react';
 import {
   useEditPlaylistMutation,
   usePlaylistQuery,

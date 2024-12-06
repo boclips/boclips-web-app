@@ -2,8 +2,8 @@ import React from 'react';
 import { Typography } from 'boclips-ui';
 import ScrollToTop from '@src/hooks/scrollToTop';
 import Confetti from '@src/components/confetti/Confetti';
+import VerifyEmailIllustration from '@resources/icons/classroom-registration-verify-email-illustration.svg?react';
 import s from './style.module.less';
-import VerifyEmailIllustration from '../../../resources/icons/classroom-registration-verify-email-illustration.svg';
 
 interface EmailVerificationPromptProps {
   userEmail: string;

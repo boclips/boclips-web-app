@@ -1,11 +1,11 @@
-import DiscoverySVG from '@src/resources/icons/bestFor/discovery.svg';
-import ExplainerSVG from '@src/resources/icons/bestFor/explainer.svg';
-import ExperienceSVG from '@src/resources/icons/bestFor/experience.svg';
-import TutorialSVG from '@src/resources/icons/bestFor/tutorial.svg';
-import ApplicationSVG from '@src/resources/icons/bestFor/application.svg';
-import SynthesisSVG from '@src/resources/icons/bestFor/synthesis.svg';
-import ReviewSVG from '@src/resources/icons/bestFor/review.svg';
-import OtherSVG from '@src/resources/icons/bestFor/other.svg';
+import DiscoverySVG from '@resources/icons/bestFor/discovery.svg?react';
+import ExplainerSVG from '@resources/icons/bestFor/explainer.svg?react';
+import ExperienceSVG from '@resources/icons/bestFor/experience.svg?react';
+import TutorialSVG from '@resources/icons/bestFor/tutorial.svg?react';
+import ApplicationSVG from '@resources/icons/bestFor/application.svg?react';
+import SynthesisSVG from '@resources/icons/bestFor/synthesis.svg?react';
+import ReviewSVG from '@resources/icons/bestFor/review.svg?react';
+import OtherSVG from '@resources/icons/bestFor/other.svg?react';
 import React from 'react';
 
 export const bestForInfo = [

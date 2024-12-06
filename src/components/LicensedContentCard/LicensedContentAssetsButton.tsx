@@ -6,8 +6,8 @@ import { useBoclipsClient } from '@src/components/common/providers/BoclipsClient
 import { downloadFileFromUrl } from '@src/services/downloadFileFromUrl';
 import { displayNotification } from '@src/components/common/notification/displayNotification';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import DownloadSVG from '@src/resources/icons/download.svg';
-import OptionsDotsSVG from '@src/resources/icons/options-dots.svg';
+import DownloadSVG from '@resources/icons/download.svg?react';
+import OptionsDotsSVG from '@resources/icons/options-dots.svg?react';
 import { CaptionsModal } from '@src/components/LicensedContentCard/CaptionsModal';
 import { usePlatformInteractedWithEvent } from '@src/hooks/usePlatformInteractedWithEvent';
 

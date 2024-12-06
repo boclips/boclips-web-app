@@ -1,9 +1,9 @@
 import { Button } from 'boclips-ui';
-import PlusSign from '@src/resources/icons/plus-sign.svg';
+import PlusSign from '@resources/icons/plus-sign.svg?react';
 import React, { useState } from 'react';
-import { CreatePlaylistModal } from '@src/components/playlistModal/createPlaylist/CreatePlaylistModal';
+import { CreatePlaylistModal } from '@components/playlistModal/createPlaylist/CreatePlaylistModal';
 import { useNavigate } from 'react-router-dom';
-import { displayNotification } from '@src/components/common/notification/displayNotification';
+import { displayNotification } from '@components/common/notification/displayNotification';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
 import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 

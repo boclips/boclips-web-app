@@ -5,7 +5,7 @@ import React, {
   useRef,
 } from 'react';
 import { Button, Typography } from 'boclips-ui';
-import CloseIconSVG from '@src/resources/icons/cross-icon.svg';
+import CloseIconSVG from '@resources/icons/cross-icon.svg?react';
 import { LoadingOutlined } from '@ant-design/icons';
 import { TextButton } from '@src/components/common/textButton/TextButton';
 import { handleEscapeKeyEvent } from '@src/services/handleKeyEvent';

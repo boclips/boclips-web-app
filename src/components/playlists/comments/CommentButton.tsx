@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from 'boclips-ui';
-import CommentSVG from '@src/resources/icons/comment-icon.svg';
+import CommentSVG from '@resources/icons/comment-icon.svg?react';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import Bubble from '@src/components/playlists/comments/Bubble';
 import SliderPanel from '@src/components/playlists/comments/SliderPanel';

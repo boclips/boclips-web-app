@@ -1,7 +1,7 @@
 import React from 'react';
 import { Hero } from '@src/components/hero/Hero';
 import { Button } from 'boclips-ui';
-import NotFoundSVG from '@src/resources/icons/not-found.svg';
+import NotFoundSVG from '@resources/icons/not-found.svg?react';
 
 export const PageNotFoundError = () => {
   return (

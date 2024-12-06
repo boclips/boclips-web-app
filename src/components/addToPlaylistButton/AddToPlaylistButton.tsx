@@ -1,8 +1,8 @@
 import Tooltip, { Button, Typography } from 'boclips-ui';
-import PlaylistAddIcon from '@src/resources/icons/playlist-add.svg';
-import PlaylistAddAlreadyAddedIcon from '@src/resources/icons/playlist-add-already-added.svg';
+import PlaylistAddIcon from '@resources/icons/playlist-add.svg?react';
+import PlaylistAddAlreadyAddedIcon from '@resources/icons/playlist-add-already-added.svg?react';
 import React, { useRef, useState } from 'react';
-import CloseButton from '@src/resources/icons/cross-icon.svg';
+import CloseButton from '@resources/icons/cross-icon.svg?react';
 import {
   useAddToPlaylistMutation,
   useOwnAndEditableSharedPlaylistsQuery,
@@ -16,7 +16,7 @@ import FocusTrap from 'focus-trap-react';
 import { handleEscapeKeyEvent } from '@src/services/handleKeyEvent';
 import { CreatePlaylistModal } from '@src/components/playlistModal/createPlaylist/CreatePlaylistModal';
 import { displayNotification } from '@src/components/common/notification/displayNotification';
-import PlusIcon from '@src/resources/icons/plus-sign.svg';
+import PlusIcon from '@resources/icons/plus-sign.svg?react';
 import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
 import { LoadingOutlined } from '@ant-design/icons';

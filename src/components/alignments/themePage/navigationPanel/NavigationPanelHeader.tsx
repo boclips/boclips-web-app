@@ -1,8 +1,8 @@
 import React from 'react';
 import { TextButton } from '@src/components/common/textButton/TextButton';
-import BackArrow from '@src/resources/icons/back-arrow.svg';
+import BackArrow from '@resources/icons/back-arrow.svg?react';
 import Button, { Typography, useMediaBreakPoint } from 'boclips-ui';
-import CloseButtonIcon from '@src/resources/icons/cross-icon.svg';
+import CloseButtonIcon from '@resources/icons/cross-icon.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { useThemeMobileMenuContext } from '@src/components/common/providers/ThemeMobileMenuProvider';
 import { ThemeLogo } from '@src/components/alignments/themePage/themeLogo/ThemeLogo';

@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import c from 'classnames';
-import ClassroomLogoSVG from '@src/resources/icons/classroom-logo.svg';
+import ClassroomLogoSVG from '@resources/icons/classroom-logo.svg?react';
 import navbarStyle from './navbar.module.less';
 import unauthorizedNavbarStyle from './unauthorizedNavbar.module.less';
 

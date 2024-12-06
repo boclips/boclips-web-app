@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'boclips-ui';
 import { Video } from 'boclips-api-client/dist/types';
-import PencilSVG from '@src/resources/icons/pencil.svg';
+import PencilSVG from '@resources/icons/pencil.svg?react';
 import {
   useEditPlaylistMutation,
   usePlaylistQuery,

@@ -1,5 +1,5 @@
 import React from 'react';
-import GoogleClassroomIcon from '@src/resources/icons/classroom/google-classroom-logo.png';
+import GoogleClassroomIcon from '@resources/icons/classroom/google-classroom-logo.png';
 import { Typography } from 'boclips-ui';
 import { GoogleClassroomUrlBuilder } from './GoogleClassroomUrlBuilder';
 import s from './GoogleClassroomShareLink.module.less';

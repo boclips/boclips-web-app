@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from 'boclips-ui';
-import Arrow from '../../resources/icons/grey-arrow.svg';
+import Arrow from '@resources/icons/grey-arrow.svg?react';
 import { Link } from '../common/Link';
 
 export const OrderHeader = ({ id }: { id?: string }) => {
