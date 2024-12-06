@@ -128,7 +128,7 @@
     "boclips-js-security": "14.0.1-dev.1",
     "boclips-player": "^7.16.0",
     "boclips-player-react": "^4.0.8",
-    "boclips-ui": "1.1.0",
+    "boclips-ui": "^1.1.1-dev.2",
     "classnames": "^2.5.1",
     "core-js": "^3.39.0",
     "dateformat": "^4.4.1",

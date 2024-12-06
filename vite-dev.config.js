@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import image from '@rollup/plugin-image';
 import path from 'path';
@@ -29,15 +29,15 @@ export default defineConfig({
       },
     ],
   },
-  css: {
-    preprocessorOptions: {
-      less: {
-        math: 'always',
-        relativeUrls: true,
-        javascriptEnabled: true,
-      },
-    },
-  },
+  // css: {
+  //   preprocessorOptions: {
+  //     less: {
+  //       math: 'always',
+  //       relativeUrls: true,
+  //       javascriptEnabled: true,
+  //     },
+  //   },
+  // },
   plugins: [
     react({
       include: /\.(js|jsx|ts|tsx|less)$/,
