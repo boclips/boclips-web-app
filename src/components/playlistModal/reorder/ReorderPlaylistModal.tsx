@@ -9,9 +9,17 @@ import { CollectionAsset } from 'boclips-api-client/dist/sub-clients/collections
 import {
   arrayMove,
   SortableContext,
+  sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { closestCenter, DndContext } from '@dnd-kit/core';
+import {
+  closestCenter,
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
 import s from './style.module.less';
 
 interface Props {
@@ -50,6 +58,13 @@ const ReorderModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
     }
   };
 
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
+
   return (
     <Bodal
       title="Reorder videos"
@@ -62,7 +77,11 @@ const ReorderModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
       <Typography.Body as="span">
         Drag & drop video titles to put them in your desired order:
       </Typography.Body>
-      <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd}>
+      <DndContext
+        collisionDetection={closestCenter}
+        onDragEnd={onDragEnd}
+        sensors={sensors}
+      >
         <SortableContext
           items={reorderedAssets.map((asset) => asset.id)}
           strategy={verticalListSortingStrategy}

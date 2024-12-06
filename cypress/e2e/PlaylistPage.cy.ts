@@ -45,24 +45,10 @@ context('Playlist page', () => {
     cy.percySnapshot('Reorder videos in playlist');
 
     cy.get('[data-qa="data-video-1"]')
-      .focus()
-      .then((el) => {
-        el[0].dispatchEvent(
-          new KeyboardEvent('keydown', { keyCode: 32, which: 32 }),
-        );
-        return el;
-      })
-      .then((el) => {
-        el[0].dispatchEvent(
-          new KeyboardEvent('keydown', { keyCode: 40, which: 40 }),
-        );
-        return el;
-      })
-      .then((el) => {
-        el[0].dispatchEvent(
-          new KeyboardEvent('keydown', { keyCode: 32, which: 32 }),
-        );
-      });
+      .click()
+      .type(' ')
+      .type('{downArrow}')
+      .type(' ');
 
     cy.findAllByText('video title').then((it) => {
       const item1 = it.get(0);
