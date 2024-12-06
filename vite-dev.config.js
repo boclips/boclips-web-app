@@ -48,6 +48,7 @@ export default defineConfig({
   ],
   server: {
     port: 9000,
+    https: false,
     open: 'index-dev.html',
   },
 });
