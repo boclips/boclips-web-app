@@ -1,18 +1,19 @@
 import { configure } from '@testing-library/react';
 import resizeTo from 'src/testSupport/resizeTo';
 import '@testing-library/jest-dom';
+import { vi } from "vitest";
 
-const jestTimeout = 30000;
+const testTimeout = 30000;
 
 configure({
   testIdAttribute: 'data-qa',
-  asyncUtilTimeout: jestTimeout - 2000,
+  asyncUtilTimeout: testTimeout - 2000,
 });
 
-jest.setTimeout(jestTimeout);
+vi.setConfig({ testTimeout: testTimeout })
 
-const { toHaveNoViolations } = require('jest-axe');
-expect.extend(toHaveNoViolations);
+// const { toHaveNoViolations } = require('jest-axe');
+// expect.extend(toHaveNoViolations);
 
 window.resizeTo = resizeTo;
 
@@ -54,4 +55,3 @@ beforeEach(() => {
 });
 
 jest.mock('src/components/confetti/Confetti');
-

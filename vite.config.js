@@ -50,4 +50,15 @@ export default defineConfig({
     port: 9000,
     https: false,
   },
+  test: {
+    include: ['**/*.test.tsx'],
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './setupTests.ts',
+    css: {
+      modules: {
+        classNameStrategy: 'non-scoped',
+      },
+    },
+  },
 });

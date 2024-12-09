@@ -17,8 +17,14 @@
       "src/*": ["*"],
       "@src/*": ["*"],
       "@components/*": ["components/*"],
-      "@resources/*": ["resources/*"],
-    }
+      "@resources/*": ["resources/*"]
+    },
+    "types": [
+      "vitest/globals",
+      "@testing-library/jest-dom",
+      "@testing-library/react",
+      "@types/css-modules"
+    ]
   },
   "exclude": ["cypress", "node_modules", "dist"]
 }
