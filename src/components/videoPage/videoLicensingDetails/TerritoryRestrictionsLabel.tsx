@@ -1,6 +1,6 @@
 import React from 'react';
 import InfoSVG from '@resources/icons/info.svg?react';
-import Tooltip from 'boclips-ui';
+import { Tooltip } from 'boclips-ui';
 
 interface Props {
   territories: string[];

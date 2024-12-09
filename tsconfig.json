@@ -15,10 +15,9 @@
     "skipLibCheck": true,
     "paths": {
       "src/*": ["*"],
-      "resources/*": ["../resources/*"],
-      "components/*": ["../components/*"],
-      "test-support/*": ["../test-support/*"],
-      "@src/*": ["./*"],
+      "@src/*": ["*"],
+      "@components/*": ["components/*"],
+      "@resources/*": ["resources/*"],
     }
   },
   "exclude": ["cypress", "node_modules", "dist"]

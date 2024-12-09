@@ -1,5 +1,5 @@
 import React from 'react';
-import Tooltip from 'boclips-ui';
+import { Tooltip } from 'boclips-ui';
 
 interface Props {
   restrictions: string;

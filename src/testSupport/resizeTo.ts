@@ -1,4 +1,4 @@
-import { breakpoints } from '@boclips-ui/media-breakpoints';
+import { breakpoints } from 'boclips-ui';
 
 function resizeTo(width: number, height: number): void {
   const resizeEvent = document.createEvent('Event');

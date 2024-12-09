@@ -135,17 +135,17 @@ importers:
         specifier: ^9.2.1
         version: 9.2.1(@babel/core@7.26.0)(webpack@5.97.0)
       boclips-js-security:
-        specifier: 14.0.1-dev.1
-        version: 14.0.1-dev.1(axios@1.7.7)
+        specifier: ^14.1.0
+        version: 14.1.0(axios@1.7.7)
       boclips-player:
-        specifier: ^7.16.0
-        version: 7.16.0(webpack@5.97.0)
+        specifier: ^7.16.1
+        version: 7.16.1(webpack@5.97.0)
       boclips-player-react:
-        specifier: ^4.0.8
-        version: 4.0.8(axios@1.7.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.97.0)
+        specifier: ^4.1.0
+        version: 4.1.0(axios@1.7.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.97.0)
       boclips-ui:
-        specifier: ^1.1.1-dev.2
-        version: 1.1.1-dev.2(@types/react-dom@18.3.1)(@types/react@18.3.13)(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^1.2.1
+        version: 1.2.1(@types/react-dom@18.3.1)(@types/react@18.3.13)(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -291,6 +291,9 @@ importers:
       '@types/jest-axe':
         specifier: ^3.5.6
         version: 3.5.9
+      '@types/node':
+        specifier: ^22.10.1
+        version: 22.10.1
       audit-ci:
         specifier: ^6.6.1
         version: 6.6.1
@@ -3356,13 +3359,8 @@ packages:
     resolution: {integrity: sha512-MN2brhmbzJK3uaXx42f0I5d5Tpe427oWZFqUXp34rQEuFMOfCvYybm7dXEeuMShU3y5j04rHSi9KYuqI25XX1A==}
     engines: {node: '>=20.18.0 <21'}
 
-  boclips-js-security@14.0.0:
-    resolution: {integrity: sha512-RbFAS6tjS53CXp763E0O2YNozzHhP/ZgvA2gkaEzdlVwc8ftTsYS1zkUVPienENOXVuiyTYorxINXg5Tvw6BxQ==}
-    peerDependencies:
-      axios: '>=1.7.7 <2.0.0'
-
-  boclips-js-security@14.0.1-dev.1:
-    resolution: {integrity: sha512-taYM5xDjDjiWkQueox+Yyv+KTrqiqIwQmLC8gHe4hXrQZAPRoQ3A8onr2Q7WxHOGUgrxTPAdo02jABQQUhBmuA==}
+  boclips-js-security@14.1.0:
+    resolution: {integrity: sha512-EQxlqHGrjFV2bgOtNvj0dhLchRbRHzNiM+OyYuCC/BLwayN7PeGOz3I3Jn4mHi/8vYLnN2Y7TPuqFfpTLk72Lg==}
     peerDependencies:
       axios: '>=1.7.7 <2.0.0'
 
@@ -3370,17 +3368,17 @@ packages:
     resolution: {integrity: sha512-Y9xV1AH+AXB6Ym3J4EaF0Af9kf0zbebQeUt+q6wWRdV1dXSMkZKSHYuXd3CUcJfW7mmo7blS+sMAFobIHYsukg==}
     hasBin: true
 
-  boclips-player-react@4.0.8:
-    resolution: {integrity: sha512-Y5auQ/XJufhQSfHKLlk4CpqDfHjAXqcpcTBE6MgBk88u3c7mn/AM/idzdEpjTX5Pg4OG5smZz94g7gBkbdv5jw==}
+  boclips-player-react@4.1.0:
+    resolution: {integrity: sha512-OE1cBPJkfJEglp1wz+d9kbNgLzZ4KU/N9oHnGEc8g00JdotgVjjnoAOFI5WFLWVY5ddsD/XGU8Rh259xdA66wA==}
     peerDependencies:
       react: ^18.3.1
       react-dom: ^18.3.1
 
-  boclips-player@7.16.0:
-    resolution: {integrity: sha512-Y4JcdO4rji7eHvuN1BS94fSnrxdqcJSnauyqY6aX8eJJhqSwQjT/2xBthO0bHdojuxbtDpEXFj9hRudQ5LxSJA==}
+  boclips-player@7.16.1:
+    resolution: {integrity: sha512-wz8SB2iXyE1OOgPx4jgulbVbmBkmg64I6fyYnDDnKPPuUljQLNyLAjiXlr0k6Pbo2Fiq20aDaxj4K09sDuAeJA==}
 
-  boclips-ui@1.1.1-dev.2:
-    resolution: {integrity: sha512-DpksjytNvRQsvqDFitv6bsEmtx38HHRl5E1vDRPAQM6OrvWmW7+C3hXYw/wHP2ysnloKzbDMs26K3vY2UQ340g==}
+  boclips-ui@1.2.1:
+    resolution: {integrity: sha512-rMoKX5ykBuB5J4RzTnWQayi5EnhOsVj8Bxyf/LKY/3hyBmQaoWgmMjpIYJmzG5qQWZTFaG+bO1XkzRhYBqQ0yA==}
     peerDependencies:
       react: ^18.3.1
       react-dom: ^18.3.1
@@ -11597,19 +11595,7 @@ snapshots:
       - debug
       - supports-color
 
-  boclips-js-security@14.0.0(axios@1.7.7):
-    dependencies:
-      axios: 1.7.7(debug@4.3.7)
-      jest-environment-jsdom: 29.7.0
-      jest-mock: 29.7.0
-      keycloak-js: 18.0.1
-    transitivePeerDependencies:
-      - bufferutil
-      - canvas
-      - supports-color
-      - utf-8-validate
-
-  boclips-js-security@14.0.1-dev.1(axios@1.7.7):
+  boclips-js-security@14.1.0(axios@1.7.7):
     dependencies:
       axios: 1.7.7(debug@4.3.7)
       jest-environment-jsdom: 29.7.0
@@ -11627,10 +11613,10 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  boclips-player-react@4.0.8(axios@1.7.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.97.0):
+  boclips-player-react@4.1.0(axios@1.7.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.97.0):
     dependencies:
-      boclips-js-security: 14.0.0(axios@1.7.7)
-      boclips-player: 7.16.0(webpack@5.97.0)
+      boclips-js-security: 14.1.0(axios@1.7.7)
+      boclips-player: 7.16.1(webpack@5.97.0)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
     transitivePeerDependencies:
@@ -11645,7 +11631,7 @@ snapshots:
       - utf-8-validate
       - webpack
 
-  boclips-player@7.16.0(webpack@5.97.0):
+  boclips-player@7.16.1(webpack@5.97.0):
     dependencies:
       '@types/url-template': 2.0.31
       axios: 1.7.7(debug@4.3.7)
@@ -11672,7 +11658,7 @@ snapshots:
       - utf-8-validate
       - webpack
 
-  boclips-ui@1.1.1-dev.2(@types/react-dom@18.3.1)(@types/react@18.3.13)(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  boclips-ui@1.2.1(@types/react-dom@18.3.1)(@types/react@18.3.13)(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@ant-design/icons': 5.5.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@duetds/date-picker': 1.4.0
