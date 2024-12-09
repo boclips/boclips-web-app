@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import image from '@rollup/plugin-image';
@@ -54,11 +55,14 @@ export default defineConfig({
     include: ['**/*.test.tsx'],
     environment: 'jsdom',
     globals: true,
-    setupFiles: './setupTests.ts',
+    setupFiles: './testSetup.ts',
     css: {
       modules: {
         classNameStrategy: 'non-scoped',
       },
+    },
+    server: {
+      sourcemap: true,
     },
   },
 });

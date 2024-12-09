@@ -1,4 +1,5 @@
-import { act, renderHook, waitFor } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
+import { act } from 'react';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
 import {
   useEditPlaylistMutation,
@@ -22,10 +23,7 @@ import { PLAYLISTS_PAGE_SIZE } from 'src/components/playlists/playlistList/Playl
 describe('playlistsQuery', () => {
   it('will use list projection and convert page size when loading users playlists', async () => {
     const apiClient = new FakeBoclipsClient();
-    const collectionsSpy = jest.spyOn(
-      apiClient.collections,
-      'getMyCollections',
-    );
+    const collectionsSpy = vi.spyOn(apiClient.collections, 'getMyCollections');
     // @ts-ignore
     apiClient.collections.getMyCollections = collectionsSpy;
     const { result } = renderHook(() => useOwnPlaylistsQuery(1, 'bla'), {
@@ -48,7 +46,7 @@ describe('playlistsQuery', () => {
     ];
     const collection = CollectionFactory.sample({ assets: [asset1, asset2] });
     const apiClient = new FakeBoclipsClient();
-    const collectionsSpy = jest.spyOn(apiClient.collections, 'safeUpdate');
+    const collectionsSpy = vi.spyOn(apiClient.collections, 'safeUpdate');
     // @ts-ignore
     apiClient.collections.safeUpdate = collectionsSpy;
     const { result } = renderHook(() => useReorderPlaylist(collection), {
@@ -66,7 +64,7 @@ describe('playlistsQuery', () => {
   it('safely updates playlists', async () => {
     const collection = CollectionFactory.sample({});
     const apiClient = new FakeBoclipsClient();
-    const collectionsSpy = jest.spyOn(apiClient.collections, 'safeUpdate');
+    const collectionsSpy = vi.spyOn(apiClient.collections, 'safeUpdate');
     // @ts-ignore
     apiClient.collections.safeUpdate = collectionsSpy;
     const { result } = renderHook(() => useEditPlaylistMutation(collection), {
@@ -89,7 +87,7 @@ describe('playlistsQuery', () => {
 
   it('will get own and editable playlists', async () => {
     const apiClient = new FakeBoclipsClient();
-    const collectionsSpy = jest.spyOn(
+    const collectionsSpy = vi.spyOn(
       apiClient.collections,
       'getMySavedAndEditableCollectionsWithoutDetails',
     );
@@ -116,10 +114,7 @@ describe('playlistsQuery', () => {
     const collection = CollectionFactory.sample({});
 
     const apiClient = new FakeBoclipsClient();
-    const collectionsSpy = jest.spyOn(
-      apiClient.collections,
-      'updatePermission',
-    );
+    const collectionsSpy = vi.spyOn(apiClient.collections, 'updatePermission');
     // @ts-ignore
     apiClient.collections.updatePermission = collectionsSpy;
 
@@ -155,7 +150,7 @@ describe('playlistsQuery', () => {
     });
 
     const apiClient = new FakeBoclipsClient();
-    const collectionsSpy = jest.spyOn(
+    const collectionsSpy = vi.spyOn(
       apiClient.collections,
       'removeCommentFromCollectionVideo',
     );
@@ -176,7 +171,7 @@ describe('playlistsQuery', () => {
 
   it(`will get promotedFor playlists`, async () => {
     const apiClient = new FakeBoclipsClient();
-    const collectionsSpy = jest.spyOn(
+    const collectionsSpy = vi.spyOn(
       apiClient.collections,
       'getPromotedForCollections',
     );

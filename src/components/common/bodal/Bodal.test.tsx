@@ -47,7 +47,7 @@ describe('The mighty Bodal', () => {
   });
 
   it('calls onConfirm when confirm button is clicked', () => {
-    const handleConfirm = jest.fn();
+    const handleConfirm = vi.fn();
     const wrapper = render(
       <Bodal title="Title" onConfirm={handleConfirm}>
         <span>i must be here!</span>
@@ -59,7 +59,7 @@ describe('The mighty Bodal', () => {
   });
 
   it('calls onCancel when cancel button is clicked', () => {
-    const handleCancel = jest.fn();
+    const handleCancel = vi.fn();
     const wrapper = render(
       <Bodal title="Title" onCancel={handleCancel}>
         <span>i must be here!</span>
@@ -71,7 +71,7 @@ describe('The mighty Bodal', () => {
   });
 
   it('can change the name of the confirm button', () => {
-    const handleConfirm = jest.fn();
+    const handleConfirm = vi.fn();
     const wrapper = render(
       <Bodal
         title="Title"
@@ -89,7 +89,7 @@ describe('The mighty Bodal', () => {
   });
 
   it('can change the name of the cancel button', () => {
-    const handleCancel = jest.fn();
+    const handleCancel = vi.fn();
     const wrapper = render(
       <Bodal title="Title" cancelButtonText="Press me!" onCancel={handleCancel}>
         <span>i must be here!</span>
@@ -123,7 +123,7 @@ describe('The mighty Bodal', () => {
   });
 
   it('calls onCancel when clicking on X', () => {
-    const handleCancel = jest.fn();
+    const handleCancel = vi.fn();
     const wrapper = render(
       <Bodal onCancel={handleCancel} title="The Bodal">
         <span>i must be here!</span>
@@ -135,7 +135,7 @@ describe('The mighty Bodal', () => {
   });
 
   it(`renders a spinner in confirm button when loading and prevents clicking`, () => {
-    const onConfirmSpy = jest.fn();
+    const onConfirmSpy = vi.fn();
     const wrapper = render(
       <Bodal
         isLoading
@@ -155,7 +155,7 @@ describe('The mighty Bodal', () => {
   });
 
   it(`attempts to cancel on pressing esc`, () => {
-    const cancelSpy = jest.fn();
+    const cancelSpy = vi.fn();
     const wrapper = render(
       <Bodal title="test" onCancel={cancelSpy}>
         <span>i must be here!</span>
@@ -174,7 +174,7 @@ describe('The mighty Bodal', () => {
       <Bodal title="test" initialFocusRef={inputRef}>
         <div>skip focus</div>
         <Input
-          onChange={jest.fn()}
+          onChange={vi.fn()}
           id="no-focus-text"
           labelText="dont-focus-input"
           inputType="text"

@@ -5,7 +5,7 @@ import MarketingInfoForm from '@components/welcome/MarketingInfoForm';
 describe('MarketingInfoForm', () => {
   it('all job titles are available when dropdown clicked', async () => {
     const wrapper = render(
-      <MarketingInfoForm errors={{}} setMarketingInfo={jest.fn()} isAdmin />,
+      <MarketingInfoForm errors={{}} setMarketingInfo={vi.fn()} isAdmin />,
     );
 
     expect(await wrapper.findByText('Job Title')).toBeVisible();

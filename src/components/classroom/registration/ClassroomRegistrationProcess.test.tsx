@@ -45,7 +45,7 @@ describe('registration process', () => {
     };
 
     const fakeClient = new FakeBoclipsClient();
-    jest.spyOn(fakeClient.users, 'createClassroomUser').mockImplementation(() =>
+    vi.spyOn(fakeClient.users, 'createClassroomUser').mockImplementation(() =>
       Promise.resolve(
         UserFactory.sample({
           email: 'test@boclips.com',
@@ -93,7 +93,7 @@ describe('registration process', () => {
     };
 
     const fakeClient = new FakeBoclipsClient();
-    jest.spyOn(fakeClient.users, 'createClassroomUser').mockImplementation(() =>
+    vi.spyOn(fakeClient.users, 'createClassroomUser').mockImplementation(() =>
       Promise.resolve(
         UserFactory.sample({
           email: 'test@boclips.com',

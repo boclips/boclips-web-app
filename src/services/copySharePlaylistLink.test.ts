@@ -10,7 +10,7 @@ describe('copySharePlaylistLink', () => {
   });
 
   it('copies playlist link top the clipboard', () => {
-    jest.spyOn(navigator.clipboard, 'writeText');
+    vi.spyOn(navigator.clipboard, 'writeText');
     const playlist = CollectionFactory.sample({ id: 'myfavplaylist' });
 
     copySharePlaylistLink(playlist);

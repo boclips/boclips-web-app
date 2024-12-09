@@ -343,7 +343,7 @@ describe('CartView', () => {
 
     it('displays error when trying to place order with invalid trim values and then removes the error when trim becomes valid again', async () => {
       const fakeClient = new FakeBoclipsClient();
-      jest.spyOn(fakeClient.carts, 'updateCartItemAdditionalServices');
+      vi.spyOn(fakeClient.carts, 'updateCartItemAdditionalServices');
       fakeClient.users.setCurrentUserFeatures({
         BO_WEB_APP_REQUEST_TRIMMING: true,
       });

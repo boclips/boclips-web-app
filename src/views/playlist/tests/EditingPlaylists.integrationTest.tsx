@@ -355,7 +355,7 @@ describe('editing a playlist', () => {
     });
 
     client.collections.addToFake(newPlaylist);
-    client.collections.safeUpdate = jest.fn(() => Promise.reject());
+    client.collections.safeUpdate = vi.fn(() => Promise.reject());
 
     const wrapper = render(
       <MemoryRouter initialEntries={['/playlists/remmm']}>

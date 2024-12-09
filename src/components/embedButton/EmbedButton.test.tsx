@@ -31,12 +31,12 @@ describe(`embed button`, () => {
   });
 
   it(`copies the embed video to clipboard on click when video passed in`, async () => {
-    jest.spyOn(navigator.clipboard, 'writeText');
+    vi.spyOn(navigator.clipboard, 'writeText');
 
     const video = VideoFactory.sample({});
     const fakeClient = new FakeBoclipsClient();
-    const createCodeSpy = jest.spyOn(fakeClient.videos, 'createEmbedCode');
-    const onClickSpy = jest.fn();
+    const createCodeSpy = vi.spyOn(fakeClient.videos, 'createEmbedCode');
+    const onClickSpy = vi.fn();
 
     const wrapper = renderEmbedButton(fakeClient, video, null, onClickSpy);
     await openEmbedModal(wrapper);
@@ -88,7 +88,7 @@ describe(`embed button`, () => {
   });
 
   it(`copies the embed code to clipboard on click when licensedContent passed in`, async () => {
-    jest.spyOn(navigator.clipboard, 'writeText');
+    vi.spyOn(navigator.clipboard, 'writeText');
     const licensedContent = LicensedContentFactory.sample({
       videoId: 'video-id',
       videoMetadata: {
@@ -104,8 +104,8 @@ describe(`embed button`, () => {
     });
     const fakeClient = new FakeBoclipsClient();
     fakeClient.licenses.insertEmbedForVideo('embed', 'video-id');
-    const createCodeSpy = jest.spyOn(fakeClient.licenses, 'createEmbedCode');
-    const onClickSpy = jest.fn();
+    const createCodeSpy = vi.spyOn(fakeClient.licenses, 'createEmbedCode');
+    const onClickSpy = vi.fn();
 
     const wrapper = renderEmbedButton(
       fakeClient,

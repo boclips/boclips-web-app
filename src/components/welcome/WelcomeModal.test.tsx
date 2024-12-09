@@ -95,8 +95,8 @@ describe('Trial Welcome Modal', () => {
     });
 
     it('updates user but not account when button clicked and form filled out', async () => {
-      const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
-      const updateAccountSpy = jest.spyOn(fakeClient.accounts, 'updateAccount');
+      const updateUserSpy = vi.spyOn(fakeClient.users, 'updateUser');
+      const updateAccountSpy = vi.spyOn(fakeClient.accounts, 'updateAccount');
 
       const wrapper = renderWelcomeView();
 
@@ -171,7 +171,7 @@ describe('Trial Welcome Modal', () => {
     });
 
     it('displays error messages when marketing information is not filled, user is not updated', async () => {
-      const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+      const updateUserSpy = vi.spyOn(fakeClient.users, 'updateUser');
 
       const wrapper = renderWelcomeView();
 
@@ -197,7 +197,7 @@ describe('Trial Welcome Modal', () => {
     });
 
     it('does not update user if one of the marketing info is missing', async () => {
-      const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+      const updateUserSpy = vi.spyOn(fakeClient.users, 'updateUser');
 
       const wrapper = renderWelcomeView();
 
@@ -262,8 +262,8 @@ describe('Trial Welcome Modal', () => {
     });
 
     it('updates user but not account when button clicked and form filled out', async () => {
-      const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
-      const updateAccountSpy = jest.spyOn(fakeClient.accounts, 'updateAccount');
+      const updateUserSpy = vi.spyOn(fakeClient.users, 'updateUser');
+      const updateAccountSpy = vi.spyOn(fakeClient.accounts, 'updateAccount');
 
       const wrapper = renderWelcomeView();
 
@@ -317,8 +317,8 @@ describe('Trial Welcome Modal', () => {
     });
 
     it('updates user and account when button clicked after full form filled out', async () => {
-      const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
-      const updateAccountSpy = jest.spyOn(fakeClient.accounts, 'updateAccount');
+      const updateUserSpy = vi.spyOn(fakeClient.users, 'updateUser');
+      const updateAccountSpy = vi.spyOn(fakeClient.accounts, 'updateAccount');
 
       const wrapper = renderWelcomeView();
 
@@ -357,8 +357,8 @@ describe('Trial Welcome Modal', () => {
     });
 
     it('does not update user or account if the admin marketing info is missing', async () => {
-      const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
-      const updateAccountSpy = jest.spyOn(fakeClient.accounts, 'updateAccount');
+      const updateUserSpy = vi.spyOn(fakeClient.users, 'updateUser');
+      const updateAccountSpy = vi.spyOn(fakeClient.accounts, 'updateAccount');
 
       const wrapper = renderWelcomeView();
 
@@ -382,8 +382,8 @@ describe('Trial Welcome Modal', () => {
     });
 
     it('does not show or require Ts&Cs checkbox for admin users', async () => {
-      const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
-      const updateAccountSpy = jest.spyOn(fakeClient.accounts, 'updateAccount');
+      const updateUserSpy = vi.spyOn(fakeClient.users, 'updateUser');
+      const updateAccountSpy = vi.spyOn(fakeClient.accounts, 'updateAccount');
 
       const wrapper = renderWelcomeView();
 
@@ -457,8 +457,8 @@ describe('Trial Welcome Modal', () => {
     });
 
     it('updates user and account when button clicked after full form filled out', async () => {
-      const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
-      const updateAccountSpy = jest.spyOn(fakeClient.accounts, 'updateAccount');
+      const updateUserSpy = vi.spyOn(fakeClient.users, 'updateUser');
+      const updateAccountSpy = vi.spyOn(fakeClient.accounts, 'updateAccount');
 
       const wrapper = renderWelcomeView();
 
@@ -495,8 +495,8 @@ describe('Trial Welcome Modal', () => {
     });
 
     it('does not require Organization type to be filled out and does not validate it', async () => {
-      const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
-      const updateAccountSpy = jest.spyOn(fakeClient.accounts, 'updateAccount');
+      const updateUserSpy = vi.spyOn(fakeClient.users, 'updateUser');
+      const updateAccountSpy = vi.spyOn(fakeClient.accounts, 'updateAccount');
 
       const wrapper = renderWelcomeView();
 

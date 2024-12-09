@@ -18,7 +18,7 @@ import userEvent from '@testing-library/user-event';
 
 describe('ClassroomRegistration Form Validation', () => {
   const fakeClient = new FakeBoclipsClient();
-  const createClassroomUserSpy = jest.spyOn(
+  const createClassroomUserSpy = vi.spyOn(
     fakeClient.users,
     'createClassroomUser',
   );
@@ -432,7 +432,7 @@ describe('ClassroomRegistration Form Validation', () => {
         <QueryClientProvider client={new QueryClient()}>
           <BoclipsClientProvider client={fakeClient}>
             <GoogleReCaptchaProvider reCaptchaKey="123">
-              <ClassroomRegistrationForm onRegistrationFinished={jest.fn()} />
+              <ClassroomRegistrationForm onRegistrationFinished={vi.fn()} />
             </GoogleReCaptchaProvider>
           </BoclipsClientProvider>
         </QueryClientProvider>

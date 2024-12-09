@@ -3,15 +3,15 @@ import React, { ReactElement } from 'react';
 import AppInitializer from '@src/index';
 import MockedBoclipsSecurity from 'boclips-js-security';
 
-jest.mock('boclips-js-security', () => ({
+vi.mock('boclips-js-security', () => ({
   __esModule: true,
   default: {
-    createInstance: jest.fn(),
+    createInstance: vi.fn(),
   },
 }));
 
-jest.mock('./thirdParty/loadHotjar.js', () => null);
-jest.mock('./thirdParty/loadPendo.js', () => null);
+vi.mock('./thirdParty/loadHotjar.js', () => null);
+vi.mock('./thirdParty/loadPendo.js', () => null);
 
 const renderAppInitializer = (viewMock?: ReactElement) => {
   return render(<AppInitializer viewMock={viewMock} />);

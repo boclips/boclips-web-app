@@ -10,7 +10,7 @@ describe('YesNo', () => {
         <YesNo
           id="the-question"
           label="Should I eat a donut?"
-          onValueChange={jest.fn()}
+          onValueChange={vi.fn()}
         />
       </form>,
     );
@@ -19,7 +19,7 @@ describe('YesNo', () => {
   });
 
   it('yields value changes', async () => {
-    const valueChangeHandler = jest.fn();
+    const valueChangeHandler = vi.fn();
     const wrapper = render(
       <form>
         <YesNo

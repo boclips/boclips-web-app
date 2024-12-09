@@ -101,7 +101,7 @@ describe('video share link button', () => {
   });
 
   it(`validates start time > end time`, async () => {
-    jest.spyOn(navigator.clipboard, 'writeText');
+    vi.spyOn(navigator.clipboard, 'writeText');
 
     const wrapper = renderShareButton();
     await openShareModal(wrapper);
@@ -158,8 +158,8 @@ describe('video share link button', () => {
   it(`copies share link and closes modal on clicking main button`, async () => {
     const apiClient = new FakeBoclipsClient();
 
-    jest.spyOn(navigator.clipboard, 'writeText');
-    const trackVideoSpy = jest.spyOn(
+    vi.spyOn(navigator.clipboard, 'writeText');
+    const trackVideoSpy = vi.spyOn(
       apiClient.shareLinks,
       'trackVideoShareLink',
     );

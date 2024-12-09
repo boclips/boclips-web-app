@@ -10,8 +10,8 @@ describe('HotjarService', () => {
 
   beforeEach(() => {
     hotjar = new Hotjar();
-    jest.spyOn(hotjar, 'event');
-    jest.spyOn(hotjar, 'identify');
+    vi.spyOn(hotjar, 'event');
+    vi.spyOn(hotjar, 'identify');
 
     hotjarService = new HotjarService(hotjar);
   });

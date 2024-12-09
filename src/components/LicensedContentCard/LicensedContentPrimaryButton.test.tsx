@@ -108,7 +108,7 @@ describe('LicensedContentCard', () => {
     };
 
     it('displays download button when download link available and clicking triggers download', async () => {
-      const downloadFileSpy = jest.spyOn(
+      const downloadFileSpy = vi.spyOn(
         DownloadFileFromUrl,
         'downloadFileFromUrl',
       );

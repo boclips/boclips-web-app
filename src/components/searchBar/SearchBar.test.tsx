@@ -116,7 +116,7 @@ describe('SearchBar', () => {
     });
 
     it('does not display search suggestions when suggestions query failed', async () => {
-      fakeBoclipsClient.suggestions.suggest = jest.fn(() => Promise.reject());
+      fakeBoclipsClient.suggestions.suggest = vi.fn(() => Promise.reject());
 
       const wrapper = render(
         <MemoryRouter>

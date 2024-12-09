@@ -1,5 +1,6 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { act, renderHook, waitFor } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
+import { act } from 'react';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
 import { QueryClient } from '@tanstack/react-query';
 import { UpdateAccountRequest } from 'boclips-api-client/dist/sub-clients/accounts/model/UpdateAccountRequest';
@@ -19,7 +20,7 @@ describe('accountQuery', () => {
     fakeClient.accounts.insertAccount(
       AccountsFactory.sample({ id: 'account-1' }),
     );
-    const updateUserAccountSpy = jest.spyOn(
+    const updateUserAccountSpy = vi.spyOn(
       fakeClient.accounts,
       'updateUserAccount',
     );

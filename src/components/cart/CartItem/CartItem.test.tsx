@@ -395,7 +395,7 @@ describe('CartItem', () => {
 
   it('sends video removed from cart Hotjar event', async () => {
     const fakeApiClient = new FakeBoclipsClient();
-    const hotjarVideoRemovedFromCart = jest.spyOn(
+    const hotjarVideoRemovedFromCart = vi.spyOn(
       AnalyticsFactory.hotjar(),
       'event',
     );

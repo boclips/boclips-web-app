@@ -215,7 +215,7 @@ describe('Playlist view', () => {
   });
 
   it('can change playlist permission as an owner', async () => {
-    const updatePermissionFunction = jest.spyOn(
+    const updatePermissionFunction = vi.spyOn(
       client.collections,
       'updatePermission',
     );
@@ -254,7 +254,7 @@ describe('Playlist view', () => {
       client.collections.addToFake(playlist);
 
       const bookmarkService = new FollowPlaylist(client.collections);
-      const bookmarkFunction = jest.spyOn(bookmarkService, 'follow');
+      const bookmarkFunction = vi.spyOn(bookmarkService, 'follow');
       const history = createMemoryHistory();
 
       history.push('/playlists/123');

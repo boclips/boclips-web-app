@@ -6,7 +6,7 @@
   "scripts": {
     "audit": "check-audit",
     "resolve-audit": "resolve-audit",
-    "test": "DEBUG_PRINT_LIMIT=10000 vitest run",
+    "test": "DEBUG_PRINT_LIMIT=10000 vitest run --maxWorkers=1 --minWorkers=1",
     "test:coverage": "vitest run --maxWorkers=50% --coverage --collectCoverageFrom='src/**/*.ts*'",
     "test-visual": "percy exec -- ./node_modules/.bin/cypress run",
     "test-visual:open": "start-server-and-test fake http://localhost:9000/ 'percy exec -- ./node_modules/.bin/cypress open'",
@@ -40,6 +40,7 @@
     "@percy/cypress": "^3.1.2",
     "@svgr/webpack": "^8.1.0",
     "@testing-library/cypress": "^10.0.2",
+    "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.5.2",

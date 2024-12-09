@@ -5,7 +5,7 @@ describe('Hotjar', () => {
   let hotjar;
 
   beforeEach(() => {
-    mockHotjar = jest.fn();
+    mockHotjar = vi.fn();
     hotjar = new Hotjar(mockHotjar);
   });
 
@@ -14,7 +14,7 @@ describe('Hotjar', () => {
       IS_HOTJAR_ENABLED: 'true',
     };
 
-    const warning = jest.spyOn(console, 'warn');
+    const warning = vi.spyOn(console, 'warn');
 
     hotjar = new Hotjar();
 

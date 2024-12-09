@@ -24,7 +24,7 @@ import {
 import { BrowserRouter as Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
-const mockExecuteRecaptcha = jest.fn((_?: string) =>
+const mockExecuteRecaptcha = vi.fn((_?: string) =>
   Promise.resolve('token_baby'),
 );
 

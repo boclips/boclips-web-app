@@ -25,7 +25,7 @@ describe('Edit Personal Profile modal', () => {
           <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
             <EditPersonalProfileModal
               userToUpdate={user}
-              closeModal={() => jest.fn()}
+              closeModal={() => vi.fn()}
             />
           </BoclipsSecurityProvider>
         </QueryClientProvider>
@@ -41,7 +41,7 @@ describe('Edit Personal Profile modal', () => {
 
   it('updates the user', async () => {
     const client = new FakeBoclipsClient();
-    client.users.updateSelf = jest.fn();
+    client.users.updateSelf = vi.fn();
 
     const wrapper = render(
       <BoclipsClientProvider client={client}>
@@ -49,7 +49,7 @@ describe('Edit Personal Profile modal', () => {
           <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
             <EditPersonalProfileModal
               userToUpdate={user}
-              closeModal={() => jest.fn()}
+              closeModal={() => vi.fn()}
             />
           </BoclipsSecurityProvider>
         </QueryClientProvider>
@@ -82,7 +82,7 @@ describe('Edit Personal Profile modal', () => {
           <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
             <EditPersonalProfileModal
               userToUpdate={user}
-              closeModal={() => jest.fn()}
+              closeModal={() => vi.fn()}
             />
           </BoclipsSecurityProvider>
         </QueryClientProvider>

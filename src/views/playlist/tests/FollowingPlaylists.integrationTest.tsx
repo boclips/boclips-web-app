@@ -59,7 +59,7 @@ describe('following a playlist', () => {
     client.collections.addToFake(playlist);
 
     const bookmarkService = new FollowPlaylist(client.collections);
-    const bookmarkFunction = jest.spyOn(bookmarkService, 'follow');
+    const bookmarkFunction = vi.spyOn(bookmarkService, 'follow');
     const history = createMemoryHistory();
 
     history.push('/playlists/123');

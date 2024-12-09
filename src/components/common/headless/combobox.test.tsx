@@ -19,7 +19,7 @@ const fakeItems: ComboboxItem[] = [
 ];
 
 describe('Combobox', () => {
-  const fakeCallback = jest.fn();
+  const fakeCallback = vi.fn();
 
   it('should render the Combobox in implicit FILTER mode and filter the items properly', async () => {
     const combobox = render(
@@ -57,7 +57,7 @@ describe('Combobox', () => {
   });
 
   it('should fetch items in the FETCH mode', async () => {
-    const mockFetchFunction = jest.fn((_: string) =>
+    const mockFetchFunction = vi.fn((_: string) =>
       Promise.resolve([{ label: 'my-queried-item', value: 'item-1' }]),
     );
     const combobox = render(

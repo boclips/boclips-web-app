@@ -317,7 +317,7 @@ describe('PlaylistsView', () => {
         },
       });
 
-      jest.spyOn(navigator.clipboard, 'writeText');
+      vi.spyOn(navigator.clipboard, 'writeText');
 
       const client = new FakeBoclipsClient();
       insertUser(client, Product.LIBRARY);
@@ -529,7 +529,7 @@ describe('PlaylistsView', () => {
     });
 
     it('sends playlist created Hotjar event', async () => {
-      const hotjarPlaylistCreated = jest.spyOn(
+      const hotjarPlaylistCreated = vi.spyOn(
         AnalyticsFactory.hotjar(),
         'event',
       );

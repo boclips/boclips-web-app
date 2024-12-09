@@ -1,5 +1,6 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { act, renderHook, waitFor } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
+import { act } from 'react';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
 import { QueryClient } from '@tanstack/react-query';
 import {
@@ -22,7 +23,7 @@ import {
 describe('userQuery', () => {
   it('finds the account users', async () => {
     const fakeClient = new FakeBoclipsClient();
-    const accountsSpy = jest.spyOn(fakeClient.accounts, 'getAccountUsers');
+    const accountsSpy = vi.spyOn(fakeClient.accounts, 'getAccountUsers');
     // @ts-ignore
     fakeClient.accounts.getAccountUsers = accountsSpy;
     const { result } = renderHook(
@@ -42,7 +43,7 @@ describe('userQuery', () => {
 
   it('adds trial user', async () => {
     const fakeClient = new FakeBoclipsClient();
-    const createTrialUserSpy = jest.spyOn(fakeClient.users, 'createTrialUser');
+    const createTrialUserSpy = vi.spyOn(fakeClient.users, 'createTrialUser');
     // @ts-ignore
     fakeClient.users.createTrialUser = createTrialUserSpy;
     const { result } = renderHook(() => useAddNewTrialUser(), {
@@ -69,7 +70,7 @@ describe('userQuery', () => {
 
   it('adds classroom user', async () => {
     const fakeClient = new FakeBoclipsClient();
-    const createClassroomUserSpy = jest.spyOn(
+    const createClassroomUserSpy = vi.spyOn(
       fakeClient.users,
       'createClassroomUser',
     );
@@ -100,7 +101,7 @@ describe('userQuery', () => {
 
   it('updates a user', async () => {
     const fakeClient = new FakeBoclipsClient();
-    const usersSpy = jest.spyOn(fakeClient.users, 'updateUser');
+    const usersSpy = vi.spyOn(fakeClient.users, 'updateUser');
     // @ts-ignore
     fakeClient.users.updateUser = usersSpy;
 
@@ -139,7 +140,7 @@ describe('userQuery', () => {
 
   it('updates _self user', async () => {
     const fakeClient = new FakeBoclipsClient();
-    const usersSpy = jest.spyOn(fakeClient.users, 'updateUser');
+    const usersSpy = vi.spyOn(fakeClient.users, 'updateUser');
     // @ts-ignore
     fakeClient.users.updateSelf = usersSpy;
 

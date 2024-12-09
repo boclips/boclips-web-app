@@ -27,7 +27,7 @@ describe('Pendo Service', () => {
       },
     });
 
-    const initializeSpy = jest.fn();
+    const initializeSpy = vi.fn();
     const service = new PendoService({
       ...window.pendo,
       initialize: initializeSpy,
@@ -65,7 +65,7 @@ describe('Pendo Service', () => {
     });
     user = { ...user, account: null };
 
-    const initializeSpy = jest.fn();
+    const initializeSpy = vi.fn();
     const service = new PendoService({
       ...window.pendo,
       initialize: initializeSpy,
@@ -92,7 +92,7 @@ describe('Pendo Service', () => {
   });
 
   it('tracks classroom account creation failure', () => {
-    const trackSpy = jest.fn();
+    const trackSpy = vi.fn();
     const service = new PendoService({
       ...window.pendo,
       isReady(): boolean {

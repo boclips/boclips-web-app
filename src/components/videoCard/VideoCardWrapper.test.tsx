@@ -1,12 +1,12 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import React from 'react';
+import React, { act } from 'react';
 import { VideoCardWrapper } from '@components/videoCard/VideoCardWrapper';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { render } from '@src/testSupport/render';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { VideoInteractedWith } from 'boclips-api-client/dist/sub-clients/events/model/EventRequest';
-import { act, fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { Button } from 'boclips-ui';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
