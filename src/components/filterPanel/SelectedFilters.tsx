@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import FilterBadge from 'boclips-ui';
+import { FilterBadge } from 'boclips-ui';
 import { FilterKey } from '@src/types/search/FilterKey';
 import { useSearchQueryLocationParams } from '@src/hooks/useLocationParams';
 import { getFilterLabel } from '@src/services/convertFacetsToFilterOptions';
