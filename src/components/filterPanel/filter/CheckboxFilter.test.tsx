@@ -128,7 +128,7 @@ describe('filterPanel', () => {
   });
 
   it('calls handleChanged on click', () => {
-    const changeHandler = jest.fn();
+    const changeHandler = vi.fn();
 
     const panel = renderWithLocation(
       <CheckboxFilter

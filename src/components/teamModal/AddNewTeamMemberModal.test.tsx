@@ -19,7 +19,7 @@ describe('Team modal', () => {
       <BoclipsClientProvider client={new FakeBoclipsClient()}>
         <QueryClientProvider client={new QueryClient()}>
           <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-            <AddNewTeamMemberModal closeModal={() => jest.fn()} />
+            <AddNewTeamMemberModal closeModal={() => vi.fn()} />
           </BoclipsSecurityProvider>
         </QueryClientProvider>
       </BoclipsClientProvider>,
@@ -38,7 +38,7 @@ describe('Team modal', () => {
       hasRole: (role) => role === ROLES.BOCLIPS_WEB_APP_ORDER,
     };
 
-    client.users.createUser = jest.fn();
+    client.users.createUser = vi.fn();
     client.users.insertCurrentUser(
       UserFactory.sample({
         account: {
@@ -54,7 +54,7 @@ describe('Team modal', () => {
       <BoclipsClientProvider client={client}>
         <QueryClientProvider client={new QueryClient()}>
           <BoclipsSecurityProvider boclipsSecurity={security}>
-            <AddNewTeamMemberModal closeModal={() => jest.fn()} />
+            <AddNewTeamMemberModal closeModal={() => vi.fn()} />
           </BoclipsSecurityProvider>
         </QueryClientProvider>
       </BoclipsClientProvider>,
@@ -91,7 +91,7 @@ describe('Team modal', () => {
       <BoclipsClientProvider client={new FakeBoclipsClient()}>
         <QueryClientProvider client={new QueryClient()}>
           <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-            <AddNewTeamMemberModal closeModal={() => jest.fn()} />
+            <AddNewTeamMemberModal closeModal={() => vi.fn()} />
           </BoclipsSecurityProvider>
         </QueryClientProvider>
       </BoclipsClientProvider>,
@@ -133,7 +133,7 @@ describe('Team modal', () => {
         <BoclipsClientProvider client={client}>
           <QueryClientProvider client={new QueryClient()}>
             <BoclipsSecurityProvider boclipsSecurity={security}>
-              <AddNewTeamMemberModal closeModal={() => jest.fn()} />
+              <AddNewTeamMemberModal closeModal={() => vi.fn()} />
             </BoclipsSecurityProvider>
           </QueryClientProvider>
         </BoclipsClientProvider>,
@@ -151,7 +151,7 @@ describe('Team modal', () => {
         <BoclipsClientProvider client={client}>
           <QueryClientProvider client={new QueryClient()}>
             <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-              <AddNewTeamMemberModal closeModal={() => jest.fn()} />
+              <AddNewTeamMemberModal closeModal={() => vi.fn()} />
             </BoclipsSecurityProvider>
           </QueryClientProvider>
         </BoclipsClientProvider>,
@@ -171,7 +171,7 @@ describe('Team modal', () => {
         <BoclipsClientProvider client={client}>
           <QueryClientProvider client={new QueryClient()}>
             <BoclipsSecurityProvider boclipsSecurity={security}>
-              <AddNewTeamMemberModal closeModal={() => jest.fn()} />
+              <AddNewTeamMemberModal closeModal={() => vi.fn()} />
             </BoclipsSecurityProvider>
           </QueryClientProvider>
         </BoclipsClientProvider>,
@@ -189,7 +189,7 @@ describe('Team modal', () => {
         <BoclipsClientProvider client={client}>
           <QueryClientProvider client={new QueryClient()}>
             <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-              <AddNewTeamMemberModal closeModal={() => jest.fn()} />
+              <AddNewTeamMemberModal closeModal={() => vi.fn()} />
             </BoclipsSecurityProvider>
           </QueryClientProvider>
         </BoclipsClientProvider>,

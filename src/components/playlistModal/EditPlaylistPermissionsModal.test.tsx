@@ -18,8 +18,8 @@ describe('Edit playlist permissions modal', () => {
 
   const renderWrapper = (
     fakeClient = new FakeBoclipsClient(),
-    onCancel = jest.fn(),
-    handleClick = jest.fn(),
+    onCancel = vi.fn(),
+    handleClick = vi.fn(),
   ) => {
     return render(
       <BoclipsClientProvider client={fakeClient}>

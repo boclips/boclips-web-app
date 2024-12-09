@@ -5,11 +5,11 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { Player, PlayerFactory } from 'boclips-player';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { BoclipsSecurityProvider } from '@components/common/providers/BoclipsSecurityProvider';
-import mocked = jest.mocked;
+import mocked = vi.mocked;
 
-jest.mock('boclips-player');
+vi.mock('boclips-player');
 
-const mockedPlayer = jest.mocked(PlayerFactory);
+const mockedPlayer = vi.mocked(PlayerFactory);
 
 describe('VideoPlayer', () => {
   it('provides a token factory to the player that returns a valid token', async () => {

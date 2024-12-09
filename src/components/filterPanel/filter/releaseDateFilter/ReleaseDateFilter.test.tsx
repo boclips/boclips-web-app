@@ -4,12 +4,12 @@ import DateSelect from './ReleaseDateFilter';
 
 describe('date-select', () => {
   it('renders date select', () => {
-    render(<DateSelect label="date-select" onChange={jest.fn()} />);
+    render(<DateSelect label="date-select" onChange={vi.fn()} />);
     expect(screen.getByText('date-select')).toBeInTheDocument();
   });
 
   it('adds onChange event listener', () => {
-    const spy = jest.fn();
+    const spy = vi.fn();
 
     render(<DateSelect label="date-select" id="date" onChange={spy} />);
 

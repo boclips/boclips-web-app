@@ -126,7 +126,7 @@ describe('Video card', () => {
         createdBy: 'Amazing content partner',
         channelId: '123',
       });
-      const filterSpy = jest.fn();
+      const filterSpy = vi.fn();
 
       const wrapper = render(
         <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
@@ -159,7 +159,7 @@ describe(`PriceBadge`, () => {
           <VideoCardWrapper
             video={video}
             buttonsRow={null}
-            handleFilterChange={jest.fn()}
+            handleFilterChange={vi.fn()}
           />
         </BoclipsClientProvider>
       </BoclipsSecurityProvider>,
@@ -179,7 +179,7 @@ describe(`PriceBadge`, () => {
           <VideoCardWrapper
             video={video}
             buttonsRow={null}
-            handleFilterChange={jest.fn()}
+            handleFilterChange={vi.fn()}
           />
         </BoclipsClientProvider>
       </BoclipsSecurityProvider>,

@@ -20,7 +20,7 @@ describe('Reorder modal', () => {
         <QueryClientProvider client={new QueryClient()}>
           <ReorderModal
             confirmButtonText="Update"
-            onCancel={jest.fn()}
+            onCancel={vi.fn()}
             playlist={CollectionFactory.sample({
               mine: true,
             })}
@@ -43,7 +43,7 @@ describe('Reorder modal', () => {
         <QueryClientProvider client={new QueryClient()}>
           <ReorderModal
             confirmButtonText="Update"
-            onCancel={jest.fn()}
+            onCancel={vi.fn()}
             playlist={CollectionFactory.sample({
               assets: [
                 CollectionAssetFactory.sample({
@@ -72,7 +72,7 @@ describe('Reorder modal', () => {
         <QueryClientProvider client={new QueryClient()}>
           <ReorderModal
             confirmButtonText="Update"
-            onCancel={jest.fn()}
+            onCancel={vi.fn()}
             playlist={CollectionFactory.sample({
               mine: true,
             })}

@@ -2,10 +2,10 @@
  * @vitest-environment jsdom
  */
 
-import { configure } from '@testing-library/react';
+import { cleanup, configure } from '@testing-library/react';
 import resizeTo from '@src/testSupport/resizeTo';
-import { expect, vi } from 'vitest';
-import * as matchers from '@testing-library/jest-dom/matchers';
+import { vi } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 
 const testTimeout = 30000;
 
@@ -15,8 +15,6 @@ configure({
 });
 
 vi.setConfig({ testTimeout: testTimeout });
-
-expect.extend(matchers);
 
 // const { toHaveNoViolations } = require('jest-axe');
 // expect.extend(toHaveNoViolations);
@@ -61,3 +59,7 @@ beforeEach(() => {
 });
 
 vi.mock('src/components/confetti/Confetti');
+
+afterEach(() => {
+  cleanup();
+});

@@ -30,7 +30,7 @@ describe('Remove Team member modal', () => {
       <BoclipsClientProvider client={new FakeBoclipsClient()}>
         <QueryClientProvider client={new QueryClient()}>
           <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-            <RemoveTeamMemberModal user={user} closeModal={() => jest.fn()} />
+            <RemoveTeamMemberModal user={user} closeModal={() => vi.fn()} />
           </BoclipsSecurityProvider>
         </QueryClientProvider>
       </BoclipsClientProvider>,
@@ -55,7 +55,7 @@ describe('Remove Team member modal', () => {
       hasRole: (_role) => true,
     };
 
-    client.users.updateUser = jest.fn();
+    client.users.updateUser = vi.fn();
     client.users.insertCurrentUser(
       UserFactory.sample({
         account: {
@@ -71,7 +71,7 @@ describe('Remove Team member modal', () => {
       <BoclipsClientProvider client={client}>
         <QueryClientProvider client={new QueryClient()}>
           <BoclipsSecurityProvider boclipsSecurity={security}>
-            <RemoveTeamMemberModal user={user} closeModal={() => jest.fn()} />
+            <RemoveTeamMemberModal user={user} closeModal={() => vi.fn()} />
           </BoclipsSecurityProvider>
         </QueryClientProvider>
       </BoclipsClientProvider>,

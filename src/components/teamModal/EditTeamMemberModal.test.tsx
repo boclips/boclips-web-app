@@ -33,7 +33,7 @@ describe('Edit Team member modal', () => {
           <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
             <EditTeamMemberModal
               userToUpdate={user}
-              closeModal={() => jest.fn()}
+              closeModal={() => vi.fn()}
             />
           </BoclipsSecurityProvider>
         </QueryClientProvider>
@@ -71,7 +71,7 @@ describe('Edit Team member modal', () => {
           <BoclipsSecurityProvider boclipsSecurity={security}>
             <EditTeamMemberModal
               userToUpdate={user}
-              closeModal={() => jest.fn()}
+              closeModal={() => vi.fn()}
             />
           </BoclipsSecurityProvider>
         </QueryClientProvider>
@@ -90,7 +90,7 @@ describe('Edit Team member modal', () => {
       hasRole: (role) => role === ROLES.BOCLIPS_WEB_APP_ORDER,
     };
 
-    client.users.updateUser = jest.fn();
+    client.users.updateUser = vi.fn();
     client.users.insertCurrentUser(
       UserFactory.sample({
         account: {
@@ -108,7 +108,7 @@ describe('Edit Team member modal', () => {
           <BoclipsSecurityProvider boclipsSecurity={security}>
             <EditTeamMemberModal
               userToUpdate={user}
-              closeModal={() => jest.fn()}
+              closeModal={() => vi.fn()}
             />
           </BoclipsSecurityProvider>
         </QueryClientProvider>

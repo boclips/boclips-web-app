@@ -18,7 +18,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 describe('Registration Form Validation', () => {
   const fakeClient = new FakeBoclipsClient();
-  const createTrialUserSpy = jest.spyOn(fakeClient.users, 'createTrialUser');
+  const createTrialUserSpy = vi.spyOn(fakeClient.users, 'createTrialUser');
 
   it('first name cannot be empty', async () => {
     const wrapper = renderRegistrationForm();
@@ -281,7 +281,7 @@ describe('Registration Form Validation', () => {
         <QueryClientProvider client={new QueryClient()}>
           <BoclipsClientProvider client={fakeClient}>
             <GoogleReCaptchaProvider reCaptchaKey="123">
-              <RegistrationForm onRegistrationFinished={jest.fn()} />
+              <RegistrationForm onRegistrationFinished={vi.fn()} />
             </GoogleReCaptchaProvider>
           </BoclipsClientProvider>
         </QueryClientProvider>

@@ -180,7 +180,7 @@ describe('The mighty Bodal', () => {
           inputType="text"
         />
         <Input
-          onChange={jest.fn()}
+          onChange={vi.fn()}
           id="focus-text"
           ref={inputRef}
           labelText="Focus me"
@@ -202,16 +202,16 @@ describe('The mighty Bodal', () => {
           id="no-focus-text"
           labelText="Don't focus me"
           inputType="text"
-          onChange={jest.fn()}
+          onChange={vi.fn()}
         />
         <Bodal
           title="test"
           initialFocusRef={inputRef}
-          onCancel={jest.fn()}
-          onConfirm={jest.fn()}
+          onCancel={vi.fn()}
+          onConfirm={vi.fn()}
         >
           <Input
-            onChange={jest.fn()}
+            onChange={vi.fn()}
             id="focus-text"
             ref={inputRef}
             labelText="Focus me"
@@ -240,7 +240,7 @@ describe('The mighty Bodal', () => {
   });
 
   it('onCancel invoked when mouse down outside of bodal when closeOnClickOutside prop is set', () => {
-    const handleOnCancel = jest.fn();
+    const handleOnCancel = vi.fn();
     const wrapper = render(
       <Bodal title="Hello Bodal" onCancel={handleOnCancel} closeOnClickOutside>
         <span>i must be here!</span>
@@ -254,7 +254,7 @@ describe('The mighty Bodal', () => {
   });
 
   it('onCancel invoked when mouse down outside of bodal and closeOnClickOutside prop not set', () => {
-    const handleOnCancel = jest.fn();
+    const handleOnCancel = vi.fn();
     const wrapper = render(
       <Bodal title="Bodal" onCancel={handleOnCancel}>
         <span>i must be here!</span>
@@ -268,7 +268,7 @@ describe('The mighty Bodal', () => {
   });
 
   it('onCancel not invoked when mouse down outside of bodal but closeOnClickOutside prop set to false', () => {
-    const handleOnCancel = jest.fn();
+    const handleOnCancel = vi.fn();
     const wrapper = render(
       <Bodal
         title="Bodal"

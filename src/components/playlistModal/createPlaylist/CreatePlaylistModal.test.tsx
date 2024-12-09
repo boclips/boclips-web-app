@@ -12,10 +12,10 @@ import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 
 describe('Create new playlist modal', () => {
   it('creates a playlist with playlist name and description', async () => {
-    const handleOnSuccess = jest.fn((data) => data);
+    const handleOnSuccess = vi.fn((data) => data);
     const wrapper = renderWrapper(
       new FakeBoclipsClient(),
-      jest.fn(),
+      vi.fn(),
       handleOnSuccess,
     );
 
@@ -33,11 +33,11 @@ describe('Create new playlist modal', () => {
   });
 
   it('calls passed on cancel when cancelled', () => {
-    const handleOnCancelled = jest.fn((data) => data);
+    const handleOnCancelled = vi.fn((data) => data);
     const wrapper = renderWrapper(
       new FakeBoclipsClient(),
       handleOnCancelled,
-      jest.fn(),
+      vi.fn(),
     );
 
     fireEvent.change(wrapper.getByPlaceholderText('Add name'), {

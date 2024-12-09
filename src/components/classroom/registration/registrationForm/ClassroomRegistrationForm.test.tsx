@@ -28,7 +28,7 @@ const mockExecuteRecaptcha = vi.fn((_?: string) =>
   Promise.resolve('token_baby'),
 );
 
-jest.mock('react-google-recaptcha-v3', () => {
+vi.mock('react-google-recaptcha-v3', () => {
   return {
     GoogleReCaptchaProvider: ({ children }: any): React.JSX.Element => {
       return <>{children}</>;
@@ -137,7 +137,7 @@ describe('ClassroomRegistration Form', () => {
 
   it('typed values and checkboxes values are submitted when Create Account button is clicked', async () => {
     const fakeClient = new FakeBoclipsClient();
-    const createClassroomUserSpy = jest.spyOn(
+    const createClassroomUserSpy = vi.spyOn(
       fakeClient.users,
       'createClassroomUser',
     );
@@ -167,7 +167,7 @@ describe('ClassroomRegistration Form', () => {
 
   it('does not send through the state or nces school ID when USA, state and school dropdown are selected and then a different country is selected', async () => {
     const fakeClient = new FakeBoclipsClient();
-    const createClassroomUserSpy = jest.spyOn(
+    const createClassroomUserSpy = vi.spyOn(
       fakeClient.users,
       'createClassroomUser',
     );
@@ -228,7 +228,7 @@ describe('ClassroomRegistration Form', () => {
 
   it('sends selected usa school and id when country usa and a state are selected', async () => {
     const fakeClient = new FakeBoclipsClient();
-    const createClassroomUserSpy = jest.spyOn(
+    const createClassroomUserSpy = vi.spyOn(
       fakeClient.users,
       'createClassroomUser',
     );
@@ -283,7 +283,7 @@ describe('ClassroomRegistration Form', () => {
 
   it('sends manually added school when country usa and a state are selected', async () => {
     const fakeClient = new FakeBoclipsClient();
-    const createClassroomUserSpy = jest.spyOn(
+    const createClassroomUserSpy = vi.spyOn(
       fakeClient.users,
       'createClassroomUser',
     );
@@ -347,7 +347,7 @@ describe('ClassroomRegistration Form', () => {
           <BoclipsClientProvider client={fakeClient}>
             <ToastContainer />
             <GoogleReCaptchaProvider reCaptchaKey="123">
-              <ClassroomRegistrationForm onRegistrationFinished={jest.fn()} />
+              <ClassroomRegistrationForm onRegistrationFinished={vi.fn()} />
             </GoogleReCaptchaProvider>
           </BoclipsClientProvider>
         </QueryClientProvider>
@@ -368,7 +368,7 @@ describe('ClassroomRegistration Form', () => {
 
   it('onRegistrationFinished is called when classroom user creation passes', async () => {
     const fakeClient = new FakeBoclipsClient();
-    jest.spyOn(fakeClient.users, 'createClassroomUser').mockImplementation(() =>
+    vi.spyOn(fakeClient.users, 'createClassroomUser').mockImplementation(() =>
       Promise.resolve(
         UserFactory.sample({
           email: 'test@boclips.com',
@@ -376,7 +376,7 @@ describe('ClassroomRegistration Form', () => {
       ),
     );
 
-    const onRegistrationFinishedSpy = jest.fn();
+    const onRegistrationFinishedSpy = vi.fn();
 
     const wrapper = renderRegistrationForm(
       fakeClient,
@@ -404,7 +404,7 @@ describe('ClassroomRegistration Form', () => {
           <BoclipsClientProvider client={new FakeBoclipsClient()}>
             <ToastContainer />
             <GoogleReCaptchaProvider reCaptchaKey="123">
-              <ClassroomRegistrationForm onRegistrationFinished={jest.fn()} />
+              <ClassroomRegistrationForm onRegistrationFinished={vi.fn()} />
             </GoogleReCaptchaProvider>
           </BoclipsClientProvider>
         </QueryClientProvider>
@@ -449,7 +449,7 @@ describe('ClassroomRegistration Form', () => {
 
   function renderRegistrationForm(
     apiClient: FakeBoclipsClient = new FakeBoclipsClient(),
-    registrationFormSpy: (userEmail: string) => void = jest.fn(),
+    registrationFormSpy: (userEmail: string) => void = vi.fn(),
   ) {
     return render(
       <Router>

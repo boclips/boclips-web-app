@@ -16,7 +16,7 @@ describe('CopyVideoIdButton', () => {
   });
 
   it('copies the the video id when clicked', async () => {
-    jest.spyOn(navigator.clipboard, 'writeText');
+    vi.spyOn(navigator.clipboard, 'writeText');
 
     const fakeClient = new FakeBoclipsClient();
 

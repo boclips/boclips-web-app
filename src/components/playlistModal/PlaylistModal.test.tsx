@@ -8,7 +8,7 @@ import { PlaylistModal } from '@components/playlistModal/PlaylistModal';
 describe('Playlist modal', () => {
   it('without setting a name, it shows an error and does not call handleConfirm', async () => {
     const fakeClient = new FakeBoclipsClient();
-    const handleConfirmSpy = jest.fn();
+    const handleConfirmSpy = vi.fn();
     const wrapper = renderWrapper(fakeClient, handleConfirmSpy);
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Create playlist' }));
@@ -23,13 +23,13 @@ describe('Playlist modal', () => {
 
 const renderWrapper = (
   fakeClient = new FakeBoclipsClient(),
-  handleConfirm = jest.fn(),
+  handleConfirm = vi.fn(),
 ) => {
   return render(
     <BoclipsClientProvider client={fakeClient}>
       <PlaylistModal
         handleConfirm={handleConfirm}
-        onCancel={jest.fn()}
+        onCancel={vi.fn()}
         isLoading={false}
         title="Create new playlist"
         confirmButtonText="Create playlist"

@@ -14,7 +14,7 @@ describe('video recommendations', () => {
   let apiClient: FakeBoclipsClient;
   const mainId = 'main id';
   const recTitle = 'How to install a kitchen sink in Emacs?';
-  const hotjarEvent = jest.spyOn(AnalyticsFactory.hotjar(), 'event');
+  const hotjarEvent = vi.spyOn(AnalyticsFactory.hotjar(), 'event');
 
   beforeEach(() => {
     apiClient = new FakeBoclipsClient();

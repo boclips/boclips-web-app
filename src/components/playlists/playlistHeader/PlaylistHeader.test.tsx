@@ -118,7 +118,7 @@ describe('Playlist Header', () => {
     });
 
     it('copies the playlist link on the playlist page and shows notification', async () => {
-      jest.spyOn(navigator.clipboard, 'writeText');
+      vi.spyOn(navigator.clipboard, 'writeText');
       const playlist = CollectionFactory.sample({
         id: '123',
         title: 'Playlist title',
@@ -248,7 +248,7 @@ describe('Playlist Header', () => {
   });
 
   it('sends Hotjar link copied event', async () => {
-    const hotjarEventSent = jest.spyOn(AnalyticsFactory.hotjar(), 'event');
+    const hotjarEventSent = vi.spyOn(AnalyticsFactory.hotjar(), 'event');
 
     const playlist = CollectionFactory.sample({
       id: '123',

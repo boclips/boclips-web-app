@@ -20,7 +20,7 @@ describe('UsersListRow', () => {
       },
     };
 
-    const wrapper = renderWrapper(user, jest.fn, false);
+    const wrapper = renderWrapper(user, vi.fn, false);
 
     expect(
       within(wrapper.getByTestId('user-info-field-Can order videos')).getByText(
@@ -41,7 +41,7 @@ describe('UsersListRow', () => {
       },
     };
 
-    const wrapper = renderWrapper(user, jest.fn, false);
+    const wrapper = renderWrapper(user, vi.fn, false);
 
     expect(
       within(wrapper.getByTestId('user-info-field-Can order videos')).getByText(
@@ -62,7 +62,7 @@ describe('UsersListRow', () => {
       },
     };
 
-    const wrapper = renderWrapper(user, jest.fn, false);
+    const wrapper = renderWrapper(user, vi.fn, false);
 
     expect(wrapper.getByTestId('skeleton')).toBeVisible();
   });
@@ -82,7 +82,7 @@ describe('UsersListRow', () => {
     const client = new FakeBoclipsClient();
     expect(client.links.updateUser).not.toBeNull();
 
-    const wrapper = renderWrapper(user, jest.fn(), true);
+    const wrapper = renderWrapper(user, vi.fn(), true);
 
     expect(await wrapper.findByText('Edit')).toBeVisible();
   });
@@ -102,7 +102,7 @@ describe('UsersListRow', () => {
     const client = new FakeBoclipsClient();
     expect(client.links.deleteUser).not.toBeNull();
 
-    const wrapper = renderWrapper(user, jest.fn(), true);
+    const wrapper = renderWrapper(user, vi.fn(), true);
 
     expect(await wrapper.findByText('Remove')).toBeVisible();
   });
@@ -119,7 +119,7 @@ describe('UsersListRow', () => {
       },
     };
 
-    const wrapper = renderWrapper(user, jest.fn(), true, AccountType.TRIAL);
+    const wrapper = renderWrapper(user, vi.fn(), true, AccountType.TRIAL);
 
     expect(
       await wrapper.queryByText('Can order videos'),
@@ -144,7 +144,7 @@ describe('UsersListRow', () => {
 
     const wrapper = renderWrapper(
       user,
-      jest.fn(),
+      vi.fn(),
       true,
       AccountType.TRIAL,
       client,

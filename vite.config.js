@@ -62,7 +62,7 @@ export default defineConfig({
       },
     },
     server: {
-      sourcemap: true,
+      sourcemap: false,
     },
   },
 });

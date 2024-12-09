@@ -18,7 +18,7 @@ describe(`VideoGridCard`, () => {
       createdBy: 'Channel-1',
       channelId: 'channel-1-id',
     });
-    const filterSpy = jest.fn();
+    const filterSpy = vi.fn();
     const wrapper = render(
       <MemoryRouter>
         <BoclipsClientProvider client={new FakeBoclipsClient()}>

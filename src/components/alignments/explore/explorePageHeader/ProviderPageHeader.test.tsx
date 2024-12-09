@@ -6,10 +6,10 @@ import { AlignmentContextProvider } from '@components/common/providers/Alignment
 import * as router from 'react-router';
 
 describe('Provider Page page Header', () => {
-  const navigate = jest.fn();
+  const navigate = vi.fn();
 
   beforeAll(() => {
-    jest.spyOn(router, 'useNavigate').mockImplementation(() => navigate);
+    vi.spyOn(router, 'useNavigate').mockImplementation(() => navigate);
   });
 
   it('displays header text and an OpenStax ally logo', () => {

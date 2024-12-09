@@ -32,7 +32,7 @@ describe('MarketingInfoForm', () => {
     const wrapper = render(
       <MarketingInfoForm
         errors={{}}
-        setMarketingInfo={jest.fn()}
+        setMarketingInfo={vi.fn()}
         isAdmin
         isClassroomUser
       />,
@@ -61,7 +61,7 @@ describe('MarketingInfoForm', () => {
 
   it('discovery method is visible for admin user', async () => {
     const wrapper = render(
-      <MarketingInfoForm errors={{}} setMarketingInfo={jest.fn()} isAdmin />,
+      <MarketingInfoForm errors={{}} setMarketingInfo={vi.fn()} isAdmin />,
     );
 
     expect(await wrapper.findByText('I heard about Boclips')).toBeVisible();
@@ -72,7 +72,7 @@ describe('MarketingInfoForm', () => {
     const wrapper = render(
       <MarketingInfoForm
         errors={{}}
-        setMarketingInfo={jest.fn()}
+        setMarketingInfo={vi.fn()}
         isAdmin={false}
       />,
     );
@@ -82,7 +82,7 @@ describe('MarketingInfoForm', () => {
 
   it('all discovery methods are available when dropdown clicked', async () => {
     const wrapper = render(
-      <MarketingInfoForm errors={{}} setMarketingInfo={jest.fn()} isAdmin />,
+      <MarketingInfoForm errors={{}} setMarketingInfo={vi.fn()} isAdmin />,
     );
 
     expect(await wrapper.findByText('I heard about Boclips')).toBeVisible();
@@ -107,7 +107,7 @@ describe('MarketingInfoForm', () => {
 
   it('organization type is visible for admin user', async () => {
     const wrapper = render(
-      <MarketingInfoForm errors={{}} setMarketingInfo={jest.fn()} isAdmin />,
+      <MarketingInfoForm errors={{}} setMarketingInfo={vi.fn()} isAdmin />,
     );
 
     expect(await wrapper.findByText('Organization type')).toBeVisible();
@@ -120,7 +120,7 @@ describe('MarketingInfoForm', () => {
     const wrapper = render(
       <MarketingInfoForm
         errors={{}}
-        setMarketingInfo={jest.fn()}
+        setMarketingInfo={vi.fn()}
         isAdmin
         isClassroomUser
       />,
@@ -136,7 +136,7 @@ describe('MarketingInfoForm', () => {
     const wrapper = render(
       <MarketingInfoForm
         errors={{}}
-        setMarketingInfo={jest.fn()}
+        setMarketingInfo={vi.fn()}
         isAdmin={false}
       />,
     );
@@ -146,7 +146,7 @@ describe('MarketingInfoForm', () => {
 
   it('all organization types are available when dropdown clicked', async () => {
     const wrapper = render(
-      <MarketingInfoForm errors={{}} setMarketingInfo={jest.fn()} isAdmin />,
+      <MarketingInfoForm errors={{}} setMarketingInfo={vi.fn()} isAdmin />,
     );
 
     expect(await wrapper.findByText('Organization type')).toBeVisible();
@@ -164,7 +164,7 @@ describe('MarketingInfoForm', () => {
 
   it('error messages not visible by default for admin related fields', async () => {
     const wrapper = render(
-      <MarketingInfoForm errors={{}} setMarketingInfo={jest.fn()} isAdmin />,
+      <MarketingInfoForm errors={{}} setMarketingInfo={vi.fn()} isAdmin />,
     );
 
     expect(
@@ -182,7 +182,7 @@ describe('MarketingInfoForm', () => {
           isDiscoveryMethodsEmpty: true,
           isOrganizationTypesEmpty: true,
         }}
-        setMarketingInfo={jest.fn()}
+        setMarketingInfo={vi.fn()}
         isAdmin
       />,
     );
@@ -199,7 +199,7 @@ describe('MarketingInfoForm', () => {
     const wrapper = render(
       <MarketingInfoForm
         errors={{}}
-        setMarketingInfo={jest.fn()}
+        setMarketingInfo={vi.fn()}
         isAdmin={false}
       />,
     );
@@ -213,7 +213,7 @@ describe('MarketingInfoForm', () => {
 
   it('prompt is not visible for admin user', async () => {
     const wrapper = render(
-      <MarketingInfoForm errors={{}} setMarketingInfo={jest.fn()} isAdmin />,
+      <MarketingInfoForm errors={{}} setMarketingInfo={vi.fn()} isAdmin />,
     );
 
     expect(

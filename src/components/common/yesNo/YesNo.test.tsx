@@ -42,7 +42,7 @@ describe('YesNo', () => {
         <YesNo
           id="the-question"
           label="Should I eat a donut?"
-          onValueChange={jest.fn()}
+          onValueChange={vi.fn()}
           defaultValue
         />
       </form>,

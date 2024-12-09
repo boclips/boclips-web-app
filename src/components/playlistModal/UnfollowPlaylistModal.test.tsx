@@ -18,7 +18,7 @@ describe('Unfollow playlist modal', () => {
 
   const renderWrapper = (
     fakeClient = new FakeBoclipsClient(),
-    onCancel = jest.fn(),
+    onCancel = vi.fn(),
   ) => {
     return render(
       <BoclipsClientProvider client={fakeClient}>

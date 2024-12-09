@@ -17,7 +17,7 @@ describe('SelectedFilters', () => {
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
           <QueryClientProvider client={new QueryClient()}>
             <SelectedFilters
-              removeFilter={jest.fn}
+              removeFilter={vi.fn}
               facets={FacetsFactory.sample({
                 languages: [
                   FacetFactory.sample({ id: 'spa', name: 'Spanish' }),
@@ -38,7 +38,7 @@ describe('SelectedFilters', () => {
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
           <QueryClientProvider client={new QueryClient()}>
             <SelectedFilters
-              removeFilter={jest.fn}
+              removeFilter={vi.fn}
               facets={FacetsFactory.sample({
                 languages: [
                   FacetFactory.sample({ id: 'spa', name: undefined }),

@@ -19,11 +19,11 @@ import { fillRegistrationForm } from '@components/registration/registrationFormT
 import { BrowserRouter as Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
-const mockExecuteRecaptcha = jest.fn((_?: string) =>
+const mockExecuteRecaptcha = vi.fn((_?: string) =>
   Promise.resolve('token_baby'),
 );
 
-jest.mock('react-google-recaptcha-v3', () => {
+vi.mock('react-google-recaptcha-v3', () => {
   return {
     GoogleReCaptchaProvider: ({ children }: any): React.JSX.Element => {
       return <>{children}</>;
@@ -93,7 +93,7 @@ describe('Registration Form', () => {
 
   function renderRegistrationForm(
     apiClient: FakeBoclipsClient = new FakeBoclipsClient(),
-    registrationFormSpy: (userEmail: string) => void = jest.fn(),
+    registrationFormSpy: (userEmail: string) => void = vi.fn(),
   ) {
     return render(
       <Router>
@@ -131,7 +131,7 @@ describe('Registration Form', () => {
 
   it('typed values and checkboxes values are submitted when Create Account button is clicked', async () => {
     const fakeClient = new FakeBoclipsClient();
-    const createTrialUserSpy = jest.spyOn(fakeClient.users, 'createTrialUser');
+    const createTrialUserSpy = vi.spyOn(fakeClient.users, 'createTrialUser');
 
     const wrapper = renderRegistrationForm(fakeClient);
 
@@ -167,7 +167,7 @@ describe('Registration Form', () => {
           <BoclipsClientProvider client={fakeClient}>
             <ToastContainer />
             <GoogleReCaptchaProvider reCaptchaKey="123">
-              <RegistrationForm onRegistrationFinished={jest.fn()} />
+              <RegistrationForm onRegistrationFinished={vi.fn()} />
             </GoogleReCaptchaProvider>
           </BoclipsClientProvider>
         </QueryClientProvider>
@@ -188,7 +188,7 @@ describe('Registration Form', () => {
 
   it('onRegistrationFinished is called when trial user creation passes', async () => {
     const fakeClient = new FakeBoclipsClient();
-    jest.spyOn(fakeClient.users, 'createTrialUser').mockImplementation(() =>
+    vi.spyOn(fakeClient.users, 'createTrialUser').mockImplementation(() =>
       Promise.resolve(
         UserFactory.sample({
           email: 'test@boclips.com',

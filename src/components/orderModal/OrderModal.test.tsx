@@ -42,7 +42,7 @@ describe('Order Modal', () => {
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={apiClient}>
           <Router location={history.location} navigator={history}>
-            <OrderModal setModalOpen={jest.fn} videos={[video]} cart={cart} />
+            <OrderModal setModalOpen={vi.fn} videos={[video]} cart={cart} />
           </Router>
         </BoclipsClientProvider>
       </QueryClientProvider>,
@@ -62,7 +62,7 @@ describe('Order Modal', () => {
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={apiClient}>
           <Router location={history.location} navigator={history}>
-            <OrderModal setModalOpen={jest.fn} videos={[video]} cart={cart} />
+            <OrderModal setModalOpen={vi.fn} videos={[video]} cart={cart} />
           </Router>
         </BoclipsClientProvider>
       </QueryClientProvider>,
