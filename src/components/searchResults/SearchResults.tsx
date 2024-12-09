@@ -4,9 +4,7 @@ import { VideoSearchResults } from 'boclips-api-client/dist/sub-clients/videos/m
 import { VideosListView } from '@components/searchResults/VideosListView';
 import VideoCardPlaceholder from 'boclips-ui';
 import { Helmet } from 'react-helmet';
-import ViewButtons, {
-  ViewType,
-} from '@components/searchResults/ViewButtons';
+import ViewButtons, { ViewType } from '@components/searchResults/ViewButtons';
 import { VideosGridView } from '@components/searchResults/VideosGridView';
 import { SearchTopics } from '@components/searchResults/SearchTopics';
 import { FilterKey } from '@src/types/search/FilterKey';

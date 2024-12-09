@@ -2,10 +2,9 @@ import React from 'react';
 import List from 'antd/lib/list';
 import LicensedContentCard from '@components/LicensedContentCard/LicensedContentCard';
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
-import Pagination from 'boclips-ui';
+import { Pagination, VideoCardPlaceholder } from 'boclips-ui';
 import s from '@components/common/pagination/pagination.module.less';
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
-import VideoCardPlaceholder from 'boclips-ui';
 
 interface Props {
   licensedContentPage: Pageable<LicensedContent>;

@@ -13,33 +13,20 @@ export class AppConstants {
     this.window = window;
   }
 
-  public get AUTH_ENDPOINT(): string {
-    return import.meta.env.VITE_AUTH_ENDPOINT;
-  }
+  AUTH_ENDPOINT = import.meta.env.VITE_AUTH_ENDPOINT;
 
-  public get IS_HOTJAR_ENABLED(): boolean {
-    return import.meta.env.VITE_IS_HOTJAR_ENABLED === 'true';
-  }
+  IS_HOTJAR_ENABLED = import.meta.env.VITE_IS_HOTJAR_ENABLED === 'true';
 
-  public get CLASSROOM_ONBOARDING_VIDEO_ID(): string {
-    return import.meta.env.VITE_CLASSROOM_ONBOARDING_VIDEO_ID;
-  }
+  CLASSROOM_ONBOARDING_VIDEO_ID = import.meta.env
+    .VITE_CLASSROOM_ONBOARDING_VIDEO_ID;
 
-  public get IS_PENDO_ENABLED(): boolean {
-    return import.meta.env.VITE_IS_PENDO_ENABLED === 'true';
-  }
+  IS_PENDO_ENABLED = import.meta.env.VITE_IS_PENDO_ENABLED === 'true';
 
-  public get IS_SENTRY_ENABLED(): boolean {
-    return import.meta.env.VITE_IS_SENTRY_ENABLED === 'true';
-  }
+  IS_SENTRY_ENABLED = import.meta.env.VITE_IS_SENTRY_ENABLED === 'true';
 
-  public get IS_HUBSPOT_ENABLED(): boolean {
-    return import.meta.env.VITE_IS_HUBSPOT_ENABLED === 'true';
-  }
+  IS_HUBSPOT_ENABLED = import.meta.env.VITE_IS_HUBSPOT_ENABLED === 'true';
 
-  public get API_PREFIX(): string {
-    return import.meta.env.VITE_API_PREFIX;
-  }
+  API_PREFIX = import.meta.env.VITE_API_PREFIX;
 
   public get PEARSON_ACCOUNT_ID(): string {
     return this.window.Environment.PEARSON_ACCOUNT_ID;
