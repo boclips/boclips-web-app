@@ -1,15 +1,42 @@
 /**
  * @vitest-environment jsdom
  */
-
+import resizeTo from '@src/testSupport/resizeTo';
 import { expect, afterEach, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
 import * as matchers from '@testing-library/jest-dom/matchers';
 import { configure } from '@testing-library/dom';
 
+const testTimeout = 30000;
+configure({
+  testIdAttribute: 'data-qa',
+  asyncUtilTimeout: testTimeout - 2000,
+});
+
+vi.setConfig({ testTimeout });
+
 expect.extend(matchers);
 
 window.open = vi.fn();
+window.resizeTo = resizeTo;
+window.TextTrack = vi.fn();
+
+window.scrollTo = vi.fn();
+window.HTMLElement.prototype.scrollIntoView = vi.fn();
+window.HTMLElement.prototype.scrollTo = vi.fn();
+
+beforeEach(() => {
+  vi.spyOn(console, 'error').mockImplementation((e) => {
+    if (
+      typeof e === 'string' &&
+      e.includes('Error: Could not parse CSS stylesheet')
+    ) {
+      return null;
+    }
+
+    return e;
+  });
+});
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -34,6 +61,8 @@ window.ResizeObserver =
     observe: vi.fn(),
     unobserve: vi.fn(),
   }));
+
+vi.mock('src/components/confetti/Confetti');
 
 afterEach(() => {
   cleanup();

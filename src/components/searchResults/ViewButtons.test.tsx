@@ -14,7 +14,7 @@ describe('Layout buttons', () => {
   });
 
   it('can load chosen view from local storage', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     localStorage.setItem(VIEW_TYPE_ITEM, 'GRID');
 
     render(
@@ -27,7 +27,7 @@ describe('Layout buttons', () => {
   });
 
   it('defaults to list when there is rubbish in local storage', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     localStorage.setItem(VIEW_TYPE_ITEM, 'nanana');
 
     render(
@@ -40,7 +40,7 @@ describe('Layout buttons', () => {
   });
 
   it('defaults to list when there is no value in local storage', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <BoclipsClientProvider client={new FakeBoclipsClient()}>
@@ -52,7 +52,7 @@ describe('Layout buttons', () => {
   });
 
   it('updates value when choosing different layout', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     localStorage.setItem(VIEW_TYPE_ITEM, 'GRID');
 
     const wrapper = render(
@@ -72,7 +72,7 @@ describe('Layout buttons', () => {
   });
 
   it('non-chosen layout button is outlined', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     const wrapper = render(
       <BoclipsClientProvider client={new FakeBoclipsClient()}>
@@ -106,7 +106,7 @@ describe('Layout buttons', () => {
     it('emits events when clicking a button changes view type', () => {
       const wrapper = render(
         <BoclipsClientProvider client={client}>
-          <ViewButtons onChange={jest.fn()} />
+          <ViewButtons onChange={vi.fn()} />
         </BoclipsClientProvider>,
       );
 
@@ -132,7 +132,7 @@ describe('Layout buttons', () => {
 
       const wrapper = render(
         <BoclipsClientProvider client={client}>
-          <ViewButtons onChange={jest.fn()} />
+          <ViewButtons onChange={vi.fn()} />
         </BoclipsClientProvider>,
       );
 
@@ -144,7 +144,7 @@ describe('Layout buttons', () => {
     it('value from storage is not emitted as event every time', () => {
       render(
         <BoclipsClientProvider client={client}>
-          <ViewButtons onChange={jest.fn()} />
+          <ViewButtons onChange={vi.fn()} />
         </BoclipsClientProvider>,
       );
 

@@ -323,7 +323,7 @@ describe('Add to playlist button', () => {
       }),
     );
 
-    const mock = jest.fn();
+    const mock = vi.fn();
 
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
@@ -411,7 +411,7 @@ describe('Add to playlist button', () => {
 
     it(`displays notification on failure`, async () => {
       const fakeClient = new FakeBoclipsClient();
-      fakeClient.collections.create = jest.fn(() => Promise.reject());
+      fakeClient.collections.create = vi.fn(() => Promise.reject());
       const wrapper = renderWrapper(fakeClient);
 
       createPlaylist(wrapper, 'ornament');
@@ -423,7 +423,7 @@ describe('Add to playlist button', () => {
 
     it('video added event sent to Hotjar', async () => {
       const fakeClient = new FakeBoclipsClient();
-      const hotjarVideoAddedToPlaylist = jest.spyOn(
+      const hotjarVideoAddedToPlaylist = vi.spyOn(
         AnalyticsFactory.hotjar(),
         'event',
       );
@@ -444,7 +444,7 @@ describe('Add to playlist button', () => {
 
     it('play list created event sent to Hotjar', async () => {
       const fakeClient = new FakeBoclipsClient();
-      const hotjarPlaylistCreated = jest.spyOn(
+      const hotjarPlaylistCreated = vi.spyOn(
         AnalyticsFactory.hotjar(),
         'event',
       );

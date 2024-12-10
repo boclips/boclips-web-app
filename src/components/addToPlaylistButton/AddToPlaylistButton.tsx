@@ -189,6 +189,7 @@ export const AddToPlaylistButton = ({ videoId, onCleanup, onClick }: Props) => {
       {isOpen && !showCreatePlaylistModal && (
         <FocusTrap
           focusTrapOptions={{
+            fallbackFocus: '#dialog',
             initialFocus: hasPlaylists
               ? `input[id='${playlists[0].id}']`
               : '#create-new-playlist-button',
@@ -200,6 +201,7 @@ export const AddToPlaylistButton = ({ videoId, onCleanup, onClick }: Props) => {
           <div
             ref={ref}
             role="dialog"
+            id="dialog"
             className={s.playlistPanel}
             data-qa="add-to-playlist-pop-up"
             onKeyDown={(event) =>

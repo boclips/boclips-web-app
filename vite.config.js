@@ -55,7 +55,7 @@ export default defineConfig({
     include: ['**/*.test.tsx'],
     environment: 'jsdom',
     globals: true,
-    setupFiles: './testSetup.ts',
+    setupFiles: './setupTests.ts',
     css: {
       modules: {
         classNameStrategy: 'non-scoped',

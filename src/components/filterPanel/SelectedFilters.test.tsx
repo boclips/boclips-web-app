@@ -62,7 +62,7 @@ describe('SelectedFilters', () => {
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
           <QueryClientProvider client={new QueryClient()}>
             <SelectedFilters
-              removeFilter={jest.fn}
+              removeFilter={vi.fn}
               facets={FacetsFactory.sample({
                 videoSubtypes: [
                   FacetFactory.sample({ id: 'ANIMATION', name: 'Animation' }),

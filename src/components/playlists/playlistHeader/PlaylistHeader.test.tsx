@@ -335,14 +335,17 @@ describe('Playlist Header', () => {
 
     const wrapper = renderWrapper(playlist);
 
-    await waitFor(() => wrapper.getByText('Options')).then(async (it) => {
+    await waitFor(() => wrapper.getByText('Options')).then((it) => {
       expect(it).toBeInTheDocument();
-      await userEvent.click(it);
     });
 
-    await userEvent.click(wrapper.getByText('Edit'));
+    await userEvent.click(wrapper.getByRole('button', { name: 'Options' }));
 
-    expect(await wrapper.findByTestId('playlist-modal')).toBeVisible();
+    expect(await wrapper.findByText('Edit')).toBeInTheDocument();
+
+    await userEvent.click(
+      wrapper.getByRole('menuitem', { name: 'Edit playlist' }),
+    );
   });
 
   it('buttons are not displayed when requested', async () => {

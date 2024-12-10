@@ -7,7 +7,7 @@ import * as DownloadFileFromUrl from '@src/services/downloadFileFromUrl';
 describe(`captions modal`, () => {
   it(`displays info about captions processing when no link provided`, () => {
     const wrapper = render(
-      <CaptionsModal setOpen={jest.fn} downloadLink={null} />,
+      <CaptionsModal setOpen={vi.fn} downloadLink={null} />,
     );
 
     expect(
@@ -18,12 +18,12 @@ describe(`captions modal`, () => {
   });
 
   it(`can download multiple formats`, () => {
-    const downloadFileSpy = jest
+    const downloadFileSpy = vi
       .spyOn(DownloadFileFromUrl, 'fetchFile')
       .mockImplementation(() => {});
     const link = new Link({ href: '/captions', templated: false });
     const wrapper = render(
-      <CaptionsModal setOpen={jest.fn} downloadLink={link} />,
+      <CaptionsModal setOpen={vi.fn} downloadLink={link} />,
     );
 
     expect(
@@ -47,12 +47,12 @@ describe(`captions modal`, () => {
   });
 
   it(`if no captions selected download button is disabled`, () => {
-    const downloadFileSpy = jest
+    const downloadFileSpy = vi
       .spyOn(DownloadFileFromUrl, 'fetchFile')
       .mockImplementation(() => {});
     const link = new Link({ href: '/captions', templated: false });
     const wrapper = render(
-      <CaptionsModal setOpen={jest.fn} downloadLink={link} />,
+      <CaptionsModal setOpen={vi.fn} downloadLink={link} />,
     );
 
     expect(wrapper.getByRole('button', { name: 'Download' })).toBeVisible();
@@ -63,12 +63,12 @@ describe(`captions modal`, () => {
   });
 
   it(`can download webvtt captions`, () => {
-    const downloadFileSpy = jest
+    const downloadFileSpy = vi
       .spyOn(DownloadFileFromUrl, 'fetchFile')
       .mockImplementation(() => {});
     const link = new Link({ href: '/captions{?format}', templated: true });
     const wrapper = render(
-      <CaptionsModal setOpen={jest.fn} downloadLink={link} />,
+      <CaptionsModal setOpen={vi.fn} downloadLink={link} />,
     );
 
     expect(
@@ -85,12 +85,12 @@ describe(`captions modal`, () => {
   });
 
   it(`can download srt captions`, () => {
-    const downloadFileSpy = jest
+    const downloadFileSpy = vi
       .spyOn(DownloadFileFromUrl, 'fetchFile')
       .mockImplementation(() => {});
     const link = new Link({ href: '/captions{?format}', templated: true });
     const wrapper = render(
-      <CaptionsModal setOpen={jest.fn} downloadLink={link} />,
+      <CaptionsModal setOpen={vi.fn} downloadLink={link} />,
     );
 
     expect(

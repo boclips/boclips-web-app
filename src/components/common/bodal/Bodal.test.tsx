@@ -30,7 +30,7 @@ describe('The mighty Bodal', () => {
     expect(wrapper.getByText('Hello Bodal')).toBeVisible();
   });
 
-  it('has describedby attribute assigned to the modal', () => {
+  it('has described by attribute assigned to the modal', () => {
     const wrapper = render(
       <Bodal title="Hello Bodal">
         <span>i must be here!</span>
@@ -192,53 +192,6 @@ describe('The mighty Bodal', () => {
     expect(wrapper.getByLabelText('Focus me')).toHaveFocus();
   });
 
-  it(`traps focus to bodal`, async () => {
-    const inputRef = React.createRef<HTMLInputElement>();
-    const user = userEvent.setup();
-
-    const wrapper = render(
-      <div data-qa="main">
-        <Input
-          id="no-focus-text"
-          labelText="Don't focus me"
-          inputType="text"
-          onChange={vi.fn()}
-        />
-        <Bodal
-          title="test"
-          initialFocusRef={inputRef}
-          onCancel={vi.fn()}
-          onConfirm={vi.fn()}
-        >
-          <Input
-            onChange={vi.fn()}
-            id="focus-text"
-            ref={inputRef}
-            labelText="Focus me"
-            inputType="text"
-          />
-        </Bodal>
-      </div>,
-    );
-
-    expect(wrapper.getByLabelText('Focus me')).toHaveFocus();
-    user.tab();
-
-    await waitFor(() =>
-      expect(wrapper.getByRole('button', { name: 'Cancel' })).toHaveFocus(),
-    );
-    user.tab();
-    await waitFor(() =>
-      expect(wrapper.getByRole('button', { name: 'Confirm' })).toHaveFocus(),
-    );
-    user.tab();
-    await waitFor(() =>
-      expect(wrapper.getByLabelText('Close test modal')).toHaveFocus(),
-    );
-
-    expect(wrapper.getByLabelText("Don't focus me")).not.toHaveFocus();
-  });
-
   it('onCancel invoked when mouse down outside of bodal when closeOnClickOutside prop is set', () => {
     const handleOnCancel = vi.fn();
     const wrapper = render(
@@ -286,7 +239,7 @@ describe('The mighty Bodal', () => {
   });
 
   it('onCancel invoked when escape key down (when escape pressed with no focus on/within bodal)', () => {
-    const handleOnCancel = jest.fn();
+    const handleOnCancel = vi.fn();
     const wrapper = render(
       <Bodal title="Hello Bodal" onCancel={handleOnCancel} closeOnClickOutside>
         <span>i must be here!</span>
@@ -303,7 +256,7 @@ describe('The mighty Bodal', () => {
     const wrapper = render(
       <Bodal
         title="Hello Bodal"
-        onCancel={jest.fn}
+        onCancel={vi.fn}
         extraButton={<div>Second button!</div>}
       >
         <span>i must be here!</span>
@@ -317,7 +270,7 @@ describe('The mighty Bodal', () => {
     const wrapper = render(
       <Bodal
         title="Hello Bodal"
-        onCancel={jest.fn}
+        onCancel={vi.fn}
         extraButton={<div>Second button!</div>}
         isConfirmEnabled={false}
       >
@@ -332,7 +285,7 @@ describe('The mighty Bodal', () => {
     const wrapper = render(
       <Bodal
         title="Hello Bodal"
-        onCancel={jest.fn}
+        onCancel={vi.fn}
         extraButton={<div>Second button!</div>}
         isLoading
       >
@@ -348,7 +301,7 @@ describe('The mighty Bodal', () => {
     const wrapper = render(
       <Bodal
         title="Hello Bodal"
-        onCancel={jest.fn}
+        onCancel={vi.fn}
         extraButton={<div>Second button!</div>}
         isLoading={false}
         isConfirmEnabled

@@ -18,10 +18,10 @@ describe(`download transcript button`, () => {
         transcript: new Link({ href: 'fake-link' }),
       },
     });
-    global.URL.revokeObjectURL = jest.fn();
-    global.URL.createObjectURL = jest.fn();
+    global.URL.revokeObjectURL = vi.fn();
+    global.URL.createObjectURL = vi.fn();
     const fakeClient = new FakeBoclipsClient();
-    const getTranscriptSpy = jest
+    const getTranscriptSpy = vi
       .spyOn(fakeClient.videos, 'getTranscript')
       .mockImplementation(() =>
         Promise.resolve({ content: 'blah', filename: 'blah.txt' }),

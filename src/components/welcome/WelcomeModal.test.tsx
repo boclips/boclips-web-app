@@ -122,9 +122,9 @@ describe('Trial Welcome Modal', () => {
     });
 
     it('displays notification when user successfully updated and the modal is closed', async () => {
-      jest
-        .spyOn(fakeClient.users, 'updateUser')
-        .mockImplementation(() => Promise.resolve(true));
+      vi.spyOn(fakeClient.users, 'updateUser').mockImplementation(() =>
+        Promise.resolve(true),
+      );
 
       const wrapper = renderWelcomeView();
 
@@ -152,9 +152,9 @@ describe('Trial Welcome Modal', () => {
     });
 
     it('displays error notification when user update fails', async () => {
-      jest
-        .spyOn(fakeClient.users, 'updateUser')
-        .mockImplementation(() => Promise.reject());
+      vi.spyOn(fakeClient.users, 'updateUser').mockImplementation(() =>
+        Promise.reject(),
+      );
 
       const wrapper = renderWelcomeView();
 

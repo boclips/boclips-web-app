@@ -3,4 +3,4 @@ dist
 fly-dist
 webpack-config
 ts-compiler-dump.*
-testSetup.ts
+setupTests.ts

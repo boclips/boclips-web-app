@@ -11,7 +11,7 @@ describe('GoogleClassroomShareLink', () => {
         link="https://example.com"
         postTitle="Title"
         postBody="Body"
-        onClick={jest.fn}
+        onClick={vi.fn}
       />,
     );
 
@@ -30,7 +30,7 @@ describe('GoogleClassroomShareLink', () => {
   });
 
   it('calls onClick when clicked on', async () => {
-    const onClickSpy = jest.fn();
+    const onClickSpy = vi.fn();
     const wrapper = render(
       <GoogleClassroomShareLink
         link="https://example.com"

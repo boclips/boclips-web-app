@@ -31,7 +31,7 @@ describe('Add to cart button', () => {
 
   it('sends video added to cart Hotjar event', async () => {
     const apiClient = new FakeBoclipsClient();
-    const hotjarVideoAddedToCart = jest.spyOn(
+    const hotjarVideoAddedToCart = vi.spyOn(
       AnalyticsFactory.hotjar(),
       'event',
     );
@@ -61,7 +61,7 @@ describe('Add to cart button', () => {
       links: null,
     });
 
-    const hotjarVideoAddedToCart = jest.spyOn(
+    const hotjarVideoAddedToCart = vi.spyOn(
       AnalyticsFactory.hotjar(),
       'event',
     );
@@ -85,7 +85,7 @@ describe('Add to cart button', () => {
 
   it('calls onClick callback when clicked', async () => {
     const apiClient = new FakeBoclipsClient();
-    const onClick = jest.fn();
+    const onClick = vi.fn();
 
     const wrapper = render(
       <BoclipsClientProvider client={apiClient}>

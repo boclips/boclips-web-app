@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor, screen } from '@testing-library/react';
 import React from 'react';
 import CartItem from '@components/cart/CartItem/CartItem';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
@@ -14,6 +14,7 @@ import { Video } from 'boclips-api-client/dist/types';
 import { CartItem as CartItemType } from 'boclips-api-client/dist/sub-clients/carts/model/CartItem';
 import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
+import { expect } from 'vitest';
 
 describe('CartItem', () => {
   let client: any;

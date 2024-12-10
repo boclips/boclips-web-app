@@ -62,10 +62,10 @@ describe('Create new playlist modal', () => {
   });
 
   it('creates a playlist without description', async () => {
-    const handleOnSuccess = jest.fn((data) => data);
+    const handleOnSuccess = vi.fn((data) => data);
     const wrapper = renderWrapper(
       new FakeBoclipsClient(),
-      jest.fn(),
+      vi.fn(),
       handleOnSuccess,
     );
 
@@ -81,12 +81,12 @@ describe('Create new playlist modal', () => {
 
   it('call handleError when playlist creation fails', async () => {
     const fakeClient = new FakeBoclipsClient();
-    fakeClient.collections.create = jest.fn(() => Promise.reject());
-    const handleOnError = jest.fn();
+    fakeClient.collections.create = vi.fn(() => Promise.reject());
+    const handleOnError = vi.fn();
     const wrapper = renderWrapper(
       fakeClient,
-      jest.fn(),
-      jest.fn(),
+      vi.fn(),
+      vi.fn(),
       handleOnError,
     );
 
@@ -102,7 +102,7 @@ describe('Create new playlist modal', () => {
 
   it('can use an existing playlist as a template', async () => {
     const apiClient = new FakeBoclipsClient();
-    const createPlaylistSpy = jest
+    const createPlaylistSpy = vi
       .spyOn(apiClient.collections, 'create')
       .mockImplementation(() => Promise.resolve('playlist-id'));
 
@@ -132,9 +132,9 @@ describe('Create new playlist modal', () => {
       <BoclipsClientProvider client={apiClient}>
         <CreatePlaylistModal
           playlist={playlist}
-          onCancel={jest.fn}
-          onSuccess={jest.fn}
-          onError={jest.fn}
+          onCancel={vi.fn}
+          onSuccess={vi.fn}
+          onError={vi.fn}
         />
       </BoclipsClientProvider>,
     );
@@ -152,9 +152,9 @@ describe('Create new playlist modal', () => {
 
 const renderWrapper = (
   fakeClient = new FakeBoclipsClient(),
-  onCancel = jest.fn(),
-  onSuccess = jest.fn(),
-  onError = jest.fn(),
+  onCancel = vi.fn(),
+  onSuccess = vi.fn(),
+  onError = vi.fn(),
 ) => {
   return render(
     <BoclipsClientProvider client={fakeClient}>

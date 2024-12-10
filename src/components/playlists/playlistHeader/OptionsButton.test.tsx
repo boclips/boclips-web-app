@@ -163,7 +163,7 @@ describe('OptionsButton', () => {
 
     it('opens up new modal when clicking on it', async () => {
       const apiClient = new FakeBoclipsClient();
-      const copyPlaylistSpy = jest
+      const copyPlaylistSpy = vi
         .spyOn(apiClient.collections, 'create')
         .mockImplementation(() => Promise.resolve('playlist-id'));
 

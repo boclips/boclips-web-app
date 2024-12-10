@@ -333,7 +333,7 @@ describe('Licensed Content Card', () => {
     });
 
     const fakeClient = new FakeBoclipsClient();
-    const getTranscriptSpy = jest
+    const getTranscriptSpy = vi
       .spyOn(fakeClient.licenses, 'getTranscript')
       .mockImplementation(() =>
         Promise.resolve({ content: 'blah', filename: 'blah.txt' }),

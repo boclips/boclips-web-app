@@ -10,7 +10,7 @@ describe('Search topics', () => {
       <MemoryRouter initialEntries={[`/videos?topics=${btoa('hello')}`]}>
         <SearchTopics
           topics={[FacetFactory.sample()]}
-          handleFilterChange={jest.fn()}
+          handleFilterChange={vi.fn()}
         />
       </MemoryRouter>,
     );
@@ -32,7 +32,7 @@ describe('Search topics', () => {
             FacetFactory.sample({ id: '2', name: 'not-selected-1', score: 20 }),
             FacetFactory.sample({ id: '3', name: 'not-selected-2', score: 10 }),
           ]}
-          handleFilterChange={jest.fn()}
+          handleFilterChange={vi.fn()}
           maxVisibleTopics={3}
         />
       </MemoryRouter>,
@@ -58,7 +58,7 @@ describe('Search topics', () => {
             FacetFactory.sample({ id: '2', name: 'not-selected-1', score: 20 }),
             FacetFactory.sample({ id: '3', name: 'not-selected-2', score: 10 }),
           ]}
-          handleFilterChange={jest.fn()}
+          handleFilterChange={vi.fn()}
           maxVisibleTopics={3}
         />
       </MemoryRouter>,

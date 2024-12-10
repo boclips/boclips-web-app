@@ -356,7 +356,7 @@ describe('Bookmark modal for playlists', () => {
   });
 
   it('displays an error message if updating the bookmark fails', async () => {
-    apiClient.collections.safeUpdate = jest
+    apiClient.collections.safeUpdate = vi
       .fn()
       .mockRejectedValue(new Error('Network Error'));
 

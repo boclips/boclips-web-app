@@ -1,15 +1,15 @@
 import { Player } from 'boclips-player';
 
 const boclipsPlayer: Player = {
-  loadVideo: jest.fn(),
-  pause: jest.fn(),
-  play: jest.fn(),
-  destroy: jest.fn(),
-  onEnd: jest.fn(),
-  onError: jest.fn(),
-  onReady: jest.fn(),
+  loadVideo: vi.fn(),
+  pause: vi.fn(),
+  play: vi.fn(),
+  destroy: vi.fn(),
+  onEnd: vi.fn(),
+  onError: vi.fn(),
+  onReady: vi.fn(),
 };
 
 export const PlayerFactory = {
-  get: jest.fn().mockReturnValue(boclipsPlayer),
+  get: vi.fn().mockReturnValue(boclipsPlayer),
 };

@@ -157,7 +157,7 @@ describe('Registration Form', () => {
 
   it('error notification is displayed when trial user creation fails, inputs are not cleared', async () => {
     const fakeClient = new FakeBoclipsClient();
-    jest
+    vi
       .spyOn(fakeClient.users, 'createTrialUser')
       .mockImplementation(() => Promise.reject());
 
@@ -196,7 +196,7 @@ describe('Registration Form', () => {
       ),
     );
 
-    const onRegistrationFinishedSpy = jest.fn();
+    const onRegistrationFinishedSpy = vi.fn();
 
     const wrapper = renderRegistrationForm(
       fakeClient,
@@ -224,7 +224,7 @@ describe('Registration Form', () => {
           <BoclipsClientProvider client={new FakeBoclipsClient()}>
             <ToastContainer />
             <GoogleReCaptchaProvider reCaptchaKey="123">
-              <RegistrationForm onRegistrationFinished={jest.fn()} />
+              <RegistrationForm onRegistrationFinished={vi.fn()} />
             </GoogleReCaptchaProvider>
           </BoclipsClientProvider>
         </QueryClientProvider>
