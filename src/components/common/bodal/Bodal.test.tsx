@@ -1,13 +1,13 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { Bodal } from '@components/common/bodal/Bodal';
 import { Input } from 'boclips-ui';
-import userEvent from '@testing-library/user-event';
 
 describe('The mighty Bodal', () => {
   beforeEach(() => {
     window.resizeTo(1680, 1024);
   });
+
   it('can find the modal by role=dialog', () => {
     const wrapper = render(
       <Bodal title="Title">
