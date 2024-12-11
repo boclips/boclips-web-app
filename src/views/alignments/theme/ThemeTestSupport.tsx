@@ -1,10 +1,11 @@
-import { fireEvent, RenderResult, within } from '@testing-library/react';
+import { RenderResult, within } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { v4 as uuidv4 } from 'uuid';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
+import userEvent from '@testing-library/user-event';
 
 export const getTableOfContent = (theme: Theme, wrapper: RenderResult) =>
   wrapper.queryByLabelText(`Table of contents of ${theme.title}`);
@@ -108,7 +109,7 @@ export const sectionTitle = (bookDetails: HTMLElement) => {
   });
 };
 
-export const navigateTo = (wrapper: RenderResult, link: string) => {
+export const navigateTo = async (wrapper: RenderResult, link: string) => {
   const button = wrapper.getByRole('link', {
     name: new RegExp(link),
   });

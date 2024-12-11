@@ -144,15 +144,10 @@ describe('CartItem', () => {
 
     await userEvent.click(await wrapper.findByText('Trim video'));
 
-    fireEvent.change(await wrapper.findByLabelText('From:'), {
-      target: { value: '2:00' },
-    });
+    await userEvent.type(await wrapper.findByLabelText('From:'), '2:00');
+    await userEvent.type(await wrapper.findByLabelText('To:'), '3:00');
 
-    fireEvent.change(await wrapper.findByLabelText('To:'), {
-      target: { value: '3:00' },
-    });
-
-    fireEvent.blur(await wrapper.findByLabelText('From:'));
+    await userEvent.click(await wrapper.findByText('this is cart item test'));
 
     cart = await fakeClient.carts.getCart();
 

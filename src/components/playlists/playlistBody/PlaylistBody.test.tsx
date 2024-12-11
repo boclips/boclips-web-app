@@ -1,5 +1,4 @@
 import {
-  fireEvent,
   render,
   waitFor,
   waitForElementToBeRemoved,
@@ -202,7 +201,7 @@ describe('focus', () => {
 
     await waitFor(() =>
       wrapper.getByLabelText('Add or remove from playlist'),
-    ).then((it) => {
+    ).then(async (it) => {
       await userEvent.click(it);
     });
 
@@ -244,7 +243,7 @@ describe('focus', () => {
 
     await waitFor(() =>
       wrapper.getAllByLabelText('Add or remove from playlist'),
-    ).then((it) => {
+    ).then(async (it) => {
       await userEvent.click(it[1]);
     });
 

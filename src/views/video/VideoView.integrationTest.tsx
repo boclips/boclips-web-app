@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from '@src/App';
 import React from 'react';
@@ -324,7 +324,7 @@ describe('Video View', () => {
 
       await waitFor(() =>
         wrapper.getByText('the coolest video you ever did see'),
-      ).then((it) => {
+      ).then(async (it) => {
         await userEvent.click(it);
       });
 

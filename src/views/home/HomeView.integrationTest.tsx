@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter, Router } from 'react-router-dom';
 import App from '@src/App';
@@ -22,6 +22,7 @@ import {
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForProduct';
+import userEvent from '@testing-library/user-event';
 
 describe('HomeView', () => {
   beforeEach(() => {

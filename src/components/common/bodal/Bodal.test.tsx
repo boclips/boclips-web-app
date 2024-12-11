@@ -47,7 +47,7 @@ describe('The mighty Bodal', () => {
     expect(screenReaderText).not.toBeVisible();
   });
 
-  it('calls onConfirm when confirm button is clicked', () => {
+  it('calls onConfirm when confirm button is clicked', async () => {
     const handleConfirm = vi.fn();
     const wrapper = render(
       <Bodal title="Title" onConfirm={handleConfirm}>
@@ -59,7 +59,7 @@ describe('The mighty Bodal', () => {
     expect(handleConfirm).toBeCalledTimes(1);
   });
 
-  it('calls onCancel when cancel button is clicked', () => {
+  it('calls onCancel when cancel button is clicked', async () => {
     const handleCancel = vi.fn();
     const wrapper = render(
       <Bodal title="Title" onCancel={handleCancel}>
@@ -71,7 +71,7 @@ describe('The mighty Bodal', () => {
     expect(handleCancel).toBeCalledTimes(1);
   });
 
-  it('can change the name of the confirm button', () => {
+  it('can change the name of the confirm button', async () => {
     const handleConfirm = vi.fn();
     const wrapper = render(
       <Bodal
@@ -89,7 +89,7 @@ describe('The mighty Bodal', () => {
     expect(handleConfirm).toBeCalledTimes(1);
   });
 
-  it('can change the name of the cancel button', () => {
+  it('can change the name of the cancel button', async () => {
     const handleCancel = vi.fn();
     const wrapper = render(
       <Bodal title="Title" cancelButtonText="Press me!" onCancel={handleCancel}>
@@ -123,7 +123,7 @@ describe('The mighty Bodal', () => {
     expect(renderedContent).toBeVisible();
   });
 
-  it('calls onCancel when clicking on X', () => {
+  it('calls onCancel when clicking on X', async () => {
     const handleCancel = vi.fn();
     const wrapper = render(
       <Bodal onCancel={handleCancel} title="The Bodal">

@@ -9,13 +9,7 @@ import {
   FacetsFactory,
 } from 'boclips-api-client/dist/test-support/FacetsFactory';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import {
-  act,
-  fireEvent,
-  render,
-  waitFor,
-  within,
-} from '@testing-library/react';
+import { fireEvent, render, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import App from '@src/App';
@@ -222,11 +216,7 @@ describe('SearchResultsFiltering', () => {
       expect(await wrapper.findByText('Getty')).toBeInTheDocument();
       expect(await wrapper.findByText('Ted')).toBeInTheDocument();
 
-      act(() => {
-        fireEvent.change(wrapper.getByPlaceholderText('Search...'), {
-          target: { value: 'get' },
-        });
-      });
+      await userEvent.type(wrapper.getByPlaceholderText('Search...'), 'get');
       expect(await wrapper.findByText('Get')).toHaveClass('font-medium');
       expect(wrapper.queryByText('Ted')).toBeNull();
 
@@ -446,7 +436,7 @@ describe('SearchResultsFiltering', () => {
       ).findByPlaceholderText('DD-MM-YYYY');
 
       fireEvent.focus(fromDatePicker);
-      userEvent.type(fromDatePicker, '01-01-2020 {enter}');
+      await userEvent.type(fromDatePicker, '01-01-2020 {enter}');
 
       await waitFor(async () => {
         expect(await wrapper.findByText('new-video')).toBeVisible();
@@ -493,18 +483,18 @@ describe('SearchResultsFiltering', () => {
 
       await waitFor(async () => {
         expect(await wrapper.findByText('manx video')).toBeInTheDocument();
-        expect(await wrapper.queryByText('japanese video')).toBeNull();
+        expect(wrapper.queryByText('japanese video')).toBeNull();
       });
 
       const selectedFiltersSection = await wrapper.findByTestId(
         'applied-filter-tags',
       );
 
-      await waitFor(() =>
-        within(selectedFiltersSection).getByText('Manx'),
-      ).then((it) => {
-        await userEvent.click(within(it).getByTestId('remove-filter-glv'));
-      });
+      await userEvent.click(
+        within(within(selectedFiltersSection).getByText('Manx')).getByTestId(
+          'remove-filter-glv',
+        ),
+      );
 
       await waitFor(() => {
         expect(wrapper.queryByText('Selected filters')).toBeNull();
@@ -521,7 +511,7 @@ describe('SearchResultsFiltering', () => {
 
       await waitFor(async () => {
         expect(await wrapper.findByText('manx video')).toBeInTheDocument();
-        expect(await wrapper.queryByText('japanese video')).toBeNull();
+        expect(wrapper.queryByText('japanese video')).toBeNull();
       });
 
       await userEvent.click(await wrapper.findByText('Clear all'));
@@ -617,7 +607,7 @@ describe('SearchResultsFiltering', () => {
       const wrapper = renderSearchResultsView(['/videos?&content_package=abc']);
 
       expect(await wrapper.findByText('news video')).toBeInTheDocument();
-      expect(await wrapper.queryByText('stock video')).toBeNull();
+      expect(wrapper.queryByText('stock video')).toBeNull();
 
       await waitFor(() =>
         expect(wrapper.getByRole('banner')).toHaveTextContent(
@@ -640,7 +630,7 @@ describe('SearchResultsFiltering', () => {
 
       expect(await wrapper.findByText('news video')).toBeInTheDocument();
       expect(await wrapper.findByText('french news video')).toBeInTheDocument();
-      expect(await wrapper.queryByText('stock video')).toBeNull();
+      expect(wrapper.queryByText('stock video')).toBeNull();
 
       await waitFor(() =>
         expect(wrapper.getByRole('banner')).toHaveTextContent(

@@ -1,6 +1,7 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import React from 'react';
 import MarketingInfoForm from '@components/welcome/MarketingInfoForm';
+import userEvent from '@testing-library/user-event';
 
 describe('MarketingInfoForm', () => {
   it('all job titles are available when dropdown clicked', async () => {

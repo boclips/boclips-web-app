@@ -1,5 +1,4 @@
 import {
-  act,
   fireEvent,
   render,
   RenderResult,
@@ -52,7 +51,7 @@ describe('CartView', () => {
 
     expect(await wrapper.findByText('Shopping cart')).toBeInTheDocument();
 
-    expect(await wrapper.queryByText(/items (0)/)).not.toBeInTheDocument();
+    expect(wrapper.queryByText(/items (0)/)).not.toBeInTheDocument();
 
     expect(
       await wrapper.findByText('Your shopping cart is empty'),
@@ -116,9 +115,7 @@ describe('CartView', () => {
       </MemoryRouter>,
     );
 
-    await waitFor(() => wrapper.getByText('Submit Order')).then((it) => {
-      await userEvent.click(it);
-    });
+    await userEvent.click(await wrapper.findByText('Submit Order'));
 
     await waitFor(async () => wrapper.getByTestId('order-modal')).then(
       async (it) => {
@@ -162,14 +159,12 @@ describe('CartView', () => {
     const wrapper = await renderCartView(fakeClient);
 
     const placeOrder = await wrapper.findByText('Submit Order');
-    act(() => {
-      await userEvent.click(placeOrder);
-    });
+    await userEvent.click(placeOrder);
 
     const modal = await wrapper.findByTestId('order-modal');
     expect(await within(modal).findByText('news video')).toBeVisible();
     expect(
-      await within(modal).queryByTestId('additional-services-summary'),
+      within(modal).queryByTestId('additional-services-summary'),
     ).toBeNull();
   });
 
@@ -284,6 +279,7 @@ describe('CartView', () => {
         VideoFactory.sample({
           price: { amount: 300, currency: 'USD' },
           id: 'video-additional-service',
+          title: 'fav video',
         }),
       );
 
@@ -296,10 +292,10 @@ describe('CartView', () => {
 
       expect(await wrapper.findByText('Shopping cart')).toBeInTheDocument();
       expect(
-        await wrapper.queryByText('Captions and transcripts'),
+        wrapper.queryByText('Captions and transcripts'),
       ).not.toBeInTheDocument();
-      expect(await wrapper.queryByText('Editing')).not.toBeInTheDocument();
-      expect(await wrapper.queryByText('Trimming')).not.toBeInTheDocument();
+      expect(wrapper.queryByText('Editing')).not.toBeInTheDocument();
+      expect(wrapper.queryByText('Trimming')).not.toBeInTheDocument();
 
       await userEvent.click(
         await wrapper.findByText('Request other type of editing'),
@@ -309,9 +305,7 @@ describe('CartView', () => {
         'eg. Remove front and end credits',
       );
 
-      fireEvent.change(input, {
-        target: { value: 'please do some lovely editing' },
-      });
+      await userEvent.type(input, 'please do some lovely editing');
 
       await userEvent.click(
         await wrapper.findByText(
@@ -319,18 +313,11 @@ describe('CartView', () => {
         ),
       );
       await userEvent.click(await wrapper.findByText('Trim video'));
+      await userEvent.type(await wrapper.findByLabelText('From:'), '00:02');
+      await userEvent.click(await wrapper.findByText('fav video'));
 
-      fireEvent.change(await wrapper.findByLabelText('From:'), {
-        target: { value: '00:02' },
-      });
-
-      fireEvent.blur(await wrapper.findByLabelText('From:'));
-
-      fireEvent.change(await wrapper.findByLabelText('To:'), {
-        target: { value: '00:03' },
-      });
-
-      fireEvent.blur(await wrapper.findByLabelText('To:'));
+      await userEvent.type(await wrapper.findByLabelText('To:'), '00:03');
+      await userEvent.click(await wrapper.findByText('fav video'));
 
       await waitFor(async () => {
         expect(
@@ -352,6 +339,7 @@ describe('CartView', () => {
         VideoFactory.sample({
           price: { amount: 300, currency: 'USD' },
           id: 'video-additional-service',
+          title: 'fav video',
         }),
       );
 
@@ -364,11 +352,8 @@ describe('CartView', () => {
 
       await userEvent.click(await wrapper.findByText('Trim video'));
 
-      fireEvent.focus(await wrapper.findByLabelText('From:'));
-      fireEvent.blur(await wrapper.findByLabelText('From:'));
-      fireEvent.change(await wrapper.findByLabelText('From:'), {
-        target: { value: '-2' },
-      });
+      await userEvent.click(await wrapper.findByLabelText('From:'));
+      await userEvent.type(await wrapper.findByLabelText('From:'), '-2');
 
       await userEvent.click(await wrapper.findByText('Submit Order'));
       expect(
@@ -385,12 +370,8 @@ describe('CartView', () => {
         await wrapper.findByText('Specify your trimming options'),
       ).toBeVisible();
 
-      fireEvent.change(await wrapper.findByLabelText('From:'), {
-        target: { value: '0:00' },
-      });
-      fireEvent.change(await wrapper.findByLabelText('To:'), {
-        target: { value: '0:05' },
-      });
+      await userEvent.type(await wrapper.findByLabelText('From:'), '0:00');
+      await userEvent.type(await wrapper.findByLabelText('To:'), '0:05');
 
       expect(
         wrapper.queryByText(
@@ -677,9 +658,7 @@ async function placeAndConfirmOrder(wrapper: RenderResult) {
     ).not.toBeDisabled(),
   );
 
-  await within(modal)
-    .findByText('Confirm order')
-    .then((button) => await userEvent.click(button));
+  await userEvent.click(await within(modal).findByText('Confirm order'));
 }
 
 async function renderCartView(client: FakeBoclipsClient) {

@@ -333,9 +333,7 @@ describe('PlaylistsView', () => {
 
       const shareButton = await wrapper.findByTestId(`share-playlist-button-1`);
 
-      await act(async () => {
-        await userEvent.click(shareButton);
-      });
+      await userEvent.click(shareButton);
 
       expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
         `${Constants.HOST}/playlists/1`,
@@ -602,9 +600,7 @@ describe('PlaylistsView', () => {
     const fillPlaylistDescription = (wrapper: RenderResult, value: string) =>
       fillPlaylistField(wrapper, 'Description (Optional)', value);
 
-    const confirmPlaylistCreationModal = (wrapper: RenderResult) =>
-      await userEvent.click(
-        wrapper.getByRole('button', { name: 'Create playlist' }),
-      );
+    const confirmPlaylistCreationModal = async (wrapper: RenderResult) =>
+      userEvent.click(wrapper.getByRole('button', { name: 'Create playlist' }));
   });
 });

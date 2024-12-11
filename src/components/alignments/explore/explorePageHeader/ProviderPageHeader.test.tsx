@@ -1,6 +1,6 @@
 import React from 'react';
 import ProviderPageHeader from '@components/alignments/explore/explorePageHeader/ProviderPageHeader';
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
 import { AlignmentContextProvider } from '@components/common/providers/AlignmentContextProvider';
 import * as router from 'react-router';

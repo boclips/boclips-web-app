@@ -1,10 +1,4 @@
-import {
-  fireEvent,
-  render,
-  RenderResult,
-  waitFor,
-  within,
-} from '@testing-library/react';
+import { render, RenderResult, waitFor, within } from '@testing-library/react';
 import React from 'react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
@@ -19,6 +13,7 @@ import {
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import userEvent from '@testing-library/user-event';
+import { expect } from 'vitest';
 
 describe('Trial Welcome Modal', () => {
   const fakeClient = new FakeBoclipsClient();
@@ -204,7 +199,6 @@ describe('Trial Welcome Modal', () => {
 
       await setJobTitle(wrapper, 'Professor');
       await setAudience(wrapper, 'K12');
-      await setDesiredContent(wrapper, '');
 
       await userEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
@@ -328,13 +322,10 @@ describe('Trial Welcome Modal', () => {
       ).toBeVisible();
 
       await setJobTitle(wrapper, 'Professor');
-      await setAudience(wrapper, 'K12');
-      await setAudience(wrapper, 'Other');
+      await setAudience(wrapper, 'K12', 'Other');
       await setDesiredContent(wrapper, 'Hockey');
-      await setOrganizationType(wrapper, 'Publisher');
-      await setOrganizationType(wrapper, 'Edtech');
-      await setDiscoveryMethod(wrapper, 'Employer');
-      await setDiscoveryMethod(wrapper, 'Social Media');
+      await setOrganizationType(wrapper, 'Publisher', 'Edtech');
+      await setDiscoveryMethod(wrapper, 'Employer', 'Social Media');
 
       await userEvent.click(
         await wrapper.findByRole('button', { name: "Let's Go!" }),
@@ -468,8 +459,7 @@ describe('Trial Welcome Modal', () => {
       ).toBeVisible();
 
       await setJobTitle(wrapper, 'Professor');
-      await setAudience(wrapper, 'K12');
-      await setAudience(wrapper, 'Other');
+      await setAudience(wrapper, 'K12', 'Other');
       await setDesiredContent(wrapper, 'Hockey');
       await setDiscoveryMethod(wrapper, 'Employer');
       await setDiscoveryMethod(wrapper, 'Social Media');
@@ -529,56 +519,54 @@ describe('Trial Welcome Modal', () => {
     }
   }
 
-  async function setAudience(wrapper: RenderResult, value: string) {
-    if (value) {
-      const dropdown = await wrapper.findByTestId('input-dropdown-audience');
+  async function setDropdownValues(
+    wrapper: RenderResult,
+    dropdownTestId: string,
+    values: string[],
+  ) {
+    if (values && values.length > 0) {
+      let dropdown = await wrapper.findByTestId(dropdownTestId);
       await userEvent.click(within(dropdown).getByTestId('select'));
-      const option = within(dropdown).getByText(value);
-      expect(option).toBeVisible();
-      await userEvent.click(option);
 
+      values.map(async (value) => {
+        const option = within(dropdown).getByText(value);
+        expect(option).toBeVisible();
+        await userEvent.click(option);
+      });
       // make sure dropdown is closed
+      dropdown = await wrapper.findByTestId('input-dropdown-audience');
       await userEvent.click(within(dropdown).getByTestId('select'));
-      expect(within(dropdown).queryByText(value)).toBeNull();
+      expect(within(dropdown).queryByText(values[0])).toBeNull();
     }
+  }
+
+  async function setAudience(wrapper: RenderResult, ...values: string[]) {
+    await setDropdownValues(wrapper, 'input-dropdown-audience', values);
   }
 
   async function setDesiredContent(wrapper: RenderResult, value: string) {
-    fireEvent.change(await wrapper.findByLabelText('Content Topics'), {
-      target: { value },
-    });
+    await userEvent.type(
+      await wrapper.findByLabelText('Content Topics'),
+      value,
+    );
   }
 
-  async function setOrganizationType(wrapper: RenderResult, value: string) {
-    if (value) {
-      const dropdown = await wrapper.findByTestId(
-        'input-dropdown-organization-type',
-      );
-      await userEvent.click(within(dropdown).getByTestId('select'));
-      const option = within(dropdown).getByText(value);
-      expect(option).toBeVisible();
-      await userEvent.click(option);
-
-      // make sure dropdown is closed
-      await userEvent.click(within(dropdown).getByTestId('select'));
-      expect(within(dropdown).queryByText(value)).toBeNull();
-    }
+  async function setOrganizationType(
+    wrapper: RenderResult,
+    ...values: string[]
+  ) {
+    await setDropdownValues(
+      wrapper,
+      'input-dropdown-organization-type',
+      values,
+    );
   }
 
-  async function setDiscoveryMethod(wrapper: RenderResult, value: string) {
-    if (value) {
-      const dropdown = await wrapper.findByTestId(
-        'input-dropdown-discovery-method',
-      );
-      await userEvent.click(within(dropdown).getByTestId('select'));
-      const option = within(dropdown).getByText(value);
-      expect(option).toBeVisible();
-      await userEvent.click(option);
-
-      // make sure dropdown is closed
-      await userEvent.click(within(dropdown).getByTestId('select'));
-      expect(within(dropdown).queryByText(value)).toBeNull();
-    }
+  async function setDiscoveryMethod(
+    wrapper: RenderResult,
+    ...values: string[]
+  ) {
+    await setDropdownValues(wrapper, 'input-dropdown-discovery-method', values);
   }
 
   async function checkTermsAndConditions(wrapper: RenderResult) {

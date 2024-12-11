@@ -302,6 +302,7 @@ describe('Bookmark modal for playlists', () => {
       });
     });
   });
+
   it(`sends a platform interaction event when bookmark is updated`, async () => {
     const wrapper = renderBookmarkButton(
       asset.video,
@@ -315,10 +316,10 @@ describe('Bookmark modal for playlists', () => {
     ).toBeVisible();
     const startTimeInput = wrapper.getByLabelText('Start time:');
 
-    fireEvent.change(startTimeInput, { target: { value: '00:32' } });
+    await userEvent.type(startTimeInput, '00:32');
 
     const endTimeInput = wrapper.getByLabelText('End time:');
-    fireEvent.change(endTimeInput, { target: { value: '00:55' } });
+    await userEvent.type(endTimeInput, '00:55');
 
     await userEvent.click(wrapper.getByText('Set'));
 
@@ -386,8 +387,8 @@ describe('Bookmark modal for playlists', () => {
     expect(startTimeInput).toBeEnabled();
     expect(endTimeInput).toBeEnabled();
 
-    fireEvent.change(startTimeInput, { target: { value: '00:32' } });
-    fireEvent.change(endTimeInput, { target: { value: '00:55' } });
+    await userEvent.type(startTimeInput, '00:32');
+    await userEvent.type(endTimeInput, '00:55');
 
     await userEvent.click(wrapper.getByText('Set'));
 

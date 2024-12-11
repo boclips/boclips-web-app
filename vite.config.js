@@ -52,7 +52,10 @@ export default defineConfig({
     https: false,
   },
   test: {
-    include: ['**/*.test.tsx'],
+    include: [
+      '**/*.(integrationTest|a11yTest|test).(ts|tsx)',
+      '**/tests/*.(integrationTest|a11yTest|test).(ts|tsx)',
+    ],
     environment: 'jsdom',
     globals: true,
     setupFiles: './setupTests.ts',
