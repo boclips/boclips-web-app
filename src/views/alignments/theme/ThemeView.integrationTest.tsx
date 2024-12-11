@@ -119,7 +119,7 @@ describe('ThemeView', () => {
 
     validateVisibleHeadings(bookDetails, 2, ['Chapter 1: Introduction']);
 
-    fireEvent.click(wrapper.getByText('Chapter Overview'));
+    await userEvent.click(wrapper.getByText('Chapter Overview'));
 
     validateVisibleHeadings(bookDetails, 3, ['Chapter Overview (1 video)']);
 
@@ -157,7 +157,7 @@ describe('ThemeView', () => {
 
     expect(sectionLink).toBeVisible();
 
-    fireEvent.click(sectionLink);
+    await userEvent.click(sectionLink);
 
     const titles = await wrapper.findAllByRole('heading', {
       level: 1,
@@ -199,7 +199,7 @@ describe('ThemeView', () => {
       name: 'Chapter 2: Epilogue',
     });
 
-    fireEvent.click(chapter2NavigationButton);
+    await userEvent.click(chapter2NavigationButton);
 
     const sectionLink = wrapper.getByRole('link', {
       name: '2.1 This is the end',
@@ -207,7 +207,7 @@ describe('ThemeView', () => {
 
     expect(sectionLink).toBeVisible();
 
-    fireEvent.click(sectionLink);
+    await userEvent.click(sectionLink);
 
     const bookDetails = wrapper.getByLabelText(
       'Content for Everything to know about ducks',
@@ -316,7 +316,7 @@ describe('ThemeView', () => {
     const discussionPromptLink = wrapper.getByRole('link', {
       name: 'Discussion Prompt',
     });
-    fireEvent.click(discussionPromptLink);
+    await userEvent.click(discussionPromptLink);
 
     const chapter1DiscussionPromptNavigationLabel = getNavigationLabel(
       wrapper,
@@ -351,7 +351,7 @@ describe('ThemeView', () => {
     const sectionLink = wrapper.getByRole('link', {
       name: '1.1 Life at the coop',
     });
-    fireEvent.click(sectionLink);
+    await userEvent.click(sectionLink);
 
     const chapter1Section1NavigationLabel = getNavigationLabel(
       wrapper,
@@ -448,7 +448,7 @@ describe('ThemeView', () => {
 
         const backButton = await wrapper.findByRole('button', { name: 'Back' });
 
-        fireEvent.click(backButton);
+        await userEvent.click(backButton);
 
         expect(history.location.pathname).toEqual('/alignments/openstax');
       });
@@ -475,7 +475,7 @@ describe('ThemeView', () => {
 
       expect(getTableOfContent(theme, wrapper)).toBeNull();
 
-      fireEvent.click(courseContentButton);
+      await userEvent.click(courseContentButton);
 
       expect(getTableOfContent(theme, wrapper)).toBeVisible();
     });
@@ -493,13 +493,13 @@ describe('ThemeView', () => {
         name: 'Course content',
       });
 
-      fireEvent.click(courseContentButton);
+      await userEvent.click(courseContentButton);
 
       const closeTableOfContent = wrapper.getByRole('button', {
         name: 'Close the Table of contents',
       });
 
-      fireEvent.click(closeTableOfContent);
+      await userEvent.click(closeTableOfContent);
       expect(getTableOfContent(theme, wrapper)).toBeNull();
     });
 
@@ -515,7 +515,7 @@ describe('ThemeView', () => {
       const courseContentButton = await wrapper.findByRole('button', {
         name: 'Course content',
       });
-      fireEvent.click(courseContentButton);
+      await userEvent.click(courseContentButton);
 
       const tableOfContentPanel = wrapper.getByTestId(
         'table of contents panel',

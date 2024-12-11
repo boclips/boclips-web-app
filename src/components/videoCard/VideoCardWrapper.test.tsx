@@ -109,7 +109,7 @@ describe('Video card', () => {
       const title = await wrapper.findByText('video killed the radio star');
 
       act(() => {
-        fireEvent.click(title);
+        await userEvent.click(title);
       });
 
       const videoInteractedEvent =
@@ -140,7 +140,7 @@ describe('Video card', () => {
         </BoclipsSecurityProvider>,
       );
 
-      fireEvent.click(wrapper.getByText('Amazing content partner'));
+      await userEvent.click(wrapper.getByText('Amazing content partner'));
 
       expect(filterSpy).toHaveBeenCalledWith('channel', ['123']);
     });

@@ -112,7 +112,7 @@ describe('HomeView', () => {
         </QueryClientProvider>
       </Router>,
     );
-    fireEvent.click(await wrapper.findByText('Browse All Videos'));
+    await userEvent.click(await wrapper.findByText('Browse All Videos'));
 
     expect(history.location.pathname).toEqual('/videos');
   });

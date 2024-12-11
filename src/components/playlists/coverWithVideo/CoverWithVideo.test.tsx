@@ -30,7 +30,7 @@ describe('cover with video', () => {
       </BoclipsSecurityProvider>,
     );
 
-    fireEvent.click(screen.getByTestId(video.id).firstChild);
+    await userEvent.click(screen.getByTestId(video.id).firstChild);
 
     expect(screen.queryByTestId(video.id)).not.toBeInTheDocument();
     expect(screen.getByTestId('player')).toBeInTheDocument();

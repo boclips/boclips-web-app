@@ -41,7 +41,7 @@ describe('CopyLinkButton', () => {
 
     const button = wrapper.getByLabelText('Copy video link');
 
-    fireEvent.click(button);
+    await userEvent.click(button);
 
     await wrapper.findByText('Copied!');
 
@@ -74,7 +74,7 @@ describe('CopyLinkButton', () => {
     const button = await wrapper.findByLabelText('Copy video link');
 
     act(() => {
-      fireEvent.click(button);
+      await userEvent.click(button);
     });
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(

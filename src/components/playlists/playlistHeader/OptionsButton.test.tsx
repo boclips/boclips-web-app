@@ -69,7 +69,7 @@ describe('OptionsButton', () => {
       const editButton = await getOption(wrapper, 'Edit');
       expect(editButton).toBeVisible();
 
-      fireEvent.click(editButton);
+      await userEvent.click(editButton);
 
       await waitFor(() => {
         expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({
@@ -132,7 +132,7 @@ describe('OptionsButton', () => {
       const reorderButton = await getOption(wrapper, 'Reorder videos');
       expect(reorderButton).toBeVisible();
 
-      fireEvent.click(reorderButton);
+      await userEvent.click(reorderButton);
 
       await waitFor(() => {
         expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({
@@ -221,7 +221,7 @@ describe('OptionsButton', () => {
       const makeCopyButton = await getOption(wrapper, 'Make a copy');
       expect(makeCopyButton).toBeVisible();
 
-      fireEvent.click(makeCopyButton);
+      await userEvent.click(makeCopyButton);
 
       await waitFor(() => {
         expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({
@@ -347,7 +347,7 @@ describe('OptionsButton', () => {
       );
       expect(shareWithTeachersButton).toBeVisible();
 
-      fireEvent.click(shareWithTeachersButton);
+      await userEvent.click(shareWithTeachersButton);
 
       await waitFor(() => {
         expect(lastEvent(apiClient, 'PLATFORM_INTERACTED_WITH')).toEqual({
@@ -375,13 +375,13 @@ describe('OptionsButton', () => {
         'Share with teachers',
       );
       expect(shareWithTeachersButton).toBeVisible();
-      fireEvent.click(shareWithTeachersButton);
+      await userEvent.click(shareWithTeachersButton);
 
       expect(wrapper.getByRole('dialog')).toBeVisible();
 
       const copyLinkButton = wrapper.getByRole('button', { name: 'Copy link' });
       expect(copyLinkButton).toBeVisible();
-      fireEvent.click(copyLinkButton);
+      await userEvent.click(copyLinkButton);
 
       await waitFor(() => {
         expect(lastEvent(apiClient, 'PLATFORM_INTERACTED_WITH')).toEqual({

@@ -67,9 +67,9 @@ describe('filterPanel', () => {
       />,
     );
 
-    fireEvent.click(panel.getByText('Video Types'));
+    await userEvent.click(panel.getByText('Video Types'));
     expect(panel.queryByText('Stock')).toBeNull();
-    fireEvent.click(panel.getByText('Video Types'));
+    await userEvent.click(panel.getByText('Video Types'));
     expect(panel.getByText('Stock')).toBeVisible();
   });
 
@@ -83,10 +83,10 @@ describe('filterPanel', () => {
       />,
     );
 
-    fireEvent.click(panel.getByText('News'));
-    fireEvent.click(panel.getByText('Stock'));
+    await userEvent.click(panel.getByText('News'));
+    await userEvent.click(panel.getByText('Stock'));
 
-    fireEvent.click(panel.getByText('News'));
+    await userEvent.click(panel.getByText('News'));
 
     const stockCheckbox = panel.getByTestId('stock-checkbox');
     waitFor(() => {
@@ -121,7 +121,7 @@ describe('filterPanel', () => {
 
     expect(panel.queryByText('Option 5')).toBeNull();
 
-    fireEvent.click(panel.getByText('Show all (6)'));
+    await userEvent.click(panel.getByText('Show all (6)'));
 
     expect(panel.queryByText('Option 5')).toBeVisible();
     expect(panel.getByText('Show less')).toBeVisible();
@@ -139,7 +139,7 @@ describe('filterPanel', () => {
       />,
     );
 
-    fireEvent.click(panel.getByRole('checkbox', { name: 'Option 2' }));
+    await userEvent.click(panel.getByRole('checkbox', { name: 'Option 2' }));
     expect(changeHandler).toHaveBeenCalledWith('test', ['2-option']);
   });
 });

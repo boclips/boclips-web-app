@@ -117,7 +117,7 @@ describe('CartView', () => {
     );
 
     await waitFor(() => wrapper.getByText('Submit Order')).then((it) => {
-      fireEvent.click(it);
+      await userEvent.click(it);
     });
 
     await waitFor(async () => wrapper.getByTestId('order-modal')).then(
@@ -163,7 +163,7 @@ describe('CartView', () => {
 
     const placeOrder = await wrapper.findByText('Submit Order');
     act(() => {
-      fireEvent.click(placeOrder);
+      await userEvent.click(placeOrder);
     });
 
     const modal = await wrapper.findByTestId('order-modal');
@@ -252,7 +252,7 @@ describe('CartView', () => {
 
     const wrapper = await renderCartView(fakeClient);
     const removeButton = await wrapper.findByText('Remove');
-    fireEvent.click(removeButton);
+    await userEvent.click(removeButton);
     expect(
       await wrapper.findByText('Your shopping cart is empty'),
     ).toBeInTheDocument();
@@ -301,7 +301,7 @@ describe('CartView', () => {
       expect(await wrapper.queryByText('Editing')).not.toBeInTheDocument();
       expect(await wrapper.queryByText('Trimming')).not.toBeInTheDocument();
 
-      fireEvent.click(
+      await userEvent.click(
         await wrapper.findByText('Request other type of editing'),
       );
 
@@ -313,12 +313,12 @@ describe('CartView', () => {
         target: { value: 'please do some lovely editing' },
       });
 
-      fireEvent.click(
+      await userEvent.click(
         await wrapper.findByText(
           'Request human-generated caption and transcript files (in English)',
         ),
       );
-      fireEvent.click(await wrapper.findByText('Trim video'));
+      await userEvent.click(await wrapper.findByText('Trim video'));
 
       fireEvent.change(await wrapper.findByLabelText('From:'), {
         target: { value: '00:02' },
@@ -362,7 +362,7 @@ describe('CartView', () => {
 
       const wrapper = await renderCartView(fakeClient);
 
-      fireEvent.click(await wrapper.findByText('Trim video'));
+      await userEvent.click(await wrapper.findByText('Trim video'));
 
       fireEvent.focus(await wrapper.findByLabelText('From:'));
       fireEvent.blur(await wrapper.findByLabelText('From:'));
@@ -370,7 +370,7 @@ describe('CartView', () => {
         target: { value: '-2' },
       });
 
-      fireEvent.click(await wrapper.findByText('Submit Order'));
+      await userEvent.click(await wrapper.findByText('Submit Order'));
       expect(
         await wrapper.findByText(
           'There are some errors. Please review your shopping cart and correct the mistakes.',
@@ -419,7 +419,7 @@ describe('CartView', () => {
 
       const wrapper = await renderCartView(fakeClient);
 
-      fireEvent.click(
+      await userEvent.click(
         await wrapper.findByText('Request other type of editing'),
       );
 
@@ -429,7 +429,7 @@ describe('CartView', () => {
 
       fireEvent.focus(input);
       fireEvent.blur(input);
-      fireEvent.click(await wrapper.findByText('Submit Order'));
+      await userEvent.click(await wrapper.findByText('Submit Order'));
       expect(
         await wrapper.findByText(
           'There are some errors. Please review your shopping cart and correct the mistakes.',
@@ -471,9 +471,9 @@ describe('CartView', () => {
 
       const wrapper = await renderCartView(fakeClient);
 
-      fireEvent.click(await wrapper.findByText('Trim video'));
+      await userEvent.click(await wrapper.findByText('Trim video'));
 
-      fireEvent.click(await wrapper.findByText('Submit Order'));
+      await userEvent.click(await wrapper.findByText('Submit Order'));
       expect(
         wrapper.queryByText(
           'There are some errors. Please review your shopping cart and correct the mistakes.',
@@ -511,11 +511,11 @@ describe('CartView', () => {
 
       const wrapper = await renderCartView(fakeClient);
 
-      fireEvent.click(
+      await userEvent.click(
         await wrapper.findByText('Request other type of editing'),
       );
 
-      fireEvent.click(await wrapper.findByText('Submit Order'));
+      await userEvent.click(await wrapper.findByText('Submit Order'));
       expect(
         wrapper.queryByText(
           'There are some errors. Please review your shopping cart and correct the mistakes.',
@@ -554,7 +554,7 @@ describe('CartView', () => {
 
       const wrapper = await renderCartView(fakeClient);
 
-      fireEvent.click(await wrapper.findByText('Trim video'));
+      await userEvent.click(await wrapper.findByText('Trim video'));
 
       fireEvent.focus(await wrapper.findByLabelText('From:'));
 
@@ -667,7 +667,7 @@ describe('CartView', () => {
 
 async function placeAndConfirmOrder(wrapper: RenderResult) {
   await wrapper.findByText('Submit Order');
-  fireEvent.click(wrapper.getByText('Submit Order'));
+  await userEvent.click(wrapper.getByText('Submit Order'));
 
   const modal = await wrapper.findByTestId('order-modal');
 
@@ -679,7 +679,7 @@ async function placeAndConfirmOrder(wrapper: RenderResult) {
 
   await within(modal)
     .findByText('Confirm order')
-    .then((button) => fireEvent.click(button));
+    .then((button) => await userEvent.click(button));
 }
 
 async function renderCartView(client: FakeBoclipsClient) {

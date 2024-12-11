@@ -3,7 +3,7 @@ import React from 'react';
 import { render } from '@src/testSupport/render';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import NavbarResponsive from '@components/layout/Navbar';
-import { fireEvent, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import {
   resizeToDesktop,
@@ -16,6 +16,7 @@ import {
   AccountType,
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import userEvent from '@testing-library/user-event';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
 
@@ -75,7 +76,7 @@ describe(`Navbar`, () => {
       async (_screenType: string, resize: () => void) => {
         resize();
 
-        fireEvent.click(await wrapper.findByLabelText('Menu'));
+        await userEvent.click(await wrapper.findByLabelText('Menu'));
 
         expect(wrapper.getByText('Order History')).toBeInTheDocument();
         expect(wrapper.getByText('Cart')).toBeInTheDocument();
@@ -130,7 +131,7 @@ describe(`Navbar`, () => {
       async (_screenType: string, resize: () => void) => {
         resize();
 
-        fireEvent.click(await wrapper.findByLabelText('Menu'));
+        await userEvent.click(await wrapper.findByLabelText('Menu'));
 
         expect(wrapper.queryByText('Platform guide')).not.toBeInTheDocument();
       },
@@ -201,7 +202,7 @@ describe(`Navbar`, () => {
     ])('is visible on %s', async (_screenType: string, resize: () => void) => {
       resize();
 
-      fireEvent.click(await wrapper.findByLabelText('Menu'));
+      await userEvent.click(await wrapper.findByLabelText('Menu'));
       expect(wrapper.getByText('Playlists')).toBeVisible();
     });
   });
@@ -236,7 +237,7 @@ describe(`Navbar`, () => {
       async (_screenType: string, resize: () => void) => {
         resize();
 
-        fireEvent.click(await wrapper.findByLabelText('Menu'));
+        await userEvent.click(await wrapper.findByLabelText('Menu'));
 
         expect(wrapper.getByText('Alignments')).toBeVisible();
       },
@@ -265,7 +266,7 @@ describe(`Navbar`, () => {
     ])('is visible on %s', async (_screenType: string, resize: () => void) => {
       resize();
 
-      fireEvent.click(await wrapper.findByLabelText('Menu'));
+      await userEvent.click(await wrapper.findByLabelText('Menu'));
       expect(wrapper.getByText('Profile')).toBeVisible();
     });
   });
@@ -302,7 +303,7 @@ describe(`Navbar`, () => {
     ])('is visible on %s', async (_screenType: string, resize: () => void) => {
       resize();
 
-      fireEvent.click(await wrapper.findByLabelText('Menu'));
+      await userEvent.click(await wrapper.findByLabelText('Menu'));
       expect(wrapper.getByText('Home')).toBeVisible();
     });
   });
@@ -339,7 +340,7 @@ describe(`Navbar`, () => {
     ])('is visible on %s', async (_screenType: string, resize: () => void) => {
       resize();
 
-      fireEvent.click(await wrapper.findByLabelText('Menu'));
+      await userEvent.click(await wrapper.findByLabelText('Menu'));
       expect(wrapper.getByText('All videos')).toBeVisible();
     });
   });

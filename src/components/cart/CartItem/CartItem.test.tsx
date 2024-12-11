@@ -1,4 +1,5 @@
-import { fireEvent, render, waitFor, screen } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
 import React from 'react';
 import CartItem from '@components/cart/CartItem/CartItem';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
@@ -112,7 +113,7 @@ describe('CartItem', () => {
       fakeApiClient,
     );
 
-    fireEvent.click(await wrapper.findByText(/Trim video/));
+    await userEvent.click(await wrapper.findByText(/Trim video/));
 
     expect(wrapper.getByText(/From:/)).toBeInTheDocument();
     expect(wrapper.getByText(/To:/)).toBeInTheDocument();
@@ -141,7 +142,7 @@ describe('CartItem', () => {
       fakeClient,
     );
 
-    fireEvent.click(await wrapper.findByText('Trim video'));
+    await userEvent.click(await wrapper.findByText('Trim video'));
 
     fireEvent.change(await wrapper.findByLabelText('From:'), {
       target: { value: '2:00' },
@@ -219,7 +220,7 @@ describe('CartItem', () => {
       fakeApiClient,
     );
 
-    fireEvent.click(await wrapper.findByText('Trim video'));
+    await userEvent.click(await wrapper.findByText('Trim video'));
 
     expect(wrapper.queryByText(/From:/)).not.toBeInTheDocument();
     expect(wrapper.queryByText(/To:/)).not.toBeInTheDocument();
@@ -250,7 +251,7 @@ describe('CartItem', () => {
       fakeClient,
     );
 
-    fireEvent.click(
+    await userEvent.click(
       await wrapper.findByText(
         'Request human-generated caption and transcript files (in English)',
       ),
@@ -265,7 +266,7 @@ describe('CartItem', () => {
       );
     });
 
-    fireEvent.click(
+    await userEvent.click(
       await wrapper.findByText(
         'Request human-generated caption and transcript files (in English)',
       ),
@@ -298,7 +299,9 @@ describe('CartItem', () => {
       fakeClient,
     );
 
-    fireEvent.click(await wrapper.findByText('Request other type of editing'));
+    await userEvent.click(
+      await wrapper.findByText('Request other type of editing'),
+    );
 
     expect(
       await wrapper.findByPlaceholderText('eg. Remove front and end credits'),
@@ -326,7 +329,9 @@ describe('CartItem', () => {
       fakeClient,
     );
 
-    fireEvent.click(await wrapper.findByText('Request other type of editing'));
+    await userEvent.click(
+      await wrapper.findByText('Request other type of editing'),
+    );
 
     const input = await wrapper.findByPlaceholderText(
       'eg. Remove front and end credits',
@@ -373,7 +378,9 @@ describe('CartItem', () => {
       fakeClient,
     );
 
-    fireEvent.click(await wrapper.findByText('Request other type of editing'));
+    await userEvent.click(
+      await wrapper.findByText('Request other type of editing'),
+    );
 
     waitFor(async () => {
       const input = await wrapper.findByDisplayValue('this was a mistake');
@@ -420,7 +427,7 @@ describe('CartItem', () => {
 
     const removeFromCartButton = await wrapper.findByText('Remove');
 
-    fireEvent.click(removeFromCartButton);
+    await userEvent.click(removeFromCartButton);
 
     await waitFor(() =>
       expect(hotjarVideoRemovedFromCart).toHaveBeenCalledWith(

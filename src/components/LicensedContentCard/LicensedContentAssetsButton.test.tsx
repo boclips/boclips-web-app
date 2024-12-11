@@ -27,7 +27,9 @@ describe('LicensedContentAssetsButton', () => {
       </QueryClientProvider>,
     );
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Video Assets' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Video Assets' }),
+    );
 
     await waitFor(() => {
       expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({

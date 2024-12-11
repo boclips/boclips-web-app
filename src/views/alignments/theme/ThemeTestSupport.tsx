@@ -112,5 +112,5 @@ export const navigateTo = (wrapper: RenderResult, link: string) => {
   const button = wrapper.getByRole('link', {
     name: new RegExp(link),
   });
-  fireEvent.click(button);
+  await userEvent.click(button);
 };

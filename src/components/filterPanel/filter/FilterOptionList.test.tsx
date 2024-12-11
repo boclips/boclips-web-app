@@ -50,7 +50,7 @@ describe('FilterOptionList', () => {
       />,
     );
 
-    fireEvent.click(panel.getByText('Show all (7)'));
+    await userEvent.click(panel.getByText('Show all (7)'));
 
     const childNodes = panel.getByTestId('filter-option-list').childNodes;
     expect(childNodes[0].textContent).toContain('Option 7');
@@ -71,7 +71,7 @@ describe('FilterOptionList', () => {
       />,
     );
 
-    fireEvent.click(panel.getByText('Show all (7)'));
+    await userEvent.click(panel.getByText('Show all (7)'));
 
     const childNodes = panel.getByTestId('filter-option-list').childNodes;
     expect(childNodes[0].textContent).toContain('Option 2');

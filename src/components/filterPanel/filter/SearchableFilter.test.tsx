@@ -94,8 +94,8 @@ describe('searchableFilter', () => {
     });
 
     // Close and open the panel
-    fireEvent.click(panel.getByText('Channels'));
-    fireEvent.click(panel.getByText('Channels'));
+    await userEvent.click(panel.getByText('Channels'));
+    await userEvent.click(panel.getByText('Channels'));
 
     expect(getSearchInput(panel)).toBeVisible();
     expect(panel.getByText('TED-ED')).toBeInTheDocument();

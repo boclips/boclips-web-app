@@ -61,7 +61,7 @@ describe('Layout buttons', () => {
       </BoclipsClientProvider>,
     );
 
-    fireEvent.click(wrapper.getByTestId('list-view-button'));
+    await userEvent.click(wrapper.getByTestId('list-view-button'));
 
     expect(onChange).toBeCalledTimes(2);
 
@@ -87,7 +87,7 @@ describe('Layout buttons', () => {
       wrapper.getByTestId('list-view-button').className.includes('outline'),
     ).toBeFalsy();
 
-    fireEvent.click(wrapper.getByTestId('grid-view-button'));
+    await userEvent.click(wrapper.getByTestId('grid-view-button'));
 
     expect(
       wrapper.getByTestId('grid-view-button').className.includes('outline'),
@@ -110,7 +110,7 @@ describe('Layout buttons', () => {
         </BoclipsClientProvider>,
       );
 
-      fireEvent.click(wrapper.getByTestId('grid-view-button'));
+      await userEvent.click(wrapper.getByTestId('grid-view-button'));
 
       expect(lastEvent(client)).toEqual({
         type: 'PLATFORM_INTERACTED_WITH',
@@ -118,7 +118,7 @@ describe('Layout buttons', () => {
         anonymous: false,
       });
 
-      fireEvent.click(wrapper.getByTestId('list-view-button'));
+      await userEvent.click(wrapper.getByTestId('list-view-button'));
 
       expect(lastEvent(client)).toEqual({
         type: 'PLATFORM_INTERACTED_WITH',
@@ -136,7 +136,7 @@ describe('Layout buttons', () => {
         </BoclipsClientProvider>,
       );
 
-      fireEvent.click(wrapper.getByTestId('grid-view-button'));
+      await userEvent.click(wrapper.getByTestId('grid-view-button'));
 
       expect(client.events.getEvents()).toHaveLength(0);
     });

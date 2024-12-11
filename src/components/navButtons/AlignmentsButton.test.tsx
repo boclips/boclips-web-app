@@ -27,7 +27,9 @@ describe('alignments button', () => {
       </BoclipsClientProvider>,
     );
 
-    fireEvent.click(await wrapper.findByRole('button', { name: 'Alignments' }));
+    await userEvent.click(
+      await wrapper.findByRole('button', { name: 'Alignments' }),
+    );
 
     expect(history.location.pathname).toEqual('/alignments');
   });

@@ -27,7 +27,9 @@ describe('Create new playlist modal', () => {
       target: { value: 'hold the anchor' },
     });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create playlist' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create playlist' }),
+    );
 
     await waitFor(() => expect(handleOnSuccess).toBeCalledTimes(1));
   });
@@ -48,7 +50,7 @@ describe('Create new playlist modal', () => {
       target: { value: 'hold the anchor' },
     });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Cancel' }));
+    await userEvent.click(wrapper.getByRole('button', { name: 'Cancel' }));
 
     expect(handleOnCancelled).toBeCalledTimes(1);
   });
@@ -56,7 +58,9 @@ describe('Create new playlist modal', () => {
   it('returns an error when playlist name is empty', () => {
     const wrapper = renderWrapper();
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create playlist' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create playlist' }),
+    );
 
     expect(wrapper.getByText('Playlist name is required')).toBeVisible();
   });
@@ -73,7 +77,9 @@ describe('Create new playlist modal', () => {
       target: { value: 'sail' },
     });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create playlist' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create playlist' }),
+    );
 
     expect(wrapper.queryByTestId('playlist-modal')).toBeInTheDocument();
     await waitFor(() => expect(handleOnSuccess).toBeCalledTimes(1));
@@ -83,18 +89,15 @@ describe('Create new playlist modal', () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.collections.create = vi.fn(() => Promise.reject());
     const handleOnError = vi.fn();
-    const wrapper = renderWrapper(
-      fakeClient,
-      vi.fn(),
-      vi.fn(),
-      handleOnError,
-    );
+    const wrapper = renderWrapper(fakeClient, vi.fn(), vi.fn(), handleOnError);
 
     fireEvent.change(wrapper.getByPlaceholderText('Add name'), {
       target: { value: 'prove' },
     });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create playlist' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create playlist' }),
+    );
 
     expect(wrapper.queryByTestId('playlist-modal')).toBeInTheDocument();
     await waitFor(() => expect(handleOnError).toBeCalledTimes(1));
@@ -139,7 +142,9 @@ describe('Create new playlist modal', () => {
       </BoclipsClientProvider>,
     );
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create playlist' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create playlist' }),
+    );
     await waitFor(() =>
       expect(createPlaylistSpy).toHaveBeenCalledWith({
         title: 'Original playlist',

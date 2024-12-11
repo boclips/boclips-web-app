@@ -216,7 +216,7 @@ describe('order table', () => {
 
     const title = await wrapper.findByText('linked-video-title');
 
-    fireEvent.click(title);
+    await userEvent.click(title);
 
     expect(await wrapper.findByTestId('video-page')).toBeVisible();
   });

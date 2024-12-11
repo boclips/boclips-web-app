@@ -78,12 +78,16 @@ describe('PlaylistsView', () => {
       expect(it).toBeInTheDocument(),
     );
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'go to next page' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'go to next page' }),
+    );
 
     expect(await wrapper.findByText('Playlist 20')).toBeVisible();
     expect(wrapper.queryByText('Playlist 0')).toBeNull();
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'go to next page' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'go to next page' }),
+    );
 
     await waitFor(() => wrapper.getByText('Playlist 40')).then((it) => {
       expect(it).toBeInTheDocument();

@@ -34,7 +34,7 @@ describe(`download transcript button`, () => {
       </BoclipsClientProvider>,
     );
 
-    fireEvent.click(
+    await userEvent.click(
       wrapper.getByRole('button', { name: 'download-transcript' }),
     );
 
@@ -62,7 +62,7 @@ describe(`download transcript button`, () => {
       </BoclipsClientProvider>,
     );
 
-    fireEvent.click(
+    await userEvent.click(
       wrapper.getByRole('button', { name: 'download-transcript' }),
     );
 

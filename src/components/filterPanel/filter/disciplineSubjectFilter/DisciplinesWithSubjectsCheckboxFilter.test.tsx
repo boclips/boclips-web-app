@@ -86,7 +86,7 @@ describe('DisciplinesWithSubjectsCheckboxFilter', () => {
     expect(panel.queryByText('Math')).toBeNull();
     expect(panel.queryByText('History')).toBeNull();
 
-    fireEvent.click(disciplineButton);
+    await userEvent.click(disciplineButton);
 
     expect(
       panel.getByLabelText('MyDiscipline').getAttribute('aria-expanded'),
@@ -131,7 +131,7 @@ describe('DisciplinesWithSubjectsCheckboxFilter', () => {
 
     const disciplineButton = panel.getByLabelText('MyDiscipline');
 
-    fireEvent.click(disciplineButton);
+    await userEvent.click(disciplineButton);
 
     for (let i = 0; i < 20; i++) {
       expect(

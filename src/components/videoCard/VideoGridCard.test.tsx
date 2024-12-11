@@ -35,7 +35,7 @@ describe(`VideoGridCard`, () => {
       </MemoryRouter>,
     );
 
-    fireEvent.click(wrapper.getByText('Channel-1'));
+    await userEvent.click(wrapper.getByText('Channel-1'));
 
     expect(filterSpy).toHaveBeenCalledWith('channel', ['channel-1-id']);
   });

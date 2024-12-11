@@ -2,6 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { Bodal } from '@components/common/bodal/Bodal';
 import { Input } from 'boclips-ui';
+import userEvent from '@testing-library/user-event';
 
 describe('The mighty Bodal', () => {
   beforeEach(() => {
@@ -54,7 +55,7 @@ describe('The mighty Bodal', () => {
       </Bodal>,
     );
     const button = wrapper.getByRole('button', { name: 'Confirm' });
-    fireEvent.click(button);
+    await userEvent.click(button);
     expect(handleConfirm).toBeCalledTimes(1);
   });
 
@@ -66,7 +67,7 @@ describe('The mighty Bodal', () => {
       </Bodal>,
     );
     const button = wrapper.getByRole('button', { name: 'Cancel' });
-    fireEvent.click(button);
+    await userEvent.click(button);
     expect(handleCancel).toBeCalledTimes(1);
   });
 
@@ -83,7 +84,7 @@ describe('The mighty Bodal', () => {
     );
 
     const button = wrapper.getByRole('button', { name: 'Press me!' });
-    fireEvent.click(button);
+    await userEvent.click(button);
     expect(button).toBeVisible();
     expect(handleConfirm).toBeCalledTimes(1);
   });
@@ -96,7 +97,7 @@ describe('The mighty Bodal', () => {
       </Bodal>,
     );
     const button = wrapper.getByRole('button', { name: 'Press me!' });
-    fireEvent.click(button);
+    await userEvent.click(button);
     expect(button).toBeVisible();
     expect(handleCancel).toBeCalledTimes(1);
   });
@@ -130,11 +131,11 @@ describe('The mighty Bodal', () => {
       </Bodal>,
     );
     const closeButton = wrapper.getByLabelText('Close The Bodal modal');
-    fireEvent.click(closeButton);
+    await userEvent.click(closeButton);
     expect(handleCancel).toBeCalledTimes(1);
   });
 
-  it(`renders a spinner in confirm button when loading and prevents clicking`, () => {
+  it(`renders a spinner in confirm button when loading and prevents clicking`, async () => {
     const onConfirmSpy = vi.fn();
     const wrapper = render(
       <Bodal
@@ -148,7 +149,7 @@ describe('The mighty Bodal', () => {
     );
     const confirmButton = wrapper.getByText('confirm with spinner');
 
-    fireEvent.click(confirmButton);
+    await userEvent.click(confirmButton);
     expect(onConfirmSpy).not.toBeCalled();
 
     expect(wrapper.getByTestId('spinner')).toBeInTheDocument();

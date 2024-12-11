@@ -111,7 +111,9 @@ describe('Profile view', () => {
         await within(userProfile).findByText(/Bob Wick/),
       ).toBeInTheDocument();
 
-      fireEvent.click(await screen.findByRole('button', { name: 'Edit' }));
+      await userEvent.click(
+        await screen.findByRole('button', { name: 'Edit' }),
+      );
 
       await waitFor(() =>
         screen.getByRole('heading', {

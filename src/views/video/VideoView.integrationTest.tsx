@@ -325,14 +325,14 @@ describe('Video View', () => {
       await waitFor(() =>
         wrapper.getByText('the coolest video you ever did see'),
       ).then((it) => {
-        fireEvent.click(it);
+        await userEvent.click(it);
       });
 
       await waitFor(() => wrapper.getByText('Back')).then((it) => {
         expect(it).toBeVisible();
       });
 
-      fireEvent.click(wrapper.getByText('Back'));
+      await userEvent.click(wrapper.getByText('Back'));
 
       await waitFor(() =>
         expect(wrapper.getByText('Shopping cart')).toBeVisible(),

@@ -86,11 +86,11 @@ describe('Discipline Subject filter', () => {
     );
 
     expect(wrapper.getByText('Discipline 1')).toBeVisible();
-    fireEvent.click(wrapper.getByText('Discipline 1'));
+    await userEvent.click(wrapper.getByText('Discipline 1'));
     expect(wrapper.getByText('Math')).toBeVisible();
 
     expect(wrapper.getByText('Discipline 2')).toBeVisible();
-    fireEvent.click(wrapper.getByText('Discipline 2'));
+    await userEvent.click(wrapper.getByText('Discipline 2'));
     expect(wrapper.getByText('History')).toBeVisible();
     expect(wrapper.getByText('Art history')).toBeVisible();
   });
@@ -101,8 +101,8 @@ describe('Discipline Subject filter', () => {
       disciplineFixtures,
     );
 
-    fireEvent.click(wrapper.getByText('Discipline 1'));
-    fireEvent.click(wrapper.getByText('Discipline 2'));
+    await userEvent.click(wrapper.getByText('Discipline 1'));
+    await userEvent.click(wrapper.getByText('Discipline 2'));
 
     fireEvent.change(getSearchInput(wrapper), { target: { value: 'his' } });
 

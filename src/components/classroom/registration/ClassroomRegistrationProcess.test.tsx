@@ -75,7 +75,9 @@ describe('registration process', () => {
 
     await fillTheForm(wrapper, {});
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     expect(await wrapper.findByText('Check your email!')).toBeVisible();
 
@@ -123,7 +125,9 @@ describe('registration process', () => {
 
     await fillTheForm(wrapper, {});
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     expect(await wrapper.findByText(`You're ready to start!`)).toBeVisible();
 

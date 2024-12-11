@@ -13,6 +13,7 @@ import {
   AccountType,
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import userEvent from '@testing-library/user-event';
 
 describe(`Navbar test`, () => {
   beforeEach(() => {
@@ -53,7 +54,7 @@ describe(`Navbar test`, () => {
     );
     const navbar = renderAccountButton();
 
-    fireEvent.click(await navbar.findByText('Eddie'));
+    await userEvent.click(await navbar.findByText('Eddie'));
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 
@@ -84,7 +85,7 @@ describe(`Navbar test`, () => {
     );
     const navbar = renderAccountButton();
 
-    fireEvent.click(await navbar.findByText('Eddie'));
+    await userEvent.click(await navbar.findByText('Eddie'));
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 
@@ -106,7 +107,7 @@ describe(`Navbar test`, () => {
     const wrapper = renderAccountButton();
     expect(await wrapper.findByText('yo')).toBeInTheDocument();
 
-    fireEvent.click(await wrapper.findByText('yo'));
+    await userEvent.click(await wrapper.findByText('yo'));
 
     await waitFor(() => wrapper.getByTestId('account-modal'));
 
@@ -129,7 +130,7 @@ describe(`Navbar test`, () => {
     const wrapper = renderAccountButton();
     expect(await wrapper.findByText('yo')).toBeInTheDocument();
 
-    fireEvent.click(await wrapper.findByText('yo'));
+    await userEvent.click(await wrapper.findByText('yo'));
 
     await waitFor(() => wrapper.getByTestId('account-modal'));
 
@@ -150,7 +151,7 @@ describe(`Navbar test`, () => {
     const wrapper = renderAccountButton();
     expect(await wrapper.findByText('yo')).toBeInTheDocument();
 
-    fireEvent.click(await wrapper.findByText('yo'));
+    await userEvent.click(await wrapper.findByText('yo'));
 
     await waitFor(() => wrapper.getByTestId('account-modal'));
 
@@ -168,9 +169,9 @@ describe(`Navbar test`, () => {
 
     const wrapper = renderAccountButton();
 
-    fireEvent.click(await wrapper.findByText('Frank'));
+    await userEvent.click(await wrapper.findByText('Frank'));
 
-    fireEvent.click(await wrapper.findByText('Log out'));
+    await userEvent.click(await wrapper.findByText('Log out'));
 
     expect(stubBoclipsSecurity.logout).toHaveBeenCalledWith({
       redirectUri: `${Constants.HOST}/`,
@@ -184,7 +185,7 @@ describe(`Navbar test`, () => {
 
     expect(await navbar.findByText('Frank')).toBeInTheDocument();
 
-    fireEvent.click(await navbar.findByText('Frank'));
+    await userEvent.click(await navbar.findByText('Frank'));
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 
@@ -205,7 +206,7 @@ describe(`Navbar test`, () => {
 
     expect(await navbar.findByText('Frank')).toBeInTheDocument();
 
-    fireEvent.click(await navbar.findByText('Frank'));
+    await userEvent.click(await navbar.findByText('Frank'));
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 
@@ -221,7 +222,7 @@ describe(`Navbar test`, () => {
 
     expect(await navbar.findByText('Frank')).toBeVisible();
 
-    fireEvent.click(await navbar.findByText('Frank'));
+    await userEvent.click(await navbar.findByText('Frank'));
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 

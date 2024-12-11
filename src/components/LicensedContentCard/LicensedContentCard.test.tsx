@@ -42,7 +42,7 @@ describe('Licensed Content Card', () => {
     expect(title).toBeVisible();
     expect(title.closest('a')).toHaveAttribute('href', '/videos/video-id');
 
-    fireEvent.click(title);
+    await userEvent.click(title);
     await waitFor(() => {
       expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({
         type: 'PLATFORM_INTERACTED_WITH',
@@ -76,7 +76,7 @@ describe('Licensed Content Card', () => {
       '/orders/order-1',
     );
 
-    fireEvent.click(wrapper.getByText('order-1'));
+    await userEvent.click(wrapper.getByText('order-1'));
     await waitFor(() => {
       expect(lastEvent(fakeClient, 'PLATFORM_INTERACTED_WITH')).toEqual({
         type: 'PLATFORM_INTERACTED_WITH',
@@ -132,7 +132,7 @@ describe('Licensed Content Card', () => {
       );
 
       expect(await getAssetOption(wrapper, 'Metadata')).toBeVisible();
-      fireEvent.click(
+      await userEvent.click(
         await wrapper.findByRole('menuitem', { name: 'Metadata' }),
       );
 
@@ -191,7 +191,7 @@ describe('Licensed Content Card', () => {
     );
 
     expect(await getAssetOption(wrapper, 'Transcript')).toBeVisible();
-    fireEvent.click(
+    await userEvent.click(
       await wrapper.findByRole('menuitem', { name: 'Transcript' }),
     );
 
@@ -252,7 +252,9 @@ describe('Licensed Content Card', () => {
     );
 
     expect(await getAssetOption(wrapper, 'Captions')).toBeVisible();
-    fireEvent.click(await wrapper.findByRole('menuitem', { name: 'Captions' }));
+    await userEvent.click(
+      await wrapper.findByRole('menuitem', { name: 'Captions' }),
+    );
 
     await waitFor(() => {
       expect(lastEvent(fakeClient, 'PLATFORM_INTERACTED_WITH')).toEqual({

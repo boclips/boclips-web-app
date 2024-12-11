@@ -18,6 +18,7 @@ import {
   AccountType,
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import userEvent from '@testing-library/user-event';
 
 describe('Trial Welcome Modal', () => {
   const fakeClient = new FakeBoclipsClient();
@@ -106,7 +107,7 @@ describe('Trial Welcome Modal', () => {
       await setDesiredContent(wrapper, 'Basketball');
       await checkTermsAndConditions(wrapper);
 
-      fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+      await userEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
       await waitFor(() => {
         expect(updateUserSpy).toHaveBeenCalledWith('kb', {
@@ -133,7 +134,7 @@ describe('Trial Welcome Modal', () => {
       await setDesiredContent(wrapper, 'Basketball');
       await checkTermsAndConditions(wrapper);
 
-      fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+      await userEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
       await waitFor(() => {
         expect(wrapper.getByText('Welcome to')).toBeVisible();
@@ -163,7 +164,7 @@ describe('Trial Welcome Modal', () => {
       await setDesiredContent(wrapper, 'Basketball');
       await checkTermsAndConditions(wrapper);
 
-      fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+      await userEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
       await waitFor(() => {
         expect(wrapper.getByText(/User update failed/));
@@ -178,7 +179,7 @@ describe('Trial Welcome Modal', () => {
       await setJobTitle(wrapper, '');
       await setDesiredContent(wrapper, ' ');
 
-      fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+      await userEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
       expect(await wrapper.findByText('Job title is required')).toBeVisible();
       expect(await wrapper.findByText('Audience is required')).toBeVisible();
@@ -205,7 +206,7 @@ describe('Trial Welcome Modal', () => {
       await setAudience(wrapper, 'K12');
       await setDesiredContent(wrapper, '');
 
-      fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+      await userEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
       expect(wrapper.queryByText('Job title is required')).toBeNull();
       expect(wrapper.queryByText('Audience is required')).toBeNull();
@@ -273,7 +274,7 @@ describe('Trial Welcome Modal', () => {
       await setDesiredContent(wrapper, 'Basketball');
       await checkTermsAndConditions(wrapper);
 
-      fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+      await userEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
       await waitFor(() => {
         expect(updateUserSpy).toHaveBeenCalledWith('kb', {
@@ -335,7 +336,7 @@ describe('Trial Welcome Modal', () => {
       await setDiscoveryMethod(wrapper, 'Employer');
       await setDiscoveryMethod(wrapper, 'Social Media');
 
-      fireEvent.click(
+      await userEvent.click(
         await wrapper.findByRole('button', { name: "Let's Go!" }),
       );
 
@@ -366,7 +367,7 @@ describe('Trial Welcome Modal', () => {
       await setAudience(wrapper, 'K12');
       await setDesiredContent(wrapper, 'Hockey');
 
-      fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+      await userEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
       expect(
         await wrapper.findByText('Organization type is required'),
@@ -399,7 +400,7 @@ describe('Trial Welcome Modal', () => {
         ),
       ).toBeNull();
 
-      fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+      await userEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
       await waitFor(() => {
         expect(updateUserSpy).toHaveBeenCalledWith('sk', {
@@ -473,7 +474,7 @@ describe('Trial Welcome Modal', () => {
       await setDiscoveryMethod(wrapper, 'Employer');
       await setDiscoveryMethod(wrapper, 'Social Media');
 
-      fireEvent.click(
+      await userEvent.click(
         await wrapper.findByRole('button', { name: "Let's Go!" }),
       );
 
@@ -504,7 +505,7 @@ describe('Trial Welcome Modal', () => {
       await setAudience(wrapper, 'K12');
       await setDesiredContent(wrapper, 'Hockey');
 
-      fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+      await userEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
 
       expect(
         await wrapper.findByText('I heard about Boclips is required'),
@@ -521,23 +522,23 @@ describe('Trial Welcome Modal', () => {
   async function setJobTitle(wrapper: RenderResult, value: string) {
     if (value) {
       const dropdown = await wrapper.findByTestId('input-dropdown-job-title');
-      fireEvent.click(within(dropdown).getByTestId('select'));
+      await userEvent.click(within(dropdown).getByTestId('select'));
       const option = within(dropdown).getByText(value);
       expect(option).toBeVisible();
-      fireEvent.click(option);
+      await userEvent.click(option);
     }
   }
 
   async function setAudience(wrapper: RenderResult, value: string) {
     if (value) {
       const dropdown = await wrapper.findByTestId('input-dropdown-audience');
-      fireEvent.click(within(dropdown).getByTestId('select'));
+      await userEvent.click(within(dropdown).getByTestId('select'));
       const option = within(dropdown).getByText(value);
       expect(option).toBeVisible();
-      fireEvent.click(option);
+      await userEvent.click(option);
 
       // make sure dropdown is closed
-      fireEvent.click(within(dropdown).getByTestId('select'));
+      await userEvent.click(within(dropdown).getByTestId('select'));
       expect(within(dropdown).queryByText(value)).toBeNull();
     }
   }
@@ -553,13 +554,13 @@ describe('Trial Welcome Modal', () => {
       const dropdown = await wrapper.findByTestId(
         'input-dropdown-organization-type',
       );
-      fireEvent.click(within(dropdown).getByTestId('select'));
+      await userEvent.click(within(dropdown).getByTestId('select'));
       const option = within(dropdown).getByText(value);
       expect(option).toBeVisible();
-      fireEvent.click(option);
+      await userEvent.click(option);
 
       // make sure dropdown is closed
-      fireEvent.click(within(dropdown).getByTestId('select'));
+      await userEvent.click(within(dropdown).getByTestId('select'));
       expect(within(dropdown).queryByText(value)).toBeNull();
     }
   }
@@ -569,13 +570,13 @@ describe('Trial Welcome Modal', () => {
       const dropdown = await wrapper.findByTestId(
         'input-dropdown-discovery-method',
       );
-      fireEvent.click(within(dropdown).getByTestId('select'));
+      await userEvent.click(within(dropdown).getByTestId('select'));
       const option = within(dropdown).getByText(value);
       expect(option).toBeVisible();
-      fireEvent.click(option);
+      await userEvent.click(option);
 
       // make sure dropdown is closed
-      fireEvent.click(within(dropdown).getByTestId('select'));
+      await userEvent.click(within(dropdown).getByTestId('select'));
       expect(within(dropdown).queryByText(value)).toBeNull();
     }
   }
@@ -585,7 +586,7 @@ describe('Trial Welcome Modal', () => {
       'input-checkbox-boclips-terms-conditions',
     );
     expect(checkbox).toBeVisible();
-    fireEvent.click(checkbox);
+    await userEvent.click(checkbox);
   }
 
   function renderWelcomeView(): RenderResult {

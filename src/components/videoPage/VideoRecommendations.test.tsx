@@ -36,7 +36,7 @@ describe('video recommendations', () => {
 
     const addToCartButton = await wrapper.findByTestId('add-to-cart-button');
 
-    fireEvent.click(addToCartButton);
+    await userEvent.click(addToCartButton);
 
     await waitFor(() =>
       expect(hotjarEvent).toHaveBeenCalledWith(

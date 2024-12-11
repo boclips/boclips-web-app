@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import PlaylistHeader from '@components/playlists/playlistHeader/PlaylistHeader';
 import { Constants } from '@src/AppConstants';
@@ -141,7 +141,7 @@ describe('Playlist Header', () => {
         name: 'Get view-only link',
       });
 
-      fireEvent.click(shareButton);
+      await userEvent.click(shareButton);
 
       expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
         `${Constants.HOST}/playlists/123`,
@@ -272,7 +272,7 @@ describe('Playlist Header', () => {
       name: 'Get view-only link',
     });
 
-    fireEvent.click(shareButton);
+    await userEvent.click(shareButton);
 
     await waitFor(() =>
       expect(hotjarEventSent).toHaveBeenCalledWith(
@@ -326,6 +326,7 @@ describe('Playlist Header', () => {
     expect(await wrapper.findByText('Edit')).toBeInTheDocument();
   });
 
+  // Error - RangeError: Invalid string length
   it('open edit modal when clicked on edit', async () => {
     const playlist = CollectionFactory.sample({
       id: '123',
@@ -335,9 +336,7 @@ describe('Playlist Header', () => {
 
     const wrapper = renderWrapper(playlist);
 
-    await waitFor(() => wrapper.getByText('Options')).then((it) => {
-      expect(it).toBeInTheDocument();
-    });
+    expect(await wrapper.findByText('Options')).toBeInTheDocument();
 
     await userEvent.click(wrapper.getByRole('button', { name: 'Options' }));
 

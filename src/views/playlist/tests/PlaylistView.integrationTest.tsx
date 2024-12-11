@@ -153,7 +153,7 @@ describe('Playlist view', () => {
       </MemoryRouter>,
     );
 
-    fireEvent.click(await screen.findByTestId('add-to-cart-button'));
+    await userEvent.click(await screen.findByTestId('add-to-cart-button'));
 
     await waitFor(async () => {
       expect((await client.carts.getCart()).items[0].videoId).toEqual('111');
@@ -173,7 +173,7 @@ describe('Playlist view', () => {
       </MemoryRouter>,
     );
 
-    fireEvent.click(await screen.findByTestId('remove-from-cart-button'));
+    await userEvent.click(await screen.findByTestId('remove-from-cart-button'));
 
     await waitFor(async () => {
       expect((await client.carts.getCart()).items).toHaveLength(0);
@@ -197,7 +197,7 @@ describe('Playlist view', () => {
       'Add or remove from playlist',
     );
 
-    fireEvent.click(videoToRemoveButton);
+    await userEvent.click(videoToRemoveButton);
 
     await waitFor(() => screen.getByTestId('add-to-playlist-pop-up'));
 
@@ -205,7 +205,7 @@ describe('Playlist view', () => {
       name: 'Hello there',
     });
 
-    fireEvent.click(playlistCheckbox);
+    await userEvent.click(playlistCheckbox);
 
     await waitForElementToBeRemoved(screen.queryByText('Video One 111'));
     const remainingVideos = screen.getAllByLabelText(
@@ -230,15 +230,15 @@ describe('Playlist view', () => {
 
     const shareLinkButton = screen.getByRole('button', { name: 'Share' });
 
-    fireEvent.click(shareLinkButton);
+    await userEvent.click(shareLinkButton);
 
     await waitFor(() => screen.getByTestId('playlist-permissions-modal'));
 
     const permissionDropdown = screen.getByRole('button', { name: 'can view' });
     expect(permissionDropdown).toBeVisible();
 
-    fireEvent.click(permissionDropdown);
-    fireEvent.click(screen.getByText('can edit'));
+    await userEvent.click(permissionDropdown);
+    await userEvent.click(screen.getByText('can edit'));
 
     await waitFor(() => {
       expect(updatePermissionFunction).toHaveBeenCalled();
@@ -371,7 +371,7 @@ describe('Playlist view', () => {
         </Router>,
       );
 
-      fireEvent.click(await wrapper.findByTestId('to-library-link'));
+      await userEvent.click(await wrapper.findByTestId('to-library-link'));
 
       expect(history.location.pathname).toEqual('/playlists');
     });
@@ -389,7 +389,7 @@ describe('Playlist view', () => {
       );
 
       const titleLink = await wrapper.findByTestId('playlist-title-link');
-      fireEvent.click(titleLink);
+      await userEvent.click(titleLink);
 
       expect(history.location.pathname).toEqual('/playlists/123');
     });

@@ -155,7 +155,7 @@ describe('Theme NavigationPanel', () => {
 
     expect(closeButton).toBeVisible();
 
-    fireEvent.click(closeButton);
+    await userEvent.click(closeButton);
 
     expect(wrapper.queryByText('button')).toBeNull();
   });
@@ -175,7 +175,7 @@ describe('Theme NavigationPanel', () => {
 
     expect(closeButton).toBeVisible();
     expect(wrapper.queryByText('Close')).toBeNull();
-    fireEvent.click(closeButton);
+    await userEvent.click(closeButton);
     expect(wrapper.queryByText('button')).toBeNull();
   });
 

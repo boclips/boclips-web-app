@@ -38,10 +38,10 @@ describe(`captions modal`, () => {
     expect(srtCheckbox).toBeVisible();
     expect(wrapper.getByRole('button', { name: 'Download' })).toBeVisible();
 
-    fireEvent.click(webvttCheckbox);
-    fireEvent.click(srtCheckbox);
+    await userEvent.click(webvttCheckbox);
+    await userEvent.click(srtCheckbox);
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Download' }));
+    await userEvent.click(wrapper.getByRole('button', { name: 'Download' }));
 
     expect(downloadFileSpy).toHaveBeenCalledTimes(2);
   });
@@ -57,7 +57,7 @@ describe(`captions modal`, () => {
 
     expect(wrapper.getByRole('button', { name: 'Download' })).toBeVisible();
     expect(wrapper.getByRole('button', { name: 'Download' })).toBeDisabled();
-    fireEvent.click(wrapper.getByRole('button', { name: 'Download' }));
+    await userEvent.click(wrapper.getByRole('button', { name: 'Download' }));
 
     expect(downloadFileSpy).toHaveBeenCalledTimes(0);
   });
@@ -77,8 +77,8 @@ describe(`captions modal`, () => {
       ),
     ).toBeNull();
 
-    fireEvent.click(wrapper.getByLabelText('English WEBVTT'));
-    fireEvent.click(wrapper.getByRole('button', { name: 'Download' }));
+    await userEvent.click(wrapper.getByLabelText('English WEBVTT'));
+    await userEvent.click(wrapper.getByRole('button', { name: 'Download' }));
 
     expect(downloadFileSpy).toHaveBeenCalledTimes(1);
     expect(downloadFileSpy).toHaveBeenCalledWith('/captions?format=VTT');
@@ -99,8 +99,8 @@ describe(`captions modal`, () => {
       ),
     ).toBeNull();
 
-    fireEvent.click(wrapper.getByLabelText('English SRT'));
-    fireEvent.click(wrapper.getByRole('button', { name: 'Download' }));
+    await userEvent.click(wrapper.getByLabelText('English SRT'));
+    await userEvent.click(wrapper.getByRole('button', { name: 'Download' }));
 
     expect(downloadFileSpy).toHaveBeenCalledTimes(1);
     expect(downloadFileSpy).toHaveBeenCalledWith('/captions?format=SRT');

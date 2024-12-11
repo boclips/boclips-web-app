@@ -11,7 +11,7 @@ describe('MarketingInfoForm', () => {
     expect(await wrapper.findByText('Job Title')).toBeVisible();
     const dropdown = await wrapper.findByText('Select your job title');
 
-    fireEvent.click(dropdown);
+    await userEvent.click(dropdown);
 
     expect(
       wrapper.getByText('Curriculum Developer/Instructional Designer'),
@@ -41,7 +41,7 @@ describe('MarketingInfoForm', () => {
     expect(await wrapper.findByText('Job Title')).toBeVisible();
     const dropdown = await wrapper.findByText('Select your job title');
 
-    fireEvent.click(dropdown);
+    await userEvent.click(dropdown);
 
     expect(wrapper.getByText('Administrator')).toBeVisible();
     expect(
@@ -88,7 +88,7 @@ describe('MarketingInfoForm', () => {
     expect(await wrapper.findByText('I heard about Boclips')).toBeVisible();
     const dropdown = await wrapper.findByText('How did you hear about us');
 
-    fireEvent.click(dropdown);
+    await userEvent.click(dropdown);
 
     expect(wrapper.getByText('CCC - Copyright Clearance Center')).toBeVisible();
     expect(wrapper.getByText('Edcuration/GG4L')).toBeVisible();
@@ -152,7 +152,7 @@ describe('MarketingInfoForm', () => {
     expect(await wrapper.findByText('Organization type')).toBeVisible();
     const dropdown = await wrapper.findByText('Select your organization type');
 
-    fireEvent.click(dropdown);
+    await userEvent.click(dropdown);
 
     expect(wrapper.getByText('Publisher')).toBeVisible();
     expect(wrapper.getByText('Edtech')).toBeVisible();

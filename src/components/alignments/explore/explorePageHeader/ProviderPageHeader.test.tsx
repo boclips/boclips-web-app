@@ -35,7 +35,7 @@ describe('Provider Page page Header', () => {
       </AlignmentContextProvider>,
     );
 
-    fireEvent.click(header.getByRole('button', { name: 'Back' }));
+    await userEvent.click(header.getByRole('button', { name: 'Back' }));
     expect(navigate).toHaveBeenCalledWith('/alignments');
   });
 });

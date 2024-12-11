@@ -3,9 +3,8 @@
  */
 import resizeTo from '@src/testSupport/resizeTo';
 import { expect, afterEach, vi } from 'vitest';
-import { cleanup } from '@testing-library/react';
+import { configure, cleanup } from '@testing-library/react';
 import * as matchers from '@testing-library/jest-dom/matchers';
-import { configure } from '@testing-library/dom';
 
 const testTimeout = 30000;
 configure({
@@ -62,8 +61,6 @@ Object.defineProperty(window, 'matchMedia', {
     dispatchEvent: vi.fn(),
   })),
 });
-
-configure({ testIdAttribute: 'data-qa' });
 
 window.ResizeObserver =
   window.ResizeObserver ||

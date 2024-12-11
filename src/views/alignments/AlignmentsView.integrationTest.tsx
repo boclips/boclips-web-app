@@ -54,7 +54,7 @@ describe('Alignments landing page', () => {
 
     expect(await wrapper.findByText('aligned')).toBeVisible();
 
-    fireEvent.click(await wrapper.findByText('NGSS'));
+    await userEvent.click(await wrapper.findByText('NGSS'));
 
     expect(history.location.pathname).toEqual('/alignments/ngss');
   });

@@ -130,7 +130,7 @@ describe('PlaylistsView', () => {
     it('renders playlists created by the user', async () => {
       const wrapper = renderPlaylistsView(client);
 
-      fireEvent.click(await wrapper.findByText('My playlists'));
+      await userEvent.click(await wrapper.findByText('My playlists'));
       expect(await wrapper.findByText('Playlist 1')).toBeVisible();
       expect(await wrapper.findByText('Playlist 2')).toBeVisible();
       expect(wrapper.queryByText('Bob made this Playlist')).toBeNull();
@@ -334,7 +334,7 @@ describe('PlaylistsView', () => {
       const shareButton = await wrapper.findByTestId(`share-playlist-button-1`);
 
       await act(async () => {
-        fireEvent.click(shareButton);
+        await userEvent.click(shareButton);
       });
 
       expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
@@ -459,7 +459,7 @@ describe('PlaylistsView', () => {
 
       expect(wrapper.queryByLabelText('Create new playlist')).toBeNull();
 
-      fireEvent.click(createPlaylistButton[0]);
+      await userEvent.click(createPlaylistButton[0]);
 
       expect(wrapper.getByLabelText('Create new playlist')).toBeVisible();
       expect(wrapper.getByLabelText('Playlist name')).toBeVisible();
@@ -483,7 +483,7 @@ describe('PlaylistsView', () => {
 
       await openPlaylistCreationModal(wrapper);
 
-      fireEvent.click(wrapper.getByRole('button', { name: 'Cancel' }));
+      await userEvent.click(wrapper.getByRole('button', { name: 'Cancel' }));
 
       const modal = wrapper.queryByLabelText('Create new playlist');
       expect(modal).not.toBeInTheDocument();
@@ -496,7 +496,9 @@ describe('PlaylistsView', () => {
 
       await openPlaylistCreationModal(wrapper);
 
-      fireEvent.click(wrapper.getByRole('button', { name: 'Create playlist' }));
+      await userEvent.click(
+        wrapper.getByRole('button', { name: 'Create playlist' }),
+      );
       const modal = wrapper.queryByLabelText('Create new playlist');
       expect(modal).toBeVisible();
       expect(wrapper.getByText('Playlist name is required')).toBeVisible();
@@ -584,7 +586,7 @@ describe('PlaylistsView', () => {
     });
 
     const openPlaylistCreationModal = async (wrapper: RenderResult) =>
-      fireEvent.click(
+      userEvent.click(
         await wrapper.findByRole('button', { name: 'Create new playlist' }),
       );
 
@@ -601,6 +603,8 @@ describe('PlaylistsView', () => {
       fillPlaylistField(wrapper, 'Description (Optional)', value);
 
     const confirmPlaylistCreationModal = (wrapper: RenderResult) =>
-      fireEvent.click(wrapper.getByRole('button', { name: 'Create playlist' }));
+      await userEvent.click(
+        wrapper.getByRole('button', { name: 'Create playlist' }),
+      );
   });
 });

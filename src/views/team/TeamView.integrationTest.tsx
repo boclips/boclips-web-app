@@ -191,7 +191,7 @@ describe('Team view', () => {
     ).toBeVisible();
     expect(wrapper.queryByLabelText('go to previous page')).toBeNull();
 
-    fireEvent.click(wrapper.getByLabelText('go to next page'));
+    await userEvent.click(wrapper.getByLabelText('go to next page'));
 
     expect(await wrapper.findByText('Joe25 Biden')).toBeVisible();
     expect(wrapper.getByLabelText('go to previous page')).toBeVisible();
@@ -238,7 +238,7 @@ describe('Team view', () => {
 
     const editButton = await wrapper.findByRole('button', { name: 'Edit' });
     expect(editButton).toBeVisible();
-    fireEvent.click(editButton);
+    await userEvent.click(editButton);
 
     await waitFor(() =>
       wrapper.getByRole('heading', { level: 1, name: 'Edit user' }),
@@ -300,7 +300,7 @@ describe('Team view', () => {
 
     const editButton = wrapper.getByRole('button', { name: 'Edit' });
     expect(editButton).toBeVisible();
-    fireEvent.click(editButton);
+    await userEvent.click(editButton);
 
     await waitFor(() =>
       wrapper.getByRole('heading', { level: 1, name: 'Edit user' }),
@@ -309,7 +309,7 @@ describe('Team view', () => {
     await userEvent.click(wrapper.getByLabelText('Can order videos? Yes'));
     await userEvent.click(wrapper.getByLabelText('Can manage team? No'));
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Save' }));
+    await userEvent.click(wrapper.getByRole('button', { name: 'Save' }));
 
     await waitForElementToBeRemoved(() =>
       wrapper.getByRole('heading', { level: 1, name: 'Edit user' }),
@@ -367,7 +367,7 @@ describe('Team view', () => {
 
     const removeButton = await wrapper.findByRole('button', { name: 'Remove' });
     expect(removeButton).toBeVisible();
-    fireEvent.click(removeButton);
+    await userEvent.click(removeButton);
 
     await waitFor(() =>
       wrapper.getByRole('heading', {
@@ -415,7 +415,7 @@ describe('Team view', () => {
 
     const removeButton = wrapper.getByRole('button', { name: 'Remove' });
     expect(removeButton).toBeVisible();
-    fireEvent.click(removeButton);
+    await userEvent.click(removeButton);
 
     await waitFor(() =>
       wrapper.getByRole('heading', {
@@ -424,7 +424,9 @@ describe('Team view', () => {
       }),
     );
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Yes, I confirm' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Yes, I confirm' }),
+    );
 
     await waitForElementToBeRemoved(() =>
       wrapper.getByRole('heading', {
@@ -472,7 +474,7 @@ describe('Team view', () => {
 
     const removeButton = wrapper.getByRole('button', { name: 'Remove' });
     expect(removeButton).toBeVisible();
-    fireEvent.click(removeButton);
+    await userEvent.click(removeButton);
 
     await waitFor(() =>
       wrapper.getByRole('heading', {
@@ -481,13 +483,15 @@ describe('Team view', () => {
       }),
     );
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Yes, I confirm' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Yes, I confirm' }),
+    );
 
     expect(
       await wrapper.findByTestId('user-removal-failed-joey@boclips.com'),
     ).toBeVisible();
 
-    fireEvent.click(
+    await userEvent.click(
       wrapper.getByRole('button', {
         name: 'Close Remove user from Team Accounts modal',
       }),

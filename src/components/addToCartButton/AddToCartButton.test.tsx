@@ -24,17 +24,14 @@ describe('Add to cart button', () => {
 
     const addToCartButton = await wrapper.findByText('Add to cart');
 
-    fireEvent.click(addToCartButton);
+    await userEvent.click(addToCartButton);
 
     expect(await wrapper.findByText('Remove')).toBeInTheDocument();
   });
 
   it('sends video added to cart Hotjar event', async () => {
     const apiClient = new FakeBoclipsClient();
-    const hotjarVideoAddedToCart = vi.spyOn(
-      AnalyticsFactory.hotjar(),
-      'event',
-    );
+    const hotjarVideoAddedToCart = vi.spyOn(AnalyticsFactory.hotjar(), 'event');
 
     const wrapper = render(
       <BoclipsClientProvider client={apiClient}>
@@ -44,7 +41,7 @@ describe('Add to cart button', () => {
 
     const addToCartButton = await wrapper.findByText('Add to cart');
 
-    fireEvent.click(addToCartButton);
+    await userEvent.click(addToCartButton);
 
     await waitFor(() =>
       expect(hotjarVideoAddedToCart).toHaveBeenCalledWith(
@@ -61,10 +58,7 @@ describe('Add to cart button', () => {
       links: null,
     });
 
-    const hotjarVideoAddedToCart = vi.spyOn(
-      AnalyticsFactory.hotjar(),
-      'event',
-    );
+    const hotjarVideoAddedToCart = vi.spyOn(AnalyticsFactory.hotjar(), 'event');
 
     const wrapper = render(
       <BoclipsClientProvider client={apiClient}>
@@ -74,7 +68,7 @@ describe('Add to cart button', () => {
 
     const removeFromCartButton = await wrapper.findByText('Remove');
 
-    fireEvent.click(removeFromCartButton);
+    await userEvent.click(removeFromCartButton);
 
     await waitFor(() =>
       expect(hotjarVideoAddedToCart).toHaveBeenCalledWith(
@@ -95,7 +89,7 @@ describe('Add to cart button', () => {
 
     const addToCartButton = await wrapper.findByText('Add to cart');
 
-    fireEvent.click(addToCartButton);
+    await userEvent.click(addToCartButton);
 
     await waitFor(() => expect(onClick).toHaveBeenCalled());
   });

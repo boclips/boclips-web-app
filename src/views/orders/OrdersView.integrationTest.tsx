@@ -56,7 +56,7 @@ describe('OrderView', () => {
     );
 
     const button = await wrapper.findByText('View order');
-    fireEvent.click(button);
+    await userEvent.click(button);
     expect((await wrapper.findAllByText('Order look for me')).length).toEqual(
       2,
     );

@@ -203,7 +203,7 @@ describe('focus', () => {
     await waitFor(() =>
       wrapper.getByLabelText('Add or remove from playlist'),
     ).then((it) => {
-      fireEvent.click(it);
+      await userEvent.click(it);
     });
 
     await userEvent.click(wrapper.getByText('Courage the Cowardly Dog'));
@@ -245,7 +245,7 @@ describe('focus', () => {
     await waitFor(() =>
       wrapper.getAllByLabelText('Add or remove from playlist'),
     ).then((it) => {
-      fireEvent.click(it[1]);
+      await userEvent.click(it[1]);
     });
 
     await userEvent.click(

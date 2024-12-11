@@ -88,14 +88,14 @@ describe(`Explore view`, () => {
     expect(await wrapper.findByText('Physics-1')).toBeVisible();
     expect(await wrapper.findByText('Physics-2')).toBeVisible();
 
-    fireEvent.click(wrapper.getByLabelText('type Maths'));
+    await userEvent.click(wrapper.getByLabelText('type Maths'));
 
     expect(await wrapper.findByText('Maths book')).toBeVisible();
     expect(wrapper.queryByText('French book')).toBeNull();
     expect(wrapper.queryByText('Physics-1')).toBeNull();
     expect(wrapper.queryByText('Physics-2')).toBeNull();
 
-    fireEvent.click(wrapper.getByLabelText('type French'));
+    await userEvent.click(wrapper.getByLabelText('type French'));
 
     expect(wrapper.queryByText('Maths book')).toBeNull();
     expect(await wrapper.findByText('French book')).toBeVisible();

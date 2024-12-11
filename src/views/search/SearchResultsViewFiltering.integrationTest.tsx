@@ -162,7 +162,7 @@ describe('SearchResultsFiltering', () => {
         }),
       );
 
-      fireEvent.click(wrapper.getByTestId('NEWS-checkbox'));
+      await userEvent.click(wrapper.getByTestId('NEWS-checkbox'));
       expect(newsCheckbox).toHaveProperty('checked', true);
 
       await waitFor(() => {
@@ -230,7 +230,7 @@ describe('SearchResultsFiltering', () => {
       expect(await wrapper.findByText('Get')).toHaveClass('font-medium');
       expect(wrapper.queryByText('Ted')).toBeNull();
 
-      fireEvent.click(wrapper.getByTestId('getty-id-checkbox'));
+      await userEvent.click(wrapper.getByTestId('getty-id-checkbox'));
 
       await waitFor(() => {
         expect(wrapper.queryByText('whale video')).toBeNull();
@@ -315,7 +315,7 @@ describe('SearchResultsFiltering', () => {
       expect(wrapper.getAllByTestId('option-hits')[0]).toHaveTextContent('12');
       expect(wrapper.getAllByTestId('option-hits')[1]).toHaveTextContent('5');
 
-      fireEvent.click(wrapper.getByTestId('eng-checkbox'));
+      await userEvent.click(wrapper.getByTestId('eng-checkbox'));
 
       await waitFor(() => {
         expect(wrapper.queryByText('my english video')).toBeVisible();
@@ -412,7 +412,7 @@ describe('SearchResultsFiltering', () => {
       expect(inputs[0].nextSibling).toHaveAttribute('value', '2018-12-01');
       expect(inputs[1].nextSibling).toHaveAttribute('value', '2020-12-01');
 
-      fireEvent.click(await wrapper.findByText('Clear all'));
+      await userEvent.click(await wrapper.findByText('Clear all'));
 
       expect(await wrapper.findAllByPlaceholderText('DD-MM-YYYY')).toHaveLength(
         2,
@@ -503,7 +503,7 @@ describe('SearchResultsFiltering', () => {
       await waitFor(() =>
         within(selectedFiltersSection).getByText('Manx'),
       ).then((it) => {
-        fireEvent.click(within(it).getByTestId('remove-filter-glv'));
+        await userEvent.click(within(it).getByTestId('remove-filter-glv'));
       });
 
       await waitFor(() => {
@@ -524,7 +524,7 @@ describe('SearchResultsFiltering', () => {
         expect(await wrapper.queryByText('japanese video')).toBeNull();
       });
 
-      fireEvent.click(await wrapper.findByText('Clear all'));
+      await userEvent.click(await wrapper.findByText('Clear all'));
 
       await waitFor(() => {
         expect(wrapper.queryByText('Selected filters')).toBeNull();
@@ -636,7 +636,7 @@ describe('SearchResultsFiltering', () => {
 
       const disciplineButton = wrapper.getByLabelText('Discipline 1');
       expect(disciplineButton).toBeVisible();
-      fireEvent.click(disciplineButton);
+      await userEvent.click(disciplineButton);
 
       expect(await wrapper.findByText('news video')).toBeInTheDocument();
       expect(await wrapper.findByText('french news video')).toBeInTheDocument();
@@ -652,7 +652,7 @@ describe('SearchResultsFiltering', () => {
         name: 'french',
       });
 
-      fireEvent.click(subjectCheckbox);
+      await userEvent.click(subjectCheckbox);
 
       await waitFor(async () => {
         expect(wrapper.getByText('french news video')).toBeInTheDocument();
@@ -780,7 +780,7 @@ describe('SearchResultsFiltering', () => {
         expect(wrapper.getByText('hello boats stock')).toBeInTheDocument();
       });
 
-      fireEvent.click(wrapper.getByText('cars'));
+      await userEvent.click(wrapper.getByText('cars'));
 
       await waitFor(() => {
         expect(wrapper.getByText('hello cars stock')).toBeVisible();
@@ -800,7 +800,7 @@ describe('SearchResultsFiltering', () => {
         expect(wrapper.queryByText('hello cars stock')).toBeNull();
       });
 
-      fireEvent.click(wrapper.getByText('cars'));
+      await userEvent.click(wrapper.getByText('cars'));
 
       await waitFor(() => {
         expect(wrapper.getByText('hello cars news')).toBeInTheDocument();
@@ -808,7 +808,7 @@ describe('SearchResultsFiltering', () => {
         expect(wrapper.queryByText('hello boats stock')).toBeNull();
       });
 
-      fireEvent.click(wrapper.getByText('Clear all'));
+      await userEvent.click(wrapper.getByText('Clear all'));
 
       await waitFor(() => {
         expect(wrapper.getByText('hello cars news')).toBeVisible();
@@ -943,7 +943,7 @@ describe('SearchResultsFiltering', () => {
         name: 'B1 Intermediate',
       });
       expect(b1Checkbox).toHaveProperty('checked', false);
-      fireEvent.click(b1Checkbox);
+      await userEvent.click(b1Checkbox);
 
       await waitFor(() => {
         expect(wrapper.getByText('hello cars badger')).toBeVisible();
@@ -1000,7 +1000,7 @@ describe('SearchResultsFiltering', () => {
         expect(wrapper.queryByText('video getty news')).toBeNull();
       });
 
-      fireEvent.click(wrapper.getByText('Getty'));
+      await userEvent.click(wrapper.getByText('Getty'));
 
       await waitFor(() => {
         expect(wrapper.getByText('video getty stock')).toBeInTheDocument();
@@ -1065,7 +1065,7 @@ describe('SearchResultsFiltering', () => {
 
       const disciplineButton = wrapper.getByLabelText('Discipline 1');
       expect(disciplineButton).toBeVisible();
-      fireEvent.click(disciplineButton);
+      await userEvent.click(disciplineButton);
 
       expect(
         wrapper.getByLabelText('Discipline 1').getAttribute('aria-expanded'),
@@ -1077,7 +1077,7 @@ describe('SearchResultsFiltering', () => {
 
       expect(historySubjectCheckbox).toBeVisible();
 
-      fireEvent.click(historySubjectCheckbox);
+      await userEvent.click(historySubjectCheckbox);
 
       expect(
         wrapper.getByLabelText('1 subject selected under Discipline 1'),
@@ -1196,7 +1196,7 @@ describe('SearchResultsFiltering', () => {
         name: 'Animation',
       });
       expect(animationCheckbox).toHaveProperty('checked', false);
-      fireEvent.click(animationCheckbox);
+      await userEvent.click(animationCheckbox);
 
       await waitFor(() => {
         expect(wrapper.getByText('animation video')).toBeVisible();

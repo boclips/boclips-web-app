@@ -33,7 +33,7 @@ describe('CopyVideoIdButton', () => {
 
     const button = await wrapper.findByLabelText('Copy video id');
 
-    fireEvent.click(button);
+    await userEvent.click(button);
 
     const notification = await wrapper.findByRole('alert');
     expect(within(notification).getByText('Copied!')).toBeVisible();

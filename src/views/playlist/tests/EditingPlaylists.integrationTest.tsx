@@ -162,7 +162,7 @@ describe('editing a playlist', () => {
       target: { value: 'Not that nice description' },
     });
 
-    fireEvent.click(wrapper.getByText('Save'));
+    await userEvent.click(wrapper.getByText('Save'));
 
     await waitForElementToBeRemoved(() =>
       wrapper.getByTestId('playlist-modal'),
@@ -223,7 +223,7 @@ describe('editing a playlist', () => {
       target: { value: 'Good bye' },
     });
 
-    fireEvent.click(wrapper.getByText('Save'));
+    await userEvent.click(wrapper.getByText('Save'));
 
     await waitForElementToBeRemoved(() =>
       wrapper.getByTestId('playlist-modal'),
@@ -239,7 +239,7 @@ describe('editing a playlist', () => {
     const addToPlaylistButton = within(videoOne).getByRole('button', {
       name: 'Add or remove from playlist',
     });
-    fireEvent.click(addToPlaylistButton);
+    await userEvent.click(addToPlaylistButton);
 
     const addToPlaylistModal = await wrapper.findByTestId(
       'add-to-playlist-pop-up',
@@ -283,7 +283,7 @@ describe('editing a playlist', () => {
       target: { value: 'Not that nice description' },
     });
 
-    fireEvent.click(wrapper.getByText('Save'));
+    await userEvent.click(wrapper.getByText('Save'));
 
     await waitForElementToBeRemoved(() =>
       wrapper.getByTestId('playlist-modal'),
@@ -327,7 +327,7 @@ describe('editing a playlist', () => {
       target: { value: 'Not that nice description' },
     });
 
-    fireEvent.click(wrapper.getByText('Cancel'));
+    await userEvent.click(wrapper.getByText('Cancel'));
 
     expect(await wrapper.findByTestId('playlistTitle')).toHaveTextContent(
       'Hello there',
@@ -373,7 +373,7 @@ describe('editing a playlist', () => {
       target: { value: 'Good bye' },
     });
 
-    fireEvent.click(wrapper.getByText('Save'));
+    await userEvent.click(wrapper.getByText('Save'));
 
     expect(await wrapper.findByTestId('edit-playlist-failed')).toBeVisible();
 
@@ -416,7 +416,7 @@ describe('editing a playlist', () => {
       target: { value: '' },
     });
 
-    fireEvent.click(wrapper.getByText('Save'));
+    await userEvent.click(wrapper.getByText('Save'));
 
     expect(await wrapper.findByText('Playlist name is required')).toBeVisible();
   });

@@ -146,7 +146,9 @@ describe('ClassroomRegistration Form', () => {
 
     await fillTheForm(wrapper, {});
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     await waitFor(() => {
       expect(createClassroomUserSpy).toBeCalledWith({
@@ -356,7 +358,9 @@ describe('ClassroomRegistration Form', () => {
 
     await fillTheForm(wrapper, {});
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     expect(await wrapper.findByText('User creation failed')).toBeVisible();
 
@@ -385,7 +389,9 @@ describe('ClassroomRegistration Form', () => {
 
     await fillTheForm(wrapper, {});
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     await waitFor(() => {
       expect(onRegistrationFinishedSpy).toBeCalledTimes(1);
@@ -413,7 +419,9 @@ describe('ClassroomRegistration Form', () => {
 
     await fillTheForm(wrapper, {});
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     expect(
       await wrapper.findByText(

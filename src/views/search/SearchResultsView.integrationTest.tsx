@@ -174,7 +174,7 @@ describe('SearchResults', () => {
       expect(wrapper.queryByText('video 30')).not.toBeInTheDocument();
     });
 
-    fireEvent.click(wrapper.getByLabelText('Page 2 out of 2'));
+    await userEvent.click(wrapper.getByLabelText('Page 2 out of 2'));
 
     await waitFor(() => {
       expect(wrapper.getByText('video 30')).toBeVisible();
@@ -208,7 +208,7 @@ describe('SearchResults', () => {
       </MemoryRouter>,
     );
 
-    fireEvent.click(await wrapper.findByTestId('NEWS-checkbox'));
+    await userEvent.click(await wrapper.findByTestId('NEWS-checkbox'));
     expect(wrapper.getByTestId('NEWS-checkbox')).toHaveProperty(
       'checked',
       true,
@@ -217,7 +217,7 @@ describe('SearchResults', () => {
     expect(await wrapper.findByText('video 0')).toBeVisible();
     expect(wrapper.queryByText('video 30')).not.toBeInTheDocument();
 
-    fireEvent.click(wrapper.getByLabelText('Page 2 out of 2'));
+    await userEvent.click(wrapper.getByLabelText('Page 2 out of 2'));
 
     expect(await wrapper.findByTestId('NEWS-checkbox')).toHaveProperty(
       'checked',
@@ -457,7 +457,7 @@ describe('SearchResults', () => {
       );
 
       await waitFor(async () => {
-        fireEvent.click(wrapper.getByTestId('grid-view-button'));
+        await userEvent.click(wrapper.getByTestId('grid-view-button'));
         expect(
           await wrapper.findByTestId('grid-card-for-nanana'),
         ).toBeVisible();

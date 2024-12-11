@@ -52,7 +52,7 @@ describe('SearchBar', () => {
     fireEvent.change(searchInput, { target: { value: 'cats' } });
 
     const searchButton = wrapper.getByText('Search');
-    fireEvent.click(searchButton);
+    await userEvent.click(searchButton);
 
     expect(history.location.pathname).toEqual('/videos');
     expect(history.location.search).toEqual(
@@ -185,7 +185,7 @@ describe('SearchBar', () => {
       fireEvent.focus(searchInput);
 
       expect(await wrapper.findByText('. Senate')).toBeInTheDocument();
-      fireEvent.click(await wrapper.findByText('. Senate'));
+      await userEvent.click(await wrapper.findByText('. Senate'));
 
       await waitFor(() => {
         const events: any[] = fakeBoclipsClient.events.getEvents();

@@ -85,7 +85,7 @@ describe('Reorder modal', () => {
     const updateButton = wrapper.getByRole('button', { name: 'Update' });
 
     expect(updateButton).toBeVisible();
-    fireEvent.click(updateButton);
+    await userEvent.click(updateButton);
 
     await waitFor(() => {
       expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({

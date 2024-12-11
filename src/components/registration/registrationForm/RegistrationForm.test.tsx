@@ -137,7 +137,9 @@ describe('Registration Form', () => {
 
     await fillTheForm(wrapper, {});
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     await waitFor(() => {
       expect(createTrialUserSpy).toBeCalledWith({
@@ -157,9 +159,9 @@ describe('Registration Form', () => {
 
   it('error notification is displayed when trial user creation fails, inputs are not cleared', async () => {
     const fakeClient = new FakeBoclipsClient();
-    vi
-      .spyOn(fakeClient.users, 'createTrialUser')
-      .mockImplementation(() => Promise.reject());
+    vi.spyOn(fakeClient.users, 'createTrialUser').mockImplementation(() =>
+      Promise.reject(),
+    );
 
     const wrapper = render(
       <Router>
@@ -176,7 +178,9 @@ describe('Registration Form', () => {
 
     await fillTheForm(wrapper, {});
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     expect(await wrapper.findByText('User creation failed')).toBeVisible();
 
@@ -205,7 +209,9 @@ describe('Registration Form', () => {
 
     await fillTheForm(wrapper, {});
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     await waitFor(() => {
       expect(onRegistrationFinishedSpy).toBeCalledTimes(1);
@@ -233,7 +239,9 @@ describe('Registration Form', () => {
 
     await fillTheForm(wrapper, {});
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     expect(
       await wrapper.findByText(

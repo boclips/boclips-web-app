@@ -26,7 +26,9 @@ describe('Registration Form Validation', () => {
     fillTheForm(wrapper, { firstName: '' });
 
     await checkErrorIsNotVisible(wrapper, 'First name is required');
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
     await checkErrorIsVisible(wrapper, 'First name is required');
 
     await waitFor(() => {
@@ -40,7 +42,9 @@ describe('Registration Form Validation', () => {
     fillTheForm(wrapper, { lastName: '' });
 
     await checkErrorIsNotVisible(wrapper, 'Last name is required');
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
     await checkErrorIsVisible(wrapper, 'Last name is required');
 
     await waitFor(() => {
@@ -54,7 +58,9 @@ describe('Registration Form Validation', () => {
     fillTheForm(wrapper, { email: '' });
 
     await checkErrorIsNotVisible(wrapper, 'Email is required');
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
     await checkErrorIsVisible(wrapper, 'Email is required');
 
     await waitFor(() => {
@@ -68,7 +74,9 @@ describe('Registration Form Validation', () => {
     fillTheForm(wrapper, { email: 'wrong@' });
 
     await checkErrorIsNotVisible(wrapper, 'Please enter a valid email address');
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
     await checkErrorIsVisible(wrapper, 'Please enter a valid email address');
 
     await waitFor(() => {
@@ -82,7 +90,9 @@ describe('Registration Form Validation', () => {
     fillTheForm(wrapper, { accountName: '' });
 
     await checkErrorIsNotVisible(wrapper, 'Organization name is required');
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
     await checkErrorIsVisible(wrapper, 'Organization name is required');
 
     await waitFor(() => {
@@ -95,7 +105,9 @@ describe('Registration Form Validation', () => {
 
     fillTheForm(wrapper, { password: '' });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
     await checkErrorIsVisible(wrapper, '8 characters');
 
     await waitFor(() => {
@@ -108,7 +120,9 @@ describe('Registration Form Validation', () => {
 
     fillTheForm(wrapper, { password: 'pass' });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     await checkErrorIsVisible(wrapper, '8 characters');
     await checkErrorIsVisible(wrapper, '1 capital letter');
@@ -129,7 +143,9 @@ describe('Registration Form Validation', () => {
       confirmPassword: 'def',
     });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
     await checkErrorIsVisible(wrapper, "Password doesn't match");
 
     await waitFor(() => {
@@ -143,7 +159,9 @@ describe('Registration Form Validation', () => {
     fillTheForm(wrapper, { country: '' });
 
     await checkErrorIsNotVisible(wrapper, 'Please select a country');
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
     await checkErrorIsVisible(wrapper, 'Please select a country');
 
     await waitFor(() => {
@@ -156,7 +174,9 @@ describe('Registration Form Validation', () => {
 
     fillTheForm(wrapper, { hasAcceptedEducationalUseTerms: false });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     expect(
       await wrapper.findByText('Educational use agreement is required'),
@@ -170,7 +190,9 @@ describe('Registration Form Validation', () => {
 
     fillTheForm(wrapper, { hasAcceptedTermsAndConditions: false });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     expect(
       await wrapper.findByText(
@@ -189,7 +211,9 @@ describe('Registration Form Validation', () => {
     const wrapper = renderRegistrationForm();
     fillTheForm(wrapper, { email: 'existing@email.com' });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     expect(await wrapper.findByText('Email already exists')).toBeVisible();
   });
@@ -202,7 +226,9 @@ describe('Registration Form Validation', () => {
     const wrapper = renderRegistrationForm();
     fillTheForm(wrapper, { accountName: 'Boclips' });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     expect(
       await wrapper.findByText(
@@ -226,7 +252,9 @@ describe('Registration Form Validation', () => {
       hasAcceptedTermsAndConditions: false,
     });
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     await checkErrorIsVisible(wrapper, 'First name is required');
     await checkErrorIsVisible(wrapper, 'Last name is required');
@@ -245,7 +273,9 @@ describe('Registration Form Validation', () => {
     );
 
     fillTheForm(wrapper, {});
-    fireEvent.click(wrapper.getByRole('button', { name: 'Create Account' }));
+    await userEvent.click(
+      wrapper.getByRole('button', { name: 'Create Account' }),
+    );
 
     await checkErrorIsNotVisible(wrapper, 'First name is required');
     await checkErrorIsNotVisible(wrapper, 'Last name is required');
