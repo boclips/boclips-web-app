@@ -189,12 +189,7 @@ describe(`Navbar test`, () => {
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 
-    fireEvent.keyDown(navbar.getByTestId('account-modal'), {
-      key: 'Escape',
-      code: 'Escape',
-      keyCode: 27,
-      charCode: 27,
-    });
+    await userEvent.type(navbar.getByTestId('account-modal'), '{esc}');
 
     expect(navbar.queryByTestId('account-modal')).not.toBeInTheDocument();
   });

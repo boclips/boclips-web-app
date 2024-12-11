@@ -4,6 +4,7 @@ import { render } from '@testing-library/react';
 import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
 import { AlignmentContextProvider } from '@components/common/providers/AlignmentContextProvider';
 import * as router from 'react-router';
+import userEvent from "@testing-library/user-event";
 
 describe('Provider Page page Header', () => {
   const navigate = vi.fn();
@@ -28,7 +29,7 @@ describe('Provider Page page Header', () => {
     expect(header.getByAltText('OpenStax logo')).toBeVisible();
   });
 
-  it('shows a Back button which redirects to Alignments page', () => {
+  it('shows a Back button which redirects to Alignments page', async () => {
     const header = render(
       <AlignmentContextProvider provider={ProviderFactory.sample('openstax')}>
         <ProviderPageHeader />

@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import React from 'react';
 import { Bodal } from '@components/common/bodal/Bodal';
 import { Input } from 'boclips-ui';
@@ -155,7 +155,7 @@ describe('The mighty Bodal', () => {
     expect(wrapper.getByTestId('spinner')).toBeInTheDocument();
   });
 
-  it(`attempts to cancel on pressing esc`, () => {
+  it(`attempts to cancel on pressing esc`, async () => {
     const cancelSpy = vi.fn();
     const wrapper = render(
       <Bodal title="test" onCancel={cancelSpy}>
@@ -163,7 +163,7 @@ describe('The mighty Bodal', () => {
       </Bodal>,
     );
 
-    fireEvent.keyDown(wrapper.getByRole('dialog'), { key: 'Escape' });
+    await userEvent.type(wrapper.getByRole('dialog'), '{esc}');
 
     expect(cancelSpy).toHaveBeenCalledTimes(1);
   });
@@ -193,7 +193,7 @@ describe('The mighty Bodal', () => {
     expect(wrapper.getByLabelText('Focus me')).toHaveFocus();
   });
 
-  it('onCancel invoked when mouse down outside of bodal when closeOnClickOutside prop is set', () => {
+  it('onCancel invoked when mouse down outside of bodal when closeOnClickOutside prop is set', async () => {
     const handleOnCancel = vi.fn();
     const wrapper = render(
       <Bodal title="Hello Bodal" onCancel={handleOnCancel} closeOnClickOutside>
@@ -202,12 +202,12 @@ describe('The mighty Bodal', () => {
     );
     const bodal = wrapper.getByRole('dialog');
 
-    fireEvent.mouseDown(bodal);
+    await userEvent.click(bodal);
 
     expect(handleOnCancel).toBeCalledTimes(1);
   });
 
-  it('onCancel invoked when mouse down outside of bodal and closeOnClickOutside prop not set', () => {
+  it('onCancel invoked when mouse down outside of bodal and closeOnClickOutside prop not set', async () => {
     const handleOnCancel = vi.fn();
     const wrapper = render(
       <Bodal title="Bodal" onCancel={handleOnCancel}>
@@ -216,12 +216,12 @@ describe('The mighty Bodal', () => {
     );
     const bodal = wrapper.getByRole('dialog');
 
-    fireEvent.mouseDown(bodal);
+    await userEvent.click(bodal);
 
     expect(handleOnCancel).toBeCalledTimes(1);
   });
 
-  it('onCancel not invoked when mouse down outside of bodal but closeOnClickOutside prop set to false', () => {
+  it('onCancel not invoked when mouse down outside of bodal but closeOnClickOutside prop set to false', async () => {
     const handleOnCancel = vi.fn();
     const wrapper = render(
       <Bodal
@@ -234,12 +234,12 @@ describe('The mighty Bodal', () => {
     );
     const bodal = wrapper.getByRole('dialog');
 
-    fireEvent.mouseDown(bodal);
+    await userEvent.click(bodal);
 
     expect(handleOnCancel).toBeCalledTimes(0);
   });
 
-  it('onCancel invoked when escape key down (when escape pressed with no focus on/within bodal)', () => {
+  it('onCancel invoked when escape key down (when escape pressed with no focus on/within bodal)', async () => {
     const handleOnCancel = vi.fn();
     const wrapper = render(
       <Bodal title="Hello Bodal" onCancel={handleOnCancel} closeOnClickOutside>
@@ -248,7 +248,7 @@ describe('The mighty Bodal', () => {
     );
 
     const body = wrapper.baseElement;
-    fireEvent.keyDown(body, { key: 'Escape' });
+    await userEvent.type(body, '{esc}');
 
     expect(handleOnCancel).toBeCalledTimes(1);
   });

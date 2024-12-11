@@ -1,9 +1,4 @@
-import {
-  fireEvent,
-  render,
-  RenderResult,
-  waitFor,
-} from '@testing-library/react';
+import { render, RenderResult, waitFor } from '@testing-library/react';
 import React from 'react';
 import ClassroomRegistrationForm, {
   ClassroomRegistrationData,

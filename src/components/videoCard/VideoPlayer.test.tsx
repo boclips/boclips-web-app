@@ -5,7 +5,7 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { Player, PlayerFactory } from 'boclips-player';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { BoclipsSecurityProvider } from '@components/common/providers/BoclipsSecurityProvider';
-import mocked = vi.mocked;
+import { vi } from 'vitest';
 
 vi.mock('boclips-player');
 
@@ -64,7 +64,7 @@ describe('VideoPlayer', () => {
       </BoclipsSecurityProvider>,
     );
 
-    const player: Player = mocked(PlayerFactory.get).mock.results[0].value;
+    const player: Player = vi.mocked(PlayerFactory.get).mock.results[0].value;
 
     expect(player.loadVideo).toHaveBeenCalledWith(
       video.links.self.getOriginalLink(),

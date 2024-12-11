@@ -1,7 +1,7 @@
 import { render } from '@src/testSupport/render';
 import React from 'react';
 import { NavigationPanel } from '@components/alignments/themePage/navigationPanel/NavigationPanel';
-import { fireEvent, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 import { ThemeMobileMenuProvider } from '@components/common/providers/ThemeMobileMenuProvider';
 import {
   resizeToDesktop,
@@ -16,6 +16,7 @@ import {
   TopicFactory,
 } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
+import userEvent from "@testing-library/user-event";
 
 describe('Theme NavigationPanel', () => {
   it('renders theme title with logo, topics, topic intros and targets for specific provider', async () => {
@@ -138,7 +139,7 @@ describe('Theme NavigationPanel', () => {
     },
   );
 
-  it('renders close button with label in tablet view, which calls callback', () => {
+  it('renders close button with label in tablet view, which calls callback', async () => {
     resizeToTablet();
 
     const wrapper = render(
@@ -160,7 +161,7 @@ describe('Theme NavigationPanel', () => {
     expect(wrapper.queryByText('button')).toBeNull();
   });
 
-  it('renders close button without label in tablet view, which calls callback', () => {
+  it('renders close button without label in tablet view, which calls callback', async () => {
     resizeToTablet();
 
     const wrapper = render(

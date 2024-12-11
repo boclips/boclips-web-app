@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  fireEvent,
   render,
   waitFor,
   waitForElementToBeRemoved,
@@ -143,7 +142,7 @@ describe('Team view', () => {
     );
 
     expect(
-      await wrapper.queryByRole('button', { name: 'Edit' }),
+      wrapper.queryByRole('button', { name: 'Edit' }),
     ).not.toBeInTheDocument();
   });
 
@@ -219,7 +218,7 @@ describe('Team view', () => {
       },
     });
 
-    await fakeClient.users.insertCurrentUser(joe);
+    fakeClient.users.insertCurrentUser(joe);
 
     const security: BoclipsSecurity = {
       ...stubBoclipsSecurity,

@@ -5,7 +5,6 @@ import {
 import { render } from '@src/testSupport/render';
 import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import {
-  fireEvent,
   RenderResult,
   waitFor,
   waitForElementToBeRemoved,
@@ -285,9 +284,10 @@ describe('Add to playlist button', () => {
       expect(wrapper.getByTestId('add-to-playlist-pop-up')).toBeVisible();
       expect(wrapper.queryByText('Add to playlist')).toBeInTheDocument();
 
-      fireEvent.keyDown(wrapper.getByTestId('add-to-playlist-pop-up'), {
-        key: 'Escape',
-      });
+      await userEvent.type(
+        wrapper.getByTestId('add-to-playlist-pop-up'),
+        '{esc}',
+      );
 
       expect(wrapper.queryByText('Add to playlist')).not.toBeInTheDocument();
     });

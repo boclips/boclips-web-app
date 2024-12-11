@@ -7,12 +7,7 @@ import LicensedContentFactory from 'boclips-api-client/dist/test-support/License
 import { render, renderWithClients } from '@src/testSupport/render';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { BoclipsSecurityProvider } from '@components/common/providers/BoclipsSecurityProvider';
-import {
-  fireEvent,
-  RenderResult,
-  waitFor,
-  within,
-} from '@testing-library/react';
+import { RenderResult, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';

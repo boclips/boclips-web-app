@@ -1,6 +1,6 @@
 import VideoGridCard from '@components/videoCard/VideoGridCard';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { fireEvent, render, waitFor, within } from '@testing-library/react';
+import { render, waitFor, within } from '@testing-library/react';
 import React from 'react';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
@@ -13,7 +13,7 @@ import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFa
 import dayjs from 'dayjs';
 
 describe(`VideoGridCard`, () => {
-  it('should call onfilterchange when clicking channel name', () => {
+  it('should call onfilterchange when clicking channel name', async () => {
     const video = VideoFactory.sample({
       createdBy: 'Channel-1',
       channelId: 'channel-1-id',

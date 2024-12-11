@@ -1,5 +1,4 @@
 import {
-  fireEvent,
   render,
   waitFor,
   waitForElementToBeRemoved,
@@ -23,6 +22,7 @@ import { BoclipsSecurityProvider } from '@components/common/providers/BoclipsSec
 import { Helmet } from 'react-helmet';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { Link } from 'boclips-api-client/dist/types';
+import userEvent from '@testing-library/user-event';
 
 describe('SearchResults', () => {
   beforeEach(() => {
@@ -100,8 +100,8 @@ describe('SearchResults', () => {
       'Search for videos',
     ) as HTMLInputElement;
 
-    fireEvent.change(searchBar, { target: { value: 'artist' } });
-    fireEvent.keyDown(searchBar, { key: 'Enter', code: 'Enter' });
+    await userEvent.type(searchBar, 'artist');
+    await userEvent.type(searchBar, '{enter}');
 
     await waitForElementToBeRemoved(() =>
       wrapper.getAllByTestId('video-card-placeholder'),
@@ -141,8 +141,8 @@ describe('SearchResults', () => {
       'Search for videos',
     ) as HTMLInputElement;
 
-    fireEvent.change(searchBar, { target: { value: 'cats' } });
-    fireEvent.keyDown(searchBar, { key: 'Enter', code: 'Enter' });
+    await userEvent.type(searchBar, 'cats');
+    await userEvent.type(searchBar, '{enter}');
 
     expect(await wrapper.findByText('cats have nine lives')).toBeVisible();
     expect(wrapper.queryByText('dogs are nice')).not.toBeInTheDocument();
@@ -292,13 +292,7 @@ describe('SearchResults', () => {
 
       expect(await wrapper.findByText('Add to cart')).toBeInTheDocument();
 
-      fireEvent(
-        wrapper.getByText('Add to cart'),
-        new MouseEvent('click', {
-          bubbles: true,
-          cancelable: true,
-        }),
-      );
+      await userEvent.click(wrapper.getByText('Add to cart'));
 
       expect(await wrapper.findByText('Video added to cart')).toBeVisible();
 
@@ -308,13 +302,7 @@ describe('SearchResults', () => {
 
       expect(wrapper.getByText('Remove')).toBeInTheDocument();
 
-      fireEvent(
-        wrapper.getByText('Remove'),
-        new MouseEvent('click', {
-          bubbles: true,
-          cancelable: true,
-        }),
-      );
+      await userEvent.click(wrapper.getByText('Remove'));
 
       expect(await wrapper.findByText('Video removed from cart')).toBeVisible();
 

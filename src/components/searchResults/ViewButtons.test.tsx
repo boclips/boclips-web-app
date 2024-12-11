@@ -2,11 +2,12 @@ import ViewButtons, {
   VIEW_TYPE_ITEM,
 } from '@components/searchResults/ViewButtons';
 
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import React from 'react';
 import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { lastEvent } from '@src/testSupport/lastEvent';
+import userEvent from "@testing-library/user-event";
 
 describe('Layout buttons', () => {
   beforeEach(() => {
@@ -51,7 +52,7 @@ describe('Layout buttons', () => {
     expect(onChange).toBeCalledWith('LIST');
   });
 
-  it('updates value when choosing different layout', () => {
+  it('updates value when choosing different layout', async () => {
     const onChange = vi.fn();
     localStorage.setItem(VIEW_TYPE_ITEM, 'GRID');
 
@@ -71,7 +72,7 @@ describe('Layout buttons', () => {
     expect(localStorage.getItem(VIEW_TYPE_ITEM)).toEqual('LIST');
   });
 
-  it('non-chosen layout button is outlined', () => {
+  it('non-chosen layout button is outlined', async () => {
     const onChange = vi.fn();
 
     const wrapper = render(
@@ -103,7 +104,7 @@ describe('Layout buttons', () => {
       client.clear();
     });
 
-    it('emits events when clicking a button changes view type', () => {
+    it('emits events when clicking a button changes view type', async () => {
       const wrapper = render(
         <BoclipsClientProvider client={client}>
           <ViewButtons onChange={vi.fn()} />
@@ -127,7 +128,7 @@ describe('Layout buttons', () => {
       });
     });
 
-    it('clicking on a view that is already in use wont trigger event', () => {
+    it('clicking on a view that is already in use wont trigger event', async () => {
       localStorage.setItem(VIEW_TYPE_ITEM, 'GRID');
 
       const wrapper = render(

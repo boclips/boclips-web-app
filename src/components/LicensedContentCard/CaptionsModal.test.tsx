@@ -1,8 +1,9 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { CaptionsModal } from '@components/LicensedContentCard/CaptionsModal';
 import React from 'react';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
 import * as DownloadFileFromUrl from '@src/services/downloadFileFromUrl';
+import userEvent from "@testing-library/user-event";
 
 describe(`captions modal`, () => {
   it(`displays info about captions processing when no link provided`, () => {
@@ -17,7 +18,7 @@ describe(`captions modal`, () => {
     ).toBeVisible();
   });
 
-  it(`can download multiple formats`, () => {
+  it(`can download multiple formats`, async () => {
     const downloadFileSpy = vi
       .spyOn(DownloadFileFromUrl, 'fetchFile')
       .mockImplementation(() => {});
@@ -46,7 +47,7 @@ describe(`captions modal`, () => {
     expect(downloadFileSpy).toHaveBeenCalledTimes(2);
   });
 
-  it(`if no captions selected download button is disabled`, () => {
+  it(`if no captions selected download button is disabled`, async () => {
     const downloadFileSpy = vi
       .spyOn(DownloadFileFromUrl, 'fetchFile')
       .mockImplementation(() => {});
@@ -62,7 +63,7 @@ describe(`captions modal`, () => {
     expect(downloadFileSpy).toHaveBeenCalledTimes(0);
   });
 
-  it(`can download webvtt captions`, () => {
+  it(`can download webvtt captions`, async () => {
     const downloadFileSpy = vi
       .spyOn(DownloadFileFromUrl, 'fetchFile')
       .mockImplementation(() => {});
@@ -84,7 +85,7 @@ describe(`captions modal`, () => {
     expect(downloadFileSpy).toHaveBeenCalledWith('/captions?format=VTT');
   });
 
-  it(`can download srt captions`, () => {
+  it(`can download srt captions`, async () => {
     const downloadFileSpy = vi
       .spyOn(DownloadFileFromUrl, 'fetchFile')
       .mockImplementation(() => {});

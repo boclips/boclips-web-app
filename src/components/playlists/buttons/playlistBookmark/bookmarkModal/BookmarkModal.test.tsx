@@ -1,9 +1,4 @@
-import {
-  fireEvent,
-  render,
-  RenderResult,
-  waitFor,
-} from '@testing-library/react';
+import { render, RenderResult, waitFor } from '@testing-library/react';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
@@ -75,7 +70,7 @@ describe('Bookmark modal for playlists', () => {
     expect(startCheckbox).toBeChecked();
     expect(startTimeInput).toBeEnabled();
 
-    fireEvent.change(startTimeInput, { target: { value: '00:32' } });
+    await userEvent.type(startTimeInput, '00:32');
 
     const endCheckbox = wrapper.getByRole('checkbox', {
       name: 'End time enabled',
@@ -92,7 +87,7 @@ describe('Bookmark modal for playlists', () => {
 
     expect(endTimeInput).toBeEnabled();
 
-    fireEvent.change(endTimeInput, { target: { value: '00:55' } });
+    await userEvent.type(endTimeInput, '00:55');
 
     await userEvent.click(wrapper.getByText('Set'));
 
@@ -268,7 +263,7 @@ describe('Bookmark modal for playlists', () => {
     const startTimeInput = wrapper.getByLabelText('Start time:');
 
     await userEvent.click(startCheckbox);
-    fireEvent.change(startTimeInput, { target: { value: '00:32' } });
+    await userEvent.type(startTimeInput, '00:32');
 
     const endCheckbox = wrapper.getByRole('checkbox', {
       name: 'End time enabled',
@@ -276,7 +271,7 @@ describe('Bookmark modal for playlists', () => {
     });
     const endTimeInput = wrapper.getByLabelText('End time:');
     await userEvent.click(endCheckbox);
-    fireEvent.change(endTimeInput, { target: { value: '00:55' } });
+    await userEvent.type(endTimeInput, '00:55');
 
     await userEvent.click(wrapper.getByText('Set'));
     await waitFor(() => {

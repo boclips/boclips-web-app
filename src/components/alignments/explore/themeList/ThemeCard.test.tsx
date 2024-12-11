@@ -1,5 +1,5 @@
 import { ThemeCard } from '@components/alignments/explore/themeList/ThemeCard';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
@@ -169,9 +169,10 @@ describe('ThemeCard', () => {
         expect(wrapper.getByLabelText(`theme ${theme.title}`)).toHaveFocus();
       });
 
-      fireEvent.keyDown(wrapper.getByLabelText(`theme ${theme.title}`), {
-        key: 'Escape',
-      });
+      await userEvent.type(
+        wrapper.getByLabelText(`theme ${theme.title}`),
+        '{esc}',
+      );
 
       expect(wrapper.getByRole('main')).toHaveFocus();
     });

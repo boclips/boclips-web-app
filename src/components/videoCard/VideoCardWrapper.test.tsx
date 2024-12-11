@@ -1,15 +1,15 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import React, { act } from 'react';
+import React from 'react';
 import { VideoCardWrapper } from '@components/videoCard/VideoCardWrapper';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { render } from '@src/testSupport/render';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { VideoInteractedWith } from 'boclips-api-client/dist/sub-clients/events/model/EventRequest';
-import { fireEvent } from '@testing-library/react';
 import { Button } from 'boclips-ui';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
+import userEvent from '@testing-library/user-event';
 
 describe('Video card', () => {
   it('displays all the given information on a video card', async () => {
@@ -108,9 +108,7 @@ describe('Video card', () => {
 
       const title = await wrapper.findByText('video killed the radio star');
 
-      act(() => {
-        await userEvent.click(title);
-      });
+      await userEvent.click(title);
 
       const videoInteractedEvent =
         fakeClient.events.getEvents()[0] as VideoInteractedWith;
@@ -121,7 +119,7 @@ describe('Video card', () => {
   });
 
   describe(`createdBy link`, () => {
-    it(`renders a clickable link in createdBy element`, () => {
+    it(`renders a clickable link in createdBy element`, async () => {
       const video = VideoFactory.sample({
         createdBy: 'Amazing content partner',
         channelId: '123',

@@ -1,5 +1,4 @@
 import {
-  fireEvent,
   render,
   screen,
   waitFor,
@@ -28,6 +27,7 @@ import { BoclipsSecurityProvider } from '@components/common/providers/BoclipsSec
 import { CollectionFactory as collectionFactory } from '@src/testSupport/CollectionFactory';
 import { sleep } from '@src/testSupport/sleep';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
+import userEvent from "@testing-library/user-event";
 
 const createAssetWithThumbnail = (id: string, videoTitle: string) => {
   const video = VideoFactory.sample({

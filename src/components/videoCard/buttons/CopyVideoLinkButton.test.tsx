@@ -1,12 +1,6 @@
 import React from 'react';
 import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
-import {
-  act,
-  fireEvent,
-  render,
-  waitFor,
-  within,
-} from '@testing-library/react';
+import { render, waitFor, within } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { VideoInteractedWith } from 'boclips-api-client/dist/sub-clients/events/model/EventRequest';
@@ -15,6 +9,7 @@ import { buildVideoDetailsLink } from '@src/services/buildVideoDetailsLink';
 import { ToastContainer } from 'react-toastify';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { CopyVideoLinkButton } from './CopyVideoLinkButton';
+import userEvent from '@testing-library/user-event';
 
 describe('CopyLinkButton', () => {
   Object.assign(navigator, {
@@ -73,9 +68,7 @@ describe('CopyLinkButton', () => {
 
     const button = await wrapper.findByLabelText('Copy video link');
 
-    act(() => {
-      await userEvent.click(button);
-    });
+    await userEvent.click(button);
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
       buildVideoDetailsLink(video, user),

@@ -1,4 +1,4 @@
-import { fireEvent, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import React from 'react';
@@ -9,6 +9,7 @@ import { stubBoclipsSecurity } from '@src/testSupport/StubBoclipsSecurity';
 import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
+import userEvent from "@testing-library/user-event";
 
 describe('video recommendations', () => {
   let apiClient: FakeBoclipsClient;

@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import React from 'react';
 import { Search } from '@components/searchBar/SearchBar';
@@ -9,6 +9,7 @@ import { SearchQueryCompletionsSuggestedRequest } from 'boclips-api-client/dist/
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { queryClientConfig } from '@src/hooks/api/queryClientConfig';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
+import userEvent from '@testing-library/user-event';
 
 describe('SearchBar', () => {
   it('renders with search button displayed', () => {
@@ -49,7 +50,7 @@ describe('SearchBar', () => {
     const searchInput = wrapper.getByPlaceholderText(
       'Search for videos',
     ) as HTMLInputElement;
-    fireEvent.change(searchInput, { target: { value: 'cats' } });
+    await userEvent.type(searchInput, 'cats');
 
     const searchButton = wrapper.getByText('Search');
     await userEvent.click(searchButton);
@@ -87,8 +88,8 @@ describe('SearchBar', () => {
       const searchInput = wrapper.getByPlaceholderText(
         'Search for videos',
       ) as HTMLInputElement;
-      fireEvent.change(searchInput, { target: { value: 'U.S' } });
-      fireEvent.focus(searchInput);
+      await userEvent.type(searchInput, 'U.S');
+      await userEvent.click(searchInput);
 
       expect(await wrapper.findByText('. Government')).toBeInTheDocument();
       expect(await wrapper.findByText('. Senate')).toBeInTheDocument();
@@ -108,8 +109,8 @@ describe('SearchBar', () => {
       const searchInput = wrapper.getByPlaceholderText(
         'Search for videos',
       ) as HTMLInputElement;
-      fireEvent.change(searchInput, { target: { value: 'U.S' } });
-      fireEvent.focus(searchInput);
+      await userEvent.type(searchInput, 'U.S');
+      await userEvent.click(searchInput);
 
       expect(await wrapper.findByText('. Government')).toBeInTheDocument();
       expect(await wrapper.findByText('. Senate')).toBeInTheDocument();
@@ -131,8 +132,8 @@ describe('SearchBar', () => {
       const searchInput = wrapper.getByPlaceholderText(
         'Search for videos',
       ) as HTMLInputElement;
-      fireEvent.change(searchInput, { target: { value: 'U.S' } });
-      fireEvent.focus(searchInput);
+      await userEvent.type(searchInput, 'U.S');
+      await userEvent.click(searchInput);
 
       expect(wrapper.queryByText('. Government')).toBeNull();
     });
@@ -151,8 +152,8 @@ describe('SearchBar', () => {
       const searchInput = wrapper.getByPlaceholderText(
         'Search for videos',
       ) as HTMLInputElement;
-      fireEvent.change(searchInput, { target: { value: 'U.S' } });
-      fireEvent.focus(searchInput);
+      await userEvent.type(searchInput, 'U.S');
+      await userEvent.click(searchInput);
 
       await waitFor(() => {
         const suggestEvent = lastEvent(
@@ -181,8 +182,8 @@ describe('SearchBar', () => {
       const searchInput = wrapper.getByPlaceholderText(
         'Search for videos',
       ) as HTMLInputElement;
-      fireEvent.change(searchInput, { target: { value: 'U.S' } });
-      fireEvent.focus(searchInput);
+      await userEvent.type(searchInput, 'U.S');
+      await userEvent.click(searchInput);
 
       expect(await wrapper.findByText('. Senate')).toBeInTheDocument();
       await userEvent.click(await wrapper.findByText('. Senate'));

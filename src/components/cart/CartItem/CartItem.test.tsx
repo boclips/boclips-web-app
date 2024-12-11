@@ -1,5 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
+import { render, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import CartItem from '@components/cart/CartItem/CartItem';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
@@ -332,9 +332,7 @@ describe('CartItem', () => {
       'eg. Remove front and end credits',
     );
 
-    fireEvent.change(input, {
-      target: { value: 'please do some lovely editing' },
-    });
+    await userEvent.type(input, 'please do some lovely editing');
     const changedInput = await wrapper.findByDisplayValue(
       'please do some lovely editing',
     );
@@ -379,9 +377,9 @@ describe('CartItem', () => {
 
     waitFor(async () => {
       const input = await wrapper.findByDisplayValue('this was a mistake');
-      fireEvent.change(input, {
-        target: { value: null },
-      });
+
+      await userEvent.clear(input);
+
       const changedInput = await wrapper.findByDisplayValue(
         'eg. Remove front and end credits',
       );

@@ -2,7 +2,7 @@ import './mockRecaptcha';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
-import { fireEvent, render, RenderResult } from '@testing-library/react';
+import { render, RenderResult } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { ToastContainer } from 'react-toastify';

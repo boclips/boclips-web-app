@@ -1,71 +1,72 @@
-import { fireEvent, RenderResult, within } from '@testing-library/react';
+import { RenderResult, within } from '@testing-library/react';
 import { RegistrationData } from 'src/components/registration/registrationForm/RegistrationForm';
+import userEvent from '@testing-library/user-event';
 
-export function fillRegistrationForm(
+export async function fillRegistrationForm(
   wrapper: RenderResult,
   data: RegistrationData,
 ) {
-  fireEvent.change(wrapper.container.querySelector('[id="input-firstName"]'), {
-    target: { value: data.firstName },
-  });
+  await userEvent.type(
+    wrapper.container.querySelector('[id="input-firstName"]'),
+    data.firstName,
+  );
 
-  fireEvent.change(wrapper.container.querySelector('[id="input-lastName"]'), {
-    target: { value: data.lastName },
-  });
-  fireEvent.change(wrapper.container.querySelector('[id="input-email"]'), {
-    target: { value: data.email },
-  });
-  fireEvent.change(wrapper.container.querySelector('[id="input-password"]'), {
-    target: { value: data.password },
-  });
-  fireEvent.change(
+  await userEvent.type(
+    wrapper.container.querySelector('[id="input-lastName"]'),
+    data.lastName,
+  );
+  await userEvent.type(
+    wrapper.container.querySelector('[id="input-email"]'),
+    data.email,
+  );
+  await userEvent.type(
+    wrapper.container.querySelector('[id="input-password"]'),
+    data.password,
+  );
+  await userEvent.type(
     wrapper.container.querySelector('[id="input-confirmPassword"]'),
-    {
-      target: { value: data.confirmPassword },
-    },
+    data.confirmPassword,
   );
-  fireEvent.change(
+  await userEvent.type(
     wrapper.container.querySelector('[id="input-accountName"]'),
-    {
-      target: { value: data.accountName },
-    },
+    data.accountName,
   );
 
-  setDropdownValue(wrapper, 'input-dropdown-country', data.country);
+  await setDropdownValue(wrapper, 'input-dropdown-country', data.country);
 
   if (data.hasAcceptedEducationalUseTerms) {
-    checkEducationalUseAgreement(wrapper);
+    await checkEducationalUseAgreement(wrapper);
   }
 
   if (data.hasAcceptedTermsAndConditions) {
-    checkTermsAndConditions(wrapper);
+    await checkTermsAndConditions(wrapper);
   }
 }
 
-function setDropdownValue(
+async function setDropdownValue(
   wrapper: RenderResult,
   dropdownId: string,
   value: string,
 ) {
   if (value) {
     const dropdown = wrapper.getByTestId(dropdownId);
-    fireEvent.click(within(dropdown).getByTestId('select'));
+    await userEvent.click(within(dropdown).getByTestId('select'));
     const option = within(dropdown).getByText(value);
     expect(option).toBeVisible();
-    fireEvent.click(option);
+    await userEvent.click(option);
   }
 }
 
-const checkEducationalUseAgreement = (wrapper: RenderResult) => {
-  fireEvent.click(
+const checkEducationalUseAgreement = async (wrapper: RenderResult) => {
+  await userEvent.click(
     wrapper.getByLabelText(
       /I certify that I am accessing this service solely for Educational Use./,
     ),
   );
 };
 
-const checkTermsAndConditions = (wrapper: RenderResult) => {
-  fireEvent.click(
+const checkTermsAndConditions = async (wrapper: RenderResult) => {
+  await userEvent.click(
     wrapper.getByLabelText(
       /I understand that by checking this box, I am agreeing to the Boclips Terms & Conditions/,
     ),

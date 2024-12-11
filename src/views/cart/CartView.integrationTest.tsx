@@ -421,9 +421,7 @@ describe('CartView', () => {
         await wrapper.findByText('Specify your editing requirements'),
       ).toBeVisible();
 
-      fireEvent.change(input, {
-        target: { value: 'please do some lovely editing' },
-      });
+      await userEvent.type(input, 'please do some lovely editing');
 
       expect(
         wrapper.queryByText(
@@ -537,7 +535,7 @@ describe('CartView', () => {
 
       await userEvent.click(await wrapper.findByText('Trim video'));
 
-      fireEvent.focus(await wrapper.findByLabelText('From:'));
+      await userEvent.click(await wrapper.findByLabelText('From:'));
 
       await userEvent.type(wrapper.getByLabelText('From:'), 'k1a2:30s');
 
@@ -589,7 +587,7 @@ describe('CartView', () => {
         'Add a note about this order',
       );
 
-      fireEvent.change(input, { target: { value: 'i am a note' } });
+      await userEvent.type(input, 'i am a note');
       const changedInput = await wrapper.findByDisplayValue('i am a note');
       expect(changedInput).toBeVisible();
 

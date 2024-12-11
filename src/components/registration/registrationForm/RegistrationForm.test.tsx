@@ -1,9 +1,4 @@
-import {
-  fireEvent,
-  render,
-  RenderResult,
-  waitFor,
-} from '@testing-library/react';
+import { render, RenderResult, waitFor } from '@testing-library/react';
 import React from 'react';
 import RegistrationForm, {
   RegistrationData,
@@ -51,7 +46,7 @@ describe('Registration Form', () => {
       hasAcceptedTermsAndConditions: true,
     };
 
-    fillRegistrationForm(wrapper, { ...defaults, ...change });
+    await fillRegistrationForm(wrapper, { ...defaults, ...change });
   }
 
   it('renders the form', async () => {

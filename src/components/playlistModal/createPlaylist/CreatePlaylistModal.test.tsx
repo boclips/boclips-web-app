@@ -6,9 +6,10 @@ import { render } from '@src/testSupport/render';
 import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import React from 'react';
 import { CreatePlaylistModal } from '@components/playlistModal/createPlaylist/CreatePlaylistModal';
-import { fireEvent, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { CollectionFactory } from '@src/testSupport/CollectionFactory';
+import userEvent from '@testing-library/user-event';
 
 describe('Create new playlist modal', () => {
   it('creates a playlist with playlist name and description', async () => {
@@ -19,13 +20,12 @@ describe('Create new playlist modal', () => {
       handleOnSuccess,
     );
 
-    fireEvent.change(wrapper.getByPlaceholderText('Add name'), {
-      target: { value: 'sail' },
-    });
+    await userEvent.type(wrapper.getByPlaceholderText('Add name'), 'sail');
 
-    fireEvent.change(wrapper.getByPlaceholderText('Add description'), {
-      target: { value: 'hold the anchor' },
-    });
+    await userEvent.type(
+      wrapper.getByPlaceholderText('Add description'),
+      'hold the anchor',
+    );
 
     await userEvent.click(
       wrapper.getByRole('button', { name: 'Create playlist' }),
@@ -34,7 +34,7 @@ describe('Create new playlist modal', () => {
     await waitFor(() => expect(handleOnSuccess).toBeCalledTimes(1));
   });
 
-  it('calls passed on cancel when cancelled', () => {
+  it('calls passed on cancel when cancelled', async () => {
     const handleOnCancelled = vi.fn((data) => data);
     const wrapper = renderWrapper(
       new FakeBoclipsClient(),
@@ -42,20 +42,19 @@ describe('Create new playlist modal', () => {
       vi.fn(),
     );
 
-    fireEvent.change(wrapper.getByPlaceholderText('Add name'), {
-      target: { value: 'sail' },
-    });
+    await userEvent.type(wrapper.getByPlaceholderText('Add name'), 'sail');
 
-    fireEvent.change(wrapper.getByPlaceholderText('Add description'), {
-      target: { value: 'hold the anchor' },
-    });
+    await userEvent.type(
+      wrapper.getByPlaceholderText('Add description'),
+      'hold the anchor',
+    );
 
     await userEvent.click(wrapper.getByRole('button', { name: 'Cancel' }));
 
     expect(handleOnCancelled).toBeCalledTimes(1);
   });
 
-  it('returns an error when playlist name is empty', () => {
+  it('returns an error when playlist name is empty', async () => {
     const wrapper = renderWrapper();
 
     await userEvent.click(
@@ -73,9 +72,7 @@ describe('Create new playlist modal', () => {
       handleOnSuccess,
     );
 
-    fireEvent.change(wrapper.getByPlaceholderText('Add name'), {
-      target: { value: 'sail' },
-    });
+    await userEvent.type(wrapper.getByPlaceholderText('Add name'), 'sail');
 
     await userEvent.click(
       wrapper.getByRole('button', { name: 'Create playlist' }),
@@ -91,9 +88,7 @@ describe('Create new playlist modal', () => {
     const handleOnError = vi.fn();
     const wrapper = renderWrapper(fakeClient, vi.fn(), vi.fn(), handleOnError);
 
-    fireEvent.change(wrapper.getByPlaceholderText('Add name'), {
-      target: { value: 'prove' },
-    });
+    await userEvent.type(wrapper.getByPlaceholderText('Add name'), 'prove');
 
     await userEvent.click(
       wrapper.getByRole('button', { name: 'Create playlist' }),

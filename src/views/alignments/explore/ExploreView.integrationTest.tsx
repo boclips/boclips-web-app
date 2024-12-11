@@ -1,5 +1,5 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { QueryClient } from '@tanstack/react-query';
 import { MemoryRouter } from 'react-router-dom';

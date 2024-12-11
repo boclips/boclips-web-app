@@ -1,4 +1,4 @@
-import { fireEvent, RenderResult, within } from '@testing-library/react';
+import { RenderResult, within } from '@testing-library/react';
 import { ClassroomRegistrationData } from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
 import userEvent from '@testing-library/user-event';
 
@@ -107,16 +107,16 @@ export async function setCustomComboBoxValue(
   }
 }
 
-const checkEducationalUseAgreement = (wrapper: RenderResult) => {
-  fireEvent.click(
+const checkEducationalUseAgreement = async (wrapper: RenderResult) => {
+  await userEvent.click(
     wrapper.getByLabelText(
       /I certify that I am accessing this service solely for Educational Use./,
     ),
   );
 };
 
-const checkTermsAndConditions = (wrapper: RenderResult) => {
-  fireEvent.click(
+const checkTermsAndConditions = async (wrapper: RenderResult) => {
+  await userEvent.click(
     wrapper.getByLabelText(
       /I understand that by checking this box, I am agreeing to the Boclips Terms & Conditions/,
     ),

@@ -1,10 +1,4 @@
-import {
-  fireEvent,
-  render,
-  RenderResult,
-  waitFor,
-  within,
-} from '@testing-library/react';
+import { render, RenderResult, waitFor, within } from '@testing-library/react';
 import React from 'react';
 import { OptionsButton } from '@components/playlists/playlistHeader/OptionsButton';
 import { CollectionFactory } from '@src/testSupport/CollectionFactory';
@@ -33,7 +27,7 @@ describe('OptionsButton', () => {
 
     const wrapper = renderOptionsButton(playlist, client);
 
-    fireEvent.click(wrapper.getByRole('button', { name: 'Options' }));
+    await userEvent.click(wrapper.getByRole('button', { name: 'Options' }));
 
     await waitFor(() => {
       expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({

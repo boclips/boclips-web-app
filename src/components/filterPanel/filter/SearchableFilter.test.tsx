@@ -1,9 +1,10 @@
 import { renderWithLocation } from '@src/testSupport/renderWithLocation';
-import { fireEvent, RenderResult } from '@testing-library/react';
+import { RenderResult } from '@testing-library/react';
 import React from 'react';
 import { SearchableFilter } from '@components/filterPanel/filter/SearchableFilter';
 import { FilterOption } from '@src/types/FilterOption';
 import { FilterOptionFactory } from '@src/testSupport/FilterOptionFactory';
+import userEvent from '@testing-library/user-event';
 
 describe('searchableFilter', () => {
   const channels: FilterOption[] = [
@@ -59,7 +60,7 @@ describe('searchableFilter', () => {
     expect(getSearchInput(panel)).toBeInTheDocument();
   });
 
-  it('filters and bolds options based on the search input', () => {
+  it('filters and bolds options based on the search input', async () => {
     const panel = renderWithLocation(
       <SearchableFilter
         options={channels}
@@ -71,7 +72,7 @@ describe('searchableFilter', () => {
 
     expect(panel.getByText('Show all (6)')).toBeInTheDocument();
 
-    fireEvent.change(getSearchInput(panel), { target: { value: 'TED' } });
+    await userEvent.type(getSearchInput(panel), 'TED');
 
     expect(panel.queryByText('Show all (6)')).toBeNull();
     expect(panel.getByText('TED')).toHaveClass('font-medium');
@@ -79,7 +80,7 @@ describe('searchableFilter', () => {
     expect(panel.queryByText('History channel')).not.toBeInTheDocument();
   });
 
-  it('resets the filter search when toggling the filter', () => {
+  it('resets the filter search when toggling the filter', async () => {
     const panel = renderWithLocation(
       <SearchableFilter
         options={channels}
@@ -89,9 +90,7 @@ describe('searchableFilter', () => {
       />,
     );
 
-    fireEvent.change(getSearchInput(panel), {
-      target: { value: 'Not valid channel' },
-    });
+    await userEvent.type(getSearchInput(panel), 'Not valid channel');
 
     // Close and open the panel
     await userEvent.click(panel.getByText('Channels'));

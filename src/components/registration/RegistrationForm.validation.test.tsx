@@ -1,10 +1,5 @@
 import './mockRecaptcha';
-import {
-  fireEvent,
-  render,
-  RenderResult,
-  waitFor,
-} from '@testing-library/react';
+import { render, RenderResult, waitFor } from '@testing-library/react';
 import React from 'react';
 import RegistrationForm, {
   RegistrationData,
@@ -15,6 +10,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { fillRegistrationForm } from '@components/registration/registrationFormTestHelpers';
 import { BrowserRouter as Router } from 'react-router-dom';
+import userEvent from "@testing-library/user-event";
 
 describe('Registration Form Validation', () => {
   const fakeClient = new FakeBoclipsClient();
@@ -315,7 +311,7 @@ describe('Registration Form Validation', () => {
     );
   }
 
-  function fillTheForm(
+  async function fillTheForm(
     wrapper: RenderResult,
     change?: Partial<RegistrationData>,
   ) {
@@ -331,7 +327,7 @@ describe('Registration Form Validation', () => {
       hasAcceptedTermsAndConditions: true,
     };
 
-    fillRegistrationForm(wrapper, { ...defaults, ...change });
+    await fillRegistrationForm(wrapper, { ...defaults, ...change });
   }
 
   async function checkErrorIsNotVisible(

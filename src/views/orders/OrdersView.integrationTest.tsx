@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import App from '@src/App';
@@ -14,6 +14,7 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { Helmet } from 'react-helmet';
 import { createReactQueryClient } from '@src/testSupport/createReactQueryClient';
+import userEvent from "@testing-library/user-event";
 
 describe('OrderView', () => {
   it('loads the no orders view when there are no orders', async () => {

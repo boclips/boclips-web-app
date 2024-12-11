@@ -2,8 +2,8 @@ import React from 'react';
 import { renderWithLocation } from '@src/testSupport/renderWithLocation';
 import { FilterOptionFactory } from '@src/testSupport/FilterOptionFactory';
 import { FilterOptionList } from '@components/filterPanel/filter/FilterOptionList';
-import { fireEvent } from '@testing-library/react';
 import { FilterOption } from '@src/types/FilterOption';
+import userEvent from "@testing-library/user-event";
 
 describe('FilterOptionList', () => {
   const createFixtures = (fixturesToCreate: number) => {
@@ -62,7 +62,7 @@ describe('FilterOptionList', () => {
     expect(childNodes[6].textContent).toContain('Option 1');
   });
 
-  it('renders selected filters first', () => {
+  it('renders selected filters first', async () => {
     const panel = renderWithLocation(
       <FilterOptionList
         options={createFixtures(7)}

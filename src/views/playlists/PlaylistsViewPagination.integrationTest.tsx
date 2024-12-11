@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import App from '@src/App';
@@ -9,6 +9,7 @@ import { BoclipsClient } from 'boclips-api-client';
 import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import { QueryClient } from '@tanstack/react-query';
 import { Link } from 'boclips-api-client/dist/types';
+import userEvent from "@testing-library/user-event";
 
 const insertUser = (client: FakeBoclipsClient) =>
   client.users.insertCurrentUser(UserFactory.sample());

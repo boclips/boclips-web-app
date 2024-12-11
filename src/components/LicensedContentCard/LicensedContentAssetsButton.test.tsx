@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import LicensedContentAssetsButton from '@components/LicensedContentCard/LicensedContentAssetsButton';
 import LicensedContentFactory from 'boclips-api-client/dist/test-support/LicensedContentFactory';
 import { lastEvent } from '@src/testSupport/lastEvent';

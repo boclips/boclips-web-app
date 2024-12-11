@@ -1,10 +1,4 @@
-import {
-  fireEvent,
-  render,
-  RenderResult,
-  waitFor,
-  within,
-} from '@testing-library/react';
+import { render, RenderResult, waitFor, within } from '@testing-library/react';
 import { MemoryRouter, Router } from 'react-router-dom';
 import App from '@src/App';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
@@ -121,7 +115,9 @@ describe('ThemeView', () => {
 
     await userEvent.click(wrapper.getByText('Chapter Overview'));
 
-    validateVisibleHeadings(bookDetails, 3, ['Chapter Overview (1 video)']);
+    await waitFor(() => {
+      validateVisibleHeadings(bookDetails, 3, ['Chapter Overview (1 video)']);
+    });
 
     const bookToc = wrapper.getByLabelText(
       'Table of contents of Everything to know about ducks',
@@ -168,19 +164,21 @@ describe('ThemeView', () => {
     expect(titles[0]).toBeVisible();
     expect(titles[1]).toBeVisible();
 
-    const bookDetails = wrapper.getByLabelText(
-      'Content for Everything to know about ducks',
-    );
+    await waitFor(() => {
+      const bookDetails = wrapper.getByLabelText(
+        'Content for Everything to know about ducks',
+      );
 
-    expect(bookDetails).toBeVisible();
-    validateVisibleHeadings(bookDetails, 2, ['Chapter 1: Introduction']);
-    validateVisibleHeadings(bookDetails, 3, [
-      '1.2 Adventures outside (0 videos)',
-    ]);
+      expect(bookDetails).toBeVisible();
+      validateVisibleHeadings(bookDetails, 2, ['Chapter 1: Introduction']);
+      validateVisibleHeadings(bookDetails, 3, [
+        '1.2 Adventures outside (0 videos)',
+      ]);
 
-    expect(
-      wrapper.getByText('We’re working on it! These videos are coming soon!'),
-    ).toBeVisible();
+      expect(
+        wrapper.getByText('We’re working on it! These videos are coming soon!'),
+      ).toBeVisible();
+    });
   });
 
   it('renders second chapter when selected', async () => {

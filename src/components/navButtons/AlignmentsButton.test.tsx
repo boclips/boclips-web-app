@@ -4,8 +4,9 @@ import { BoclipsClientProvider } from '@components/common/providers/BoclipsClien
 import React from 'react';
 import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import App from '@src/App';
+import userEvent from "@testing-library/user-event";
 
 describe('alignments button', () => {
   beforeEach(() => {

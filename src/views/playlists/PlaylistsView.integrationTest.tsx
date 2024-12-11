@@ -1,6 +1,4 @@
 import {
-  act,
-  fireEvent,
   render,
   RenderResult,
   waitFor,
@@ -142,7 +140,7 @@ describe('PlaylistsView', () => {
     it('displays shared playlists', async () => {
       const wrapper = renderPlaylistsView(client);
 
-      fireEvent.mouseDown(
+      await userEvent.click(
         await wrapper.findByRole('tab', { name: 'Shared with you' }),
       );
       expect(await wrapper.findByText('Bob made this Playlist')).toBeVisible();
@@ -165,7 +163,7 @@ describe('PlaylistsView', () => {
       );
       const wrapper = renderPlaylistsView(client);
 
-      fireEvent.mouseDown(
+      await userEvent.click(
         await wrapper.findByRole('tab', { name: 'Boclips featured' }),
       );
       expect(
@@ -190,7 +188,7 @@ describe('PlaylistsView', () => {
       );
       const wrapper = renderPlaylistsView(client);
 
-      fireEvent.mouseDown(
+      await userEvent.click(
         await wrapper.findByRole('tab', { name: 'Boclips featured' }),
       );
       expect(
@@ -204,7 +202,7 @@ describe('PlaylistsView', () => {
     it(`emits events when clicking shared, boclips and my playlists tabs`, async () => {
       const wrapper = renderPlaylistsView(client);
 
-      fireEvent.mouseDown(
+      await userEvent.click(
         await wrapper.findByRole('tab', { name: 'Boclips featured' }),
       );
 
@@ -220,7 +218,7 @@ describe('PlaylistsView', () => {
         });
       });
 
-      fireEvent.mouseDown(
+      await userEvent.click(
         await wrapper.findByRole('tab', { name: 'Shared with you' }),
       );
 
@@ -292,18 +290,18 @@ describe('PlaylistsView', () => {
     );
     await userEvent.type(searchInput, 'pears');
 
-    fireEvent.mouseDown(
+    await userEvent.click(
       await wrapper.findByRole('tab', { name: 'My playlists' }),
     );
     await waitForElementToBeRemoved(() => wrapper.getByText('Apples'));
     expect(await wrapper.findByText('pears')).toBeVisible();
 
-    fireEvent.mouseDown(
+    await userEvent.click(
       await wrapper.findByRole('tab', { name: 'Shared with you' }),
     );
     expect(await wrapper.findByText('Shared pears')).toBeVisible();
 
-    fireEvent.mouseDown(
+    await userEvent.click(
       await wrapper.findByRole('tab', { name: 'Boclips featured' }),
     );
     expect(await wrapper.findByText('Boclips loves pears')).toBeVisible();
@@ -509,15 +507,17 @@ describe('PlaylistsView', () => {
 
       await openPlaylistCreationModal(wrapper);
 
-      fireEvent.change(wrapper.getByPlaceholderText('Add name'), {
-        target: { value: 'new playlist name' },
-      });
+      await userEvent.type(
+        wrapper.getByPlaceholderText('Add name'),
+        'new playlist name',
+      );
 
-      fireEvent.change(wrapper.getByPlaceholderText('Add description'), {
-        target: { value: 'Blabla new playlist' },
-      });
+      await userEvent.type(
+        wrapper.getByPlaceholderText('Add description'),
+        'Blabla new playlist',
+      );
 
-      confirmPlaylistCreationModal(wrapper);
+      await confirmPlaylistCreationModal(wrapper);
 
       await waitFor(() =>
         expect(wrapper.getByTestId('playlistTitle')).toHaveTextContent(
@@ -525,7 +525,7 @@ describe('PlaylistsView', () => {
         ),
       );
 
-      expect(await wrapper.getByText('Blabla new playlist')).toBeVisible();
+      expect(wrapper.getByText('Blabla new playlist')).toBeVisible();
     });
 
     it('sends playlist created Hotjar event', async () => {
@@ -542,7 +542,7 @@ describe('PlaylistsView', () => {
 
       await fillPlaylistName(wrapper, 'My new playlist');
       await fillPlaylistDescription(wrapper, 'Blabla new playlist');
-      confirmPlaylistCreationModal(wrapper);
+      await confirmPlaylistCreationModal(wrapper);
 
       await waitFor(() =>
         expect(hotjarPlaylistCreated).toHaveBeenCalledWith(
@@ -559,7 +559,7 @@ describe('PlaylistsView', () => {
 
       await openPlaylistCreationModal(wrapper);
       await fillPlaylistName(wrapper, 'My new playlist');
-      confirmPlaylistCreationModal(wrapper);
+      await confirmPlaylistCreationModal(wrapper);
 
       expect(
         await wrapper.findByText('Error: Failed to create new playlist'),
@@ -576,7 +576,7 @@ describe('PlaylistsView', () => {
 
       await openPlaylistCreationModal(wrapper);
       await fillPlaylistName(wrapper, 'My new playlist');
-      confirmPlaylistCreationModal(wrapper);
+      await confirmPlaylistCreationModal(wrapper);
 
       await waitFor(() => {
         expect(wrapper.getByTestId('spinner')).toBeInTheDocument();

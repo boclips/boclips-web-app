@@ -1,5 +1,5 @@
 import ReorderModal from '@components/playlistModal/reorder/ReorderPlaylistModal';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
@@ -10,6 +10,7 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 import { lastEvent } from '@src/testSupport/lastEvent';
+import userEvent from "@testing-library/user-event";
 
 describe('Reorder modal', () => {
   const client = new FakeBoclipsClient();

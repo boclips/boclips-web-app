@@ -6,7 +6,7 @@ import {
 import { renderWithLocation } from '@src/testSupport/renderWithLocation';
 import { FilterOption } from '@src/types/FilterOption';
 import { FilterOptionFactory } from '@src/testSupport/FilterOptionFactory';
-import { fireEvent } from '@testing-library/react';
+import userEvent from "@testing-library/user-event";
 
 describe('DisciplinesWithSubjectsCheckboxFilter', () => {
   const subjects: FilterOption[] = [
@@ -70,7 +70,7 @@ describe('DisciplinesWithSubjectsCheckboxFilter', () => {
     expect(panel.queryByText('English')).toBeNull();
   });
 
-  it('can open disciplines', () => {
+  it('can open disciplines', async () => {
     const panel = renderWithLocation(
       <DisciplinesWithSubjectsCheckboxFilter
         options={hierarchicalFilterOptions}
@@ -98,7 +98,7 @@ describe('DisciplinesWithSubjectsCheckboxFilter', () => {
     expect(panel.getByText('5')).toBeVisible();
   });
 
-  it('show all subjects when discipline is opened, no limit on options', () => {
+  it('show all subjects when discipline is opened, no limit on options', async () => {
     const subjectOptions: FilterOption[] = [];
 
     for (let i = 0; i < 20; i++) {

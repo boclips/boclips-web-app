@@ -1,9 +1,10 @@
 import React from 'react';
-import { fireEvent, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 import { CheckboxFilter } from '@components/filterPanel/filter/CheckboxFilter';
 import { renderWithLocation } from '@src/testSupport/renderWithLocation';
 import { FilterOption } from '@src/types/FilterOption';
 import { FilterOptionFactory } from '@src/testSupport/FilterOptionFactory';
+import userEvent from "@testing-library/user-event";
 
 describe('filterPanel', () => {
   const generateOptions = (optionNumber: number): FilterOption[] => {
@@ -57,7 +58,7 @@ describe('filterPanel', () => {
     expect(panel.queryByText('Show all (2)')).toBeNull();
   });
 
-  it('can hide the options if you collapse the panel', () => {
+  it('can hide the options if you collapse the panel', async () => {
     const panel = renderWithLocation(
       <CheckboxFilter
         options={videoTypes}
@@ -73,7 +74,7 @@ describe('filterPanel', () => {
     expect(panel.getByText('Stock')).toBeVisible();
   });
 
-  it('can uncheck an option and others remain checked', () => {
+  it('can uncheck an option and others remain checked', async () => {
     const panel = renderWithLocation(
       <CheckboxFilter
         options={videoTypes}
@@ -109,7 +110,7 @@ describe('filterPanel', () => {
     expect(panel.queryByText('Option 5')).toBeNull();
   });
 
-  it('toggles the filter to show more results', () => {
+  it('toggles the filter to show more results', async () => {
     const panel = renderWithLocation(
       <CheckboxFilter
         options={generateOptions(6)}
@@ -127,7 +128,7 @@ describe('filterPanel', () => {
     expect(panel.getByText('Show less')).toBeVisible();
   });
 
-  it('calls handleChanged on click', () => {
+  it('calls handleChanged on click', async () => {
     const changeHandler = vi.fn();
 
     const panel = renderWithLocation(

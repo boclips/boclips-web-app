@@ -1,4 +1,4 @@
-import { fireEvent, RenderResult } from '@testing-library/react';
+import { RenderResult } from '@testing-library/react';
 import React from 'react';
 import { DisciplineSubjectFilter } from '@components/filterPanel/DisciplineSubjectFilter';
 import { FilterOption } from '@src/types/FilterOption';
@@ -8,6 +8,7 @@ import { BoclipsClientProvider } from '@components/common/providers/BoclipsClien
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { renderWithLocation } from '@src/testSupport/renderWithLocation';
 import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
+import userEvent from '@testing-library/user-event';
 
 describe('Discipline Subject filter', () => {
   const filterOptions: FilterOption[] = [
@@ -79,7 +80,7 @@ describe('Discipline Subject filter', () => {
     expect(wrapper.container).toBeEmptyDOMElement();
   });
 
-  it('renders hierarchy of options and user can open disciplines to see subjects', () => {
+  it('renders hierarchy of options and user can open disciplines to see subjects', async () => {
     const wrapper = renderDisciplineSubjectFilter(
       filterOptions,
       disciplineFixtures,
@@ -95,7 +96,7 @@ describe('Discipline Subject filter', () => {
     expect(wrapper.getByText('Art history')).toBeVisible();
   });
 
-  it('filters and bolds options based on the search input', () => {
+  it('filters and bolds options based on the search input', async () => {
     const wrapper = renderDisciplineSubjectFilter(
       filterOptions,
       disciplineFixtures,
@@ -104,7 +105,7 @@ describe('Discipline Subject filter', () => {
     await userEvent.click(wrapper.getByText('Discipline 1'));
     await userEvent.click(wrapper.getByText('Discipline 2'));
 
-    fireEvent.change(getSearchInput(wrapper), { target: { value: 'his' } });
+    await userEvent.type(getSearchInput(wrapper), 'his');
 
     expect(wrapper.getByText('His')).toHaveClass('font-medium');
     expect(wrapper.getByText('tory')).toBeInTheDocument();

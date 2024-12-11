@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, within } from '@testing-library/react';
+import { within } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -7,6 +7,7 @@ import { BoclipsClientProvider } from '@components/common/providers/BoclipsClien
 import { render } from '@src/testSupport/render';
 import { ToastContainer } from 'react-toastify';
 import { CopyVideoIdButton } from './CopyVideoIdButton';
+import userEvent from '@testing-library/user-event';
 
 describe('CopyVideoIdButton', () => {
   Object.assign(navigator, {

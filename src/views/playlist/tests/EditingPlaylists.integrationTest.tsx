@@ -1,6 +1,5 @@
 import { createBrowserHistory } from 'history';
 import {
-  fireEvent,
   render,
   waitFor,
   waitForElementToBeRemoved,
@@ -155,12 +154,11 @@ describe('editing a playlist', () => {
 
     await userEvent.click(wrapper.getByText('Edit'));
 
-    fireEvent.change(wrapper.getByDisplayValue('Hello there'), {
-      target: { value: 'Good bye' },
-    });
-    fireEvent.change(wrapper.getByDisplayValue('Very nice description'), {
-      target: { value: 'Not that nice description' },
-    });
+    await userEvent.type(wrapper.getByDisplayValue('Hello there'), 'Good bye');
+    await userEvent.type(
+      wrapper.getByDisplayValue('Very nice description'),
+      'Not that nice description',
+    );
 
     await userEvent.click(wrapper.getByText('Save'));
 
@@ -219,9 +217,7 @@ describe('editing a playlist', () => {
 
     await waitFor(() => wrapper.getByTestId('playlist-modal'));
 
-    fireEvent.change(wrapper.getByPlaceholderText('Add name'), {
-      target: { value: 'Good bye' },
-    });
+    await userEvent.type(wrapper.getByPlaceholderText('Add name'), 'Good bye');
 
     await userEvent.click(wrapper.getByText('Save'));
 
@@ -275,13 +271,12 @@ describe('editing a playlist', () => {
 
     await waitFor(() => wrapper.getByTestId('playlist-modal'));
 
-    fireEvent.change(wrapper.getByPlaceholderText('Add name'), {
-      target: { value: 'Good bye' },
-    });
+    await userEvent.type(wrapper.getByPlaceholderText('Add name'), 'Good bye');
 
-    fireEvent.change(wrapper.getByDisplayValue('Very nice description'), {
-      target: { value: 'Not that nice description' },
-    });
+    await userEvent.type(
+      wrapper.getByDisplayValue('Very nice description'),
+      'Not that nice description',
+    );
 
     await userEvent.click(wrapper.getByText('Save'));
 
@@ -320,12 +315,11 @@ describe('editing a playlist', () => {
 
     await userEvent.click(wrapper.getByText('Edit'));
 
-    fireEvent.change(wrapper.getByDisplayValue('Hello there'), {
-      target: { value: 'Good bye' },
-    });
-    fireEvent.change(wrapper.getByDisplayValue('Very nice description'), {
-      target: { value: 'Not that nice description' },
-    });
+    await userEvent.type(wrapper.getByDisplayValue('Hello there'), 'Good bye');
+    await userEvent.type(
+      wrapper.getByDisplayValue('Very nice description'),
+      'Not that nice description',
+    );
 
     await userEvent.click(wrapper.getByText('Cancel'));
 
@@ -369,9 +363,7 @@ describe('editing a playlist', () => {
 
     await userEvent.click(wrapper.getByText('Edit'));
 
-    fireEvent.change(wrapper.getByDisplayValue('Hello there'), {
-      target: { value: 'Good bye' },
-    });
+    await userEvent.type(wrapper.getByDisplayValue('Hello there'), 'Good bye');
 
     await userEvent.click(wrapper.getByText('Save'));
 
@@ -412,9 +404,7 @@ describe('editing a playlist', () => {
 
     await userEvent.click(wrapper.getByText('Edit'));
 
-    fireEvent.change(wrapper.getByDisplayValue('Hello there'), {
-      target: { value: '' },
-    });
+    await userEvent.clear(wrapper.getByDisplayValue('Hello there'));
 
     await userEvent.click(wrapper.getByText('Save'));
 
