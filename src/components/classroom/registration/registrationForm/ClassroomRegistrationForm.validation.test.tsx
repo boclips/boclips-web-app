@@ -326,11 +326,9 @@ describe('ClassroomRegistration Form Validation', () => {
   });
 
   it('displays error message if email already exists', async () => {
-    jest
-      .spyOn(fakeClient.users, 'createClassroomUser')
-      .mockImplementation(() =>
-        Promise.reject(new Error('User already exists for account: Boclips')),
-      );
+    vi.spyOn(fakeClient.users, 'createClassroomUser').mockImplementation(() =>
+      Promise.reject(new Error('User already exists for account: Boclips')),
+    );
 
     const wrapper = renderRegistrationForm();
     await fillTheForm(wrapper, { email: 'existing@email.com' });
@@ -343,11 +341,9 @@ describe('ClassroomRegistration Form Validation', () => {
   });
 
   it('displays error message if account name already exists', async () => {
-    jest
-      .spyOn(fakeClient.users, 'createClassroomUser')
-      .mockImplementation(() =>
-        Promise.reject(new Error('Account Boclips already exists')),
-      );
+    vi.spyOn(fakeClient.users, 'createClassroomUser').mockImplementation(() =>
+      Promise.reject(new Error('Account Boclips already exists')),
+    );
 
     const wrapper = renderRegistrationForm();
     await fillTheForm(wrapper, { schoolName: 'Boclips' });

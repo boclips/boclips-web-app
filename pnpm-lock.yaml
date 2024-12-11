@@ -360,9 +360,6 @@ importers:
       identity-obj-proxy:
         specifier: ^3.0.0
         version: 3.0.0
-      jest-environment-jsdom:
-        specifier: ^29.7.0
-        version: 29.7.0
       less:
         specifier: ^4.2.1
         version: 4.2.1

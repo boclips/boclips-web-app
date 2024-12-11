@@ -18,6 +18,7 @@ import userEvent from '@testing-library/user-event';
 import { ToastContainer } from 'react-toastify';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
 import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
+import { sleep } from '@src/testSupport/sleep';
 
 describe('Add to playlist button', () => {
   const asset = CollectionAssetFactory.sample({
@@ -44,18 +45,33 @@ describe('Add to playlist button', () => {
 
   it('shows loading information before playlists are loaded', async () => {
     const fakeClient = new FakeBoclipsClient();
-
-    const playlists = [
-      CollectionFactory.sample({
-        id: '1',
-        title: 'Playlist 1',
-        owner: 'user-123',
-        mine: true,
-      }),
-    ];
-
     fakeClient.collections.setCurrentUser('user-123');
-    playlists.forEach((it) => fakeClient.collections.addToFake(it));
+
+    const playlist = CollectionFactory.sample({
+      id: '1',
+      title: 'Playlist 1',
+      owner: 'user-123',
+      mine: true,
+    });
+    fakeClient.collections.addToFake(playlist);
+
+    async function addDelayToGetMySavedAndEditableCollectionsWithoutDetails(
+      delay: number,
+    ) {
+      const pageableCollections =
+        await fakeClient.collections.getMySavedAndEditableCollectionsWithoutDetails(
+          {},
+        );
+
+      fakeClient.collections.getMySavedAndEditableCollectionsWithoutDetails = vi
+        .fn()
+        .mockImplementation(async () => {
+          await sleep(delay);
+          return Promise.resolve(pageableCollections);
+        });
+    }
+
+    await addDelayToGetMySavedAndEditableCollectionsWithoutDetails(50);
 
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
@@ -73,6 +89,15 @@ describe('Add to playlist button', () => {
 
   it('clicking on playlist button opens popover that can be closed with X button', async () => {
     const fakeClient = new FakeBoclipsClient();
+    fakeClient.collections.setCurrentUser('user-123');
+
+    const playlist = CollectionFactory.sample({
+      id: '1',
+      title: 'Playlist 1',
+      owner: 'user-123',
+      mine: true,
+    });
+    fakeClient.collections.addToFake(playlist);
 
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
@@ -81,10 +106,12 @@ describe('Add to playlist button', () => {
     );
 
     const playlistButton = await wrapper.findByLabelText('Add to playlist');
+
     fireEvent.click(playlistButton);
+    expect(await wrapper.findByText('Playlist 1')).toBeInTheDocument();
 
     fireEvent.click(await wrapper.findByLabelText('close add to playlist'));
-    expect(wrapper.queryByText('Add to playlist')).not.toBeInTheDocument();
+    expect(wrapper.queryByText('Playlist 1')).not.toBeInTheDocument();
   });
 
   it('there are only own and not shared playlists visible in popover', async () => {
@@ -234,7 +261,7 @@ describe('Add to playlist button', () => {
 
   it('video added event sent as Hotjar event', async () => {
     const fakeClient = new FakeBoclipsClient();
-    const hotjarVideoAddedToPlaylist = jest.spyOn(
+    const hotjarVideoAddedToPlaylist = vi.spyOn(
       AnalyticsFactory.hotjar(),
       'event',
     );
@@ -270,7 +297,7 @@ describe('Add to playlist button', () => {
 
   it('video removed event sent as Hotjar event', async () => {
     const fakeClient = new FakeBoclipsClient();
-    const hotjarVideoRemovedFromPlaylist = jest.spyOn(
+    const hotjarVideoRemovedFromPlaylist = vi.spyOn(
       AnalyticsFactory.hotjar(),
       'event',
     );

@@ -337,9 +337,9 @@ describe('ClassroomRegistration Form', () => {
 
   it('error notification is displayed when classroom user creation fails, inputs are not cleared', async () => {
     const fakeClient = new FakeBoclipsClient();
-    jest
-      .spyOn(fakeClient.users, 'createClassroomUser')
-      .mockImplementation(() => Promise.reject());
+    vi.spyOn(fakeClient.users, 'createClassroomUser').mockImplementation(() =>
+      Promise.reject(),
+    );
 
     const wrapper = render(
       <Router>

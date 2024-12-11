@@ -435,9 +435,10 @@ describe('Video View', () => {
     });
 
     it('displays an error message if we get an error from the api while getting learning outcomes', async () => {
-      jest
-        .spyOn(fakeClient.videoAIMetadata, 'getLearningOutcomes')
-        .mockImplementation(() => Promise.reject());
+      vi.spyOn(
+        fakeClient.videoAIMetadata,
+        'getLearningOutcomes',
+      ).mockImplementation(() => Promise.reject());
 
       fakeClient.videos.insertVideo(exampleVideo);
 
@@ -464,9 +465,10 @@ describe('Video View', () => {
     });
 
     it('displays an error message if we get an error from the api while getting assessment questions', async () => {
-      jest
-        .spyOn(fakeClient.videoAIMetadata, 'getAssessmentQuestions')
-        .mockImplementation(() => Promise.reject());
+      vi.spyOn(
+        fakeClient.videoAIMetadata,
+        'getAssessmentQuestions',
+      ).mockImplementation(() => Promise.reject());
 
       fakeClient.users.setCurrentUserFeatures({ BO_WEB_APP_DEV: true });
       fakeClient.videos.insertVideo(exampleVideo);

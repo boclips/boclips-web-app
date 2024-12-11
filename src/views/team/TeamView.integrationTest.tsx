@@ -441,9 +441,9 @@ describe('Team view', () => {
 
   it('fails to remove a user', async () => {
     const fakeClient = new FakeBoclipsClient();
-    jest
-      .spyOn(fakeClient.users, 'updateUser')
-      .mockImplementation(() => Promise.reject(new Error('')));
+    vi.spyOn(fakeClient.users, 'updateUser').mockImplementation(() =>
+      Promise.reject(new Error('')),
+    );
 
     fakeClient.accounts.insertAccount(
       AccountsFactory.sample({ id: 'account-1' }),

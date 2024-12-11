@@ -58,9 +58,9 @@ describe('Unfollow playlist', () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.collections.addToFake(playlist);
 
-    jest
-      .spyOn(apiClient.collections, 'unbookmark')
-      .mockImplementation(() => Promise.reject());
+    vi.spyOn(apiClient.collections, 'unbookmark').mockImplementation(() =>
+      Promise.reject(),
+    );
 
     const wrapper = render(
       <MemoryRouter initialEntries={['/playlists/pl123']}>

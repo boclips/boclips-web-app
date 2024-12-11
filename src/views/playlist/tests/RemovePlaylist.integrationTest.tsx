@@ -64,9 +64,9 @@ describe('Remove playlist', () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.collections.addToFake(playlist);
 
-    jest
-      .spyOn(apiClient.collections, 'delete')
-      .mockImplementation(() => Promise.reject());
+    vi.spyOn(apiClient.collections, 'delete').mockImplementation(() =>
+      Promise.reject(),
+    );
 
     const wrapper = render(
       <MemoryRouter initialEntries={['/playlists/pl123']}>

@@ -51,9 +51,9 @@ describe('Duplicate playlist', () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.collections.addToFake(playlist);
 
-    jest
-      .spyOn(apiClient.collections, 'create')
-      .mockImplementation(() => Promise.reject());
+    vi.spyOn(apiClient.collections, 'create').mockImplementation(() =>
+      Promise.reject(),
+    );
 
     const wrapper = render(
       <MemoryRouter initialEntries={['/playlists/pl123']}>

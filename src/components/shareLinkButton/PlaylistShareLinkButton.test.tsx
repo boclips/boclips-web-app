@@ -72,8 +72,8 @@ describe('playlist share link button', () => {
 
   it(`copies share link but doesn't close modal on clicking main button`, async () => {
     const apiClient = new FakeBoclipsClient();
-    jest.spyOn(navigator.clipboard, 'writeText');
-    const trackCollectionShareLinkSpy = jest.spyOn(
+    vi.spyOn(navigator.clipboard, 'writeText');
+    const trackCollectionShareLinkSpy = vi.spyOn(
       apiClient.shareLinks,
       'trackCollectionShareLink',
     );
