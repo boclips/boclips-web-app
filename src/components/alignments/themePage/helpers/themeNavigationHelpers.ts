@@ -1,4 +1,4 @@
-import { TargetInfo } from 'src/components/alignments/themePage/theme/TargetDetails';
+import { TargetInfo } from '@src/components/alignments/themePage/theme/TargetDetails';
 import {
   Target,
   Theme,

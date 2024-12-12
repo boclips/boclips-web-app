@@ -1,6 +1,6 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
-import { buildVideoDetailsLink } from 'src/services/buildVideoDetailsLink';
+import { buildVideoDetailsLink } from '@src/services/buildVideoDetailsLink';
 
 describe('buildVideoDetailsLink', () => {
   it('adds referer user to the video page url', () => {

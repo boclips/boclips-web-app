@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getDecimalNumberOrNullFromString } from '@src/services/getDecimalNumberOrNullFromString';
-import { FilterKey } from '../types/search/FilterKey';
+import { FilterKey } from '@src/types/search/FilterKey';
 
 export const useLocationParams = () => {
   const location = useLocation();

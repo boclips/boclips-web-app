@@ -1,4 +1,4 @@
-import { getFacetSorter } from 'src/services/sortFacets';
+import { getFacetSorter } from '@src/services/sortFacets';
 import { Facet } from 'boclips-api-client/dist/sub-clients/videos/model/VideoFacets';
 
 describe('Sort facets', () => {

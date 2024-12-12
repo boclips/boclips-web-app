@@ -1,7 +1,7 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { renderHook, waitFor } from '@testing-library/react';
 import { act } from 'react';
-import { wrapperWithClients } from 'src/testSupport/wrapper';
+import { wrapperWithClients } from '@src/testSupport/wrapper';
 import { QueryClient } from '@tanstack/react-query';
 import { UpdateAccountRequest } from 'boclips-api-client/dist/sub-clients/accounts/model/UpdateAccountRequest';
 import {
@@ -10,7 +10,7 @@ import {
   MarketSegment,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { DeliveryMethod } from 'boclips-api-client/dist/sub-clients/common/model/DeliveryMethod';
-import { useUpdateAccount } from 'src/hooks/api/accountQuery';
+import { useUpdateAccount } from '@src/hooks/api/accountQuery';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 

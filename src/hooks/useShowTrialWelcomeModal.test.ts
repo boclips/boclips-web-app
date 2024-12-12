@@ -1,4 +1,4 @@
-import { shouldShowWelcomeModal } from 'src/hooks/useShowTrialWelcomeModal';
+import { shouldShowWelcomeModal } from '@src/hooks/useShowTrialWelcomeModal';
 
 describe('should show trial welcome modal', () => {
   it('shows modal when CLASSROOM user has marketing info missing', () => {

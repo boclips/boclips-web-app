@@ -110,8 +110,8 @@ export const sectionTitle = (bookDetails: HTMLElement) => {
 };
 
 export const navigateTo = async (wrapper: RenderResult, link: string) => {
-  const button = wrapper.getByRole('link', {
+  const button = wrapper.findByRole('link', {
     name: new RegExp(link),
   });
-  await userEvent.click(button);
+  await userEvent.click(await button);
 };

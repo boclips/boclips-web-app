@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { act } from 'react';
-import { wrapperWithClients } from 'src/testSupport/wrapper';
+import { wrapperWithClients } from '@src/testSupport/wrapper';
 import {
   useEditPlaylistMutation,
   useGetPromotedPlaylistsQuery,
@@ -9,7 +9,7 @@ import {
   useRemoveCommentFromPlaylistVideo,
   useReorderPlaylist,
   useUpdatePlaylistPermissionsMutation,
-} from 'src/hooks/api/playlistsQuery';
+} from '@src/hooks/api/playlistsQuery';
 import { QueryClient } from '@tanstack/react-query';
 import {
   CollectionAssetFactory,
@@ -18,7 +18,7 @@ import {
 } from 'boclips-api-client/dist/test-support';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForProduct';
-import { PLAYLISTS_PAGE_SIZE } from 'src/components/playlists/playlistList/PlaylistList';
+import { PLAYLISTS_PAGE_SIZE } from '@components/playlists/playlistList/PlaylistList';
 
 describe('playlistsQuery', () => {
   it('will use list projection and convert page size when loading users playlists', async () => {

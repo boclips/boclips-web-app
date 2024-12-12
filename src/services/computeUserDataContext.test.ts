@@ -3,7 +3,7 @@ import {
   AccountType,
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import computeUserDataContext from 'src/services/computeUserDataContext';
+import computeUserDataContext from '@src/services/computeUserDataContext';
 
 describe('compute user data context', () => {
   describe('isClassroomUser', () => {

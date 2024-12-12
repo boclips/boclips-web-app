@@ -1,4 +1,4 @@
-import { getDecimalNumberOrNullFromString } from 'src/services/getDecimalNumberOrNullFromString';
+import { getDecimalNumberOrNullFromString } from '@src/services/getDecimalNumberOrNullFromString';
 
 describe('getDecimalNumberOrNullFromString', () => {
   it('returns null when empty string', () => {

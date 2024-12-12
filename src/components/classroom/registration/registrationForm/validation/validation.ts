@@ -1,6 +1,6 @@
 import * as EmailValidator from 'email-validator';
 import PasswordValidator from 'password-validator';
-import { ClassroomRegistrationData } from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
+import { ClassroomRegistrationData } from '@src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
 
 type SetError = (fieldName: string, errorMessage: string | boolean) => void;
 

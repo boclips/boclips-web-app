@@ -1,14 +1,14 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { renderHook, waitFor } from '@testing-library/react';
 import { act } from 'react';
-import { wrapperWithClients } from 'src/testSupport/wrapper';
+import { wrapperWithClients } from '@src/testSupport/wrapper';
 import { QueryClient } from '@tanstack/react-query';
 import {
   useAddNewClassroomUser,
   useAddNewTrialUser,
   useFindAccountUsers,
   useUpdateUser,
-} from 'src/hooks/api/userQuery';
+} from '@src/hooks/api/userQuery';
 import {
   UpdateUserRequest,
   UserType,

@@ -1,6 +1,6 @@
-import { CollectionFactory } from 'src/testSupport/CollectionFactory';
-import { copySharePlaylistLink } from 'src/services/copySharePlaylistLink';
-import { Constants } from 'src/AppConstants';
+import { CollectionFactory } from '@src/testSupport/CollectionFactory';
+import { copySharePlaylistLink } from '@src/services/copySharePlaylistLink';
+import { Constants } from '@src/AppConstants';
 
 describe('copySharePlaylistLink', () => {
   Object.assign(navigator, {

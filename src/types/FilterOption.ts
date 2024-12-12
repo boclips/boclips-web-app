@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { FilterKey } from 'src/types/search/FilterKey';
+import { FilterKey } from '@src/types/search/FilterKey';
 
 export interface FilterOption {
   id: string;

@@ -1,4 +1,4 @@
-import { getSelectedTarget } from 'src/components/alignments/themePage/helpers/themeNavigationHelpers';
+import { getSelectedTarget } from '@src/components/alignments/themePage/helpers/themeNavigationHelpers';
 import {
   TargetFactory,
   ThemeFactory,

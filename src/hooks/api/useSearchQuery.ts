@@ -3,7 +3,7 @@ import { VideoSearchResults } from 'boclips-api-client/dist/sub-clients/videos/m
 import { DEFAULT_DURATIONS } from '@src/types/DefaultDurations';
 import { BoclipsClient } from 'boclips-api-client';
 import { useBoclipsClient } from '@components/common/providers/BoclipsClientProvider';
-import { FilterKey } from 'src/types/search/FilterKey';
+import { FilterKey } from '@src/types/search/FilterKey';
 import dayjs from 'dayjs';
 
 export const SEARCH_BASE_KEY = 'videos';

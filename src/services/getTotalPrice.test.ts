@@ -1,5 +1,5 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { getTotalPrice } from 'src/services/getTotalPrice';
+import { getTotalPrice } from '@src/services/getTotalPrice';
 
 describe('getTotalPrice', () => {
   it('provides correct value for multiple videos', () => {

@@ -69,7 +69,7 @@ window.ResizeObserver =
     unobserve: vi.fn(),
   }));
 
-vi.mock('src/components/confetti/Confetti');
+vi.mock('@components/confetti/Confetti');
 
 afterEach(() => {
   cleanup();

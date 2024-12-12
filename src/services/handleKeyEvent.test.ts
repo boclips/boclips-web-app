@@ -1,7 +1,7 @@
 import {
   handleEnterKeyEvent,
   handleEscapeKeyEvent,
-} from 'src/services/handleKeyEvent';
+} from '@src/services/handleKeyEvent';
 
 describe('Handle key event', () => {
   describe('Handle Enter', () => {

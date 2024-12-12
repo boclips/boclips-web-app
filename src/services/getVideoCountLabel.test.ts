@@ -1,4 +1,4 @@
-import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
+import { getVideoCountLabel } from '@src/services/getVideoCountLabel';
 
 describe('getVideoCountLabel', () => {
   it.each([

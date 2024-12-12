@@ -16,7 +16,7 @@ import { Subject } from 'boclips-api-client/dist/sub-clients/subjects/model/Subj
 import { FeatureKey } from 'boclips-api-client/dist/sub-clients/common/model/FeatureKey';
 import { ThemeFactory } from 'boclips-api-client/dist/test-support/ThemeFactory';
 import { Theme } from 'boclips-api-client/dist/sub-clients/alignments/model/theme/Theme';
-import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
+import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
 import { Discipline } from 'boclips-api-client/dist/sub-clients/disciplines/model/Discipline';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';

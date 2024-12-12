@@ -5,7 +5,7 @@ import {
 import {
   convertFacetsToFilterOptions,
   getFilterLabel,
-} from 'src/services/convertFacetsToFilterOptions';
+} from '@src/services/convertFacetsToFilterOptions';
 
 describe('convertFacets', () => {
   it('can convert every facet type to a filter option with filter keys', () => {

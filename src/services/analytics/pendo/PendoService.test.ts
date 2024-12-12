@@ -1,5 +1,5 @@
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
-import { PendoService } from 'src/services/analytics/pendo/PendoService';
+import { PendoService } from '@src/services/analytics/pendo/PendoService';
 import {
   AccountType,
   Product,

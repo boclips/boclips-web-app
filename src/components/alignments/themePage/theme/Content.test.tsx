@@ -97,7 +97,7 @@ describe('Theme Content', () => {
     expect(wrapper.queryByRole('link', { name: 'Previous' })).toBeNull();
   });
 
-  it('show previous section button when not on the first section', () => {
+  it('show previous section button when not on the first section', async () => {
     window.resizeTo(1500, 1024);
 
     const wrapper = renderWithClients(
@@ -109,10 +109,10 @@ describe('Theme Content', () => {
       </ThemeMobileMenuProvider>,
     );
 
-    navigateTo(wrapper, 'Next');
+    await navigateTo(wrapper, 'Next');
 
     expect(
-      wrapper.getByRole('link', {
+      await wrapper.findByRole('link', {
         name: 'Previous 1.1 Life at the coop',
       }),
     ).toBeVisible();
@@ -155,7 +155,7 @@ describe('Theme Content', () => {
     expect(wrapper.queryByRole('link', { name: 'Next' })).toBeNull();
   });
 
-  it(`show chapter navigation button instead of section ones when chapter change is possible`, () => {
+  it(`show chapter navigation button instead of section ones when chapter change is possible`, async () => {
     window.resizeTo(1500, 1024);
 
     const wrapper = renderWithClients(
@@ -167,9 +167,9 @@ describe('Theme Content', () => {
       </ThemeMobileMenuProvider>,
     );
 
-    navigateTo(wrapper, 'Next');
+    await navigateTo(wrapper, 'Next');
     expect(
-      wrapper.getByRole('link', {
+      await wrapper.findByRole('link', {
         name: 'Next Chapter 2: Epilogue',
       }),
     ).toBeVisible();

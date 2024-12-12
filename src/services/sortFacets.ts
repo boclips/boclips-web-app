@@ -1,4 +1,4 @@
-import { SortBy } from 'src/types/SortBy';
+import { SortBy } from '@src/types/SortBy';
 import { Facet } from 'boclips-api-client/dist/sub-clients/videos/model/VideoFacets';
 import isNumeric from 'antd/lib/_util/isNumeric';
 

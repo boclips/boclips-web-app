@@ -1,7 +1,7 @@
-import Hotjar from 'src/services/analytics/hotjar/Hotjar';
-import HotjarService from 'src/services/analytics/hotjar/HotjarService';
-import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
-import UserAttributes from 'src/services/analytics/hotjar/UserAttributes';
+import Hotjar from '@src/services/analytics/hotjar/Hotjar';
+import HotjarService from '@src/services/analytics/hotjar/HotjarService';
+import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
+import UserAttributes from '@src/services/analytics/hotjar/UserAttributes';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 
 describe('HotjarService', () => {

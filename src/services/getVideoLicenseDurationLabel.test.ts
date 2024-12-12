@@ -1,4 +1,4 @@
-import { getVideoPageLicenseDurationLabel } from 'src/services/getVideoLicenseDurationLabel';
+import { getVideoPageLicenseDurationLabel } from '@src/services/getVideoLicenseDurationLabel';
 
 describe('Get video license duration label', () => {
   describe('For video page', () => {

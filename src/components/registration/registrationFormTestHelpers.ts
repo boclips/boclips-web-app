@@ -1,5 +1,5 @@
 import { RenderResult, within } from '@testing-library/react';
-import { RegistrationData } from 'src/components/registration/registrationForm/RegistrationForm';
+import { RegistrationData } from '@src/components/registration/registrationForm/RegistrationForm';
 import userEvent from '@testing-library/user-event';
 
 export async function fillRegistrationForm(

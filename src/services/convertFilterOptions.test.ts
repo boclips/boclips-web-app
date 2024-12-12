@@ -1,5 +1,5 @@
-import { FilterOption } from 'src/types/FilterOption';
-import { searchFilterOptions } from 'src/services/sortFilterOptions';
+import { FilterOption } from '@src/types/FilterOption';
+import { searchFilterOptions } from '@src/services/sortFilterOptions';
 import { render } from '@testing-library/react';
 import { FilterOptionFactory } from '../testSupport/FilterOptionFactory';
 

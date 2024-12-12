@@ -1,8 +1,8 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { renderHook, waitFor } from '@testing-library/react';
-import { wrapperWithClients } from 'src/testSupport/wrapper';
+import { wrapperWithClients } from '@src/testSupport/wrapper';
 import { QueryClient } from '@tanstack/react-query';
-import useUserProducts from 'src/hooks/useUserProducts';
+import useUserProducts from '@src/hooks/useUserProducts';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import {
   AccountType,
