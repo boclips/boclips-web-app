@@ -1,4 +1,10 @@
-import { render, RenderResult, waitFor, within } from '@testing-library/react';
+import {
+  fireEvent,
+  render,
+  RenderResult,
+  waitFor,
+  within,
+} from '@testing-library/react';
 import React from 'react';
 import { OptionsButton } from '@components/playlists/playlistHeader/OptionsButton';
 import { CollectionFactory } from '@src/testSupport/CollectionFactory';

@@ -18,6 +18,7 @@ import { ToastContainer } from 'react-toastify';
 import AnalyticsFactory from '@src/services/analytics/AnalyticsFactory';
 import { HotjarEvents } from '@src/services/analytics/hotjar/Events';
 import { sleep } from '@src/testSupport/sleep';
+import { expect } from 'vitest';
 
 describe('Add to playlist button', () => {
   const asset = CollectionAssetFactory.sample({

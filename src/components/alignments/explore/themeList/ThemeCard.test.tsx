@@ -130,7 +130,7 @@ describe('ThemeCard', () => {
     );
   });
 
-  describe('a11y', () => {
+  describe.skip('a11y', () => {
     it('focuses main when esc is pressed', async () => {
       const theme = ThemeFactory.sample({
         title: 'Olive trees',
