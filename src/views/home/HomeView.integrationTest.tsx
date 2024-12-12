@@ -23,6 +23,7 @@ import {
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForProduct';
 import userEvent from '@testing-library/user-event';
+import { BoclipsClientProvider } from '@components/common/providers/BoclipsClientProvider';
 
 describe('HomeView', () => {
   beforeEach(() => {
@@ -98,20 +99,16 @@ describe('HomeView', () => {
 
   it('redirects to empty search (video) page with no filters or query', async () => {
     const fakeClient = new FakeBoclipsClient();
-    const client = new QueryClient();
 
     const history = createBrowserHistory();
+    history.push('/');
 
     const wrapper = render(
-      <Router location="/" navigator={history}>
-        <QueryClientProvider client={client}>
-          <App
-            apiClient={fakeClient}
-            boclipsSecurity={stubBoclipsSecurity}
-            reactQueryClient={createReactQueryClient()}
-          />
-        </QueryClientProvider>
-      </Router>,
+      <BoclipsClientProvider client={fakeClient}>
+        <Router location={history.location} navigator={history}>
+          <App boclipsSecurity={stubBoclipsSecurity} apiClient={fakeClient} />
+        </Router>
+      </BoclipsClientProvider>,
     );
     await userEvent.click(await wrapper.findByText('Browse All Videos'));
 

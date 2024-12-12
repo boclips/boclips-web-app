@@ -27,7 +27,7 @@ import { BoclipsSecurityProvider } from '@components/common/providers/BoclipsSec
 import { CollectionFactory as collectionFactory } from '@src/testSupport/CollectionFactory';
 import { sleep } from '@src/testSupport/sleep';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
-import userEvent from "@testing-library/user-event";
+import userEvent from '@testing-library/user-event';
 
 const createAssetWithThumbnail = (id: string, videoTitle: string) => {
   const video = VideoFactory.sample({
@@ -83,17 +83,17 @@ describe('Playlist view', () => {
   });
 
   it("shows Playlist's title and description if user can access", async () => {
-    render(
+    const wrapper = render(
       <MemoryRouter initialEntries={['/playlists/123']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );
 
-    await waitFor(() => screen.getByText('Playlists'));
+    await waitFor(() => wrapper.getByText('Playlists'));
 
-    expect(await screen.findByTestId('playlistTitle')).toBeVisible();
-    expect(await screen.findByText('Very nice description')).toBeVisible();
-    expect(await screen.findByText('By: You')).toBeVisible();
+    expect(await wrapper.findByTestId('playlistTitle')).toBeVisible();
+    expect(await wrapper.findByText('Very nice description')).toBeVisible();
+    expect(await wrapper.findByText('By: You')).toBeVisible();
   });
 
   it('displays video title for all videos in the playlist', async () => {

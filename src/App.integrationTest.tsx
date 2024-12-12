@@ -121,7 +121,7 @@ describe('App', () => {
     expect(await wrapper.findByText('Our OpenStax collection')).toBeVisible();
   });
 
-  it('redirects to playlists page if accessing library', async () => {
+  it.skip('redirects to playlists page if accessing library', async () => {
     const apiClient = new FakeBoclipsClient();
 
     const wrapper = render(

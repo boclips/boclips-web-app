@@ -183,12 +183,12 @@ describe('ThemeView', () => {
 
   it('renders second chapter when selected', async () => {
     resizeToDesktop();
-    const book = createTheme();
+    const theme = createTheme();
 
-    const client = setUpClientWithTheme(book);
+    const client = setUpClientWithTheme(theme);
 
     const wrapper = render(
-      <MemoryRouter initialEntries={[`/alignments/openstax/${book.id}`]}>
+      <MemoryRouter initialEntries={[`/alignments/openstax/${theme.id}`]}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
       </MemoryRouter>,
     );

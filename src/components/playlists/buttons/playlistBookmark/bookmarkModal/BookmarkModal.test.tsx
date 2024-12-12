@@ -84,7 +84,6 @@ describe('Bookmark modal for playlists', () => {
 
     await userEvent.click(endCheckbox);
     expect(endCheckbox).toBeChecked();
-
     expect(endTimeInput).toBeEnabled();
 
     await userEvent.type(endTimeInput, '00:55');
@@ -95,11 +94,15 @@ describe('Bookmark modal for playlists', () => {
       nonBookmarkedCollectionId,
     );
 
+    expect(updatedPlaylist).toBeNull();
     await waitFor(() => {
       const updatedSegment = updatedPlaylist.assets.find(
         (updatedAsset) => updatedAsset.id === asset.id,
       ).segment;
       expect(updatedSegment.start).toEqual(32);
+
+      expect(false).toBeTruthy();
+
       expect(updatedSegment.end).toEqual(55);
       expect(
         wrapper.getByText('Video bookmark has been updated'),
@@ -273,7 +276,7 @@ describe('Bookmark modal for playlists', () => {
     await userEvent.click(endCheckbox);
     await userEvent.type(endTimeInput, '00:55');
 
-    await userEvent.click(wrapper.getByText('Set'));
+    await userEvent.click(wrapper.getByRole('button', { name: 'Set' }));
     await waitFor(() => {
       expect(
         wrapper.getByText('Video bookmark has been updated'),

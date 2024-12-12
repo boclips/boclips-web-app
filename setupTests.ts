@@ -42,7 +42,6 @@ beforeEach(() => {
     );
     return {
       ...mod,
-      useNavigate: () => vi.fn(),
       useParams: () => vi.fn(),
     };
   });
