@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { BoclipsClient } from 'boclips-api-client';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Loading } from '@components/common/Loading';
@@ -232,10 +232,6 @@ const App = ({
                       element={<OrderConfirmationView />}
                     />
                     <Route path="/playlists" element={<PlaylistsView />} />
-                    <Route
-                      path="/library"
-                      element={<Navigate to="/playlists" replace />}
-                    />
                     <Route
                       path="/playlists/:id"
                       element={

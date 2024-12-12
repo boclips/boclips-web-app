@@ -121,19 +121,6 @@ describe('App', () => {
     expect(await wrapper.findByText('Our OpenStax collection')).toBeVisible();
   });
 
-  it.skip('redirects to playlists page if accessing library', async () => {
-    const apiClient = new FakeBoclipsClient();
-
-    const wrapper = render(
-      <MemoryRouter initialEntries={['/library']}>
-        <App boclipsSecurity={stubBoclipsSecurity} apiClient={apiClient} />,
-      </MemoryRouter>,
-    );
-
-    expect(wrapper.queryByText('Page not found!')).not.toBeInTheDocument();
-    expect(await wrapper.findByText('Playlists')).toBeVisible();
-  });
-
   it('redirects from explore/openstax to alignments/openstax', async () => {
     const fakeBoclipsClient = new FakeBoclipsClient();
 
