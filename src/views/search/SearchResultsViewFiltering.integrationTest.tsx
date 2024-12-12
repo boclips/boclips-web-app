@@ -436,10 +436,10 @@ describe('SearchResultsFiltering', () => {
       ).findByPlaceholderText('DD-MM-YYYY');
 
       fireEvent.focus(fromDatePicker);
-      await userEvent.type(fromDatePicker, '01-01-2020 {enter}');
+      await userEvent.type(fromDatePicker, '01-01-2020{enter}');
 
-      await waitFor(async () => {
-        expect(await wrapper.findByText('new-video')).toBeVisible();
+      await waitFor(() => {
+        expect(wrapper.queryByText('new-video')).toBeVisible();
         expect(wrapper.queryByText('old-video')).not.toBeInTheDocument();
       });
 

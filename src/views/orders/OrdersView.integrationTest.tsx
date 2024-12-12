@@ -14,7 +14,7 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { Helmet } from 'react-helmet';
 import { createReactQueryClient } from '@src/testSupport/createReactQueryClient';
-import userEvent from "@testing-library/user-event";
+import userEvent from '@testing-library/user-event';
 
 describe('OrderView', () => {
   it('loads the no orders view when there are no orders', async () => {
@@ -226,13 +226,12 @@ describe('OrderView', () => {
       </MemoryRouter>,
     );
 
-    const thumbnail = await wrapper.findByTestId('order-item-thumbnail');
-
-    await waitFor(() =>
+    await waitFor(async () => {
+      const thumbnail = await wrapper.findByTestId('order-item-thumbnail');
       expect(thumbnail).toHaveStyle(
         'background-image: url(https://validThumbnail.com)',
-      ),
-    );
+      );
+    });
   });
 
   describe('window titles', () => {
@@ -246,9 +245,9 @@ describe('OrderView', () => {
         </MemoryRouter>,
       );
 
-      const helmet = Helmet.peek();
 
       await waitFor(() => {
+        const helmet = Helmet.peek();
         expect(helmet.title).toEqual('Order History');
       });
     });

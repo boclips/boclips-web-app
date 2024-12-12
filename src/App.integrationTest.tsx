@@ -36,6 +36,7 @@ describe('App', () => {
     expect(
       await wrapper.findByText('Your free trial has ended!'),
     ).toBeVisible();
+
     await waitFor(() => {
       expect(lastEvent(apiClient, 'PLATFORM_INTERACTED_WITH')).toEqual({
         type: 'PLATFORM_INTERACTED_WITH',

@@ -16,6 +16,7 @@ import PlaylistVideoBookmarkButton from '@components/playlists/buttons/playlistB
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import { lastEvent } from '@src/testSupport/lastEvent';
+import { as } from "vitest/dist/chunks/reporters.D7Jzd9GS";
 
 describe('Bookmark modal for playlists', () => {
   const asset = CollectionAssetFactory.sample({
@@ -100,9 +101,6 @@ describe('Bookmark modal for playlists', () => {
         (updatedAsset) => updatedAsset.id === asset.id,
       ).segment;
       expect(updatedSegment.start).toEqual(32);
-
-      expect(false).toBeTruthy();
-
       expect(updatedSegment.end).toEqual(55);
       expect(
         wrapper.getByText('Video bookmark has been updated'),
@@ -144,11 +142,11 @@ describe('Bookmark modal for playlists', () => {
 
     await userEvent.click(wrapper.getByText('Set'));
 
-    const updatedPlaylist = await apiClient.collections.get(
-      bookmarkedCollectionId,
-    );
+    await waitFor(async () => {
+      const updatedPlaylist = await apiClient.collections.get(
+        bookmarkedCollectionId,
+      );
 
-    await waitFor(() => {
       expect(
         updatedPlaylist.assets.find(
           (updatedAsset) => updatedAsset.id === asset.id,
@@ -283,11 +281,11 @@ describe('Bookmark modal for playlists', () => {
       ).toBeInTheDocument();
     });
 
-    const updatedPlaylist = await apiClient.collections.get(
-      nonBookmarkedCollectionId,
-    );
+    await waitFor(async () => {
+      const updatedPlaylist = await apiClient.collections.get(
+        nonBookmarkedCollectionId,
+      );
 
-    await waitFor(() => {
       const updatedSegment = updatedPlaylist.assets.find(
         (updatedAsset) => updatedAsset.id === asset.id,
       ).segment;
@@ -321,11 +319,11 @@ describe('Bookmark modal for playlists', () => {
 
     await userEvent.click(wrapper.getByText('Set'));
 
-    const updatedPlaylist = await apiClient.collections.get(
-      bookmarkedCollectionId,
-    );
+    await waitFor(async () => {
+      const updatedPlaylist = await apiClient.collections.get(
+        bookmarkedCollectionId,
+      );
 
-    await waitFor(() => {
       const updatedSegment = updatedPlaylist.assets.find(
         (updatedAsset) => updatedAsset.id === asset.id,
       ).segment;

@@ -144,14 +144,15 @@ describe('CartItem', () => {
 
     await userEvent.click(await wrapper.findByText('Trim video'));
 
+    await userEvent.clear(await wrapper.findByLabelText('From:'));
     await userEvent.type(await wrapper.findByLabelText('From:'), '2:00');
+    await userEvent.clear(await wrapper.findByLabelText('To:'));
     await userEvent.type(await wrapper.findByLabelText('To:'), '3:00');
 
     await userEvent.click(await wrapper.findByText('this is cart item test'));
 
-    cart = await fakeClient.carts.getCart();
-
-    await waitFor(() => {
+    await waitFor(async () => {
+      cart = await fakeClient.carts.getCart();
       expect(cart.items[0].additionalServices?.trim.from).toEqual('2:00');
       expect(cart.items[0].additionalServices?.trim.to).toEqual('3:00');
     });

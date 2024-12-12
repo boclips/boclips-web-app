@@ -1,10 +1,10 @@
 import {
+  cleanup,
   fireEvent,
   render,
   RenderResult,
   waitFor,
   within,
-  cleanup,
 } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from '@src/App';
@@ -19,8 +19,6 @@ import { QueryClient } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet';
 import userEvent from '@testing-library/user-event';
 import { lastEvent } from '@src/testSupport/lastEvent';
-
-afterEach(cleanup);
 
 describe('CartView', () => {
   const video = VideoFactory.sample({
@@ -291,11 +289,9 @@ describe('CartView', () => {
       const wrapper = await renderCartView(fakeClient);
 
       expect(await wrapper.findByText('Shopping cart')).toBeInTheDocument();
-      expect(
-        wrapper.queryByText('Captions and transcripts'),
-      ).not.toBeInTheDocument();
-      expect(wrapper.queryByText('Editing')).not.toBeInTheDocument();
-      expect(wrapper.queryByText('Trimming')).not.toBeInTheDocument();
+      expect(wrapper.queryByText('Captions and transcripts')).toBeNull();
+      expect(wrapper.queryByText('Editing')).toBeNull();
+      expect(wrapper.queryByText('Trimming')).toBeNull();
 
       await userEvent.click(
         await wrapper.findByText('Request other type of editing'),
@@ -313,18 +309,18 @@ describe('CartView', () => {
         ),
       );
       await userEvent.click(await wrapper.findByText('Trim video'));
+      await userEvent.clear(await wrapper.findByLabelText('From:'));
       await userEvent.type(await wrapper.findByLabelText('From:'), '00:02');
       await userEvent.click(await wrapper.findByText('fav video'));
 
+      await userEvent.clear(await wrapper.findByLabelText('To:'));
       await userEvent.type(await wrapper.findByLabelText('To:'), '00:03');
       await userEvent.click(await wrapper.findByText('fav video'));
 
-      await waitFor(async () => {
-        expect(
-          await wrapper.findByText('Captions and transcripts'),
-        ).toBeVisible();
-        expect(await wrapper.findByText('Editing')).toBeVisible();
-        expect(await wrapper.findByText('Trimming')).toBeVisible();
+      await waitFor(() => {
+        expect(wrapper.queryByText('Captions and transcripts')).toBeVisible();
+        expect(wrapper.queryByText('Editing')).toBeVisible();
+        expect(wrapper.queryByText('Trimming')).toBeVisible();
       });
     });
 
