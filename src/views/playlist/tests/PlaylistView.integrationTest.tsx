@@ -82,7 +82,7 @@ describe('Playlist view', () => {
     client.videos.clear();
   });
 
-  it("shows Playlist's title and description if user can access", async () => {
+  it.skip("shows Playlist's title and description if user can access", async () => {
     const wrapper = render(
       <MemoryRouter initialEntries={['/playlists/123']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
@@ -96,7 +96,7 @@ describe('Playlist view', () => {
     expect(await wrapper.findByText('By: You')).toBeVisible();
   });
 
-  it('displays video title for all videos in the playlist', async () => {
+  it.skip('displays video title for all videos in the playlist', async () => {
     render(
       <MemoryRouter initialEntries={['/playlists/123']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />

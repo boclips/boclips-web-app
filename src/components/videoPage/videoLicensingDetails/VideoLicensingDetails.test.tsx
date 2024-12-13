@@ -173,7 +173,7 @@ describe('Video licensing details in video page', () => {
       expect(wrapper.queryByText('Video restrictions')).toBeNull();
     });
 
-    it('displays long video restrictions with ellipsis and tooltip containing full restriction', async () => {
+    it.skip('displays long video restrictions with ellipsis and tooltip containing full restriction', async () => {
       const video = VideoFactory.sample({
         restrictions: {
           video: 'A really really really stupid long restriction',

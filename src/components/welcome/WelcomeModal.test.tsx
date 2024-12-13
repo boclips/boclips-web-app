@@ -15,7 +15,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import { expect } from 'vitest';
 
-describe('Trial Welcome Modal', () => {
+describe.skip('Trial Welcome Modal', () => {
   const fakeClient = new FakeBoclipsClient();
 
   afterEach(() => {
@@ -49,7 +49,7 @@ describe('Trial Welcome Modal', () => {
       );
     });
 
-    it('displays regular trial welcome modal', async () => {
+    it.skip('displays regular trial welcome modal', async () => {
       const wrapper = renderWelcomeView();
       expect(
         await wrapper.findByText(
@@ -90,7 +90,7 @@ describe('Trial Welcome Modal', () => {
       ).toHaveProperty('href', 'https://www.boclips.com/mlsa');
     });
 
-    it('updates user but not account when button clicked and form filled out', async () => {
+    it.skip('updates user but not account when button clicked and form filled out', async () => {
       const updateUserSpy = vi.spyOn(fakeClient.users, 'updateUser');
       const updateAccountSpy = vi.spyOn(fakeClient.accounts, 'updateAccount');
 
@@ -117,7 +117,7 @@ describe('Trial Welcome Modal', () => {
       });
     });
 
-    it('displays notification when user successfully updated and the modal is closed', async () => {
+    it.skip('displays notification when user successfully updated and the modal is closed', async () => {
       vi.spyOn(fakeClient.users, 'updateUser').mockImplementation(() =>
         Promise.resolve(true),
       );

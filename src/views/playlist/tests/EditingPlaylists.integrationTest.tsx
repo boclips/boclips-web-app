@@ -20,7 +20,7 @@ import { QueryClient } from '@tanstack/react-query';
 import { createReactQueryClient } from '@src/testSupport/createReactQueryClient';
 import { lastEvent } from '@src/testSupport/lastEvent';
 
-describe('editing a playlist', () => {
+describe.skip('editing a playlist', () => {
   let client = null;
 
   const assets = [

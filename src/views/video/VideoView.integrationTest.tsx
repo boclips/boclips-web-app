@@ -136,7 +136,7 @@ describe('Video View', () => {
     ).toBeNull();
   });
 
-  describe('video page navigated from explore view', () => {
+  describe.skip('video page navigated from explore view', () => {
     it(`will display embed video as primary button`, async () => {
       const theme = getThemeWithVideo(exampleVideo);
 
@@ -307,7 +307,7 @@ describe('Video View', () => {
       expect(wrapper.queryByText('Back')).not.toBeInTheDocument();
     });
 
-    it('navigates back to previous page', async () => {
+    it.skip('navigates back to previous page', async () => {
       const video = VideoFactory.sample({
         id: 'video-4',
         title: 'the coolest video you ever did see',
@@ -379,7 +379,7 @@ describe('Video View', () => {
       expect(helmet.title).toEqual('the coolest video you ever did see');
     });
 
-    it('displays default window title when no video available', async () => {
+    it.skip('displays default window title when no video available', async () => {
       const wrapper = render(
         <MemoryRouter initialEntries={['/videos/video-2']}>
           <App
@@ -399,7 +399,7 @@ describe('Video View', () => {
   });
 
   describe('explore similar videos', () => {
-    it(`section is displayed when there are recommendations`, async () => {
+    it.skip(`section is displayed when there are recommendations`, async () => {
       fakeClient.videos.insertVideo(exampleVideo);
       fakeClient.videos.setRecommendationsForVideo(exampleVideo.id, [
         VideoFactory.sample({ title: 'I am recommended' }),

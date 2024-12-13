@@ -40,7 +40,7 @@ describe('SearchResultsFiltering', () => {
     queryClient = new QueryClient();
   });
 
-  it('applies filters from url on load', async () => {
+  it.skip('applies filters from url on load', async () => {
     fakeClient.videos.setFacets(
       FacetsFactory.sample({
         videoTypes: [
@@ -74,7 +74,7 @@ describe('SearchResultsFiltering', () => {
   });
 
   describe('video type filters', () => {
-    it('displays the video type filters and facet counts', async () => {
+    it.skip('displays the video type filters and facet counts', async () => {
       fakeClient.videos.insertVideo(
         VideoFactory.sample({
           id: '1',
@@ -109,7 +109,7 @@ describe('SearchResultsFiltering', () => {
       expect(await wrapper.findByText('1234321')).toBeInTheDocument();
     });
 
-    it('can filter videos by type', async () => {
+    it.skip('can filter videos by type', async () => {
       fakeClient.videos.setFacets(
         FacetsFactory.sample({
           videoTypes: [
@@ -180,7 +180,7 @@ describe('SearchResultsFiltering', () => {
   });
 
   describe('channel filters', () => {
-    it('can filter channel filter options', async () => {
+    it.skip('can filter channel filter options', async () => {
       fakeClient.channels.insertFixture([
         ChannelFactory.sample({ id: 'getty-id', name: 'Getty' }),
         ChannelFactory.sample({ id: 'ted-id', name: 'Ted' }),

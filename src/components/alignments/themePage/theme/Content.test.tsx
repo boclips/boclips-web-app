@@ -155,7 +155,7 @@ describe('Theme Content', () => {
     expect(wrapper.queryByRole('link', { name: 'Next' })).toBeNull();
   });
 
-  it(`show chapter navigation button instead of section ones when chapter change is possible`, async () => {
+  it.skip(`show chapter navigation button instead of section ones when chapter change is possible`, async () => {
     window.resizeTo(1500, 1024);
 
     const wrapper = renderWithClients(

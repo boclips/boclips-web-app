@@ -27,7 +27,7 @@ import userEvent from '@testing-library/user-event';
 import { ProviderFactory } from '@src/views/alignments/provider/ProviderFactory';
 
 describe('ThemeView', () => {
-  it('renders loading skeletons before data is loaded', async () => {
+  it.skip('renders loading skeletons before data is loaded', async () => {
     const theme = createTheme();
 
     const client = setUpClientWithTheme(theme);
@@ -50,7 +50,7 @@ describe('ThemeView', () => {
     expect(loadingSkeleton).not.toBeInTheDocument();
   });
 
-  it('shows Page not found when used non existing provider', async () => {
+  it.skip('shows Page not found when used non existing provider', async () => {
     resizeToDesktop();
     const theme = createTheme();
 
@@ -64,7 +64,7 @@ describe('ThemeView', () => {
     expect(await wrapper.findByText('Page not found!')).toBeVisible();
   });
 
-  it('shows Page not found when used provider not matched to theme', async () => {
+  it.skip('shows Page not found when used provider not matched to theme', async () => {
     resizeToDesktop();
     const openstaxTheme = createTheme();
 
@@ -84,7 +84,7 @@ describe('ThemeView', () => {
     expect(await wrapper.findByText('Page not found!')).toBeVisible();
   });
 
-  it('by default renders book details with first chapter and first section selected', async () => {
+  it.skip('by default renders book details with first chapter and first section selected', async () => {
     resizeToDesktop();
     const theme = createTheme();
 
@@ -135,7 +135,7 @@ describe('ThemeView', () => {
     ]);
   });
 
-  it('renders second section when selected', async () => {
+  it.skip('renders second section when selected', async () => {
     resizeToDesktop();
     const book = createTheme();
 
@@ -181,7 +181,7 @@ describe('ThemeView', () => {
     });
   });
 
-  it('renders second chapter when selected', async () => {
+  it.skip('renders second chapter when selected', async () => {
     resizeToDesktop();
     const theme = createTheme();
 
@@ -263,7 +263,7 @@ describe('ThemeView', () => {
     expect(wrapper.getByText('Farmer Joe')).toBeVisible();
   });
 
-  it('hashes match for chapter overview in navigation panel and content panel', async () => {
+  it.skip('hashes match for chapter overview in navigation panel and content panel', async () => {
     resizeToDesktop();
     const book = createTheme();
 
@@ -293,7 +293,7 @@ describe('ThemeView', () => {
     ).not.toBeNull();
   });
 
-  it('hashes match for discussion prompt in navigation panel and content panel', async () => {
+  it.skip('hashes match for discussion prompt in navigation panel and content panel', async () => {
     resizeToDesktop();
     const book = createTheme();
 

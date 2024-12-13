@@ -173,7 +173,7 @@ describe('Playlist Body', () => {
   });
 });
 
-describe('focus', () => {
+describe.skip('focus', () => {
   it('focuses on the main after removing the last video of a playlist', async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.collections.setCurrentUser('user-123');

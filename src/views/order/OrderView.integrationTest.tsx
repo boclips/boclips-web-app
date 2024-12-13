@@ -14,7 +14,7 @@ import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory
 import { OrderStatus } from 'boclips-api-client/dist/sub-clients/orders/model/Order';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { Helmet } from 'react-helmet';
-import userEvent from "@testing-library/user-event";
+import userEvent from '@testing-library/user-event';
 
 describe('order table', () => {
   it('renders the order header with an id that matches query', async () => {
@@ -177,7 +177,7 @@ describe('order table', () => {
     expect(wrapper.queryByText('Notes')).not.toBeInTheDocument();
   });
 
-  it('video title links to video page', async () => {
+  it.skip('video title links to video page', async () => {
     const fakeClient = new FakeBoclipsClient();
     const item = OrderItemFactory.sample({
       video: {

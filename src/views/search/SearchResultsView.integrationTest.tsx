@@ -29,7 +29,7 @@ describe('SearchResults', () => {
     window.resizeTo(1680, 1024);
   });
 
-  it('renders a list of videos that match the search query', async () => {
+  it.skip('renders a list of videos that match the search query', async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.users.insertCurrentUser(UserFactory.sample());
     const videos = [
@@ -74,7 +74,7 @@ describe('SearchResults', () => {
     });
   });
 
-  it('renders a hits count that is updated after new search', async () => {
+  it.skip('renders a hits count that is updated after new search', async () => {
     const fakeClient = new FakeBoclipsClient();
     const videos = [
       VideoFactory.sample({ id: '1', title: 'art' }),

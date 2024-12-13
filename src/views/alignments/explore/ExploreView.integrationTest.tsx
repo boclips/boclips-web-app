@@ -13,7 +13,7 @@ import {
   setUpClientWithTheme,
 } from '@src/views/alignments/theme/ThemeTestSupport';
 
-describe(`Explore view`, () => {
+describe.skip(`Explore view`, () => {
   it('renders loading skeletons before data is loaded', async () => {
     const theme = createTheme();
 

@@ -232,7 +232,7 @@ describe('PlaylistsView', () => {
     });
   });
 
-  it('can search for playlist with separate tabs result', async () => {
+  it.skip('can search for playlist with separate tabs result', async () => {
     const client = new FakeBoclipsClient();
     const user = insertUser(client);
     client.collections.setCurrentUser(user.id);

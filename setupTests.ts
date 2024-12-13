@@ -6,7 +6,7 @@ import { expect, afterEach, vi } from 'vitest';
 import { configure, cleanup } from '@testing-library/react';
 import * as matchers from '@testing-library/jest-dom/matchers';
 
-const testTimeout = 20000;
+const testTimeout = 10000;
 configure({
   testIdAttribute: 'data-qa',
   asyncUtilTimeout: testTimeout - 2000,

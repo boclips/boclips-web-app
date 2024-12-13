@@ -33,7 +33,7 @@ describe('OptionsButton', () => {
 
     const wrapper = renderOptionsButton(playlist, client);
 
-    await userEvent.click(wrapper.getByRole('button', { name: 'Options' }));
+    fireEvent.click(wrapper.getByRole('button', { name: 'Options' }));
 
     await waitFor(() => {
       expect(lastEvent(client, 'PLATFORM_INTERACTED_WITH')).toEqual({

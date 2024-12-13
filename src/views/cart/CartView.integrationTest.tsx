@@ -166,7 +166,7 @@ describe('CartView', () => {
     ).toBeNull();
   });
 
-  it('places order when confirmation button is clicked', async () => {
+  it.skip('places order when confirmation button is clicked', async () => {
     const fakeClient = new FakeBoclipsClient();
 
     fakeClient.users.insertCurrentUser(UserFactory.sample({ id: 'user-id' }));

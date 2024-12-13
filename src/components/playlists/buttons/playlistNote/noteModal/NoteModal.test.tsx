@@ -236,8 +236,9 @@ describe('Note modal for playlists', () => {
     );
   });
 
-  it('displays an error message if updating the bookmark fails', async () => {
-    apiClient.collections.safeUpdate = vi.fn()
+  it('displays an error message if updating the note fails', async () => {
+    apiClient.collections.safeUpdate = vi
+      .fn()
       .mockRejectedValue(new Error('Network Error'));
 
     const wrapper = renderNoteButton(
