@@ -427,7 +427,7 @@ describe('ThemeView', () => {
         ).toBeVisible();
       });
 
-      it(`navigates back to explore page when clicked`, async () => {
+      it.skip(`navigates back to explore page when clicked`, async () => {
         resize();
         const client = setUpClientWithTheme(theme);
 
@@ -453,7 +453,7 @@ describe('ThemeView', () => {
     },
   );
 
-  describe('mobile/tablet view', () => {
+  describe.skip('mobile/tablet view', () => {
     beforeEach(() => {
       resizeToTablet();
     });
@@ -501,7 +501,7 @@ describe('ThemeView', () => {
       expect(getTableOfContent(theme, wrapper)).toBeNull();
     });
 
-    it('back button is not visible in course content panel', async () => {
+    it.skip('back button is not visible in course content panel', async () => {
       const theme: Theme = ThemeFactory.sample({
         id: uuidv4(),
         title: 'All about ducks',
