@@ -1,4 +1,5 @@
 import {
+  fireEvent,
   render,
   RenderResult,
   waitFor,
@@ -331,7 +332,7 @@ describe('PlaylistsView', () => {
 
       const shareButton = await wrapper.findByTestId(`share-playlist-button-1`);
 
-      await userEvent.click(shareButton);
+      fireEvent.click(shareButton);
 
       expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
         `${Constants.HOST}/playlists/1`,
@@ -584,7 +585,7 @@ describe('PlaylistsView', () => {
     });
 
     const openPlaylistCreationModal = async (wrapper: RenderResult) =>
-      userEvent.click(
+      fireEvent.click(
         await wrapper.findByRole('button', { name: 'Create new playlist' }),
       );
 
@@ -601,6 +602,8 @@ describe('PlaylistsView', () => {
       fillPlaylistField(wrapper, 'Description (Optional)', value);
 
     const confirmPlaylistCreationModal = async (wrapper: RenderResult) =>
-      userEvent.click(wrapper.getByRole('button', { name: 'Create playlist' }));
+      userEvent.click(
+        await wrapper.findByRole('button', { name: 'Create playlist' }),
+      );
   });
 });
