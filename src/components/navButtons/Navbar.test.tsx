@@ -154,7 +154,7 @@ describe(`Navbar test`, () => {
     const wrapper = renderAccountButton();
     expect(await wrapper.findByText('yo')).toBeInTheDocument();
 
-    await userEvent.click(await wrapper.findByText('yo'));
+    fireEvent.click(await wrapper.findByText('yo'));
 
     await waitFor(() => wrapper.getByTestId('account-modal'));
 
@@ -191,9 +191,14 @@ describe(`Navbar test`, () => {
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 
-    await userEvent.type(navbar.getByTestId('account-modal'), '{esc}');
+    fireEvent.keyDown(navbar.getByTestId('account-modal'), {
+      key: 'Escape',
+      code: 'Escape',
+      keyCode: 27,
+      charCode: 27,
+    });
 
-    expect(navbar.queryByTestId('account-modal')).not.toBeInTheDocument();
+    expect(navbar.queryByTestId('account-modal')).toBeNull();
   });
 
   it('closes the dialog when the dialog loses focus', async () => {
