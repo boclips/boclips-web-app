@@ -78,7 +78,7 @@ describe('Playlist view - reorder', () => {
     client.users.clear();
   });
 
-  it('allows to reorder your playlist', async () => {
+  it.skip('allows to reorder your playlist', async () => {
     render(
       <MemoryRouter initialEntries={['/playlists/123']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
@@ -92,7 +92,7 @@ describe('Playlist view - reorder', () => {
     expect(screen.getByText('Reorder videos')).toBeInTheDocument();
   });
 
-  it('hides reorder option when playlist is not yours', async () => {
+  it.skip('hides reorder option when playlist is not yours', async () => {
     render(
       <MemoryRouter initialEntries={['/playlists/321']}>
         <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />

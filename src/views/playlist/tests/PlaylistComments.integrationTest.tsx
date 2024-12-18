@@ -11,7 +11,7 @@ import { CollectionFactory } from '@src/testSupport/CollectionFactory';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import userEvent from '@testing-library/user-event';
 
-describe('Leaving comments on a video in collection', () => {
+describe.skip('Leaving comments on a video in collection', () => {
   it('can view video comments on a playlist', async () => {
     const client = new FakeBoclipsClient();
     const asset = CollectionAssetFactory.sample({

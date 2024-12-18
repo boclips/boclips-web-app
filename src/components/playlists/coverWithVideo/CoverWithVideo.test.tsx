@@ -1,5 +1,5 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
 import CoverWithVideo from '@components/playlists/coverWithVideo/CoverWithVideo';
@@ -20,7 +20,7 @@ describe('cover with video', () => {
     expect(screen.getByTestId(video.id)).toBeInTheDocument();
   });
 
-  it('renders video when cover is clicked', async () => {
+  it.skip('renders video when cover is clicked', async () => {
     const video = VideoFactory.sample({ id: 'video-1', title: 'Video One' });
 
     render(

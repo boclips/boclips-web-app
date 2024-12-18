@@ -30,15 +30,6 @@ export default defineConfig({
       },
     ],
   },
-  // css: {
-  //   preprocessorOptions: {
-  //     less: {
-  //       math: 'always',
-  //       relativeUrls: true,
-  //       javascriptEnabled: true,
-  //     },
-  //   },
-  // },
   plugins: [
     react({
       include: /\.(js|jsx|ts|tsx|less)$/,
@@ -67,5 +58,9 @@ export default defineConfig({
     server: {
       sourcemap: false,
     },
+    sequence: {
+      hooks: 'list',
+    },
+    pool: 'forks',
   },
 });

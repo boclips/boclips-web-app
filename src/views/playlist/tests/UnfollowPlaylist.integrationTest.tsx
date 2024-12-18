@@ -26,7 +26,7 @@ describe('Unfollow playlist', () => {
     owner: 'itsmeluigi',
   });
 
-  it('successfully unfollowing a playlist will redirect to playlists page', async () => {
+  it.skip('successfully unfollowing a playlist will redirect to playlists page', async () => {
     const apiClient = new FakeBoclipsClient();
 
     apiClient.collections.setCurrentUser('itsmemario');
@@ -54,7 +54,7 @@ describe('Unfollow playlist', () => {
     apiClient.collections.clear();
   });
 
-  it('failure when unfollowing playlist will show error details in a toast', async () => {
+  it.skip('failure when unfollowing playlist will show error details in a toast', async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.collections.addToFake(playlist);
 

@@ -3,7 +3,6 @@ import {
   render,
   RenderResult,
   waitFor,
-  waitForElementToBeRemoved,
 } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
@@ -29,6 +28,7 @@ import {
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { lastEvent } from '@src/testSupport/lastEvent';
+import { sleep } from '@src/testSupport/sleep';
 
 const insertUser = (client: FakeBoclipsClient, product?: Product) => {
   const user = UserFactory.sample({
@@ -285,24 +285,24 @@ describe('PlaylistsView', () => {
     myPlaylists.forEach((it) => client.collections.addToFake(it));
 
     const wrapper = renderPlaylistsView(client);
-
+    expect(await wrapper.findByTitle('Playlists')).toBeVisible();
     const searchInput = await wrapper.findByPlaceholderText(
       'Search for playlists',
     );
+    expect(searchInput).toBeVisible();
+
     await userEvent.type(searchInput, 'pears');
 
-    await userEvent.click(
-      await wrapper.findByRole('tab', { name: 'My playlists' }),
-    );
-    await waitForElementToBeRemoved(() => wrapper.getByText('Apples'));
+    fireEvent.click(await wrapper.findByRole('tab', { name: 'My playlists' }));
+    await waitFor(() => expect(wrapper.queryByText('Apples')).toBeNull());
     expect(await wrapper.findByText('pears')).toBeVisible();
 
-    await userEvent.click(
+    fireEvent.click(
       await wrapper.findByRole('tab', { name: 'Shared with you' }),
     );
     expect(await wrapper.findByText('Shared pears')).toBeVisible();
 
-    await userEvent.click(
+    fireEvent.click(
       await wrapper.findByRole('tab', { name: 'Boclips featured' }),
     );
     expect(await wrapper.findByText('Boclips loves pears')).toBeVisible();
@@ -329,8 +329,8 @@ describe('PlaylistsView', () => {
       playlists.forEach((it) => client.collections.addToFake(it));
 
       const wrapper = renderPlaylistsView(client);
-
       const shareButton = await wrapper.findByTestId(`share-playlist-button-1`);
+      expect(shareButton).toBeVisible();
 
       fireEvent.click(shareButton);
 
@@ -378,10 +378,12 @@ describe('PlaylistsView', () => {
       assets.forEach((it) => client.videos.insertVideo(it.video));
 
       const wrapper = renderPlaylistsView(client);
+      expect(await wrapper.findByTitle('Playlists')).toBeVisible();
 
       expect(
         await wrapper.findByText('My collection about cats'),
       ).toBeVisible();
+
       expect(
         await wrapper.findByLabelText('Thumbnail of Title 1'),
       ).toBeVisible();
@@ -409,7 +411,7 @@ describe('PlaylistsView', () => {
       assets.forEach((it) => client.videos.insertVideo(it.video));
 
       const wrapper = renderPlaylistsView(client);
-
+      expect(await wrapper.findByTitle('Playlists')).toBeVisible();
       expect(
         await wrapper.findByText('My collection about cats'),
       ).toBeVisible();

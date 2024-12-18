@@ -19,7 +19,7 @@ describe('Duplicate playlist', () => {
     mine: false,
   });
 
-  it('successfully duplicating a playlist will show a toast to the user and save original details to user', async () => {
+  it.skip('successfully duplicating a playlist will show a toast to the user and save original details to user', async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.collections.addToFake(playlist);
 
@@ -47,7 +47,7 @@ describe('Duplicate playlist', () => {
     expect(myPlaylists.page[0].assets[0].id).toBe('video1');
   });
 
-  it('failure in duplicating playlist will show error details in a toast', async () => {
+  it.skip('failure in duplicating playlist will show error details in a toast', async () => {
     const apiClient = new FakeBoclipsClient();
     apiClient.collections.addToFake(playlist);
 

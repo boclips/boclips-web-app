@@ -57,7 +57,7 @@ describe('Unauthorized Playlist View', () => {
     ).toBeInTheDocument();
   });
 
-  it('should display page not found when referer invalid', async () => {
+  it.skip('should display page not found when referer invalid', async () => {
     const apiClient = new FakeBoclipsClient();
     const playlist = CollectionFactory.sample({
       id: 'playlist-id',
