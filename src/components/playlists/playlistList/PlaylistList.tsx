@@ -1,5 +1,4 @@
-import { getMediaBreakpoint } from '@boclips-ui/use-media-breakpoints';
-import Pagination from '@boclips-ui/pagination';
+import { Pagination, getMediaBreakpoint } from 'boclips-ui';
 import List from 'antd/lib/list';
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
 import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collections/model/ListViewCollection';
@@ -29,7 +28,10 @@ const PlaylistList: React.FC<PlaylistListProps> = ({
   const mobileView = currentBreakpoint.type === 'mobile';
 
   const itemRender = React.useCallback(
-    (pageNumber: number, type: string) => (
+    (
+      pageNumber: number,
+      type: 'prev' | 'jump-prev' | 'page' | 'jump-next' | 'next',
+    ) => (
       <Pagination
         buttonType={type}
         page={pageNumber}

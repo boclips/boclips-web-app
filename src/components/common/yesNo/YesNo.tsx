@@ -1,6 +1,6 @@
 import React from 'react';
 import * as RadioGroup from '@radix-ui/react-radio-group';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import s from './style.module.less';
 
 export interface Props {

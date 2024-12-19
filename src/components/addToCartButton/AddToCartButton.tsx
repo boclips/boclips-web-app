@@ -5,7 +5,7 @@ import {
   useCartQuery,
 } from 'src/hooks/api/cartQuery';
 import { Cart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
-import Button from '@boclips-ui/button';
+import { Button, Tooltip } from 'boclips-ui';
 import React from 'react';
 import c from 'classnames';
 import CartIcon from 'resources/icons/cart-icon.svg';
@@ -17,7 +17,6 @@ import {
 import { Video } from 'boclips-api-client/dist/types';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
-import Tooltip from '@boclips-ui/tooltip';
 import s from './style.module.less';
 import { useBoclipsClient } from '../common/providers/BoclipsClientProvider';
 

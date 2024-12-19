@@ -1,7 +1,7 @@
 import c from 'classnames';
 import React from 'react';
 import { Facet } from 'boclips-api-client/dist/sub-clients/videos/model/VideoFacets';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import s from './styles.module.less';
 
 interface Props {

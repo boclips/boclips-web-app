@@ -1,4 +1,6 @@
-import { breakpoints } from '@boclips-ui/media-breakpoints';
+const mobileMaxWidth = 768;
+const tabletMaxWidth = 1148;
+const desktopMaxWidth = 9999;
 
 function resizeTo(width: number, height: number): void {
   const resizeEvent = document.createEvent('Event');
@@ -12,15 +14,15 @@ function resizeTo(width: number, height: number): void {
 }
 
 export function resizeToMobile(height = 1024) {
-  resizeTo(breakpoints.mobile.maxWidth - 1, height);
+  resizeTo(mobileMaxWidth - 1, height);
 }
 
 export function resizeToTablet(height = 1024) {
-  resizeTo(breakpoints.tablet.maxWidth - 1, height);
+  resizeTo(tabletMaxWidth - 1, height);
 }
 
 export function resizeToDesktop(height = 1024) {
-  resizeTo(breakpoints.desktop.maxWidth - 1, height);
+  resizeTo(desktopMaxWidth - 1, height);
 }
 
 export default resizeTo;

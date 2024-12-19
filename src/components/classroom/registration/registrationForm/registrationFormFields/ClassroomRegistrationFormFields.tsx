@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react';
-import { InputText } from '@boclips-ui/input';
+import { Input, Typography } from 'boclips-ui';
 import s from 'src/components/classroom/registration/style.module.less';
 import c from 'classnames';
 import RegistrationPageCheckbox from 'src/components/common/input/RegistrationPageCheckbox';
 import { ClassroomRegistrationData } from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
 import PasswordValidattor from 'react-password-validattor';
-import { Typography } from '@boclips-ui/typography';
 import {
   getCountries,
   getCountry,
@@ -138,7 +137,7 @@ const ClassroomRegistrationFormFields = ({
   return (
     <>
       <div className="flex flex-row items-start">
-        <InputText
+        <Input
           id="input-firstName"
           aria-label="input-firstName"
           onChange={(value) => handleChange('firstName', value)}
@@ -151,7 +150,7 @@ const ClassroomRegistrationFormFields = ({
           errorMessage={validationErrors.firstName}
           errorMessagePlacement="bottom"
         />
-        <InputText
+        <Input
           id="input-lastName"
           onChange={(value) => handleChange('lastName', value)}
           inputType="text"
@@ -165,7 +164,7 @@ const ClassroomRegistrationFormFields = ({
         />
       </div>
 
-      <InputText
+      <Input
         id="input-email"
         onChange={(value) => handleChange('email', value)}
         inputType="text"
@@ -221,7 +220,7 @@ const ClassroomRegistrationFormFields = ({
             </div>
           ) : null
         ) : (
-          <InputText
+          <Input
             id="input-schoolName"
             onChange={handleSchoolTextUpdate}
             inputType="text"
@@ -237,7 +236,7 @@ const ClassroomRegistrationFormFields = ({
 
       <div className="flex flex-col items-start">
         <div className="flex flex-row w-full">
-          <InputText
+          <Input
             id="input-password"
             onChange={(value) => handleChange('password', value)}
             inputType="password"
@@ -249,7 +248,7 @@ const ClassroomRegistrationFormFields = ({
             errorMessagePlacement="bottom"
           />
 
-          <InputText
+          <Input
             id="input-confirmPassword"
             onChange={(value) => handleChange('confirmPassword', value)}
             inputType="password"

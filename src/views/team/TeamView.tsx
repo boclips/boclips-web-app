@@ -2,7 +2,7 @@ import { Layout } from 'src/components/layout/Layout';
 import Navbar from 'src/components/layout/Navbar';
 import React from 'react';
 import PageHeader from 'src/components/pageTitle/PageHeader';
-import Button from '@boclips-ui/button';
+import { Button } from 'boclips-ui';
 import AddNewTeamMemberModal from 'src/components/teamModal/AddNewTeamMemberModal';
 import Footer from 'src/components/layout/Footer';
 import PlusSign from 'resources/icons/plus-sign.svg';

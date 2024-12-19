@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import countries from 'iso-3166-1';
 
 const allCountries = countries.all().map((it) => it.country);

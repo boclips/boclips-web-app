@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import Arrow from '../../resources/icons/grey-arrow.svg';
 import { Link } from '../common/Link';
 

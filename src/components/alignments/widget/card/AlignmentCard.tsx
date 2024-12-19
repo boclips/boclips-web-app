@@ -1,4 +1,4 @@
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import React from 'react';
 import { Provider } from 'boclips-api-client/dist/sub-clients/alignments/model/provider/Provider';
 import { useNavigate } from 'react-router-dom';

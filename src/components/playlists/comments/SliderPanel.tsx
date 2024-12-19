@@ -6,15 +6,12 @@ import {
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import React, { useRef, useState } from 'react';
 import s from 'src/components/playlists/comments/style.module.less';
-import { Typography } from '@boclips-ui/typography';
-import Button from '@boclips-ui/button';
 import CloseSVG from 'src/resources/icons/cross-icon.svg';
-import { InputText } from '@boclips-ui/input';
+import { Button, Input, Tooltip, Typography } from 'boclips-ui';
 import AccountSVG from 'src/resources/icons/account-icon.svg';
 import BinSVG from 'src/resources/icons/bin.svg';
 import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
 import c from 'classnames';
-import Tooltip from '@boclips-ui/tooltip';
 import Bubble from './Bubble';
 
 type Props = {
@@ -86,7 +83,7 @@ const SliderPanel = ({
         <Typography.Body className={s.headerText} weight="medium">
           {collection.assets.find((it) => it.id === videoId)?.video?.title}
         </Typography.Body>
-        <InputText
+        <Input
           ref={textareaRef}
           id={`${videoId}-comment`}
           inputType="textarea"

@@ -1,4 +1,4 @@
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import React from 'react';
 import { Link } from '../common/Link';
 import { OrderInformationField } from './OrderInformationField';

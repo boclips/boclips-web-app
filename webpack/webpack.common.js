@@ -8,13 +8,15 @@ const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  entry: path.resolve(path.resolve(__dirname, '../src'), 'index.tsx'),
+  entry: path.resolve(__dirname, '../src/index.tsx'),
 
   // Allows ts(x) and js files to be imported without extension
   resolve: {
     fallback: {
       querystring: require.resolve('querystring-es3'),
       crypto: false,
+      http: require.resolve('stream-http'),
+      url: require.resolve('url/'),
     },
     extensions: ['.ts', '.tsx', '.js', '.less'],
     alias: {

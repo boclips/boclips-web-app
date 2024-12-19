@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Bodal } from 'src/components/common/bodal/Bodal';
-import { InputText } from '@boclips-ui/input';
+import { Input, Typography } from 'boclips-ui';
 import { useAddNewUser, useGetUserQuery } from 'src/hooks/api/userQuery';
 import {
   CreateUserRequest,
@@ -9,7 +9,6 @@ import {
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
 import YesNo from 'src/components/common/yesNo/YesNo';
-import { Typography } from '@boclips-ui/typography';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 
 type Props = {
@@ -113,7 +112,7 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
       isLoading={isLoadingUser || isCreateUserLoading}
       initialFocusRef={firstInputRef}
     >
-      <InputText
+      <Input
         ref={firstInputRef}
         showLabelText
         inputType="text"
@@ -126,7 +125,7 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
         onBlur={() => validateTextField('firstName')}
         errorMessage="Please enter a valid first name (2 characters or longer)"
       />
-      <InputText
+      <Input
         inputType="text"
         id="last-name"
         onChange={(e) => setForm({ ...form, lastName: e })}
@@ -138,7 +137,7 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
         onBlur={() => validateTextField('lastName')}
         errorMessage="Please enter a valid last name (2 characters or longer)"
       />
-      <InputText
+      <Input
         showLabelText
         labelText="Email address"
         className="mb-6"

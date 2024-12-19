@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import PlaylistVideosListDraggable from 'src/components/playlistModal/reorder/PlaylistVideosListDraggable';
 import { useReorderPlaylist } from 'src/hooks/api/playlistsQuery';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';

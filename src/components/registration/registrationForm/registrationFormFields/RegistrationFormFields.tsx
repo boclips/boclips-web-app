@@ -1,13 +1,11 @@
 import React from 'react';
-import { InputText } from '@boclips-ui/input';
+import { Dropdown, Input, Typography } from 'boclips-ui';
 import s from 'src/components/registration/style.module.less';
 import c from 'classnames';
-import Dropdown from '@boclips-ui/dropdown';
 import { LIST_OF_COUNTRIES } from 'src/components/registration/dropdownValues';
 import RegistrationPageCheckbox from 'src/components/common/input/RegistrationPageCheckbox';
 import { RegistrationData } from 'src/components/registration/registrationForm/RegistrationForm';
 import PasswordValidattor from 'react-password-validattor';
-import { Typography } from '@boclips-ui/typography';
 
 const passwordConfig = {
   classNames: {
@@ -81,7 +79,7 @@ const RegistrationFormFields = ({
   );
   return (
     <>
-      <InputText
+      <Input
         id="input-accountName"
         onFocus={() => onFieldSelected('schoolName')}
         onChange={(value) => handleChange('accountName', value)}
@@ -96,7 +94,7 @@ const RegistrationFormFields = ({
       />
 
       <div className="flex flex-row items-start">
-        <InputText
+        <Input
           id="input-firstName"
           aria-label="input-firstName"
           onFocus={() => onFieldSelected('firstName')}
@@ -110,7 +108,7 @@ const RegistrationFormFields = ({
           errorMessage={validationErrors.firstName}
           errorMessagePlacement="bottom"
         />
-        <InputText
+        <Input
           id="input-lastName"
           onFocus={() => onFieldSelected('lastName')}
           onChange={(value) => handleChange('lastName', value)}
@@ -125,7 +123,7 @@ const RegistrationFormFields = ({
         />
       </div>
 
-      <InputText
+      <Input
         id="input-email"
         onFocus={() => onFieldSelected('email')}
         onChange={(value) => handleChange('email', value)}
@@ -157,7 +155,7 @@ const RegistrationFormFields = ({
 
       <div className="flex flex-col items-start mt-4">
         <div className="flex flex-row w-full">
-          <InputText
+          <Input
             id="input-password"
             onFocus={() => {
               onFieldSelected('password');
@@ -173,7 +171,7 @@ const RegistrationFormFields = ({
             errorMessagePlacement="bottom"
           />
 
-          <InputText
+          <Input
             id="input-confirmPassword"
             onFocus={() => {
               onFieldSelected('password');

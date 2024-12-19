@@ -1,6 +1,6 @@
 import React from 'react';
 import dateFormat from 'dateformat';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { OrderInformationField } from './OrderInformationField';
 
 interface Props {

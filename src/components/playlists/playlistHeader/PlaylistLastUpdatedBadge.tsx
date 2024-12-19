@@ -1,6 +1,6 @@
 import React from 'react';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
-import { Typography } from '@boclips-ui/typography';
+import { Typography } from 'boclips-ui';
 import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collections/model/ListViewCollection';
 import dayjs from 'dayjs';
 import s from './style.module.less';
