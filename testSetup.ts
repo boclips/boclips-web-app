@@ -19,6 +19,7 @@ window.resizeTo = resizeTo;
 window.scrollTo = jest.fn();
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.HTMLElement.prototype.scrollTo = jest.fn();
+window.TextTrack = jest.fn();
 
 // @ts-ignore
 window.matchMedia =
@@ -54,4 +55,3 @@ beforeEach(() => {
 });
 
 jest.mock('src/components/confetti/Confetti');
-
