@@ -15,7 +15,7 @@ describe('Duplicate playlist', () => {
     id: 'pl123',
     title: 'Original playlist',
     description: 'Description of original playlist',
-    assets: [CollectionAssetFactory.sample({ id: 'video1' })],
+    assets: [CollectionAssetFactory.sample({ id: { videoId: 'video1' } })],
     mine: false,
   });
 
@@ -44,7 +44,7 @@ describe('Duplicate playlist', () => {
     expect(myPlaylists.page[0].description).toBe(
       'Description of original playlist',
     );
-    expect(myPlaylists.page[0].assets[0].id).toBe('video1');
+    expect(myPlaylists.page[0].assets[0].id.videoId).toBe('video1');
   });
 
   it('failure in duplicating playlist will show error details in a toast', async () => {

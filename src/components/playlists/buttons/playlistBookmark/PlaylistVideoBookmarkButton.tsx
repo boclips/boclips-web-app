@@ -33,7 +33,7 @@ const PlaylistVideoBookmarkButton = ({
     setSegments(
       playlist.assets.reduce((accum, asset) => {
         if (asset.segment) {
-          accum[asset.id] = asset.segment;
+          accum[asset.id.videoId] = asset.segment;
         }
         return accum;
       }, {}),

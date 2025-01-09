@@ -20,7 +20,7 @@ describe('Unauthorized Playlist View', () => {
       description: 'We will, we will rock you, we will, we will rock you',
       assets: [
         CollectionAssetFactory.sample({
-          id: 'video1',
+          id: { videoId: 'video1' },
           video: VideoFactory.sample({
             id: 'video1',
             title: 'Somebody better put you back into your place',
@@ -65,7 +65,7 @@ describe('Unauthorized Playlist View', () => {
       description: 'We will, we will rock you, we will, we will rock you',
       assets: [
         CollectionAssetFactory.sample({
-          id: 'video1',
+          id: { videoId: 'video1' },
           video: VideoFactory.sample({
             id: 'video1',
             title: 'Somebody better put you back into your place',
@@ -102,7 +102,7 @@ describe('Unauthorized Playlist View', () => {
       description: 'We will, we will rock you, we will, we will rock you',
       assets: [
         CollectionAssetFactory.sample({
-          id: 'video1',
+          id: { videoId: 'video1' },
           video: VideoFactory.sample({
             id: 'video1',
             title: 'Somebody better put you back into your place',

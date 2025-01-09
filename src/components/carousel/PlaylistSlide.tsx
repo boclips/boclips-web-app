@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const PlaylistSlide = ({ playlist }: Props) => {
-  const videoId = playlist.assets[0].id;
+  const videoId = playlist.assets[0].id.videoId;
   const { data: video } = useFindOrGetVideo(videoId);
 
   return (

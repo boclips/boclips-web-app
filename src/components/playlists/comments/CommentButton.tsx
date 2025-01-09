@@ -16,7 +16,7 @@ type CommentButtonProps = {
 const CommentButton = ({ videoId, collection }: CommentButtonProps) => {
   const [isSliderOpen, setIsSliderOpen] = useState<boolean>(false);
   const numberOfComments = collection.assets.find(
-    (asset) => asset.id === videoId,
+    (asset) => asset.id.videoId === videoId,
   )?.comments?.length;
 
   return (
@@ -41,7 +41,7 @@ const CommentButton = ({ videoId, collection }: CommentButtonProps) => {
           <SliderPanel
             comments={
               numberOfComments
-                ? collection.assets.find((asset) => asset.id === videoId)
+                ? collection.assets.find((asset) => asset.id.videoId === videoId)
                     .comments
                 : []
             }

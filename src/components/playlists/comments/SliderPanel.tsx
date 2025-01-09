@@ -84,7 +84,10 @@ const SliderPanel = ({
       </section>
       <section className={c(s.input, { [s.margin]: comment.length === 0 })}>
         <Typography.Body className={s.headerText} weight="medium">
-          {collection.assets.find((it) => it.id === videoId)?.video?.title}
+          {
+            collection.assets.find((it) => it.id.videoId === videoId)?.video
+              ?.title
+          }
         </Typography.Body>
         <InputText
           ref={textareaRef}

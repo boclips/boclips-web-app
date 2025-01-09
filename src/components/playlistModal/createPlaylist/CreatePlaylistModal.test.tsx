@@ -108,15 +108,15 @@ describe('Create new playlist modal', () => {
 
     const assets = [
       CollectionAssetFactory.sample({
-        id: 'video1',
+        id: { videoId: 'video1' },
         video: VideoFactory.sample({ id: 'video1' }),
       }),
       CollectionAssetFactory.sample({
-        id: 'video2',
+        id: { videoId: 'video2' },
         video: VideoFactory.sample({ id: 'video2' }),
       }),
       CollectionAssetFactory.sample({
-        id: 'video3',
+        id: { videoId: 'video3' },
         video: VideoFactory.sample({ id: 'video3' }),
       }),
     ];
@@ -144,7 +144,7 @@ describe('Create new playlist modal', () => {
       expect(createPlaylistSpy).toHaveBeenCalledWith({
         title: 'Original playlist',
         description: 'Description of original playlist',
-        videos: [...assets.map((a) => a.id)],
+        videos: [...assets.map((a) => a.id.videoId)],
       }),
     );
   });

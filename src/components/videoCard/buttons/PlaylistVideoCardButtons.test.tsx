@@ -28,7 +28,7 @@ describe('Playlist Video Card Buttons', () => {
     const collection = CollectionFactory.sample({
       assets: [
         CollectionAssetFactory.sample({
-          id: video.id,
+          id: { videoId: video.id },
           video: VideoFactory.sample({ id: video.id }),
         }),
       ],
@@ -71,7 +71,7 @@ describe('Playlist Video Card Buttons', () => {
       id: '123',
       assets: [
         CollectionAssetFactory.sample({
-          id: video.id,
+          id: { videoId: video.id },
           video: VideoFactory.sample({ id: video.id }),
         }),
       ],
@@ -109,7 +109,7 @@ describe('Playlist Video Card Buttons', () => {
     const collection = CollectionFactory.sample({
       assets: [
         CollectionAssetFactory.sample({
-          id: video.id,
+          id: { videoId: video.id },
           video: VideoFactory.sample({ id: video.id }),
         }),
       ],
@@ -147,7 +147,7 @@ describe('Playlist Video Card Buttons', () => {
     const collection = CollectionFactory.sample({
       assets: [
         CollectionAssetFactory.sample({
-          id: video.id,
+          id: { videoId: video.id },
           video: VideoFactory.sample({ id: video.id }),
         }),
       ],

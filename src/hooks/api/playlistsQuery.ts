@@ -403,7 +403,7 @@ export const useReorderPlaylist = (playlist: Collection) => {
   return useMutation(
     (assets: CollectionAsset[]) =>
       client.collections.safeUpdate(playlist, {
-        videos: assets.map((it) => it.id),
+        videos: assets.map((it) => it.id.videoId),
       }),
     {
       onMutate: async (assets: CollectionAsset[]) => {

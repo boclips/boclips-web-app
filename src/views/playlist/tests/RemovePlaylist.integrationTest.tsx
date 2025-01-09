@@ -19,7 +19,7 @@ describe('Remove playlist', () => {
     description: 'Description of original playlist',
     assets: [
       CollectionAssetFactory.sample({
-        id: 'video1',
+        id: { videoId: 'video1' },
         video: VideoFactory.sample({ id: 'video1' }),
       }),
     ],

@@ -32,7 +32,7 @@ const PlaylistVideoNoteButton = ({
     setNotes(
       playlist.assets.reduce((accum, asset) => {
         if (asset.note) {
-          accum[asset.id] = asset.note;
+          accum[asset.id.videoId] = asset.note;
         }
         return accum;
       }, {}),
