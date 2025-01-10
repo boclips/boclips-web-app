@@ -9,7 +9,8 @@ import {
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 import NoteModal from 'src/components/playlists/buttons/playlistNote/noteModal/NoteModal';
-import { Notes } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';
+import { CollectionAsset } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
+import { CollectionAssetRequest } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';
 import s from '../style.module.less';
 
 interface PlaylistVideoShareButtonProps {
@@ -25,19 +26,26 @@ const PlaylistVideoNoteButton = ({
   const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
   const { mutate: updatePlaylist } = useEditPlaylistMutation(playlist);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [notes, setNotes] = useState<Notes>();
-  const hasNotes = !!notes && !!notes[video.id];
+  const [assets, setAssets] = useState<CollectionAsset[]>(playlist.assets);
+
+  const assetNotes = (
+    videoId: string,
+    highlightId?: string,
+  ): string | undefined => {
+    const foundAsset = assets.find(
+      (asset) =>
+        asset.id.videoId === videoId && asset.id.highlightId === highlightId,
+    );
+    return foundAsset.note;
+  };
+
+  const hasNotes = !!assets && !!assetNotes(video.id);
+
   useEffect(() => {
     if (!playlist) return;
-    setNotes(
-      playlist.assets.reduce((accum, asset) => {
-        if (asset.note) {
-          accum[asset.id.videoId] = asset.note;
-        }
-        return accum;
-      }, {}),
-    );
-  }, [playlist]);
+    setAssets(assets);
+  }, [assets, playlist]);
+
   const analyticsType: string = hasNotes ? 'UPDATE_NOTE' : 'SET_NOTE';
   const toggleModalVisibility = () => {
     if (!isModalVisible) {
@@ -49,11 +57,39 @@ const PlaylistVideoNoteButton = ({
     setIsModalVisible(!isModalVisible);
   };
 
-  const onConfirm = (videoId: string, note: string) => {
-    notes[videoId] = note;
+  const convertToCollectionAssetRequest = (
+    asset: CollectionAsset,
+  ): CollectionAssetRequest => ({
+    videoId: asset.id.videoId,
+    highlightId: asset.id.highlightId,
+    segment: asset.segment,
+    note: asset.note,
+  });
 
+  const updateAssetNote = (
+    videoId: string,
+    note: string,
+    highlightId?: string,
+  ) => {
+    const indexToReplace = assets.findIndex(
+      (asset) =>
+        asset.id.videoId === videoId && asset.id.highlightId === highlightId,
+    );
+
+    if (indexToReplace !== -1) {
+      assets[indexToReplace] = {
+        ...assets[indexToReplace],
+        note,
+      };
+    }
+  };
+
+  const onConfirm = (videoId: string, note: string) => {
+    updateAssetNote(videoId, note);
     updatePlaylist(
-      { notes },
+      {
+        assets: assets.map(convertToCollectionAssetRequest),
+      },
       {
         onSuccess: () => {
           trackPlatformInteraction({
@@ -98,7 +134,7 @@ const PlaylistVideoNoteButton = ({
           onCancel={toggleModalVisibility}
           title={modalTitle}
           video={video}
-          initialNote={(hasNotes && notes[video.id]) || ''}
+          initialNote={(hasNotes && assetNotes(video.id)) || ''}
           onConfirm={onConfirm}
         />
       )}
