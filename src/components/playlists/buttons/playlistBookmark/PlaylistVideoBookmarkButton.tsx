@@ -10,7 +10,8 @@ import { displayNotification } from 'src/components/common/notification/displayN
 import BookmarkModal from 'src/components/playlists/buttons/playlistBookmark/bookmarkModal/BookmarkModal';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 import { Segment } from 'boclips-api-client/dist/sub-clients/collections/model/Segment';
-import { Segments } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';
+import { CollectionAssetRequest } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';
+import { CollectionAsset } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
 import s from '../style.module.less';
 
 interface PlaylistVideoShareButtonProps {
@@ -26,19 +27,25 @@ const PlaylistVideoBookmarkButton = ({
   const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
   const { mutate: updatePlaylist } = useEditPlaylistMutation(playlist);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [segments, setSegments] = useState<Segments>();
-  const hasBookmark = !!segments && !!segments[video.id];
+  const [assets, setAssets] = useState<CollectionAsset[]>(playlist.assets);
+
+  const assetSegment = (
+    videoId: string,
+    highlightId?: string,
+  ): Segment | undefined => {
+    const foundAsset = assets.find(
+      (asset) =>
+        asset.id.videoId === videoId && asset.id.highlightId === highlightId,
+    );
+    return foundAsset.segment;
+  };
+  const hasBookmark = !!assets && !!assetSegment(video.id);
+
   useEffect(() => {
     if (!playlist) return;
-    setSegments(
-      playlist.assets.reduce((accum, asset) => {
-        if (asset.segment) {
-          accum[asset.id.videoId] = asset.segment;
-        }
-        return accum;
-      }, {}),
-    );
-  }, [playlist]);
+    setAssets(assets);
+  }, [assets, playlist]);
+
   const analyticsType: string = hasBookmark
     ? 'UPDATE_BOOKMARK'
     : 'SET_BOOKMARK';
@@ -52,11 +59,38 @@ const PlaylistVideoBookmarkButton = ({
     setIsModalVisible(!isModalVisible);
   };
 
+  const convertToCollectionAssetRequest = (
+    asset: CollectionAsset,
+  ): CollectionAssetRequest => ({
+    videoId: asset.id.videoId,
+    highlightId: asset.id.highlightId,
+    segment: asset.segment,
+    note: asset.note,
+  });
+
+  const updateAssetSegment = (
+    videoId: string,
+    segment: Segment,
+    highlightId?: string,
+  ) => {
+    const indexToReplace = assets.findIndex(
+      (asset) =>
+        asset.id.videoId === videoId && asset.id.highlightId === highlightId,
+    );
+
+    if (indexToReplace !== -1) {
+      assets[indexToReplace] = {
+        ...assets[indexToReplace],
+        segment,
+      };
+    }
+  };
+
   const onConfirm = (videoId: string, segment: Segment) => {
-    segments[videoId] = segment;
+    updateAssetSegment(videoId, segment);
 
     updatePlaylist(
-      { segments },
+      { assets: assets.map(convertToCollectionAssetRequest) },
       {
         onSuccess: () => {
           trackPlatformInteraction({
@@ -106,7 +140,7 @@ const PlaylistVideoBookmarkButton = ({
           onCancel={toggleModalVisibility}
           title={modalTitle}
           video={video}
-          initialSegment={hasBookmark && segments[video.id]}
+          initialSegment={hasBookmark && assetSegment(video.id)}
           onConfirm={onConfirm}
         />
       )}
