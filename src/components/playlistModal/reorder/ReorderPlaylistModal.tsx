@@ -94,7 +94,7 @@ const ReorderModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
         sensors={sensors}
       >
         <SortableContext
-          items={reorderedAssets.map((asset) => assetIdString(asset.id))}
+          items={reorderedAssets.map((asset) => assetIdString(asset.id.videoId))}
           strategy={verticalListSortingStrategy}
         >
           <ul className={s.listWrapper}>
