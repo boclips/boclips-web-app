@@ -5,7 +5,10 @@ import { Typography } from '@boclips-ui/typography';
 import PlaylistVideosListDraggable from 'src/components/playlistModal/reorder/PlaylistVideosListDraggable';
 import { useReorderPlaylist } from 'src/hooks/api/playlistsQuery';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
-import { CollectionAsset } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
+import {
+  CollectionAsset,
+  CollectionAssetId,
+} from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
 import {
   arrayMove,
   SortableContext,
@@ -47,10 +50,10 @@ const ReorderModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
 
     if (active.id !== over?.id) {
       const oldIndex = reorderedAssets.findIndex(
-        (item) => item.id === active.id,
+        (item) => assetIdString(item.id) === active.id,
       );
       const newIndex = reorderedAssets.findIndex(
-        (item) => item.id === over?.id,
+        (item) => assetIdString(item.id) === over?.id,
       );
 
       const newOrder = arrayMove(reorderedAssets, oldIndex, newIndex);
@@ -64,6 +67,14 @@ const ReorderModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
+
+  const assetIdString = (assetId: CollectionAssetId): string => {
+    if (assetId.highlightId) {
+      return `${assetId.videoId}_${assetId.highlightId}`;
+    }
+
+    return assetId.videoId;
+  };
 
   return (
     <Bodal
@@ -83,14 +94,14 @@ const ReorderModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
         sensors={sensors}
       >
         <SortableContext
-          items={reorderedAssets.map((asset) => asset.id.videoId)}
+          items={reorderedAssets.map((asset) => assetIdString(asset.id))}
           strategy={verticalListSortingStrategy}
         >
           <ul className={s.listWrapper}>
             {reorderedAssets.map((asset) => (
               <PlaylistVideosListDraggable
-                key={asset.id.videoId}
-                id={asset.id.videoId} // Pass the unique identifier
+                key={assetIdString(asset.id)}
+                id={assetIdString(asset.id)} // Pass the unique identifier
                 video={asset.video}
               />
             ))}
