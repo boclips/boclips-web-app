@@ -26,25 +26,25 @@ const PlaylistVideoNoteButton = ({
   const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
   const { mutate: updatePlaylist } = useEditPlaylistMutation(playlist);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [assets, setAssets] = useState<CollectionAsset[]>(playlist.assets);
+  const [assets, setAssets] = useState<CollectionAsset[]>();
 
   const assetNotes = (
     videoId: string,
     highlightId?: string,
   ): string | undefined => {
-    const foundAsset = assets.find(
+    const foundAsset = assets?.find(
       (asset) =>
         asset.id.videoId === videoId && asset.id.highlightId === highlightId,
     );
-    return foundAsset.note;
+    return foundAsset?.note;
   };
 
   const hasNotes = !!assets && !!assetNotes(video.id);
 
   useEffect(() => {
     if (!playlist) return;
-    setAssets(assets);
-  }, [assets, playlist]);
+    setAssets(playlist.assets);
+  }, [playlist]);
 
   const analyticsType: string = hasNotes ? 'UPDATE_NOTE' : 'SET_NOTE';
   const toggleModalVisibility = () => {
@@ -84,8 +84,8 @@ const PlaylistVideoNoteButton = ({
     }
   };
 
-  const onConfirm = (videoId: string, note: string) => {
-    updateAssetNote(videoId, note);
+  const onConfirm = (videoId: string, note: string, highlightId?: string) => {
+    updateAssetNote(videoId, note, highlightId);
     updatePlaylist(
       {
         assets: assets.map(convertToCollectionAssetRequest),

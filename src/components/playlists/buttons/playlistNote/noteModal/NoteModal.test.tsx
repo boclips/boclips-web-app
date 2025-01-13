@@ -72,7 +72,9 @@ describe('Note modal for playlists', () => {
     );
 
     const updatedNote = updatedPlaylist.assets.find(
-      (updatedAsset) => updatedAsset.id === asset.id,
+      (updatedAsset) =>
+        updatedAsset.id.videoId === asset.id.videoId &&
+        updatedAsset.id.highlightId === asset.id.highlightId,
     ).note;
 
     expect(updatedNote).toEqual(
@@ -111,7 +113,9 @@ describe('Note modal for playlists', () => {
     );
 
     const updatedNote = updatedPlaylist.assets.find(
-      (updatedAsset) => updatedAsset.id === asset.id,
+      (updatedAsset) =>
+        updatedAsset.id.videoId === asset.id.videoId &&
+        updatedAsset.id.highlightId === asset.id.highlightId,
     ).note;
 
     expect(updatedNote).toEqual('');

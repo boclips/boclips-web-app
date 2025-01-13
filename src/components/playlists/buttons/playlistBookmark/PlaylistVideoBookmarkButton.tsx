@@ -27,24 +27,24 @@ const PlaylistVideoBookmarkButton = ({
   const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
   const { mutate: updatePlaylist } = useEditPlaylistMutation(playlist);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [assets, setAssets] = useState<CollectionAsset[]>(playlist.assets);
+  const [assets, setAssets] = useState<CollectionAsset[]>();
 
   const assetSegment = (
     videoId: string,
     highlightId?: string,
   ): Segment | undefined => {
-    const foundAsset = assets.find(
+    const foundAsset = assets?.find(
       (asset) =>
         asset.id.videoId === videoId && asset.id.highlightId === highlightId,
     );
-    return foundAsset.segment;
+    return foundAsset?.segment;
   };
   const hasBookmark = !!assets && !!assetSegment(video.id);
 
   useEffect(() => {
     if (!playlist) return;
-    setAssets(assets);
-  }, [assets, playlist]);
+    setAssets(playlist.assets);
+  }, [playlist]);
 
   const analyticsType: string = hasBookmark
     ? 'UPDATE_BOOKMARK'

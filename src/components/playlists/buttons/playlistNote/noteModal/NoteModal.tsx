@@ -8,7 +8,7 @@ interface NoteModalProps {
   title: string;
   video: Video;
   initialNote: string;
-  onConfirm: (videoId: string, note: string) => void;
+  onConfirm: (videoId: string, note: string, highlightId?: string) => void;
 }
 
 const NoteModal = ({

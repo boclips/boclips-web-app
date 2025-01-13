@@ -102,7 +102,9 @@ describe('Bookmark modal for playlists', () => {
 
     await waitFor(() => {
       const updatedSegment = updatedPlaylist.assets.find(
-        (updatedAsset) => updatedAsset.id === asset.id,
+        (updatedAsset) =>
+          updatedAsset.id.videoId === asset.id.videoId &&
+          updatedAsset.id.highlightId === asset.id.highlightId,
       ).segment;
       expect(updatedSegment.start).toEqual(32);
       expect(updatedSegment.end).toEqual(55);
@@ -153,7 +155,9 @@ describe('Bookmark modal for playlists', () => {
     await waitFor(() => {
       expect(
         updatedPlaylist.assets.find(
-          (updatedAsset) => updatedAsset.id === asset.id,
+          (updatedAsset) =>
+            updatedAsset.id.videoId === asset.id.videoId &&
+            updatedAsset.id.highlightId === asset.id.highlightId,
         ).segment,
       ).toBeUndefined();
       expect(
@@ -291,7 +295,9 @@ describe('Bookmark modal for playlists', () => {
 
     await waitFor(() => {
       const updatedSegment = updatedPlaylist.assets.find(
-        (updatedAsset) => updatedAsset.id === asset.id,
+        (updatedAsset) =>
+          updatedAsset.id.videoId === asset.id.videoId &&
+          updatedAsset.id.highlightId === asset.id.highlightId,
       ).segment;
       expect(updatedSegment.start).toEqual(32);
       expect(updatedSegment.end).toEqual(55);
@@ -328,7 +334,9 @@ describe('Bookmark modal for playlists', () => {
 
     await waitFor(() => {
       const updatedSegment = updatedPlaylist.assets.find(
-        (updatedAsset) => updatedAsset.id === asset.id,
+        (updatedAsset) =>
+          updatedAsset.id.videoId === asset.id.videoId &&
+          updatedAsset.id.highlightId === asset.id.highlightId,
       ).segment;
       expect(updatedSegment.start).toEqual(32);
       expect(updatedSegment.end).toEqual(55);
