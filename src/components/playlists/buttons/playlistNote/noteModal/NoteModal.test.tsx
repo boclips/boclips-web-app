@@ -19,7 +19,7 @@ import PlaylistVideoNoteButton from 'src/components/playlists/buttons/playlistNo
 
 describe('Note modal for playlists', () => {
   const asset = CollectionAssetFactory.sample({
-    id: 'video-id',
+    id: { videoId: 'video-id' },
     video: VideoFactory.sample({ id: 'video-id' }),
   });
   const collectionWithoutNoteId = 'without-note';

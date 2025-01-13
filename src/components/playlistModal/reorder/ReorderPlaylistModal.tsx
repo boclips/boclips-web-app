@@ -83,14 +83,14 @@ const ReorderModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
         sensors={sensors}
       >
         <SortableContext
-          items={reorderedAssets.map((asset) => asset.id)}
+          items={reorderedAssets.map((asset) => asset.id.videoId)}
           strategy={verticalListSortingStrategy}
         >
           <ul className={s.listWrapper}>
             {reorderedAssets.map((asset) => (
               <PlaylistVideosListDraggable
-                key={asset.id}
-                id={asset.id} // Pass the unique identifier
+                key={asset.id.videoId}
+                id={asset.id.videoId} // Pass the unique identifier
                 video={asset.video}
               />
             ))}

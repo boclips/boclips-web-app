@@ -24,7 +24,7 @@ import { lastEvent } from 'src/testSupport/lastEvent';
 
 describe('Bookmark modal for playlists', () => {
   const asset = CollectionAssetFactory.sample({
-    id: 'video-id',
+    id: { videoId: 'video-id' },
     video: VideoFactory.sample({ id: 'video-id' }),
   });
   const nonBookmarkedCollectionId = 'non-segment';

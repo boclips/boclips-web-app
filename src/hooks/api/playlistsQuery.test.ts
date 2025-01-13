@@ -43,8 +43,8 @@ describe('playlistsQuery', () => {
 
   it('safely reorders playlists', async () => {
     const [asset1, asset2] = [
-      CollectionAssetFactory.sample({ id: 'video-1' }),
-      CollectionAssetFactory.sample({ id: 'video-2' }),
+      CollectionAssetFactory.sample({ id: { videoId: 'video-1' } }),
+      CollectionAssetFactory.sample({ id: { videoId: 'video-2' } }),
     ];
     const collection = CollectionFactory.sample({ assets: [asset1, asset2] });
     const apiClient = new FakeBoclipsClient();
@@ -59,7 +59,7 @@ describe('playlistsQuery', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(collectionsSpy).toBeCalledWith(collection, {
-      videos: [asset2.id, asset1.id],
+      videos: [asset2.id.videoId, asset1.id.videoId],
     });
   });
 
@@ -139,7 +139,7 @@ describe('playlistsQuery', () => {
     const collection = CollectionFactory.sample({
       assets: [
         CollectionAssetFactory.sample({
-          id: 'video-id',
+          id: { videoId: 'video-id' },
           comments: [
             {
               id: 'comment-id',

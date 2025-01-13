@@ -54,7 +54,7 @@ export const CreatePlaylistModal = ({
     });
     let videos = [];
     if (playlist) {
-      videos = playlist.assets.map((video) => video.id);
+      videos = playlist.assets.map((video) => video.id.videoId);
     } else if (videoId) {
       videos = [videoId];
     }

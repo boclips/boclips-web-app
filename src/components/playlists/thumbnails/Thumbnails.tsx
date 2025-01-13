@@ -10,13 +10,13 @@ interface Props {
 
 const Thumbnails = ({ assets }: Props) => {
   const { data: firstVideo, isLoading: firstLoading } = useFindOrGetVideo(
-    assets[0]?.id,
+    assets[0]?.id.videoId,
   );
   const { data: secondVideo, isLoading: secondLoading } = useFindOrGetVideo(
-    assets[1]?.id,
+    assets[1]?.id.videoId,
   );
   const { data: thirdVideo, isLoading: thirdLoading } = useFindOrGetVideo(
-    assets[2]?.id,
+    assets[2]?.id.videoId,
   );
 
   const loading = [firstLoading, secondLoading, thirdLoading];

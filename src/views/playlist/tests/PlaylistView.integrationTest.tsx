@@ -41,7 +41,7 @@ const createAssetWithThumbnail = (id: string, videoTitle: string) => {
     }),
   });
 
-  return CollectionAssetFactory.sample({ id, video });
+  return CollectionAssetFactory.sample({ id: { videoId: id }, video });
 };
 
 describe('Playlist view', () => {
@@ -117,11 +117,11 @@ describe('Playlist view', () => {
       </MemoryRouter>,
     );
 
-    expect(await screen.findByTestId(assets[0].id)).toBeVisible();
-    expect(await screen.findByTestId(assets[1].id)).toBeVisible();
-    expect(await screen.findByTestId(assets[2].id)).toBeVisible();
-    expect(await screen.findByTestId(assets[3].id)).toBeVisible();
-    expect(await screen.findByTestId(assets[4].id)).toBeVisible();
+    expect(await screen.findByTestId(assets[0].id.videoId)).toBeVisible();
+    expect(await screen.findByTestId(assets[1].id.videoId)).toBeVisible();
+    expect(await screen.findByTestId(assets[2].id.videoId)).toBeVisible();
+    expect(await screen.findByTestId(assets[3].id.videoId)).toBeVisible();
+    expect(await screen.findByTestId(assets[4].id.videoId)).toBeVisible();
   });
 
   it('playlist item has valid href for redirection', async () => {

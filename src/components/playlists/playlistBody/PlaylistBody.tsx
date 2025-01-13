@@ -122,7 +122,7 @@ const PlaylistBody = ({
                   </div>
                 )}
                 <VideoCardWrapper
-                  key={asset.id}
+                  key={asset.id.videoId}
                   video={asset.video}
                   handleFilterChange={handleFilterChange}
                   disableTitleLink={disableLinks}
@@ -134,7 +134,7 @@ const PlaylistBody = ({
               </>
             ) : (
               <VideoGridCard
-                key={asset.id}
+                key={asset.id.videoId}
                 video={asset.video}
                 handleFilterChange={handleFilterChange}
                 disableLink={disableLinks}

@@ -115,7 +115,7 @@ const AppInitializer = ({ viewMock }: { viewMock?: ReactElement }) => {
     );
   }
 
-  BoclipsSecurity.createInstance(authOptions);
+  BoclipsSecurity.createInstance(authOptions, true, axios);
 
   return null;
 };

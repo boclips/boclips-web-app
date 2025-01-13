@@ -15,7 +15,7 @@ describe('Leaving comments on a video in collection', () => {
   it('can view video comments on a playlist', async () => {
     const client = new FakeBoclipsClient();
     const asset = CollectionAssetFactory.sample({
-      id: '123',
+      id: { videoId: '123' },
       video: VideoFactory.sample({ id: '123', title: 'title' }),
       comments: [
         {
@@ -55,7 +55,7 @@ describe('Leaving comments on a video in collection', () => {
 
     await userEvent.click(screen.getByTestId('add-comment-button'));
 
-    const sliderPanel = screen.getByTestId(`slider-panel-${asset.id}`);
+    const sliderPanel = screen.getByTestId(`slider-panel-${asset.id.videoId}`);
 
     expect(within(sliderPanel).getByText('Comments')).toBeInTheDocument();
     expect(
@@ -77,7 +77,7 @@ describe('Leaving comments on a video in collection', () => {
   it('can add a comment to a video in collection', async () => {
     const client = new FakeBoclipsClient();
     const asset = CollectionAssetFactory.sample({
-      id: '123',
+      id: { videoId: '123' },
       video: VideoFactory.sample({ id: '123', title: 'title' }),
       comments: null,
     });
@@ -105,7 +105,7 @@ describe('Leaving comments on a video in collection', () => {
 
     await userEvent.click(screen.getByTestId('add-comment-button'));
 
-    const slider = screen.getByTestId(`slider-panel-${asset.id}`);
+    const slider = screen.getByTestId(`slider-panel-${asset.id.videoId}`);
 
     await userEvent.type(
       within(slider).getByPlaceholderText('Add a comment'),
@@ -122,7 +122,7 @@ describe('Leaving comments on a video in collection', () => {
   it('displays comment button if user has feature flag', async () => {
     const client = new FakeBoclipsClient();
     const asset = CollectionAssetFactory.sample({
-      id: '123',
+      id: { videoId: '123' },
       video: VideoFactory.sample({ id: '123', title: 'title' }),
       comments: null,
     });

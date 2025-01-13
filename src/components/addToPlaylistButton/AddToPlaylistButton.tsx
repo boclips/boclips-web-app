@@ -85,7 +85,7 @@ export const AddToPlaylistButton = ({ videoId, onCleanup, onClick }: Props) => {
     if (playlists && videoId) {
       const ids = playlists
         .filter((playlist) =>
-          playlist.assets.map((v) => v.id).includes(videoId),
+          playlist.assets.map((v) => v.id.videoId).includes(videoId),
         )
         .map((playlist) => playlist.id);
 

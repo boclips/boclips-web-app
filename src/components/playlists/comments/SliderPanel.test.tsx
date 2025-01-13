@@ -28,7 +28,7 @@ describe('slider panel', () => {
       id: 'collection-id',
       assets: [
         CollectionAssetFactory.sample({
-          id: video.id,
+          id: { videoId: video.id },
           comments: [
             {
               id: 'id-123',
@@ -52,7 +52,7 @@ describe('slider panel', () => {
               videoId={video.id}
               collection={collection}
               comments={
-                collection.assets.find((asset) => asset.id === video.id)
+                collection.assets.find((asset) => asset.id.videoId === video.id)
                   .comments
               }
             />
@@ -79,7 +79,7 @@ describe('slider panel', () => {
       id: 'collection-id',
       assets: [
         CollectionAssetFactory.sample({
-          id: video.id,
+          id: { videoId: video.id },
           comments: [
             {
               id: 'id-123',
@@ -103,7 +103,7 @@ describe('slider panel', () => {
               videoId={video.id}
               collection={collection}
               comments={
-                collection.assets.find((asset) => asset.id === video.id)
+                collection.assets.find((asset) => asset.id.videoId === video.id)
                   .comments
               }
             />
@@ -142,7 +142,7 @@ describe('slider panel', () => {
       id: 'collection-id',
       assets: [
         CollectionAssetFactory.sample({
-          id: video.id,
+          id: { videoId: video.id },
           comments: [
             {
               id: 'id-123',
@@ -174,7 +174,7 @@ describe('slider panel', () => {
               videoId={video.id}
               collection={collection}
               comments={
-                collection.assets.find((asset) => asset.id === video.id)
+                collection.assets.find((asset) => asset.id.videoId === video.id)
                   .comments
               }
             />
