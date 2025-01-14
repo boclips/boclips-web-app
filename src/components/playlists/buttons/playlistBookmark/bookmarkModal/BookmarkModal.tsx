@@ -1,4 +1,3 @@
-import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { Segment } from 'boclips-api-client/dist/sub-clients/collections/model/Segment';
 import formatDuration from 'src/components/playlists/buttons/playlistBookmark/helpers/formatDuration';
 import React, { ChangeEvent, useEffect, useState } from 'react';
@@ -12,22 +11,27 @@ import { Bodal } from 'src/components/common/bodal/Bodal';
 import BoCheckbox from 'src/components/common/input/BoCheckbox';
 import { DurationInput } from 'src/components/cart/AdditionalServices/Trim/DurationInput';
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
+import {
+  CollectionAsset,
+  CollectionAssetId,
+} from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
 
 interface BookmarkModalProps {
   onCancel: () => void;
   title: string;
-  video: Video;
+  asset: CollectionAsset;
   initialSegment?: Segment;
-  onConfirm: (videoId: string, segment: Segment) => void;
+  onConfirm: (assetId: CollectionAssetId, segment: Segment) => void;
 }
 
 const BookmarkModal = ({
   onCancel,
   title,
-  video,
+  asset,
   initialSegment,
   onConfirm,
 }: BookmarkModalProps) => {
+  const video = asset.video;
   const videoDuration = video.playback.duration.format('mm:ss');
   const startSegment = initialSegment
     ? formatDuration(initialSegment.start)
@@ -98,7 +102,7 @@ const BookmarkModal = ({
       };
     }
 
-    onConfirm(video.id, segment);
+    onConfirm(asset.id, segment);
   };
 
   return (

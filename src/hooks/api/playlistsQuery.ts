@@ -14,12 +14,16 @@ import { useNavigate } from 'react-router-dom';
 import { CollectionPermission } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionPermissions';
 import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForProduct';
 import { PLAYLISTS_PAGE_SIZE } from 'src/components/playlists/playlistList/PlaylistList';
-import { CollectionAsset } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
+import {
+  CollectionAsset,
+  CollectionAssetId,
+} from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
+import { assetIdString } from 'src/components/playlistModal/CollectionAssetIdString';
 import { playlistKeys } from './playlistKeys';
 
 interface UpdatePlaylistProps {
   playlist: Collection | ListViewCollection;
-  videoId: string;
+  assetId: CollectionAssetId;
 }
 
 interface PlaylistMutationCallbacks {
@@ -203,18 +207,24 @@ export const useRemoveCommentFromPlaylistVideo = (playlist: Collection) => {
 
 export const doAddToPlaylist = (
   playlist: Collection | ListViewCollection,
-  videoId: string,
+  assetId: CollectionAssetId,
   client: BoclipsClient,
 ) => {
-  return client.collections.addVideoToCollection(playlist, videoId);
+  return client.collections.addVideoToCollection(
+    playlist,
+    assetId.videoId, // TODO sc-2150
+  );
 };
 
 export const doRemoveFromPlaylist = (
   playlist: Collection | ListViewCollection,
-  videoId: string,
+  assetId: CollectionAssetId,
   client: BoclipsClient,
 ) => {
-  return client.collections.removeVideoFromCollection(playlist, videoId);
+  return client.collections.removeVideoFromCollection(
+    playlist,
+    assetId.videoId, // TODO sc-2150
+  );
 };
 
 export const doFollowPlaylist = (
@@ -229,24 +239,24 @@ export const useAddToPlaylistMutation = (
 ) => {
   const client = useBoclipsClient();
   return useMutation(
-    async ({ playlist, videoId }: UpdatePlaylistProps) =>
-      doAddToPlaylist(playlist, videoId, client),
+    async ({ playlist, assetId }: UpdatePlaylistProps) =>
+      doAddToPlaylist(playlist, assetId, client),
     {
-      onSuccess: (_, { playlist, videoId }) => {
+      onSuccess: (_, { playlist, assetId }) => {
         displayNotification(
           'success',
           `Video added to "${playlist.title}"`,
           '',
-          `add-video-${videoId}-to-playlist`,
+          `add-video-${assetIdString(assetId)}-to-playlist`,
         );
         callbacks.onSuccess(playlist.id);
       },
-      onError: (_, { playlist, videoId }: UpdatePlaylistProps) => {
+      onError: (_, { playlist, assetId }: UpdatePlaylistProps) => {
         displayNotification(
           'error',
           `Error: Failed to add video to ${playlist.title}`,
           'Please refresh the page and try again',
-          `add-video-${videoId}-to-playlist`,
+          `add-video-${assetIdString(assetId)}-to-playlist`,
         );
         callbacks.onError(playlist.id);
       },
@@ -261,24 +271,24 @@ export const useRemoveFromPlaylistMutation = (
   const queryClient = useQueryClient();
 
   return useMutation(
-    async ({ playlist, videoId }: UpdatePlaylistProps) =>
-      doRemoveFromPlaylist(playlist, videoId, client),
+    async ({ playlist, assetId }: UpdatePlaylistProps) =>
+      doRemoveFromPlaylist(playlist, assetId, client),
     {
-      onSuccess: (_, { playlist, videoId }) => {
+      onSuccess: (_, { playlist, assetId }) => {
         displayNotification(
           'success',
           `Video removed from "${playlist.title}"`,
           '',
-          `add-video-${videoId}-to-playlist`,
+          `add-video-${assetIdString(assetId)}-to-playlist`,
         );
         callbacks.onSuccess(playlist.id);
       },
-      onError: (_, { playlist, videoId }: UpdatePlaylistProps) => {
+      onError: (_, { playlist, assetId }: UpdatePlaylistProps) => {
         displayNotification(
           'error',
           `Error: Failed remove video from ${playlist.title}`,
           'Please refresh the page and try again',
-          `add-video-${videoId}-to-playlist`,
+          `add-video-${assetIdString(assetId)}-to-playlist`,
         );
         callbacks.onError(playlist.id);
       },

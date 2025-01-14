@@ -59,6 +59,7 @@ describe('Playlist Video Card Buttons', () => {
 
     expect(await wrapper.findByLabelText('download-transcript')).toBeVisible();
   });
+
   it('playlists button present', async () => {
     const video = VideoFactory.sample({
       links: {
@@ -99,6 +100,7 @@ describe('Playlist Video Card Buttons', () => {
 
     expect(await wrapper.findByLabelText('Add to playlist')).toBeVisible();
   });
+
   it('transcript button hidden when video has no transcript', async () => {
     const video = VideoFactory.sample({
       links: {
@@ -187,7 +189,10 @@ describe('Playlist Video Card Buttons', () => {
     return render(
       <BoclipsClientProvider client={fakeClient}>
         <QueryClientProvider client={new QueryClient()}>
-          <PlaylistVideoCardButtons video={video} playlistId={playlistId} />
+          <PlaylistVideoCardButtons
+            asset={CollectionAssetFactory.sample({ video })}
+            playlistId={playlistId}
+          />
         </QueryClientProvider>
       </BoclipsClientProvider>,
     );

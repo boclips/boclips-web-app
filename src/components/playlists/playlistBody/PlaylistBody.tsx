@@ -57,10 +57,10 @@ const PlaylistBody = ({
     });
   };
 
-  const listViewVideoCardButtons = (video: Video) => {
+  const listViewVideoCardButtons = (asset: CollectionAsset) => {
     return (
       <PlaylistVideoCardButtons
-        video={video}
+        asset={asset}
         onCleanupAddToPlaylist={shouldRemoveVideoCardFromView}
         playlistId={playlist.id}
       />
@@ -126,9 +126,7 @@ const PlaylistBody = ({
                   video={asset.video}
                   handleFilterChange={handleFilterChange}
                   disableTitleLink={disableLinks}
-                  buttonsRow={
-                    showButtons && listViewVideoCardButtons(asset.video)
-                  }
+                  buttonsRow={showButtons && listViewVideoCardButtons(asset)}
                   segment={asset.segment}
                 />
               </>

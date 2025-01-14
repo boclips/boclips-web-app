@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@boclips-ui/button';
-import { Video } from 'boclips-api-client/dist/types';
 import PencilSVG from 'src/resources/icons/pencil.svg';
 import {
   useEditPlaylistMutation,
@@ -9,17 +8,20 @@ import {
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 import NoteModal from 'src/components/playlists/buttons/playlistNote/noteModal/NoteModal';
-import { CollectionAsset } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
+import {
+  CollectionAsset,
+  CollectionAssetId,
+} from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
 import { CollectionAssetRequest } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';
 import s from '../style.module.less';
 
 interface PlaylistVideoShareButtonProps {
-  video: Video;
+  selectedAsset: CollectionAsset;
   playlistId: string;
 }
 
 const PlaylistVideoNoteButton = ({
-  video,
+  selectedAsset,
   playlistId,
 }: PlaylistVideoShareButtonProps) => {
   const { data: playlist } = usePlaylistQuery(playlistId);
@@ -28,18 +30,16 @@ const PlaylistVideoNoteButton = ({
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [assets, setAssets] = useState<CollectionAsset[]>();
 
-  const assetNotes = (
-    videoId: string,
-    highlightId?: string,
-  ): string | undefined => {
+  const assetNotes = (assetId: CollectionAssetId): string | undefined => {
     const foundAsset = assets?.find(
       (asset) =>
-        asset.id.videoId === videoId && asset.id.highlightId === highlightId,
+        asset.id.videoId === assetId.videoId &&
+        asset.id.highlightId === assetId.highlightId,
     );
     return foundAsset?.note;
   };
 
-  const hasNotes = !!assets && !!assetNotes(video.id);
+  const hasNotes = !!assets && !!assetNotes(selectedAsset.id);
 
   useEffect(() => {
     if (!playlist) return;
@@ -66,14 +66,11 @@ const PlaylistVideoNoteButton = ({
     note: asset.note,
   });
 
-  const updateAssetNote = (
-    videoId: string,
-    note: string,
-    highlightId?: string,
-  ) => {
+  const updateAssetNote = (assetId: CollectionAssetId, note: string) => {
     const indexToReplace = assets.findIndex(
       (asset) =>
-        asset.id.videoId === videoId && asset.id.highlightId === highlightId,
+        asset.id.videoId === assetId.videoId &&
+        asset.id.highlightId === assetId.highlightId,
     );
 
     if (indexToReplace !== -1) {
@@ -84,8 +81,8 @@ const PlaylistVideoNoteButton = ({
     }
   };
 
-  const onConfirm = (videoId: string, note: string, highlightId?: string) => {
-    updateAssetNote(videoId, note, highlightId);
+  const onConfirm = (assetId: CollectionAssetId, note: string) => {
+    updateAssetNote(assetId, note);
     updatePlaylist(
       {
         assets: assets.map(convertToCollectionAssetRequest),
@@ -112,8 +109,8 @@ const PlaylistVideoNoteButton = ({
   };
 
   const modalTitle = hasNotes
-    ? `Update note for '${video.title}'`
-    : `Add note for '${video.title}'`;
+    ? `Update note for '${selectedAsset.video.title}'`
+    : `Add note for '${selectedAsset.video.title}'`;
   const mainButtonCopy = hasNotes ? 'Edit Note' : 'Add Note';
   const mainButtonIcon = hasNotes ? <PencilSVG /> : null;
 
@@ -133,8 +130,8 @@ const PlaylistVideoNoteButton = ({
         <NoteModal
           onCancel={toggleModalVisibility}
           title={modalTitle}
-          video={video}
-          initialNote={(hasNotes && assetNotes(video.id)) || ''}
+          assetId={selectedAsset.id}
+          initialNote={(hasNotes && assetNotes(selectedAsset.id)) || ''}
           onConfirm={onConfirm}
         />
       )}

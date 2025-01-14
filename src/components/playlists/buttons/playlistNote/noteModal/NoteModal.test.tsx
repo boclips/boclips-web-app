@@ -12,14 +12,18 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import dayjs from 'src/day-js';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { ToastContainer } from 'react-toastify';
-import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { lastEvent } from 'src/testSupport/lastEvent';
 import PlaylistVideoNoteButton from 'src/components/playlists/buttons/playlistNote/PlaylistVideoNoteButton';
+import { CollectionAsset } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
 
 describe('Note modal for playlists', () => {
-  const asset = CollectionAssetFactory.sample({
+  const videoAsset = CollectionAssetFactory.sample({
     id: { videoId: 'video-id' },
+    video: VideoFactory.sample({ id: 'video-id' }),
+  });
+  const highlightAsset = CollectionAssetFactory.sample({
+    id: { videoId: 'video-id', highlightId: 'highlight-id' },
     video: VideoFactory.sample({ id: 'video-id' }),
   });
   const collectionWithoutNoteId = 'without-note';
@@ -30,31 +34,31 @@ describe('Note modal for playlists', () => {
     apiClient.videos.clear();
     apiClient.collections.clear();
 
-    apiClient.videos.insertVideo(asset.video);
+    apiClient.videos.insertVideo(videoAsset.video);
     apiClient.collections.addToFake(
       CollectionFactory.sample({
         id: collectionWithoutNoteId,
-        assets: [asset],
+        assets: [videoAsset, highlightAsset],
       }),
     );
     apiClient.collections.addToFake(
       CollectionFactory.sample({
         id: collectionWithNoteId,
-        assets: [{ ...asset, note: 'A regular note' }],
+        assets: [{ ...videoAsset, note: 'A regular note' }],
       }),
     );
   });
 
   it(`allows setting a note on a video`, async () => {
     const wrapper = renderNoteButton(
-      asset.video,
+      videoAsset,
       collectionWithoutNoteId,
       apiClient,
     );
     await openNoteModal(wrapper);
 
     expect(
-      await wrapper.findByText(`Add note for '${asset.video.title}'`),
+      await wrapper.findByText(`Add note for '${videoAsset.video.title}'`),
     ).toBeVisible();
 
     const noteInput = wrapper.getByPlaceholderText('Add note');
@@ -73,8 +77,51 @@ describe('Note modal for playlists', () => {
 
     const updatedNote = updatedPlaylist.assets.find(
       (updatedAsset) =>
-        updatedAsset.id.videoId === asset.id.videoId &&
-        updatedAsset.id.highlightId === asset.id.highlightId,
+        updatedAsset.id.videoId === videoAsset.id.videoId &&
+        updatedAsset.id.highlightId === videoAsset.id.highlightId,
+    ).note;
+
+    expect(updatedNote).toEqual(
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    );
+
+    await waitFor(() => {
+      expect(
+        wrapper.getByText('Video note has been updated'),
+      ).toBeInTheDocument();
+    });
+  });
+
+  it(`allows setting a note on a video highlight`, async () => {
+    const wrapper = renderNoteButton(
+      highlightAsset,
+      collectionWithoutNoteId,
+      apiClient,
+    );
+    await openNoteModal(wrapper);
+
+    expect(
+      await wrapper.findByText(`Add note for '${highlightAsset.video.title}'`),
+    ).toBeVisible();
+
+    const noteInput = wrapper.getByPlaceholderText('Add note');
+    expect(noteInput).toBeVisible();
+
+    await userEvent.type(
+      noteInput,
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    );
+
+    await userEvent.click(wrapper.getByRole('button', { name: 'Set note' }));
+
+    const updatedPlaylist = await apiClient.collections.get(
+      collectionWithoutNoteId,
+    );
+
+    const updatedNote = updatedPlaylist.assets.find(
+      (updatedAsset) =>
+        updatedAsset.id.videoId === highlightAsset.id.videoId &&
+        updatedAsset.id.highlightId === highlightAsset.id.highlightId,
     ).note;
 
     expect(updatedNote).toEqual(
@@ -89,16 +136,12 @@ describe('Note modal for playlists', () => {
   });
 
   it(`allows removing the note for a video`, async () => {
-    const wrapper = renderNoteButton(
-      asset.video,
-      collectionWithNoteId,
-      apiClient,
-    );
+    const wrapper = renderNoteButton(videoAsset, collectionWithNoteId, apiClient);
 
     await openNoteModal(wrapper);
 
     expect(
-      await wrapper.findByText(`Update note for '${asset.video.title}'`),
+      await wrapper.findByText(`Update note for '${videoAsset.video.title}'`),
     ).toBeVisible();
 
     const noteInput = wrapper.getByPlaceholderText('Add note');
@@ -114,8 +157,8 @@ describe('Note modal for playlists', () => {
 
     const updatedNote = updatedPlaylist.assets.find(
       (updatedAsset) =>
-        updatedAsset.id.videoId === asset.id.videoId &&
-        updatedAsset.id.highlightId === asset.id.highlightId,
+        updatedAsset.id.videoId === videoAsset.id.videoId &&
+        updatedAsset.id.highlightId === videoAsset.id.highlightId,
     ).note;
 
     expect(updatedNote).toEqual('');
@@ -128,15 +171,11 @@ describe('Note modal for playlists', () => {
   });
 
   it(`sends a platform interaction event when set note modal is opened`, async () => {
-    const wrapper = renderNoteButton(
-      asset.video,
-      collectionWithoutNoteId,
-      apiClient,
-    );
+    const wrapper = renderNoteButton(videoAsset, collectionWithoutNoteId, apiClient);
     await openNoteModal(wrapper);
 
     expect(
-      await wrapper.findByText(`Add note for '${asset.video.title}'`),
+      await wrapper.findByText(`Add note for '${videoAsset.video.title}'`),
     ).toBeVisible();
 
     await waitFor(() => {
@@ -149,15 +188,11 @@ describe('Note modal for playlists', () => {
   });
 
   it(`sends a platform interaction event when update note modal is opened`, async () => {
-    const wrapper = renderNoteButton(
-      asset.video,
-      collectionWithNoteId,
-      apiClient,
-    );
+    const wrapper = renderNoteButton(videoAsset, collectionWithNoteId, apiClient);
     await openNoteModal(wrapper);
 
     expect(
-      await wrapper.findByText(`Update note for '${asset.video.title}'`),
+      await wrapper.findByText(`Update note for '${videoAsset.video.title}'`),
     ).toBeVisible();
 
     await waitFor(() => {
@@ -170,15 +205,11 @@ describe('Note modal for playlists', () => {
   });
 
   it(`sends a platform interaction event when note is set`, async () => {
-    const wrapper = renderNoteButton(
-      asset.video,
-      collectionWithoutNoteId,
-      apiClient,
-    );
+    const wrapper = renderNoteButton(videoAsset, collectionWithoutNoteId, apiClient);
     await openNoteModal(wrapper);
 
     expect(
-      await wrapper.findByText(`Add note for '${asset.video.title}'`),
+      await wrapper.findByText(`Add note for '${videoAsset.video.title}'`),
     ).toBeVisible();
 
     const noteInput = wrapper.getByPlaceholderText('Add note');
@@ -201,15 +232,11 @@ describe('Note modal for playlists', () => {
   });
 
   it(`sends a platform interaction event when bookmark is updated`, async () => {
-    const wrapper = renderNoteButton(
-      asset.video,
-      collectionWithNoteId,
-      apiClient,
-    );
+    const wrapper = renderNoteButton(videoAsset, collectionWithNoteId, apiClient);
     await openNoteModal(wrapper);
 
     expect(
-      await wrapper.findByText(`Update note for '${asset.video.title}'`),
+      await wrapper.findByText(`Update note for '${videoAsset.video.title}'`),
     ).toBeVisible();
 
     const noteInput = wrapper.getByPlaceholderText('Add note');
@@ -245,15 +272,11 @@ describe('Note modal for playlists', () => {
       .fn()
       .mockRejectedValue(new Error('Network Error'));
 
-    const wrapper = renderNoteButton(
-      asset.video,
-      collectionWithoutNoteId,
-      apiClient,
-    );
+    const wrapper = renderNoteButton(videoAsset, collectionWithoutNoteId, apiClient);
     await openNoteModal(wrapper);
 
     expect(
-      await wrapper.findByText(`Add note for '${asset.video.title}'`),
+      await wrapper.findByText(`Add note for '${videoAsset.video.title}'`),
     ).toBeVisible();
 
     const noteInput = wrapper.getByPlaceholderText('Add note');
@@ -275,11 +298,13 @@ describe('Note modal for playlists', () => {
 });
 
 const renderNoteButton = (
-  video: Video = VideoFactory.sample({
-    id: 'video-1',
-    title: 'Tractor Video',
-    playback: PlaybackFactory.sample({
-      duration: dayjs.duration({ minutes: 1, seconds: 10 }),
+  asset: CollectionAsset = CollectionAssetFactory.sample({
+    video: VideoFactory.sample({
+      id: 'video-1',
+      title: 'Tractor Video',
+      playback: PlaybackFactory.sample({
+        duration: dayjs.duration({ minutes: 1, seconds: 10 }),
+      }),
     }),
   }),
   playlistId = '123',
@@ -296,7 +321,10 @@ const renderNoteButton = (
     <main tabIndex={-1}>
       <QueryClientProvider client={queryClient}>
         <BoclipsClientProvider client={apiClient}>
-          <PlaylistVideoNoteButton video={video} playlistId={playlistId} />
+          <PlaylistVideoNoteButton
+            selectedAsset={asset}
+            playlistId={playlistId}
+          />
         </BoclipsClientProvider>
       </QueryClientProvider>
       <ToastContainer />

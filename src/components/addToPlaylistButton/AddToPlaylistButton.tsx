@@ -2,7 +2,7 @@ import Tooltip from '@boclips-ui/tooltip';
 import Button from '@boclips-ui/button';
 import PlaylistAddIcon from 'src/resources/icons/playlist-add.svg';
 import PlaylistAddAlreadyAddedIcon from 'src/resources/icons/playlist-add-already-added.svg';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import CloseButton from 'src/resources/icons/cross-icon.svg';
 import {
   useAddToPlaylistMutation,
@@ -22,15 +22,27 @@ import { Typography } from '@boclips-ui/typography';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { LoadingOutlined } from '@ant-design/icons';
+import { assetIdString } from 'src/components/playlistModal/CollectionAssetIdString';
 import s from './style.module.less';
 
 interface Props {
   videoId: string;
+  highlightId?: string;
   onCleanup?: (playlistId: string, buttonCleanUp: () => void) => void;
   onClick?: () => void;
 }
 
-export const AddToPlaylistButton = ({ videoId, onCleanup, onClick }: Props) => {
+export const AddToPlaylistButton = ({
+  videoId,
+  highlightId,
+  onCleanup,
+  onClick,
+}: Props) => {
+  const assetId = {
+    videoId,
+    highlightId,
+  };
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [showCreatePlaylistModal, setShowCreatePlaylistModal] =
     useState<boolean>(false);
@@ -81,11 +93,13 @@ export const AddToPlaylistButton = ({ videoId, onCleanup, onClick }: Props) => {
     onError: uncheckPlaylistForVideo,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (playlists && videoId) {
       const ids = playlists
         .filter((playlist) =>
-          playlist.assets.map((v) => v.id.videoId).includes(videoId),
+          playlist.assets.some(
+            (v) => v.id.videoId === videoId && v.id.highlightId === highlightId,
+          ),
         )
         .map((playlist) => playlist.id);
 
@@ -103,13 +117,13 @@ export const AddToPlaylistButton = ({ videoId, onCleanup, onClick }: Props) => {
       uncheckPlaylistForVideo(playlistId);
       mutateRemoveFromPlaylist({
         playlist: chosenPlaylist,
-        videoId,
+        assetId,
       });
     } else {
       checkPlaylistForVideo(playlistId);
       mutateAddToPlaylist({
         playlist: chosenPlaylist,
-        videoId,
+        assetId,
       });
     }
   };
@@ -151,13 +165,13 @@ export const AddToPlaylistButton = ({ videoId, onCleanup, onClick }: Props) => {
 
   return (
     <div
-      id={videoId}
+      id={assetIdString(assetId)}
       className={c(s.addToPlaylist, { [s.buttonActive]: isOpen })}
     >
       {showCreatePlaylistModal && (
         <div className={s.createPlaylistModalWrapper}>
           <CreatePlaylistModal
-            videoId={videoId}
+            assetId={assetId}
             onCancel={() => setShowCreatePlaylistModal(false)}
             onSuccess={handlePlaylistCreationSuccess}
             onError={handlePlaylistCreationError}

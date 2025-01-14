@@ -5,10 +5,7 @@ import { Typography } from '@boclips-ui/typography';
 import PlaylistVideosListDraggable from 'src/components/playlistModal/reorder/PlaylistVideosListDraggable';
 import { useReorderPlaylist } from 'src/hooks/api/playlistsQuery';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
-import {
-  CollectionAsset,
-  CollectionAssetId,
-} from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
+import { CollectionAsset } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
 import {
   arrayMove,
   SortableContext,
@@ -24,6 +21,7 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 import s from './style.module.less';
+import { assetIdString } from 'src/components/playlistModal/CollectionAssetIdString';
 
 interface Props {
   playlist: Collection;
@@ -67,14 +65,6 @@ const ReorderModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
-
-  const assetIdString = (assetId: CollectionAssetId): string => {
-    if (assetId.highlightId) {
-      return `${assetId.videoId}_${assetId.highlightId}`;
-    }
-
-    return assetId.videoId;
-  };
 
   return (
     <Bodal

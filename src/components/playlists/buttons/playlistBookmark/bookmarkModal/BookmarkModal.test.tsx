@@ -429,7 +429,10 @@ const renderBookmarkButton = (
     <main tabIndex={-1}>
       <QueryClientProvider client={queryClient}>
         <BoclipsClientProvider client={apiClient}>
-          <PlaylistVideoBookmarkButton video={video} playlistId={playlistId} />
+          <PlaylistVideoBookmarkButton
+            selectedAsset={CollectionAssetFactory.sample({ video })}
+            playlistId={playlistId}
+          />
         </BoclipsClientProvider>
       </QueryClientProvider>
       <ToastContainer />

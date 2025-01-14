@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@boclips-ui/button';
-import { Video } from 'boclips-api-client/dist/types';
 import TimerSVG from 'src/resources/icons/timer.svg';
 import {
   useEditPlaylistMutation,
@@ -11,16 +10,19 @@ import BookmarkModal from 'src/components/playlists/buttons/playlistBookmark/boo
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 import { Segment } from 'boclips-api-client/dist/sub-clients/collections/model/Segment';
 import { CollectionAssetRequest } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';
-import { CollectionAsset } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
+import {
+  CollectionAsset,
+  CollectionAssetId,
+} from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
 import s from '../style.module.less';
 
 interface PlaylistVideoShareButtonProps {
-  video: Video;
+  selectedAsset: CollectionAsset;
   playlistId: string;
 }
 
 const PlaylistVideoBookmarkButton = ({
-  video,
+  selectedAsset,
   playlistId,
 }: PlaylistVideoShareButtonProps) => {
   const { data: playlist } = usePlaylistQuery(playlistId);
@@ -29,17 +31,15 @@ const PlaylistVideoBookmarkButton = ({
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [assets, setAssets] = useState<CollectionAsset[]>();
 
-  const assetSegment = (
-    videoId: string,
-    highlightId?: string,
-  ): Segment | undefined => {
+  const assetSegment = (assetId: CollectionAssetId): Segment | undefined => {
     const foundAsset = assets?.find(
       (asset) =>
-        asset.id.videoId === videoId && asset.id.highlightId === highlightId,
+        asset.id.videoId === assetId.videoId &&
+        asset.id.highlightId === assetId.highlightId,
     );
     return foundAsset?.segment;
   };
-  const hasBookmark = !!assets && !!assetSegment(video.id);
+  const hasBookmark = !!assets && !!assetSegment(selectedAsset.id);
 
   useEffect(() => {
     if (!playlist) return;
@@ -68,14 +68,11 @@ const PlaylistVideoBookmarkButton = ({
     note: asset.note,
   });
 
-  const updateAssetSegment = (
-    videoId: string,
-    segment: Segment,
-    highlightId?: string,
-  ) => {
+  const updateAssetSegment = (assetId: CollectionAssetId, segment: Segment) => {
     const indexToReplace = assets.findIndex(
       (asset) =>
-        asset.id.videoId === videoId && asset.id.highlightId === highlightId,
+        asset.id.videoId === assetId.videoId &&
+        asset.id.highlightId === assetId.highlightId,
     );
 
     if (indexToReplace !== -1) {
@@ -86,8 +83,8 @@ const PlaylistVideoBookmarkButton = ({
     }
   };
 
-  const onConfirm = (videoId: string, segment: Segment) => {
-    updateAssetSegment(videoId, segment);
+  const onConfirm = (assetId: CollectionAssetId, segment: Segment) => {
+    updateAssetSegment(assetId, segment);
 
     updatePlaylist(
       { assets: assets.map(convertToCollectionAssetRequest) },
@@ -139,8 +136,8 @@ const PlaylistVideoBookmarkButton = ({
         <BookmarkModal
           onCancel={toggleModalVisibility}
           title={modalTitle}
-          video={video}
-          initialSegment={hasBookmark && assetSegment(video.id)}
+          asset={selectedAsset}
+          initialSegment={hasBookmark && assetSegment(selectedAsset.id)}
           onConfirm={onConfirm}
         />
       )}

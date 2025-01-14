@@ -5,10 +5,11 @@ import {
   PlaylistModal,
 } from 'src/components/playlistModal/PlaylistModal';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
+import { CollectionAssetId } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
 
 export interface Props {
   title?: string;
-  videoId?: string;
+  assetId?: CollectionAssetId;
   playlist?: Collection;
   onCancel: () => void;
   onSuccess: (playlistId?: string, playlistName?: string) => void;
@@ -17,7 +18,7 @@ export interface Props {
 
 export const CreatePlaylistModal = ({
   title = 'Create new playlist',
-  videoId = null,
+  assetId = null,
   playlist = null,
   onCancel,
   onSuccess,
@@ -54,9 +55,9 @@ export const CreatePlaylistModal = ({
     });
     let videos = [];
     if (playlist) {
-      videos = playlist.assets.map((video) => video.id.videoId);
-    } else if (videoId) {
-      videos = [videoId];
+      videos = playlist.assets.map((asset) => asset.id.videoId);
+    } else if (assetId) {
+      videos = [assetId.videoId]; // sc-2150
     }
 
     createPlaylist({

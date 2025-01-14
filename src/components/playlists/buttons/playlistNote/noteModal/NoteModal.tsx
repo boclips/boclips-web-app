@@ -1,20 +1,20 @@
-import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import React, { useEffect, useState } from 'react';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import { InputText } from '@boclips-ui/input';
+import { CollectionAssetId } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
 
 interface NoteModalProps {
   onCancel: () => void;
   title: string;
-  video: Video;
+  assetId: CollectionAssetId;
   initialNote: string;
-  onConfirm: (videoId: string, note: string, highlightId?: string) => void;
+  onConfirm: (assetId: CollectionAssetId, note: string) => void;
 }
 
 const NoteModal = ({
   onCancel,
   title,
-  video,
+  assetId,
   initialNote,
   onConfirm,
 }: NoteModalProps) => {
@@ -35,7 +35,7 @@ const NoteModal = ({
   };
 
   const handleConfirm = () => {
-    onConfirm(video.id, note);
+    onConfirm(assetId, note);
   };
 
   return (
