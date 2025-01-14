@@ -4,8 +4,8 @@ import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPla
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { DownloadTranscriptButton } from 'src/components/downloadTranscriptButton/DownloadTranscriptButton';
-import PlaylistVideoBookmarkButton from 'src/components/playlists/buttons/playlistBookmark/PlaylistVideoBookmarkButton';
-import PlaylistVideoNoteButton from 'src/components/playlists/buttons/playlistNote/PlaylistVideoNoteButton';
+import PlaylistAssetBookmarkButton from 'src/components/playlists/buttons/playlistBookmark/PlaylistAssetBookmarkButton';
+import PlaylistAssetNoteButton from 'src/components/playlists/buttons/playlistNote/PlaylistAssetNoteButton';
 import { CollectionAsset } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
 import { assetIdString } from 'src/components/playlistModal/CollectionAssetIdString';
 
@@ -44,11 +44,11 @@ const PlaylistVideoCardButtons = ({
       </div>
 
       <div className="flex justify-between gap-2">
-        <PlaylistVideoNoteButton
+        <PlaylistAssetNoteButton
           selectedAsset={asset}
           playlistId={playlistId}
         />
-        <PlaylistVideoBookmarkButton
+        <PlaylistAssetBookmarkButton
           selectedAsset={asset}
           playlistId={playlistId}
         />

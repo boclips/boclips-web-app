@@ -5,7 +5,7 @@ import {
   useGetPromotedPlaylistsQuery,
   useOwnAndEditableSharedPlaylistsQuery,
   useOwnPlaylistsQuery,
-  useRemoveCommentFromPlaylistVideo,
+  useRemoveCommentFromPlaylistAsset,
   useReorderPlaylist,
   useUpdatePlaylistPermissionsMutation,
 } from 'src/hooks/api/playlistsQuery';
@@ -163,7 +163,7 @@ describe('playlistsQuery', () => {
     apiClient.collections.removeCommentFromCollectionVideo = collectionsSpy;
 
     const { result } = renderHook(
-      () => useRemoveCommentFromPlaylistVideo(collection),
+      () => useRemoveCommentFromPlaylistAsset(collection),
       {
         wrapper: wrapperWithClients(apiClient, new QueryClient()),
       },

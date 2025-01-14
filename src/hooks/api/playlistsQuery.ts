@@ -172,7 +172,7 @@ export const doRemoveCommentFromVideo = (
   );
 };
 
-export const useRemoveCommentFromPlaylistVideo = (playlist: Collection) => {
+export const useRemoveCommentFromPlaylistAsset = (playlist: Collection) => {
   const client = useBoclipsClient();
   const queryClient = useQueryClient();
 

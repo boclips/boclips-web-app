@@ -1,52 +1,54 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@boclips-ui/button';
-import PencilSVG from 'src/resources/icons/pencil.svg';
+import TimerSVG from 'src/resources/icons/timer.svg';
 import {
   useEditPlaylistMutation,
   usePlaylistQuery,
 } from 'src/hooks/api/playlistsQuery';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
+import BookmarkModal from 'src/components/playlists/buttons/playlistBookmark/bookmarkModal/BookmarkModal';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
-import NoteModal from 'src/components/playlists/buttons/playlistNote/noteModal/NoteModal';
+import { Segment } from 'boclips-api-client/dist/sub-clients/collections/model/Segment';
+import { CollectionAssetRequest } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';
 import {
   CollectionAsset,
   CollectionAssetId,
 } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
-import { CollectionAssetRequest } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionRequest';
 import s from '../style.module.less';
 
-interface PlaylistVideoShareButtonProps {
+interface PlaylistAssetShareButtonProps {
   selectedAsset: CollectionAsset;
   playlistId: string;
 }
 
-const PlaylistVideoNoteButton = ({
+const PlaylistAssetBookmarkButton = ({
   selectedAsset,
   playlistId,
-}: PlaylistVideoShareButtonProps) => {
+}: PlaylistAssetShareButtonProps) => {
   const { data: playlist } = usePlaylistQuery(playlistId);
   const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
   const { mutate: updatePlaylist } = useEditPlaylistMutation(playlist);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [assets, setAssets] = useState<CollectionAsset[]>();
 
-  const assetNotes = (assetId: CollectionAssetId): string | undefined => {
+  const assetSegment = (assetId: CollectionAssetId): Segment | undefined => {
     const foundAsset = assets?.find(
       (asset) =>
         asset.id.videoId === assetId.videoId &&
         asset.id.highlightId === assetId.highlightId,
     );
-    return foundAsset?.note;
+    return foundAsset?.segment;
   };
-
-  const hasNotes = !!assets && !!assetNotes(selectedAsset.id);
+  const hasBookmark = !!assets && !!assetSegment(selectedAsset.id);
 
   useEffect(() => {
     if (!playlist) return;
     setAssets(playlist.assets);
   }, [playlist]);
 
-  const analyticsType: string = hasNotes ? 'UPDATE_NOTE' : 'SET_NOTE';
+  const analyticsType: string = hasBookmark
+    ? 'UPDATE_BOOKMARK'
+    : 'SET_BOOKMARK';
   const toggleModalVisibility = () => {
     if (!isModalVisible) {
       trackPlatformInteraction({
@@ -66,7 +68,7 @@ const PlaylistVideoNoteButton = ({
     note: asset.note,
   });
 
-  const updateAssetNote = (assetId: CollectionAssetId, note: string) => {
+  const updateAssetSegment = (assetId: CollectionAssetId, segment: Segment) => {
     const indexToReplace = assets.findIndex(
       (asset) =>
         asset.id.videoId === assetId.videoId &&
@@ -76,24 +78,28 @@ const PlaylistVideoNoteButton = ({
     if (indexToReplace !== -1) {
       assets[indexToReplace] = {
         ...assets[indexToReplace],
-        note,
+        segment,
       };
     }
   };
 
-  const onConfirm = (assetId: CollectionAssetId, note: string) => {
-    updateAssetNote(assetId, note);
+  const onConfirm = (assetId: CollectionAssetId, segment: Segment) => {
+    updateAssetSegment(assetId, segment);
+
     updatePlaylist(
-      {
-        assets: assets.map(convertToCollectionAssetRequest),
-      },
+      { assets: assets.map(convertToCollectionAssetRequest) },
       {
         onSuccess: () => {
           trackPlatformInteraction({
             subtype: `${analyticsType}_MODAL_SUBMITTED`,
             anonymous: false,
           });
-          displayNotification('success', 'Video note has been updated', '', '');
+          displayNotification(
+            'success',
+            'Video bookmark has been updated',
+            '',
+            '',
+          );
         },
         onError: () => {
           displayNotification(
@@ -108,30 +114,30 @@ const PlaylistVideoNoteButton = ({
     toggleModalVisibility();
   };
 
-  const modalTitle = hasNotes
-    ? `Update note for '${selectedAsset.video.title}'`
-    : `Add note for '${selectedAsset.video.title}'`;
-  const mainButtonCopy = hasNotes ? 'Edit Note' : 'Add Note';
-  const mainButtonIcon = hasNotes ? <PencilSVG /> : null;
+  const modalTitle = hasBookmark
+    ? 'Update bookmarked timings for this video'
+    : 'Bookmark custom timings for this video';
+  const mainButtonCopy = hasBookmark ? 'Edit Bookmark' : 'Bookmark';
+  const mainButtonIcon = hasBookmark ? <TimerSVG /> : null;
 
   return (
     <>
       <Button
         onClick={toggleModalVisibility}
-        dataQa="note-video-button"
+        dataQa="bookmark-video-button"
         text={mainButtonCopy}
-        aria-label="Note"
+        aria-label="Bookmark"
         icon={mainButtonIcon}
         height="44px"
         className={s.playlistButton}
         iconOnly={false}
       />
       {isModalVisible && (
-        <NoteModal
+        <BookmarkModal
           onCancel={toggleModalVisibility}
           title={modalTitle}
-          assetId={selectedAsset.id}
-          initialNote={(hasNotes && assetNotes(selectedAsset.id)) || ''}
+          asset={selectedAsset}
+          initialSegment={hasBookmark && assetSegment(selectedAsset.id)}
           onConfirm={onConfirm}
         />
       )}
@@ -139,4 +145,4 @@ const PlaylistVideoNoteButton = ({
   );
 };
 
-export default PlaylistVideoNoteButton;
+export default PlaylistAssetBookmarkButton;

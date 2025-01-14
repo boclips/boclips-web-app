@@ -17,7 +17,7 @@ import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import dayjs from 'src/day-js';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import { ToastContainer } from 'react-toastify';
-import PlaylistVideoBookmarkButton from 'src/components/playlists/buttons/playlistBookmark/PlaylistVideoBookmarkButton';
+import PlaylistAssetBookmarkButton from 'src/components/playlists/buttons/playlistBookmark/PlaylistAssetBookmarkButton';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { lastEvent } from 'src/testSupport/lastEvent';
@@ -429,7 +429,7 @@ const renderBookmarkButton = (
     <main tabIndex={-1}>
       <QueryClientProvider client={queryClient}>
         <BoclipsClientProvider client={apiClient}>
-          <PlaylistVideoBookmarkButton
+          <PlaylistAssetBookmarkButton
             selectedAsset={CollectionAssetFactory.sample({ video })}
             playlistId={playlistId}
           />

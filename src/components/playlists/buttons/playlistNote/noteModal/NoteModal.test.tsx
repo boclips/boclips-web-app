@@ -14,7 +14,7 @@ import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFa
 import { ToastContainer } from 'react-toastify';
 import { CollectionFactory } from 'src/testSupport/CollectionFactory';
 import { lastEvent } from 'src/testSupport/lastEvent';
-import PlaylistVideoNoteButton from 'src/components/playlists/buttons/playlistNote/PlaylistVideoNoteButton';
+import PlaylistAssetNoteButton from 'src/components/playlists/buttons/playlistNote/PlaylistAssetNoteButton';
 import { CollectionAsset } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
 
 describe('Note modal for playlists', () => {
@@ -136,7 +136,11 @@ describe('Note modal for playlists', () => {
   });
 
   it(`allows removing the note for a video`, async () => {
-    const wrapper = renderNoteButton(videoAsset, collectionWithNoteId, apiClient);
+    const wrapper = renderNoteButton(
+      videoAsset,
+      collectionWithNoteId,
+      apiClient,
+    );
 
     await openNoteModal(wrapper);
 
@@ -171,7 +175,11 @@ describe('Note modal for playlists', () => {
   });
 
   it(`sends a platform interaction event when set note modal is opened`, async () => {
-    const wrapper = renderNoteButton(videoAsset, collectionWithoutNoteId, apiClient);
+    const wrapper = renderNoteButton(
+      videoAsset,
+      collectionWithoutNoteId,
+      apiClient,
+    );
     await openNoteModal(wrapper);
 
     expect(
@@ -188,7 +196,11 @@ describe('Note modal for playlists', () => {
   });
 
   it(`sends a platform interaction event when update note modal is opened`, async () => {
-    const wrapper = renderNoteButton(videoAsset, collectionWithNoteId, apiClient);
+    const wrapper = renderNoteButton(
+      videoAsset,
+      collectionWithNoteId,
+      apiClient,
+    );
     await openNoteModal(wrapper);
 
     expect(
@@ -205,7 +217,11 @@ describe('Note modal for playlists', () => {
   });
 
   it(`sends a platform interaction event when note is set`, async () => {
-    const wrapper = renderNoteButton(videoAsset, collectionWithoutNoteId, apiClient);
+    const wrapper = renderNoteButton(
+      videoAsset,
+      collectionWithoutNoteId,
+      apiClient,
+    );
     await openNoteModal(wrapper);
 
     expect(
@@ -232,7 +248,11 @@ describe('Note modal for playlists', () => {
   });
 
   it(`sends a platform interaction event when bookmark is updated`, async () => {
-    const wrapper = renderNoteButton(videoAsset, collectionWithNoteId, apiClient);
+    const wrapper = renderNoteButton(
+      videoAsset,
+      collectionWithNoteId,
+      apiClient,
+    );
     await openNoteModal(wrapper);
 
     expect(
@@ -272,7 +292,11 @@ describe('Note modal for playlists', () => {
       .fn()
       .mockRejectedValue(new Error('Network Error'));
 
-    const wrapper = renderNoteButton(videoAsset, collectionWithoutNoteId, apiClient);
+    const wrapper = renderNoteButton(
+      videoAsset,
+      collectionWithoutNoteId,
+      apiClient,
+    );
     await openNoteModal(wrapper);
 
     expect(
@@ -321,7 +345,7 @@ const renderNoteButton = (
     <main tabIndex={-1}>
       <QueryClientProvider client={queryClient}>
         <BoclipsClientProvider client={apiClient}>
-          <PlaylistVideoNoteButton
+          <PlaylistAssetNoteButton
             selectedAsset={asset}
             playlistId={playlistId}
           />

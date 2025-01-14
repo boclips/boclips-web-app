@@ -1,7 +1,7 @@
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import {
   useAddCommentToVideo,
-  useRemoveCommentFromPlaylistVideo,
+  useRemoveCommentFromPlaylistAsset,
 } from 'src/hooks/api/playlistsQuery';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import React, { useRef, useState } from 'react';
@@ -41,7 +41,7 @@ const SliderPanel = ({
   const [comment, setComment] = useState<string>('');
   const { mutate: addCommentToVideo } = useAddCommentToVideo();
   const { mutate: removeCommentFromVideo } =
-    useRemoveCommentFromPlaylistVideo(collection);
+    useRemoveCommentFromPlaylistAsset(collection);
   const ref = useRef(null);
   const textareaRef = useRef(null);
 

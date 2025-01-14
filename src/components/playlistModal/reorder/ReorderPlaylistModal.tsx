@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
 import { Typography } from '@boclips-ui/typography';
-import PlaylistVideosListDraggable from 'src/components/playlistModal/reorder/PlaylistVideosListDraggable';
+import PlaylistAssetsListDraggable from 'src/components/playlistModal/reorder/PlaylistAssetsListDraggable';
 import { useReorderPlaylist } from 'src/hooks/api/playlistsQuery';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 import { CollectionAsset } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
@@ -20,8 +20,8 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
-import s from './style.module.less';
 import { assetIdString } from 'src/components/playlistModal/CollectionAssetIdString';
+import s from './style.module.less';
 
 interface Props {
   playlist: Collection;
@@ -89,7 +89,7 @@ const ReorderModal = ({ playlist, onCancel, confirmButtonText }: Props) => {
         >
           <ul className={s.listWrapper}>
             {reorderedAssets.map((asset) => (
-              <PlaylistVideosListDraggable
+              <PlaylistAssetsListDraggable
                 key={assetIdString(asset.id)}
                 id={assetIdString(asset.id)} // Pass the unique identifier
                 video={asset.video}
