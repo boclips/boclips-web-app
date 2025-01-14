@@ -212,7 +212,8 @@ export const doAddToPlaylist = (
 ) => {
   return client.collections.addVideoToCollection(
     playlist,
-    assetId.videoId, // TODO sc-2150
+    assetId.videoId,
+    assetId.highlightId,
   );
 };
 
@@ -223,7 +224,8 @@ export const doRemoveFromPlaylist = (
 ) => {
   return client.collections.removeVideoFromCollection(
     playlist,
-    assetId.videoId, // TODO sc-2150
+    assetId.videoId,
+    assetId.highlightId,
   );
 };
 
