@@ -53,17 +53,27 @@ export const CreatePlaylistModal = ({
       title: playlistTitle,
       description: playlistDescription,
     });
-    let videos = [];
+    let assets = [];
     if (playlist) {
-      videos = playlist.assets.map((asset) => asset.id.videoId);
+      assets = playlist.assets.map((asset) => {
+        return {
+          videoId: asset.id.videoId,
+          highlightId: asset.id.highlightId,
+        };
+      });
     } else if (assetId) {
-      videos = [assetId.videoId]; // sc-2150
+      assets = [
+        {
+          videoId: assetId.videoId,
+          highlightId: assetId.highlightId,
+        },
+      ];
     }
 
     createPlaylist({
       title: playlistTitle,
       description: playlistDescription,
-      videos,
+      assets,
     });
   };
 

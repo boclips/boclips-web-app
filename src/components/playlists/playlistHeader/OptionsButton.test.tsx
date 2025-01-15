@@ -173,12 +173,8 @@ describe('OptionsButton', () => {
           video: VideoFactory.sample({ id: 'video1' }),
         }),
         CollectionAssetFactory.sample({
-          id: { videoId: 'video2' },
+          id: { videoId: 'video2', highlightId: 'highlight-2' },
           video: VideoFactory.sample({ id: 'video2' }),
-        }),
-        CollectionAssetFactory.sample({
-          id: { videoId: 'video3' },
-          video: VideoFactory.sample({ id: 'video3' }),
         }),
       ];
 
@@ -209,7 +205,14 @@ describe('OptionsButton', () => {
       expect(copyPlaylistSpy).toHaveBeenCalledWith({
         title: 'Copy of Original playlist',
         description: 'Description of original playlist',
-        videos: [...assets.map((v) => v.id.videoId)],
+        assets: [
+          ...assets.map((a) => {
+            return {
+              videoId: a.id.videoId,
+              highlightId: a.id.highlightId,
+            };
+          }),
+        ],
       });
     });
 
