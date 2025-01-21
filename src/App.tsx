@@ -95,6 +95,10 @@ const MyProfileView = lazyWithRetry(
   () => import('src/views/profile/ProfileView'),
 );
 
+const AssistantView = lazyWithRetry(
+  () => import('src/views/assistant/AssistantView'),
+);
+
 const MyTeamView = lazyWithRetry(() => import('src/views/team/TeamView'));
 
 interface Props {
@@ -298,6 +302,10 @@ const App = ({
                           <ClassroomRegisterView />
                         </FeatureGate>
                       }
+                    />
+                    <Route
+                      path="/boclips-assistant"
+                      element={<AssistantView />}
                     />
                     <Route
                       path="*"
