@@ -1,7 +1,11 @@
 import React from 'react';
 
 const AssistantConversations = () => {
-  return <div className="row-start-3 row-end-4 col-start-20 col-end-26" />;
+  return (
+    <div className="row-start-2 row-end-3 col-start-20 col-end-26">
+      Conversation Highlights
+    </div>
+  );
 };
 
 export default AssistantConversations;
