@@ -69,7 +69,7 @@ export const ChatInput = () => {
     return convId;
   }
 
-  async function sendChatQuestion(history: ChatHistory[]) {
+  function sendChatQuestion(history: ChatHistory[]) {
     setInputValue('');
     doChat({
       model: 'langchain5-gpt4-markdown',
@@ -78,9 +78,9 @@ export const ChatInput = () => {
     });
   }
 
-  const onSubmit = async (suggestion?: string) => {
+  const onSubmit = (suggestion?: string) => {
     const history = saveUserInputToChatHistory(suggestion || inputValue);
-    await sendChatQuestion(history);
+    sendChatQuestion(history);
     setInputValue('');
   };
 
@@ -103,24 +103,22 @@ export const ChatInput = () => {
     setIsLoading(false);
   };
 
-  /* eslint-disable */
-  const handleTextAre = (e: any) => {
-    if (e.key === "Enter" && e.shiftKey) {
-      e.target.rows = e.target.rows + 1;
+  const handleTextArea = (e) => {
+    if (e.key === 'Enter' && e.shiftKey) {
+      e.target.rows += 1;
       return;
     }
 
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       e.preventDefault();
       if (isLoading) return;
       onSubmit();
     }
   };
 
-  const handleSuggestion = (e: any) => {
+  const handleSuggestion = (e) => {
     onSubmit(e.currentTarget.innerText);
   };
-  /* eslint-enable */
 
   useEffect(() => {
     const getQuestion = getRandomQuestions();
@@ -148,7 +146,6 @@ export const ChatInput = () => {
           text="Restart Conversation"
         />
       )}
-
       {isChatResponseError && (
         <div className={s.errorWrapper}>
           <div className={s.errorMessage}>
@@ -164,14 +161,13 @@ export const ChatInput = () => {
           />
         </div>
       )}
-
       <div className={s.chatInputWrapper}>
         <textarea
           id="prompt-textarea"
           rows={1}
           placeholder="Message Boclips Assistant…"
           className={s.prompt}
-          onKeyDown={(e: any) => handleTextAre(e)}
+          onKeyDown={(e) => handleTextArea(e)}
           value={inputValue}
           onChange={(e) => onChange(e.currentTarget.value)}
         />
