@@ -76,6 +76,7 @@ const onLogin = async () => {
     const apiClient = await ApiBoclipsClient.create(
       axios,
       Constants.API_PREFIX,
+      Constants.CHAT_URL,
     );
 
     root.render(
