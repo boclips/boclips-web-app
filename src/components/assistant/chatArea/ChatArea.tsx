@@ -9,6 +9,7 @@ import { Clip } from 'boclips-api-client/dist/sub-clients/chat/model/Clip';
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
 import { ChatbotIntro } from 'src/components/assistant/chatbotIntro/ChatBotIntro';
+import Markdown from 'react-markdown';
 import s from './style.module.less';
 
 export const ChatArea = () => {
@@ -78,9 +79,9 @@ export const ChatArea = () => {
             if (item.clips === null) {
               return (
                 <div className={s.chatItem} key={index}>
-                  <Typography.Title1>Boclips</Typography.Title1>
+                  <Typography.Title1>Boclips Assistant</Typography.Title1>
                   <Typography.Body className={s.answer}>
-                    {item.content}
+                    <Markdown>{item.content}</Markdown>
                   </Typography.Body>
                 </div>
               );
@@ -90,13 +91,13 @@ export const ChatArea = () => {
 
             return (
               <div className={s.chatItem} key={index}>
-                <Typography.Title1>Boclips (beta)</Typography.Title1>
+                <Typography.Title1>Boclips Assistant</Typography.Title1>
                 <div className={s.answer}>
                   {responseWithVideos.map((it: string | Clip, clipIndex) => {
                     if (typeof it === 'string') {
                       return (
                         <Typography.Body className={s.answer} key={clipIndex}>
-                          {it}
+                          <Markdown>{it}</Markdown>
                         </Typography.Body>
                       );
                     }
