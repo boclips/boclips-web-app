@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet';
 import AssistantSidebar from 'src/components/assistant/AssistantSidebar';
 import AssistantChatBox from 'src/components/assistant/AssistantChatBox';
 import AssistantConversations from 'src/components/assistant/AssistantConversations';
+import { AssistantContextProvider } from 'src/components/assistant/context/assistantContextProvider';
 
 const AssistantView = () => {
   return (
@@ -13,9 +14,11 @@ const AssistantView = () => {
       <Helmet title="Boclips Assistant" />
       <Layout rowsSetup="grid-rows-assistant-view" responsiveLayout>
         <Navbar />
-        <AssistantSidebar />
-        <AssistantChatBox />
-        <AssistantConversations />
+        <AssistantContextProvider>
+          <AssistantSidebar />
+          <AssistantChatBox />
+          <AssistantConversations />
+        </AssistantContextProvider>
         <Footer className="col-start-2 col-end-26" />
       </Layout>
     </>
