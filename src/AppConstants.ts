@@ -7,6 +7,11 @@ declare global {
 window.Environment = window.Environment || {};
 
 export class AppConstants {
+  public CLASSROOM_TERMS_AND_CONDITIONS_LINK =
+    'https://www.boclips.com/mlsa-classroom';
+
+  public LIBRARY_TERMS_AND_CONDITIONS_LINK = 'https://www.boclips.com/mlsa';
+
   private window: Window;
 
   public constructor(window: Window) {
@@ -41,6 +46,10 @@ export class AppConstants {
     return this.window.Environment.API_PREFIX;
   }
 
+  public get CHAT_URL(): string {
+    return this.window.Environment.CHAT_URL;
+  }
+
   public get PEARSON_ACCOUNT_ID(): string {
     return this.window.Environment.PEARSON_ACCOUNT_ID;
   }
@@ -61,11 +70,6 @@ export class AppConstants {
   public get CAPTCHA_TOKEN(): string {
     return this.window.Environment.CAPTCHA_TOKEN ?? null;
   }
-
-  public CLASSROOM_TERMS_AND_CONDITIONS_LINK =
-    'https://www.boclips.com/mlsa-classroom';
-
-  public LIBRARY_TERMS_AND_CONDITIONS_LINK = 'https://www.boclips.com/mlsa';
 }
 
 export const Constants = new AppConstants(window);

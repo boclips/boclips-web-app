@@ -52,6 +52,7 @@ const AppUnauthenticated = ({
         const client = await ApiBoclipsClient.create(
           axios,
           Constants.API_PREFIX,
+          Constants.CHAT_URL,
         );
         setApiClient(client);
       } catch (e) {
