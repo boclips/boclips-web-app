@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Typography } from '@boclips-ui/typography';
 import Button from '@boclips-ui/button';
 import {
@@ -30,11 +30,8 @@ export const ChatInput = () => {
     setConversationId,
     chatHistory,
     setChatHistory,
-    isLoading,
     setIsLoading,
   } = useAssistantContextProvider();
-
-  const abortController = useRef(new AbortController());
 
   const saveUserInputToChatHistory = (question: string): ChatHistory[] => {
     const userInput: ChatHistory = {
@@ -82,25 +79,18 @@ export const ChatInput = () => {
     const history = saveUserInputToChatHistory(suggestion || inputValue);
     sendChatQuestion(history);
     setInputValue('');
+    setIsLoading(true);
   };
 
   useEffect(() => {
     if (chatResponse) {
       saveAssistantResponseToChatHistory(chatResponse);
+      setIsLoading(false);
     }
   }, [chatResponse]);
 
   const onChange = (value: string) => {
     setInputValue(value);
-  };
-
-  const handleReset = () => {
-    abortController.current.abort();
-    abortController.current = new AbortController();
-    setInputValue('');
-    setChatHistory([]);
-    setConversationId('');
-    setIsLoading(false);
   };
 
   const handleTextArea = (e) => {
@@ -111,7 +101,7 @@ export const ChatInput = () => {
 
     if (e.key === 'Enter') {
       e.preventDefault();
-      if (isLoading) return;
+      if (isChatResponseLoading) return;
       onSubmit();
     }
   };
@@ -137,15 +127,7 @@ export const ChatInput = () => {
             );
           })}
         </ul>
-      ) : (
-        <Button
-          type="outline"
-          className={s.restartButton}
-          width="auto"
-          onClick={handleReset}
-          text="Restart Conversation"
-        />
-      )}
+      ) : null}
       {isChatResponseError && (
         <div className={s.errorWrapper}>
           <div className={s.errorMessage}>
@@ -176,8 +158,9 @@ export const ChatInput = () => {
           icon={isChatResponseLoading ? <LoadingDots /> : <SendIcon />}
           iconOnly
           disabled={isChatResponseLoading}
-          width={isChatResponseLoading ? '80px' : '60px'}
-          className={s.expand}
+          width="3.5rem"
+          height="3rem"
+          className={s.submitButton}
         />
       </div>
       <div className={s.betaBadge}>

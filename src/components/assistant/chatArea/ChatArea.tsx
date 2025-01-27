@@ -10,9 +10,12 @@ import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
 import { ChatbotIntro } from 'src/components/assistant/chatbotIntro/ChatBotIntro';
 import Markdown from 'react-markdown';
+import AssistantIcon from 'resources/icons/boclips-assistant.svg';
+import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import s from './style.module.less';
 
 export const ChatArea = () => {
+  const { data: user, isLoading: userIsLoading } = useGetUserQuery();
   const { chatHistory, isLoading } = useAssistantContextProvider();
 
   const chatWrapperRef = useRef<HTMLDivElement>(null);
@@ -60,6 +63,10 @@ export const ChatArea = () => {
     return result;
   };
 
+  const userInitials = userIsLoading
+    ? 'Y'
+    : `${user?.firstName[0]}${user?.lastName[0]}`;
+
   return (
     <section ref={chatWrapperRef} className={s.chatWrapper} id="chatWrapper">
       {chatHistory.length === 0 && <ChatbotIntro />}
@@ -68,7 +75,10 @@ export const ChatArea = () => {
           if (item.role === 'user') {
             return (
               <div className={s.chatItem} key={index}>
-                <Typography.Title2>You</Typography.Title2>
+                <div className={s.messengerName}>
+                  <div className={s.messengerIcon}>{userInitials}</div>
+                  <Typography.Title2>You</Typography.Title2>
+                </div>
                 <Typography.Body className={s.question}>
                   <p>{item.content}</p>
                 </Typography.Body>
@@ -79,7 +89,12 @@ export const ChatArea = () => {
             if (item.clips === null) {
               return (
                 <div className={s.chatItem} key={index}>
-                  <Typography.Title1>Boclips Assistant</Typography.Title1>
+                  <div className={s.messengerName}>
+                    <div className={s.boclipsAssistantIcon}>
+                      <AssistantIcon />
+                    </div>
+                    <Typography.Title2>Boclips Assistant</Typography.Title2>
+                  </div>
                   <Typography.Body className={s.answer}>
                     <Markdown>{item.content}</Markdown>
                   </Typography.Body>
@@ -91,7 +106,12 @@ export const ChatArea = () => {
 
             return (
               <div className={s.chatItem} key={index}>
-                <Typography.Title1>Boclips Assistant</Typography.Title1>
+                <div className={s.messengerName}>
+                  <div className={s.boclipsAssistantIcon}>
+                    <AssistantIcon />
+                  </div>
+                  <Typography.Title2>Boclips Assistant</Typography.Title2>
+                </div>
                 <div className={s.answer}>
                   {responseWithVideos.map((it: string | Clip, clipIndex) => {
                     if (typeof it === 'string') {
@@ -122,7 +142,12 @@ export const ChatArea = () => {
         })}
         {isLoading && (
           <div className={c(s.chatItem, s.skeleton)} key="Loading">
-            <Typography.Title1>Boclips (beta)</Typography.Title1>
+            <div className={s.messengerName}>
+              <div className={s.boclipsAssistantIcon}>
+                <AssistantIcon />
+              </div>
+              <Typography.Title2>Boclips Assistant</Typography.Title2>
+            </div>
             <Typography.Body className={s.answer} />
           </div>
         )}
