@@ -57,20 +57,20 @@ export const ChatInput = () => {
     ]);
   };
 
-  function getConversationId(convId: string | null) {
-    if (!convId) {
+  function getConversationId() {
+    if (!conversationId) {
       const id = new Date().getTime().toString();
       setConversationId(id);
       return id;
     }
-    return convId;
+    return conversationId;
   }
 
   function sendChatQuestion(history: ChatHistory[]) {
     setInputValue('');
     doChat({
       model: 'langchain5-gpt4-markdown',
-      conversationId: getConversationId(conversationId),
+      conversationId: getConversationId(),
       chatHistory: history.map(({ role, content }) => ({ role, content })),
     });
   }
@@ -111,8 +111,7 @@ export const ChatInput = () => {
   };
 
   useEffect(() => {
-    const getQuestion = getRandomQuestions();
-    setRandomQuestions(getQuestion);
+    setRandomQuestions(getRandomQuestions());
   }, []);
 
   return (

@@ -7,7 +7,7 @@ import s from './style.module.less';
 const AssistantChatBox = () => {
   return (
     <div
-      className={c('row-start-2 row-end-3 col-start-7 col-end-20', s.chatbot)}
+      className={c('row-start-2 row-end-3 col-start-7 col-end-20', s.chatBox)}
     >
       <ChatArea />
       <ChatInput />

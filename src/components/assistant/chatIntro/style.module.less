@@ -1,0 +1,41 @@
+@import "~@boclips-ui/styles/src/colors";
+
+.descriptionWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: @gray-900;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+
+  & > div {
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .introTitleWrapper {
+    display: flex;
+    align-items: center;
+
+    .introIcon {
+      background-color: #EDE5EB;
+      color: #852675;
+      border-radius: 0.5rem;
+      height: 3rem;
+      width: 3rem;
+      margin-right: 1rem;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+
+    .introTitle {
+      color: #5F1352;
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.75rem;
+    }
+  }
+}

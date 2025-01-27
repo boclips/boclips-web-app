@@ -8,7 +8,7 @@ import c from 'classnames';
 import { Clip } from 'boclips-api-client/dist/sub-clients/chat/model/Clip';
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
-import { ChatbotIntro } from 'src/components/assistant/chatbotIntro/ChatBotIntro';
+import { ChatIntro } from 'src/components/assistant/chatIntro/ChatIntro';
 import Markdown from 'react-markdown';
 import AssistantIcon from 'resources/icons/boclips-assistant.svg';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
@@ -69,7 +69,7 @@ export const ChatArea = () => {
 
   return (
     <section ref={chatWrapperRef} className={s.chatWrapper} id="chatWrapper">
-      {chatHistory.length === 0 && <ChatbotIntro />}
+      {chatHistory.length === 0 && <ChatIntro />}
       <div>
         {chatHistory.map((item, index) => {
           if (item.role === 'user') {
