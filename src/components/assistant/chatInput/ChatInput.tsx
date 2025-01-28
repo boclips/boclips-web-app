@@ -31,6 +31,7 @@ export const ChatInput = () => {
     chatHistory,
     setChatHistory,
     setIsLoading,
+    abortController,
   } = useAssistantContextProvider();
 
   const saveUserInputToChatHistory = (question: string): ChatHistory[] => {
@@ -79,9 +80,12 @@ export const ChatInput = () => {
   function sendChatQuestion(history: ChatHistory[]) {
     setInputValue('');
     doChat({
-      model: 'langchain5-gpt4-markdown',
-      conversationId: getConversationId(),
-      chatHistory: history.map(({ role, content }) => ({ role, content })),
+      chatRequest: {
+        model: 'langchain5-gpt4-markdown',
+        conversationId: getConversationId(),
+        chatHistory: history.map(({ role, content }) => ({ role, content })),
+      },
+      abortSignal: abortController.current.signal,
     });
   }
 

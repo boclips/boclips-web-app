@@ -5,10 +5,17 @@ import { useAssistantContextProvider } from 'src/components/assistant/context/as
 import NewConversationIcon from 'resources/icons/new-conversation.svg';
 
 const AssistantSidebar = () => {
-  const { setConversationId, chatHistory, setChatHistory, setIsLoading } =
-    useAssistantContextProvider();
+  const {
+    setConversationId,
+    chatHistory,
+    setChatHistory,
+    setIsLoading,
+    abortController,
+  } = useAssistantContextProvider();
 
   const handleReset = () => {
+    abortController.current.abort();
+    abortController.current = new AbortController();
     setChatHistory([]);
     setConversationId('');
     setIsLoading(false);

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo, useState } from 'react';
+import React, { createContext, MutableRefObject, useContext, useMemo, useRef, useState } from "react";
 import { ChatResult } from 'boclips-api-client/dist/sub-clients/chat/model/ChatResult';
 import { Clip } from 'boclips-api-client/dist/sub-clients/chat/model/Clip';
 
@@ -9,6 +9,7 @@ interface ContextProps {
   setChatHistory: React.Dispatch<React.SetStateAction<ChatHistory[]>>;
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  abortController: MutableRefObject<AbortController>;
 }
 
 interface Props {
@@ -21,13 +22,14 @@ export interface ChatHistory {
   clips?: { [id: string]: Clip };
 }
 
-const tutorContext = createContext<ContextProps>({
+const assistantContext = createContext<ContextProps>({
   conversationId: null,
   chatHistory: [],
   setChatHistory: () => null,
   setConversationId: () => null,
   isLoading: false,
   setIsLoading: () => null,
+  abortController: null,
 });
 
 const AssistantContextProvider = ({ children }: Props) => {
@@ -35,6 +37,7 @@ const AssistantContextProvider = ({ children }: Props) => {
   const [lakituResponse, setLakituResponse] = useState<ChatResult[]>([]);
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const abortController = useRef(new AbortController());
 
   const context = useMemo(
     () => ({
@@ -46,12 +49,20 @@ const AssistantContextProvider = ({ children }: Props) => {
       setLakituResponse,
       isLoading,
       setIsLoading,
+      abortController,
     }),
-    [chatHistory, lakituResponse, conversationId, isLoading, setIsLoading],
+    [
+      chatHistory,
+      lakituResponse,
+      conversationId,
+      isLoading,
+      setIsLoading,
+      abortController,
+    ],
   );
 
   return (
-    <tutorContext.Provider value={context}>{children}</tutorContext.Provider>
+    <assistantContext.Provider value={context}>{children}</assistantContext.Provider>
   );
 };
 
@@ -63,7 +74,8 @@ function useAssistantContextProvider() {
     setConversationId,
     isLoading,
     setIsLoading,
-  } = useContext(tutorContext);
+    abortController,
+  } = useContext(assistantContext);
 
   return {
     conversationId,
@@ -72,6 +84,7 @@ function useAssistantContextProvider() {
     setChatHistory,
     isLoading,
     setIsLoading,
+    abortController,
   };
 }
 
