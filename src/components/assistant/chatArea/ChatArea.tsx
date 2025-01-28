@@ -12,6 +12,7 @@ import { ChatIntro } from 'src/components/assistant/chatIntro/ChatIntro';
 import Markdown from 'react-markdown';
 import AssistantIcon from 'resources/icons/boclips-assistant.svg';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
+import Feedback from 'src/components/assistant/feedback/Feedback';
 import s from './style.module.less';
 
 export const ChatArea = () => {
@@ -122,15 +123,17 @@ export const ChatArea = () => {
                       );
                     }
                     return (
-                      <VideoPlayer
-                        videoLink={
-                          new Link({
-                            href: `https://api.boclips.com/v1/videos/${it.videoId}`,
-                            templated: false,
-                          })
-                        }
-                        segment={{ start: it.startTime, end: it.endTime }}
-                      />
+                      <Feedback clipId={it.clipId}>
+                        <VideoPlayer
+                          videoLink={
+                            new Link({
+                              href: `https://api.boclips.com/v1/videos/${it.videoId}`,
+                              templated: false,
+                            })
+                          }
+                          segment={{ start: it.startTime, end: it.endTime }}
+                        />
+                      </Feedback>
                     );
                   })}
                 </div>

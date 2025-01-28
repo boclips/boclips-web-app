@@ -1,0 +1,107 @@
+@import "~@boclips-ui/styles/src/colors";
+@box-shadow: var(
+  --bo-ui-video-card-box-sahdow,
+  0px 4px 12px rgba(0, 0, 0, 0.1)
+);
+.playerWrapper {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+
+  ul {
+    position: absolute;
+    right: 55px;
+    background: @white;
+    z-index: 9999;
+    width: auto;
+    color: black;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    box-shadow: @box-shadow;
+    border: 2px solid @blue-900;
+
+    &.positive {
+      top: -10px;
+    }
+
+    &.negative {
+      top: 50px;
+    }
+
+    li {
+      padding: 0 0.25rem;
+
+      * {
+        font-size: 12px;
+      }
+    }
+  }
+
+  > div {
+    flex: 1;
+  }
+
+  .buttonWrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1rem;
+    color: transparent;
+    flex: 0;
+
+    button {
+      svg,
+      path {
+        fill: transparent !important;
+      }
+
+      &.positive {
+        &:hover {
+          svg,
+          path {
+            stroke: @green !important;
+          }
+        }
+      }
+
+      &.negative {
+        svg {
+          rotate: 180deg !important;
+          transform: scaleX(-1) !important;
+        }
+
+        &:hover {
+          svg,
+          path {
+            stroke: @error !important;
+          }
+        }
+      }
+
+      &.active {
+        border-color: @blue-900;
+        background-color: @white;
+
+        &.positive {
+          svg,
+          path {
+            stroke: @green;
+          }
+        }
+
+        &.negative {
+          svg,
+          path {
+            stroke: @error;
+          }
+        }
+      }
+
+      &:first-child {
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}
