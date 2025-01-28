@@ -51,6 +51,16 @@ export const ChatInput = () => {
       clips: response.clips,
     };
 
+    const lastEntry = chatHistory[chatHistory.length - 1];
+
+    if (
+      assistantInput.role === lastEntry.role &&
+      assistantInput.content === lastEntry.content &&
+      assistantInput.clips === lastEntry.clips
+    ) {
+      return;
+    }
+
     setChatHistory((prevState: ChatHistory[]) => [
       ...prevState,
       assistantInput,
@@ -115,7 +125,7 @@ export const ChatInput = () => {
   }, []);
 
   return (
-    <main className={s.promptWrapper}>
+    <div className={s.promptWrapper}>
       {chatHistory.length === 0 ? (
         <ul className={s.sampleQuestions}>
           {randomQuestion.map((it) => {
@@ -143,34 +153,38 @@ export const ChatInput = () => {
         </div>
       )}
       <div className={s.chatInputWrapper}>
-        <textarea
-          id="prompt-textarea"
-          rows={1}
-          placeholder="Message Boclips Assistant…"
-          className={s.prompt}
-          onKeyDown={(e) => handleTextArea(e)}
-          value={inputValue}
-          onChange={(e) => onChange(e.currentTarget.value)}
-        />
-        <Button
-          onClick={() => onSubmit()}
-          icon={isChatResponseLoading ? <LoadingDots /> : <SendIcon />}
-          iconOnly
-          disabled={isChatResponseLoading}
-          width="3.5rem"
-          height="3rem"
-          className={s.submitButton}
-        />
+        <div className={s.chatInput}>
+          <textarea
+            id="prompt-textarea"
+            rows={1}
+            placeholder="Message Boclips Assistant…"
+            className={s.prompt}
+            onKeyDown={(e) => handleTextArea(e)}
+            value={inputValue}
+            onChange={(e) => onChange(e.currentTarget.value)}
+          />
+          <Button
+            onClick={() => onSubmit()}
+            icon={isChatResponseLoading ? <LoadingDots /> : <SendIcon />}
+            iconOnly
+            disabled={isChatResponseLoading}
+            width="3.5rem"
+            height="3rem"
+            className={s.submitButton}
+          />
+        </div>
+        <div className={s.uploadAndBetaRow}>
+          <div className={s.betaBadge}>
+            <BetaIcon />
+            <Typography.Body>Beta</Typography.Body>
+          </div>
+        </div>
+        <Typography.Body as="p" size="small" className={s.assistantWarning}>
+          <WarningIcon />
+          Boclips Assistant is in beta and powered by generative AI and so may
+          make mistakes. Please review important information.
+        </Typography.Body>
       </div>
-      <div className={s.betaBadge}>
-        <BetaIcon />
-        <Typography.Body>Beta</Typography.Body>
-      </div>
-      <Typography.Body as="p" size="small" className={s.assistantWarning}>
-        <WarningIcon />
-        Boclips Assistant is in beta and powered by generative AI and so may
-        make mistakes. Please review important information.
-      </Typography.Body>
-    </main>
+    </div>
   );
 };

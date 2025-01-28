@@ -5,10 +5,10 @@ import s from './style.module.less';
 
 const AssistantChatBox = () => {
   return (
-    <div className={s.chatBox}>
+    <main className={s.chatBox}>
       <ChatArea />
       <ChatInput />
-    </div>
+    </main>
   );
 };
 

@@ -51,8 +51,7 @@ module.exports = {
         'video-view': 'minmax(74px, auto) minmax(0, auto) repeat(6, auto)',
         'my-profile-view':
           'minmax(74px, auto) min-content min-content min-content 1fr auto',
-        'assistant-view':
-          'minmax(74px, auto) minmax(30px, min-content) auto 1fr auto',
+        'assistant-view': 'minmax(74px, auto) 1fr auto',
       },
       gridTemplateColumns: {
         container:
