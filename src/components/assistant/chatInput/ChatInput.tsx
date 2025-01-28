@@ -86,7 +86,11 @@ export const ChatInput = () => {
   }
 
   const onSubmit = (suggestion?: string) => {
-    const history = saveUserInputToChatHistory(suggestion || inputValue);
+    const input = (suggestion ?? inputValue).trim();
+
+    if (!input) return;
+
+    const history = saveUserInputToChatHistory(input);
     sendChatQuestion(history);
     setInputValue('');
     setIsLoading(true);
