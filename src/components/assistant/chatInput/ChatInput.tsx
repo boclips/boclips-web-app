@@ -117,7 +117,7 @@ export const ChatInput = () => {
   return (
     <main className={s.promptWrapper}>
       {chatHistory.length === 0 ? (
-        <ul className={s.testQuestions}>
+        <ul className={s.sampleQuestions}>
           {randomQuestion.map((it) => {
             return (
               <Typography.Body onClick={handleSuggestion} as="li" key={it}>

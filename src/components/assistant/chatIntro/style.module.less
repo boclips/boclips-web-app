@@ -1,4 +1,5 @@
 @import "~@boclips-ui/styles/src/colors";
+@import '~@boclips-ui/styles/src/breakpoints';
 
 .descriptionWrapper {
   display: flex;
@@ -6,13 +7,17 @@
   align-items: center;
   color: @gray-900;
 
-  @media screen and (max-width: 768px) {
+  .description {
     display: none;
-  }
 
-  & > div {
-    margin-bottom: 1.5rem;
-    text-align: center;
+    @media screen and (min-width: @screen-md) {
+      display: block;
+      margin-top: 1.5rem;
+      & > div {
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+    }
   }
 
   .introTitleWrapper {

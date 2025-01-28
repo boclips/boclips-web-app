@@ -14,14 +14,16 @@ export const ChatIntro = () => {
           Assistant
         </Typography.Title1>
       </div>
-      <Typography.Title2 as="div">
-        Welcome to Boclips Assistant
-      </Typography.Title2>
-      <Typography.Body as="div">
-        Start enhancing your lessons with curated educational videos from more
-        than 550 premium brands, like PBS, SciShow, TED, and more.
-      </Typography.Body>
-      <Typography.Body as="div">To help you get started:</Typography.Body>
+      <div className={s.description}>
+        <Typography.Title2 as="div">
+          Welcome to Boclips Assistant
+        </Typography.Title2>
+        <Typography.Body as="div">
+          Start enhancing your lessons with curated educational videos from more
+          than 550 premium brands, like PBS, SciShow, TED, and more.
+        </Typography.Body>
+        <Typography.Body as="div">To help you get started:</Typography.Body>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@boclips-ui/button';
-import s from 'src/components/assistant/chatInput/style.module.less';
+import s from 'src/components/assistant/style.module.less';
 import { useAssistantContextProvider } from 'src/components/assistant/context/assistantContextProvider';
 import NewConversationIcon from 'resources/icons/new-conversation.svg';
 
@@ -15,7 +15,7 @@ const AssistantSidebar = () => {
   };
 
   return (
-    <div className="row-start-2 row-end-3 col-start-2 col-end-7">
+    <div className={s.assistantSidebar}>
       {chatHistory.length !== 0 ? (
         <Button
           type="outline"

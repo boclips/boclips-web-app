@@ -1,7 +1,8 @@
 import React from 'react';
+import s from './style.module.less';
 
 const AssistantConversations = () => {
-  return <div className="row-start-2 row-end-3 col-start-20 col-end-26" />;
+  return <div className={s.assistantConversations} />;
 };
 
 export default AssistantConversations;
