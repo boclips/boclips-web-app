@@ -19,6 +19,7 @@ import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import { Constants } from 'src/AppConstants';
 import FilmIcon from '../../resources/icons/film-icon.svg';
 import PlaylistsIcon from '../../resources/icons/playlists.svg';
+import AssistantIcon from '../../resources/icons/boclips-assistant.svg';
 import s from './style.module.less';
 
 const HomeView = () => {
@@ -64,6 +65,25 @@ const HomeView = () => {
             <span className={s.classroom}>Boclips Classroom</span>
           </FeatureGate>
         </h1>
+        <FeatureGate feature="BO_WEB_APP_DEV">
+          <div className={s.assistantFeature}>
+            <div className={s.newBadge}>
+              <AssistantIcon />
+              <p>New</p>
+            </div>
+            <h1>Try out Boclips Assistant</h1>
+            <p>
+              We built a gen-AI chatbot to showcase Assistant, a new feature
+              coming to Boclips. Highlights brings you just the right learning
+              moment.
+            </p>
+            <Button
+              onClick={() => navigate('/assistant')}
+              text="Try out Assistant"
+              type="label"
+            />
+          </div>
+        </FeatureGate>
         <Search showIconOnly={false} />
         <div className="mt-9 flex justify-between">
           <Button
