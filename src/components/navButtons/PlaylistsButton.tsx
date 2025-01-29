@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import c from 'classnames';
 import s from './style.module.less';
-import YourLibraryIcon from '../../resources/icons/your-library.svg';
+import PlaylistsIcon from '../../resources/icons/playlists.svg';
 
 const PlaylistsButton = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const PlaylistsButton = () => {
         data-qa="playlists-button"
         className={s.headerButton}
       >
-        <YourLibraryIcon className={s.navbarIcon} />
+        <PlaylistsIcon className={s.navbarIcon} />
         <span>Playlists</span>
         <span className="sr-only"> find your playlists here</span>
       </button>

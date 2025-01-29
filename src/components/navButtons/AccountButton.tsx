@@ -1,4 +1,3 @@
-import MyAccountSVG from 'src/resources/icons/user-icon.svg';
 import ExternalLinkIcon from 'src/resources/icons/external-link-icon.svg';
 import React, { useRef, useState } from 'react';
 import c from 'classnames';
@@ -72,6 +71,24 @@ export const AccountButton = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  const getInitials = () => {
+    const firstNameExists = user.firstName && user.firstName.trim().length > 0;
+    const lastNameExists = user.lastName && user.lastName.trim().length > 0;
+    if (firstNameExists && lastNameExists) {
+      return `${user?.firstName[0].toUpperCase()}${user?.lastName[0].toUpperCase()}`;
+    }
+
+    if (firstNameExists && !lastNameExists) {
+      return `${user?.firstName[0].toUpperCase()}}`;
+    }
+
+    if (!firstNameExists && lastNameExists) {
+      return `${user?.lastName[0].toUpperCase()}}`;
+    }
+
+    return 'User';
+  };
+
   return (
     <div
       data-qa="account-button"
@@ -86,12 +103,7 @@ export const AccountButton = () => {
           aria-expanded={displayModal}
           aria-haspopup
           className={s.accountButton}
-          icon={<MyAccountSVG className={s.navbarIcon} />}
-          text={
-            user.firstName && user.firstName.trim().length > 0
-              ? `${user.firstName}`
-              : 'Account'
-          }
+          text={getInitials()}
           height="45px"
         />
       )}

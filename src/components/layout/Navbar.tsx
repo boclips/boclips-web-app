@@ -11,13 +11,13 @@ import SkipLink from 'src/components/skipLink/SkipLink';
 import AlignmentsButton from 'src/components/navButtons/AlignmentsButton';
 import SideMenu from 'src/components/layout/SideMenu';
 import LibraryButton from 'src/components/navButtons/LibraryButton';
-import { HomeButton } from 'src/components/navButtons/HomeButton';
 import { AccountButton } from 'src/components/navButtons/AccountButton';
 import Logo from 'src/components/logo/Logo';
 import {
   AccountType,
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import AssistantButton from 'src/components/navButtons/AssistantButton';
 import s from './navbar.module.less';
 import { Search } from '../searchBar/SearchBar';
 
@@ -79,8 +79,10 @@ const NavbarResponsive = ({
         ) : (
           <div className="col-start-15 col-end-26 row-start-1 row-end-1 flex h-full justify-end">
             <div className={c('flex mr-6', s.buttonsDesktop)}>
-              <HomeButton />
               <LibraryButton />
+              <FeatureGate feature="BO_WEB_APP_DEV">
+                <AssistantButton />
+              </FeatureGate>
               <AlignmentsButton />
               <PlaylistsButton />
               <FeatureGate linkName="cart">

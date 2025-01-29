@@ -304,7 +304,7 @@ const App = ({
                       }
                     />
                     <Route
-                      path="/boclips-assistant"
+                      path="/assistant"
                       element={
                         <FeatureGate
                           feature="BO_WEB_APP_DEV"

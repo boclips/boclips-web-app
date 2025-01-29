@@ -36,10 +36,12 @@ describe(`Navbar test`, () => {
     );
 
   it(`text is Account if name is blank`, async () => {
-    fakeClient.users.insertCurrentUser(UserFactory.sample({ firstName: ' ' }));
+    fakeClient.users.insertCurrentUser(
+      UserFactory.sample({ firstName: ' ', lastName: ' ' }),
+    );
     const wrapper = renderAccountButton();
 
-    expect(await wrapper.findByText('Account')).toBeInTheDocument();
+    expect(await wrapper.findByText('User')).toBeInTheDocument();
   });
   let fakeClient: FakeBoclipsClient;
 
@@ -53,7 +55,7 @@ describe(`Navbar test`, () => {
     );
     const navbar = renderAccountButton();
 
-    fireEvent.click(await navbar.findByText('Eddie'));
+    fireEvent.click(await navbar.findByText('EB'));
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 
@@ -84,7 +86,7 @@ describe(`Navbar test`, () => {
     );
     const navbar = renderAccountButton();
 
-    fireEvent.click(await navbar.findByText('Eddie'));
+    fireEvent.click(await navbar.findByText('EB'));
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 
@@ -104,9 +106,9 @@ describe(`Navbar test`, () => {
     fakeClient.links.userOrders = null;
 
     const wrapper = renderAccountButton();
-    expect(await wrapper.findByText('yo')).toBeInTheDocument();
+    expect(await wrapper.findByText('YY')).toBeInTheDocument();
 
-    fireEvent.click(await wrapper.findByText('yo'));
+    fireEvent.click(await wrapper.findByText('YY'));
 
     await waitFor(() => wrapper.getByTestId('account-modal'));
 
@@ -127,9 +129,9 @@ describe(`Navbar test`, () => {
     fakeClient.links.myLicensedContent = null;
 
     const wrapper = renderAccountButton();
-    expect(await wrapper.findByText('yo')).toBeInTheDocument();
+    expect(await wrapper.findByText('YY')).toBeInTheDocument();
 
-    fireEvent.click(await wrapper.findByText('yo'));
+    fireEvent.click(await wrapper.findByText('YY'));
 
     await waitFor(() => wrapper.getByTestId('account-modal'));
 
@@ -142,15 +144,16 @@ describe(`Navbar test`, () => {
   it('contains your content link in tooltip when user has BWA_DEV feature enabled', async () => {
     fakeClient.users.insertCurrentUser(
       UserFactory.sample({
-        firstName: 'yo',
+        firstName: 'Zoe',
+        lastName: 'Jolly',
         features: { BO_WEB_APP_DEV: true },
       }),
     );
 
     const wrapper = renderAccountButton();
-    expect(await wrapper.findByText('yo')).toBeInTheDocument();
+    expect(await wrapper.findByText('ZJ')).toBeInTheDocument();
 
-    fireEvent.click(await wrapper.findByText('yo'));
+    fireEvent.click(await wrapper.findByText('ZJ'));
 
     await waitFor(() => wrapper.getByTestId('account-modal'));
 
@@ -163,12 +166,12 @@ describe(`Navbar test`, () => {
    * Ideally we'd test that we'd actually get back to the home page, somehow.
    */
   it('redirects to / on logout', async () => {
-    const user = UserFactory.sample({ firstName: 'Frank' });
+    const user = UserFactory.sample({ firstName: 'Frank', lastName: 'Zoe' });
     fakeClient.users.insertCurrentUser(user);
 
     const wrapper = renderAccountButton();
 
-    fireEvent.click(await wrapper.findByText('Frank'));
+    fireEvent.click(await wrapper.findByText('FZ'));
 
     fireEvent.click(await wrapper.findByText('Log out'));
 
@@ -178,13 +181,14 @@ describe(`Navbar test`, () => {
   });
 
   it('closes the dialog on esc', async () => {
-    const user = UserFactory.sample({ firstName: 'Frank' });
+    const user = UserFactory.sample({ firstName: 'Frank', lastName: 'Zoe' });
+
     fakeClient.users.insertCurrentUser(user);
     const navbar = renderAccountButton();
 
-    expect(await navbar.findByText('Frank')).toBeInTheDocument();
+    expect(await navbar.findByText('FZ')).toBeInTheDocument();
 
-    fireEvent.click(await navbar.findByText('Frank'));
+    fireEvent.click(await navbar.findByText('FZ'));
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 
@@ -199,13 +203,14 @@ describe(`Navbar test`, () => {
   });
 
   it('closes the dialog when the dialog loses focus', async () => {
-    const user = UserFactory.sample({ firstName: 'Frank' });
+    const user = UserFactory.sample({ firstName: 'Frank', lastName: 'Zoe' });
+
     fakeClient.users.insertCurrentUser(user);
     const navbar = renderAccountButton();
 
-    expect(await navbar.findByText('Frank')).toBeInTheDocument();
+    expect(await navbar.findByText('FZ')).toBeInTheDocument();
 
-    fireEvent.click(await navbar.findByText('Frank'));
+    fireEvent.click(await navbar.findByText('FZ'));
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 
@@ -215,13 +220,14 @@ describe(`Navbar test`, () => {
   });
 
   it('does not close the dialog when a child gains focus', async () => {
-    const user = UserFactory.sample({ firstName: 'Frank' });
+    const user = UserFactory.sample({ firstName: 'Frank', lastName: 'Zoe' });
+
     fakeClient.users.insertCurrentUser(user);
     const navbar = renderAccountButton();
 
-    expect(await navbar.findByText('Frank')).toBeVisible();
+    expect(await navbar.findByText('FZ')).toBeVisible();
 
-    fireEvent.click(await navbar.findByText('Frank'));
+    fireEvent.click(await navbar.findByText('FZ'));
 
     await waitFor(() => navbar.getByTestId('account-modal'));
 

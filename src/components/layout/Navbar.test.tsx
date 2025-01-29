@@ -45,54 +45,6 @@ describe(`Navbar`, () => {
     );
   });
 
-  describe('Menu Hamburger button', () => {
-    const client = new FakeBoclipsClient();
-    let wrapper;
-
-    beforeEach(() => {
-      client.users.insertCurrentUser(
-        UserFactory.sample({
-          firstName: 'Ricky',
-          lastName: 'Julian',
-          email: 'sunnyvale@swearnet.com',
-        }),
-      );
-
-      wrapper = render(
-        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-          <BoclipsClientProvider client={client}>
-            <NavbarResponsive />
-          </BoclipsClientProvider>
-        </BoclipsSecurityProvider>,
-      );
-    });
-
-    it.each([
-      ['mobile', resizeToMobile],
-      ['tablet', resizeToTablet],
-    ])(
-      'opens menu on click on %s',
-      async (_screenType: string, resize: () => void) => {
-        resize();
-
-        fireEvent.click(await wrapper.findByLabelText('Menu'));
-
-        expect(wrapper.getByText('Order History')).toBeInTheDocument();
-        expect(wrapper.getByText('Cart')).toBeInTheDocument();
-        expect(wrapper.getByText('Platform guide')).toBeInTheDocument();
-        expect(wrapper.getByText('Log out')).toBeInTheDocument();
-      },
-    );
-
-    it('is not visible on desktop', async () => {
-      resizeToDesktop();
-
-      await waitFor(() =>
-        expect(wrapper.queryByLabelText('Menu')).not.toBeInTheDocument(),
-      );
-    });
-  });
-
   describe('Platform guide link for Classroom', () => {
     const client = new FakeBoclipsClient();
     let wrapper;
@@ -243,12 +195,14 @@ describe(`Navbar`, () => {
     );
   });
 
-  describe('Profile in Navbar - mobile', () => {
+  describe('Show assistant option in Navbar', () => {
     const client = new FakeBoclipsClient();
     let wrapper;
 
     beforeEach(() => {
-      client.users.insertCurrentUser(UserFactory.sample());
+      client.users.setCurrentUserFeatures({
+        BO_WEB_APP_DEV: true,
+      });
 
       wrapper = render(
         <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
@@ -259,91 +213,204 @@ describe(`Navbar`, () => {
       );
     });
 
-    it.each([
-      ['mobile', resizeToMobile],
-      ['tablet', resizeToTablet],
-    ])('is visible on %s', async (_screenType: string, resize: () => void) => {
-      resize();
+    it(`will show the Assistant menu option on desktop`, async () => {
+      resizeToDesktop();
 
-      fireEvent.click(await wrapper.findByLabelText('Menu'));
-      expect(wrapper.getByText('Profile')).toBeVisible();
-    });
-  });
-
-  describe('Home in Navbar - mobile', () => {
-    const client = new FakeBoclipsClient();
-    let wrapper;
-
-    beforeEach(() => {
-      client.users.insertCurrentUser(
-        UserFactory.sample({
-          account: {
-            ...UserFactory.sample().account,
-            name: 'Footballers',
-            id: 'id',
-            products: [Product.CLASSROOM],
-            type: AccountType.STANDARD,
-          },
-        }),
-      );
-
-      wrapper = render(
-        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-          <BoclipsClientProvider client={client}>
-            <NavbarResponsive />
-          </BoclipsClientProvider>
-        </BoclipsSecurityProvider>,
-      );
+      expect(
+        await wrapper.findByRole('button', { name: 'Assistant' }),
+      ).toBeVisible();
     });
 
     it.each([
       ['mobile', resizeToMobile],
       ['tablet', resizeToTablet],
-    ])('is visible on %s', async (_screenType: string, resize: () => void) => {
-      resize();
+    ])(
+      'will show the Assistant menu option on %s',
+      async (_screenType: string, resize: () => void) => {
+        resize();
 
-      fireEvent.click(await wrapper.findByLabelText('Menu'));
-      expect(wrapper.getByText('Home')).toBeVisible();
-    });
+        fireEvent.click(await wrapper.findByLabelText('Menu'));
+
+        expect(wrapper.getByText('Assistant')).toBeVisible();
+      },
+    );
   });
 
-  describe('All videos in Navbar - mobile', () => {
-    const client = new FakeBoclipsClient();
-    let wrapper;
+  it(`will hide the Assistant menu option on desktop when toggled off`, async () => {
+    const wrapper = render(
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <NavbarResponsive />
+        </BoclipsClientProvider>
+      </BoclipsSecurityProvider>,
+    );
 
-    beforeEach(() => {
-      client.users.insertCurrentUser(
-        UserFactory.sample({
-          account: {
-            ...UserFactory.sample().account,
-            name: 'Footballers',
-            id: 'id',
-            products: [Product.CLASSROOM],
-            type: AccountType.STANDARD,
-          },
-        }),
-      );
+    resizeToDesktop();
 
-      wrapper = render(
-        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-          <BoclipsClientProvider client={client}>
-            <NavbarResponsive />
-          </BoclipsClientProvider>
-        </BoclipsSecurityProvider>,
-      );
-    });
-
-    it.each([
-      ['mobile', resizeToMobile],
-      ['tablet', resizeToTablet],
-    ])('is visible on %s', async (_screenType: string, resize: () => void) => {
-      resize();
-
-      fireEvent.click(await wrapper.findByLabelText('Menu'));
-      expect(wrapper.getByText('All videos')).toBeVisible();
-    });
+    expect(
+      await wrapper.queryByRole('button', { name: 'Assistant' }),
+    ).toBeNull();
   });
 
+  describe('Mobile', () => {
+    describe('Menu Hamburger button', () => {
+      const client = new FakeBoclipsClient();
+      let wrapper;
+
+      beforeEach(() => {
+        client.users.insertCurrentUser(
+          UserFactory.sample({
+            firstName: 'Ricky',
+            lastName: 'Julian',
+            email: 'sunnyvale@swearnet.com',
+          }),
+        );
+
+        wrapper = render(
+          <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+            <BoclipsClientProvider client={client}>
+              <NavbarResponsive />
+            </BoclipsClientProvider>
+          </BoclipsSecurityProvider>,
+        );
+      });
+
+      it.each([
+        ['mobile', resizeToMobile],
+        ['tablet', resizeToTablet],
+      ])(
+        'opens menu on click on %s',
+        async (_screenType: string, resize: () => void) => {
+          resize();
+
+          fireEvent.click(await wrapper.findByLabelText('Menu'));
+
+          expect(wrapper.getByText('Order History')).toBeInTheDocument();
+          expect(wrapper.getByText('Cart')).toBeInTheDocument();
+          expect(wrapper.getByText('Platform guide')).toBeInTheDocument();
+          expect(wrapper.getByText('Log out')).toBeInTheDocument();
+        },
+      );
+
+      it('is not visible on desktop', async () => {
+        resizeToDesktop();
+
+        await waitFor(() =>
+          expect(wrapper.queryByLabelText('Menu')).not.toBeInTheDocument(),
+        );
+      });
+    });
+
+    describe('Profile in Navbar - mobile', () => {
+      const client = new FakeBoclipsClient();
+      let wrapper;
+
+      beforeEach(() => {
+        client.users.insertCurrentUser(UserFactory.sample());
+
+        wrapper = render(
+          <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+            <BoclipsClientProvider client={client}>
+              <NavbarResponsive />
+            </BoclipsClientProvider>
+          </BoclipsSecurityProvider>,
+        );
+      });
+
+      it.each([
+        ['mobile', resizeToMobile],
+        ['tablet', resizeToTablet],
+      ])(
+        'is visible on %s',
+        async (_screenType: string, resize: () => void) => {
+          resize();
+
+          fireEvent.click(await wrapper.findByLabelText('Menu'));
+          expect(wrapper.getByText('Profile')).toBeVisible();
+        },
+      );
+    });
+
+    describe('Home in Navbar - mobile', () => {
+      const client = new FakeBoclipsClient();
+      let wrapper;
+
+      beforeEach(() => {
+        client.users.insertCurrentUser(
+          UserFactory.sample({
+            account: {
+              ...UserFactory.sample().account,
+              name: 'Footballers',
+              id: 'id',
+              products: [Product.CLASSROOM],
+              type: AccountType.STANDARD,
+            },
+          }),
+        );
+
+        wrapper = render(
+          <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+            <BoclipsClientProvider client={client}>
+              <NavbarResponsive />
+            </BoclipsClientProvider>
+          </BoclipsSecurityProvider>,
+        );
+      });
+
+      it.each([
+        ['mobile', resizeToMobile],
+        ['tablet', resizeToTablet],
+      ])(
+        'is visible on %s',
+        async (_screenType: string, resize: () => void) => {
+          resize();
+
+          fireEvent.click(await wrapper.findByLabelText('Menu'));
+          expect(wrapper.getByText('Home')).toBeVisible();
+        },
+      );
+    });
+
+    describe('All videos in Navbar - mobile', () => {
+      const client = new FakeBoclipsClient();
+      let wrapper;
+
+      beforeEach(() => {
+        client.users.insertCurrentUser(
+          UserFactory.sample({
+            account: {
+              ...UserFactory.sample().account,
+              name: 'Footballers',
+              id: 'id',
+              products: [Product.CLASSROOM],
+              type: AccountType.STANDARD,
+            },
+          }),
+        );
+
+        wrapper = render(
+          <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+            <BoclipsClientProvider client={client}>
+              <NavbarResponsive />
+            </BoclipsClientProvider>
+          </BoclipsSecurityProvider>,
+        );
+      });
+
+      it.each([
+        ['mobile', resizeToMobile],
+        ['tablet', resizeToTablet],
+      ])(
+        'is visible on %s',
+        async (_screenType: string, resize: () => void) => {
+          resize();
+
+          fireEvent.click(await wrapper.findByLabelText('Menu'));
+          expect(wrapper.getByText('All videos')).toBeVisible();
+        },
+      );
+    });
+  });
   describe('Show Options', () => {
     it('should hide options if requested', () => {
       resizeToDesktop();
@@ -356,7 +423,6 @@ describe(`Navbar`, () => {
         </BoclipsSecurityProvider>,
       );
 
-      expect(wrapper.queryByRole('button', { name: 'Home Home' })).toBeNull();
       expect(wrapper.queryByRole('button', { name: 'All videos' })).toBeNull();
     });
 
@@ -371,7 +437,6 @@ describe(`Navbar`, () => {
         </BoclipsSecurityProvider>,
       );
 
-      expect(wrapper.getByRole('button', { name: 'Home Home' })).toBeVisible();
       expect(wrapper.getByRole('button', { name: 'All videos' })).toBeVisible();
     });
 
