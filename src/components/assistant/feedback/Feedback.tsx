@@ -95,6 +95,7 @@ const FeedbackButton = ({
                 <Button
                   onClick={() => handleOnClick(it.id, it.text)}
                   text={it.text}
+                  type="label"
                 />
               </li>
             );
