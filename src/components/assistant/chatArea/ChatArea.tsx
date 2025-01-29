@@ -72,9 +72,9 @@ export const ChatArea = () => {
     : `${user?.firstName[0]}${user?.lastName[0]}`;
 
   return (
-    <section ref={chatWrapperRef} className={s.chatWrapper} id="chatWrapper">
+    <section className={s.chatWrapper} id="chatWrapper">
       {chatHistory.length === 0 && <ChatIntro />}
-      <div>
+      <div ref={chatWrapperRef}>
         {chatHistory.map((item, index) => {
           if (item.role === 'user') {
             return (
