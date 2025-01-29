@@ -14,8 +14,8 @@ import AssistantIcon from 'resources/icons/boclips-assistant.svg';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import Feedback from 'src/components/assistant/feedback/Feedback';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
-import s from './style.module.less';
 import expandUrlTemplate from 'boclips-api-client/dist/sub-clients/common/utils/expandUrlTemplate';
+import s from './style.module.less';
 
 export const ChatArea = () => {
   const { data: user, isLoading: userIsLoading } = useGetUserQuery();

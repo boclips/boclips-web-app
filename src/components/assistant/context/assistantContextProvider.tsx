@@ -1,4 +1,11 @@
-import React, { createContext, MutableRefObject, useContext, useMemo, useRef, useState } from "react";
+import React, {
+  createContext,
+  MutableRefObject,
+  useContext,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { ChatResult } from 'boclips-api-client/dist/sub-clients/chat/model/ChatResult';
 import { Clip } from 'boclips-api-client/dist/sub-clients/chat/model/Clip';
 
@@ -62,7 +69,9 @@ const AssistantContextProvider = ({ children }: Props) => {
   );
 
   return (
-    <assistantContext.Provider value={context}>{children}</assistantContext.Provider>
+    <assistantContext.Provider value={context}>
+      {children}
+    </assistantContext.Provider>
   );
 };
 
