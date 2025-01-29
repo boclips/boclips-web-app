@@ -95,7 +95,6 @@ const FeedbackButton = ({
                 <Button
                   onClick={() => handleOnClick(it.id, it.text)}
                   text={it.text}
-                  type="label"
                 />
               </li>
             );
@@ -116,20 +115,24 @@ const Feedback = ({ children, clipId }: Props) => {
       {children}
       {!feedbackLoading ? (
         <div className={s.buttonWrapper}>
-          <FeedbackButton
-            chatHistory={chatHistory}
-            conversationId={conversationId}
-            clipId={clipId}
-            feedbackOptions={feedbackOption}
-            type="positive"
-          />
-          <FeedbackButton
-            chatHistory={chatHistory}
-            conversationId={conversationId}
-            clipId={clipId}
-            feedbackOptions={feedbackOption}
-            type="negative"
-          />
+          <div className={s.actionbuttons} />
+          <div className={s.feedbackButtons}>
+            <p>Is this helpful?</p>
+            <FeedbackButton
+              chatHistory={chatHistory}
+              conversationId={conversationId}
+              clipId={clipId}
+              feedbackOptions={feedbackOption}
+              type="positive"
+            />
+            <FeedbackButton
+              chatHistory={chatHistory}
+              conversationId={conversationId}
+              clipId={clipId}
+              feedbackOptions={feedbackOption}
+              type="negative"
+            />
+          </div>
         </div>
       ) : null}
     </div>

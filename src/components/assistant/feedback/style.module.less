@@ -1,43 +1,47 @@
-@import "~@boclips-ui/styles/src/colors";
+@import '~@boclips-ui/styles/src/colors';
 @box-shadow: var(
   --bo-ui-video-card-box-shadow,
   0px 4px 12px rgba(0, 0, 0, 0.1)
 );
 
 .playerWrapper {
-  display: flex;
-  flex-direction: row;
+  background: @white;
   position: relative;
+  width: 100%;
+  padding: 0.5rem 0.25rem;
+  border-radius: 0.25rem;
 
   ul {
     position: absolute;
-    right: 55px;
     background: @gray-100;
     z-index: 99;
-    width: auto;
-    color: black;
     list-style: none;
     display: flex;
-    flex-direction: row;
-    padding: 0.5rem 0.5rem;
+    flex-direction: column;
     border-radius: 4px;
     box-shadow: @box-shadow;
+    width: 10rem;
+    padding: 0.25rem 0;
+
+    li {
+      padding: 0.25rem 0;
+
+      * {
+        width: 90%;
+        font-size: 12px;
+      }
+
+      span {
+        width: auto;
+      }
+    }
 
     &.positive {
-      top: -10px;
+      right: 4.5rem;
     }
 
     &.negative {
-      top: 45px;
-    }
-
-    li {
-      padding: 0 0.25rem;
-
-      * {
-        font-size: 12px;
-        text-decoration: underline;
-      }
+      right: 0.5rem;
     }
   }
 
@@ -47,62 +51,39 @@
 
   .buttonWrapper {
     display: flex;
-    flex-direction: column;
-    margin-left: 1rem;
-    color: transparent;
-    flex: 0;
+    flex-direction: row;
+    align-items: center;
     --bo-ui-button-outline-background-color-hover: transparent;
+    padding: 0 0.5rem;
+    justify-content: space-between;
 
-    button {
-      svg,
-      path {
-        fill: transparent !important;
-      }
+    p {
+      margin-right: 0.5rem;
+    }
 
-      &.positive {
-        &:hover {
-          svg,
-          path {
-            stroke: @green !important;
-          }
-        }
-      }
+    .feedbackButtons {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      button {
+        margin-left: 0.5rem;
+        border-color: @blue-400;
 
-      &.negative {
-        svg {
-          rotate: 180deg !important;
-          transform: scaleX(-1) !important;
-        }
-
-        &:hover {
-          svg,
-          path {
-            stroke: @error !important;
-          }
-        }
-      }
-
-      &.active {
-        border-color: @blue-900;
-        background-color: @white;
-
-        &.positive {
-          svg,
-          path {
-            stroke: @green;
-          }
+        svg,
+        path {
+          fill: transparent !important;
         }
 
         &.negative {
-          svg,
-          path {
-            stroke: @error;
+          svg {
+            rotate: 180deg !important;
+            transform: scaleX(-1) !important;
           }
         }
-      }
 
-      &.positive {
-        margin-bottom: 0.5rem;
+        &.active {
+          border-color: @blue-900;
+        }
       }
     }
   }
