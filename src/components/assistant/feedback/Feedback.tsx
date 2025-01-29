@@ -47,7 +47,12 @@ const FeedbackButton = ({
 
   const handleOnClick = (selectedOptionId: string, feedbackMessage: string) => {
     const request = {
-      chatHistory,
+      chatHistory: chatHistory.map((entry) => {
+        return {
+          role: entry.role,
+          content: entry.content,
+        };
+      }),
       conversationId,
       feedbackMessage,
       clipId,
