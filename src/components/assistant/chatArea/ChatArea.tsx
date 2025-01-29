@@ -13,11 +13,14 @@ import Markdown from 'react-markdown';
 import AssistantIcon from 'resources/icons/boclips-assistant.svg';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import Feedback from 'src/components/assistant/feedback/Feedback';
+import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import s from './style.module.less';
+import expandUrlTemplate from 'boclips-api-client/dist/sub-clients/common/utils/expandUrlTemplate';
 
 export const ChatArea = () => {
   const { data: user, isLoading: userIsLoading } = useGetUserQuery();
   const { chatHistory, isLoading } = useAssistantContextProvider();
+  const videoLink = useBoclipsClient().links.video;
 
   const chatWrapperRef = useRef<HTMLDivElement>(null);
 
@@ -127,7 +130,9 @@ export const ChatArea = () => {
                         <VideoPlayer
                           videoLink={
                             new Link({
-                              href: `https://api.boclips.com/v1/videos/${it.videoId}`,
+                              href: expandUrlTemplate(videoLink.href, {
+                                id: it.videoId,
+                              }),
                               templated: false,
                             })
                           }
