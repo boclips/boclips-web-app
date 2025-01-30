@@ -5,11 +5,12 @@ import expandUrlTemplate from 'boclips-api-client/dist/sub-clients/common/utils/
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import { Clip } from 'boclips-api-client/dist/sub-clients/chat/model/Clip';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
-import FilmIcon from 'src/resources/icons/film-icon.svg';
+import HighlightIcon from 'src/resources/icons/highlights.svg';
 import Open from 'src/resources/icons/open-new-window.svg';
 import formatDuration from 'src/components/playlists/buttons/playlistBookmark/helpers/formatDuration';
 import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import Thumbnail from 'src/components/playlists/thumbnails/Thumbnail';
+import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import s from './style.module.less';
 
 interface Props {
@@ -26,7 +27,10 @@ const HighlightPlayer = ({ clip }: Props) => {
     <div className={s.playerWrapper}>
       <div className={s.header}>
         <p>
-          <FilmIcon /> Highlight
+          <div className={s.icon}>
+            <HighlightIcon />
+          </div>{' '}
+          Highlight
         </p>
         <div className={s.durationBadge}>
           {formatDuration(clip.clipDuration)}
@@ -45,7 +49,12 @@ const HighlightPlayer = ({ clip }: Props) => {
       />
       <h1 className={s.clipTitle}>{clip.clipName}</h1>
       <div className={s.buttonWrapper}>
-        <div className={s.actionbuttons} />
+        <div className={s.actionbuttons}>
+          <AddToPlaylistButton
+            videoId={clip.videoId}
+            highlightId={clip.clipId}
+          />
+        </div>
         <Feedback clipId={clip.clipId} />
       </div>
       {!isVideoLoading ? (
