@@ -71,11 +71,12 @@ const HomeView = () => {
               <AssistantIcon />
               <p>New</p>
             </div>
-            <h1>Try out Boclips Assistant</h1>
+            <h1>Try out Boclips Assistant.</h1>
             <p>
-              We built a gen-AI chatbot to showcase Assistant, a new feature
-              coming to Boclips. Highlights brings you just the right learning
-              moment.
+              Our new tool designed to help you find and use our videos more
+              efficiently. You can streamline your workflow, discover relevant
+              clips, and find video relating to your curriculum standards and
+              lesson plans.
             </p>
             <Button
               onClick={() => navigate('/assistant')}
