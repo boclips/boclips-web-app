@@ -47,7 +47,10 @@ const HighlightPlayer = ({ clip }: Props) => {
         }
         segment={{ start: clip.startTime, end: clip.endTime }}
       />
-      <h1 className={s.clipTitle}>{clip.clipName}</h1>
+      <div className={s.clipDetails}>
+        <h1 className={s.clipTitle}>{clip.clipName}</h1>
+        {!isVideoLoading && <p className={s.channelName}>{video.createdBy}</p>}
+      </div>
       <div className={s.buttonWrapper}>
         <div className={s.actionbuttons}>
           <AddToPlaylistButton
@@ -57,7 +60,7 @@ const HighlightPlayer = ({ clip }: Props) => {
         </div>
         <Feedback clipId={clip.clipId} />
       </div>
-      {!isVideoLoading ? (
+      {!isVideoLoading && (
         <div className={s.videoDetails}>
           <p>Highlight taken from:</p>
           <a
@@ -70,7 +73,7 @@ const HighlightPlayer = ({ clip }: Props) => {
             <Open />
           </a>
         </div>
-      ) : null}
+      )}
     </div>
   );
 };
