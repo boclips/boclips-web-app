@@ -1,4 +1,4 @@
-@import "~@boclips-ui/styles/src/colors";
+@import '~@boclips-ui/styles/src/colors';
 @import '~@boclips-ui/styles/src/breakpoints';
 
 @border: var(--bo-ui-input-text-border, 2px solid @gray-500);
@@ -19,13 +19,8 @@
   align-self: flex-end;
   z-index: 100;
   padding-top: 1rem;
-
-  .restartButton {
-    width: 200px;
-    align-self: center;
-    margin-bottom: 0.5rem;
-  }
-
+  width: 100%;
+  
   .sampleQuestions {
     display: flex;
     gap: 0.5rem;
@@ -40,7 +35,7 @@
       list-style: none;
       border: 2px solid @gray-400;
       border-radius: @radius;
-      padding: 1.0rem 1rem;
+      padding: 1rem 1rem;
       box-sizing: border-box;
       cursor: pointer;
       align-items: center;
