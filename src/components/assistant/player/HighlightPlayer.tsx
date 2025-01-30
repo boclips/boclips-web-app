@@ -6,7 +6,10 @@ import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import { Clip } from 'boclips-api-client/dist/sub-clients/chat/model/Clip';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import FilmIcon from 'src/resources/icons/film-icon.svg';
+import Open from 'src/resources/icons/open-new-window.svg';
 import formatDuration from 'src/components/playlists/buttons/playlistBookmark/helpers/formatDuration';
+import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
+import Thumbnail from 'src/components/playlists/thumbnails/Thumbnail';
 import s from './style.module.less';
 
 interface Props {
@@ -15,6 +18,9 @@ interface Props {
 
 const HighlightPlayer = ({ clip }: Props) => {
   const videoLink = useBoclipsClient().links.video;
+  const { data: video, isLoading: isVideoLoading } = useFindOrGetVideo(
+    clip.videoId,
+  );
 
   return (
     <div className={s.playerWrapper}>
@@ -42,6 +48,20 @@ const HighlightPlayer = ({ clip }: Props) => {
         <div className={s.actionbuttons} />
         <Feedback clipId={clip.clipId} />
       </div>
+      {!isVideoLoading ? (
+        <div className={s.videoDetails}>
+          <p>Highlight taken from:</p>
+          <a
+            href={`${window.location.host}/videos/${video.id}`}
+            target="new"
+            rel="noopener noreferrer"
+          >
+            <Thumbnail video={video} className={s.thumbnail} />
+            {video.title}
+            <Open />
+          </a>
+        </div>
+      ) : null}
     </div>
   );
 };

@@ -4,13 +4,14 @@ import s from './style.module.less';
 
 interface Props {
   video: Video;
+  className?: string;
 }
 
-const Thumbnail = ({ video }: Props) => {
+const Thumbnail = ({ video, className = 'h-36' }: Props) => {
   const thumbnailUrl = video?.playback?.links?.thumbnail?.getOriginalLink();
 
   return (
-    <div className="h-36">
+    <div className={className}>
       {thumbnailUrl ? (
         <div
           className={s.thumbnails}
