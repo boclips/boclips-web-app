@@ -5,6 +5,8 @@ import expandUrlTemplate from 'boclips-api-client/dist/sub-clients/common/utils/
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import { Clip } from 'boclips-api-client/dist/sub-clients/chat/model/Clip';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
+import FilmIcon from 'src/resources/icons/film-icon.svg';
+import formatDuration from 'src/components/playlists/buttons/playlistBookmark/helpers/formatDuration';
 import s from './style.module.less';
 
 interface Props {
@@ -16,6 +18,14 @@ const HighlightPlayer = ({ clip }: Props) => {
 
   return (
     <div className={s.playerWrapper}>
+      <div className={s.header}>
+        <p>
+          <FilmIcon /> Highlight
+        </p>
+        <div className={s.durationBadge}>
+          {formatDuration(clip.clipDuration)}
+        </div>
+      </div>
       <VideoPlayer
         videoLink={
           new Link({
