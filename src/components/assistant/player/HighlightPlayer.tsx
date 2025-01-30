@@ -27,6 +27,7 @@ const HighlightPlayer = ({ clip }: Props) => {
         }
         segment={{ start: clip.startTime, end: clip.endTime }}
       />
+      <h1 className={s.clipTitle}>{clip.clipName}</h1>
       <div className={s.buttonWrapper}>
         <div className={s.actionbuttons} />
         <Feedback clipId={clip.clipId} />
