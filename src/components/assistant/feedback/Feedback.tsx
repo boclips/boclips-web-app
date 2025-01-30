@@ -13,6 +13,8 @@ import {
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
 import ThumbsUp from 'resources/icons/thumbs-up.svg';
+import { Typography } from '@boclips-ui/typography';
+import CloseButton from 'src/resources/icons/cross-icon.svg';
 import s from './style.module.less';
 
 interface Props {
@@ -67,7 +69,8 @@ const FeedbackButton = ({
   return (
     <div ref={buttonWrapperRef}>
       <Button
-        width="52px"
+        width="40px"
+        height="40px"
         onClick={() => {
           setIsOpen(!isOpen);
         }}
@@ -82,23 +85,40 @@ const FeedbackButton = ({
         text=""
       />
       {isOpen && (
-        <ul
-          className={c({
-            [s.positive]: type === 'positive',
-            [s.negative]: type === 'negative',
-          })}
+        <div
+          role="dialog"
+          className={c(
+            {
+              [s.positive]: type === 'positive',
+              [s.negative]: type === 'negative',
+            },
+            s.feedbackOptions,
+          )}
         >
-          {handleFeedbackApiResponse.map((it) => {
-            return (
-              <li key={it.id}>
-                <Button
-                  onClick={() => handleOnClick(it.id, it.text)}
-                  text={it.text}
-                />
-              </li>
-            );
-          })}
-        </ul>
+          <div className={s.header}>
+            <Typography.Body weight="medium">Feedback</Typography.Body>
+            <button
+              type="button"
+              aria-label="close feedback options"
+              onClick={() => setIsOpen(false)}
+            >
+              <CloseButton />
+            </button>
+          </div>
+          <ul>
+            {handleFeedbackApiResponse.map((it) => {
+              return (
+                <li>
+                  {' '}
+                  <Button
+                    onClick={() => handleOnClick(it.id, it.text)}
+                    text={it.text}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       )}
     </div>
   );

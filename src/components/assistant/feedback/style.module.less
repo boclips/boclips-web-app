@@ -1,54 +1,13 @@
 @import '~@boclips-ui/styles/src/colors';
-@box-shadow: var(
-  --bo-ui-video-card-box-shadow,
-  0px 4px 12px rgba(0, 0, 0, 0.1)
-);
-
-.playerWrapper {
-  ul {
-    position: absolute;
-    background: @gray-100;
-    z-index: 99;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    border-radius: 4px;
-    box-shadow: @box-shadow;
-    width: 10rem;
-    padding: 0.25rem 0;
-
-    li {
-      padding: 0.25rem 0;
-
-      * {
-        width: 90%;
-        font-size: 12px;
-      }
-
-      span {
-        width: auto;
-      }
-    }
-
-    &.positive {
-      right: 4.5rem;
-    }
-
-    &.negative {
-      right: 0.5rem;
-    }
-  }
-
-  > div {
-    flex: 1;
-  }
-}
+@import '~@boclips-ui/styles/src/breakpoints';
 
 .feedbackButtons {
   --bo-ui-button-outline-background-color-hover: transparent;
   display: flex;
   flex-direction: row;
   align-items: center;
+  position: relative;
+
   button {
     margin-left: 0.5rem;
     border-color: @blue-400;
@@ -68,5 +27,94 @@
     &.active {
       border-color: @blue-900;
     }
+  }
+
+  ul {
+    z-index: 99;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    width: 10rem;
+    padding: 0.25rem 0;
+
+    li {
+      padding: 0.25rem 0;
+
+      * {
+        width: 90%;
+        font-size: 12px;
+      }
+
+      span {
+        width: auto;
+      }
+    }
+  }
+
+  > div {
+    flex: 1;
+  }
+}
+
+.feedbackOptions {
+  background-color: @white;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media screen and (min-width: @screen-sm) {
+  .feedbackOptions {
+    position: fixed;
+    width: 100vw;
+    max-height: 60vh;
+    min-height: 30vh;
+    bottom: 0;
+    left: 0;
+    transform-style: preserve-3d;
+
+    &:after {
+      content: '';
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(@gray-900, 0.55);
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 99;
+      transform: translateZ(-1px);
+      pointer-events: none;
+    }
+  }
+}
+
+@media screen and (min-width: @screen-md) {
+  .feedbackOptions {
+    position: absolute;
+    width: fit-content;
+    min-height: unset;
+    top: 40px;
+    bottom: unset;
+    z-index: 99;
+    border: 2px solid @blue-800;
+
+    &:after {
+      content: none;
+    }
+  }
+
+  .positive {
+      left: -1rem;
+  }
+
+  .negative {
+    left: 2rem;
   }
 }
