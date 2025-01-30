@@ -6,21 +6,16 @@ import {
 } from 'src/components/assistant/context/assistantContextProvider';
 import c from 'classnames';
 import { Clip } from 'boclips-api-client/dist/sub-clients/chat/model/Clip';
-import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
-import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
 import { ChatIntro } from 'src/components/assistant/chatIntro/ChatIntro';
 import Markdown from 'react-markdown';
 import AssistantIcon from 'resources/icons/boclips-assistant.svg';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
-import Feedback from 'src/components/assistant/feedback/Feedback';
-import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
-import expandUrlTemplate from 'boclips-api-client/dist/sub-clients/common/utils/expandUrlTemplate';
+import HighlightPlayer from 'src/components/assistant/player/HighlightPlayer';
 import s from './style.module.less';
 
 export const ChatArea = () => {
   const { data: user, isLoading: userIsLoading } = useGetUserQuery();
   const { chatHistory, isLoading } = useAssistantContextProvider();
-  const videoLink = useBoclipsClient().links.video;
 
   const chatWrapperRef = useRef<HTMLDivElement>(null);
 
@@ -125,21 +120,7 @@ export const ChatArea = () => {
                         </Typography.Body>
                       );
                     }
-                    return (
-                      <Feedback clipId={it.clipId}>
-                        <VideoPlayer
-                          videoLink={
-                            new Link({
-                              href: expandUrlTemplate(videoLink.href, {
-                                id: it.videoId,
-                              }),
-                              templated: false,
-                            })
-                          }
-                          segment={{ start: it.startTime, end: it.endTime }}
-                        />
-                      </Feedback>
-                    );
+                    return <HighlightPlayer clip={it} />;
                   })}
                 </div>
               </div>

@@ -1,0 +1,26 @@
+@import '~@boclips-ui/styles/src/colors';
+@box-shadow: var(
+  --bo-ui-video-card-box-shadow,
+  0px 4px 12px rgba(0, 0, 0, 0.1)
+);
+
+.playerWrapper {
+  background: @white;
+  position: relative;
+  width: 100%;
+  padding: 0.5rem 0.25rem;
+  border-radius: 0.25rem;
+
+  .buttonWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    --bo-ui-button-outline-background-color-hover: transparent;
+    padding: 0 0.5rem;
+    justify-content: space-between;
+
+    p {
+      margin-right: 0.5rem;
+    }
+  }
+}

@@ -5,12 +5,6 @@
 );
 
 .playerWrapper {
-  background: @white;
-  position: relative;
-  width: 100%;
-  padding: 0.5rem 0.25rem;
-  border-radius: 0.25rem;
-
   ul {
     position: absolute;
     background: @gray-100;
@@ -48,43 +42,31 @@
   > div {
     flex: 1;
   }
+}
 
-  .buttonWrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    --bo-ui-button-outline-background-color-hover: transparent;
-    padding: 0 0.5rem;
-    justify-content: space-between;
+.feedbackButtons {
+  --bo-ui-button-outline-background-color-hover: transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  button {
+    margin-left: 0.5rem;
+    border-color: @blue-400;
 
-    p {
-      margin-right: 0.5rem;
+    svg,
+    path {
+      fill: transparent !important;
     }
 
-    .feedbackButtons {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      button {
-        margin-left: 0.5rem;
-        border-color: @blue-400;
-
-        svg,
-        path {
-          fill: transparent !important;
-        }
-
-        &.negative {
-          svg {
-            rotate: 180deg !important;
-            transform: scaleX(-1) !important;
-          }
-        }
-
-        &.active {
-          border-color: @blue-900;
-        }
+    &.negative {
+      svg {
+        rotate: 180deg !important;
+        transform: scaleX(-1) !important;
       }
+    }
+
+    &.active {
+      border-color: @blue-900;
     }
   }
 }

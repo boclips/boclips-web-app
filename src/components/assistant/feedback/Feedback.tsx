@@ -16,7 +16,6 @@ import ThumbsUp from 'resources/icons/thumbs-up.svg';
 import s from './style.module.less';
 
 interface Props {
-  children: React.ReactNode;
   clipId: string;
 }
 
@@ -105,38 +104,30 @@ const FeedbackButton = ({
   );
 };
 
-const Feedback = ({ children, clipId }: Props) => {
+const Feedback = ({ clipId }: Props) => {
   const { data: feedbackOption, isLoading: feedbackLoading } =
     useGetClipFeedbackOptionsQuery();
   const { chatHistory, conversationId } = useAssistantContextProvider();
 
-  return (
-    <div className={s.playerWrapper}>
-      {children}
-      {!feedbackLoading ? (
-        <div className={s.buttonWrapper}>
-          <div className={s.actionbuttons} />
-          <div className={s.feedbackButtons}>
-            <p>Is this helpful?</p>
-            <FeedbackButton
-              chatHistory={chatHistory}
-              conversationId={conversationId}
-              clipId={clipId}
-              feedbackOptions={feedbackOption}
-              type="positive"
-            />
-            <FeedbackButton
-              chatHistory={chatHistory}
-              conversationId={conversationId}
-              clipId={clipId}
-              feedbackOptions={feedbackOption}
-              type="negative"
-            />
-          </div>
-        </div>
-      ) : null}
+  return !feedbackLoading ? (
+    <div className={s.feedbackButtons}>
+      <p>Is this helpful?</p>
+      <FeedbackButton
+        chatHistory={chatHistory}
+        conversationId={conversationId}
+        clipId={clipId}
+        feedbackOptions={feedbackOption}
+        type="positive"
+      />
+      <FeedbackButton
+        chatHistory={chatHistory}
+        conversationId={conversationId}
+        clipId={clipId}
+        feedbackOptions={feedbackOption}
+        type="negative"
+      />
     </div>
-  );
+  ) : null;
 };
 
 export default Feedback;
