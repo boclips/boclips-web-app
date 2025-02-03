@@ -65,26 +65,24 @@ const HomeView = () => {
             <span className={s.classroom}>Boclips Classroom</span>
           </FeatureGate>
         </h1>
-        <FeatureGate feature="BO_WEB_APP_DEV">
-          <div className={s.assistantFeature}>
-            <div className={s.newBadge}>
-              <AssistantIcon />
-              <p>New</p>
-            </div>
-            <h1>Try out Boclips Assistant.</h1>
-            <p>
-              Our new tool designed to help you find and use our videos more
-              efficiently. You can streamline your workflow, discover relevant
-              clips, and find video relating to your curriculum standards and
-              lesson plans.
-            </p>
-            <Button
-              onClick={() => navigate('/assistant')}
-              text="Try out Assistant"
-              type="label"
-            />
+        <div className={s.assistantFeature}>
+          <div className={s.newBadge}>
+            <AssistantIcon />
+            <p>New</p>
           </div>
-        </FeatureGate>
+          <h1>Try out Boclips Assistant.</h1>
+          <p>
+            Our new tool designed to help you find and use our videos more
+            efficiently. You can streamline your workflow, discover relevant
+            clips, and find video relating to your curriculum standards and
+            lesson plans.
+          </p>
+          <Button
+            onClick={() => navigate('/assistant')}
+            text="Try out Assistant"
+            type="label"
+          />
+        </div>
         <Search showIconOnly={false} />
         <div className="mt-9 flex justify-between">
           <Button

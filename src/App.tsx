@@ -303,18 +303,7 @@ const App = ({
                         </FeatureGate>
                       }
                     />
-                    <Route
-                      path="/assistant"
-                      element={
-                        <FeatureGate
-                          feature="BO_WEB_APP_DEV"
-                          fallback={<NotFound />}
-                          isView
-                        >
-                          <AssistantView />
-                        </FeatureGate>
-                      }
-                    />
+                    <Route path="/assistant" element={<AssistantView />} />
                     <Route
                       path="*"
                       element={
