@@ -64,7 +64,7 @@ const HighlightPlayer = ({ clip }: Props) => {
         <div className={s.videoDetails}>
           <p>Highlight taken from:</p>
           <a
-            href={`${window.location.host}/videos/${video.id}`}
+            href={`/videos/${video.id}`}
             target="new"
             rel="noopener noreferrer"
           >
