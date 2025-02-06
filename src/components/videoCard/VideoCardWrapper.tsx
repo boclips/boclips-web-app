@@ -10,6 +10,7 @@ import { Typography } from '@boclips-ui/typography';
 import { FilterKey } from 'src/types/search/FilterKey';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import { Segment } from 'boclips-api-client/dist/sub-clients/collections/model/Segment';
+import { HighlightBadge } from 'src/components/common/highlight/HighlightBadge';
 import s from './VideoCardWrapper.module.less';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 
@@ -19,6 +20,7 @@ interface Props {
   disableTitleLink?: boolean;
   buttonsRow: React.ReactElement;
   segment?: Segment;
+  showHighlightBadge?: boolean;
 }
 
 const VideoCardTitle = ({
@@ -53,6 +55,7 @@ export const VideoCardWrapper = ({
   buttonsRow,
   disableTitleLink = false,
   segment,
+  showHighlightBadge = false,
 }: Props) => {
   const videoWithoutAgeRange = { ...video, ageRange: null };
 
@@ -77,6 +80,13 @@ export const VideoCardWrapper = ({
         <PriceBadge price={video.price} />
       </div>
     );
+
+  const highlightBadge = () => (
+    <div className="absolute top-3 right-4">
+      <HighlightBadge />{' '}
+    </div>
+  );
+
   return (
     <div className={s.videoCard}>
       <VideoCard
@@ -86,7 +96,7 @@ export const VideoCardWrapper = ({
           <VideoPlayer video={video} showDurationBadge segment={segment} />
         }
         createdBy={createdByLink()}
-        topBadge={priceBadge()}
+        topBadge={showHighlightBadge ? highlightBadge() : priceBadge()}
         title={
           <VideoCardTitle video={video} disableTitleLink={disableTitleLink} />
         }
