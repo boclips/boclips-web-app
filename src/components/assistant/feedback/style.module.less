@@ -61,12 +61,26 @@
   background-color: @white;
   padding: 0.5rem;
   border-radius: 0.25rem;
+  z-index: 999;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 
   .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     margin-bottom: 0.5rem;
+
+    svg {
+      position: fixed;
+      top: 10px;
+      right: 1rem;
+    }
+
+    h5 {
+      font-size: 1rem;
+      color: @gray-800;
+      font-weight: 500;
+      margin: 0;
+    }
   }
 }
 
@@ -111,10 +125,10 @@
   }
 
   .positive {
-      left: -1rem;
+      left: -8.25rem;
   }
 
   .negative {
-    left: 2rem;
+    left: -5.25rem;
   }
 }
