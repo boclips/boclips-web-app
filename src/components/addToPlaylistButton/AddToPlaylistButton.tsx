@@ -30,6 +30,8 @@ interface Props {
   highlightId?: string;
   onCleanup?: (playlistId: string, buttonCleanUp: () => void) => void;
   onClick?: () => void;
+  iconOnly?: boolean;
+  outlineType?: boolean;
 }
 
 export const AddToPlaylistButton = ({
@@ -37,6 +39,8 @@ export const AddToPlaylistButton = ({
   highlightId,
   onCleanup,
   onClick,
+  iconOnly = true,
+  outlineType = true,
 }: Props) => {
   const assetId = {
     videoId,
@@ -181,9 +185,10 @@ export const AddToPlaylistButton = ({
 
       <Tooltip text={buttonDescription}>
         <Button
+          label={buttonDescription}
           text={buttonDescription}
           aria-label={buttonDescription}
-          iconOnly
+          iconOnly={iconOnly}
           icon={
             videoNotAddedToAnyPlaylist ? (
               <PlaylistAddIcon className={s.addSvg} />
@@ -197,9 +202,9 @@ export const AddToPlaylistButton = ({
             }
             setIsOpen(!isOpen);
           }}
-          type="outline"
-          width="40px"
-          height="40px"
+          type={outlineType ? 'outline' : null}
+          width={iconOnly ? '40px' : '200px'}
+          height={iconOnly ? '40px' : '60px'}
         />
       </Tooltip>
       {isOpen && !showCreatePlaylistModal && (

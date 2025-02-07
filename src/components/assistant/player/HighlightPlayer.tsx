@@ -56,6 +56,8 @@ const HighlightPlayer = ({ clip }: Props) => {
           <AddToPlaylistButton
             videoId={clip.videoId}
             highlightId={clip.clipId}
+            iconOnly={false}
+            outlineType={false}
           />
         </div>
         <Feedback clipId={clip.clipId} />
