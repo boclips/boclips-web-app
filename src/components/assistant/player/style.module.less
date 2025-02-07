@@ -57,10 +57,19 @@
       margin-right: 0.5rem;
     }
 
-    .actionbuttons {
+    .actionButtons {
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
+
       svg {
         color: @white;
         fill: @blue-800;
+      }
+
+      .embedButton {
+        --bo-ui-button-svg-height: 24px;
+        --bo-ui-button-svg-width: 24px;
       }
     }
   }

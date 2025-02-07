@@ -204,7 +204,7 @@ export const AddToPlaylistButton = ({
           }}
           type={outlineType ? 'outline' : null}
           width={iconOnly && '40px'}
-          height={iconOnly && '40px'}
+          height="40px"
         />
       </Tooltip>
       {isOpen && !showCreatePlaylistModal && (

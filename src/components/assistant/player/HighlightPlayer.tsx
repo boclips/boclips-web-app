@@ -11,6 +11,9 @@ import formatDuration from 'src/components/playlists/buttons/playlistBookmark/he
 import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import Thumbnail from 'src/components/playlists/thumbnails/Thumbnail';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
+import Button from '@boclips-ui/button';
+import EmbedIcon from 'resources/icons/embed-icon.svg';
+import { displayNotification } from 'src/components/common/notification/displayNotification';
 import s from './style.module.less';
 
 interface Props {
@@ -18,10 +21,30 @@ interface Props {
 }
 
 const HighlightPlayer = ({ clip }: Props) => {
-  const videoLink = useBoclipsClient().links.video;
+  const client = useBoclipsClient();
+
+  const videoLink = client.links.video;
   const { data: video, isLoading: isVideoLoading } = useFindOrGetVideo(
     clip.videoId,
   );
+
+  const handleEmbedCopy = async () => {
+    if (!video) {
+      return;
+    }
+    const link = await client.videos.createEmbedCode(
+      video,
+      clip.startTime,
+      clip.endTime,
+    );
+    await navigator.clipboard.writeText(link.embed);
+    displayNotification(
+      'success',
+      'Embed video code is copied!',
+      'You can now embed this video in your LMS',
+      'embed-code-copied-to-clipboard-notification',
+    );
+  };
 
   return (
     <div className={s.playerWrapper}>
@@ -29,7 +52,7 @@ const HighlightPlayer = ({ clip }: Props) => {
         <p>
           <div className={s.icon}>
             <HighlightIcon />
-          </div>{' '}
+          </div>
           Highlight
         </p>
         <div className={s.durationBadge}>
@@ -52,13 +75,24 @@ const HighlightPlayer = ({ clip }: Props) => {
         {!isVideoLoading && <p className={s.channelName}>{video.createdBy}</p>}
       </div>
       <div className={s.buttonWrapper}>
-        <div className={s.actionbuttons}>
+        <div className={s.actionButtons}>
           <AddToPlaylistButton
             videoId={clip.videoId}
             highlightId={clip.clipId}
             iconOnly={false}
             outlineType={false}
           />
+          {video.links.createEmbedCode && (
+            <Button
+              className={s.embedButton}
+              icon={<EmbedIcon />}
+              name="Embed"
+              aria-label="Embed"
+              onClick={handleEmbedCopy}
+              height="40px"
+              text="Embed"
+            />
+          )}
         </div>
         <Feedback clipId={clip.clipId} />
       </div>
