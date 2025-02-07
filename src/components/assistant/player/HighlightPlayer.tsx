@@ -11,15 +11,11 @@ import formatDuration from 'src/components/playlists/buttons/playlistBookmark/he
 import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import Thumbnail from 'src/components/playlists/thumbnails/Thumbnail';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
-import Button from '@boclips-ui/button';
-import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import ShareSVG from 'src/resources/icons/white-share.svg';
 import { FeatureGate } from 'src/components/common/FeatureGate';
-import { getShareableVideoLink } from 'src/components/shareLinkButton/getShareableLink';
-import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import { EmbedButton } from 'src/components/embedButton/EmbedButton';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import { VideoShareLinkButton } from 'src/components/shareLinkButton/VideoShareLinkButton';
 import s from './style.module.less';
 
 interface Props {
@@ -28,7 +24,6 @@ interface Props {
 
 const HighlightPlayer = ({ clip }: Props) => {
   const client = useBoclipsClient();
-  const { data: user } = useGetUserQuery();
   const breakpoints = useMediaBreakPoint();
   const isMobileView =
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
@@ -37,26 +32,6 @@ const HighlightPlayer = ({ clip }: Props) => {
   const { data: video, isLoading: isVideoLoading } = useFindOrGetVideo(
     clip.videoId,
   );
-
-  const handleShareCopy = () => {
-    const shareLink = getShareableVideoLink(
-      video.id,
-      user?.id,
-      clip.startTime,
-      clip.endTime,
-    );
-
-    client.shareLinks.trackVideoShareLink(video.id);
-
-    navigator.clipboard.writeText(shareLink).then(() => {
-      displayNotification(
-        'success',
-        'Share link copied!',
-        '',
-        'text-copied-notification',
-      );
-    });
-  };
 
   return (
     <div className={s.playerWrapper}>
@@ -94,18 +69,15 @@ const HighlightPlayer = ({ clip }: Props) => {
             iconOnly={isMobileView}
             outlineType={false}
           />
-          <FeatureGate product={Product.CLASSROOM}>
-            <Button
-              onClick={handleShareCopy}
-              dataQa="share-button"
-              text="Share"
-              aria-label="Share"
-              icon={<ShareSVG />}
-              iconOnly={isMobileView}
-              height="40px"
-              className={s.shareLinkButton}
-            />
-          </FeatureGate>
+          {!isVideoLoading && (
+            <FeatureGate product={Product.CLASSROOM}>
+              <VideoShareLinkButton
+                iconOnly={isMobileView}
+                video={video}
+                initialSegment={{ start: clip.startTime, end: clip.endTime }}
+              />
+            </FeatureGate>
+          )}
           {!isVideoLoading && video?.links?.createEmbedCode && (
             <EmbedButton
               video={video}
