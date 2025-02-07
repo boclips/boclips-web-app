@@ -45,7 +45,6 @@ const LicensedContentPrimaryButton = ({ licensedContent }: Props) => {
       .then((response) => {
         const href = URL.createObjectURL(new Blob([response.content]));
         downloadFileFromUrl(href, response.filename);
-        console.log(response);
         URL.revokeObjectURL(href);
       })
       .catch(() => {

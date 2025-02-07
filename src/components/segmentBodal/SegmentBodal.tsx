@@ -52,16 +52,42 @@ export const SegmentBodal = ({
   videoLink,
 }: Props) => {
   const toggleModalVisibility = () => setIsModalVisible(!isModalVisible);
-
+  const initialStartDuration = startDuration;
+  const initialEndDuration = endDuration;
   const [startTimeEnabled, setStartTimeEnabled] = useState(false);
   const [startDurationValid, setStartDurationValid] = useState(true);
   const [endTimeEnabled, setEndTimeEnabled] = useState(false);
   const [endDurationValid, setEndDurationValid] = useState(true);
 
   useEffect(() => {
+    const validateFields = () => {
+      if (startTimeEnabled) {
+        setStartDurationValid(
+          isTrimFromValid({ from: startDuration, to: endDuration }, duration),
+        );
+      }
+
+      if (endTimeEnabled) {
+        setEndDurationValid(
+          isTrimToValid({ from: startDuration, to: endDuration }, duration),
+        );
+      }
+
+      setIsError(!startDurationValid || !endDurationValid);
+    };
+
     if (startDuration.length === 5) validateFields();
     if (endDuration.length === 5) validateFields();
-  }, [startDuration, endDuration]);
+  }, [
+    startDuration,
+    endDuration,
+    startTimeEnabled,
+    endTimeEnabled,
+    setIsError,
+    startDurationValid,
+    endDurationValid,
+    duration,
+  ]);
 
   useEffect(() => {
     const main = document.querySelector('main');
@@ -74,10 +100,10 @@ export const SegmentBodal = ({
       if (main) main.setAttribute('tabIndex', '-1');
 
       setStartTimeEnabled(false);
-      setStartDuration('00:00');
+      setStartDuration(initialStartDuration);
       setStartDurationValid(true);
       setEndTimeEnabled(false);
-      setEndDuration('00:00');
+      setEndDuration(initialEndDuration);
       setEndDurationValid(true);
     };
   }, [isModalVisible]);
@@ -88,22 +114,6 @@ export const SegmentBodal = ({
 
   const handleEndTimeChange = (value: string) => {
     setEndDuration(value);
-  };
-
-  const validateFields = () => {
-    if (startTimeEnabled) {
-      setStartDurationValid(
-        isTrimFromValid({ from: startDuration, to: endDuration }, duration),
-      );
-    }
-
-    if (endTimeEnabled) {
-      setEndDurationValid(
-        isTrimToValid({ from: startDuration, to: endDuration }, duration),
-      );
-    }
-
-    setIsError(!startDurationValid || !endDurationValid);
   };
 
   return (
@@ -177,7 +187,6 @@ export const SegmentBodal = ({
             disabled={!endTimeEnabled}
             onChange={handleEndTimeChange}
             isError={!endDurationValid}
-            onBlur={validateFields}
             placeholder={duration.format('mm:ss')}
           />
         </div>

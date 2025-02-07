@@ -12,13 +12,13 @@ import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import Thumbnail from 'src/components/playlists/thumbnails/Thumbnail';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import Button from '@boclips-ui/button';
-import EmbedIcon from 'resources/icons/embed-icon.svg';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import ShareSVG from 'src/resources/icons/white-share.svg';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { getShareableVideoLink } from 'src/components/shareLinkButton/getShareableLink';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
+import { EmbedButton } from 'src/components/embedButton/EmbedButton';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import s from './style.module.less';
 
@@ -37,24 +37,6 @@ const HighlightPlayer = ({ clip }: Props) => {
   const { data: video, isLoading: isVideoLoading } = useFindOrGetVideo(
     clip.videoId,
   );
-
-  const handleEmbedCopy = async () => {
-    if (!video) {
-      return;
-    }
-    const link = await client.videos.createEmbedCode(
-      video,
-      clip.startTime,
-      clip.endTime,
-    );
-    await navigator.clipboard.writeText(link.embed);
-    displayNotification(
-      'success',
-      'Embed video code is copied!',
-      'You can now embed this video in your LMS',
-      'embed-code-copied-to-clipboard-notification',
-    );
-  };
 
   const handleShareCopy = () => {
     const shareLink = getShareableVideoLink(
@@ -124,16 +106,13 @@ const HighlightPlayer = ({ clip }: Props) => {
               className={s.shareLinkButton}
             />
           </FeatureGate>
-          {video?.links?.createEmbedCode && (
-            <Button
-              className={s.embedButton}
-              icon={<EmbedIcon />}
-              name="Embed"
-              aria-label="Embed"
-              onClick={handleEmbedCopy}
+          {!isVideoLoading && video?.links?.createEmbedCode && (
+            <EmbedButton
+              video={video}
+              initialSegment={{ start: clip.startTime, end: clip.endTime }}
               iconOnly={isMobileView}
-              height="40px"
-              text="Embed"
+              label="Embed"
+              width="auto"
             />
           )}
         </div>

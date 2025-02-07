@@ -25,11 +25,7 @@ export const isTrimFromValid = (trim: Trim, duration: Duration): boolean => {
     return false;
   }
 
-  if (isFullDuration(trim, duration)) {
-    return false;
-  }
-
-  return true;
+  return !isFullDuration(trim, duration);
 };
 
 export const isTrimToValid = (trim: Trim, duration: Duration) => {
@@ -55,11 +51,7 @@ export const isTrimToValid = (trim: Trim, duration: Duration) => {
     return false;
   }
 
-  if (durationInSeconds(trim.to) > duration.asSeconds()) {
-    return false;
-  }
-
-  return true;
+  return durationInSeconds(trim.to) <= duration.asSeconds();
 };
 
 const isMatchingTimeFormat = (time: string) => time.match(/(^\d+:[0-5]\d$)/);
@@ -71,6 +63,12 @@ const isFullDuration = (trim: Trim, duration: Duration) =>
 export const durationInSeconds = (time: string): number => {
   const minutesAndSeconds = time.split(':');
   return +minutesAndSeconds[0] * 60 + +minutesAndSeconds[1];
+};
+
+export const durationString = (duration: number): string => {
+  const minutes = String(Math.floor(duration / 60)).padStart(2, '0');
+  const seconds = String(duration % 60).padStart(2, '0');
+  return `${minutes}:${seconds}`;
 };
 
 const isBaseDuration = (value: string) => BASE_DURATION === value;

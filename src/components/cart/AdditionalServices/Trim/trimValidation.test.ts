@@ -1,5 +1,9 @@
 import dayjs from '../../../../day-js/index';
-import { isTrimFromValid, isTrimToValid } from './trimValidation';
+import {
+  durationString,
+  isTrimFromValid,
+  isTrimToValid,
+} from './trimValidation';
 
 describe('Trim validation', () => {
   const videoDuration = dayjs.duration('PT1M10S');
@@ -77,6 +81,15 @@ describe('Trim validation', () => {
       expect(
         isTrimToValid({ from: '00:00', to: '1:20' }, videoDuration),
       ).toBeFalsy();
+    });
+  });
+
+  describe('Duration string', () => {
+    it('converts duration into string', () => {
+      expect(durationString(112)).toEqual('01:52');
+      expect(durationString(120)).toEqual('02:00');
+      expect(durationString(1201)).toEqual('20:01');
+      expect(durationString(43)).toEqual('00:43');
     });
   });
 });

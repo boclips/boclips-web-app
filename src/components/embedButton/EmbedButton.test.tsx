@@ -11,6 +11,7 @@ import { Link } from 'boclips-api-client/dist/types';
 import { BoclipsClient } from 'boclips-api-client/dist/BoclipsClient';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
+import dayjs from 'dayjs';
 
 describe(`embed button`, () => {
   Object.assign(navigator, {
@@ -93,6 +94,7 @@ describe(`embed button`, () => {
       videoId: 'video-id',
       videoMetadata: {
         ...LicensedContentFactory.sample({}).videoMetadata,
+        duration: dayjs.duration('PT1M41S'),
         links: {
           self: new Link({ href: 'link', templated: false }),
           createEmbedCode: new Link({
