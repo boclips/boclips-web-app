@@ -7,11 +7,6 @@ import s from './style.module.less';
 
 const features = [
   {
-    title: 'Free access for teachers',
-    description:
-      'Explore, collaborate, and share with students and colleagues.',
-  },
-  {
     title: 'Curriculum-aligned',
     description:
       'Expertly curated to align to educational standards and curriculum objectives.',
