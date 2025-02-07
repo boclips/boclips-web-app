@@ -27,7 +27,7 @@ import s from './style.module.less';
 
 interface Props {
   videoId: string;
-  highlightId?: string;
+  highlightId?: string | null;
   onCleanup?: (playlistId: string, buttonCleanUp: () => void) => void;
   onClick?: () => void;
   iconOnly?: boolean;
@@ -36,7 +36,7 @@ interface Props {
 
 export const AddToPlaylistButton = ({
   videoId,
-  highlightId,
+  highlightId = null,
   onCleanup,
   onClick,
   iconOnly = true,

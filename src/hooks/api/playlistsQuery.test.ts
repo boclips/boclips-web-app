@@ -43,8 +43,12 @@ describe('playlistsQuery', () => {
 
   it('safely reorders playlists', async () => {
     const [asset1, asset2] = [
-      CollectionAssetFactory.sample({ id: { videoId: 'video-1' } }),
-      CollectionAssetFactory.sample({ id: { videoId: 'video-2' } }),
+      CollectionAssetFactory.sample({
+        id: { videoId: 'video-1', highlightId: null },
+      }),
+      CollectionAssetFactory.sample({
+        id: { videoId: 'video-2', highlightId: null },
+      }),
     ];
     const collection = CollectionFactory.sample({ assets: [asset1, asset2] });
     const apiClient = new FakeBoclipsClient();
@@ -139,7 +143,7 @@ describe('playlistsQuery', () => {
     const collection = CollectionFactory.sample({
       assets: [
         CollectionAssetFactory.sample({
-          id: { videoId: 'video-id' },
+          id: { videoId: 'video-id', highlightId: null },
           comments: [
             {
               id: 'comment-id',

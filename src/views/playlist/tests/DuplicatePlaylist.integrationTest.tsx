@@ -15,7 +15,11 @@ describe('Duplicate playlist', () => {
     id: 'pl123',
     title: 'Original playlist',
     description: 'Description of original playlist',
-    assets: [CollectionAssetFactory.sample({ id: { videoId: 'video1' } })],
+    assets: [
+      CollectionAssetFactory.sample({
+        id: { videoId: 'video1', highlightId: null },
+      }),
+    ],
     mine: false,
   });
 

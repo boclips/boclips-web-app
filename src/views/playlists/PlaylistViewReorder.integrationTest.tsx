@@ -16,7 +16,7 @@ import userEvent from '@testing-library/user-event';
 
 const createAssetWithThumbnail = (id: string, videoTitle: string) => {
   return CollectionAssetFactory.sample({
-    id: { videoId: id },
+    id: { videoId: id, highlightId: null },
     video: VideoFactory.sample({
       id,
       title: `${videoTitle} ${id}`,

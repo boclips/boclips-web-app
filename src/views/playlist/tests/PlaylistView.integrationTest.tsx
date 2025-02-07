@@ -41,7 +41,10 @@ const createAssetWithThumbnail = (id: string, videoTitle: string) => {
     }),
   });
 
-  return CollectionAssetFactory.sample({ id: { videoId: id }, video });
+  return CollectionAssetFactory.sample({
+    id: { videoId: id, highlightId: null },
+    video,
+  });
 };
 
 describe('Playlist view', () => {

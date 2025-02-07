@@ -169,7 +169,7 @@ describe('OptionsButton', () => {
 
       const assets = [
         CollectionAssetFactory.sample({
-          id: { videoId: 'video1' },
+          id: { videoId: 'video1', highlightId: null },
           video: VideoFactory.sample({ id: 'video1' }),
         }),
         CollectionAssetFactory.sample({

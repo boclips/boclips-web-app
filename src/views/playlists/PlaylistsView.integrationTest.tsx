@@ -434,7 +434,7 @@ describe('PlaylistsView', () => {
         }),
       });
       return CollectionAssetFactory.sample({
-        id: { videoId: id },
+        id: { videoId: id, highlightId: null },
         video,
       });
     };

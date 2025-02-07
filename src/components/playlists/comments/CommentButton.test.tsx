@@ -61,7 +61,7 @@ describe('comment button', () => {
       id: 'collection-id',
       assets: [
         CollectionAssetFactory.sample({
-          id: { videoId: video.id },
+          id: { videoId: video.id, highlightId: null },
           comments: [
             {
               id: 'id-123',
@@ -123,7 +123,7 @@ describe('comment button', () => {
       owner: user.id,
       assets: [
         CollectionAssetFactory.sample({
-          id: { videoId: video.id },
+          id: { videoId: video.id, highlightId: null },
           comments: [
             {
               id: 'id-1234',
@@ -185,7 +185,7 @@ describe('comment button', () => {
       owner: user.id,
       assets: [
         CollectionAssetFactory.sample({
-          id: { videoId: video.id },
+          id: { videoId: video.id, highlightId: null },
           comments: null,
         }),
       ],
@@ -245,7 +245,7 @@ describe('comment button', () => {
       owner: user.id,
       assets: [
         CollectionAssetFactory.sample({
-          id: { videoId: video.id },
+          id: { videoId: video.id, highlightId: null },
           video,
           comments: [
             {
@@ -306,7 +306,7 @@ describe('comment button', () => {
       owner: user.id,
       assets: [
         CollectionAssetFactory.sample({
-          id: { videoId: video.id },
+          id: { videoId: video.id, highlightId: null },
           comments: null,
         }),
       ],
@@ -371,7 +371,7 @@ describe('comment button', () => {
       },
       assets: [
         CollectionAssetFactory.sample({
-          id: { videoId: video.id },
+          id: { videoId: video.id, highlightId: null },
           comments: null,
         }),
       ],

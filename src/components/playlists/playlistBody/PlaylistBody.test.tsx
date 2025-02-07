@@ -46,7 +46,7 @@ describe('Playlist Body', () => {
   it('has add to playlist button when playlist has one video', async () => {
     const assets = [
       CollectionAssetFactory.sample({
-        id: { videoId: 'video-1' },
+        id: { videoId: 'video-1', highlightId: null },
         video: VideoFactory.sample({ id: 'video-1', title: 'Video One' }),
       }),
     ];
@@ -69,7 +69,7 @@ describe('Playlist Body', () => {
   it('has no buttons when requested', async () => {
     const assets = [
       CollectionAssetFactory.sample({
-        id: { videoId: 'video-1' },
+        id: { videoId: 'video-1', highlightId: null },
         video: VideoFactory.sample({ id: 'video-1', title: 'Video One' }),
       }),
     ];

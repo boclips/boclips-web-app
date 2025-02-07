@@ -19,7 +19,7 @@ import { CollectionAsset } from 'boclips-api-client/dist/sub-clients/collections
 
 describe('Note modal for playlists', () => {
   const videoAsset = CollectionAssetFactory.sample({
-    id: { videoId: 'video-id' },
+    id: { videoId: 'video-id', highlightId: null },
     video: VideoFactory.sample({ id: 'video-id' }),
   });
   const highlightAsset = CollectionAssetFactory.sample({

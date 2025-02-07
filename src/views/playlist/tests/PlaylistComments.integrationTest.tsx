@@ -15,7 +15,7 @@ describe('Leaving comments on a video in collection', () => {
   it('can view video comments on a playlist', async () => {
     const client = new FakeBoclipsClient();
     const asset = CollectionAssetFactory.sample({
-      id: { videoId: '123' },
+      id: { videoId: '123', highlightId: null },
       video: VideoFactory.sample({ id: '123', title: 'title' }),
       comments: [
         {
@@ -77,7 +77,7 @@ describe('Leaving comments on a video in collection', () => {
   it('can add a comment to a video in collection', async () => {
     const client = new FakeBoclipsClient();
     const asset = CollectionAssetFactory.sample({
-      id: { videoId: '123' },
+      id: { videoId: '123', highlightId: null },
       video: VideoFactory.sample({ id: '123', title: 'title' }),
       comments: null,
     });
@@ -122,7 +122,7 @@ describe('Leaving comments on a video in collection', () => {
   it('displays comment button if user has feature flag', async () => {
     const client = new FakeBoclipsClient();
     const asset = CollectionAssetFactory.sample({
-      id: { videoId: '123' },
+      id: { videoId: '123', highlightId: null },
       video: VideoFactory.sample({ id: '123', title: 'title' }),
       comments: null,
     });
