@@ -131,7 +131,6 @@ const Feedback = ({ clipId }: Props) => {
 
   return !feedbackLoading ? (
     <div className={s.feedbackButtons}>
-      <p>Is this helpful?</p>
       <FeedbackButton
         chatHistory={chatHistory}
         conversationId={conversationId}
