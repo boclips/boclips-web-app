@@ -15,6 +15,11 @@ import Button from '@boclips-ui/button';
 import EmbedIcon from 'resources/icons/embed-icon.svg';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import s from './style.module.less';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import ShareSVG from 'src/resources/icons/white-share.svg';
+import { FeatureGate } from 'src/components/common/FeatureGate';
+import { getShareableVideoLink } from 'src/components/shareLinkButton/getShareableLink';
+import { useGetUserQuery } from 'src/hooks/api/userQuery';
 
 interface Props {
   clip: Clip;
@@ -22,6 +27,7 @@ interface Props {
 
 const HighlightPlayer = ({ clip }: Props) => {
   const client = useBoclipsClient();
+  const { data: user } = useGetUserQuery();
 
   const videoLink = client.links.video;
   const { data: video, isLoading: isVideoLoading } = useFindOrGetVideo(
@@ -44,6 +50,26 @@ const HighlightPlayer = ({ clip }: Props) => {
       'You can now embed this video in your LMS',
       'embed-code-copied-to-clipboard-notification',
     );
+  };
+
+  const handleShareCopy = () => {
+    const shareLink = getShareableVideoLink(
+      video.id,
+      user?.id,
+      clip.startTime,
+      clip.endTime,
+    );
+
+    client.shareLinks.trackVideoShareLink(video.id);
+
+    navigator.clipboard.writeText(shareLink).then(() => {
+      displayNotification(
+        'success',
+        'Share link copied!',
+        '',
+        'text-copied-notification',
+      );
+    });
   };
 
   return (
@@ -82,7 +108,18 @@ const HighlightPlayer = ({ clip }: Props) => {
             iconOnly={false}
             outlineType={false}
           />
-          {video.links.createEmbedCode && (
+          <FeatureGate product={Product.CLASSROOM}>
+            <Button
+              onClick={handleShareCopy}
+              dataQa="share-button"
+              text="Share"
+              aria-label="Share"
+              icon={<ShareSVG />}
+              height="40px"
+              className={s.shareLinkButton}
+            />
+          </FeatureGate>
+          {video?.links?.createEmbedCode && (
             <Button
               className={s.embedButton}
               icon={<EmbedIcon />}
