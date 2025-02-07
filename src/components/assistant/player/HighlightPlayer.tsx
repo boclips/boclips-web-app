@@ -14,12 +14,13 @@ import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPla
 import Button from '@boclips-ui/button';
 import EmbedIcon from 'resources/icons/embed-icon.svg';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
-import s from './style.module.less';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import ShareSVG from 'src/resources/icons/white-share.svg';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { getShareableVideoLink } from 'src/components/shareLinkButton/getShareableLink';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
+import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
+import s from './style.module.less';
 
 interface Props {
   clip: Clip;
@@ -28,6 +29,9 @@ interface Props {
 const HighlightPlayer = ({ clip }: Props) => {
   const client = useBoclipsClient();
   const { data: user } = useGetUserQuery();
+  const breakpoints = useMediaBreakPoint();
+  const isMobileView =
+    breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
 
   const videoLink = client.links.video;
   const { data: video, isLoading: isVideoLoading } = useFindOrGetVideo(
@@ -105,7 +109,7 @@ const HighlightPlayer = ({ clip }: Props) => {
           <AddToPlaylistButton
             videoId={clip.videoId}
             highlightId={clip.clipId}
-            iconOnly={false}
+            iconOnly={isMobileView}
             outlineType={false}
           />
           <FeatureGate product={Product.CLASSROOM}>
@@ -115,6 +119,7 @@ const HighlightPlayer = ({ clip }: Props) => {
               text="Share"
               aria-label="Share"
               icon={<ShareSVG />}
+              iconOnly={isMobileView}
               height="40px"
               className={s.shareLinkButton}
             />
@@ -126,6 +131,7 @@ const HighlightPlayer = ({ clip }: Props) => {
               name="Embed"
               aria-label="Embed"
               onClick={handleEmbedCopy}
+              iconOnly={isMobileView}
               height="40px"
               text="Embed"
             />
