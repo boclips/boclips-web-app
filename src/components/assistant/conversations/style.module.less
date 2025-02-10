@@ -1,7 +1,7 @@
 @import '~@boclips-ui/styles/src/colors';
 @import '~@boclips-ui/styles/src/breakpoints';
 
-.assistantConversations {
+.assistantConversationsWrapper {
   display: none;
 
   @media screen and (min-width: @screen-lg) {
@@ -9,6 +9,11 @@
     display: flex;
     flex-direction: column;
   }
+}
+
+.assistantConversations {
+  position: sticky;
+  top: 7rem;
 
   .header {
     display: flex;
@@ -23,6 +28,11 @@
 
 .conversationEntry {
   margin-bottom: 1.5rem;
+
+  .question {
+    color: @blue-800;
+    font-weight: 500;
+  }
 }
 
 .answer {

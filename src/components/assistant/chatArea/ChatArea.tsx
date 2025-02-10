@@ -73,7 +73,7 @@ export const ChatArea = () => {
         {chatHistory.map((item, index) => {
           if (item.role === 'user') {
             return (
-              <div className={s.chatItem} key={index}>
+              <div className={s.chatItem} key={index} id={index.toString()}>
                 <div className={s.messengerName}>
                   <div className={s.messengerIcon}>{userInitials}</div>
                   <Typography.Title2>You</Typography.Title2>
@@ -87,7 +87,7 @@ export const ChatArea = () => {
           if (item.role === 'assistant') {
             if (item.clips === null) {
               return (
-                <div className={s.chatItem} key={index}>
+                <div className={s.chatItem} key={index} id={index.toString()}>
                   <div className={s.messengerName}>
                     <div className={s.boclipsAssistantIcon}>
                       <AssistantIcon />

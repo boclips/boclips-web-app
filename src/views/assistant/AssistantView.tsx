@@ -10,18 +10,16 @@ import { AssistantContextProvider } from 'src/components/assistant/context/assis
 
 const AssistantView = () => {
   return (
-    <>
+    <Layout rowsSetup="grid-rows-assistant-view" responsiveLayout>
       <Helmet title="Boclips Assistant" />
-      <Layout rowsSetup="grid-rows-assistant-view" responsiveLayout>
-        <Navbar />
-        <AssistantContextProvider>
-          <AssistantSidebar />
-          <AssistantChatBox />
-          <AssistantConversations />
-        </AssistantContextProvider>
-        <Footer className="col-start-2 col-end-26" />
-      </Layout>
-    </>
+      <Navbar />
+      <AssistantContextProvider>
+        <AssistantSidebar />
+        <AssistantChatBox />
+        <AssistantConversations />
+      </AssistantContextProvider>
+      <Footer className="col-start-2 col-end-26" />
+    </Layout>
   );
 };
 

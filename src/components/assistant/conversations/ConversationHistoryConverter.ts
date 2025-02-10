@@ -10,9 +10,10 @@ export const convertToConversationHistory = (
 
   const entries: ConversationEntry[] = [];
 
-  history.forEach((it) => {
+  history.forEach((it, index) => {
     if (it.role === 'user') {
       entries.push({
+        index: index.toString(),
         question: it.content,
       });
     } else {

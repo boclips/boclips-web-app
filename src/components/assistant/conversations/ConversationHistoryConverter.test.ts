@@ -18,6 +18,7 @@ describe('Conversation History Converter', () => {
         },
       ]),
     ).toContainEqual({
+      index: '0',
       question: 'What is the meaning of life, the universe and everything?',
     });
   });
@@ -45,6 +46,7 @@ describe('Conversation History Converter', () => {
         },
       ]),
     ).toContainEqual({
+      index: '0',
       question: 'What is the meaning of life, the universe and everything?',
       answer: {
         content: '42',
@@ -90,9 +92,11 @@ describe('Conversation History Converter', () => {
       ]),
     ).toEqual([
       {
+        index: '0',
         question: 'Who framed Roger Rabbit?',
       },
       {
+        index: '1',
         question: 'What is the meaning of life, the universe and everything?',
         answer: {
           content: '42',

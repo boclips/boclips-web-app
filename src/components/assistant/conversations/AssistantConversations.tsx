@@ -8,6 +8,7 @@ import { HighlightIcon } from 'src/components/assistant/common/HighlightIcon';
 import s from './style.module.less';
 
 export interface ConversationEntry {
+  index: string;
   question: string;
   answer?: {
     content: string;
@@ -20,28 +21,45 @@ const AssistantConversations = () => {
 
   const conversationHistory = convertToConversationHistory(chatHistory);
 
+  const jumpToQuestionSection = (index: string) => {
+    document.querySelector(`#\\3${index}`).scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest',
+    });
+  };
+
   return (
-    <div className={s.assistantConversations}>
-      <div className={s.header}>
-        <HighlightIcon />
-        <Typography.H1 size="sm">Conversation Highlights</Typography.H1>
+    <div className={s.assistantConversationsWrapper}>
+      <div className={s.assistantConversations}>
+        <div className={s.header}>
+          <HighlightIcon />
+          <Typography.H1 size="sm">Conversation Highlights</Typography.H1>
+        </div>
+        {conversationHistory.map((ch) =>
+          ch.answer?.clips.length > 0 ? (
+            <div className={s.conversationEntry}>
+              From{' '}
+              <button
+                onClick={() => jumpToQuestionSection(ch.index)}
+                className={s.question}
+                type="button"
+              >
+                {ch.question}
+              </button>
+              <ul className={s.answers}>
+                {ch.answer?.clips.map((it) => {
+                  return (
+                    <li>
+                      <AnswerClip clip={it} />
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ) : null,
+        )}
       </div>
-      {conversationHistory.map((ch) =>
-        ch.answer?.clips.length > 0 ? (
-          <div className={s.conversationEntry}>
-            <p className={s.question}>From {ch.question}</p>
-            <ul className={s.answers}>
-              {ch.answer?.clips.map((it) => {
-                return (
-                  <li>
-                    <AnswerClip clip={it} />
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        ) : null,
-      )}
     </div>
   );
 };

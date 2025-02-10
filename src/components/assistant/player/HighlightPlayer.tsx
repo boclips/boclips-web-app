@@ -36,10 +36,10 @@ const HighlightPlayer = ({ clip }: Props) => {
   return (
     <div className={s.playerWrapper}>
       <div className={s.header}>
-        <p>
+        <div className={s.title}>
           <HighlightIcon />
           Highlight
-        </p>
+        </div>
         <div className={s.durationBadge}>
           {formatDuration(clip.clipDuration)}
         </div>
