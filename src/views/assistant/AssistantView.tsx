@@ -5,7 +5,7 @@ import { Layout } from 'src/components/layout/Layout';
 import { Helmet } from 'react-helmet';
 import AssistantSidebar from 'src/components/assistant/AssistantSidebar';
 import AssistantChatBox from 'src/components/assistant/AssistantChatBox';
-import AssistantConversations from 'src/components/assistant/AssistantConversations';
+import AssistantConversations from 'src/components/assistant/conversations/AssistantConversations';
 import { AssistantContextProvider } from 'src/components/assistant/context/assistantContextProvider';
 
 const AssistantView = () => {

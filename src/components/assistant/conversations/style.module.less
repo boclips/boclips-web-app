@@ -1,0 +1,37 @@
+@import '~@boclips-ui/styles/src/breakpoints';
+
+.assistantConversations {
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (min-width: @screen-lg) {
+  @apply row-start-2 row-end-3 col-start-20 col-end-26;
+    display: flex;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    h1 {
+      margin-left: 0.5rem;
+    }
+  }
+}
+
+.conversationEntry {
+  margin-bottom: 1.5rem;
+}
+
+.answer {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
+
+  .thumbnail {
+    margin-right: 0.5rem;
+    min-width: 3.5rem;
+    height: 2rem;
+  }
+}

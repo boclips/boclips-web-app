@@ -5,7 +5,6 @@ import expandUrlTemplate from 'boclips-api-client/dist/sub-clients/common/utils/
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import { Clip } from 'boclips-api-client/dist/sub-clients/chat/model/Clip';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
-import HighlightIcon from 'src/resources/icons/highlights.svg';
 import Open from 'src/resources/icons/open-new-window.svg';
 import formatDuration from 'src/components/playlists/buttons/playlistBookmark/helpers/formatDuration';
 import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
@@ -16,6 +15,7 @@ import { FeatureGate } from 'src/components/common/FeatureGate';
 import { EmbedButton } from 'src/components/embedButton/EmbedButton';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import { VideoShareLinkButton } from 'src/components/shareLinkButton/VideoShareLinkButton';
+import { HighlightIcon } from 'src/components/assistant/common/HighlightIcon';
 import s from './style.module.less';
 
 interface Props {
@@ -37,9 +37,7 @@ const HighlightPlayer = ({ clip }: Props) => {
     <div className={s.playerWrapper}>
       <div className={s.header}>
         <p>
-          <div className={s.icon}>
-            <HighlightIcon />
-          </div>
+          <HighlightIcon />
           Highlight
         </p>
         <div className={s.durationBadge}>
