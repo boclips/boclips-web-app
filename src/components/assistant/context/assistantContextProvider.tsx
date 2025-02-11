@@ -12,8 +12,10 @@ import { Clip } from 'boclips-api-client/dist/sub-clients/chat/model/Clip';
 interface ContextProps {
   conversationId: string | null;
   setConversationId: (id: string) => void;
-  chatHistory: ChatHistory[];
-  setChatHistory: React.Dispatch<React.SetStateAction<ChatHistory[]>>;
+  conversationHistory: ConversationEntry[];
+  setConversationHistory: React.Dispatch<
+    React.SetStateAction<ConversationEntry[]>
+  >;
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   abortController: MutableRefObject<AbortController>;
@@ -21,6 +23,16 @@ interface ContextProps {
 
 interface Props {
   children: React.ReactNode;
+}
+
+export interface ConversationEntry {
+  question: string;
+  answer?: Answer;
+}
+
+export interface Answer {
+  content: string;
+  clips?: Clip[];
 }
 
 export interface ChatHistory {
@@ -31,16 +43,18 @@ export interface ChatHistory {
 
 const assistantContext = createContext<ContextProps>({
   conversationId: null,
-  chatHistory: [],
-  setChatHistory: () => null,
   setConversationId: () => null,
+  conversationHistory: [],
+  setConversationHistory: () => null,
   isLoading: false,
   setIsLoading: () => null,
   abortController: null,
 });
 
 const AssistantContextProvider = ({ children }: Props) => {
-  const [chatHistory, setChatHistory] = useState<ChatHistory[]>([]);
+  const [conversationHistory, setConversationHistory] = useState<
+    ConversationEntry[]
+  >([]);
   const [lakituResponse, setLakituResponse] = useState<ChatResult[]>([]);
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -50,8 +64,8 @@ const AssistantContextProvider = ({ children }: Props) => {
     () => ({
       conversationId,
       setConversationId,
-      chatHistory,
-      setChatHistory,
+      conversationHistory,
+      setConversationHistory,
       lakituResponse,
       setLakituResponse,
       isLoading,
@@ -59,7 +73,7 @@ const AssistantContextProvider = ({ children }: Props) => {
       abortController,
     }),
     [
-      chatHistory,
+      conversationHistory,
       lakituResponse,
       conversationId,
       isLoading,
@@ -77,8 +91,8 @@ const AssistantContextProvider = ({ children }: Props) => {
 
 function useAssistantContextProvider() {
   const {
-    chatHistory,
-    setChatHistory,
+    conversationHistory,
+    setConversationHistory,
     conversationId,
     setConversationId,
     isLoading,
@@ -89,8 +103,8 @@ function useAssistantContextProvider() {
   return {
     conversationId,
     setConversationId,
-    chatHistory,
-    setChatHistory,
+    conversationHistory,
+    setConversationHistory,
     isLoading,
     setIsLoading,
     abortController,

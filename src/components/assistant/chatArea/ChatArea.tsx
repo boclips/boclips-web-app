@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Typography } from '@boclips-ui/typography';
 import {
-  ChatHistory,
+  Answer,
   useAssistantContextProvider,
 } from 'src/components/assistant/context/assistantContextProvider';
 import c from 'classnames';
@@ -15,7 +15,7 @@ import s from './style.module.less';
 
 export const ChatArea = () => {
   const { data: user, isLoading: userIsLoading } = useGetUserQuery();
-  const { chatHistory, isLoading } = useAssistantContextProvider();
+  const { conversationHistory, isLoading } = useAssistantContextProvider();
 
   const chatWrapperRef = useRef<HTMLDivElement>(null);
 
@@ -34,9 +34,9 @@ export const ChatArea = () => {
         });
       }
     }
-  }, [chatHistory]);
+  }, [conversationHistory]);
 
-  const handleAnswerWithClips = (item: ChatHistory) => {
+  const handleAnswerWithClips = (item: Answer) => {
     const { content, clips } = item;
     const regex = /\[BOVIDEO: (\w+)\]/g;
     let lastIndex = 0;
@@ -46,8 +46,7 @@ export const ChatArea = () => {
       result.push(content.substring(lastIndex, index));
 
       if (clipId && clips) {
-        clips[clipId].clipId = clipId;
-        result.push(clips[clipId]);
+        result.push(clips.find((clip) => clip.clipId === clipId));
       }
 
       lastIndex = index + substring.length;
@@ -68,11 +67,11 @@ export const ChatArea = () => {
 
   return (
     <section className={s.chatWrapper} id="chatWrapper">
-      {chatHistory.length === 0 && <ChatIntro />}
+      {conversationHistory.length === 0 && <ChatIntro />}
       <div ref={chatWrapperRef}>
-        {chatHistory.map((item, index) => {
-          if (item.role === 'user') {
-            return (
+        {conversationHistory.map((item, index) => {
+          return (
+            <div>
               <div
                 className={s.chatItem}
                 key={index}
@@ -83,18 +82,14 @@ export const ChatArea = () => {
                   <Typography.Title2>You</Typography.Title2>
                 </div>
                 <Typography.Body className={s.question}>
-                  <p>{item.content}</p>
+                  <p>{item.question}</p>
                 </Typography.Body>
               </div>
-            );
-          }
-          if (item.role === 'assistant') {
-            if (item.clips === null) {
-              return (
+              {item.answer && (
                 <div
                   className={s.chatItem}
                   key={index}
-                  id={`answer_${(index - 1).toString()}`}
+                  id={`answer_${index.toString()}`}
                 >
                   <div className={s.messengerName}>
                     <div className={s.boclipsAssistantIcon}>
@@ -102,48 +97,38 @@ export const ChatArea = () => {
                     </div>
                     <Typography.Title2>Boclips Assistant</Typography.Title2>
                   </div>
-                  <Typography.Body className={s.answer}>
-                    <Markdown>{item.content}</Markdown>
-                  </Typography.Body>
-                </div>
-              );
-            }
 
-            const responseWithVideos = handleAnswerWithClips(item);
-
-            return (
-              <div
-                className={s.chatItem}
-                key={index}
-                id={`answer_${(index - 1).toString()}`}
-              >
-                <div className={s.messengerName}>
-                  <div className={s.boclipsAssistantIcon}>
-                    <AssistantIcon />
-                  </div>
-                  <Typography.Title2>Boclips Assistant</Typography.Title2>
+                  {item.answer?.clips?.length === 0 ? (
+                    <Typography.Body className={s.answer}>
+                      <Markdown>{item.answer.content}</Markdown>
+                    </Typography.Body>
+                  ) : (
+                    <div className={s.answer}>
+                      {handleAnswerWithClips(item.answer).map(
+                        (it: string | Clip, clipIndex) => {
+                          if (typeof it === 'string') {
+                            return (
+                              <Typography.Body
+                                className={s.answer}
+                                key={clipIndex}
+                              >
+                                <Markdown>{it}</Markdown>
+                              </Typography.Body>
+                            );
+                          }
+                          return (
+                            <div id={`answer_${index.toString()}_${it.clipId}`}>
+                              <HighlightPlayer clip={it} />
+                            </div>
+                          );
+                        },
+                      )}
+                    </div>
+                  )}
                 </div>
-                <div className={s.answer}>
-                  {responseWithVideos.map((it: string | Clip, clipIndex) => {
-                    if (typeof it === 'string') {
-                      return (
-                        <Typography.Body className={s.answer} key={clipIndex}>
-                          <Markdown>{it}</Markdown>
-                        </Typography.Body>
-                      );
-                    }
-                    return (
-                      <div id={`answer_${(index - 1).toString()}_${it.clipId}`}>
-                        <HighlightPlayer clip={it} />
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          }
-
-          return <div />;
+              )}
+            </div>
+          );
         })}
         {isLoading && (
           <div className={c(s.chatItem, s.skeleton)} key="Loading">

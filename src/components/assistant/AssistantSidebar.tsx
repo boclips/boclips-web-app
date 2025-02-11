@@ -7,8 +7,8 @@ import NewConversationIcon from 'resources/icons/new-conversation.svg';
 const AssistantSidebar = () => {
   const {
     setConversationId,
-    chatHistory,
-    setChatHistory,
+    conversationHistory,
+    setConversationHistory,
     setIsLoading,
     abortController,
   } = useAssistantContextProvider();
@@ -16,14 +16,14 @@ const AssistantSidebar = () => {
   const handleReset = () => {
     abortController.current.abort();
     abortController.current = new AbortController();
-    setChatHistory([]);
+    setConversationHistory([]);
     setConversationId('');
     setIsLoading(false);
   };
 
   return (
     <div className={s.assistantSidebar}>
-      {chatHistory.length !== 0 ? (
+      {conversationHistory.length !== 0 ? (
         <Button
           type="outline"
           className={s.newConversationButton}

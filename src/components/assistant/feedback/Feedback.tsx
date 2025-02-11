@@ -3,7 +3,7 @@ import { ClipFeedbackOptions } from 'boclips-api-client/dist/sub-clients/chat/mo
 import Button from '@boclips-ui/button';
 import c from 'classnames';
 import {
-  ChatHistory,
+  ConversationEntry,
   useAssistantContextProvider,
 } from 'src/components/assistant/context/assistantContextProvider';
 import {
@@ -15,6 +15,7 @@ import CloseOnClickOutside from 'src/hooks/closeOnClickOutside';
 import ThumbsUp from 'resources/icons/thumbs-up.svg';
 import { Typography } from '@boclips-ui/typography';
 import CloseButton from 'src/resources/icons/cross-icon.svg';
+import { convertToChatHistory } from 'src/components/assistant/common/ConversationHistoryConverter';
 import s from './style.module.less';
 
 interface Props {
@@ -22,13 +23,13 @@ interface Props {
 }
 
 const FeedbackButton = ({
-  chatHistory,
+  conversationHistory,
   conversationId,
   clipId,
   type,
   feedbackOptions,
 }: {
-  chatHistory: ChatHistory[];
+  conversationHistory: ConversationEntry[];
   conversationId: string | null;
   clipId: string;
   type: 'positive' | 'negative';
@@ -48,12 +49,7 @@ const FeedbackButton = ({
 
   const handleOnClick = (selectedOptionId: string, feedbackMessage: string) => {
     const request = {
-      chatHistory: chatHistory.map((entry) => {
-        return {
-          role: entry.role,
-          content: entry.content,
-        };
-      }),
+      chatHistory: convertToChatHistory(conversationHistory),
       conversationId,
       feedbackMessage,
       clipId,
@@ -127,19 +123,19 @@ const FeedbackButton = ({
 const Feedback = ({ clipId }: Props) => {
   const { data: feedbackOption, isLoading: feedbackLoading } =
     useGetClipFeedbackOptionsQuery();
-  const { chatHistory, conversationId } = useAssistantContextProvider();
+  const { conversationHistory, conversationId } = useAssistantContextProvider();
 
   return !feedbackLoading ? (
     <div className={s.feedbackButtons}>
       <FeedbackButton
-        chatHistory={chatHistory}
+        conversationHistory={conversationHistory}
         conversationId={conversationId}
         clipId={clipId}
         feedbackOptions={feedbackOption}
         type="positive"
       />
       <FeedbackButton
-        chatHistory={chatHistory}
+        conversationHistory={conversationHistory}
         conversationId={conversationId}
         clipId={clipId}
         feedbackOptions={feedbackOption}

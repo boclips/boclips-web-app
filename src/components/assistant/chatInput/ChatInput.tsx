@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Typography } from '@boclips-ui/typography';
 import Button from '@boclips-ui/button';
 import {
-  ChatHistory,
+  Answer,
+  ConversationEntry,
   useAssistantContextProvider,
 } from 'src/components/assistant/context/assistantContextProvider';
 import { ChatResult } from 'boclips-api-client/dist/sub-clients/chat/model/ChatResult';
@@ -12,6 +13,7 @@ import SendIcon from 'src/resources/icons/send.svg';
 import BetaIcon from 'src/resources/icons/beta.svg';
 import ErrorIcon from 'src/resources/icons/error-icon.svg';
 import WarningIcon from 'src/resources/icons/info.svg';
+import { convertToChatHistory } from 'src/components/assistant/common/ConversationHistoryConverter';
 import s from './style.module.less';
 import { getRandomQuestions } from './promoQuestions';
 
@@ -28,44 +30,52 @@ export const ChatInput = () => {
   const {
     conversationId,
     setConversationId,
-    chatHistory,
-    setChatHistory,
+    conversationHistory,
+    setConversationHistory,
     setIsLoading,
     abortController,
   } = useAssistantContextProvider();
 
-  const saveUserInputToChatHistory = (question: string): ChatHistory[] => {
-    const userInput: ChatHistory = {
-      role: 'user',
-      content: question,
+  const saveUserInputToChatHistory = (
+    question: string,
+  ): ConversationEntry[] => {
+    const userInput: ConversationEntry = {
+      question,
     };
 
-    setChatHistory((prevState: ChatHistory[]) => [...prevState, userInput]);
+    setConversationHistory((prevState: ConversationEntry[]) => [
+      ...prevState,
+      userInput,
+    ]);
 
-    return [...chatHistory, userInput];
+    return [...conversationHistory, userInput];
   };
 
   const saveAssistantResponseToChatHistory = (response: ChatResult) => {
-    const assistantInput: ChatHistory = {
-      role: 'assistant',
+    const assistantAnswer: Answer = {
       content: response.answer,
-      clips: response.clips,
+      clips: Object.entries(response.clips).map(([clipId, clip]) => {
+        return {
+          ...clip,
+          clipId,
+        };
+      }),
     };
 
-    const lastEntry = chatHistory[chatHistory.length - 1];
+    const lastEntry = conversationHistory[conversationHistory.length - 1];
 
     if (
-      assistantInput.role === lastEntry.role &&
-      assistantInput.content === lastEntry.content &&
-      assistantInput.clips === lastEntry.clips
+      assistantAnswer.content === lastEntry.answer?.content &&
+      assistantAnswer.clips === lastEntry.answer?.clips
     ) {
       return;
     }
 
-    setChatHistory((prevState: ChatHistory[]) => [
-      ...prevState,
-      assistantInput,
-    ]);
+    setConversationHistory((prevState: ConversationEntry[]) => {
+      prevState[prevState.length - 1].answer = assistantAnswer;
+
+      return prevState;
+    });
   };
 
   function getConversationId() {
@@ -77,13 +87,13 @@ export const ChatInput = () => {
     return conversationId;
   }
 
-  function sendChatQuestion(history: ChatHistory[]) {
+  function sendChatQuestion(history: ConversationEntry[]) {
     setInputValue('');
     doChat({
       chatRequest: {
         model: 'langchain5-gpt4-markdown',
         conversationId: getConversationId(),
-        chatHistory: history.map(({ role, content }) => ({ role, content })),
+        chatHistory: convertToChatHistory(history),
       },
       abortSignal: abortController.current.signal,
     });
@@ -134,7 +144,7 @@ export const ChatInput = () => {
 
   return (
     <div className={s.promptWrapper}>
-      {chatHistory.length === 0 ? (
+      {conversationHistory.length === 0 ? (
         <ul className={s.sampleQuestions}>
           {randomQuestion.map((it) => {
             return (
@@ -154,7 +164,7 @@ export const ChatInput = () => {
             </Typography.Body>
           </div>
           <Button
-            onClick={() => sendChatQuestion(chatHistory)}
+            onClick={() => sendChatQuestion(conversationHistory)}
             text="Retry"
             className={s.retryButton}
           />

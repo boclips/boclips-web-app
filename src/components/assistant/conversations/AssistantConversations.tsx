@@ -1,28 +1,15 @@
 import React from 'react';
 import { useAssistantContextProvider } from 'src/components/assistant/context/assistantContextProvider';
-import { Clip } from 'boclips-api-client/dist/sub-clients/chat/model/Clip';
-import { convertToConversationHistory } from 'src/components/assistant/conversations/ConversationHistoryConverter';
 import { AnswerClip } from 'src/components/assistant/conversations/AnswerClip';
 import { Typography } from '@boclips-ui/typography';
 import { HighlightIcon } from 'src/components/assistant/common/HighlightIcon';
 import s from './style.module.less';
 
-export interface ConversationEntry {
-  index: string;
-  question: string;
-  answer?: {
-    content: string;
-    clips: Clip[];
-  };
-}
-
 const AssistantConversations = () => {
-  const { chatHistory } = useAssistantContextProvider();
+  const { conversationHistory } = useAssistantContextProvider();
 
-  const conversationHistory = convertToConversationHistory(chatHistory);
-
-  const jumpToQuestionSection = (index: string) => {
-    document.querySelector(`#question_${index}`).scrollIntoView({
+  const jumpToQuestionSection = (index: number) => {
+    document.querySelector(`#question_${index.toString()}`).scrollIntoView({
       behavior: 'smooth',
       block: 'start',
       inline: 'nearest',
@@ -38,24 +25,24 @@ const AssistantConversations = () => {
             <Typography.H1 size="sm">Conversation Highlights</Typography.H1>
           </div>
           {conversationHistory.map(
-            (entry) =>
-              entry.answer?.clips.length > 0 && (
+            (entry, index) =>
+              entry.answer?.clips?.length > 0 && (
                 <div className={s.conversationEntry}>
                   From{' '}
                   <button
-                    onClick={() => jumpToQuestionSection(entry.index)}
+                    onClick={() => jumpToQuestionSection(index)}
                     className={s.question}
                     type="button"
                   >
                     {entry.question}
                   </button>
                   <ul className={s.answers}>
-                    {entry.answer?.clips.map((clip) => {
+                    {entry.answer?.clips?.map((clip) => {
                       return (
                         <li>
                           <AnswerClip
                             clip={clip}
-                            id={`answer_${entry.index}_${clip.clipId}`}
+                            id={`answer_${index}_${clip.clipId}`}
                           />
                         </li>
                       );
