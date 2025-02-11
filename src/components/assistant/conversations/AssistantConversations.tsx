@@ -31,35 +31,38 @@ const AssistantConversations = () => {
 
   return (
     <div className={s.assistantConversationsWrapper}>
-      <div className={s.assistantConversations}>
-        <div className={s.header}>
-          <HighlightIcon />
-          <Typography.H1 size="sm">Conversation Highlights</Typography.H1>
+      {conversationHistory.length > 0 && (
+        <div className={s.assistantConversations}>
+          <div className={s.header}>
+            <HighlightIcon />
+            <Typography.H1 size="sm">Conversation Highlights</Typography.H1>
+          </div>
+          {conversationHistory.map(
+            (entry) =>
+              entry.answer?.clips.length > 0 && (
+                <div className={s.conversationEntry}>
+                  From{' '}
+                  <button
+                    onClick={() => jumpToQuestionSection(entry.index)}
+                    className={s.question}
+                    type="button"
+                  >
+                    {entry.question}
+                  </button>
+                  <ul className={s.answers}>
+                    {entry.answer?.clips.map((it) => {
+                      return (
+                        <li>
+                          <AnswerClip clip={it} />
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              ),
+          )}
         </div>
-        {conversationHistory.map((ch) =>
-          ch.answer?.clips.length > 0 ? (
-            <div className={s.conversationEntry}>
-              From{' '}
-              <button
-                onClick={() => jumpToQuestionSection(ch.index)}
-                className={s.question}
-                type="button"
-              >
-                {ch.question}
-              </button>
-              <ul className={s.answers}>
-                {ch.answer?.clips.map((it) => {
-                  return (
-                    <li>
-                      <AnswerClip clip={it} />
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ) : null,
-        )}
-      </div>
+      )}
     </div>
   );
 };
