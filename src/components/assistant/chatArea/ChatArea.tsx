@@ -117,7 +117,10 @@ export const ChatArea = () => {
                             );
                           }
                           return (
-                            <div id={`answer_${index.toString()}_${it.clipId}`}>
+                            <div
+                              className={s.answerClipContainer}
+                              id={`answer_${index.toString()}_${it.clipId}`}
+                            >
                               <HighlightPlayer clip={it} />
                             </div>
                           );
