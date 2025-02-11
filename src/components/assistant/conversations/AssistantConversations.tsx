@@ -22,7 +22,7 @@ const AssistantConversations = () => {
   const conversationHistory = convertToConversationHistory(chatHistory);
 
   const jumpToQuestionSection = (index: string) => {
-    document.querySelector(`#\\3${index}`).scrollIntoView({
+    document.querySelector(`#question_${index}`).scrollIntoView({
       behavior: 'smooth',
       block: 'start',
       inline: 'nearest',
@@ -50,10 +50,13 @@ const AssistantConversations = () => {
                     {entry.question}
                   </button>
                   <ul className={s.answers}>
-                    {entry.answer?.clips.map((it) => {
+                    {entry.answer?.clips.map((clip) => {
                       return (
                         <li>
-                          <AnswerClip clip={it} />
+                          <AnswerClip
+                            clip={clip}
+                            id={`answer_${entry.index}_${clip.clipId}`}
+                          />
                         </li>
                       );
                     })}

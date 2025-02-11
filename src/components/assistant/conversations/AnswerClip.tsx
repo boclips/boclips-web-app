@@ -16,6 +16,7 @@ import s from './style.module.less';
 
 interface Props {
   clip: Clip;
+  id: string;
 }
 
 const MoreButton = ({ clip, video }: { clip: Clip; video: Video }) => {
@@ -70,14 +71,28 @@ const MoreButton = ({ clip, video }: { clip: Clip; video: Video }) => {
   );
 };
 
-export const AnswerClip = ({ clip }: Props) => {
+export const AnswerClip = ({ clip, id }: Props) => {
   const { data: video, isLoading } = useFindOrGetVideo(clip.videoId);
+
+  const jumpToSectionWithId = (sectionId: string) => {
+    document.querySelector(`#${sectionId}`).scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest',
+    });
+  };
 
   return !isLoading ? (
     <div className={s.answer}>
       <div className={s.clipDetails}>
         <Thumbnail video={video} className={s.thumbnail} />
-        <p>{clip.clipName}</p>
+        <button
+          onClick={() => jumpToSectionWithId(id)}
+          className={s.answerClip}
+          type="button"
+        >
+          {clip.clipName}
+        </button>
       </div>
       <FeatureGate feature="BO_WEB_APP_DEV">
         <div className={s.more}>
