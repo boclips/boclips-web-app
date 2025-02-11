@@ -5,7 +5,7 @@
   display: none;
 
   @media screen and (min-width: @screen-lg) {
-  @apply row-start-2 row-end-3 col-start-20 col-end-26;
+    @apply row-start-2 row-end-3 col-start-20 col-end-26;
     display: flex;
     flex-direction: column;
     position: sticky;
@@ -26,6 +26,30 @@
       margin-left: 0.5rem;
     }
   }
+
+  .modeButtons {
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.5rem;
+
+    .modeButton {
+      border: var(--bo-ui-button-outline-border, 1px solid @gray-500);
+      border-radius: var(--bo-ui-button-border-radius, 4px);
+      padding: 0.25rem 0.75rem;
+
+      .modeCount {
+        padding-left: 0.5rem;
+      }
+    }
+
+    .modeButton[data-state='active'] {
+      background-color: #ebf0ff;
+    }
+  }
+
+  .modeContent {
+    padding-top: 1rem;
+  }
 }
 
 .conversationEntry {
@@ -35,7 +59,8 @@
     font-weight: 500;
   }
 
-  .question, .answerClip{
+  .question,
+  .answerClip {
     text-align: left;
     color: @blue-800;
   }
@@ -61,7 +86,7 @@
   .close {
     width: auto;
     margin-left: auto;
-    margin-right: 0 ;
+    margin-right: 0;
   }
 
   .more {
