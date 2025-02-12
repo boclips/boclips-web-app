@@ -32,6 +32,8 @@ interface Props {
   onClick?: () => void;
   iconOnly?: boolean;
   outlineType?: boolean;
+  width?: string;
+  height?: string;
 }
 
 export const AddToPlaylistButton = ({
@@ -41,6 +43,8 @@ export const AddToPlaylistButton = ({
   onClick,
   iconOnly = true,
   outlineType = true,
+  width = 'auto',
+  height = '40px',
 }: Props) => {
   const assetId = {
     videoId,
@@ -166,6 +170,36 @@ export const AddToPlaylistButton = ({
     : 'Add or remove from playlist';
 
   const hasPlaylists = !isLoading && playlists && playlists.length > 0;
+  const button = (
+    <Button
+      label={buttonDescription}
+      text={buttonDescription}
+      aria-label={buttonDescription}
+      iconOnly={iconOnly}
+      icon={
+        videoNotAddedToAnyPlaylist ? (
+          <PlaylistAddIcon className={s.addSvg} />
+        ) : (
+          <PlaylistAddAlreadyAddedIcon className={s.removeSvg} />
+        )
+      }
+      onClick={() => {
+        if (onClick) {
+          onClick();
+        }
+        setIsOpen(!isOpen);
+      }}
+      type={outlineType ? 'outline' : null}
+      width={iconOnly ? '40px' : width}
+      height={height}
+    />
+  );
+
+  const element = iconOnly ? (
+    <Tooltip text={buttonDescription}>{button}</Tooltip>
+  ) : (
+    button
+  );
 
   return (
     <div
@@ -183,30 +217,7 @@ export const AddToPlaylistButton = ({
         </div>
       )}
 
-      <Tooltip text={buttonDescription}>
-        <Button
-          label={buttonDescription}
-          text={buttonDescription}
-          aria-label={buttonDescription}
-          iconOnly={iconOnly}
-          icon={
-            videoNotAddedToAnyPlaylist ? (
-              <PlaylistAddIcon className={s.addSvg} />
-            ) : (
-              <PlaylistAddAlreadyAddedIcon className={s.removeSvg} />
-            )
-          }
-          onClick={() => {
-            if (onClick) {
-              onClick();
-            }
-            setIsOpen(!isOpen);
-          }}
-          type={outlineType ? 'outline' : null}
-          width={iconOnly && '40px'}
-          height="40px"
-        />
-      </Tooltip>
+      {element}
       {isOpen && !showCreatePlaylistModal && (
         <FocusTrap
           focusTrapOptions={{

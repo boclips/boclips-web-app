@@ -15,18 +15,21 @@ import { getShareableVideoLink } from 'src/components/shareLinkButton/getShareab
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { Segment } from 'boclips-api-client/dist/sub-clients/collections/model/Segment';
+import Tooltip from '@boclips-ui/tooltip';
 import s from './shareLinkButton.module.less';
 
 interface VideoShareLinkButtonProps {
   iconOnly?: boolean;
   video: Video;
   initialSegment?: Segment;
+  width?: string;
 }
 
 export const VideoShareLinkButton = ({
   iconOnly = false,
   video,
   initialSegment,
+  width = 'auto',
 }: VideoShareLinkButtonProps) => {
   const client = useBoclipsClient();
   const startingSegment = initialSegment ?? {
@@ -71,18 +74,24 @@ export const VideoShareLinkButton = ({
     });
   };
 
+  const button = (
+    <Button
+      onClick={toggleModalVisibility}
+      dataQa="share-button"
+      text="Share"
+      aria-label="Share"
+      icon={<ShareSVG />}
+      width={width}
+      height="40px"
+      className={s.shareLinkButton}
+      iconOnly={iconOnly}
+    />
+  );
+  const element = iconOnly ? <Tooltip text="Share">{button}</Tooltip> : button;
+
   return (
     <>
-      <Button
-        onClick={toggleModalVisibility}
-        dataQa="share-button"
-        text="Share"
-        aria-label="Share"
-        icon={<ShareSVG />}
-        height="40px"
-        className={s.shareLinkButton}
-        iconOnly={iconOnly}
-      />
+      {element}
       {isModalVisible && (
         <SegmentBodal
           isModalVisible={isModalVisible}
