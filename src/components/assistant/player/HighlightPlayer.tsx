@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Feedback from 'src/components/assistant/feedback/Feedback';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
 import expandUrlTemplate from 'boclips-api-client/dist/sub-clients/common/utils/expandUrlTemplate';
@@ -27,12 +27,12 @@ const HighlightPlayer = ({ clip }: Props) => {
   const breakpoints = useMediaBreakPoint();
   const isMobileView =
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
+  const [isShareLinkClicked, setIsShareLinkClicked] = useState(false);
 
   const videoLink = client.links.video;
   const { data: video, isLoading: isVideoLoading } = useFindOrGetVideo(
     clip.videoId,
   );
-
   return (
     <div className={s.playerWrapper}>
       <div className={s.header}>
@@ -73,6 +73,7 @@ const HighlightPlayer = ({ clip }: Props) => {
                 iconOnly={isMobileView}
                 video={video}
                 initialSegment={{ start: clip.startTime, end: clip.endTime }}
+                callback={setIsShareLinkClicked}
               />
             </FeatureGate>
           )}

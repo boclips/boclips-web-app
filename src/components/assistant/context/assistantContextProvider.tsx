@@ -31,7 +31,14 @@ export interface ConversationEntry {
 
 export interface Answer {
   content: string;
-  clips?: Clip[];
+  conversationClips?: ConversationClip[];
+}
+
+export interface ConversationClip {
+  clipId: string;
+  clip: Clip;
+  shared?: boolean;
+  addedToPlaylist?: boolean;
 }
 
 export interface ChatHistory {

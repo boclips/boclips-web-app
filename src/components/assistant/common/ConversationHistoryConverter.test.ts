@@ -29,7 +29,7 @@ describe('Conversation History Converter', () => {
           question: 'What is the meaning of life, the universe and everything?',
           answer: {
             content: '42',
-            clips: [
+            conversationClips: [
               {
                 clipName: '42',
                 videoId: 'video-1',

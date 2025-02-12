@@ -6,7 +6,7 @@ import { HighlightIcon } from 'src/components/assistant/common/HighlightIcon';
 import { Content, List, Root, Trigger } from '@radix-ui/react-tabs';
 import s from './style.module.less';
 
-const AssistantConversations = () => {
+const AssistantConversationHighlights = () => {
   const { conversationHistory } = useAssistantContextProvider();
 
   const jumpToQuestionSection = (index: number) => {
@@ -18,7 +18,7 @@ const AssistantConversations = () => {
   };
 
   const allClipCount = conversationHistory.reduce((acc, entry) => {
-    return acc + (entry?.answer?.clips?.length ?? 0);
+    return acc + (entry?.answer?.conversationClips?.length ?? 0);
   }, 0);
 
   return (
@@ -47,7 +47,7 @@ const AssistantConversations = () => {
             <Content value="all" className={s.modeContent}>
               {conversationHistory.map(
                 (entry, index) =>
-                  entry.answer?.clips?.length > 0 && (
+                  entry.answer?.conversationClips?.length > 0 && (
                     <div className={s.conversationEntry}>
                       From{' '}
                       <button
@@ -58,16 +58,18 @@ const AssistantConversations = () => {
                         {entry.question}
                       </button>
                       <ul className={s.answers}>
-                        {entry.answer?.clips?.map((clip) => {
-                          return (
-                            <li>
-                              <AnswerClip
-                                clip={clip}
-                                id={`answer_${index}_${clip.clipId}`}
-                              />
-                            </li>
-                          );
-                        })}
+                        {entry.answer?.conversationClips?.map(
+                          (conversationClip) => {
+                            return (
+                              <li>
+                                <AnswerClip
+                                  clip={conversationClip.clip}
+                                  id={`answer_${index}_${conversationClip.clipId}`}
+                                />
+                              </li>
+                            );
+                          },
+                        )}
                       </ul>
                     </div>
                   ),
@@ -80,4 +82,4 @@ const AssistantConversations = () => {
   );
 };
 
-export default AssistantConversations;
+export default AssistantConversationHighlights;

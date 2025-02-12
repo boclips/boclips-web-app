@@ -21,12 +21,14 @@ interface VideoShareLinkButtonProps {
   iconOnly?: boolean;
   video: Video;
   initialSegment?: Segment;
+  callback: (called: boolean) => void;
 }
 
 export const VideoShareLinkButton = ({
   iconOnly = false,
   video,
   initialSegment,
+  callback,
 }: VideoShareLinkButtonProps) => {
   const client = useBoclipsClient();
   const startingSegment = initialSegment ?? {
@@ -59,8 +61,8 @@ export const VideoShareLinkButton = ({
     }
 
     client.shareLinks.trackVideoShareLink(video.id);
-
     toggleModalVisibility();
+    callback(true);
     navigator.clipboard.writeText(shareLink).then(() => {
       displayNotification(
         'success',

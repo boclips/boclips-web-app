@@ -2,10 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import { Typography } from '@boclips-ui/typography';
 import {
   Answer,
+  ConversationClip,
+  ConversationEntry,
   useAssistantContextProvider,
 } from 'src/components/assistant/context/assistantContextProvider';
 import c from 'classnames';
-import { Clip } from 'boclips-api-client/dist/sub-clients/chat/model/Clip';
 import { ChatIntro } from 'src/components/assistant/chatIntro/ChatIntro';
 import Markdown from 'react-markdown';
 import AssistantIcon from 'resources/icons/boclips-assistant.svg';
@@ -15,7 +16,8 @@ import s from './style.module.less';
 
 export const ChatArea = () => {
   const { data: user, isLoading: userIsLoading } = useGetUserQuery();
-  const { conversationHistory, isLoading } = useAssistantContextProvider();
+  const { conversationHistory, isLoading, setConversationHistory } =
+    useAssistantContextProvider();
 
   const chatWrapperRef = useRef<HTMLDivElement>(null);
 
@@ -36,17 +38,38 @@ export const ChatArea = () => {
     }
   }, [conversationHistory]);
 
+  const handleClipShared = (
+    entryToUpdate: ConversationEntry,
+    clipId: string,
+  ) => {
+    const updatedHistory = conversationHistory.map((entry) => {
+      if (entry !== entryToUpdate) return entry;
+
+      return {
+        ...entry,
+        answer: {
+          ...entry.answer,
+          conversationClips: entry.answer?.conversationClips.map((clip) =>
+            clip.clipId === clipId ? { ...clip, shared: true } : clip,
+          ),
+        },
+      };
+    });
+    setConversationHistory(updatedHistory);
+  };
+
   const handleAnswerWithClips = (item: Answer) => {
-    const { content, clips } = item;
+    const { content, conversationClips } = item;
     const regex = /\[BOVIDEO: (\w+)\]/g;
     let lastIndex = 0;
-    const result: Array<string | Clip> = [];
+    const result: Array<string | ConversationClip> = [];
 
     content.replace(regex, (substring, clipId, index) => {
       result.push(content.substring(lastIndex, index));
 
-      if (clipId && clips) {
-        result.push(clips.find((clip) => clip.clipId === clipId));
+      if (clipId && conversationClips) {
+        const clip = conversationClips.find((cc) => cc.clipId === clipId);
+        result.push(clip);
       }
 
       lastIndex = index + substring.length;
@@ -69,7 +92,7 @@ export const ChatArea = () => {
     <section className={s.chatWrapper} id="chatWrapper">
       {conversationHistory.length === 0 && <ChatIntro />}
       <div ref={chatWrapperRef}>
-        {conversationHistory.map((item, index) => {
+        {conversationHistory.map((entry, index) => {
           return (
             <div>
               <div
@@ -82,10 +105,10 @@ export const ChatArea = () => {
                   <Typography.Title2>You</Typography.Title2>
                 </div>
                 <Typography.Body className={s.question}>
-                  <p>{item.question}</p>
+                  <p>{entry.question}</p>
                 </Typography.Body>
               </div>
-              {item.answer && (
+              {entry.answer && (
                 <div
                   className={s.chatItem}
                   key={index}
@@ -98,14 +121,14 @@ export const ChatArea = () => {
                     <Typography.Title2>Boclips Assistant</Typography.Title2>
                   </div>
 
-                  {item.answer?.clips?.length === 0 ? (
+                  {entry.answer?.conversationClips?.length === 0 ? (
                     <Typography.Body className={s.answer}>
-                      <Markdown>{item.answer.content}</Markdown>
+                      <Markdown>{entry.answer.content}</Markdown>
                     </Typography.Body>
                   ) : (
                     <div className={s.answer}>
-                      {handleAnswerWithClips(item.answer).map(
-                        (it: string | Clip, clipIndex) => {
+                      {handleAnswerWithClips(entry.answer).map(
+                        (it: string | ConversationClip, clipIndex) => {
                           if (typeof it === 'string') {
                             return (
                               <Typography.Body
@@ -121,7 +144,7 @@ export const ChatArea = () => {
                               className={s.answerClipContainer}
                               id={`answer_${index.toString()}_${it.clipId}`}
                             >
-                              <HighlightPlayer clip={it} />
+                              <HighlightPlayer clip={it.clip} />
                             </div>
                           );
                         },

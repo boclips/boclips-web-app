@@ -54,19 +54,24 @@ export const ChatInput = () => {
   const saveAssistantResponseToChatHistory = (response: ChatResult) => {
     const assistantAnswer: Answer = {
       content: response.answer,
-      clips: Object.entries(response.clips).map(([clipId, clip]) => {
-        return {
-          ...clip,
-          clipId,
-        };
-      }),
+      conversationClips: Object.entries(response.clips).map(
+        ([clipId, clip]) => {
+          return {
+            clipId,
+            clip: {
+              ...clip,
+              clipId,
+            },
+          };
+        },
+      ),
     };
 
     const lastEntry = conversationHistory[conversationHistory.length - 1];
 
     if (
       assistantAnswer.content === lastEntry.answer?.content &&
-      assistantAnswer.clips === lastEntry.answer?.clips
+      assistantAnswer.conversationClips === lastEntry.answer?.conversationClips
     ) {
       return;
     }
