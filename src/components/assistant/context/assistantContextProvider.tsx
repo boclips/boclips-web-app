@@ -6,7 +6,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { ChatResult } from 'boclips-api-client/dist/sub-clients/chat/model/ChatResult';
 import { Clip } from 'boclips-api-client/dist/sub-clients/chat/model/Clip';
 
 interface ContextProps {
@@ -55,7 +54,6 @@ const AssistantContextProvider = ({ children }: Props) => {
   const [conversationHistory, setConversationHistory] = useState<
     ConversationEntry[]
   >([]);
-  const [lakituResponse, setLakituResponse] = useState<ChatResult[]>([]);
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const abortController = useRef(new AbortController());
@@ -66,15 +64,12 @@ const AssistantContextProvider = ({ children }: Props) => {
       setConversationId,
       conversationHistory,
       setConversationHistory,
-      lakituResponse,
-      setLakituResponse,
       isLoading,
       setIsLoading,
       abortController,
     }),
     [
       conversationHistory,
-      lakituResponse,
       conversationId,
       isLoading,
       setIsLoading,
