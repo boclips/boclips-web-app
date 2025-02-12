@@ -52,18 +52,24 @@ const MoreButton = ({ clip, video }: { clip: Clip; video: Video }) => {
             <CloseButton />
           </button>
           <div className={s.actionButtons}>
-            <AddToPlaylistButton
-              videoId={clip.videoId}
-              iconOnly={false}
-              outlineType={false}
-            />
-            <VideoShareLinkButton video={video} iconOnly={false} />
-            <EmbedButton
-              video={video}
-              initialSegment={{ start: clip.startTime, end: clip.endTime }}
-              iconOnly={false}
-              label="Embed"
-            />
+            <div className={s.actionButton}>
+              <AddToPlaylistButton
+                videoId={clip.videoId}
+                iconOnly={false}
+                outlineType={false}
+              />
+            </div>
+            <div className={s.actionButton}>
+              <VideoShareLinkButton video={video} iconOnly={false} />
+            </div>
+            <div className={s.actionButton}>
+              <EmbedButton
+                video={video}
+                initialSegment={{ start: clip.startTime, end: clip.endTime }}
+                iconOnly={false}
+                label="Embed"
+              />
+            </div>
           </div>
         </div>
       )}
