@@ -9,12 +9,11 @@ import { Clip } from 'boclips-api-client/dist/sub-clients/chat/model/Clip';
 import { ChatIntro } from 'src/components/assistant/chatIntro/ChatIntro';
 import Markdown from 'react-markdown';
 import AssistantIcon from 'resources/icons/boclips-assistant.svg';
-import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import HighlightPlayer from 'src/components/assistant/player/HighlightPlayer';
+import { UserIcon } from 'src/components/assistant/chatArea/UserIcon';
 import s from './style.module.less';
 
 export const ChatArea = () => {
-  const { data: user, isLoading: userIsLoading } = useGetUserQuery();
   const { conversationHistory, isLoading } = useAssistantContextProvider();
 
   const chatWrapperRef = useRef<HTMLDivElement>(null);
@@ -61,10 +60,6 @@ export const ChatArea = () => {
     return result;
   };
 
-  const userInitials = userIsLoading
-    ? 'Y'
-    : `${user?.firstName[0]}${user?.lastName[0]}`;
-
   return (
     <section className={s.chatWrapper} id="chatWrapper">
       {conversationHistory.length === 0 && <ChatIntro />}
@@ -78,7 +73,7 @@ export const ChatArea = () => {
                 id={`question_${index.toString()}`}
               >
                 <div className={s.messengerName}>
-                  <div className={s.messengerIcon}>{userInitials}</div>
+                  <UserIcon />
                   <Typography.Title2>You</Typography.Title2>
                 </div>
                 <Typography.Body className={s.question}>
