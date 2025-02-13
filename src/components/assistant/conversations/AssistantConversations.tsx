@@ -27,7 +27,10 @@ const AssistantConversations = () => {
           {conversationHistory.map(
             (entry, index) =>
               entry.answer?.clips?.length > 0 && (
-                <div className={s.conversationEntry}>
+                <div
+                  className={s.conversationEntry}
+                  key={`conversation_highlight_${index}`}
+                >
                   From{' '}
                   <button
                     onClick={() => jumpToQuestionSection(index)}
@@ -39,7 +42,7 @@ const AssistantConversations = () => {
                   <ul className={s.answers}>
                     {entry.answer?.clips?.map((clip) => {
                       return (
-                        <li>
+                        <li key={`answer_${index}_${clip.clipId}`}>
                           <AnswerClip
                             clip={clip}
                             id={`answer_${index}_${clip.clipId}`}

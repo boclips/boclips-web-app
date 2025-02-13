@@ -71,10 +71,10 @@ export const ChatArea = () => {
       <div ref={chatWrapperRef}>
         {conversationHistory.map((item, index) => {
           return (
-            <div>
+            <div key={`entry_${index.toString()}`}>
               <div
                 className={s.chatItem}
-                key={index}
+                key={`question_${index.toString()}`}
                 id={`question_${index.toString()}`}
               >
                 <div className={s.messengerName}>
@@ -88,7 +88,7 @@ export const ChatArea = () => {
               {item.answer && (
                 <div
                   className={s.chatItem}
-                  key={index}
+                  key={`answer_${index.toString()}`}
                   id={`answer_${index.toString()}`}
                 >
                   <div className={s.messengerName}>
@@ -99,7 +99,10 @@ export const ChatArea = () => {
                   </div>
 
                   {item.answer?.clips?.length === 0 ? (
-                    <Typography.Body className={s.answer}>
+                    <Typography.Body
+                      className={s.answer}
+                      key={`answer_${index.toString()}_content}`}
+                    >
                       <Markdown>{item.answer.content}</Markdown>
                     </Typography.Body>
                   ) : (
@@ -110,7 +113,7 @@ export const ChatArea = () => {
                             return (
                               <Typography.Body
                                 className={s.answer}
-                                key={clipIndex}
+                                key={`answer_${index.toString()}_content_${clipIndex}`}
                               >
                                 <Markdown>{it}</Markdown>
                               </Typography.Body>
@@ -119,6 +122,7 @@ export const ChatArea = () => {
                           return (
                             <div
                               className={s.answerClipContainer}
+                              key={`answer_${index.toString()}_${it.clipId}`}
                               id={`answer_${index.toString()}_${it.clipId}`}
                             >
                               <HighlightPlayer clip={it} />
