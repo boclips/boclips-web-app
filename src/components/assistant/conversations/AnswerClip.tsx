@@ -2,7 +2,6 @@ import React from 'react';
 import { Clip } from 'boclips-api-client/dist/sub-clients/chat/model/Clip';
 import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import Thumbnail from 'src/components/playlists/thumbnails/Thumbnail';
-import { FeatureGate } from 'src/components/common/FeatureGate';
 import { MoreActionsButton } from 'src/components/assistant/conversations/MoreActionsButton';
 import s from './style.module.less';
 
@@ -34,11 +33,9 @@ export const AnswerClip = ({ clip, id }: Props) => {
           {clip.clipName}
         </button>
       </div>
-      <FeatureGate feature="BO_WEB_APP_DEV">
-        <div className={s.more}>
-          <MoreActionsButton clip={clip} video={video} />
-        </div>
-      </FeatureGate>
+      <div className={s.more}>
+        <MoreActionsButton clip={clip} video={video} />
+      </div>
     </div>
   ) : null;
 };
