@@ -10,6 +10,8 @@ import CloseButton from 'src/resources/icons/cross-icon.svg';
 import { AddToPlaylistButton } from 'src/components/addToPlaylistButton/AddToPlaylistButton';
 import { VideoShareLinkButton } from 'src/components/shareLinkButton/VideoShareLinkButton';
 import { EmbedButton } from 'src/components/embedButton/EmbedButton';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { FeatureGate } from 'src/components/common/FeatureGate';
 
 export const MoreActionsButton = ({
   clip,
@@ -57,14 +59,22 @@ export const MoreActionsButton = ({
               width="100%"
               height="auto"
             />
-            <VideoShareLinkButton video={video} iconOnly={false} width="100%" />
-            <EmbedButton
-              video={video}
-              initialSegment={{ start: clip.startTime, end: clip.endTime }}
-              iconOnly={false}
-              label="Embed"
-              width="100%"
-            />
+            <FeatureGate product={Product.CLASSROOM}>
+              <VideoShareLinkButton
+                video={video}
+                iconOnly={false}
+                width="100%"
+              />
+            </FeatureGate>
+            {video?.links?.createEmbedCode && (
+              <EmbedButton
+                video={video}
+                initialSegment={{ start: clip.startTime, end: clip.endTime }}
+                iconOnly={false}
+                label="Embed"
+                width="100%"
+              />
+            )}
           </div>
         </div>
       )}
