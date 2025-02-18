@@ -112,7 +112,7 @@
     "@boclips-ui/use-media-breakpoints": "3.0.2",
     "@boclips-ui/video-card": "^7.1.1",
     "@boclips-ui/video-card-placeholder": "3.0.2",
-    "@dnd-kit/core": "^6.2.0",
+    "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^9.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@duetds/date-picker": "^1.4.0",
