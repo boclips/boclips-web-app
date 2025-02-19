@@ -8,15 +8,12 @@ import {
   useFindAccountUsers,
   useUpdateUser,
 } from 'src/hooks/api/userQuery';
-import {
-  UpdateUserRequest,
-  UserType,
-} from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
+import { UpdateUserRequest } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
 import {
   CreateClassroomUserRequest,
   CreateTrialUserRequest,
-  UserType as CreationUserType,
+  UserType,
 } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
 
 describe('userQuery', () => {
@@ -54,7 +51,7 @@ describe('userQuery', () => {
       lastName: 'James',
       email: 'lj@nba.com',
       password: 'p@ss',
-      type: CreationUserType.trialB2bUser,
+      type: UserType.trialB2bUser,
       accountName: 'Los Angeles Lakers',
       hasAcceptedEducationalUseTerms: true,
       country: 'country',
@@ -84,7 +81,7 @@ describe('userQuery', () => {
       lastName: 'James',
       email: 'lj@nba.com',
       password: 'p@ss',
-      type: CreationUserType.classroomUser,
+      type: UserType.classroomUser,
       schoolName: 'Los Angeles Lakers',
       hasAcceptedEducationalUseTerms: true,
       country: 'country',
@@ -105,7 +102,6 @@ describe('userQuery', () => {
     fakeClient.users.updateUser = usersSpy;
 
     const request: UpdateUserRequest = {
-      type: UserType.b2bUser,
       permissions: {
         canOrder: true,
         canManageUsers: true,
@@ -144,7 +140,6 @@ describe('userQuery', () => {
     fakeClient.users.updateSelf = usersSpy;
 
     const request: UpdateUserRequest = {
-      type: UserType.b2bUser,
       jobTitle: 'test',
     };
     const { result } = renderHook(() => useUpdateUser(), {

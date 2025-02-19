@@ -2,10 +2,7 @@ import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
 import { useUpdateSelfUser } from 'src/hooks/api/userQuery';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  UpdateUserRequest,
-  UserType,
-} from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
+import { UpdateUserRequest } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import { InputText } from '@boclips-ui/input';
 
@@ -61,7 +58,6 @@ const EditPersonalProfileModal = ({ userToUpdate, closeModal }: Props) => {
     const request: UpdateUserRequest = {
       firstName: form.firstName,
       lastName: form.lastName,
-      type: UserType.b2bUser,
     };
 
     updateSelfUser(

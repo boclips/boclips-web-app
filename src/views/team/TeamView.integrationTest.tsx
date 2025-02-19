@@ -83,7 +83,7 @@ describe('Team view', () => {
       lastName: 'Biden',
       email: 'joebiden@gmail.com',
       accountId: 'account-1',
-      type: UserType.b2bUser,
+      type: UserType.webAppUser,
     });
     fakeClient.users.setPermissionsOfUser(joe.id, {
       canOrder: true,
@@ -122,7 +122,7 @@ describe('Team view', () => {
       lastName: 'Biden',
       email: 'joebiden@gmail.com',
       accountId: 'account-1',
-      type: UserType.b2bUser,
+      type: UserType.webAppUser,
     });
 
     fakeClient.users.setPermissionsOfUser(joe.id, {
@@ -160,7 +160,7 @@ describe('Team view', () => {
         lastName: 'Biden',
         email: `joebiden${i}@boclips.com`,
         accountId: 'account-1',
-        type: UserType.b2bUser,
+        type: UserType.webAppUser,
       });
     }
 
@@ -212,7 +212,7 @@ describe('Team view', () => {
       lastName: 'Biden',
       email: 'joey@boclips.com',
       accountId: 'account-1',
-      type: UserType.b2bUser,
+      type: UserType.webAppUser,
       permissions: {
         canOrder: false,
         canManageUsers: true,
@@ -269,7 +269,7 @@ describe('Team view', () => {
       lastName: 'Biden',
       email: 'joey@boclips.com',
       accountId: 'account-1',
-      type: UserType.b2bUser,
+      type: UserType.webAppUser,
     });
 
     await fakeClient.users.insertCurrentUser(joe);
@@ -341,7 +341,7 @@ describe('Team view', () => {
       lastName: 'Biden',
       email: 'joey@boclips.com',
       accountId: 'account-1',
-      type: UserType.b2bUser,
+      type: UserType.webAppUser,
       permissions: {
         canOrder: false,
         canManageUsers: true,
@@ -396,7 +396,7 @@ describe('Team view', () => {
       lastName: 'Biden',
       email: 'joey@boclips.com',
       accountId: 'account-1',
-      type: UserType.b2bUser,
+      type: UserType.webAppUser,
     });
 
     fakeClient.users.insertCurrentUser(joe);
@@ -453,7 +453,7 @@ describe('Team view', () => {
       lastName: 'Biden',
       email: 'joey@boclips.com',
       accountId: 'account-1',
-      type: UserType.b2bUser,
+      type: UserType.webAppUser,
     });
 
     fakeClient.users.insertCurrentUser(joe);

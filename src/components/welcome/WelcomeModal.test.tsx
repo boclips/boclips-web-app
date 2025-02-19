@@ -114,7 +114,6 @@ describe('Trial Welcome Modal', () => {
           audiences: ['K12', 'Other'],
           desiredContent: 'Basketball',
           discoveryMethods: [],
-          type: 'b2bUser',
           hasAcceptedTermsAndConditions: true,
         });
         expect(updateAccountSpy).not.toHaveBeenCalled();
@@ -281,7 +280,6 @@ describe('Trial Welcome Modal', () => {
           audiences: ['K12', 'Other'],
           desiredContent: 'Basketball',
           discoveryMethods: [],
-          type: 'b2bUser',
           hasAcceptedTermsAndConditions: true,
         });
         expect(updateAccountSpy).not.toHaveBeenCalled();
@@ -345,7 +343,6 @@ describe('Trial Welcome Modal', () => {
           audiences: ['K12', 'Other'],
           desiredContent: 'Hockey',
           discoveryMethods: ['Employer', 'Social Media'],
-          type: 'b2bUser',
         });
       });
 
@@ -407,7 +404,6 @@ describe('Trial Welcome Modal', () => {
           audiences: ['K12', 'Other'],
           desiredContent: 'Hockey',
           discoveryMethods: ['Employer'],
-          type: 'b2bUser',
         });
       });
 
@@ -483,7 +479,6 @@ describe('Trial Welcome Modal', () => {
           audiences: ['K12', 'Other'],
           desiredContent: 'Hockey',
           discoveryMethods: ['Employer', 'Social Media'],
-          type: 'b2bUser',
         });
       });
 

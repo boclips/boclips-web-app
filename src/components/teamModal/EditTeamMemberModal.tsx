@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import { EditUserRequest, useUpdateUser } from 'src/hooks/api/userQuery';
-import {
-  UpdateUserRequest,
-  UserType,
-} from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
+import { UpdateUserRequest } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import YesNo from 'src/components/common/yesNo/YesNo';
 import { Typography } from '@boclips-ui/typography';
@@ -73,7 +70,6 @@ const EditTeamMemberModal = ({ userToUpdate, closeModal }: Props) => {
 
   const handleConfirm = () => {
     const request: UpdateUserRequest = {
-      type: UserType.b2bUser,
       permissions: {
         canOrder: form?.canOrder,
         canManageUsers: form?.canManageUsers,

@@ -8,7 +8,6 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
 import { ROLES } from 'src/types/Roles';
-import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import EditTeamMemberModal from 'src/components/teamModal/EditTeamMemberModal';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
@@ -122,7 +121,6 @@ describe('Edit Team member modal', () => {
 
     await waitFor(() =>
       expect(client.users.updateUser).toHaveBeenCalledWith('user-id-123', {
-        type: UserType.b2bUser,
         permissions: {
           canOrder: false,
           canManageUsers: true,

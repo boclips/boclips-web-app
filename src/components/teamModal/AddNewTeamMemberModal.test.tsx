@@ -77,7 +77,7 @@ describe('Team modal', () => {
         lastName: 'Duda',
         email: 'dudu@wp.pl',
         accountId: 'best-account',
-        type: UserType.b2bUser,
+        type: UserType.webAppUser,
         permissions: {
           canOrder: true,
           canManageUsers: false,

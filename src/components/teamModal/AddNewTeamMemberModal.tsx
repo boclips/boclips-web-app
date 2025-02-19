@@ -80,7 +80,7 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
       lastName: form?.lastName,
       email: form?.email,
       accountId: user?.account?.id,
-      type: UserType.b2bUser,
+      type: UserType.webAppUser,
       permissions: {
         canOrder: form?.canOrder,
         canManageUsers: form?.canManageUsers,
