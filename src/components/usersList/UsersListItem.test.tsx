@@ -5,7 +5,6 @@ import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('UsersListRow', () => {
   it('says the user can place orders if the permissions allow that', () => {
@@ -107,7 +106,7 @@ describe('UsersListRow', () => {
     expect(await wrapper.findByText('Remove')).toBeVisible();
   });
 
-  it('doesnt display `Can order videos` column when account type is TRIAL', async () => {
+  it('doesnt display `Can order videos` column when flag is unset', async () => {
     const user: AccountUser = {
       id: 'id-1',
       email: 'joebiden@gmail.com',
@@ -119,11 +118,9 @@ describe('UsersListRow', () => {
       },
     };
 
-    const wrapper = renderWrapper(user, jest.fn(), true, AccountType.TRIAL);
+    const wrapper = renderWrapper(user, jest.fn(), true, false);
 
-    expect(
-      await wrapper.queryByText('Can order videos'),
-    ).not.toBeInTheDocument();
+    expect(wrapper.queryByText('Can order videos')).not.toBeInTheDocument();
   });
 
   it('doesnt display ui elements if user doesnt have necessary links', () => {
@@ -142,23 +139,17 @@ describe('UsersListRow', () => {
     delete client.links.deleteUser;
     delete client.links.updateUser;
 
-    const wrapper = renderWrapper(
-      user,
-      jest.fn(),
-      true,
-      AccountType.TRIAL,
-      client,
-    );
+    const wrapper = renderWrapper(user, jest.fn(), true, false, client);
 
     expect(wrapper.queryByText('Remove')).toBeNull();
     expect(wrapper.queryByText('Edit')).toBeNull();
   });
 
   const renderWrapper = (
-    user,
-    onEdit,
-    canEdit,
-    accountType = AccountType.STANDARD,
+    user: AccountUser,
+    onEdit: (user: AccountUser) => void,
+    canEdit: boolean,
+    displayOrderPermissions = true,
     client = new FakeBoclipsClient(),
   ) => {
     return render(
@@ -171,7 +162,7 @@ describe('UsersListRow', () => {
             canEdit={canEdit}
             onRemove={() => {}}
             canRemove
-            accountType={accountType}
+            displayOrderPermissions={displayOrderPermissions}
           />
         </QueryClientProvider>
       </BoclipsClientProvider>,

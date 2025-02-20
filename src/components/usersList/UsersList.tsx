@@ -11,7 +11,11 @@ import Pagination from '@boclips-ui/pagination';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import c from 'classnames';
 import s from 'src/components/common/pagination/pagination.module.less';
-import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import {
+  AccountStatus,
+  AccountType,
+  Product,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 
 const SKELETON_LIST_ITEMS = new Array(3).fill('');
@@ -47,6 +51,10 @@ export const UsersList = ({ onEditUser, onRemoveUser }: Props) => {
   const currentBreakpoint = useMediaBreakPoint();
   const mobileView = currentBreakpoint.type === 'mobile';
 
+  const displayOrderPermissions =
+    account.products.some((product) => product === Product.LIBRARY) &&
+    account.type !== AccountType.TRIAL;
+
   const itemRender = React.useCallback(
     (page, type) => {
       return (
@@ -77,7 +85,7 @@ export const UsersList = ({ onEditUser, onRemoveUser }: Props) => {
             canEdit={canEditUser}
             onRemove={() => onRemoveUser(accountUser)}
             canRemove={canRemoveUser}
-            accountType={account?.type}
+            displayOrderPermissions={displayOrderPermissions}
           />
         )}
         pagination={{

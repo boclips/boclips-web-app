@@ -4,7 +4,6 @@ import { Typography } from '@boclips-ui/typography';
 import c from 'classnames';
 import Button from '@boclips-ui/button';
 import PencilSVG from 'src/resources/icons/pencil.svg';
-import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import BinSVG from 'src/resources/icons/bin.svg';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import s from './style.module.less';
@@ -16,7 +15,7 @@ interface UserInformationFieldProps {
 
 export interface Props {
   user: AccountUser;
-  accountType: AccountType;
+  displayOrderPermissions: boolean;
   isLoading?: boolean;
   onEdit: (user: AccountUser) => void;
   canEdit: boolean;
@@ -29,12 +28,10 @@ export const UsersListItem = ({
   isLoading,
   onEdit,
   canEdit,
-  accountType,
+  displayOrderPermissions,
   onRemove,
   canRemove,
 }: Props) => {
-  const isNotTrial = accountType !== AccountType.TRIAL;
-
   const renderPermission = (permission: boolean) => (permission ? 'Yes' : 'No');
 
   return (
@@ -47,7 +44,7 @@ export const UsersListItem = ({
         value={`${user.firstName} ${user.lastName}`}
       />
       <UserInformationField name="Email address" value={user.email} />
-      {isNotTrial && (
+      {displayOrderPermissions && (
         <UserInformationField
           name="Can order videos"
           value={renderPermission(user.permissions?.canOrder)}
