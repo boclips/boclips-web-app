@@ -52,8 +52,8 @@ export const UsersList = ({ onEditUser, onRemoveUser }: Props) => {
   const mobileView = currentBreakpoint.type === 'mobile';
 
   const displayOrderPermissions =
-    account.products.some((product) => product === Product.LIBRARY) &&
-    account.type !== AccountType.TRIAL;
+    account?.products?.some((product) => product === Product.LIBRARY) &&
+    account?.type !== AccountType.TRIAL;
 
   const itemRender = React.useCallback(
     (page, type) => {

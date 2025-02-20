@@ -15,7 +15,11 @@ import userEvent from '@testing-library/user-event';
 import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
 import { BoclipsSecurity } from 'boclips-js-security/dist/BoclipsSecurity';
-import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import {
+  AccountStatus,
+  AccountType,
+  Product,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { Helmet } from 'react-helmet';
 
 describe('Team view', () => {
@@ -76,7 +80,11 @@ describe('Team view', () => {
   it('lists the users with expected table headers', async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'account-1' }),
+      AccountsFactory.sample({
+        id: 'account-1',
+        products: [Product.LIBRARY],
+        type: AccountType.STANDARD,
+      }),
     );
     const joe = await fakeClient.users.createUser({
       firstName: 'Joe',
@@ -89,6 +97,7 @@ describe('Team view', () => {
       canOrder: true,
       canManageUsers: false,
     });
+    fakeClient.users.insertCurrentUser(joe);
 
     const wrapper = render(
       <MemoryRouter initialEntries={['/team']}>
@@ -262,7 +271,11 @@ describe('Team view', () => {
   it('can edit Team member actions', async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.accounts.insertAccount(
-      AccountsFactory.sample({ id: 'account-1' }),
+      AccountsFactory.sample({
+        id: 'account-1',
+        products: [Product.LIBRARY],
+        type: AccountType.STANDARD,
+      }),
     );
     const joe = await fakeClient.users.createUser({
       firstName: 'Joe',
