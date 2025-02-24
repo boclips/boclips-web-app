@@ -160,7 +160,17 @@ const ClassroomRegistrationForm = ({
   return (
     <main ref={mainRef} tabIndex={-1} className={s.formInputsWrapper}>
       <section className={s.formHeader}>
-        <Typography.H2>Create your free account</Typography.H2>
+        <Typography.H2>Create a trial account</Typography.H2>
+        <Typography.Body>
+          For a limited time, Boclips Classroom is available to educators
+          through the end of the 2024–2025 school year with a free trial.
+        </Typography.Body>
+        <Typography.Body>
+          Interested in a school/district pilot?
+        </Typography.Body>
+        <Typography.Link type="inline-blue">
+          <a href="https://www.boclips.com/contact">Schedule a consultation</a>
+        </Typography.Link>
       </section>
 
       <ClassroomRegistrationFormFields
