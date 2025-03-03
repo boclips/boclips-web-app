@@ -28,9 +28,9 @@ const TrialEnded = () => {
         description={
           <>
             <p className="mb-2">
-              We hope that you’ve enjoyed the last 60 days of free access to
-              Boclips Classroom and found lots of exciting content to
-              collaborate with colleagues on and share with your students.
+              We hope that you’ve enjoyed the free access to Boclips Classroom
+              and found lots of exciting content to collaborate with colleagues
+              on and share with your students.
             </p>
             <p>
               Your access has now expired but we’ve kept all your saved
