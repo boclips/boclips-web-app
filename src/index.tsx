@@ -3,13 +3,10 @@ import './main.less';
 import React, { ReactElement } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
-import { Integration } from '@sentry/types';
 import BoclipsSecurity from 'boclips-js-security';
 import { ApiBoclipsClient } from 'boclips-api-client';
 import axios from 'axios';
-import { extraErrorDataIntegration } from '@sentry/integrations';
 import * as Sentry from '@sentry/react';
-import { browserTracingIntegration } from '@sentry/react';
 import AppUnauthenticated from 'src/AppUnauthenticated';
 import { FallbackApp } from 'src/FallbackApp';
 import App from './App';
@@ -40,8 +37,8 @@ const initializeSentry = () => {
     environment,
     dsn: 'https://50de7aa7ec43491d9c7140376d0bf128@o236297.ingest.sentry.io/5633299',
     integrations: [
-      browserTracingIntegration() as Integration,
-      extraErrorDataIntegration(),
+      Sentry.browserTracingIntegration(),
+      Sentry.extraErrorDataIntegration(),
     ],
     tracesSampleRate: 1.0,
     denyUrls: [
