@@ -24,19 +24,18 @@ const TrialEnded = () => {
       <EmptyNavbar />
       <Hero
         icon={<TrialEndedSVG />}
-        title="Your free trial has ended!"
+        title="Your Boclips Classroom Trial has Expired"
         description={
           <>
             <p className="mb-2">
-              We hope that you’ve enjoyed the free access to Boclips Classroom
-              and found lots of exciting content to collaborate with colleagues
-              on and share with your students.
+              WWe hope you enjoyed your Boclips Classroom trial and found it
+              enriching and beneficial to your teaching and learning experience!
             </p>
             <p>
-              Your access has now expired but we’ve kept all your saved
-              playlists and videos safe, just as you left them. Talk to us now
-              to regain access and to discuss getting Boclips Classroom at your
-              school.
+              To regain access and explore options to bring Boclips Classroom to
+              your school or district, please schedule a free consultation.
+              Don’t worry — we’ll save your playlists for you until you come
+              back!
             </p>
           </>
         }
@@ -45,7 +44,7 @@ const TrialEnded = () => {
             onClick={() => {
               window.location.href = 'https://www.boclips.com/contact';
             }}
-            text="Get Boclips Classroom at your school"
+            text="Schedule Free Consultation"
           />
         }
       />
