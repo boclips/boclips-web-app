@@ -155,9 +155,8 @@ describe('Note modal for playlists', () => {
 
     await userEvent.click(wrapper.getByRole('button', { name: 'Set note' }));
 
-    const updatedPlaylist = await apiClient.collections.get(
-      collectionWithNoteId,
-    );
+    const updatedPlaylist =
+      await apiClient.collections.get(collectionWithNoteId);
 
     const updatedNote = updatedPlaylist.assets.find(
       (updatedAsset) =>

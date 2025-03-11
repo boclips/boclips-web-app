@@ -153,8 +153,8 @@ const WelcomeModal = ({ showPopup, isAdmin, isClassroomUser }: Props) => {
         isAdmin
           ? 'Tell us a bit more about you'
           : isClassroomUser
-          ? 'Your colleague has invited you to Boclips Classroom!'
-          : 'Your colleague has invited you to Boclips Library!'
+            ? 'Your colleague has invited you to Boclips Classroom!'
+            : 'Your colleague has invited you to Boclips Library!'
       }
       confirmButtonText="Let's Go!"
     >
