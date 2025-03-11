@@ -16,3 +16,8 @@ updates:
       applies-to: version-updates
       patterns:
       - "@sentry/*"
+    tsparticles:
+      applies-to: version-updates
+      patterns:
+      - "tsparticles"
+      - "@tsparticles/*"
