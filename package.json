@@ -133,7 +133,7 @@
     "boclips-api-client": "^103.0.1",
     "boclips-js-security": "^14.1.1",
     "boclips-player": "^8.0.1",
-    "boclips-player-react": "^5.0.1",
+    "boclips-player-react": "^6.0.0",
     "copy-webpack-plugin": "^13.0.0",
     "dateformat": "^4.4.1",
     "dayjs": "^1.11.13",
