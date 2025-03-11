@@ -21,3 +21,7 @@ updates:
       patterns:
       - "tsparticles"
       - "@tsparticles/*"
+    react-query:
+      applies-to: version-updates
+      patterns:
+      - "@tanstack/react-query*"
