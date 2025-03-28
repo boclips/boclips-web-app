@@ -1,16 +1,16 @@
 import React, { useMemo } from 'react';
 import { InputText } from '@boclips-ui/input';
-import s from 'src/components/classroom/registration/style.module.less';
+import s from 'src/components/classroom/registration/user/style.module.less';
 import c from 'classnames';
 import RegistrationPageCheckbox from 'src/components/common/input/RegistrationPageCheckbox';
-import { ClassroomRegistrationData } from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
+import { ClassroomRegistrationData } from 'src/components/classroom/registration/user/registrationForm/ClassroomRegistrationForm';
 import PasswordValidattor from 'react-password-validattor';
 import { Typography } from '@boclips-ui/typography';
 import {
   getCountries,
   getCountry,
   getCountryStates,
-} from 'src/components/classroom/registration/dropdownValues';
+} from 'src/components/classroom/registration/user/dropdownValues';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 
 import {

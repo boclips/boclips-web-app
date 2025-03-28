@@ -5,11 +5,11 @@ import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/Create
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
-import ClassroomRegistrationFormFields from 'src/components/classroom/registration/registrationForm/registrationFormFields/ClassroomRegistrationFormFields';
-import CreateAccountButton from 'src/components/classroom/registration/registrationForm/createAccountButton/CreateAccountButton';
-import FormValidator from 'src/components/classroom/registration/registrationForm/validation/validation';
+import CreateAccountButton from 'src/components/classroom/registration/user/registrationForm/createAccountButton/CreateAccountButton';
+import FormValidator from 'src/components/classroom/registration/user/registrationForm/validation/validation';
 import { Link } from 'react-router-dom';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import ClassroomRegistrationFormFields from './registrationFormFields/ClassroomRegistrationFormFields';
 import s from '../style.module.less';
 
 export interface ClassroomRegistrationData {

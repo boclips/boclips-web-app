@@ -3,7 +3,7 @@ import { render, RenderResult, waitFor } from '@testing-library/react';
 import React from 'react';
 import ClassroomRegistrationForm, {
   ClassroomRegistrationData,
-} from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
+} from 'src/components/classroom/registration/user/registrationForm/ClassroomRegistrationForm';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -12,7 +12,7 @@ import {
   fillRegistrationForm,
   SchoolMode,
   setDropdownValue,
-} from 'src/components/classroom/registration/registrationForm/classroomRegistrationFormTestHelpers';
+} from 'src/components/classroom/registration/user/registrationForm/classroomRegistrationFormTestHelpers';
 import { BrowserRouter as Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
