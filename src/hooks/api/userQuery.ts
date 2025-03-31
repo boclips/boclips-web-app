@@ -64,6 +64,14 @@ export const useAddNewClassroomUser = () => {
   );
 };
 
+export const useAddNewDistrictUser = () => {
+  const client = useBoclipsClient();
+
+  return useMutation((userRequest: CreateDistrictUserRequest) =>
+    client.users.createDistrictUser(userRequest),
+  );
+};
+
 export const useAddNewTrialUser = () => {
   const client = useBoclipsClient();
 

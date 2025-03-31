@@ -113,4 +113,27 @@ describe('Pendo Service', () => {
       errorMessage: 'error message is here',
     });
   });
+
+  it('tracks classroom district account creation failure', () => {
+    const trackSpy = jest.fn();
+    const service = new PendoService({
+      ...window.pendo,
+      isReady(): boolean {
+        return true;
+      },
+      track: trackSpy,
+    });
+
+    service.trackClassroomDistrictAccountCreationFailure(
+      'email@gmail.com',
+      'District Musical',
+      'error message is here',
+    );
+
+    expect(trackSpy).lastCalledWith('Classroom District Registration Failure', {
+      email: 'email@gmail.com',
+      districtName: 'District Musical',
+      errorMessage: 'error message is here',
+    });
+  });
 });

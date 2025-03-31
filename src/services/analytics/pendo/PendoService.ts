@@ -50,4 +50,22 @@ export class PendoService {
       });
     }
   }
+
+  public trackClassroomDistrictAccountCreationFailure(
+    email: string,
+    districtName: string,
+    errorMessage?: string,
+  ) {
+    if (
+      this.pendoInstance &&
+      this.pendoInstance.isReady &&
+      this.pendoInstance.isReady()
+    ) {
+      this.pendoInstance.track('Classroom District Registration Failure', {
+        email,
+        districtName,
+        errorMessage,
+      });
+    }
+  }
 }
