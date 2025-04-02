@@ -11,6 +11,8 @@ import { VideosGridView } from 'src/components/searchResults/VideosGridView';
 import { SearchTopics } from 'src/components/searchResults/SearchTopics';
 import { FilterKey } from 'src/types/search/FilterKey';
 import c from 'classnames';
+import { NavigateToAssistantPrompt } from 'src/components/common/assistant/NavigateToAssistantPrompt';
+import s from './styles.module.less';
 
 interface Props {
   results?: VideoSearchResults;
@@ -88,6 +90,9 @@ export const SearchResults = ({
           'row-start-2': !hasSearchTopics,
         })}
       >
+        <div className={s.assistantPromptContainer}>
+          <NavigateToAssistantPrompt />
+        </div>
         <div className="flex flex-row justify-between mb-2.5">
           <SearchResultsSummary
             count={results?.pageSpec?.totalElements}
