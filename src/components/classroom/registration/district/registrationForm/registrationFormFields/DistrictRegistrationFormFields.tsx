@@ -8,14 +8,19 @@ import PasswordValidattor from 'react-password-validattor';
 import { Typography } from '@boclips-ui/typography';
 import { getUsaStates } from 'src/components/classroom/registration/district/dropdownValues';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
-
 import {
   Combobox,
   ComboboxItem,
   ComboboxMode,
 } from 'src/components/common/headless/combobox';
-import { RadioGroup } from '@radix-ui/react-radio-group';
-import { RadioItem } from '@radix-ui/react-dropdown-menu';
+import Dropdown from '@boclips-ui/dropdown';
+import {
+  INSTRUCTIONAL_VIDEO_SOURCE,
+  REASON,
+  SUBJECTS,
+  USAGE_FREQUENCY,
+  VIDEO_RESOURCE_BARRIERS,
+} from 'src/components/classroom/registration/district/registrationForm/registrationFormFields/dropdownValues';
 
 const passwordConfig = {
   classNames: {
@@ -103,18 +108,46 @@ const DistrictRegistrationFormFields = ({
   );
 
   const handleStateUpdate = (selectedState: ComboboxItem) => {
-    handleChange('state', selectedState.value);
+    handleChange('state', selectedState?.value);
     handleChange('districtName', '');
     handleChange('ncesDistrictId', undefined);
   };
 
   const handleDistrictDropdownUpdate = (selectedDistrict: ComboboxItem) => {
-    handleChange('districtName', selectedDistrict.label);
-    handleChange('ncesDistrictId', selectedDistrict.value);
+    handleChange('districtName', selectedDistrict?.label);
+    handleChange('ncesDistrictId', selectedDistrict?.value);
   };
 
   return (
     <>
+      <div className={c(s.input, 'flex flex-row w-full space-x-4')}>
+        <Combobox
+          items={getUsaStates(boclipsClient)}
+          onChange={handleStateUpdate}
+          label="State"
+          placeholder="Select state"
+          isError={!!validationErrors.state}
+          errorMessage={validationErrors.state}
+          dataQa="input-dropdown-state"
+        />
+      </div>
+
+      {registrationData.state ? (
+        <div className="mb-6">
+          <Combobox
+            allowCustom={false}
+            onChange={handleDistrictDropdownUpdate}
+            label="District Name"
+            placeholder="Search for district"
+            isError={!!validationErrors.districtName}
+            errorMessage={validationErrors.districtName}
+            mode={ComboboxMode.FETCH}
+            fetchFunction={handleDistrictSearch}
+            dataQa="input-dropdown-districtName"
+          />
+        </div>
+      ) : null}
+
       <div className="flex flex-row items-start">
         <InputText
           id="input-firstName"
@@ -155,34 +188,6 @@ const DistrictRegistrationFormFields = ({
         errorMessage={validationErrors.email}
         errorMessagePlacement="bottom"
       />
-
-      <div className={c(s.input, 'flex flex-row w-full space-x-4')}>
-        <Combobox
-          items={getUsaStates(boclipsClient)}
-          onChange={handleStateUpdate}
-          label="State"
-          placeholder="Select state"
-          isError={!!validationErrors.state}
-          errorMessage={validationErrors.state}
-          dataQa="input-dropdown-state"
-        />
-      </div>
-
-      {registrationData.state ? (
-        <div className="mb-6">
-          <Combobox
-            allowCustom={false}
-            onChange={handleDistrictDropdownUpdate}
-            label="District Name"
-            placeholder="Search for district or add manually"
-            isError={!!validationErrors.districtName}
-            errorMessage={validationErrors.districtName}
-            mode={ComboboxMode.FETCH}
-            fetchFunction={handleDistrictSearch}
-            dataQa="input-dropdown-districtName"
-          />
-        </div>
-      ) : null}
 
       <div className="flex flex-col items-start">
         <div className="flex flex-row w-full">
@@ -228,17 +233,74 @@ const DistrictRegistrationFormFields = ({
           />
         )}
       </div>
-      <div>
-        <label>
-          How frequently do you currently use video in your classes?
-        </label>
 
-        <RadioGroup.Root>
-          <RadioItem value="teacher">Teacher</RadioItem>
-          <RadioItem value="administrator">Administrator</RadioItem>
-          <RadioItem value="other">Other</RadioItem>
-        </RadioGroup.Root>
+      <div className="flex flex-col gap-4 items-start mb-6">
+        <Dropdown
+          mode="single"
+          labelText="How frequently do you currently use video in your classes?"
+          onUpdate={(value: string) => handleChange('usageFrequency', value)}
+          options={USAGE_FREQUENCY}
+          dataQa="input-dropdown-usageFrequency"
+          placeholder="Select your usage frequency"
+          showLabel
+          fitWidth
+          isError={!!validationErrors.usageFrequency}
+          errorMessage="Usage frequency is required"
+        />
+        <Dropdown
+          mode="single"
+          labelText="Where do you currently get most of your instructional videos from?"
+          onUpdate={(value: string) =>
+            handleChange('instructionalVideoSource', value)
+          }
+          options={INSTRUCTIONAL_VIDEO_SOURCE}
+          dataQa="input-dropdown-instructionalVideoSource"
+          placeholder="Select your instructional video source"
+          showLabel
+          fitWidth
+          isError={!!validationErrors.instructionalVideoSource}
+          errorMessage="Instructional video source is required"
+        />
+        <Dropdown
+          mode="multiple"
+          labelText="What barriers do you face with current video resources?"
+          onUpdate={(value: string) =>
+            handleChange('videoResourceBarriers', value)
+          }
+          options={VIDEO_RESOURCE_BARRIERS}
+          dataQa="input-dropdown-videoResourceBarriers"
+          placeholder="Select one or more barriers"
+          showLabel
+          fitWidth
+          isError={!!validationErrors.videoResourceBarriers}
+          errorMessage="One or more barriers is required"
+        />
+        <Dropdown
+          mode="multiple"
+          labelText="What subject do you teach?"
+          onUpdate={(value: string) => handleChange('subjects', value)}
+          options={SUBJECTS}
+          dataQa="input-dropdown-subjects"
+          placeholder="Select one or more subjects"
+          showLabel
+          fitWidth
+          isError={!!validationErrors.subjects}
+          errorMessage="At last one subject is required"
+        />
+        <Dropdown
+          mode="single"
+          labelText="I want to try Boclips because"
+          onUpdate={(value: string) => handleChange('reason', value)}
+          options={REASON}
+          dataQa="input-dropdown-reason"
+          placeholder="Select a reason"
+          showLabel
+          fitWidth
+          isError={!!validationErrors.reason}
+          errorMessage="A reason is required"
+        />
       </div>
+
       <div>
         <RegistrationPageCheckbox
           onChange={(event) =>

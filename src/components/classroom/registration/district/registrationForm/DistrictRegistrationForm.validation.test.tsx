@@ -1,4 +1,4 @@
-import '../mockRecaptcha';
+import '../../mockRecaptcha';
 import { render, RenderResult, waitFor } from '@testing-library/react';
 import React from 'react';
 import DistrictRegistrationForm, {
@@ -399,6 +399,11 @@ describe('DistrictRegistration Form Validation', () => {
       hasAcceptedEducationalUseTerms: true,
       hasAcceptedTermsAndConditions: true,
       ncesDistrictId: '',
+      usageFrequency: '',
+      instructionalVideoSource: '',
+      videoResourceBarriers: [],
+      subjects: [],
+      reason: '',
     };
 
     await fillRegistrationForm(wrapper, { ...defaults, ...change });

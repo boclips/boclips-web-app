@@ -53,6 +53,11 @@ describe('DistrictRegistration Form', () => {
       hasAcceptedEducationalUseTerms: true,
       hasAcceptedTermsAndConditions: true,
       ncesDistrictId: '',
+      usageFrequency: '',
+      instructionalVideoSource: '',
+      videoResourceBarriers: [],
+      subjects: [],
+      reason: '',
     };
 
     await fillRegistrationForm(wrapper, { ...defaults, ...change });
@@ -61,8 +66,15 @@ describe('DistrictRegistration Form', () => {
   it('renders the form', async () => {
     const wrapper = renderRegistrationForm();
 
-    expect(wrapper.getByText('Create a trial account')).toBeVisible();
-    expect(wrapper.getByText('Schedule a consultation')).toBeVisible();
+    expect(wrapper.getByText('Create a US Pilot Trial Account')).toBeVisible();
+    expect(
+      wrapper.getByText(
+        'Please register below to create your district pilot trial account.',
+      ),
+    ).toBeVisible();
+    expect(
+      wrapper.getByText('Schedule a consultation for more information'),
+    ).toBeVisible();
     expect(wrapper.getByLabelText('First name')).toBeVisible();
     expect(wrapper.getByLabelText('Last name')).toBeVisible();
     expect(wrapper.getByLabelText('Email Address')).toBeVisible();

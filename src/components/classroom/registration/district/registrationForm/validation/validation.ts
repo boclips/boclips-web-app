@@ -43,6 +43,19 @@ const FormValidator: FormValidatorClass = class
     return true;
   }
 
+  checkArrayIsNotEmpty(fieldName: string, errorMessage: string): boolean {
+    if (
+      !this.registrationData[fieldName] ||
+      this.registrationData[fieldName].length === 0
+    ) {
+      this.setError(fieldName, errorMessage);
+      return false;
+    }
+
+    this.setError(fieldName, '');
+    return true;
+  }
+
   checkHasEmailFormat(fieldName: string, errorMessage: string): boolean {
     if (!EmailValidator.validate(this.registrationData[fieldName])) {
       this.setError(fieldName, errorMessage);
@@ -122,6 +135,20 @@ const FormValidator: FormValidatorClass = class
         this.checkPasswordConfirmed(),
       this.checkIsNotEmpty('country', 'Please select a country'),
       this.checkIsNotEmpty('state', 'Please select a state'),
+      this.checkIsNotEmpty('usageFrequency', 'Please select a usage frequency'),
+      this.checkIsNotEmpty(
+        'instructionalVideoSource',
+        'Please select an instructional video source',
+      ),
+      this.checkArrayIsNotEmpty(
+        'videoResourceBarriers',
+        'Please select one or more barriers',
+      ),
+      this.checkArrayIsNotEmpty(
+        'subjects',
+        'Please select one or more subjects',
+      ),
+      this.checkIsNotEmpty('reason', 'Please select a reason'),
       this.checkEducationalUseAgreementValid(),
       this.checkTermsAndConditionsAgreementValid(),
     ];

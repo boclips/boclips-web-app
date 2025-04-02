@@ -19,7 +19,7 @@ describe('registration', () => {
     renderRegistration();
 
     expect(
-      await screen.findByText('Welcome to Boclips Classroom!'),
+      await screen.findByText('Welcome to Boclips Classroom District!'),
     ).toBeVisible();
   });
 
@@ -27,14 +27,18 @@ describe('registration', () => {
     resizeToMobile();
     renderRegistration();
 
-    expect(screen.queryByText('Welcome to Boclips Classroom!')).toBeNull();
+    expect(
+      screen.queryByText('Welcome to Boclips Classroom District!'),
+    ).toBeNull();
   });
 
   it('does not displays classroom info box in tablet view', async () => {
     resizeToTablet();
     renderRegistration();
 
-    expect(screen.queryByText('Welcome to Boclips Classroom!')).toBeNull();
+    expect(
+      screen.queryByText('Welcome to Boclips Classroom District!'),
+    ).toBeNull();
   });
 
   const renderRegistration = () => {

@@ -21,6 +21,11 @@ export interface DistrictRegistrationData {
   state: string;
   districtName: string;
   ncesDistrictId: string;
+  usageFrequency: string;
+  instructionalVideoSource: string;
+  videoResourceBarriers: string[];
+  subjects: string[];
+  reason: string;
   hasAcceptedEducationalUseTerms: boolean;
   hasAcceptedTermsAndConditions: boolean;
 }
@@ -35,6 +40,11 @@ const emptyRegistrationData = (): DistrictRegistrationData => {
     state: '',
     districtName: '',
     ncesDistrictId: '',
+    usageFrequency: '',
+    instructionalVideoSource: '',
+    videoResourceBarriers: [],
+    subjects: [],
+    reason: '',
     hasAcceptedEducationalUseTerms: false,
     hasAcceptedTermsAndConditions: false,
   };
@@ -117,6 +127,13 @@ const DistrictRegistrationForm = ({
           hasAcceptedTermsAndConditions:
             registrationData.hasAcceptedTermsAndConditions,
           ncesDistrictId: registrationData.ncesDistrictId,
+          districtPilotInformation: {
+            usageFrequency: registrationData.usageFrequency,
+            instructionalVideoSource: registrationData.instructionalVideoSource,
+            videoResourceBarriers: registrationData.videoResourceBarriers,
+            subjects: registrationData.subjects,
+            reason: registrationData.reason,
+          },
         },
         {
           onSuccess: (user: User) => {

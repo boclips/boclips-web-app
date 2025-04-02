@@ -30,6 +30,11 @@ describe('registration process', () => {
       hasAcceptedEducationalUseTerms: true,
       hasAcceptedTermsAndConditions: true,
       ncesDistrictId: '',
+      usageFrequency: '',
+      instructionalVideoSource: '',
+      videoResourceBarriers: [],
+      subjects: [],
+      reason: '',
     };
 
     await fillRegistrationForm(wrapper, { ...defaults, ...change });

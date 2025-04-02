@@ -4,6 +4,7 @@ import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientP
 import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
 import {
   CreateClassroomUserRequest,
+  CreateDistrictUserRequest,
   CreateTrialUserRequest,
   CreateUserRequest,
 } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
