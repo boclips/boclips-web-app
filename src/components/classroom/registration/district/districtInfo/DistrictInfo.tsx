@@ -32,7 +32,9 @@ const DistrictInfo = () => {
   return (
     <>
       <div className={s.classroomInfo}>
-        <Typography.H1 size="lg">Welcome to Boclips Classroom!</Typography.H1>
+        <Typography.H1 size="lg">
+          Welcome to Boclips Classroom District!
+        </Typography.H1>
         <Typography.Body as="div" size="small" className="mt-3 mb-3">
           Enhance your classroom experience with over 1.7M videos in a safe,
           educational alternative to YouTube.

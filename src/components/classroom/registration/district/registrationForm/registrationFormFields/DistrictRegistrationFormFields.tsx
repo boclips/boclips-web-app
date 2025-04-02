@@ -14,6 +14,8 @@ import {
   ComboboxItem,
   ComboboxMode,
 } from 'src/components/common/headless/combobox';
+import { RadioGroup } from '@radix-ui/react-radio-group';
+import { RadioItem } from '@radix-ui/react-dropdown-menu';
 
 const passwordConfig = {
   classNames: {
@@ -225,6 +227,17 @@ const DistrictRegistrationFormFields = ({
             config={passwordConfig}
           />
         )}
+      </div>
+      <div>
+        <label>
+          How frequently do you currently use video in your classes?
+        </label>
+
+        <RadioGroup.Root>
+          <RadioItem value="teacher">Teacher</RadioItem>
+          <RadioItem value="administrator">Administrator</RadioItem>
+          <RadioItem value="other">Other</RadioItem>
+        </RadioGroup.Root>
       </div>
       <div>
         <RegistrationPageCheckbox

@@ -159,17 +159,18 @@ const DistrictRegistrationForm = ({
   return (
     <main ref={mainRef} tabIndex={-1} className={s.formInputsWrapper}>
       <section className={s.formHeader}>
-        <Typography.H2>Create a trial account</Typography.H2>
+        <Typography.H2>Create a US Pilot Trial Account</Typography.H2>
         <Typography.Body>
-          For a limited time, Boclips District is available to educators through
-          the end of the 2024–2025 school year with a free trial.
+          Please register below to create your district pilot trial account.
         </Typography.Body>
         <Typography.Body>
-          Interested in a school/district pilot?
+          <Typography.Link type="inline-blue">
+            <a href="https://www.boclips.com/contact">
+              Schedule a consultation
+            </a>
+          </Typography.Link>{' '}
+          for more information
         </Typography.Body>
-        <Typography.Link type="inline-blue">
-          <a href="https://www.boclips.com/contact">Schedule a consultation</a>
-        </Typography.Link>
       </section>
 
       <DistrictRegistrationFormFields
