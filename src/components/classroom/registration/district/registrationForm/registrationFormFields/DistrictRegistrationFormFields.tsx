@@ -3,7 +3,10 @@ import { InputText } from '@boclips-ui/input';
 import s from 'src/components/classroom/registration/district/style.module.less';
 import c from 'classnames';
 import RegistrationPageCheckbox from 'src/components/common/input/RegistrationPageCheckbox';
-import { DistrictRegistrationData } from 'src/components/classroom/registration/district/registrationForm/DistrictRegistrationForm';
+import {
+  DistrictRegistrationData,
+  ValidationErrors
+} from "src/components/classroom/registration/district/registrationForm/DistrictRegistrationForm";
 import PasswordValidattor from 'react-password-validattor';
 import { Typography } from '@boclips-ui/typography';
 import { getUsaStates } from 'src/components/classroom/registration/district/dropdownValues';
@@ -54,7 +57,7 @@ const passwordConfig = {
 
 interface DistrictRegistrationFormProps {
   handleChange: (name: string, value: string | string[] | boolean) => void;
-  validationErrors: DistrictRegistrationData;
+  validationErrors: ValidationErrors;
   registrationData: DistrictRegistrationData;
 }
 
@@ -143,8 +146,8 @@ const DistrictRegistrationFormFields = ({
           onChange={handleStateUpdate}
           label="State"
           placeholder="Select state"
-          isError={!!validationErrors.state}
-          errorMessage={validationErrors.state}
+          isError={!!validationErrors.state?.isError}
+          errorMessage={validationErrors.state?.errorMessage}
           dataQa="input-dropdown-state"
         />
       </div>
@@ -156,8 +159,8 @@ const DistrictRegistrationFormFields = ({
             onChange={handleDistrictDropdownUpdate}
             label="District Name"
             placeholder="Search for district"
-            isError={!!validationErrors.districtName}
-            errorMessage={validationErrors.districtName}
+            isError={!!validationErrors.districtName?.isError}
+            errorMessage={validationErrors.districtName?.errorMessage}
             mode={ComboboxMode.FETCH}
             fetchFunction={handleDistrictSearch}
             dataQa="input-dropdown-districtName"
@@ -175,8 +178,8 @@ const DistrictRegistrationFormFields = ({
           className={c(s.input, 'flex-1 mr-4')}
           labelText="First name"
           height="48px"
-          isError={!!validationErrors.firstName}
-          errorMessage={validationErrors.firstName}
+          isError={!!validationErrors.firstName?.isError}
+          errorMessage={validationErrors.firstName?.errorMessage}
           errorMessagePlacement="bottom"
         />
         <InputText
@@ -187,8 +190,8 @@ const DistrictRegistrationFormFields = ({
           className={c(s.input, 'flex-1')}
           labelText="Last name"
           height="48px"
-          isError={!!validationErrors.lastName}
-          errorMessage={validationErrors.lastName}
+          isError={!!validationErrors.lastName?.isError}
+          errorMessage={validationErrors.lastName?.errorMessage}
           errorMessagePlacement="bottom"
         />
       </div>
@@ -201,8 +204,8 @@ const DistrictRegistrationFormFields = ({
         className={c(s.input)}
         labelText="Email Address"
         height="48px"
-        isError={!!validationErrors.email}
-        errorMessage={validationErrors.email}
+        isError={!!validationErrors.email?.isError}
+        errorMessage={validationErrors.email?.errorMessage}
         errorMessagePlacement="bottom"
       />
 
@@ -216,7 +219,8 @@ const DistrictRegistrationFormFields = ({
             className={c(s.input, 'flex-1 mr-4')}
             labelText="Password"
             height="48px"
-            isError={!!validationErrors.password}
+            isError={!!validationErrors.password?.isError}
+            errorMessage={validationErrors.password?.errorMessage}
             errorMessagePlacement="bottom"
           />
 
@@ -228,9 +232,8 @@ const DistrictRegistrationFormFields = ({
             className={c(s.input, 'flex-1')}
             labelText="Confirm password"
             height="48px"
-            isError={
-              !!validationErrors.confirmPassword || !!validationErrors.password
-            }
+            isError={!!validationErrors.confirmPassword?.isError}
+            errorMessage={validationErrors.confirmPassword?.errorMessage}
             errorMessagePlacement="bottom"
           />
         </div>
@@ -260,8 +263,8 @@ const DistrictRegistrationFormFields = ({
           label="How frequently do you currently use video in your classes?"
           placeholder="Select your usage frequency"
           mode={ComboboxMode.FILTER}
-          isError={!!validationErrors.usageFrequency}
-          errorMessage="Usage frequency is required"
+          isError={!!validationErrors.usageFrequency?.isError}
+          errorMessage={validationErrors.usageFrequency?.errorMessage}
           dataQa="input-dropdown-usageFrequency"
         />
         <Combobox
@@ -272,8 +275,8 @@ const DistrictRegistrationFormFields = ({
           label="Where do you currently get most of your instructional videos from?"
           placeholder="Select your instructional video source"
           mode={ComboboxMode.FILTER}
-          isError={!!validationErrors.instructionalVideoSource}
-          errorMessage="Instructional video source is required"
+          isError={!!validationErrors.instructionalVideoSource?.isError}
+          errorMessage={validationErrors.instructionalVideoSource?.errorMessage}
           dataQa="input-dropdown-instructionalVideoSource"
         />
         <MultiCombobox
@@ -283,8 +286,8 @@ const DistrictRegistrationFormFields = ({
           }
           label="What barriers do you face with current video resources?"
           placeholder="Select one or more barriers"
-          isError={!!validationErrors.videoResourceBarriers}
-          errorMessage="One or more barriers is required"
+          isError={!!validationErrors.videoResourceBarriers?.isError}
+          errorMessage={validationErrors.videoResourceBarriers?.errorMessage}
           dataQa="input-dropdown-videoResourceBarriers"
         />
         <MultiCombobox
@@ -294,8 +297,8 @@ const DistrictRegistrationFormFields = ({
           }
           label="What subject do you teach?"
           placeholder="Select one or more subjects"
-          isError={!!validationErrors.subjects}
-          errorMessage="At least one subject is required"
+          isError={!!validationErrors.subjects?.isError}
+          errorMessage={validationErrors.subjects?.errorMessage}
           dataQa="input-dropdown-subjects"
         />
         <Combobox
@@ -306,8 +309,8 @@ const DistrictRegistrationFormFields = ({
           label="I want to try Boclips because"
           placeholder="Select a reason"
           mode={ComboboxMode.FILTER}
-          isError={!!validationErrors.reason}
-          errorMessage="A reason is required"
+          isError={!!validationErrors.reason?.isError}
+          errorMessage={validationErrors.reason?.errorMessage}
           dataQa="input-dropdown-reason"
         />
       </div>
@@ -318,7 +321,7 @@ const DistrictRegistrationFormFields = ({
             handleChange('hasAcceptedEducationalUseTerms', event.target.checked)
           }
           errorMessage={
-            validationErrors.hasAcceptedEducationalUseTerms
+            validationErrors.hasAcceptedEducationalUseTerms?.isError
               ? 'Educational use agreement is required'
               : null
           }
@@ -333,7 +336,7 @@ const DistrictRegistrationFormFields = ({
             handleChange('hasAcceptedTermsAndConditions', event.target.checked)
           }
           errorMessage={
-            validationErrors.hasAcceptedTermsAndConditions
+            validationErrors.hasAcceptedTermsAndConditions?.isError
               ? 'Boclips Terms and Conditions agreement is required'
               : null
           }

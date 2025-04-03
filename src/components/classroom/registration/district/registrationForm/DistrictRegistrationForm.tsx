@@ -30,6 +30,10 @@ export interface DistrictRegistrationData {
   hasAcceptedTermsAndConditions: boolean;
 }
 
+export interface ValidationErrors {
+  [key: string]: { isError: boolean; errorMessage: string };
+}
+
 const emptyRegistrationData = (): DistrictRegistrationData => {
   return {
     firstName: '',
@@ -71,8 +75,9 @@ const DistrictRegistrationForm = ({
   const [registrationData, setRegistrationData] =
     useState<DistrictRegistrationData>(emptyRegistrationData());
 
-  const [validationErrors, setValidationErrors] =
-    useState<DistrictRegistrationData>(emptyRegistrationData());
+  const [validationErrors, setValidationErrors] = useState<ValidationErrors>(
+    {},
+  );
 
   const handleChange = (
     fieldName: string,
@@ -98,12 +103,19 @@ const DistrictRegistrationForm = ({
     }
   }
 
-  const setError = (fieldName: string, value: boolean | string) => {
-    setValidationErrors((prevState) => ({ ...prevState, [fieldName]: value }));
+  const setError = (
+    fieldName: string,
+    isError: boolean,
+    errorMessage: string,
+  ) => {
+    setValidationErrors((prevState) => ({
+      ...prevState,
+      [fieldName]: { isError, errorMessage },
+    }));
   };
 
   const clearError = (fieldName: string) => {
-    setError(fieldName, '');
+    setError(fieldName, false, '');
   };
 
   const handleUserCreation = async () => {
@@ -144,11 +156,12 @@ const DistrictRegistrationForm = ({
 
             switch (errorOrigin) {
               case 'USER':
-                setError('email', 'Email already exists');
+                setError('email', true, 'Email already exists');
                 break;
               case 'ACCOUNT':
                 setError(
                   'districtName',
+                  true,
                   'Cannot use this district name. Try another or contact us.',
                 );
                 break;

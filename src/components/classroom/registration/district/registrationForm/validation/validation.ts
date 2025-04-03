@@ -2,12 +2,13 @@ import * as EmailValidator from 'email-validator';
 import PasswordValidator from 'password-validator';
 import { DistrictRegistrationData } from 'src/components/classroom/registration/district/registrationForm/DistrictRegistrationForm';
 
-type SetError = (fieldName: string, errorMessage: string | boolean) => void;
-
-type ValidationMethod = (
+type SetError = (
   fieldName: string,
-  errorMessage: string | boolean,
-) => boolean;
+  isError: boolean,
+  errorMessage?: string,
+) => void;
+
+type ValidationMethod = (fieldName: string, errorMessage: string) => boolean;
 
 interface FormValidatorClass {
   new (registrationData: DistrictRegistrationData, setError: SetError);
@@ -15,6 +16,7 @@ interface FormValidatorClass {
 
 interface FormValidatorInstance {
   checkIsNotEmpty: ValidationMethod;
+  checkArrayIsNotEmpty: ValidationMethod;
   checkHasEmailFormat: ValidationMethod;
   checkPasswordIsStrong: ValidationMethod;
   checkPasswordConfirmed: ValidationMethod;
@@ -35,11 +37,11 @@ const FormValidator: FormValidatorClass = class
 
   checkIsNotEmpty(fieldName: string, errorMessage: string): boolean {
     if (!this.registrationData[fieldName]) {
-      this.setError(fieldName, errorMessage);
+      this.setError(fieldName, true, errorMessage);
       return false;
     }
 
-    this.setError(fieldName, '');
+    this.setError(fieldName, false, '');
     return true;
   }
 
@@ -48,21 +50,21 @@ const FormValidator: FormValidatorClass = class
       !this.registrationData[fieldName] ||
       this.registrationData[fieldName].length === 0
     ) {
-      this.setError(fieldName, errorMessage);
+      this.setError(fieldName, true, errorMessage);
       return false;
     }
 
-    this.setError(fieldName, '');
+    this.setError(fieldName, false, '');
     return true;
   }
 
   checkHasEmailFormat(fieldName: string, errorMessage: string): boolean {
     if (!EmailValidator.validate(this.registrationData[fieldName])) {
-      this.setError(fieldName, errorMessage);
+      this.setError(fieldName, true, errorMessage);
       return false;
     }
 
-    this.setError(fieldName, '');
+    this.setError(fieldName, false, '');
     return true;
   }
 
@@ -85,11 +87,11 @@ const FormValidator: FormValidatorClass = class
     /* eslint-enable  */
 
     if (!schema.validate(this.registrationData.password)) {
-      this.setError('password', ' ');
+      this.setError('password', true, '');
       return false;
     }
 
-    this.setError('password', '');
+    this.setError('password', false, '');
     return true;
   }
 
@@ -97,29 +99,29 @@ const FormValidator: FormValidatorClass = class
     if (
       this.registrationData.password !== this.registrationData.confirmPassword
     ) {
-      this.setError('confirmPassword', ' ');
+      this.setError('confirmPassword', true, '');
       return false;
     }
 
-    this.setError('confirmPassword', '');
+    this.setError('confirmPassword', false, '');
     return true;
   }
 
   checkEducationalUseAgreementValid(): boolean {
     if (!this.registrationData.hasAcceptedEducationalUseTerms) {
-      this.setError('hasAcceptedEducationalUseTerms', true);
+      this.setError('hasAcceptedEducationalUseTerms', true, '');
       return false;
     }
-    this.setError('hasAcceptedEducationalUseTerms', false);
+    this.setError('hasAcceptedEducationalUseTerms', false, '');
     return true;
   }
 
   checkTermsAndConditionsAgreementValid(): boolean {
     if (!this.registrationData.hasAcceptedTermsAndConditions) {
-      this.setError('hasAcceptedTermsAndConditions', true);
+      this.setError('hasAcceptedTermsAndConditions', true, '');
       return false;
     }
-    this.setError('hasAcceptedTermsAndConditions', false);
+    this.setError('hasAcceptedTermsAndConditions', false, '');
     return true;
   }
 
