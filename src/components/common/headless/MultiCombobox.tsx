@@ -59,10 +59,18 @@ export const MultiCombobox = ({
         value={selectedItems}
         onChange={(newValue) => {
           setSelectedItems(newValue);
-          onChange(newValue);
+          onChange(selectedItems);
         }}
         onClose={() => setQuery('')}
       >
+        //TODO: remove later after debugging
+        {selectedItems.length > 0 && (
+          <ul>
+            {selectedItems.map((item) => (
+              <li key={item.value}>{item.label}</li>
+            ))}
+          </ul>
+        )}
         <div className="relative">
           <ComboboxInput
             aria-label={label}

@@ -81,7 +81,7 @@ export async function setComboboxDropdownValue(
 ) {
   if (value) {
     const byTestId = wrapper.getByTestId(dropdownId);
-    const combobox = within(byTestId).getByRole('combobox');
+    const combobox = await within(byTestId).findByRole('combobox');
     await userEvent.clear(combobox);
     await userEvent.type(combobox, value);
 

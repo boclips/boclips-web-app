@@ -132,6 +132,7 @@ const DistrictRegistrationFormFields = ({
     propertyKey: string,
     selectedItem: ComboboxItem[],
   ) => {
+    console.log(selectedItem);
     handleChange(
       propertyKey,
       selectedItem?.map((item) => item.value),
