@@ -19,6 +19,18 @@ describe('DistrictRegistration Form Validation', () => {
     'createDistrictUser',
   );
 
+  beforeEach(() => {
+    fakeClient.districts.setUsaDistricts({
+      CA: [
+        {
+          externalId: 'district-1',
+          name: 'Los Angeles Lakers',
+          city: 'Little Rock',
+        },
+      ],
+    });
+  });
+
   it('first name cannot be empty', async () => {
     const wrapper = renderRegistrationForm();
 
@@ -394,19 +406,20 @@ describe('DistrictRegistration Form Validation', () => {
       email: 'lj@nba.com',
       password: 'p@ssw0rd',
       confirmPassword: 'p@ssw0rd',
-      districtName: 'Los Angeles Lakers',
+      districtName: 'Los Angeles Lakers, Little Rock',
       state: 'California',
       hasAcceptedEducationalUseTerms: true,
       hasAcceptedTermsAndConditions: true,
       ncesDistrictId: '',
-      usageFrequency: '',
-      instructionalVideoSource: '',
-      videoResourceBarriers: [],
-      subjects: [],
-      reason: '',
+      usageFrequency: 'Very rarely',
+      instructionalVideoSource: 'YouTube',
+      videoResourceBarriers: ['Misinformation/disinformation'],
+      subjects: ['Math'],
+      reason: 'It’s hard to find standards aligned videos',
     };
 
-    await fillRegistrationForm(wrapper, { ...defaults, ...change });
+    const data = { ...defaults, ...change };
+    await fillRegistrationForm(wrapper, data);
   }
 
   async function checkErrorIsNotVisible(

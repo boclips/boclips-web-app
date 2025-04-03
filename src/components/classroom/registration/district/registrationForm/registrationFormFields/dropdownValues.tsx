@@ -1,7 +1,7 @@
 const createDropdownOptions = (items) =>
   items.map((item) => {
     const id = item.replace(' ', '-').toLowerCase();
-    return { id, name: item, value: item };
+    return { id, name: item, label: item, value: item };
   });
 
 const USAGE_FREQUENCY = createDropdownOptions([

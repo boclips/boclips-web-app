@@ -27,12 +27,42 @@ export async function fillRegistrationForm(
     data.confirmPassword,
   );
 
-  await setDropdownValue(wrapper, 'input-dropdown-state', data.state);
+  await setComboboxDropdownValue(wrapper, 'input-dropdown-state', data.state);
 
-  await setDropdownValue(
+  await setComboboxDropdownValue(
     wrapper,
     'input-dropdown-districtName',
     data.districtName,
+  );
+
+  await setComboboxDropdownValue(
+    wrapper,
+    'input-dropdown-usageFrequency',
+    data.usageFrequency,
+  );
+
+  await setComboboxDropdownValue(
+    wrapper,
+    'input-dropdown-instructionalVideoSource',
+    data.instructionalVideoSource,
+  );
+
+  await setComboboxDropdownValue(
+    wrapper,
+    'input-dropdown-videoResourceBarriers',
+    data.videoResourceBarriers[0],
+  );
+
+  await setComboboxDropdownValue(
+    wrapper,
+    'input-dropdown-subjects',
+    data.subjects[0],
+  );
+
+  await setComboboxDropdownValue(
+    wrapper,
+    'input-dropdown-reason',
+    data.reason[0],
   );
 
   if (data.hasAcceptedEducationalUseTerms) {
@@ -44,15 +74,14 @@ export async function fillRegistrationForm(
   }
 }
 
-export async function setDropdownValue(
+export async function setComboboxDropdownValue(
   wrapper: RenderResult,
   dropdownId: string,
   value: string,
 ) {
   if (value) {
-    const combobox = within(wrapper.getByTestId(dropdownId)).getByRole(
-      'combobox',
-    );
+    const byTestId = wrapper.getByTestId(dropdownId);
+    const combobox = within(byTestId).getByRole('combobox');
     await userEvent.clear(combobox);
     await userEvent.type(combobox, value);
 

@@ -13,7 +13,6 @@ import {
   ComboboxItem,
   ComboboxMode,
 } from 'src/components/common/headless/combobox';
-import Dropdown from '@boclips-ui/dropdown';
 import {
   INSTRUCTIONAL_VIDEO_SOURCE,
   REASON,
@@ -21,6 +20,7 @@ import {
   USAGE_FREQUENCY,
   VIDEO_RESOURCE_BARRIERS,
 } from 'src/components/classroom/registration/district/registrationForm/registrationFormFields/dropdownValues';
+import { MultiCombobox } from 'src/components/common/headless/MultiCombobox';
 
 const passwordConfig = {
   classNames: {
@@ -116,6 +116,23 @@ const DistrictRegistrationFormFields = ({
   const handleDistrictDropdownUpdate = (selectedDistrict: ComboboxItem) => {
     handleChange('districtName', selectedDistrict?.label);
     handleChange('ncesDistrictId', selectedDistrict?.value);
+  };
+
+  const handleComboboxItemUpdate = (
+    propertyKey: string,
+    selectedItem: ComboboxItem,
+  ) => {
+    handleChange(propertyKey, selectedItem?.value);
+  };
+
+  const handleMultiComboboxItemUpdate = (
+    propertyKey: string,
+    selectedItem: ComboboxItem[],
+  ) => {
+    handleChange(
+      propertyKey,
+      selectedItem?.map((item) => item.value),
+    );
   };
 
   return (
@@ -235,69 +252,63 @@ const DistrictRegistrationFormFields = ({
       </div>
 
       <div className="flex flex-col gap-4 items-start mb-6">
-        <Dropdown
-          mode="single"
-          labelText="How frequently do you currently use video in your classes?"
-          onUpdate={(value: string) => handleChange('usageFrequency', value)}
-          options={USAGE_FREQUENCY}
-          dataQa="input-dropdown-usageFrequency"
+        <Combobox
+          items={USAGE_FREQUENCY}
+          onChange={(value: ComboboxItem) =>
+            handleComboboxItemUpdate('usageFrequency', value)
+          }
+          label="How frequently do you currently use video in your classes?"
           placeholder="Select your usage frequency"
-          showLabel
-          fitWidth
+          mode={ComboboxMode.FILTER}
           isError={!!validationErrors.usageFrequency}
           errorMessage="Usage frequency is required"
+          dataQa="input-dropdown-usageFrequency"
         />
-        <Dropdown
-          mode="single"
-          labelText="Where do you currently get most of your instructional videos from?"
-          onUpdate={(value: string) =>
-            handleChange('instructionalVideoSource', value)
+        <Combobox
+          items={INSTRUCTIONAL_VIDEO_SOURCE}
+          onChange={(value: ComboboxItem) =>
+            handleComboboxItemUpdate('instructionalVideoSource', value)
           }
-          options={INSTRUCTIONAL_VIDEO_SOURCE}
-          dataQa="input-dropdown-instructionalVideoSource"
+          label="Where do you currently get most of your instructional videos from?"
           placeholder="Select your instructional video source"
-          showLabel
-          fitWidth
+          mode={ComboboxMode.FILTER}
           isError={!!validationErrors.instructionalVideoSource}
           errorMessage="Instructional video source is required"
+          dataQa="input-dropdown-instructionalVideoSource"
         />
-        <Dropdown
-          mode="multiple"
-          labelText="What barriers do you face with current video resources?"
-          onUpdate={(value: string) =>
-            handleChange('videoResourceBarriers', value)
+        <MultiCombobox
+          items={VIDEO_RESOURCE_BARRIERS}
+          onChange={(values: ComboboxItem[]) =>
+            handleMultiComboboxItemUpdate('videoResourceBarriers', values)
           }
-          options={VIDEO_RESOURCE_BARRIERS}
-          dataQa="input-dropdown-videoResourceBarriers"
+          label="What barriers do you face with current video resources?"
           placeholder="Select one or more barriers"
-          showLabel
-          fitWidth
           isError={!!validationErrors.videoResourceBarriers}
           errorMessage="One or more barriers is required"
+          dataQa="input-dropdown-videoResourceBarriers"
         />
-        <Dropdown
-          mode="multiple"
-          labelText="What subject do you teach?"
-          onUpdate={(value: string) => handleChange('subjects', value)}
-          options={SUBJECTS}
-          dataQa="input-dropdown-subjects"
+        <MultiCombobox
+          items={SUBJECTS}
+          onChange={(values: ComboboxItem[]) =>
+            handleMultiComboboxItemUpdate('subjects', values)
+          }
+          label="What subject do you teach?"
           placeholder="Select one or more subjects"
-          showLabel
-          fitWidth
           isError={!!validationErrors.subjects}
-          errorMessage="At last one subject is required"
+          errorMessage="At least one subject is required"
+          dataQa="input-dropdown-subjects"
         />
-        <Dropdown
-          mode="single"
-          labelText="I want to try Boclips because"
-          onUpdate={(value: string) => handleChange('reason', value)}
-          options={REASON}
-          dataQa="input-dropdown-reason"
+        <Combobox
+          items={REASON}
+          onChange={(value: ComboboxItem) =>
+            handleComboboxItemUpdate('reason', value)
+          }
+          label="I want to try Boclips because"
           placeholder="Select a reason"
-          showLabel
-          fitWidth
+          mode={ComboboxMode.FILTER}
           isError={!!validationErrors.reason}
           errorMessage="A reason is required"
+          dataQa="input-dropdown-reason"
         />
       </div>
 
