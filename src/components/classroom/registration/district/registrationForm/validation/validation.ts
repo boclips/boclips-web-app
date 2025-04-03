@@ -127,16 +127,15 @@ const FormValidator: FormValidatorClass = class
 
   isValid(): boolean {
     const checks = [
+      this.checkIsNotEmpty('state', 'Please select a state'),
+      this.checkIsNotEmpty('districtName', 'District name is required'),
       this.checkIsNotEmpty('firstName', 'First name is required'),
       this.checkIsNotEmpty('lastName', 'Last name is required'),
       this.checkIsNotEmpty('email', 'Email is required') &&
         this.checkHasEmailFormat('email', 'Please enter a valid email address'),
-      this.checkIsNotEmpty('districtName', 'District name is required'),
       this.checkIsNotEmpty('password', 'Password is required') &&
         this.checkPasswordIsStrong() &&
         this.checkPasswordConfirmed(),
-      this.checkIsNotEmpty('country', 'Please select a country'),
-      this.checkIsNotEmpty('state', 'Please select a state'),
       this.checkIsNotEmpty('usageFrequency', 'Please select a usage frequency'),
       this.checkIsNotEmpty(
         'instructionalVideoSource',

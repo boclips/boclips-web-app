@@ -13,20 +13,20 @@ import ErrorIcon from 'src/resources/icons/error-icon.svg';
 import Checkmark from 'src/resources/icons/checkmark.svg';
 import s from './style.module.less';
 
-export interface ComboboxItem {
+export interface MultiComboboxItem {
   label: string;
   value: string;
   dropdownLabel?: string | React.JSX.Element;
 }
 
 interface MultiComboboxProps {
-  onChange: (value: ComboboxItem[]) => void;
+  onChange: (value: MultiComboboxItem[]) => void;
   label?: string;
   placeholder?: string;
   isError?: boolean;
   errorMessage?: string;
   dataQa?: string;
-  items: ComboboxItem[];
+  items: MultiComboboxItem[];
 }
 
 export const MultiCombobox = ({
@@ -39,8 +39,8 @@ export const MultiCombobox = ({
   dataQa,
 }: MultiComboboxProps) => {
   const [query, setQuery] = useState('');
-  const [filteredItems, setFilteredItems] = useState<ComboboxItem[]>(items);
-  const [selectedItems, setSelectedItems] = useState<ComboboxItem[]>([]);
+  const [filteredItems, setFilteredItems] = useState<MultiComboboxItem[]>(items);
+  const [selectedItems, setSelectedItems] = useState<MultiComboboxItem[]>([]);
 
   useEffect(() => {
     setFilteredItems(
@@ -52,7 +52,7 @@ export const MultiCombobox = ({
     );
   }, [query]);
 
-  const isSelected = (item: ComboboxItem) => {
+  const isSelected = (item: MultiComboboxItem) => {
     return selectedItems.some((selected) => selected.value === item.value);
   };
 
@@ -64,7 +64,7 @@ export const MultiCombobox = ({
         value={selectedItems}
         onChange={(newValue) => {
           setSelectedItems(newValue);
-          onChange(selectedItems);
+          onChange(newValue);
         }}
         onClose={() => setQuery('')}
       >
@@ -72,7 +72,7 @@ export const MultiCombobox = ({
           <ComboboxInput
             aria-label={label}
             className={`${s.combobox} ${isError ? s.error : ''}`}
-            displayValue={(i: ComboboxItem[]) =>
+            displayValue={(i: MultiComboboxItem[]) =>
               i?.map((item) => item.label).join(', ')
             }
             onChange={(event) => setQuery(event.target.value)}

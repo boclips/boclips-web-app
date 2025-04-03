@@ -15,6 +15,8 @@ import { createBrowserHistory } from 'history';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('registration process', () => {
+  const fakeClient = new FakeBoclipsClient();
+
   async function fillTheForm(
     wrapper: RenderResult,
     change?: Partial<DistrictRegistrationData>,
@@ -25,27 +27,38 @@ describe('registration process', () => {
       email: 'lj@nba.com',
       password: 'p@ss1234',
       confirmPassword: 'p@ss1234',
-      districtName: 'Los Angeles Lakers',
+      districtName: 'Los Angeles Lakers, Little Rock',
       state: 'California',
       hasAcceptedEducationalUseTerms: true,
       hasAcceptedTermsAndConditions: true,
       ncesDistrictId: '',
-      usageFrequency: '',
-      instructionalVideoSource: '',
-      videoResourceBarriers: [],
-      subjects: [],
-      reason: '',
+      usageFrequency: 'Very rarely',
+      instructionalVideoSource: 'YouTube',
+      videoResourceBarriers: ['Misinformation/disinformation'],
+      subjects: ['Math'],
+      reason: 'It’s hard to find standards aligned videos',
     };
 
     await fillRegistrationForm(wrapper, { ...defaults, ...change });
   }
+
+  beforeEach(() => {
+    fakeClient.districts.setUsaDistricts({
+      CA: [
+        {
+          externalId: 'district-1',
+          name: 'Los Angeles Lakers',
+          city: 'Little Rock',
+        },
+      ],
+    });
+  });
 
   it('displays "check your email" view after successful registration when email validation required', async () => {
     window.Environment = {
       REGISTRATION_CLASSROOM_REQUIRE_EMAIL_VERIFICATION: 'true',
     };
 
-    const fakeClient = new FakeBoclipsClient();
     jest.spyOn(fakeClient.users, 'createDistrictUser').mockImplementation(() =>
       Promise.resolve(
         UserFactory.sample({
@@ -93,7 +106,6 @@ describe('registration process', () => {
       REGISTRATION_CLASSROOM_REQUIRE_EMAIL_VERIFICATION: 'false',
     };
 
-    const fakeClient = new FakeBoclipsClient();
     jest.spyOn(fakeClient.users, 'createDistrictUser').mockImplementation(() =>
       Promise.resolve(
         UserFactory.sample({

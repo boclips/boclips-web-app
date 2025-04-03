@@ -23,7 +23,7 @@ import {
   USAGE_FREQUENCY,
   VIDEO_RESOURCE_BARRIERS,
 } from 'src/components/classroom/registration/district/registrationForm/registrationFormFields/dropdownValues';
-import { MultiCombobox } from 'src/components/common/headless/MultiCombobox';
+import { MultiCombobox, MultiComboboxItem } from "src/components/common/headless/MultiCombobox";
 
 const passwordConfig = {
   classNames: {
@@ -232,8 +232,14 @@ const DistrictRegistrationFormFields = ({
             className={c(s.input, 'flex-1')}
             labelText="Confirm password"
             height="48px"
-            isError={!!validationErrors.confirmPassword?.isError}
-            errorMessage={validationErrors.confirmPassword?.errorMessage}
+            isError={
+              !!validationErrors.confirmPassword?.isError ||
+              !!validationErrors.password?.isError
+            }
+            errorMessage={
+              validationErrors.confirmPassword?.errorMessage ||
+              validationErrors.password?.errorMessage
+            }
             errorMessagePlacement="bottom"
           />
         </div>
@@ -281,7 +287,7 @@ const DistrictRegistrationFormFields = ({
         />
         <MultiCombobox
           items={VIDEO_RESOURCE_BARRIERS}
-          onChange={(values: ComboboxItem[]) =>
+          onChange={(values: MultiComboboxItem[]) =>
             handleMultiComboboxItemUpdate('videoResourceBarriers', values)
           }
           label="What barriers do you face with current video resources?"
@@ -292,7 +298,7 @@ const DistrictRegistrationFormFields = ({
         />
         <MultiCombobox
           items={SUBJECTS}
-          onChange={(values: ComboboxItem[]) =>
+          onChange={(values: MultiComboboxItem[]) =>
             handleMultiComboboxItemUpdate('subjects', values)
           }
           label="What subject do you teach?"

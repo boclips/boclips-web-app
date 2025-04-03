@@ -48,20 +48,38 @@ describe('DistrictRegistration Form', () => {
       email: 'lj@nba.com',
       password: 'p@ss1234',
       confirmPassword: 'p@ss1234',
-      districtName: 'Los Angeles Lakers',
-      state: 'California',
+      districtName: 'Lincoln District, Little Rock',
+      state: 'Arkansas',
       hasAcceptedEducationalUseTerms: true,
       hasAcceptedTermsAndConditions: true,
       ncesDistrictId: '',
-      usageFrequency: '',
-      instructionalVideoSource: '',
-      videoResourceBarriers: [],
-      subjects: [],
-      reason: '',
+      usageFrequency: 'Very rarely',
+      instructionalVideoSource: 'YouTube',
+      videoResourceBarriers: ['Misinformation/disinformation'],
+      subjects: ['Math'],
+      reason: 'It’s hard to find standards aligned videos',
     };
 
     await fillRegistrationForm(wrapper, { ...defaults, ...change });
   }
+
+  const fakeClient = new FakeBoclipsClient();
+  beforeEach(() => {
+    fakeClient.districts.setUsaDistricts({
+      AR: [
+        {
+          externalId: 'district-1',
+          name: 'Lincoln District',
+          city: 'Little Rock',
+        },
+        {
+          externalId: 'district-2',
+          name: 'Harris Elementary District',
+          city: 'Hot Springs',
+        },
+      ],
+    });
+  });
 
   it('renders the form', async () => {
     const wrapper = renderRegistrationForm();
@@ -72,9 +90,7 @@ describe('DistrictRegistration Form', () => {
         'Please register below to create your district pilot trial account.',
       ),
     ).toBeVisible();
-    expect(
-      wrapper.getByText('Schedule a consultation for more information'),
-    ).toBeVisible();
+    expect(wrapper.getByText('Schedule a consultation')).toBeVisible();
     expect(wrapper.getByLabelText('First name')).toBeVisible();
     expect(wrapper.getByLabelText('Last name')).toBeVisible();
     expect(wrapper.getByLabelText('Email Address')).toBeVisible();
@@ -128,32 +144,14 @@ describe('DistrictRegistration Form', () => {
   });
 
   it('sends selected usa district and id', async () => {
-    const fakeClient = new FakeBoclipsClient();
     const createDistrictUserSpy = jest.spyOn(
       fakeClient.users,
       'createDistrictUser',
     );
-    fakeClient.districts.setUsaDistricts({
-      AR: [
-        {
-          externalId: 'district-1',
-          name: 'Lincoln District',
-          city: 'Little Rock',
-        },
-        {
-          externalId: 'district-2',
-          name: 'Harris Elementary District',
-          city: 'Hot Springs',
-        },
-      ],
-    });
 
     const wrapper = renderRegistrationForm(fakeClient);
 
-    await fillTheForm(wrapper, {
-      state: 'Arkansas',
-      districtName: 'Lincoln District, Little Rock',
-    });
+    await fillTheForm(wrapper, {});
 
     await userEvent.click(
       wrapper.getByRole('button', { name: 'Create Account' }),
@@ -166,19 +164,25 @@ describe('DistrictRegistration Form', () => {
         email: 'lj@nba.com',
         password: 'p@ss1234',
         recaptchaToken: 'token_baby',
-        type: UserType.classroomUser,
+        type: UserType.districtUser,
         districtName: 'Lincoln District, Little Rock',
         country: 'USA',
         state: 'AR',
-        ncesSchoolId: 'district-1',
+        ncesDistrictId: 'district-1',
         hasAcceptedEducationalUseTerms: true,
         hasAcceptedTermsAndConditions: true,
+        districtPilotInformation: {
+          usageFrequency: 'Very rarely',
+          instructionalVideoSource: 'YouTube',
+          videoResourceBarriers: ['Misinformation/disinformation'],
+          subjects: ['Math'],
+          reason: 'It’s hard to find standards aligned videos',
+        },
       });
     });
   });
 
   it('error notification is displayed when classroom user creation fails, inputs are not cleared', async () => {
-    const fakeClient = new FakeBoclipsClient();
     jest
       .spyOn(fakeClient.users, 'createDistrictUser')
       .mockImplementation(() => Promise.reject());
@@ -209,7 +213,6 @@ describe('DistrictRegistration Form', () => {
   });
 
   it('onRegistrationFinished is called when classroom user creation passes', async () => {
-    const fakeClient = new FakeBoclipsClient();
     jest.spyOn(fakeClient.users, 'createDistrictUser').mockImplementation(() =>
       Promise.resolve(
         UserFactory.sample({
@@ -243,7 +246,7 @@ describe('DistrictRegistration Form', () => {
     const wrapper = render(
       <Router>
         <QueryClientProvider client={new QueryClient()}>
-          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+          <BoclipsClientProvider client={fakeClient}>
             <ToastContainer />
             <GoogleReCaptchaProvider reCaptchaKey="123">
               <DistrictRegistrationForm onRegistrationFinished={jest.fn()} />
@@ -265,7 +268,7 @@ describe('DistrictRegistration Form', () => {
   });
 
   it('validation errors are cleared on filling in the field', async () => {
-    const wrapper = renderRegistrationForm(new FakeBoclipsClient());
+    const wrapper = renderRegistrationForm(fakeClient);
 
     await fillTheForm(wrapper, { firstName: '' });
 

@@ -28,7 +28,7 @@ describe('DistrictRegistration Form Validation', () => {
         {
           externalId: 'district-1',
           name: 'Los Angeles Lakers',
-          city: 'Little Rock',
+          city: 'Los Angeles',
         },
       ],
     });
@@ -127,7 +127,7 @@ describe('DistrictRegistration Form Validation', () => {
           {
             externalId: 'district-1',
             name: 'Lincoln District',
-            city: 'Little Rock',
+            city: 'Los Angeles',
           },
           {
             externalId: 'district-2',
@@ -150,7 +150,7 @@ describe('DistrictRegistration Form Validation', () => {
       await setComboboxDropdownValue(
         wrapper,
         'input-dropdown-districtName',
-        'Lincoln District, Little Rock',
+        'Lincoln District, Los Angeles',
       );
 
       await checkErrorIsNotVisible(wrapper, 'District name is required');
@@ -308,11 +308,13 @@ describe('DistrictRegistration Form Validation', () => {
     jest
       .spyOn(fakeClient.users, 'createDistrictUser')
       .mockImplementation(() =>
-        Promise.reject(new Error('Account Boclips already exists')),
+        Promise.reject(
+          new Error('Account Los Angeles Lakers, Los Angeles already exists'),
+        ),
       );
 
     const wrapper = renderRegistrationForm();
-    await fillTheForm(wrapper, { districtName: 'Boclips' });
+    await fillTheForm(wrapper, {});
 
     await userEvent.click(
       wrapper.getByRole('button', { name: 'Create Account' }),
@@ -320,38 +322,35 @@ describe('DistrictRegistration Form Validation', () => {
 
     expect(
       await wrapper.findByText(
-        'Cannot use this school name. Try another or contact us.',
+        'Cannot use this district name. Try another or contact us.',
       ),
     ).toBeVisible();
   });
 
-  it('errors disappear when form is fixed', async () => {
+  it('clears errors when form is fixed', async () => {
     const wrapper = renderRegistrationForm();
-
-    await fillTheForm(wrapper, {
-      firstName: '',
-      lastName: '',
-      password: '',
-      confirmPassword: '',
-      state: '',
-      districtName: '',
-      email: '',
-      hasAcceptedEducationalUseTerms: false,
-      hasAcceptedTermsAndConditions: false,
-    });
 
     await userEvent.click(
       wrapper.getByRole('button', { name: 'Create Account' }),
     );
 
+    await checkErrorIsVisible(wrapper, 'Please select a state');
     await checkErrorIsVisible(wrapper, 'First name is required');
     await checkErrorIsVisible(wrapper, 'Last name is required');
     await checkErrorIsVisible(wrapper, 'Email is required');
+    expect(wrapper.getAllByText('Password is required')[0]).toBeVisible();
     await checkErrorIsVisible(wrapper, '8 characters');
     await checkErrorIsVisible(wrapper, '1 capital letter');
-    await checkErrorIsVisible(wrapper, "Password doesn't match");
     await checkErrorIsVisible(wrapper, '1 special character');
     await checkErrorIsVisible(wrapper, '1 number');
+    await checkErrorIsVisible(wrapper, 'Please select a usage frequency');
+    await checkErrorIsVisible(
+      wrapper,
+      'Please select an instructional video source',
+    );
+    await checkErrorIsVisible(wrapper, 'Please select one or more barriers');
+    await checkErrorIsVisible(wrapper, 'Please select one or more subjects');
+    await checkErrorIsVisible(wrapper, 'Please select a reason');
     await checkErrorIsVisible(wrapper, 'Educational use agreement is required');
     await checkErrorIsVisible(
       wrapper,
@@ -363,16 +362,23 @@ describe('DistrictRegistration Form Validation', () => {
       wrapper.getByRole('button', { name: 'Create Account' }),
     );
 
+    await checkErrorIsNotVisible(wrapper, 'Please select a state');
     await checkErrorIsNotVisible(wrapper, 'First name is required');
     await checkErrorIsNotVisible(wrapper, 'Last name is required');
     await checkErrorIsNotVisible(wrapper, 'Email is required');
-    await checkErrorIsNotVisible(wrapper, 'District name is required');
-    await checkErrorIsNotVisible(wrapper, 'Password is required');
-    await checkErrorIsNotVisible(wrapper, 'Please select a country');
+    await checkErrorIsNotVisible(wrapper, "Password doesn't match");
+    await checkErrorIsNotVisible(wrapper, '8 characters');
+    await checkErrorIsNotVisible(wrapper, '1 capital letter');
+    await checkErrorIsNotVisible(wrapper, '1 special character');
+    await checkErrorIsNotVisible(wrapper, '1 number');
+    await checkErrorIsNotVisible(wrapper, 'Please select a usage frequency');
     await checkErrorIsNotVisible(
       wrapper,
-      'Please select a type of organisation',
+      'Please select an instructional video source',
     );
+    await checkErrorIsNotVisible(wrapper, 'Please select one or more barriers');
+    await checkErrorIsNotVisible(wrapper, 'Please select one or more subjects');
+    await checkErrorIsNotVisible(wrapper, 'Please select a reason');
     await checkErrorIsNotVisible(
       wrapper,
       'Educational use agreement is required',
@@ -411,7 +417,7 @@ describe('DistrictRegistration Form Validation', () => {
       email: 'lj@nba.com',
       password: 'p@ssw0rd',
       confirmPassword: 'p@ssw0rd',
-      districtName: 'Los Angeles Lakers, Little Rock',
+      districtName: 'Los Angeles Lakers, Los Angeles',
       state: 'California',
       hasAcceptedEducationalUseTerms: true,
       hasAcceptedTermsAndConditions: true,
