@@ -5,8 +5,8 @@ import c from 'classnames';
 import RegistrationPageCheckbox from 'src/components/common/input/RegistrationPageCheckbox';
 import {
   DistrictRegistrationData,
-  ValidationErrors
-} from "src/components/classroom/registration/district/registrationForm/DistrictRegistrationForm";
+  ValidationErrors,
+} from 'src/components/classroom/registration/district/registrationForm/DistrictRegistrationForm';
 import PasswordValidattor from 'react-password-validattor';
 import { Typography } from '@boclips-ui/typography';
 import { getUsaStates } from 'src/components/classroom/registration/district/dropdownValues';
@@ -132,7 +132,6 @@ const DistrictRegistrationFormFields = ({
     propertyKey: string,
     selectedItem: ComboboxItem[],
   ) => {
-    console.log(selectedItem);
     handleChange(
       propertyKey,
       selectedItem?.map((item) => item.value),

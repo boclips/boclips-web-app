@@ -8,7 +8,10 @@ import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsCl
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
-import { fillRegistrationForm } from 'src/components/classroom/registration/district/registrationForm/districtRegistrationFormTestHelpers';
+import {
+  fillRegistrationForm,
+  setComboboxDropdownValue,
+} from 'src/components/classroom/registration/district/registrationForm/districtRegistrationFormTestHelpers';
 import { BrowserRouter as Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
@@ -144,10 +147,11 @@ describe('DistrictRegistration Form Validation', () => {
 
       await checkErrorIsVisible(wrapper, 'District name is required');
 
-      await fillTheForm(wrapper, {
-        state: 'Arkansas',
-        districtName: 'Lincoln District, Little Rock',
-      });
+      await setComboboxDropdownValue(
+        wrapper,
+        'input-dropdown-districtName',
+        'Lincoln District, Little Rock',
+      );
 
       await checkErrorIsNotVisible(wrapper, 'District name is required');
 
@@ -239,10 +243,11 @@ describe('DistrictRegistration Form Validation', () => {
       );
       await checkErrorIsVisible(wrapper, 'Please select a state');
 
-      await fillTheForm(wrapper, {
-        state: 'Florida',
-        districtName: '',
-      });
+      await setComboboxDropdownValue(
+        wrapper,
+        'input-dropdown-state',
+        'Florida',
+      );
 
       await checkErrorIsNotVisible(wrapper, 'Please select a state');
     });

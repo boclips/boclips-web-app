@@ -47,23 +47,19 @@ export async function fillRegistrationForm(
     data.instructionalVideoSource,
   );
 
-  await setComboboxDropdownValue(
+  await setMultiComboboxDropdownValue(
     wrapper,
     'input-dropdown-videoResourceBarriers',
     data.videoResourceBarriers[0],
   );
 
-  await setComboboxDropdownValue(
+  await setMultiComboboxDropdownValue(
     wrapper,
     'input-dropdown-subjects',
     data.subjects[0],
   );
 
-  await setComboboxDropdownValue(
-    wrapper,
-    'input-dropdown-reason',
-    data.reason[0],
-  );
+  await setComboboxDropdownValue(wrapper, 'input-dropdown-reason', data.reason);
 
   if (data.hasAcceptedEducationalUseTerms) {
     checkEducationalUseAgreement(wrapper);
@@ -88,6 +84,25 @@ export async function setComboboxDropdownValue(
     const option = await wrapper.findByText(value);
     expect(option).toBeVisible();
     await userEvent.click(option);
+  }
+}
+
+export async function setMultiComboboxDropdownValue(
+  wrapper: RenderResult,
+  dropdownId: string,
+  value: string,
+) {
+  if (value) {
+    const combobox = await within(wrapper.getByTestId(dropdownId)).findByRole(
+      'combobox',
+    );
+    await userEvent.clear(combobox);
+    await userEvent.type(combobox, value);
+
+    const option = await wrapper.findByText(value);
+    expect(option).toBeVisible();
+    await userEvent.click(option);
+    await userEvent.tab();
   }
 }
 
