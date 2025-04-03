@@ -10,6 +10,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import ChevronDownIcon from 'src/resources/icons/chevron-down.svg';
 import ErrorIcon from 'src/resources/icons/error-icon.svg';
+import Checkmark from 'src/resources/icons/checkmark.svg';
 import s from './style.module.less';
 
 export interface ComboboxItem {
@@ -51,6 +52,10 @@ export const MultiCombobox = ({
     );
   }, [query]);
 
+  const isSelected = (item: ComboboxItem) => {
+    return selectedItems.some((selected) => selected.value === item.value);
+  };
+
   return (
     <Field className="flex flex-col w-full space-y-2" data-qa={dataQa}>
       {label && <Label>{label}</Label>}
@@ -63,19 +68,13 @@ export const MultiCombobox = ({
         }}
         onClose={() => setQuery('')}
       >
-        //TODO: remove later after debugging
-        {selectedItems.length > 0 && (
-          <ul>
-            {selectedItems.map((item) => (
-              <li key={item.value}>{item.label}</li>
-            ))}
-          </ul>
-        )}
         <div className="relative">
           <ComboboxInput
             aria-label={label}
             className={`${s.combobox} ${isError ? s.error : ''}`}
-            displayValue={(item: ComboboxItem) => item?.label ?? ''}
+            displayValue={(i: ComboboxItem[]) =>
+              i?.map((item) => item.label).join(', ')
+            }
             onChange={(event) => setQuery(event.target.value)}
             placeholder={placeholder}
             data-qa="select"
@@ -95,7 +94,10 @@ export const MultiCombobox = ({
               value={item}
               className={s.comboboxOption}
             >
-              {item.dropdownLabel ?? item.label}
+              <Checkmark
+                className={isSelected(item) ? 'visible' : 'invisible'}
+              />
+              <span>{item.dropdownLabel ?? item.label}</span>
             </ComboboxOption>
           ))}
         </ComboboxOptions>
