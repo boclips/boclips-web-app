@@ -23,7 +23,10 @@ import {
   USAGE_FREQUENCY,
   VIDEO_RESOURCE_BARRIERS,
 } from 'src/components/classroom/registration/district/registrationForm/registrationFormFields/dropdownValues';
-import { MultiCombobox, MultiComboboxItem } from "src/components/common/headless/MultiCombobox";
+import {
+  MultiCombobox,
+  MultiComboboxItem,
+} from 'src/components/common/headless/MultiCombobox';
 
 const passwordConfig = {
   classNames: {
@@ -213,7 +216,11 @@ const DistrictRegistrationFormFields = ({
         <div className="flex flex-row w-full">
           <InputText
             id="input-password"
-            onChange={(value) => handleChange('password', value)}
+            onChange={(value) => {
+              console.log('regData', registrationData);
+              console.log(validationErrors);
+              handleChange('password', value);
+            }}
             inputType="password"
             placeholder="*********"
             className={c(s.input, 'flex-1 mr-4')}

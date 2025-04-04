@@ -11,7 +11,7 @@ const ClassroomDistrictRegistrationView = () => {
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
   return (
     <>
-      <Helmet title="Register" />
+      <Helmet title="District Register" />
       <Layout
         rowsSetup="grid-rows-registration-view"
         responsiveLayout

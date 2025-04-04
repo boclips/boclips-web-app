@@ -3,9 +3,9 @@ import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { Constants } from 'src/AppConstants';
 import ClassroomRegistrationForm from 'src/components/classroom/registration/user/registrationForm/ClassroomRegistrationForm';
 import ClassroomEmailVerificationPrompt from 'src/components/classroom/registration/user/ClassroomEmailVerificationPrompt';
-import ClassroomInfo from 'src/components/classroom/registration/user/classroomInfo/ClassroomInfo';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import ClassroomLoginPrompt from 'src/components/classroom/registration/user/ClassroomLoginPrompt';
+import ClassroomInfo from 'src/components/classroom/registration/common/classroomInfo/ClassroomInfo';
 
 const CAPTCHA_TOKEN = Constants.CAPTCHA_TOKEN;
 
