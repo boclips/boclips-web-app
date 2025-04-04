@@ -1,4 +1,4 @@
-import '../mockRecaptcha';
+import '../common/mockRecaptcha';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { render, screen } from '@testing-library/react';
