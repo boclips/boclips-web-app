@@ -9,7 +9,7 @@ interface EmailVerificationPromptProps {
   userEmail: string;
 }
 
-const ClassroomEmailVerificationPrompt = ({
+const DistrictEmailVerificationPrompt = ({
   userEmail,
 }: EmailVerificationPromptProps) => {
   return (
@@ -39,4 +39,4 @@ const ClassroomEmailVerificationPrompt = ({
   );
 };
 
-export default ClassroomEmailVerificationPrompt;
+export default DistrictEmailVerificationPrompt;

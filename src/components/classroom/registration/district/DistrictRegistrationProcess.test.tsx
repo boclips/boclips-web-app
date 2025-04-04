@@ -6,46 +6,60 @@ import { fireEvent, render, RenderResult } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { ToastContainer } from 'react-toastify';
-import { ClassroomRegistrationData } from 'src/components/classroom/registration/user/registrationForm/ClassroomRegistrationForm';
+import { DistrictRegistrationData } from 'src/components/classroom/registration/district/registrationForm/DistrictRegistrationForm';
 import React from 'react';
-import {
-  fillRegistrationForm,
-  SchoolMode,
-} from 'src/components/classroom/registration/user/registrationForm/classroomRegistrationFormTestHelpers';
-import { ClassroomRegistration } from 'src/components/classroom/registration/user/ClassroomRegistration';
+import { fillRegistrationForm } from 'src/components/classroom/registration/district/registrationForm/districtRegistrationFormTestHelpers';
+import { DistrictRegistration } from 'src/components/classroom/registration/district/DistrictRegistration';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 
 describe('registration process', () => {
+  const fakeClient = new FakeBoclipsClient();
+
   async function fillTheForm(
     wrapper: RenderResult,
-    change?: Partial<ClassroomRegistrationData>,
-    schoolMode: SchoolMode = SchoolMode.FREE_TEXT,
+    change?: Partial<DistrictRegistrationData>,
   ) {
-    const defaults: ClassroomRegistrationData = {
+    const defaults: DistrictRegistrationData = {
       firstName: 'LeBron',
       lastName: 'James',
       email: 'lj@nba.com',
       password: 'p@ss1234',
       confirmPassword: 'p@ss1234',
-      schoolName: 'Los Angeles Lakers',
-      country: 'Poland',
-      state: '',
+      districtName: 'Los Angeles Lakers, Little Rock',
+      state: 'California',
       hasAcceptedEducationalUseTerms: true,
       hasAcceptedTermsAndConditions: true,
+      ncesDistrictId: '',
+      usageFrequency: 'Very rarely',
+      instructionalVideoSource: 'YouTube',
+      videoResourceBarriers: ['Misinformation/disinformation'],
+      subjects: ['Math'],
+      reason: 'It’s hard to find standards aligned videos',
     };
 
-    await fillRegistrationForm(wrapper, { ...defaults, ...change }, schoolMode);
+    await fillRegistrationForm(wrapper, { ...defaults, ...change });
   }
+
+  beforeEach(() => {
+    fakeClient.districts.setUsaDistricts({
+      CA: [
+        {
+          externalId: 'district-1',
+          name: 'Los Angeles Lakers',
+          city: 'Little Rock',
+        },
+      ],
+    });
+  });
 
   it('displays "check your email" view after successful registration when email validation required', async () => {
     window.Environment = {
       REGISTRATION_CLASSROOM_REQUIRE_EMAIL_VERIFICATION: 'true',
     };
 
-    const fakeClient = new FakeBoclipsClient();
-    jest.spyOn(fakeClient.users, 'createClassroomUser').mockImplementation(() =>
+    jest.spyOn(fakeClient.users, 'createDistrictUser').mockImplementation(() =>
       Promise.resolve(
         UserFactory.sample({
           email: 'test@boclips.com',
@@ -66,7 +80,7 @@ describe('registration process', () => {
           <Router location={history.location} navigator={history}>
             <ToastContainer />
             <GoogleReCaptchaProvider reCaptchaKey="123">
-              <ClassroomRegistration />
+              <DistrictRegistration />
             </GoogleReCaptchaProvider>
           </Router>
         </BoclipsClientProvider>
@@ -92,8 +106,7 @@ describe('registration process', () => {
       REGISTRATION_CLASSROOM_REQUIRE_EMAIL_VERIFICATION: 'false',
     };
 
-    const fakeClient = new FakeBoclipsClient();
-    jest.spyOn(fakeClient.users, 'createClassroomUser').mockImplementation(() =>
+    jest.spyOn(fakeClient.users, 'createDistrictUser').mockImplementation(() =>
       Promise.resolve(
         UserFactory.sample({
           email: 'test@boclips.com',
@@ -114,7 +127,7 @@ describe('registration process', () => {
           <Router location={history.location} navigator={history}>
             <ToastContainer />
             <GoogleReCaptchaProvider reCaptchaKey="123">
-              <ClassroomRegistration />
+              <DistrictRegistration />
             </GoogleReCaptchaProvider>
           </Router>
         </BoclipsClientProvider>

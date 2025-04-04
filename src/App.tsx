@@ -87,10 +87,6 @@ const RegisterView = lazyWithRetry(
   () => import('src/views/register/RegisterView'),
 );
 
-const ClassroomRegisterView = lazyWithRetry(
-  () => import('src/views/classroom/register/ClassroomRegisterView'),
-);
-
 const MyProfileView = lazyWithRetry(
   () => import('src/views/profile/ProfileView'),
 );
@@ -288,18 +284,6 @@ const App = ({
                           isView
                         >
                           <RegisterView />
-                        </FeatureGate>
-                      }
-                    />
-                    <Route
-                      path="/classroom/register"
-                      element={
-                        <FeatureGate
-                          feature="BO_WEB_APP_DEV"
-                          fallback={<NotFound />}
-                          isView
-                        >
-                          <ClassroomRegisterView />
                         </FeatureGate>
                       }
                     />

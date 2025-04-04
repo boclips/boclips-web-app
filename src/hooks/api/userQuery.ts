@@ -4,6 +4,7 @@ import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientP
 import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
 import {
   CreateClassroomUserRequest,
+  CreateDistrictUserRequest,
   CreateTrialUserRequest,
   CreateUserRequest,
 } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
@@ -61,6 +62,14 @@ export const useAddNewClassroomUser = () => {
 
   return useMutation((userRequest: CreateClassroomUserRequest) =>
     client.users.createClassroomUser(userRequest),
+  );
+};
+
+export const useAddNewDistrictUser = () => {
+  const client = useBoclipsClient();
+
+  return useMutation((userRequest: CreateDistrictUserRequest) =>
+    client.users.createDistrictUser(userRequest),
   );
 };
 

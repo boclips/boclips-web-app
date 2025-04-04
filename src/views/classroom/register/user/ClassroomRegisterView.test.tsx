@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { MemoryRouter } from 'react-router-dom';
-import ClassroomRegisterView from 'src/views/classroom/register/ClassroomRegisterView';
+import ClassroomRegisterView from 'src/views/classroom/register/user/ClassroomRegisterView';
 
 describe('ClassroomRegisterView', () => {
   it('displays Register as window title for /classroom/register', async () => {

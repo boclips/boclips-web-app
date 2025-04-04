@@ -1,41 +1,54 @@
 import React, { useRef, useState } from 'react';
 import { Typography } from '@boclips-ui/typography';
-import { useAddNewClassroomUser } from 'src/hooks/api/userQuery';
+import { useAddNewDistrictUser } from 'src/hooks/api/userQuery';
 import { UserType } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
-import CreateAccountButton from 'src/components/classroom/registration/user/registrationForm/createAccountButton/CreateAccountButton';
-import FormValidator from 'src/components/classroom/registration/user/registrationForm/validation/validation';
+import CreateAccountButton from 'src/components/classroom/registration/common/createAccountButton/CreateAccountButton';
+import FormValidator from 'src/components/classroom/registration/district/registrationForm/validation/validation';
 import { Link } from 'react-router-dom';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import ClassroomRegistrationFormFields from './registrationFormFields/ClassroomRegistrationFormFields';
+import DistrictRegistrationFormFields from './registrationFormFields/DistrictRegistrationFormFields';
 import s from '../style.module.less';
 
-export interface ClassroomRegistrationData {
+export interface DistrictRegistrationData {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
   confirmPassword: string;
-  schoolName: string;
-  country: string;
   state: string;
+  districtName: string;
+  ncesDistrictId: string;
+  usageFrequency: string;
+  instructionalVideoSource: string;
+  videoResourceBarriers: string[];
+  subjects: string[];
+  reason: string;
   hasAcceptedEducationalUseTerms: boolean;
   hasAcceptedTermsAndConditions: boolean;
-  ncesSchoolId?: string;
 }
 
-const emptyRegistrationData = (): ClassroomRegistrationData => {
+export interface ValidationErrors {
+  [key: string]: { isError: boolean; errorMessage: string };
+}
+
+const emptyRegistrationData = (): DistrictRegistrationData => {
   return {
     firstName: '',
     lastName: '',
     email: '',
     password: '',
     confirmPassword: '',
-    schoolName: '',
-    country: '',
     state: '',
+    districtName: '',
+    ncesDistrictId: '',
+    usageFrequency: '',
+    instructionalVideoSource: '',
+    videoResourceBarriers: [],
+    subjects: [],
+    reason: '',
     hasAcceptedEducationalUseTerms: false,
     hasAcceptedTermsAndConditions: false,
   };
@@ -45,11 +58,11 @@ interface RegistrationFormProps {
   onRegistrationFinished: (userEmail: string) => void;
 }
 
-const ClassroomRegistrationForm = ({
+const DistrictRegistrationForm = ({
   onRegistrationFinished,
 }: RegistrationFormProps) => {
-  const { mutate: createClassroomUser, isLoading: isClassroomUserCreating } =
-    useAddNewClassroomUser();
+  const { mutate: createDistrictUser, isLoading: isDistrictUserCreating } =
+    useAddNewDistrictUser();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const handleReCaptchaVerify = async () => {
@@ -60,10 +73,11 @@ const ClassroomRegistrationForm = ({
   };
 
   const [registrationData, setRegistrationData] =
-    useState<ClassroomRegistrationData>(emptyRegistrationData());
+    useState<DistrictRegistrationData>(emptyRegistrationData());
 
-  const [validationErrors, setValidationErrors] =
-    useState<ClassroomRegistrationData>(emptyRegistrationData());
+  const [validationErrors, setValidationErrors] = useState<ValidationErrors>(
+    {},
+  );
 
   const handleChange = (
     fieldName: string,
@@ -89,12 +103,19 @@ const ClassroomRegistrationForm = ({
     }
   }
 
-  const setError = (fieldName: string, value: boolean | string) => {
-    setValidationErrors((prevState) => ({ ...prevState, [fieldName]: value }));
+  const setError = (
+    fieldName: string,
+    isError: boolean,
+    errorMessage: string,
+  ) => {
+    setValidationErrors((prevState) => ({
+      ...prevState,
+      [fieldName]: { isError, errorMessage },
+    }));
   };
 
   const clearError = (fieldName: string) => {
-    setError(fieldName, '');
+    setError(fieldName, false, '');
   };
 
   const handleUserCreation = async () => {
@@ -102,22 +123,29 @@ const ClassroomRegistrationForm = ({
     const isFormValid = new FormValidator(registrationData, setError).isValid();
 
     if (isFormValid && token) {
-      createClassroomUser(
+      createDistrictUser(
         {
           email: registrationData.email,
           firstName: registrationData.firstName,
           lastName: registrationData.lastName,
           password: registrationData.password,
           recaptchaToken: token,
-          type: UserType.classroomUser,
-          schoolName: registrationData.schoolName,
-          country: registrationData.country,
+          type: UserType.districtUser,
+          districtName: registrationData.districtName,
+          country: 'USA',
           state: registrationData.state,
           hasAcceptedEducationalUseTerms:
             registrationData.hasAcceptedEducationalUseTerms,
           hasAcceptedTermsAndConditions:
             registrationData.hasAcceptedTermsAndConditions,
-          ncesSchoolId: registrationData.ncesSchoolId,
+          ncesDistrictId: registrationData.ncesDistrictId,
+          districtPilotInformation: {
+            usageFrequency: registrationData.usageFrequency,
+            instructionalVideoSource: registrationData.instructionalVideoSource,
+            videoResourceBarriers: registrationData.videoResourceBarriers,
+            subjects: registrationData.subjects,
+            reason: registrationData.reason,
+          },
         },
         {
           onSuccess: (user: User) => {
@@ -128,12 +156,13 @@ const ClassroomRegistrationForm = ({
 
             switch (errorOrigin) {
               case 'USER':
-                setError('email', 'Email already exists');
+                setError('email', true, 'Email already exists');
                 break;
               case 'ACCOUNT':
                 setError(
-                  'schoolName',
-                  'Cannot use this school name. Try another or contact us.',
+                  'districtName',
+                  true,
+                  'Cannot use this district name. Try another or contact us.',
                 );
                 break;
               default:
@@ -144,9 +173,9 @@ const ClassroomRegistrationForm = ({
                 );
             }
 
-            AnalyticsFactory.pendo().trackClassroomAccountCreationFailure(
+            AnalyticsFactory.pendo().trackClassroomDistrictAccountCreationFailure(
               registrationData.email,
-              registrationData.schoolName,
+              registrationData.districtName,
               error?.message,
             );
           },
@@ -160,20 +189,21 @@ const ClassroomRegistrationForm = ({
   return (
     <main ref={mainRef} tabIndex={-1} className={s.formInputsWrapper}>
       <section className={s.formHeader}>
-        <Typography.H2>Create a trial account</Typography.H2>
+        <Typography.H2>Create a US Pilot Trial Account</Typography.H2>
         <Typography.Body>
-          For a limited time, Boclips Classroom is available to educators
-          through the end of the 2024–2025 school year with a free trial.
+          Please register below to create your district pilot trial account.
         </Typography.Body>
         <Typography.Body>
-          Interested in a school/district pilot?
+          <Typography.Link type="inline-blue">
+            <a href="https://www.boclips.com/contact">
+              Schedule a consultation
+            </a>
+          </Typography.Link>{' '}
+          for more information
         </Typography.Body>
-        <Typography.Link type="inline-blue">
-          <a href="https://www.boclips.com/contact">Schedule a consultation</a>
-        </Typography.Link>
       </section>
 
-      <ClassroomRegistrationFormFields
+      <DistrictRegistrationFormFields
         handleChange={handleChange}
         validationErrors={validationErrors}
         registrationData={registrationData}
@@ -181,7 +211,7 @@ const ClassroomRegistrationForm = ({
 
       <CreateAccountButton
         onClick={handleUserCreation}
-        isLoading={isClassroomUserCreating}
+        isLoading={isDistrictUserCreating}
       />
 
       <section className={s.logIn}>
@@ -220,4 +250,4 @@ const ClassroomRegistrationForm = ({
   );
 };
 
-export default ClassroomRegistrationForm;
+export default DistrictRegistrationForm;

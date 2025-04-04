@@ -1,27 +1,38 @@
 import '../../common/mockRecaptcha';
 import { render, RenderResult, waitFor } from '@testing-library/react';
 import React from 'react';
-import ClassroomRegistrationForm, {
-  ClassroomRegistrationData,
-} from 'src/components/classroom/registration/user/registrationForm/ClassroomRegistrationForm';
+import DistrictRegistrationForm, {
+  DistrictRegistrationData,
+} from 'src/components/classroom/registration/district/registrationForm/DistrictRegistrationForm';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import {
   fillRegistrationForm,
-  SchoolMode,
-  setDropdownValue,
-} from 'src/components/classroom/registration/user/registrationForm/classroomRegistrationFormTestHelpers';
+  setComboboxDropdownValue,
+} from 'src/components/classroom/registration/district/registrationForm/districtRegistrationFormTestHelpers';
 import { BrowserRouter as Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
-describe('ClassroomRegistration Form Validation', () => {
+describe('DistrictRegistration Form Validation', () => {
   const fakeClient = new FakeBoclipsClient();
-  const createClassroomUserSpy = jest.spyOn(
+  const createDistrictUserSpy = jest.spyOn(
     fakeClient.users,
-    'createClassroomUser',
+    'createDistrictUser',
   );
+
+  beforeEach(() => {
+    fakeClient.districts.setUsaDistricts({
+      CA: [
+        {
+          externalId: 'district-1',
+          name: 'Los Angeles Lakers',
+          city: 'Los Angeles',
+        },
+      ],
+    });
+  });
 
   it('first name cannot be empty', async () => {
     const wrapper = renderRegistrationForm();
@@ -35,7 +46,7 @@ describe('ClassroomRegistration Form Validation', () => {
     await checkErrorIsVisible(wrapper, 'First name is required');
 
     await waitFor(() => {
-      expect(createClassroomUserSpy).not.toBeCalled();
+      expect(createDistrictUserSpy).not.toBeCalled();
     });
   });
 
@@ -51,7 +62,7 @@ describe('ClassroomRegistration Form Validation', () => {
     await checkErrorIsVisible(wrapper, 'Last name is required');
 
     await waitFor(() => {
-      expect(createClassroomUserSpy).not.toBeCalled();
+      expect(createDistrictUserSpy).not.toBeCalled();
     });
   });
 
@@ -68,7 +79,7 @@ describe('ClassroomRegistration Form Validation', () => {
       await checkErrorIsVisible(wrapper, 'Email is required');
 
       await waitFor(() => {
-        expect(createClassroomUserSpy).not.toBeCalled();
+        expect(createDistrictUserSpy).not.toBeCalled();
       });
     });
 
@@ -88,73 +99,64 @@ describe('ClassroomRegistration Form Validation', () => {
       await checkErrorIsVisible(wrapper, 'Please enter a valid email address');
 
       await waitFor(() => {
-        expect(createClassroomUserSpy).not.toBeCalled();
+        expect(createDistrictUserSpy).not.toBeCalled();
       });
     });
   });
 
-  describe('school name', () => {
-    it('school name cannot be empty', async () => {
+  describe('district name', () => {
+    it('district name cannot be empty', async () => {
       const wrapper = renderRegistrationForm();
 
-      await fillTheForm(wrapper, { schoolName: '' });
+      await fillTheForm(wrapper, { districtName: '' });
 
-      await checkErrorIsNotVisible(wrapper, 'School name is required');
+      await checkErrorIsNotVisible(wrapper, 'District name is required');
       await userEvent.click(
         wrapper.getByRole('button', { name: 'Create Account' }),
       );
-      await checkErrorIsVisible(wrapper, 'School name is required');
+      await checkErrorIsVisible(wrapper, 'District name is required');
 
       await waitFor(() => {
-        expect(createClassroomUserSpy).not.toBeCalled();
+        expect(createDistrictUserSpy).not.toBeCalled();
       });
     });
 
-    it('clears error when school name is filled', async () => {
-      fakeClient.schools.setUsaSchools({
+    it('clears error when district name is filled', async () => {
+      fakeClient.districts.setUsaDistricts({
         AR: [
           {
-            externalId: 'school-1',
-            name: 'Lincoln High School',
-            city: 'Little Rock',
+            externalId: 'district-1',
+            name: 'Lincoln District',
+            city: 'Los Angeles',
           },
           {
-            externalId: 'school-2',
-            name: 'Harris Elementary School',
+            externalId: 'district-2',
+            name: 'Harris District',
             city: 'Hot Springs',
           },
         ],
       });
       const wrapper = renderRegistrationForm();
-      await fillTheForm(
-        wrapper,
-        {
-          country: 'United States of America',
-          state: 'Arkansas',
-          schoolName: '',
-        },
-        SchoolMode.DROPDOWN_VALUE,
-      );
+      await fillTheForm(wrapper, {
+        state: 'Arkansas',
+        districtName: '',
+      });
       await userEvent.click(
         wrapper.getByRole('button', { name: 'Create Account' }),
       );
 
-      await checkErrorIsVisible(wrapper, 'School name is required');
+      await checkErrorIsVisible(wrapper, 'District name is required');
 
-      await fillTheForm(
+      await setComboboxDropdownValue(
         wrapper,
-        {
-          country: 'United States of America',
-          state: 'Arkansas',
-          schoolName: 'Lincoln High School, Little Rock',
-        },
-        SchoolMode.DROPDOWN_VALUE,
+        'input-dropdown-districtName',
+        'Lincoln District, Los Angeles',
       );
 
-      await checkErrorIsNotVisible(wrapper, 'School name is required');
+      await checkErrorIsNotVisible(wrapper, 'District name is required');
 
       await waitFor(() => {
-        expect(createClassroomUserSpy).not.toBeCalled();
+        expect(createDistrictUserSpy).not.toBeCalled();
       });
     });
   });
@@ -171,7 +173,7 @@ describe('ClassroomRegistration Form Validation', () => {
       await checkErrorIsVisible(wrapper, '8 characters');
 
       await waitFor(() => {
-        expect(createClassroomUserSpy).not.toBeCalled();
+        expect(createDistrictUserSpy).not.toBeCalled();
       });
     });
 
@@ -191,7 +193,7 @@ describe('ClassroomRegistration Form Validation', () => {
       await checkErrorIsVisible(wrapper, '1 number');
 
       await waitFor(() => {
-        expect(createClassroomUserSpy).not.toBeCalled();
+        expect(createDistrictUserSpy).not.toBeCalled();
       });
     });
 
@@ -209,53 +211,14 @@ describe('ClassroomRegistration Form Validation', () => {
       await checkErrorIsVisible(wrapper, "Password doesn't match");
 
       await waitFor(() => {
-        expect(createClassroomUserSpy).not.toBeCalled();
+        expect(createDistrictUserSpy).not.toBeCalled();
       });
     });
   });
 
-  describe('country and state', () => {
-    it('country cannot be empty', async () => {
+  describe('state', () => {
+    it('state cannot be empty', async () => {
       const wrapper = renderRegistrationForm();
-
-      await fillTheForm(wrapper, { country: '', schoolName: '' });
-
-      await checkErrorIsNotVisible(wrapper, 'Please select a country');
-      await userEvent.click(
-        wrapper.getByRole('button', { name: 'Create Account' }),
-      );
-      await checkErrorIsVisible(wrapper, 'Please select a country');
-
-      await waitFor(() => {
-        expect(createClassroomUserSpy).not.toBeCalled();
-      });
-    });
-
-    it('clears error when country is filled', async () => {
-      const wrapper = renderRegistrationForm();
-      await userEvent.click(
-        wrapper.getByRole('button', { name: 'Create Account' }),
-      );
-
-      await checkErrorIsVisible(wrapper, 'Please select a country');
-
-      await fillTheForm(wrapper, {
-        country: 'India',
-        schoolName: '',
-      });
-
-      await checkErrorIsNotVisible(wrapper, 'Please select a country');
-    });
-
-    it('states cannot be empty when country is USA', async () => {
-      const wrapper = renderRegistrationForm();
-
-      await setDropdownValue(
-        wrapper,
-        'input-dropdown-country',
-        'United States of America',
-      );
-      await checkErrorIsNotVisible(wrapper, 'Please select a state');
 
       await userEvent.click(
         wrapper.getByRole('button', { name: 'Create Account' }),
@@ -263,7 +226,7 @@ describe('ClassroomRegistration Form Validation', () => {
       await checkErrorIsVisible(wrapper, 'Please select a state');
 
       await waitFor(() => {
-        expect(createClassroomUserSpy).not.toBeCalled();
+        expect(createDistrictUserSpy).not.toBeCalled();
       });
     });
 
@@ -271,9 +234,8 @@ describe('ClassroomRegistration Form Validation', () => {
       const wrapper = renderRegistrationForm();
 
       await fillTheForm(wrapper, {
-        country: 'United States of America',
         state: '',
-        schoolName: '',
+        districtName: '',
       });
 
       await userEvent.click(
@@ -281,11 +243,11 @@ describe('ClassroomRegistration Form Validation', () => {
       );
       await checkErrorIsVisible(wrapper, 'Please select a state');
 
-      await fillTheForm(wrapper, {
-        country: 'United States of America',
-        state: 'Florida',
-        schoolName: '',
-      });
+      await setComboboxDropdownValue(
+        wrapper,
+        'input-dropdown-state',
+        'Florida',
+      );
 
       await checkErrorIsNotVisible(wrapper, 'Please select a state');
     });
@@ -304,7 +266,7 @@ describe('ClassroomRegistration Form Validation', () => {
       await wrapper.findByText('Educational use agreement is required'),
     ).toBeVisible();
 
-    expect(createClassroomUserSpy).not.toBeCalled();
+    expect(createDistrictUserSpy).not.toBeCalled();
   });
 
   it('prompts user to check boclips Ts and Cs checkbox if not checked and user clicks submit', async () => {
@@ -322,12 +284,12 @@ describe('ClassroomRegistration Form Validation', () => {
       ),
     ).toBeVisible();
 
-    expect(createClassroomUserSpy).not.toBeCalled();
+    expect(createDistrictUserSpy).not.toBeCalled();
   });
 
   it('displays error message if email already exists', async () => {
     jest
-      .spyOn(fakeClient.users, 'createClassroomUser')
+      .spyOn(fakeClient.users, 'createDistrictUser')
       .mockImplementation(() =>
         Promise.reject(new Error('User already exists for account: Boclips')),
       );
@@ -344,13 +306,15 @@ describe('ClassroomRegistration Form Validation', () => {
 
   it('displays error message if account name already exists', async () => {
     jest
-      .spyOn(fakeClient.users, 'createClassroomUser')
+      .spyOn(fakeClient.users, 'createDistrictUser')
       .mockImplementation(() =>
-        Promise.reject(new Error('Account Boclips already exists')),
+        Promise.reject(
+          new Error('Account Los Angeles Lakers, Los Angeles already exists'),
+        ),
       );
 
     const wrapper = renderRegistrationForm();
-    await fillTheForm(wrapper, { schoolName: 'Boclips' });
+    await fillTheForm(wrapper, {});
 
     await userEvent.click(
       wrapper.getByRole('button', { name: 'Create Account' }),
@@ -358,39 +322,35 @@ describe('ClassroomRegistration Form Validation', () => {
 
     expect(
       await wrapper.findByText(
-        'Cannot use this school name. Try another or contact us.',
+        'Cannot use this district name. Try another or contact us.',
       ),
     ).toBeVisible();
   });
 
-  it('errors disappear when form is fixed', async () => {
+  it('clears errors when form is fixed', async () => {
     const wrapper = renderRegistrationForm();
-
-    await fillTheForm(wrapper, {
-      firstName: '',
-      lastName: '',
-      password: '',
-      confirmPassword: '',
-      schoolName: '',
-      country: '',
-      email: '',
-      hasAcceptedEducationalUseTerms: false,
-      hasAcceptedTermsAndConditions: false,
-    });
 
     await userEvent.click(
       wrapper.getByRole('button', { name: 'Create Account' }),
     );
 
+    await checkErrorIsVisible(wrapper, 'Please select a state');
     await checkErrorIsVisible(wrapper, 'First name is required');
     await checkErrorIsVisible(wrapper, 'Last name is required');
     await checkErrorIsVisible(wrapper, 'Email is required');
+    expect(wrapper.getAllByText('Password is required')[0]).toBeVisible();
     await checkErrorIsVisible(wrapper, '8 characters');
     await checkErrorIsVisible(wrapper, '1 capital letter');
-    await checkErrorIsVisible(wrapper, "Password doesn't match");
     await checkErrorIsVisible(wrapper, '1 special character');
     await checkErrorIsVisible(wrapper, '1 number');
-    await checkErrorIsVisible(wrapper, 'Please select a country');
+    await checkErrorIsVisible(wrapper, 'Please select a usage frequency');
+    await checkErrorIsVisible(
+      wrapper,
+      'Please select an instructional video source',
+    );
+    await checkErrorIsVisible(wrapper, 'Please select one or more barriers');
+    await checkErrorIsVisible(wrapper, 'Please select one or more subjects');
+    await checkErrorIsVisible(wrapper, 'Please select a reason');
     await checkErrorIsVisible(wrapper, 'Educational use agreement is required');
     await checkErrorIsVisible(
       wrapper,
@@ -402,16 +362,19 @@ describe('ClassroomRegistration Form Validation', () => {
       wrapper.getByRole('button', { name: 'Create Account' }),
     );
 
+    await checkErrorIsNotVisible(wrapper, 'Please select a state');
     await checkErrorIsNotVisible(wrapper, 'First name is required');
     await checkErrorIsNotVisible(wrapper, 'Last name is required');
     await checkErrorIsNotVisible(wrapper, 'Email is required');
-    await checkErrorIsNotVisible(wrapper, 'School name is required');
     await checkErrorIsNotVisible(wrapper, 'Password is required');
-    await checkErrorIsNotVisible(wrapper, 'Please select a country');
+    await checkErrorIsNotVisible(wrapper, 'Please select a usage frequency');
     await checkErrorIsNotVisible(
       wrapper,
-      'Please select a type of organisation',
+      'Please select an instructional video source',
     );
+    await checkErrorIsNotVisible(wrapper, 'Please select one or more barriers');
+    await checkErrorIsNotVisible(wrapper, 'Please select one or more subjects');
+    await checkErrorIsNotVisible(wrapper, 'Please select a reason');
     await checkErrorIsNotVisible(
       wrapper,
       'Educational use agreement is required',
@@ -422,7 +385,7 @@ describe('ClassroomRegistration Form Validation', () => {
     );
 
     await waitFor(() => {
-      expect(createClassroomUserSpy).toBeCalled();
+      expect(createDistrictUserSpy).toBeCalled();
     });
   });
 
@@ -432,7 +395,7 @@ describe('ClassroomRegistration Form Validation', () => {
         <QueryClientProvider client={new QueryClient()}>
           <BoclipsClientProvider client={fakeClient}>
             <GoogleReCaptchaProvider reCaptchaKey="123">
-              <ClassroomRegistrationForm onRegistrationFinished={jest.fn()} />
+              <DistrictRegistrationForm onRegistrationFinished={jest.fn()} />
             </GoogleReCaptchaProvider>
           </BoclipsClientProvider>
         </QueryClientProvider>
@@ -442,23 +405,27 @@ describe('ClassroomRegistration Form Validation', () => {
 
   async function fillTheForm(
     wrapper: RenderResult,
-    change?: Partial<ClassroomRegistrationData>,
-    schoolMode: SchoolMode = SchoolMode.FREE_TEXT,
+    change?: Partial<DistrictRegistrationData>,
   ) {
-    const defaults: ClassroomRegistrationData = {
+    const defaults: DistrictRegistrationData = {
       firstName: 'Lebron',
       lastName: 'James',
       email: 'lj@nba.com',
       password: 'p@ssw0rd',
       confirmPassword: 'p@ssw0rd',
-      schoolName: 'Los Angeles Lakers',
-      country: 'Poland',
-      state: '',
+      districtName: 'Los Angeles Lakers, Los Angeles',
+      state: 'California',
       hasAcceptedEducationalUseTerms: true,
       hasAcceptedTermsAndConditions: true,
+      ncesDistrictId: '',
+      usageFrequency: 'Very rarely',
+      instructionalVideoSource: 'YouTube',
+      videoResourceBarriers: ['Misinformation/disinformation'],
+      subjects: ['Math'],
+      reason: 'It’s hard to find standards aligned videos',
     };
 
-    await fillRegistrationForm(wrapper, { ...defaults, ...change }, schoolMode);
+    await fillRegistrationForm(wrapper, { ...defaults, ...change });
   }
 
   async function checkErrorIsNotVisible(
