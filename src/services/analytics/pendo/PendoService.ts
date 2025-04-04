@@ -38,11 +38,7 @@ export class PendoService {
     schoolName: string,
     errorMessage?: string,
   ) {
-    if (
-      this.pendoInstance &&
-      this.pendoInstance.isReady &&
-      this.pendoInstance.isReady()
-    ) {
+    if (this.pendoInstanceIsReady()) {
       this.pendoInstance.track('Classroom Registration Failure', {
         email,
         schoolName,
@@ -56,11 +52,7 @@ export class PendoService {
     districtName: string,
     errorMessage?: string,
   ) {
-    if (
-      this.pendoInstance &&
-      this.pendoInstance.isReady &&
-      this.pendoInstance.isReady()
-    ) {
+    if (this.pendoInstanceIsReady()) {
       this.pendoInstance.track('Classroom District Registration Failure', {
         email,
         districtName,
@@ -70,22 +62,22 @@ export class PendoService {
   }
 
   public trackAssistantEntryPointUsed(entryPoint: string) {
-    if (
-      this.pendoInstance &&
-      this.pendoInstance.isReady &&
-      this.pendoInstance.isReady()
-    ) {
+    if (this.pendoInstanceIsReady()) {
       this.pendoInstance.track('Assistant Entry Point Used', { entryPoint });
     }
   }
 
   public trackAssistantSuggestionClicked(suggestion: string) {
-    if (
+    if (this.pendoInstanceIsReady()) {
+      this.pendoInstance.track('Assistant Suggestion Clicked', { suggestion });
+    }
+  }
+
+  private pendoInstanceIsReady(): boolean {
+    return (
       this.pendoInstance &&
       this.pendoInstance.isReady &&
       this.pendoInstance.isReady()
-    ) {
-      this.pendoInstance.track('Assistant Suggestion Clicked', { suggestion });
-    }
+    );
   }
 }
