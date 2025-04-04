@@ -78,4 +78,14 @@ export class PendoService {
       this.pendoInstance.track('Assistant Entry Point Used', { entryPoint });
     }
   }
+
+  public trackAssistantSuggestionClicked(suggestion: string) {
+    if (
+      this.pendoInstance &&
+      this.pendoInstance.isReady &&
+      this.pendoInstance.isReady()
+    ) {
+      this.pendoInstance.track('Assistant Suggestion Clicked', { suggestion });
+    }
+  }
 }
