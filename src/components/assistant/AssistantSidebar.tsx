@@ -3,6 +3,7 @@ import Button from '@boclips-ui/button';
 import s from 'src/components/assistant/style.module.less';
 import { useAssistantContextProvider } from 'src/components/assistant/context/assistantContextProvider';
 import NewConversationIcon from 'resources/icons/new-conversation.svg';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 
 const AssistantSidebar = () => {
   const {
@@ -19,6 +20,7 @@ const AssistantSidebar = () => {
     setConversationHistory([]);
     setConversationId('');
     setIsLoading(false);
+    AnalyticsFactory.pendo().trackAssistantConversationReset();
   };
 
   return (

@@ -171,6 +171,21 @@ describe('Pendo Service', () => {
     });
   });
 
+  it('tracks assistant conversation reset', () => {
+    const trackSpy = jest.fn();
+    const service = new PendoService({
+      ...window.pendo,
+      isReady(): boolean {
+        return true;
+      },
+      track: trackSpy,
+    });
+
+    service.trackAssistantConversationReset();
+
+    expect(trackSpy).lastCalledWith('Assistant Conversation Reset', {});
+  });
+
   it('tracks assistant video navigation from highlight', () => {
     const trackSpy = jest.fn();
     const service = new PendoService({

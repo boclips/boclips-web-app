@@ -73,6 +73,12 @@ export class PendoService {
     }
   }
 
+  public trackAssistantConversationReset() {
+    if (this.pendoInstanceIsReady()) {
+      this.pendoInstance.track('Assistant Conversation Reset', {});
+    }
+  }
+
   public trackAssistantVideoNavigatedTo(clipId: string, videoId: string) {
     if (this.pendoInstanceIsReady()) {
       this.pendoInstance.track('Assistant Video Navigated To', {
