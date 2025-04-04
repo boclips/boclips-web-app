@@ -68,4 +68,14 @@ export class PendoService {
       });
     }
   }
+
+  public trackAssistantEntryPointUsed(entryPoint: string) {
+    if (
+      this.pendoInstance &&
+      this.pendoInstance.isReady &&
+      this.pendoInstance.isReady()
+    ) {
+      this.pendoInstance.track('Assistant Entry Point Used', { entryPoint });
+    }
+  }
 }
