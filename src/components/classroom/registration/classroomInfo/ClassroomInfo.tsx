@@ -19,12 +19,17 @@ const features = [
   {
     title: 'Distraction-free',
     description:
-      'Share videos directly with students in a distraction free environment curated for learning.',
+      'Share videos directly with students in a distraction-free environment curated for learning.',
   },
   {
     title: 'Safe and reliable',
     description:
       'Content sourced directly from educational content creators, guaranteeing content provenance.',
+  },
+  {
+    title: 'Time-saving',
+    description:
+      'Get highlights that align with your teaching goals, so you don’t have to scrub through footage before sharing.',
   },
 ];
 
