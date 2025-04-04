@@ -73,6 +73,15 @@ export class PendoService {
     }
   }
 
+  public trackAssistantVideoNavigatedTo(clipId: string, videoId: string) {
+    if (this.pendoInstanceIsReady()) {
+      this.pendoInstance.track('Assistant Video Navigated To', {
+        clipId,
+        videoId,
+      });
+    }
+  }
+
   private pendoInstanceIsReady(): boolean {
     return (
       this.pendoInstance &&
