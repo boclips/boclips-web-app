@@ -5,7 +5,7 @@ import { render, screen } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import React from 'react';
-import { ClassroomRegistration } from 'src/components/classroom/registration/ClassroomRegistration';
+import { ClassroomRegistration } from 'src/components/classroom/registration/user/ClassroomRegistration';
 import {
   resizeToDesktop,
   resizeToMobile,

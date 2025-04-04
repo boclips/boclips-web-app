@@ -1,5 +1,5 @@
 import { fireEvent, RenderResult, within } from '@testing-library/react';
-import { ClassroomRegistrationData } from 'src/components/classroom/registration/registrationForm/ClassroomRegistrationForm';
+import { ClassroomRegistrationData } from 'src/components/classroom/registration/user/registrationForm/ClassroomRegistrationForm';
 import userEvent from '@testing-library/user-event';
 
 export enum SchoolMode {
