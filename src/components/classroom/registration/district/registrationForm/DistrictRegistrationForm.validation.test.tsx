@@ -366,11 +366,7 @@ describe('DistrictRegistration Form Validation', () => {
     await checkErrorIsNotVisible(wrapper, 'First name is required');
     await checkErrorIsNotVisible(wrapper, 'Last name is required');
     await checkErrorIsNotVisible(wrapper, 'Email is required');
-    await checkErrorIsNotVisible(wrapper, "Password doesn't match");
-    await checkErrorIsNotVisible(wrapper, '8 characters');
-    await checkErrorIsNotVisible(wrapper, '1 capital letter');
-    await checkErrorIsNotVisible(wrapper, '1 special character');
-    await checkErrorIsNotVisible(wrapper, '1 number');
+    await checkErrorIsNotVisible(wrapper, 'Password is required');
     await checkErrorIsNotVisible(wrapper, 'Please select a usage frequency');
     await checkErrorIsNotVisible(
       wrapper,
@@ -429,8 +425,7 @@ describe('DistrictRegistration Form Validation', () => {
       reason: 'It’s hard to find standards aligned videos',
     };
 
-    const data = { ...defaults, ...change };
-    await fillRegistrationForm(wrapper, data);
+    await fillRegistrationForm(wrapper, { ...defaults, ...change });
   }
 
   async function checkErrorIsNotVisible(

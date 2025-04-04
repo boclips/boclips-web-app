@@ -18,14 +18,6 @@ export async function fillRegistrationForm(
     wrapper.container.querySelector('[id="input-email"]'),
     data.email,
   );
-  await setTextFieldValue(
-    wrapper.container.querySelector('[id="input-password"]'),
-    data.password,
-  );
-  await setTextFieldValue(
-    wrapper.container.querySelector('[id="input-confirmPassword"]'),
-    data.confirmPassword,
-  );
 
   await setComboboxDropdownValue(wrapper, 'input-dropdown-state', data.state);
 
@@ -33,6 +25,15 @@ export async function fillRegistrationForm(
     wrapper,
     'input-dropdown-districtName',
     data.districtName,
+  );
+
+  await setTextFieldValue(
+    wrapper.container.querySelector('[id="input-password"]'),
+    data.password,
+  );
+  await setTextFieldValue(
+    wrapper.container.querySelector('[id="input-confirmPassword"]'),
+    data.confirmPassword,
   );
 
   await setComboboxDropdownValue(
