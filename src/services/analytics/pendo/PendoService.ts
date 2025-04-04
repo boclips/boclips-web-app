@@ -88,6 +88,18 @@ export class PendoService {
     }
   }
 
+  public trackAssistantSidebarQuestionJumpedTo() {
+    if (this.pendoInstanceIsReady()) {
+      this.pendoInstance.track('Assistant Sidebar Question Jumped To', {});
+    }
+  }
+
+  public trackAssistantSidebarClipJumpedTo(clipId: string) {
+    if (this.pendoInstanceIsReady()) {
+      this.pendoInstance.track('Assistant Sidebar Clip Jumped To', { clipId });
+    }
+  }
+
   private pendoInstanceIsReady(): boolean {
     return (
       this.pendoInstance &&
