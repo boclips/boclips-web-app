@@ -3,6 +3,7 @@ import { Clip } from 'boclips-api-client/dist/sub-clients/chat/model/Clip';
 import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import Thumbnail from 'src/components/playlists/thumbnails/Thumbnail';
 import { MoreActionsButton } from 'src/components/assistant/conversations/MoreActionsButton';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import s from './style.module.less';
 
 interface Props {
@@ -26,7 +27,12 @@ export const AnswerClip = ({ clip, id }: Props) => {
       <div className={s.clipDetails}>
         <Thumbnail video={video} className={s.thumbnail} />
         <button
-          onClick={() => jumpToSectionWithId(id)}
+          onClick={() => {
+            AnalyticsFactory.pendo().trackAssistantSidebarClipJumpedTo(
+              clip.clipId,
+            );
+            jumpToSectionWithId(id);
+          }}
           className={s.answerClip}
           type="button"
         >

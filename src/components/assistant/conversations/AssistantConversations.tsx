@@ -3,6 +3,7 @@ import { useAssistantContextProvider } from 'src/components/assistant/context/as
 import { AnswerClip } from 'src/components/assistant/conversations/AnswerClip';
 import { Typography } from '@boclips-ui/typography';
 import { HighlightIcon } from 'src/components/assistant/common/HighlightIcon';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import s from './style.module.less';
 
 const AssistantConversations = () => {
@@ -33,7 +34,10 @@ const AssistantConversations = () => {
                 >
                   From{' '}
                   <button
-                    onClick={() => jumpToQuestionSection(index)}
+                    onClick={() => {
+                      AnalyticsFactory.pendo().trackAssistantSidebarQuestionJumpedTo();
+                      jumpToQuestionSection(index);
+                    }}
                     className={s.question}
                     type="button"
                   >

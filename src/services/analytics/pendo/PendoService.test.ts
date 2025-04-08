@@ -203,4 +203,36 @@ describe('Pendo Service', () => {
       videoId: 'video-id',
     });
   });
+
+  it('tracks assistant jumping to question from sidebar', () => {
+    const trackSpy = jest.fn();
+    const service = new PendoService({
+      ...window.pendo,
+      isReady(): boolean {
+        return true;
+      },
+      track: trackSpy,
+    });
+
+    service.trackAssistantSidebarQuestionJumpedTo();
+
+    expect(trackSpy).lastCalledWith('Assistant Sidebar Question Jumped To', {});
+  });
+
+  it('tracks assistant jumping to clip from sidebar', () => {
+    const trackSpy = jest.fn();
+    const service = new PendoService({
+      ...window.pendo,
+      isReady(): boolean {
+        return true;
+      },
+      track: trackSpy,
+    });
+
+    service.trackAssistantSidebarClipJumpedTo('clip-id');
+
+    expect(trackSpy).lastCalledWith('Assistant Sidebar Clip Jumped To', {
+      clipId: 'clip-id',
+    });
+  });
 });
