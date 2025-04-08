@@ -12,6 +12,7 @@ import { SearchTopics } from 'src/components/searchResults/SearchTopics';
 import { FilterKey } from 'src/types/search/FilterKey';
 import c from 'classnames';
 import { NavigateToAssistantPrompt } from 'src/components/common/assistant/NavigateToAssistantPrompt';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import s from './styles.module.less';
 
 interface Props {
@@ -91,7 +92,13 @@ export const SearchResults = ({
         })}
       >
         <div className={s.assistantPromptContainer}>
-          <NavigateToAssistantPrompt />
+          <NavigateToAssistantPrompt
+            onNavigate={() =>
+              AnalyticsFactory.pendo().trackAssistantEntryPointUsed(
+                'searchResults',
+              )
+            }
+          />
         </div>
         <div className="flex flex-row justify-between mb-2.5">
           <SearchResultsSummary

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import c from 'classnames';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import s from './style.module.less';
 import AssistantIcon from '../../resources/icons/boclips-assistant.svg';
 
@@ -11,6 +12,7 @@ const AssistantButton = () => {
   const isOnAssistantPage = location.pathname.includes('assistant');
 
   const onClick = () => {
+    AnalyticsFactory.pendo().trackAssistantEntryPointUsed('navbar');
     navigate('/assistant');
   };
 

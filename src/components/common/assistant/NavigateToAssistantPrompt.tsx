@@ -3,13 +3,20 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import s from './style.module.less';
 
-export const NavigateToAssistantPrompt = () => {
+interface Props {
+  onNavigate: () => void;
+}
+
+export const NavigateToAssistantPrompt = ({ onNavigate }: Props) => {
   const navigate = useNavigate();
 
   return (
     <div className={s.assistantButton}>
       <Button
-        onClick={() => navigate('/assistant')}
+        onClick={() => {
+          onNavigate();
+          navigate('/assistant');
+        }}
         text="Try Boclips Assistant"
         type="label"
       />

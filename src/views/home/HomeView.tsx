@@ -17,6 +17,7 @@ import FeaturedPlaylists from 'src/components/carousel/FeaturedPlaylists';
 import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
 import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import { Constants } from 'src/AppConstants';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import FilmIcon from '../../resources/icons/film-icon.svg';
 import PlaylistsIcon from '../../resources/icons/playlists.svg';
 import AssistantIcon from '../../resources/icons/boclips-assistant.svg';
@@ -78,7 +79,10 @@ const HomeView = () => {
             lesson plans.
           </p>
           <Button
-            onClick={() => navigate('/assistant')}
+            onClick={() => {
+              AnalyticsFactory.pendo().trackAssistantEntryPointUsed('home');
+              navigate('/assistant');
+            }}
             text="Try out Assistant"
             type="label"
           />

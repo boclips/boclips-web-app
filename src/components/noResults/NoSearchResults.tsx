@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavigateToAssistantPrompt } from 'src/components/common/assistant/NavigateToAssistantPrompt';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import NoResultsIcon from '../../resources/icons/no-search-results.svg';
 import s from './style.module.less';
 
@@ -14,7 +15,13 @@ const NoResultsCopy = ({ header, copy }) => {
       <div className="font-medium">{header}</div>
       <div>
         <div className={s.noResultsCopy}>
-          <NavigateToAssistantPrompt />
+          <NavigateToAssistantPrompt
+            onNavigate={() =>
+              AnalyticsFactory.pendo().trackAssistantEntryPointUsed(
+                'searchError',
+              )
+            }
+          />
           <p>{copy}</p>
         </div>
       </div>

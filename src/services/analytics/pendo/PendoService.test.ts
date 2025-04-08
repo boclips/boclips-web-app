@@ -136,4 +136,21 @@ describe('Pendo Service', () => {
       errorMessage: 'error message is here',
     });
   });
+
+  it('tracks assistant entry point usage', () => {
+    const trackSpy = jest.fn();
+    const service = new PendoService({
+      ...window.pendo,
+      isReady(): boolean {
+        return true;
+      },
+      track: trackSpy,
+    });
+
+    service.trackAssistantEntryPointUsed('coolSecretLink');
+
+    expect(trackSpy).lastCalledWith('Assistant Entry Point Used', {
+      entryPoint: 'coolSecretLink',
+    });
+  });
 });
