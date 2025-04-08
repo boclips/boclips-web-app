@@ -14,6 +14,7 @@ import BetaIcon from 'src/resources/icons/beta.svg';
 import ErrorIcon from 'src/resources/icons/error-icon.svg';
 import WarningIcon from 'src/resources/icons/info.svg';
 import { convertToChatHistory } from 'src/components/assistant/common/ConversationHistoryConverter';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import s from './style.module.less';
 import { getRandomQuestions } from './promoQuestions';
 
@@ -135,7 +136,9 @@ export const ChatInput = () => {
   };
 
   const handleSuggestion = (e) => {
-    onSubmit(e.currentTarget.innerText);
+    const suggestion = e.currentTarget.innerText;
+    AnalyticsFactory.pendo().trackAssistantSuggestionClicked(suggestion);
+    onSubmit(suggestion);
   };
 
   useEffect(() => {

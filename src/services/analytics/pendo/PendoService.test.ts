@@ -153,4 +153,21 @@ describe('Pendo Service', () => {
       entryPoint: 'coolSecretLink',
     });
   });
+
+  it('tracks assistant suggestion clicks', () => {
+    const trackSpy = jest.fn();
+    const service = new PendoService({
+      ...window.pendo,
+      isReady(): boolean {
+        return true;
+      },
+      track: trackSpy,
+    });
+
+    service.trackAssistantSuggestionClicked('What are tariffs?');
+
+    expect(trackSpy).lastCalledWith('Assistant Suggestion Clicked', {
+      suggestion: 'What are tariffs?',
+    });
+  });
 });
