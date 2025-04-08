@@ -13,6 +13,7 @@ import { EmbedButton } from 'src/components/embedButton/EmbedButton';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import { VideoShareLinkButton } from 'src/components/shareLinkButton/VideoShareLinkButton';
 import { HighlightIcon } from 'src/components/assistant/common/HighlightIcon';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import s from './style.module.less';
 
 interface Props {
@@ -85,6 +86,12 @@ const HighlightPlayer = ({ clip }: Props) => {
               href={`/videos/${video.id}`}
               target="new"
               rel="noopener noreferrer"
+              onClick={() =>
+                AnalyticsFactory.pendo().trackAssistantVideoNavigatedTo(
+                  clip.clipId,
+                  video.id,
+                )
+              }
             >
               <Thumbnail video={video} className={s.thumbnail} />
               {video.title}

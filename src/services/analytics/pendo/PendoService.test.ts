@@ -170,4 +170,22 @@ describe('Pendo Service', () => {
       suggestion: 'What are tariffs?',
     });
   });
+
+  it('tracks assistant video navigation from highlight', () => {
+    const trackSpy = jest.fn();
+    const service = new PendoService({
+      ...window.pendo,
+      isReady(): boolean {
+        return true;
+      },
+      track: trackSpy,
+    });
+
+    service.trackAssistantVideoNavigatedTo('clip-id', 'video-id');
+
+    expect(trackSpy).lastCalledWith('Assistant Video Navigated To', {
+      clipId: 'clip-id',
+      videoId: 'video-id',
+    });
+  });
 });
