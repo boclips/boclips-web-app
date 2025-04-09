@@ -23,6 +23,7 @@ interface VideoShareLinkButtonProps {
   video: Video;
   initialSegment?: Segment;
   width?: string;
+  onClick?: () => void;
 }
 
 export const VideoShareLinkButton = ({
@@ -30,6 +31,7 @@ export const VideoShareLinkButton = ({
   video,
   initialSegment,
   width = 'auto',
+  onClick,
 }: VideoShareLinkButtonProps) => {
   const client = useBoclipsClient();
   const startingSegment = initialSegment ?? {
@@ -57,6 +59,10 @@ export const VideoShareLinkButton = ({
   const toggleModalVisibility = () => setIsModalVisible(!isModalVisible);
 
   const handleCopyLink = () => {
+    if (onClick) {
+      onClick();
+    }
+
     if (isError) {
       return;
     }

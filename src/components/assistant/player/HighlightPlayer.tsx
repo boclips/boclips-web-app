@@ -66,6 +66,12 @@ const HighlightPlayer = ({ clip }: Props) => {
                     start: clip.startTime,
                     end: clip.endTime,
                   }}
+                  onClick={() =>
+                    AnalyticsFactory.pendo().trackAssistantHighlightShared(
+                      clip.clipId,
+                      video.id,
+                    )
+                  }
                 />
               </FeatureGate>
               {video?.links?.createEmbedCode && (
@@ -75,6 +81,12 @@ const HighlightPlayer = ({ clip }: Props) => {
                   iconOnly={isMobileView}
                   label="Embed"
                   width="auto"
+                  onClick={() =>
+                    AnalyticsFactory.pendo().trackAssistantHighlightEmbedded(
+                      clip.clipId,
+                      video.id,
+                    )
+                  }
                 />
               )}
             </div>

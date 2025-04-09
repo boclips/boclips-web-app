@@ -88,6 +88,24 @@ export class PendoService {
     }
   }
 
+  public trackAssistantHighlightEmbedded(clipId: string, videoId: string) {
+    if (this.pendoInstanceIsReady()) {
+      this.pendoInstance.track('Assistant Highlight Embedded', {
+        clipId,
+        videoId,
+      });
+    }
+  }
+
+  public trackAssistantHighlightShared(clipId: string, videoId: string) {
+    if (this.pendoInstanceIsReady()) {
+      this.pendoInstance.track('Assistant Highlight Shared', {
+        clipId,
+        videoId,
+      });
+    }
+  }
+
   public trackAssistantSidebarQuestionJumpedTo() {
     if (this.pendoInstanceIsReady()) {
       this.pendoInstance.track('Assistant Sidebar Question Jumped To', {});
