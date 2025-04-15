@@ -23,6 +23,13 @@ export const ChatIntro = () => {
           than 550 premium brands, like PBS, SciShow, TED, and more.
         </Typography.Body>
         <Typography.Body as="div">To help you get started:</Typography.Body>
+        <Typography.Body as="div">
+          <ul className={s.assistantStartPrompt}>
+            <li>Try pasting in your lesson plan for suggested videos</li>
+            <li>Share a standard that you&#39;d like a video for</li>
+            <li>What topics are you working on?</li>
+          </ul>
+        </Typography.Body>
       </div>
     </div>
   );
