@@ -79,12 +79,6 @@ export class PendoService {
     }
   }
 
-  public trackTrapDoorInterest(testName: string) {
-    if (this.pendoInstanceIsReady()) {
-      this.pendoInstance.track('Interest Registered', { testName });
-    }
-  }
-
   public trackAssistantVideoNavigatedTo(clipId: string, videoId: string) {
     if (this.pendoInstanceIsReady()) {
       this.pendoInstance.track('Assistant Video Navigated To', {
@@ -121,6 +115,18 @@ export class PendoService {
   public trackAssistantSidebarClipJumpedTo(clipId: string) {
     if (this.pendoInstanceIsReady()) {
       this.pendoInstance.track('Assistant Sidebar Clip Jumped To', { clipId });
+    }
+  }
+
+  public trackTrapDoorInterest(testName: string) {
+    if (this.pendoInstanceIsReady()) {
+      this.pendoInstance.track('Trap Door Interest Registered', { testName });
+    }
+  }
+
+  public trackTrapDoorSignUp(testName: string) {
+    if (this.pendoInstanceIsReady()) {
+      this.pendoInstance.track('Trap Door Signed Up', { testName });
     }
   }
 

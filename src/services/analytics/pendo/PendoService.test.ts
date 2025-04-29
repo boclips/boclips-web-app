@@ -235,4 +235,38 @@ describe('Pendo Service', () => {
       clipId: 'clip-id',
     });
   });
+
+  it('tracks trap door interest', () => {
+    const trackSpy = jest.fn();
+    const service = new PendoService({
+      ...window.pendo,
+      isReady(): boolean {
+        return true;
+      },
+      track: trackSpy,
+    });
+
+    service.trackTrapDoorInterest('trap-door-test-1');
+
+    expect(trackSpy).lastCalledWith('Trap Door Interest Registered', {
+      testName: 'trap-door-test-1',
+    });
+  });
+
+  it('tracks trap door sign ups', () => {
+    const trackSpy = jest.fn();
+    const service = new PendoService({
+      ...window.pendo,
+      isReady(): boolean {
+        return true;
+      },
+      track: trackSpy,
+    });
+
+    service.trackTrapDoorSignUp('trap-door-test-1');
+
+    expect(trackSpy).lastCalledWith('Trap Door Signed Up', {
+      testName: 'trap-door-test-1',
+    });
+  });
 });

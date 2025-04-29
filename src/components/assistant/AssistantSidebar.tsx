@@ -4,8 +4,11 @@ import s from 'src/components/assistant/style.module.less';
 import { useAssistantContextProvider } from 'src/components/assistant/context/assistantContextProvider';
 import NewConversationIcon from 'resources/icons/new-conversation.svg';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { Typography } from '@boclips-ui/typography';
+import { useNavigate } from 'react-router-dom';
 
 const AssistantSidebar = () => {
+  const navigate = useNavigate();
   const {
     setConversationId,
     conversationHistory,
@@ -28,6 +31,9 @@ const AssistantSidebar = () => {
     abortController.current = new AbortController();
     setIsLoading(false);
     AnalyticsFactory.pendo().trackTrapDoorInterest(testName);
+    navigate({
+      pathname: '/assistant/generate',
+    });
   };
 
   return (
@@ -44,7 +50,9 @@ const AssistantSidebar = () => {
             icon={<NewConversationIcon />}
           />
           <div className={s.trapDoor}>
-            <p>Can&apos;t find what you&apos;re looking for?</p>
+            <Typography.Body as="p">
+              Can&apos;t find what you&apos;re looking for?
+            </Typography.Body>
             <Button
               type="outline"
               height="48px"
