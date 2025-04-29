@@ -79,6 +79,12 @@ export class PendoService {
     }
   }
 
+  public trackTrapDoorInterest(testName: string) {
+    if (this.pendoInstanceIsReady()) {
+      this.pendoInstance.track('Interest Registered', { testName });
+    }
+  }
+
   public trackAssistantVideoNavigatedTo(clipId: string, videoId: string) {
     if (this.pendoInstanceIsReady()) {
       this.pendoInstance.track('Assistant Video Navigated To', {

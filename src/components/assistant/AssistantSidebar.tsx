@@ -23,18 +23,37 @@ const AssistantSidebar = () => {
     AnalyticsFactory.pendo().trackAssistantConversationReset();
   };
 
+  const handleTrapDoor = (testName: string) => {
+    abortController.current.abort();
+    abortController.current = new AbortController();
+    setIsLoading(false);
+    AnalyticsFactory.pendo().trackTrapDoorInterest(testName);
+  };
+
   return (
     <div className={s.assistantSidebar}>
       {conversationHistory.length !== 0 ? (
-        <Button
-          type="outline"
-          className={s.newConversationButton}
-          height="48px"
-          width="auto"
-          onClick={handleReset}
-          text="Start new conversation"
-          icon={<NewConversationIcon />}
-        />
+        <div>
+          <Button
+            type="outline"
+            className={s.newConversationButton}
+            height="48px"
+            width="100%"
+            onClick={handleReset}
+            text="Start new conversation"
+            icon={<NewConversationIcon />}
+          />
+          <div className={s.trapDoor}>
+            <p>Can&apos;t find what you&apos;re looking for?</p>
+            <Button
+              type="outline"
+              height="48px"
+              width="100%"
+              onClick={() => handleTrapDoor('Boclips Generate')}
+              text="Generate your own video"
+            />
+          </div>
+        </div>
       ) : null}
     </div>
   );
