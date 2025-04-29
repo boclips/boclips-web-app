@@ -118,6 +118,18 @@ export class PendoService {
     }
   }
 
+  public trackTrapDoorInterest(testName: string) {
+    if (this.pendoInstanceIsReady()) {
+      this.pendoInstance.track('Trap Door Interest Registered', { testName });
+    }
+  }
+
+  public trackTrapDoorSignUp(testName: string) {
+    if (this.pendoInstanceIsReady()) {
+      this.pendoInstance.track('Trap Door Signed Up', { testName });
+    }
+  }
+
   private pendoInstanceIsReady(): boolean {
     return (
       this.pendoInstance &&

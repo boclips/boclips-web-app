@@ -95,6 +95,10 @@ const AssistantView = lazyWithRetry(
   () => import('src/views/assistant/AssistantView'),
 );
 
+const TrapDoorView = lazyWithRetry(
+  () => import('src/views/trapdoor/TrapDoorView'),
+);
+
 const MyTeamView = lazyWithRetry(() => import('src/views/team/TeamView'));
 
 interface Props {
@@ -288,6 +292,10 @@ const App = ({
                       }
                     />
                     <Route path="/assistant" element={<AssistantView />} />
+                    <Route
+                      path="/assistant/generate"
+                      element={<TrapDoorView feature="boclips-generate" />}
+                    />
                     <Route
                       path="*"
                       element={
