@@ -5,7 +5,10 @@ import PageHeader from 'src/components/pageTitle/PageHeader';
 import InfoIcon from 'src/resources/icons/info.svg';
 import Footer from 'src/components/layout/Footer';
 import { Helmet } from 'react-helmet';
-import { useUserLicensedContentQuery } from 'src/hooks/api/licensedContentQuery';
+import {
+  useUserAccountLicensedContentQuery,
+  useUserLicensedContentQuery,
+} from 'src/hooks/api/licensedContentQuery';
 import Tooltip from '@boclips-ui/tooltip';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 import { Typography } from '@boclips-ui/typography';
@@ -85,6 +88,17 @@ const LicensesView = () => {
           >
             <List aria-label="tabs licenses" className={s.tabNavBar}>
               <Trigger
+                value="account-licenses"
+                className={s.tabHeader}
+                onMouseDown={() =>
+                  trackPlatformInteraction({
+                    subtype: 'MY_ACCOUNT_LICENSES_VIEWED',
+                  })
+                }
+              >
+                <Typography.H5>Account licenses</Typography.H5>
+              </Trigger>
+              <Trigger
                 value="my-licenses"
                 className={s.tabHeader}
                 onMouseDown={() =>
@@ -94,6 +108,10 @@ const LicensesView = () => {
                 <Typography.H5>My licenses</Typography.H5>
               </Trigger>
             </List>
+            <LicensesTab
+              value="account-licenses"
+              getLicenses={useUserAccountLicensedContentQuery}
+            />
             <LicensesTab
               value="my-licenses"
               getLicenses={useUserLicensedContentQuery}
