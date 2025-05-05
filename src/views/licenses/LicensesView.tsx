@@ -5,7 +5,7 @@ import PageHeader from 'src/components/pageTitle/PageHeader';
 import InfoIcon from 'src/resources/icons/info.svg';
 import Footer from 'src/components/layout/Footer';
 import { Helmet } from 'react-helmet';
-import { useLicensedContentQuery } from 'src/hooks/api/licensedContentQuery';
+import { useUserLicensedContentQuery } from 'src/hooks/api/licensedContentQuery';
 import Tooltip from '@boclips-ui/tooltip';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 import { Typography } from '@boclips-ui/typography';
@@ -96,7 +96,7 @@ const LicensesView = () => {
             </List>
             <LicensesTab
               value="my-licenses"
-              getLicenses={useLicensedContentQuery}
+              getLicenses={useUserLicensedContentQuery}
             />
           </Root>
         </div>
