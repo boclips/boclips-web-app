@@ -12,6 +12,7 @@ describe('Licensed Content Territory restrictions', () => {
     videoId: 'video-id',
     license: {
       id: 'license-id',
+      userId: 'user-1',
       orderId: 'order-id',
       startDate: new Date(),
       endDate: new Date(),

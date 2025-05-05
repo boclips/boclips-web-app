@@ -138,6 +138,7 @@ describe('Licenses view', () => {
     videoId: 'video-id',
     license: {
       id: 'license-id',
+      userId: 'user-1',
       orderId: 'order-id',
       startDate: new Date('2022-01-11'),
       endDate: new Date('2023-02-11'),
@@ -158,6 +159,7 @@ describe('Licenses view', () => {
       videoId: 'id',
       license: {
         id: 'video-id',
+        userId: 'user-1',
         orderId: 'order-id',
         startDate: new Date('2022-01-11'),
         endDate: new Date('2023-02-11'),
