@@ -1,10 +1,6 @@
 @import '@boclips-ui/styles/src/colors';
 @import "@boclips-ui/styles/src/focus";
 
-.contentHeader {
-  justify-content: normal;
-}
-
 .infoIcon {
   margin-left: 1.5rem;
 
@@ -12,5 +8,56 @@
     width: 20px;
     height: 20px;
     stroke: @gray-700;
+  }
+}
+.licensesHeader {
+  display: flex;
+}
+
+.licensesWrapper {
+  grid-column-start: 2;
+  grid-column-end: 26;
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+
+.licensesTab {
+  margin-top: 1rem;
+  .tabNavBar {
+    border-bottom: 2px solid @gray-400;
+  }
+
+  .tabHeader {
+    color: @gray-700;
+    padding: 1rem 1rem 0.5rem;
+    margin-right: 1rem;
+
+    &:first-child {
+      padding: 1rem 1rem 0.5rem 0;
+    }
+
+    :hover {
+      color: @gray-900;
+    }
+  }
+
+  .tabHeader[data-state='active'] {
+    color: @gray-900;
+    position: relative;
+
+    &:after {
+      content: '';
+      background-color: @blue-800;
+      position: absolute;
+      height: 4px;
+      bottom: -3px;
+      width: 100%;
+      left: 0;
+      border-radius: 4px;
+    }
+  }
+
+  .tabContent {
+    padding-top: 2rem;
   }
 }
