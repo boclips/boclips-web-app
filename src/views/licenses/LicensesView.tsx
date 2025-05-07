@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout } from 'src/components/layout/Layout';
 import Navbar from 'src/components/layout/Navbar';
 import PageHeader from 'src/components/pageTitle/PageHeader';
@@ -20,6 +20,16 @@ import s from './style.module.less';
 
 const LicensesView = () => {
   const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
+
+  const [pages, setPages] = useState(() => new Map<'mine' | 'team', number>());
+
+  const setMyLicensesPage = (page: number) => {
+    setPages((prev) => new Map(prev).set('mine', page));
+  };
+
+  const setTeamLicensesPage = (page: number) => {
+    setPages((prev) => new Map(prev).set('team', page));
+  };
 
   const licensesStartDate = getFormattedDate(new Date('2023-03-31'), {
     monthFormat: 'long',
@@ -111,10 +121,14 @@ const LicensesView = () => {
             <LicensesTab
               value="team-licenses"
               getLicenses={useUserAccountLicensedContentQuery}
+              currentPage={pages.get('team')}
+              setPage={setTeamLicensesPage}
             />
             <LicensesTab
               value="my-licenses"
               getLicenses={useUserLicensedContentQuery}
+              currentPage={pages.get('mine')}
+              setPage={setMyLicensesPage}
             />
           </Root>
         </div>
