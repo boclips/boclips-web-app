@@ -7,12 +7,11 @@ import EmptyContentSVG from 'src/resources/icons/empty-content.svg';
 import { UseQueryResult } from '@tanstack/react-query';
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
-import { useNavigate } from 'react-router-dom';
-import { useLocationParams } from 'src/hooks/useLocationParams';
 import {
-  useGetUserQuery,
   useAccountBulkGetUsers,
+  useGetUserQuery,
 } from 'src/hooks/api/userQuery';
+import { LicenseTabType } from 'src/views/licenses/LicensesView';
 
 const PAGE_SIZE = 10;
 
@@ -22,14 +21,18 @@ interface Props {
     page: number,
     pageSize: number,
   ) => UseQueryResult<Pageable<LicensedContent>, unknown>;
+  currentPage: number;
+  setPage: (number) => void;
+  type: LicenseTabType;
 }
 
-export const LicensesTab = ({ value, getLicenses }: Props) => {
-  const locationParams = useLocationParams();
-  const navigator = useNavigate();
-  const [currentPageNumber, setCurrentPageNumber] = useState<number>(
-    locationParams.get('page') ? Number(locationParams.get('page')) - 1 : 0,
-  );
+export const LicensesTab = ({
+  value,
+  getLicenses,
+  currentPage,
+  setPage,
+  type,
+}: Props) => {
   const [userIds, setUserIds] = useState<string[]>([]);
   const { data: currentUser } = useGetUserQuery();
   const { data: userProfiles } = useAccountBulkGetUsers(
@@ -37,15 +40,8 @@ export const LicensesTab = ({ value, getLicenses }: Props) => {
     userIds,
   );
 
-  useEffect(() => {
-    locationParams.set('page', (currentPageNumber + 1).toString());
-    navigator({
-      search: locationParams.toString(),
-    });
-  }, [currentPageNumber]);
-
   const { data: licensedContent, isLoading } = getLicenses(
-    currentPageNumber,
+    currentPage,
     PAGE_SIZE,
   );
 
@@ -67,8 +63,9 @@ export const LicensesTab = ({ value, getLicenses }: Props) => {
         <LicensesArea
           licensedContentPage={licensedContent}
           userProfiles={userProfiles}
-          onPageChange={(newPage) => setCurrentPageNumber(newPage)}
+          onPageChange={(newPage) => setPage(newPage)}
           isLoading={isLoading}
+          isMyLicense={type === 'mine'}
         />
       ) : (
         <ContentEmptyPlaceholderState

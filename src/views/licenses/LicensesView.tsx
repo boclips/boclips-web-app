@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout } from 'src/components/layout/Layout';
 import Navbar from 'src/components/layout/Navbar';
 import PageHeader from 'src/components/pageTitle/PageHeader';
@@ -18,8 +18,20 @@ import { List, Root, Trigger } from '@radix-ui/react-tabs';
 import { LicensesTab } from 'src/components/licensesArea/LicensesTab';
 import s from './style.module.less';
 
+export type LicenseTabType = 'mine' | 'team';
+
 const LicensesView = () => {
   const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
+
+  const [pages, setPages] = useState(() => new Map<LicenseTabType, number>());
+
+  const setMyLicensesPage = (page: number) => {
+    setPages((prev) => new Map(prev).set('mine', page));
+  };
+
+  const setTeamLicensesPage = (page: number) => {
+    setPages((prev) => new Map(prev).set('team', page));
+  };
 
   const licensesStartDate = getFormattedDate(new Date('2023-03-31'), {
     monthFormat: 'long',
@@ -111,10 +123,16 @@ const LicensesView = () => {
             <LicensesTab
               value="team-licenses"
               getLicenses={useUserAccountLicensedContentQuery}
+              currentPage={pages.get('team')}
+              setPage={setTeamLicensesPage}
+              type="team"
             />
             <LicensesTab
               value="my-licenses"
               getLicenses={useUserLicensedContentQuery}
+              currentPage={pages.get('mine')}
+              setPage={setMyLicensesPage}
+              type="mine"
             />
           </Root>
         </div>

@@ -10,6 +10,7 @@ describe('Licenses', () => {
         userProfiles={[]}
         onPageChange={null}
         isLoading
+        isMyLicense
       />,
     );
 

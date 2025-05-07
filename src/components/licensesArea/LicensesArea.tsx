@@ -13,6 +13,7 @@ interface Props {
   userProfiles: AccountUserProfile[];
   onPageChange: (newPage: number) => void;
   isLoading: boolean;
+  isMyLicense: boolean;
 }
 
 const LicensesArea = ({
@@ -20,6 +21,7 @@ const LicensesArea = ({
   userProfiles,
   onPageChange,
   isLoading,
+  isMyLicense,
 }: Props) => {
   const itemRender = React.useCallback(
     (page, type) => {
@@ -65,6 +67,7 @@ const LicensesArea = ({
               userProfile={userProfiles?.find(
                 (profile) => profile.id === licensedContentItem.license.userId,
               )}
+              isMyLicense={isMyLicense}
             />
           )}
           pagination={{

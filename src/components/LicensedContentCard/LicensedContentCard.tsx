@@ -16,9 +16,14 @@ import s from './styles.module.less';
 interface Props {
   licensedContent: LicensedContent;
   userProfile?: AccountUserProfile;
+  isMyLicense: boolean;
 }
 
-const LicensedContentCard = ({ licensedContent, userProfile }: Props) => {
+const LicensedContentCard = ({
+  licensedContent,
+  userProfile,
+  isMyLicense,
+}: Props) => {
   const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
 
   const getLabeledField = (label: string, value: string) => (
@@ -62,25 +67,29 @@ const LicensedContentCard = ({ licensedContent, userProfile }: Props) => {
             getFormattedDate(licensedContent.license.endDate, {}),
           )}
         </div>
-        <div>
-          <Typography.Body as="div" size="small">
-            <span className={s.label}>Order ID:</span>
-            <Link
-              to={{
-                pathname: `/orders/${licensedContent.license.orderId}`,
-              }}
-              state={{ userNavigated: true }}
-              onClick={() =>
-                trackPlatformInteraction({
-                  subtype: 'MY_CONTENT_AREA_ORDER_ID_CLICKED',
-                })
-              }
-              aria-label={`${licensedContent.license.orderId} order link`}
-            >
-              <span className={s.link}>{licensedContent.license.orderId}</span>
-            </Link>
-          </Typography.Body>
-        </div>
+        {isMyLicense && (
+          <div>
+            <Typography.Body as="div" size="small">
+              <span className={s.label}>Order ID:</span>
+              <Link
+                to={{
+                  pathname: `/orders/${licensedContent.license.orderId}`,
+                }}
+                state={{ userNavigated: true }}
+                onClick={() =>
+                  trackPlatformInteraction({
+                    subtype: 'MY_CONTENT_AREA_ORDER_ID_CLICKED',
+                  })
+                }
+                aria-label={`${licensedContent.license.orderId} order link`}
+              >
+                <span className={s.link}>
+                  {licensedContent.license.orderId}
+                </span>
+              </Link>
+            </Typography.Body>
+          </div>
+        )}
         {userProfile && (
           <div>
             {getLabeledField(

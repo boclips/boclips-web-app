@@ -145,11 +145,14 @@ describe('Licenses view', () => {
 
     expect(await wrapper.findByText('My Team Licenses')).toBeVisible();
 
+    expect(await wrapper.findByText('video-1')).toBeVisible();
     await userEvent.click(wrapper.getByText('Next'));
-    expect(history.location.search).toContain('?page=2');
+    expect(await wrapper.findByText('video-11')).toBeVisible();
+    expect(wrapper.queryByText('video-1')).toBeNull();
 
     await userEvent.click(wrapper.getByText('Prev'));
-    expect(history.location.search).toContain('?page=1');
+    expect(await wrapper.findByText('video-1')).toBeVisible();
+    expect(wrapper.queryByText('video-11')).toBeNull();
   });
 
   it(`emits platform interacted with event on viewing info`, async () => {

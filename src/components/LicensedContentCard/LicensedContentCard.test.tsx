@@ -34,7 +34,7 @@ describe('Licensed Content Card', () => {
     const client = new FakeBoclipsClient();
     const wrapper = renderWithClients(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <LicensedContentCard licensedContent={licensedContent} />,
+        <LicensedContentCard licensedContent={licensedContent} isMyLicense />,
       </BoclipsSecurityProvider>,
       client,
     );
@@ -75,6 +75,7 @@ describe('Licensed Content Card', () => {
             firstName: 'User',
             lastName: 'One',
           }}
+          isMyLicense
         />
         ,
       </BoclipsSecurityProvider>,
@@ -98,7 +99,7 @@ describe('Licensed Content Card', () => {
 
     const wrapper = renderWithClients(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <LicensedContentCard licensedContent={licensedContent} />,
+        <LicensedContentCard licensedContent={licensedContent} isMyLicense />,
       </BoclipsSecurityProvider>,
       fakeClient,
     );
@@ -118,6 +119,32 @@ describe('Licensed Content Card', () => {
     });
   });
 
+  it('does not display order if not my license', async () => {
+    const licensedContent: LicensedContent = LicensedContentFactory.sample({
+      videoId: 'video-id',
+      license: {
+        id: 'video-id',
+        userId: 'user-1',
+        orderId: 'order-1',
+        startDate: new Date('2022-01-11'),
+        endDate: new Date('2023-02-11'),
+      },
+    });
+    const fakeClient = new FakeBoclipsClient();
+
+    const wrapper = renderWithClients(
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <LicensedContentCard
+          licensedContent={licensedContent}
+          isMyLicense={false}
+        />
+        ,
+      </BoclipsSecurityProvider>,
+      fakeClient,
+    );
+    expect(wrapper.queryByText('order-1')).toBeNull();
+  });
+
   it('should have Video Assets button visible', async () => {
     const licensedContent: LicensedContent = LicensedContentFactory.sample({
       videoId: 'video-id',
@@ -133,7 +160,7 @@ describe('Licensed Content Card', () => {
 
     const wrapper = renderWithClients(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <LicensedContentCard licensedContent={licensedContent} />
+        <LicensedContentCard licensedContent={licensedContent} isMyLicense />
       </BoclipsSecurityProvider>,
     );
 
@@ -158,7 +185,7 @@ describe('Licensed Content Card', () => {
 
       const wrapper = renderWithClients(
         <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-          <LicensedContentCard licensedContent={licensedContent} />
+          <LicensedContentCard licensedContent={licensedContent} isMyLicense />
         </BoclipsSecurityProvider>,
         fakeClient,
       );
@@ -192,7 +219,7 @@ describe('Licensed Content Card', () => {
 
       const wrapper = renderWithClients(
         <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-          <LicensedContentCard licensedContent={licensedContent} />
+          <LicensedContentCard licensedContent={licensedContent} isMyLicense />
         </BoclipsSecurityProvider>,
       );
 
@@ -217,7 +244,7 @@ describe('Licensed Content Card', () => {
 
     const wrapper = renderWithClients(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <LicensedContentCard licensedContent={licensedContent} />
+        <LicensedContentCard licensedContent={licensedContent} isMyLicense />
       </BoclipsSecurityProvider>,
       fakeClient,
     );
@@ -251,7 +278,7 @@ describe('Licensed Content Card', () => {
 
     const wrapper = renderWithClients(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <LicensedContentCard licensedContent={licensedContent} />
+        <LicensedContentCard licensedContent={licensedContent} isMyLicense />
       </BoclipsSecurityProvider>,
     );
 
@@ -278,7 +305,7 @@ describe('Licensed Content Card', () => {
 
     const wrapper = renderWithClients(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <LicensedContentCard licensedContent={licensedContent} />
+        <LicensedContentCard licensedContent={licensedContent} isMyLicense />
       </BoclipsSecurityProvider>,
       fakeClient,
     );
@@ -314,7 +341,7 @@ describe('Licensed Content Card', () => {
 
     const wrapper = renderWithClients(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <LicensedContentCard licensedContent={licensedContent} />
+        <LicensedContentCard licensedContent={licensedContent} isMyLicense />
       </BoclipsSecurityProvider>,
     );
 
@@ -343,7 +370,7 @@ describe('Licensed Content Card', () => {
 
     const wrapper = renderWithClients(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <LicensedContentCard licensedContent={licensedContent} />
+        <LicensedContentCard licensedContent={licensedContent} isMyLicense />
       </BoclipsSecurityProvider>,
     );
 
@@ -374,7 +401,7 @@ describe('Licensed Content Card', () => {
     const wrapper = render(
       <BoclipsClientProvider client={fakeClient}>
         <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-          <LicensedContentCard licensedContent={licensedContent} />
+          <LicensedContentCard licensedContent={licensedContent} isMyLicense />
         </BoclipsSecurityProvider>
       </BoclipsClientProvider>,
     );
@@ -417,7 +444,7 @@ describe('Licensed Content Card', () => {
 
     const wrapper = renderWithClients(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <LicensedContentCard licensedContent={licensedContent} />
+        <LicensedContentCard licensedContent={licensedContent} isMyLicense />
       </BoclipsSecurityProvider>,
     );
 
