@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { MemoryRouter, Router } from 'react-router-dom';
 import App from 'src/App';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
@@ -12,6 +12,18 @@ import { createBrowserHistory } from 'history';
 import { lastEvent } from 'src/testSupport/lastEvent';
 
 describe('Licenses view', () => {
+  it('renders licenses tabs', async () => {
+    const apiClient = new FakeBoclipsClient();
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/licenses']}>
+        <App apiClient={apiClient} boclipsSecurity={stubBoclipsSecurity} />
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByText('My licenses')).toBeVisible();
+  });
+
   it('loads the no content view (for now)', async () => {
     const apiClient = new FakeBoclipsClient();
 
@@ -47,6 +59,7 @@ describe('Licenses view', () => {
       ),
     ).toBeVisible();
 
+    fireEvent.click(await wrapper.findByText('My licenses'));
     expect(await wrapper.findByText('video-title')).toBeVisible();
     expect(wrapper.getByText('Starting date:')).toBeVisible();
     expect(wrapper.getByText('11 Jan 2022')).toBeVisible();
