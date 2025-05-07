@@ -9,6 +9,10 @@ import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable'
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
 import { useNavigate } from 'react-router-dom';
 import { useLocationParams } from 'src/hooks/useLocationParams';
+import {
+  useGetUserQuery,
+  useAccountBulkGetUsers,
+} from 'src/hooks/api/userQuery';
 
 const PAGE_SIZE = 10;
 
@@ -19,11 +23,18 @@ interface Props {
     pageSize: number,
   ) => UseQueryResult<Pageable<LicensedContent>, unknown>;
 }
+
 export const LicensesTab = ({ value, getLicenses }: Props) => {
   const locationParams = useLocationParams();
   const navigator = useNavigate();
   const [currentPageNumber, setCurrentPageNumber] = useState<number>(
     locationParams.get('page') ? Number(locationParams.get('page')) - 1 : 0,
+  );
+  const [userIds, setUserIds] = useState<string[]>([]);
+  const { data: currentUser } = useGetUserQuery();
+  const { data: userProfiles } = useAccountBulkGetUsers(
+    currentUser?.account?.id,
+    userIds,
   );
 
   useEffect(() => {
@@ -38,6 +49,16 @@ export const LicensesTab = ({ value, getLicenses }: Props) => {
     PAGE_SIZE,
   );
 
+  useEffect(() => {
+    if (!licensedContent) return;
+
+    setUserIds(
+      licensedContent.page.map((content) => {
+        return content.license.userId;
+      }) || [],
+    );
+  }, [licensedContent]);
+
   const hasLicensedContent = licensedContent?.page?.length > 0;
 
   return (
@@ -45,6 +66,7 @@ export const LicensesTab = ({ value, getLicenses }: Props) => {
       {hasLicensedContent || isLoading ? (
         <LicensesArea
           licensedContentPage={licensedContent}
+          userProfiles={userProfiles}
           onPageChange={(newPage) => setCurrentPageNumber(newPage)}
           isLoading={isLoading}
         />

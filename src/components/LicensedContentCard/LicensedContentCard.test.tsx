@@ -67,11 +67,20 @@ describe('Licensed Content Card', () => {
 
     const wrapper = renderWithClients(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <LicensedContentCard licensedContent={licensedContent} />,
+        <LicensedContentCard
+          licensedContent={licensedContent}
+          userProfile={{
+            id: 'user-1',
+            email: 'user-1@example.org',
+            firstName: 'User',
+            lastName: 'One',
+          }}
+        />
+        ,
       </BoclipsSecurityProvider>,
       fakeClient,
     );
-    expect(wrapper.getByText('user-1')).toBeVisible();
+    expect(wrapper.getByText('User One <user-1@example.org>')).toBeVisible();
   });
 
   it('make order id a clickable link to order details page', async () => {

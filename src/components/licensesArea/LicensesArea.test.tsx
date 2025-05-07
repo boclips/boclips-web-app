@@ -5,7 +5,12 @@ import LicensesArea from 'src/components/licensesArea/LicensesArea';
 describe('Licenses', () => {
   it('displays licensed content card placeholder when still loading', () => {
     const wrapper = render(
-      <LicensesArea licensedContentPage={null} onPageChange={null} isLoading />,
+      <LicensesArea
+        licensedContentPage={null}
+        userProfiles={[]}
+        onPageChange={null}
+        isLoading
+      />,
     );
 
     expect(

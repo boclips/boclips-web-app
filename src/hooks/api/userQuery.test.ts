@@ -3,6 +3,7 @@ import { act, renderHook, waitFor } from '@testing-library/react';
 import { wrapperWithClients } from 'src/testSupport/wrapper';
 import { QueryClient } from '@tanstack/react-query';
 import {
+  useAccountBulkGetUsers,
   useAddNewClassroomUser,
   useAddNewTrialUser,
   useFindAccountUsers,
@@ -20,8 +21,7 @@ describe('userQuery', () => {
   it('finds the account users', async () => {
     const fakeClient = new FakeBoclipsClient();
     const accountsSpy = jest.spyOn(fakeClient.accounts, 'getAccountUsers');
-    // @ts-ignore
-    fakeClient.accounts.getAccountUsers = accountsSpy;
+
     const { result } = renderHook(
       () => useFindAccountUsers('account-1', 2, 10),
       {
@@ -37,11 +37,27 @@ describe('userQuery', () => {
     });
   });
 
+  it('bulk gets account users', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const accountsSpy = jest.spyOn(fakeClient.accounts, 'getAccountBulkUsers');
+
+    const { result } = renderHook(
+      () => useAccountBulkGetUsers('account-1', ['user-1', 'user-99']),
+      {
+        wrapper: wrapperWithClients(fakeClient, new QueryClient()),
+      },
+    );
+
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
+    expect(accountsSpy).toBeCalledWith('account-1', {
+      userIds: ['user-1', 'user-99'],
+    });
+  });
+
   it('adds trial user', async () => {
     const fakeClient = new FakeBoclipsClient();
     const createTrialUserSpy = jest.spyOn(fakeClient.users, 'createTrialUser');
-    // @ts-ignore
-    fakeClient.users.createTrialUser = createTrialUserSpy;
+
     const { result } = renderHook(() => useAddNewTrialUser(), {
       wrapper: wrapperWithClients(fakeClient, new QueryClient()),
     });
@@ -70,8 +86,7 @@ describe('userQuery', () => {
       fakeClient.users,
       'createClassroomUser',
     );
-    // @ts-ignore
-    fakeClient.users.createClassroomUser = createClassroomUserSpy;
+
     const { result } = renderHook(() => useAddNewClassroomUser(), {
       wrapper: wrapperWithClients(fakeClient, new QueryClient()),
     });
@@ -98,8 +113,6 @@ describe('userQuery', () => {
   it('updates a user', async () => {
     const fakeClient = new FakeBoclipsClient();
     const usersSpy = jest.spyOn(fakeClient.users, 'updateUser');
-    // @ts-ignore
-    fakeClient.users.updateUser = usersSpy;
 
     const request: UpdateUserRequest = {
       permissions: {
@@ -136,8 +149,6 @@ describe('userQuery', () => {
   it('updates _self user', async () => {
     const fakeClient = new FakeBoclipsClient();
     const usersSpy = jest.spyOn(fakeClient.users, 'updateUser');
-    // @ts-ignore
-    fakeClient.users.updateSelf = usersSpy;
 
     const request: UpdateUserRequest = {
       jobTitle: 'test',

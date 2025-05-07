@@ -12,6 +12,7 @@ import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable'
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
 import { UpdateUserRequest } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
 import { Account } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { AccountUserProfile } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUserProfile';
 
 export const doGetUser = (client: BoclipsClient): Promise<User> => {
   return client.users.getCurrentUser();
@@ -147,6 +148,14 @@ const doFindAccountUsers = (
   return client.accounts.getAccountUsers({ id: accountId, page, size });
 };
 
+const doAccountBulkGetUsers = (
+  client: BoclipsClient,
+  accountId: string,
+  userIds: string[],
+): Promise<AccountUserProfile[]> => {
+  return client.accounts.getAccountBulkUsers(accountId, { userIds });
+};
+
 const doGetAccount = (
   client: BoclipsClient,
   accountId: string,
@@ -164,6 +173,21 @@ export const useFindAccountUsers = (
   return useQuery(
     ['accountUsers', accountId, page],
     () => doFindAccountUsers(client, accountId, page, size),
+    {
+      enabled: !!accountId,
+    },
+  );
+};
+
+export const useAccountBulkGetUsers = (
+  accountId: string,
+  userIds: string[],
+) => {
+  const client = useBoclipsClient();
+
+  return useQuery(
+    ['accountBulkUsers', accountId, userIds],
+    () => doAccountBulkGetUsers(client, accountId, userIds),
     {
       enabled: !!accountId,
     },

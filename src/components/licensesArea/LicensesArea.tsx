@@ -6,15 +6,18 @@ import Pagination from '@boclips-ui/pagination';
 import s from 'src/components/common/pagination/pagination.module.less';
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
 import VideoCardPlaceholder from '@boclips-ui/video-card-placeholder';
+import { AccountUserProfile } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUserProfile';
 
 interface Props {
   licensedContentPage: Pageable<LicensedContent>;
+  userProfiles: AccountUserProfile[];
   onPageChange: (newPage: number) => void;
   isLoading: boolean;
 }
 
 const LicensesArea = ({
   licensedContentPage,
+  userProfiles,
   onPageChange,
   isLoading,
 }: Props) => {
@@ -57,7 +60,12 @@ const LicensesArea = ({
           size="large"
           dataSource={licensedContentPage.page}
           renderItem={(licensedContentItem: LicensedContent) => (
-            <LicensedContentCard licensedContent={licensedContentItem} />
+            <LicensedContentCard
+              licensedContent={licensedContentItem}
+              userProfile={userProfiles?.find(
+                (profile) => profile.id === licensedContentItem.license.userId,
+              )}
+            />
           )}
           pagination={{
             total: licensedContentPage.pageSpec.totalElements,

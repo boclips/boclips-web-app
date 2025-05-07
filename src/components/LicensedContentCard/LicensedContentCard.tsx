@@ -10,13 +10,15 @@ import LicensedContentPrimaryButton from 'src/components/LicensedContentCard/Lic
 import LicensedContentAssetsButton from 'src/components/LicensedContentCard/LicensedContentAssetsButton';
 import LicensedContentTerritoryRestrictions from 'src/components/LicensedContentCard/LicensedContentTerritoryRestrictions';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
+import { AccountUserProfile } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUserProfile';
 import s from './styles.module.less';
 
 interface Props {
   licensedContent: LicensedContent;
+  userProfile?: AccountUserProfile;
 }
 
-const LicensedContentCard = ({ licensedContent }: Props) => {
+const LicensedContentCard = ({ licensedContent, userProfile }: Props) => {
   const { mutate: trackPlatformInteraction } = usePlatformInteractedWithEvent();
 
   const getLabeledField = (label: string, value: string) => (
@@ -79,7 +81,14 @@ const LicensedContentCard = ({ licensedContent }: Props) => {
             </Link>
           </Typography.Body>
         </div>
-        <div>{getLabeledField('User ID', licensedContent.license.userId)}</div>
+        {userProfile && (
+          <div>
+            {getLabeledField(
+              'User',
+              `${userProfile.firstName} ${userProfile.lastName} <${userProfile.email}>`,
+            )}
+          </div>
+        )}
         <LicensedContentTerritoryRestrictions
           licensedContent={licensedContent}
         />
