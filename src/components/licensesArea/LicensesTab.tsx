@@ -23,11 +23,11 @@ export const LicensesTab = ({ value, getLicenses }: Props) => {
   const locationParams = useLocationParams();
   const navigator = useNavigate();
   const [currentPageNumber, setCurrentPageNumber] = useState<number>(
-    locationParams.get('page') ? Number(locationParams.get('page')) : 0,
+    locationParams.get('page') ? Number(locationParams.get('page')) - 1 : 0,
   );
 
   useEffect(() => {
-    locationParams.set('page', currentPageNumber.toString());
+    locationParams.set('page', (currentPageNumber + 1).toString());
     navigator({
       search: locationParams.toString(),
     });

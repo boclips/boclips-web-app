@@ -146,10 +146,10 @@ describe('Licenses view', () => {
     expect(await wrapper.findByText('My Licenses')).toBeVisible();
 
     await userEvent.click(wrapper.getByText('Next'));
-    expect(history.location.search).toContain('?page=1');
+    expect(history.location.search).toContain('?page=2');
 
     await userEvent.click(wrapper.getByText('Prev'));
-    expect(history.location.search).toContain('?page=0');
+    expect(history.location.search).toContain('?page=1');
   });
 
   it(`emits platform interacted with event on viewing info`, async () => {
