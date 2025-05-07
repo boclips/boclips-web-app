@@ -79,6 +79,7 @@ const LicensedContentCard = ({ licensedContent }: Props) => {
             </Link>
           </Typography.Body>
         </div>
+        <div>{getLabeledField('User ID', licensedContent.license.userId)}</div>
         <LicensedContentTerritoryRestrictions
           licensedContent={licensedContent}
         />

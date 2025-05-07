@@ -52,6 +52,28 @@ describe('Licensed Content Card', () => {
     });
   });
 
+  it('show user details', async () => {
+    const licensedContent: LicensedContent = LicensedContentFactory.sample({
+      videoId: 'video-id',
+      license: {
+        id: 'video-id',
+        userId: 'user-1',
+        orderId: 'order-1',
+        startDate: new Date('2022-01-11'),
+        endDate: new Date('2023-02-11'),
+      },
+    });
+    const fakeClient = new FakeBoclipsClient();
+
+    const wrapper = renderWithClients(
+      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+        <LicensedContentCard licensedContent={licensedContent} />,
+      </BoclipsSecurityProvider>,
+      fakeClient,
+    );
+    expect(wrapper.getByText('user-1')).toBeVisible();
+  });
+
   it('make order id a clickable link to order details page', async () => {
     const licensedContent: LicensedContent = LicensedContentFactory.sample({
       videoId: 'video-id',
