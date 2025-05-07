@@ -36,21 +36,21 @@ const LicensesView = () => {
         <Navbar />
         <PageHeader
           className={s.contentHeader}
-          title="My Licenses"
+          title="My Team Licenses"
           button={
             <Tooltip
               isLarge
               text={
                 <div className="text-left w-96">
                   <p>
-                    <b>My Licenses</b>
+                    <b>My Team Licenses</b>
                   </p>
                   <br />
                   <p>
-                    Access all your purchased content here once your order is
-                    processed and licensed. Note that there may be a brief delay
-                    between ordering and licensing; track your order under Order
-                    History in the meantime.
+                    Access all your purchased and team&#39;s content here once
+                    your order is processed and licensed. Note that there may be
+                    a brief delay between ordering and licensing; track your
+                    order under Order History in the meantime.
                     <br />
                     Download content files, metadata, transcripts, and captions
                     here, if available in your account. For inquiries, contact{' '}
@@ -88,15 +88,15 @@ const LicensesView = () => {
           >
             <List aria-label="tabs licenses" className={s.tabNavBar}>
               <Trigger
-                value="account-licenses"
+                value="team-licenses"
                 className={s.tabHeader}
                 onMouseDown={() =>
                   trackPlatformInteraction({
-                    subtype: 'MY_ACCOUNT_LICENSES_VIEWED',
+                    subtype: 'MY_TEAM_LICENSES_VIEWED',
                   })
                 }
               >
-                <Typography.H5>Account licenses</Typography.H5>
+                <Typography.H5>Team licenses</Typography.H5>
               </Trigger>
               <Trigger
                 value="my-licenses"
@@ -109,7 +109,7 @@ const LicensesView = () => {
               </Trigger>
             </List>
             <LicensesTab
-              value="account-licenses"
+              value="team-licenses"
               getLicenses={useUserAccountLicensedContentQuery}
             />
             <LicensesTab

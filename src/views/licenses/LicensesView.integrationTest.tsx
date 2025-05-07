@@ -22,7 +22,7 @@ describe('Licenses view', () => {
     );
 
     expect(await wrapper.findByText('My licenses')).toBeVisible();
-    expect(await wrapper.findByText('Account licenses')).toBeVisible();
+    expect(await wrapper.findByText('Team licenses')).toBeVisible();
   });
 
   it('loads the no content view (for now)', async () => {
@@ -53,7 +53,7 @@ describe('Licenses view', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByText('My Licenses')).toBeVisible();
+    expect(await wrapper.findByText('My Team Licenses')).toBeVisible();
     expect(
       await wrapper.findByText(
         /Your Licenses from 31 March 2023 are available here. For any order prior to 31 March 2023 please reach out to/,
@@ -78,14 +78,14 @@ describe('Licenses view', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByText('My Licenses')).toBeVisible();
+    expect(await wrapper.findByText('My Team Licenses')).toBeVisible();
     expect(
       await wrapper.findByText(
         /Your Licenses from 31 March 2023 are available here. For any order prior to 31 March 2023 please reach out to/,
       ),
     ).toBeVisible();
 
-    fireEvent.click(await wrapper.findByText('Account licenses'));
+    fireEvent.click(await wrapper.findByText('Team licenses'));
     expect(await wrapper.findByText('video-title')).toBeVisible();
     expect(wrapper.getByText('Starting date:')).toBeVisible();
     expect(wrapper.getByText('11 Jan 2022')).toBeVisible();
@@ -108,7 +108,7 @@ describe('Licenses view', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByText('My Licenses')).toBeVisible();
+    expect(await wrapper.findByText('My Team Licenses')).toBeVisible();
 
     expect(await wrapper.findByText('video-1')).toBeVisible();
     expect(await wrapper.findByText('video-10')).toBeVisible();
@@ -143,7 +143,7 @@ describe('Licenses view', () => {
       </Router>,
     );
 
-    expect(await wrapper.findByText('My Licenses')).toBeVisible();
+    expect(await wrapper.findByText('My Team Licenses')).toBeVisible();
 
     await userEvent.click(wrapper.getByText('Next'));
     expect(history.location.search).toContain('?page=2');
@@ -161,7 +161,7 @@ describe('Licenses view', () => {
       </MemoryRouter>,
     );
 
-    expect(await wrapper.findByText('My Licenses')).toBeVisible();
+    expect(await wrapper.findByText('My Team Licenses')).toBeVisible();
     await userEvent.hover(wrapper.getByTestId('content-info'));
 
     await waitFor(() => {
