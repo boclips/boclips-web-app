@@ -22,6 +22,7 @@ describe('Licenses view', () => {
     );
 
     expect(await wrapper.findByText('My licenses')).toBeVisible();
+    expect(await wrapper.findByText('Account licenses')).toBeVisible();
   });
 
   it('loads the no content view (for now)', async () => {
@@ -44,7 +45,7 @@ describe('Licenses view', () => {
     ).toBeInTheDocument();
   });
 
-  it('displays licensed content', async () => {
+  it('displays user licensed content', async () => {
     const apiClient = setupLicenses();
     const wrapper = render(
       <MemoryRouter initialEntries={['/content']}>
@@ -60,6 +61,31 @@ describe('Licenses view', () => {
     ).toBeVisible();
 
     fireEvent.click(await wrapper.findByText('My licenses'));
+    expect(await wrapper.findByText('video-title')).toBeVisible();
+    expect(wrapper.getByText('Starting date:')).toBeVisible();
+    expect(wrapper.getByText('11 Jan 2022')).toBeVisible();
+    expect(wrapper.getByText('Expiry date:')).toBeVisible();
+    expect(wrapper.getByText('11 Feb 2023')).toBeVisible();
+    expect(wrapper.getByText('Order ID:')).toBeVisible();
+    expect(wrapper.getByText('order-id')).toBeVisible();
+  });
+
+  it('displays account licensed content', async () => {
+    const apiClient = setupLicenses();
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/content']}>
+        <App apiClient={apiClient} boclipsSecurity={stubBoclipsSecurity} />
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByText('My Licenses')).toBeVisible();
+    expect(
+      await wrapper.findByText(
+        /Your Licenses from 31 March 2023 are available here. For any order prior to 31 March 2023 please reach out to/,
+      ),
+    ).toBeVisible();
+
+    fireEvent.click(await wrapper.findByText('Account licenses'));
     expect(await wrapper.findByText('video-title')).toBeVisible();
     expect(wrapper.getByText('Starting date:')).toBeVisible();
     expect(wrapper.getByText('11 Jan 2022')).toBeVisible();
