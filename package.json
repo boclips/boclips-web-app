@@ -127,7 +127,7 @@
     "@types/react-helmet": "^6.1.0",
     "@types/react-router-dom": "^5.3.3",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^5.62.0",
+    "@typescript-eslint/parser": "^8.32.1",
     "antd": "4.20.0",
     "axios": "^1.8.2",
     "babel-loader": "^10.0.0",
