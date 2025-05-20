@@ -2,14 +2,12 @@ import { useEffect } from 'react';
 import { Constants } from 'src/AppConstants';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
-import { useNavigate } from 'react-router-dom';
 
 const SubdomainRedirector = () => {
   const { data: user } = useGetUserQuery();
-  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user?.account?.products || !navigate) {
+    if (!user?.account?.products) {
       return;
     }
 
@@ -34,16 +32,14 @@ const SubdomainRedirector = () => {
         }
         break;
       default:
-        console.log('Host does not match so not redirecting');
         return;
     }
 
     if (targetHost && targetHost !== currentHost) {
-      console.log(`Should redirect to ${targetHost}`);
       const newUrl = window.location.href.replace(currentHost, targetHost);
-      navigate(newUrl, { replace: true });
+      window.location.replace(newUrl);
     }
-  }, [navigate, user]);
+  }, [user]);
 
   return null;
 };
