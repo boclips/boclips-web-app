@@ -16,6 +16,7 @@ import CommentButton from 'src/components/playlists/comments/CommentButton';
 import { CollectionAsset } from 'boclips-api-client/dist/sub-clients/collections/model/CollectionAsset';
 import useUserProducts from 'src/hooks/useUserProducts';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { checkIsProduct } from 'src/services/checkIsProduct';
 import s from '../style.module.less';
 
 interface Props {
@@ -132,7 +133,7 @@ const PlaylistBody = ({
                   buttonsRow={showButtons && listViewVideoCardButtons(asset)}
                   segment={asset.segment}
                   showHighlightBadge={
-                    products.includes(Product.CLASSROOM) &&
+                    checkIsProduct(Product.CLASSROOM, products) &&
                     asset.id.highlightId != null
                   }
                 />

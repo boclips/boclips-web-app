@@ -6,7 +6,7 @@ import { Loading } from 'src/components/common/Loading';
 import { FeatureKey } from 'boclips-api-client/dist/sub-clients/common/model/FeatureKey';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import useUserProducts from 'src/hooks/useUserProducts';
-import { Constants } from 'src/AppConstants';
+import { checkIsProduct } from 'src/services/checkIsProduct';
 
 interface FeatureGateProps {
   children: React.ReactElement | React.ReactElement[];
@@ -56,22 +56,13 @@ export const FeatureGate = (props: FeatureGateProps & OptionalProps) => {
   const { features, isLoading } = useFeatureFlags();
   const { products, isLoading: isProductsLoading } = useUserProducts();
 
-  const host = window.location.host;
-
   if (isLoading && isProductsLoading) {
     return isView ? <Loading /> : null;
   }
 
   const shouldShow = (() => {
     if (product) {
-      if (
-        (host === Constants.CLASSROOM_HOST && product !== Product.CLASSROOM) ||
-        (host === Constants.LIBRARY_HOST && product !== Product.LIBRARY)
-      ) {
-        return false;
-      }
-
-      return products.includes(product);
+      return checkIsProduct(product, products);
     }
 
     if (linkName) {
