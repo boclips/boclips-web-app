@@ -1,17 +1,18 @@
 import { useEffect } from 'react';
 import { Constants } from 'src/AppConstants';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import { useQuery } from '@tanstack/react-query';
-import { doGetUser } from 'src/hooks/api/userQuery';
-import { BoclipsClient } from 'boclips-api-client';
+import { useGetUserQuery } from 'src/hooks/api/userQuery';
+import { useNavigate } from 'react-router-dom';
 
-export interface Props {
-  apiClient: BoclipsClient;
-}
-const SubdomainRedirector = ({ apiClient }: Props) => {
-  const { data: user } = useQuery(['user'], async () => doGetUser(apiClient));
+const SubdomainRedirector = () => {
+  const { data: user } = useGetUserQuery();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!user.account.products || !navigate) {
+      return;
+    }
+
     const currentHost = window.location.host;
     let targetHost: string | null = null;
     const userProducts = user.account.products;
@@ -40,9 +41,9 @@ const SubdomainRedirector = ({ apiClient }: Props) => {
     if (targetHost && targetHost !== currentHost) {
       console.log(`Should redirect to ${targetHost}`);
       const newUrl = window.location.href.replace(currentHost, targetHost);
-      window.location.replace(newUrl);
+      navigate(newUrl, { replace: true });
     }
-  }, [user]);
+  }, [navigate, user]);
 
   return null;
 };

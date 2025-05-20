@@ -118,8 +118,6 @@ const App = ({
   boclipsSecurity,
   reactQueryClient = queryClient,
 }: Props) => {
-  <SubdomainRedirector apiClient={apiClient} />;
-
   const currentLocation = useLocation();
 
   useEffect(() => {
@@ -162,6 +160,7 @@ const App = ({
             <Suspense fallback={<Loading />}>
               <JSErrorBoundary fallback={<FallbackView />}>
                 <AccessGate>
+                  <SubdomainRedirector />
                   <Helmet title="Library" />
                   <Routes>
                     <Route
@@ -322,5 +321,4 @@ const App = ({
     </QueryClientProvider>
   );
 };
-
 export default App;
