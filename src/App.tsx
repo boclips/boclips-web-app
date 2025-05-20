@@ -24,7 +24,6 @@ import { BoclipsClientProvider } from './components/common/providers/BoclipsClie
 import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSecurityProvider';
 import { GlobalQueryErrorProvider } from './components/common/providers/GlobalQueryErrorProvider';
 import { JSErrorBoundary } from './components/common/errors/JSErrorBoundary';
-import { useRedirectToCorrectSubdomain } from 'src/hooks/useRedirectToCorrectSubdomain';
 import Pendo = pendo.Pendo;
 
 declare global {
@@ -102,6 +101,10 @@ const TrapDoorView = lazyWithRetry(
 
 const MyTeamView = lazyWithRetry(() => import('src/views/team/TeamView'));
 
+const SubdomainRedirector = lazyWithRetry(
+  () => import('src/views/redirector/SubdomainRedirector'),
+);
+
 interface Props {
   apiClient: BoclipsClient;
   boclipsSecurity: BoclipsSecurity;
@@ -115,7 +118,7 @@ const App = ({
   boclipsSecurity,
   reactQueryClient = queryClient,
 }: Props) => {
-  useRedirectToCorrectSubdomain(apiClient);
+  <SubdomainRedirector apiClient={apiClient} />;
 
   const currentLocation = useLocation();
 
