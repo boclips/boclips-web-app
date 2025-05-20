@@ -6,6 +6,7 @@ import { Loading } from 'src/components/common/Loading';
 import { FeatureKey } from 'boclips-api-client/dist/sub-clients/common/model/FeatureKey';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import useUserProducts from 'src/hooks/useUserProducts';
+import { Constants } from 'src/AppConstants';
 
 interface FeatureGateProps {
   children: React.ReactElement | React.ReactElement[];
@@ -55,37 +56,38 @@ export const FeatureGate = (props: FeatureGateProps & OptionalProps) => {
   const { features, isLoading } = useFeatureFlags();
   const { products, isLoading: isProductsLoading } = useUserProducts();
 
-  if (isLoading || isProductsLoading) {
+  const host = window.location.host;
+
+  if (isLoading && isProductsLoading) {
     return isView ? <Loading /> : null;
   }
 
-  if (product && products) {
-    const hasProduct = products?.some((p) => p === product);
-    if (hasProduct) {
-      return <>{children}</>;
-    }
-  }
+  const shouldShow = (() => {
+    if (product) {
+      if (
+        (host === Constants.CLASSROOM_HOST && product !== Product.CLASSROOM) ||
+        (host === Constants.LIBRARY_HOST && product !== Product.LIBRARY)
+      ) {
+        return false;
+      }
 
-  if (linkName && links) {
-    const link = links[linkName];
-    if (link) {
-      return <>{children}</>;
+      return products.includes(product);
     }
-  }
 
-  if (anyLinkName && links) {
-    const hasAnyLink = (anyLinkName as AdminLinksKey[]).some((it) => links[it]);
-    if (hasAnyLink) {
-      return <>{children}</>;
+    if (linkName) {
+      return Boolean(links?.[linkName]);
     }
-  }
 
-  if (feature && features) {
-    const isEnabled = features[feature];
-    if (isEnabled) {
-      return <>{children}</>;
+    if (anyLinkName) {
+      return (anyLinkName as AdminLinksKey[]).some((key) => links?.[key]);
     }
-  }
 
-  return <>{fallback}</>;
+    if (feature) {
+      return Boolean(features?.[feature]);
+    }
+
+    return false;
+  })();
+
+  return <>{shouldShow ? children : fallback}</>;
 };
