@@ -101,6 +101,10 @@ const TrapDoorView = lazyWithRetry(
 
 const MyTeamView = lazyWithRetry(() => import('src/views/team/TeamView'));
 
+const SubdomainRedirector = lazyWithRetry(
+  () => import('src/views/redirector/SubdomainRedirector'),
+);
+
 interface Props {
   apiClient: BoclipsClient;
   boclipsSecurity: BoclipsSecurity;
@@ -156,6 +160,7 @@ const App = ({
             <Suspense fallback={<Loading />}>
               <JSErrorBoundary fallback={<FallbackView />}>
                 <AccessGate>
+                  <SubdomainRedirector />
                   <Helmet title="Library" />
                   <Routes>
                     <Route
@@ -316,5 +321,4 @@ const App = ({
     </QueryClientProvider>
   );
 };
-
 export default App;

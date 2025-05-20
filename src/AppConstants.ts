@@ -50,6 +50,18 @@ export class AppConstants {
     return this.window.Environment.CHAT_URL;
   }
 
+  public get LEGACY_HOST(): string {
+    return this.window.Environment.LEGACY_HOST;
+  }
+
+  public get CLASSROOM_HOST(): string {
+    return this.window.Environment.CLASSROOM_HOST;
+  }
+
+  public get LIBRARY_HOST(): string {
+    return this.window.Environment.LIBRARY_HOST;
+  }
+
   public get PEARSON_ACCOUNT_ID(): string {
     return this.window.Environment.PEARSON_ACCOUNT_ID;
   }
