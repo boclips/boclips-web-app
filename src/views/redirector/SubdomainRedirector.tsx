@@ -9,7 +9,7 @@ const SubdomainRedirector = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user.account.products || !navigate) {
+    if (!user?.account?.products || !navigate) {
       return;
     }
 
