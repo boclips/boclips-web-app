@@ -12,24 +12,21 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Loading } from 'src/components/common/Loading';
 import { Helmet } from 'react-helmet';
 import NotFound from 'src/views/notFound/NotFound';
+import ClassroomRegistrationView from 'src/views/register/classroom/user/ClassroomRegistrationView';
 
 interface Props {
   reactQueryClient?: QueryClient;
   axiosApiClient?: BoclipsClient;
 }
 
-const RegisterView = lazyWithRetry(
-  () => import('src/views/register/RegisterView'),
+const SubdomainAppropriateRegistrationView = lazyWithRetry(
+  () => import('src/views/register/SubdomainAppropriateRegistrationView'),
 );
 
-const ClassroomRegisterView = lazyWithRetry(
-  () => import('src/views/classroom/register/user/ClassroomRegisterView'),
-);
-
-const ClassroomDistrictRegisterView = lazyWithRetry(
+const ClassroomDistrictRegistrationView = lazyWithRetry(
   () =>
     import(
-      'src/views/classroom/register/district/ClassroomDistrictRegisterView'
+      'src/views/register/classroom/district/ClassroomDistrictRegistrationView'
     ),
 );
 
@@ -84,14 +81,21 @@ const AppUnauthenticated = ({
       <BoclipsClientProvider client={apiClient}>
         <Suspense fallback={<Loading />}>
           <Routes>
-            <Route path="/register" element={<RegisterView />} />
+            <Route
+              path="/register"
+              element={<SubdomainAppropriateRegistrationView />}
+            />
+            <Route
+              path="/district/register"
+              element={<ClassroomDistrictRegistrationView />}
+            />
             <Route
               path="/classroom/register"
-              element={<ClassroomRegisterView />}
+              element={<ClassroomRegistrationView />}
             />
             <Route
               path="/classroom/district/register"
-              element={<ClassroomDistrictRegisterView />}
+              element={<ClassroomDistrictRegistrationView />}
             />
             <Route
               path="/videos/shared/:id"

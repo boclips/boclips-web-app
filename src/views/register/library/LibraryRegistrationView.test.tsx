@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { Helmet } from 'react-helmet';
 import React from 'react';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
@@ -7,16 +7,16 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { MemoryRouter } from 'react-router-dom';
-import ClassroomRegisterView from 'src/views/classroom/register/user/ClassroomRegisterView';
+import LibraryRegistrationView from 'src/views/register/library/LibraryRegistrationView';
 
-describe('ClassroomRegisterView', () => {
-  it('displays Register as window title for /classroom/register', async () => {
+describe('RegisterView', () => {
+  it('displays Register as window title for /register', async () => {
     render(
       <QueryClientProvider client={new QueryClient()}>
         <BoclipsClientProvider client={new FakeBoclipsClient()}>
           <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
             <MemoryRouter>
-              <ClassroomRegisterView />
+              <LibraryRegistrationView />
             </MemoryRouter>
           </BoclipsSecurityProvider>
         </BoclipsClientProvider>
@@ -28,7 +28,5 @@ describe('ClassroomRegisterView', () => {
     await waitFor(() => {
       expect(helmet.title).toEqual('Register');
     });
-
-    expect(screen.getByTestId('classroom-logo')).toBeInTheDocument();
   });
 });
