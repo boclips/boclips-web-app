@@ -12,7 +12,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Loading } from 'src/components/common/Loading';
 import { Helmet } from 'react-helmet';
 import NotFound from 'src/views/notFound/NotFound';
-import ClassroomRegistrationView from 'src/views/register/classroom/user/ClassroomRegistrationView';
 
 interface Props {
   reactQueryClient?: QueryClient;
@@ -28,6 +27,10 @@ const ClassroomDistrictRegistrationView = lazyWithRetry(
     import(
       'src/views/register/classroom/district/ClassroomDistrictRegistrationView'
     ),
+);
+
+const ClassroomRegistrationView = lazyWithRetry(
+  () => import('src/views/register/classroom/user/ClassroomRegistrationView'),
 );
 
 const UnauthorizedVideoView = lazyWithRetry(
