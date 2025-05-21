@@ -1,19 +1,24 @@
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Constants } from 'src/AppConstants';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 
-const SubdomainRedirector = () => {
+interface Props {
+  children: React.ReactNode;
+}
+
+const SubdomainRedirector = ({ children }: Props) => {
   const { data: user } = useGetUserQuery();
+  const [loadChildren, setLoadChildren] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!user?.account?.products) {
+    if (!user) {
       return;
     }
 
     const currentHost = window.location.host;
     let targetHost: string | null = null;
-    const userProducts = user.account.products;
+    const userProducts = user.account?.products ?? [];
 
     switch (currentHost) {
       case Constants.LEGACY_HOST:
@@ -32,16 +37,18 @@ const SubdomainRedirector = () => {
         }
         break;
       default:
-        return;
+        break;
     }
 
     if (targetHost && targetHost !== currentHost) {
       const newUrl = window.location.href.replace(currentHost, targetHost);
       window.location.replace(newUrl);
+    } else {
+      setLoadChildren(true);
     }
   }, [user]);
 
-  return null;
+  return loadChildren && children;
 };
 
 export default SubdomainRedirector;
