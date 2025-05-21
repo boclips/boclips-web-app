@@ -160,158 +160,159 @@ const App = ({
             <Suspense fallback={<Loading />}>
               <JSErrorBoundary fallback={<FallbackView />}>
                 <AccessGate>
-                  <SubdomainRedirector />
-                  <Helmet title="Library" />
-                  <Routes>
-                    <Route
-                      path="/"
-                      element={
-                        <>
-                          <Helmet title="Home" />
-                          <HomeView />
-                        </>
-                      }
-                    />
-                    <Route
-                      path="/videos"
-                      element={
-                        <>
-                          <Helmet title="All Videos" />
-                          <SearchResultsView />
-                        </>
-                      }
-                    />
-                    <Route path="/videos/:id" element={<VideoView />} />
-                    <Route
-                      path="/cart"
-                      element={
-                        <FeatureGate
-                          linkName="cart"
-                          fallback={<AccessDeniedView />}
-                        >
-                          <Helmet title="Cart" />
-                          <CartView />
-                        </FeatureGate>
-                      }
-                    />
-                    <Route
-                      path="/orders"
-                      element={
-                        <FeatureGate
-                          linkName="userOrders"
-                          fallback={<AccessDeniedView />}
-                        >
-                          <Helmet title="Order History" />
-                          <OrdersView />
-                        </FeatureGate>
-                      }
-                    />
-                    <Route
-                      path="/content"
-                      element={
-                        <>
-                          <Helmet title="Licenses" />
-                          <ContentView />
-                        </>
-                      }
-                    />
-                    <Route
-                      path="/licenses"
-                      element={
-                        <>
-                          <Helmet title="Licenses" />
-                          <ContentView />
-                        </>
-                      }
-                    />
-                    <Route
-                      path="/orders/:id"
-                      element={
-                        <FeatureGate
-                          linkName="order"
-                          fallback={<AccessDeniedView />}
-                        >
-                          <OrderView />
-                        </FeatureGate>
-                      }
-                    />
-                    <Route path="/error" element={<ErrorView />} />
-                    <Route
-                      path="/order-confirmed"
-                      element={<OrderConfirmationView />}
-                    />
-                    <Route path="/playlists" element={<PlaylistsView />} />
-                    <Route
-                      path="/library"
-                      element={<Navigate to="/playlists" replace />}
-                    />
-                    <Route
-                      path="/playlists/:id"
-                      element={
-                        <PlaylistView
-                          followPlaylist={
-                            new FollowPlaylist(apiClient.collections)
-                          }
-                        />
-                      }
-                    />
-                    <Route path="/alignments" element={<AlignmentsView />} />
-                    <Route
-                      path="/alignments/:provider"
-                      element={<ExploreView />}
-                    />
-                    <Route
-                      path="/alignments/:provider/:id"
-                      element={<ThemeView />}
-                    />
-                    <Route
-                      path="/sparks/*"
-                      element={<RedirectFromSparksToAlignments />}
-                    />
-                    <Route
-                      path="/explore/*"
-                      element={<RedirectFromExploreToAlignments />}
-                    />
-                    <Route
-                      path="/team"
-                      element={
-                        <FeatureGate
-                          linkName="createUser"
-                          fallback={<NotFound />}
-                        >
-                          <MyTeamView />
-                        </FeatureGate>
-                      }
-                    />
-                    <Route path="/profile" element={<MyProfileView />} />
-                    <Route
-                      path="/register"
-                      element={
-                        <FeatureGate
-                          feature="BO_WEB_APP_DEV"
-                          fallback={<NotFound />}
-                          isView
-                        >
-                          <LibraryRegistrationView />
-                        </FeatureGate>
-                      }
-                    />
-                    <Route path="/assistant" element={<AssistantView />} />
-                    <Route
-                      path="/assistant/generate"
-                      element={<TrapDoorView feature="boclips-generate" />}
-                    />
-                    <Route
-                      path="*"
-                      element={
-                        <>
-                          <Helmet title="Page not found" />
-                          <NotFound />
-                        </>
-                      }
-                    />
-                  </Routes>
-                  <ReactQueryDevtools initialIsOpen={false} />
+                  <SubdomainRedirector>
+                    <Helmet title="Library" />
+                    <Routes>
+                      <Route
+                        path="/"
+                        element={
+                          <>
+                            <Helmet title="Home" />
+                            <HomeView />
+                          </>
+                        }
+                      />
+                      <Route
+                        path="/videos"
+                        element={
+                          <>
+                            <Helmet title="All Videos" />
+                            <SearchResultsView />
+                          </>
+                        }
+                      />
+                      <Route path="/videos/:id" element={<VideoView />} />
+                      <Route
+                        path="/cart"
+                        element={
+                          <FeatureGate
+                            linkName="cart"
+                            fallback={<AccessDeniedView />}
+                          >
+                            <Helmet title="Cart" />
+                            <CartView />
+                          </FeatureGate>
+                        }
+                      />
+                      <Route
+                        path="/orders"
+                        element={
+                          <FeatureGate
+                            linkName="userOrders"
+                            fallback={<AccessDeniedView />}
+                          >
+                            <Helmet title="Order History" />
+                            <OrdersView />
+                          </FeatureGate>
+                        }
+                      />
+                      <Route
+                        path="/content"
+                        element={
+                          <>
+                            <Helmet title="Licenses" />
+                            <ContentView />
+                          </>
+                        }
+                      />
+                      <Route
+                        path="/licenses"
+                        element={
+                          <>
+                            <Helmet title="Licenses" />
+                            <ContentView />
+                          </>
+                        }
+                      />
+                      <Route
+                        path="/orders/:id"
+                        element={
+                          <FeatureGate
+                            linkName="order"
+                            fallback={<AccessDeniedView />}
+                          >
+                            <OrderView />
+                          </FeatureGate>
+                        }
+                      />
+                      <Route path="/error" element={<ErrorView />} />
+                      <Route
+                        path="/order-confirmed"
+                        element={<OrderConfirmationView />}
+                      />
+                      <Route path="/playlists" element={<PlaylistsView />} />
+                      <Route
+                        path="/library"
+                        element={<Navigate to="/playlists" replace />}
+                      />
+                      <Route
+                        path="/playlists/:id"
+                        element={
+                          <PlaylistView
+                            followPlaylist={
+                              new FollowPlaylist(apiClient.collections)
+                            }
+                          />
+                        }
+                      />
+                      <Route path="/alignments" element={<AlignmentsView />} />
+                      <Route
+                        path="/alignments/:provider"
+                        element={<ExploreView />}
+                      />
+                      <Route
+                        path="/alignments/:provider/:id"
+                        element={<ThemeView />}
+                      />
+                      <Route
+                        path="/sparks/*"
+                        element={<RedirectFromSparksToAlignments />}
+                      />
+                      <Route
+                        path="/explore/*"
+                        element={<RedirectFromExploreToAlignments />}
+                      />
+                      <Route
+                        path="/team"
+                        element={
+                          <FeatureGate
+                            linkName="createUser"
+                            fallback={<NotFound />}
+                          >
+                            <MyTeamView />
+                          </FeatureGate>
+                        }
+                      />
+                      <Route path="/profile" element={<MyProfileView />} />
+                      <Route
+                        path="/register"
+                        element={
+                          <FeatureGate
+                            feature="BO_WEB_APP_DEV"
+                            fallback={<NotFound />}
+                            isView
+                          >
+                            <LibraryRegistrationView />
+                          </FeatureGate>
+                        }
+                      />
+                      <Route path="/assistant" element={<AssistantView />} />
+                      <Route
+                        path="/assistant/generate"
+                        element={<TrapDoorView feature="boclips-generate" />}
+                      />
+                      <Route
+                        path="*"
+                        element={
+                          <>
+                            <Helmet title="Page not found" />
+                            <NotFound />
+                          </>
+                        }
+                      />
+                    </Routes>
+                    <ReactQueryDevtools initialIsOpen={false} />
+                  </SubdomainRedirector>
                 </AccessGate>
               </JSErrorBoundary>
             </Suspense>
