@@ -91,7 +91,7 @@
     "@babel/core": "^7.26.0",
     "@boclips-ui/badge": "3.0.2",
     "@boclips-ui/button": "5.0.3",
-    "@boclips-ui/dropdown": "^2.8.0",
+    "@boclips-ui/dropdown": "^2.9.0",
     "@boclips-ui/education-level-badge": "2.0.2",
     "@boclips-ui/filter-badge": "4.0.2",
     "@boclips-ui/input": "^2.2.5",
