@@ -25,3 +25,7 @@ updates:
       applies-to: version-updates
       patterns:
       - "@tanstack/react-query*"
+    typescript-eslint:
+      applies-to: version-updates
+      patterns:
+      - "@typescript-eslint/*"
