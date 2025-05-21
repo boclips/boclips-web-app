@@ -94,7 +94,7 @@
     "@boclips-ui/dropdown": "^2.8.0",
     "@boclips-ui/education-level-badge": "2.0.2",
     "@boclips-ui/filter-badge": "4.0.2",
-    "@boclips-ui/input": "^2.2.5",
+    "@boclips-ui/input": "^2.3.0",
     "@boclips-ui/pagination": "2.0.2",
     "@boclips-ui/search-bar": "5.1.4",
     "@boclips-ui/styles": "5.0.2",
