@@ -18,18 +18,14 @@ interface Props {
   axiosApiClient?: BoclipsClient;
 }
 
-const RegisterView = lazyWithRetry(
-  () => import('src/views/register/RegisterView'),
+const SubdomainAppropriateRegistrationView = lazyWithRetry(
+  () => import('src/views/register/SubdomainAppropriateRegistrationView'),
 );
 
-const ClassroomRegisterView = lazyWithRetry(
-  () => import('src/views/classroom/register/user/ClassroomRegisterView'),
-);
-
-const ClassroomDistrictRegisterView = lazyWithRetry(
+const ClassroomDistrictRegistrationView = lazyWithRetry(
   () =>
     import(
-      'src/views/classroom/register/district/ClassroomDistrictRegisterView'
+      'src/views/register/classroom/district/ClassroomDistrictRegistrationView'
     ),
 );
 
@@ -84,14 +80,31 @@ const AppUnauthenticated = ({
       <BoclipsClientProvider client={apiClient}>
         <Suspense fallback={<Loading />}>
           <Routes>
-            <Route path="/register" element={<RegisterView />} />
+            <Route
+              path="/register"
+              element={<SubdomainAppropriateRegistrationView />}
+            />
+            <Route
+              path="/district/register"
+              element={<ClassroomDistrictRegistrationView />}
+            />
             <Route
               path="/classroom/register"
-              element={<ClassroomRegisterView />}
+              Component={() => {
+                window.location.replace(
+                  `${window.location.protocol}//${Constants.CLASSROOM_HOST}/register`,
+                );
+                return null;
+              }}
             />
             <Route
               path="/classroom/district/register"
-              element={<ClassroomDistrictRegisterView />}
+              Component={() => {
+                window.location.replace(
+                  `${window.location.protocol}//${Constants.CLASSROOM_HOST}/district/register`,
+                );
+                return null;
+              }}
             />
             <Route
               path="/videos/shared/:id"

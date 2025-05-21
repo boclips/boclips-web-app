@@ -83,8 +83,8 @@ const ThemeView = lazyWithRetry(
   () => import('src/views/alignments/theme/ThemeView'),
 );
 
-const RegisterView = lazyWithRetry(
-  () => import('src/views/register/RegisterView'),
+const LibraryRegistrationView = lazyWithRetry(
+  () => import('src/views/register/library/LibraryRegistrationView'),
 );
 
 const MyProfileView = lazyWithRetry(
@@ -292,7 +292,7 @@ const App = ({
                           fallback={<NotFound />}
                           isView
                         >
-                          <RegisterView />
+                          <LibraryRegistrationView />
                         </FeatureGate>
                       }
                     />

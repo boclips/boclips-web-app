@@ -5,7 +5,7 @@ import { Registration } from 'src/components/registration/Registration';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import InvisibleNavbar from 'src/components/common/invisibleNavbar/InvisibleNavbar';
 
-const RegistrationView = () => {
+const LibraryRegistrationView = () => {
   const breakpoints = useMediaBreakPoint();
   const isMobileView =
     breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
@@ -24,4 +24,4 @@ const RegistrationView = () => {
   );
 };
 
-export default RegistrationView;
+export default LibraryRegistrationView;
