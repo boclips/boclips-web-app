@@ -33,3 +33,7 @@ updates:
       applies-to: version-updates
       patterns:
       - "@boclips-ui/*"
+    babel:
+      applies-to: version-updates
+      patterns:
+      - "@babel/*"
