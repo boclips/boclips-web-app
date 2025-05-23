@@ -137,7 +137,6 @@ describe('HomeView', () => {
       VideoFactory.sample({
         id: '63c04899bf161a652f79f0ed',
         title: 'my promoted video',
-        promoted: true,
       }),
     );
     const wrapper = renderWrapper(fakeBoclipsClient);
