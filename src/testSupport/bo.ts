@@ -252,7 +252,6 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
             releasedOn: new Date(2011, 11, 1),
             title:
               'TED-Ed: No one can figure out how eels have sex | Lucy Cooke',
-            promoted: true,
             price: {
               currency: 'USD',
               amount: 1000,
