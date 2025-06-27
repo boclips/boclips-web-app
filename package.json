@@ -73,7 +73,7 @@
     "postcss": "^8.5.2",
     "postcss-loader": "^8.1.1",
     "postcss-preset-env": "^10.1.5",
-    "prettier": "^3.5.3",
+    "prettier": "^3.6.2",
     "query-string": "^7.0.0",
     "react-refresh": "^0.14.0",
     "react-refresh-typescript": "^2.0.8",
