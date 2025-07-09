@@ -133,7 +133,7 @@
     "babel-loader": "^10.0.0",
     "boclips-api-client": "^109.3.3",
     "boclips-js-security": "^15.0.0",
-    "boclips-player": "^9.0.1",
+    "boclips-player": "^10.0.1",
     "boclips-player-react": "^6.0.1",
     "copy-webpack-plugin": "^13.0.0",
     "dateformat": "^4.4.1",
