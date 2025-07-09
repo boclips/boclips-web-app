@@ -136,7 +136,6 @@
     "boclips-player": "^10.0.1",
     "boclips-player-react": "^7.0.0",
     "copy-webpack-plugin": "^13.0.0",
-    "dateformat": "^4.4.1",
     "dayjs": "^1.11.13",
     "email-validator": "^2.0.4",
     "focus-trap-react": "^11.0.3",
