@@ -15,7 +15,12 @@ const VideoDescription = ({ video }: Props) => {
         <Typography.H1 size="xs" weight="medium" className="text-gray-900">
           Video Description
         </Typography.H1>
-        <Typography.Body as="p" size="small" className="text-gray-800">
+        <Typography.Body
+          as="p"
+          size="small"
+          className="text-gray-800"
+          style={{ whiteSpace: 'pre-line' }}
+        >
           {video.description}
         </Typography.Body>
 
