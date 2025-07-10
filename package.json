@@ -88,7 +88,7 @@
     "webpack-merge": "^6.0.1"
   },
   "dependencies": {
-    "@babel/core": "^7.27.1",
+    "@babel/core": "^7.28.0",
     "@boclips-ui/badge": "3.1.0",
     "@boclips-ui/button": "5.1.0",
     "@boclips-ui/dropdown": "^2.9.0",
