@@ -295,6 +295,7 @@ describe('Trial Welcome Modal', () => {
           firstName: 'Saku',
           lastName: 'Saku Koivu',
           email: 'saku@koivu.com',
+          hasAcceptedTermsAndConditions: true,
           account: {
             ...UserFactory.sample().account,
             id: 'AND',
@@ -378,7 +379,7 @@ describe('Trial Welcome Modal', () => {
       });
     });
 
-    it('does not show or require Ts&Cs checkbox for admin users', async () => {
+    it('does not show or require Ts&Cs checkbox for admin users who have accepted Ts&Cs previously', async () => {
       const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
       const updateAccountSpy = jest.spyOn(fakeClient.accounts, 'updateAccount');
 
