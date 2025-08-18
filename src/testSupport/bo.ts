@@ -212,6 +212,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
               marketingInformation: null,
               createdAt: new Date(),
             },
+            hasAcceptedTermsAndConditions: true,
           }),
         );
         apiClient.accounts.insertAccount(
