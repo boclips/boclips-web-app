@@ -285,6 +285,55 @@ describe('Trial Welcome Modal', () => {
         expect(updateAccountSpy).not.toHaveBeenCalled();
       });
     });
+
+    it('does not display or require Ts&Cs when user has already accepted them', async () => {
+      const updateUserSpy = jest.spyOn(fakeClient.users, 'updateUser');
+
+      fakeClient.users.insertCurrentUser(
+        UserFactory.sample({
+          id: 'kb',
+          firstName: 'Kobe',
+          lastName: 'Bryant',
+          email: 'kobe@la.com',
+          account: {
+            ...UserFactory.sample().account,
+            id: 'LAL',
+            name: 'LA Lakers',
+            products: [Product.CLASSROOM],
+            type: AccountType.TRIAL,
+            marketingInformation: { companySegments: ['Edtech'] },
+          },
+          hasAcceptedTermsAndConditions: true,
+        }),
+      );
+
+      const wrapper = renderWelcomeView();
+      expect(
+        await wrapper.findByText(
+          'Your colleague has invited you to Boclips Classroom!',
+        ),
+      ).toBeVisible();
+
+      expect(
+        wrapper.queryByRole('link', { name: 'Boclips Terms & Conditions' }),
+      ).toBeNull();
+
+      await setJobTitle(wrapper, 'Administrator');
+      await setAudience(wrapper, 'K12');
+      await setAudience(wrapper, 'Other');
+      await setDesiredContent(wrapper, 'Basketball');
+
+      fireEvent.click(wrapper.getByRole('button', { name: "Let's Go!" }));
+
+      await waitFor(() => {
+        expect(updateUserSpy).toHaveBeenCalledWith('kb', {
+          jobTitle: 'Administrator',
+          audiences: ['K12', 'Other'],
+          desiredContent: 'Basketball',
+          discoveryMethods: [],
+        });
+      });
+    });
   });
 
   describe('admin non-classroom user', () => {
@@ -432,6 +481,7 @@ describe('Trial Welcome Modal', () => {
             type: AccountType.TRIAL,
             marketingInformation: {},
           },
+          hasAcceptedTermsAndConditions: true,
         }),
       );
       fakeClient.accounts.insertAccount(

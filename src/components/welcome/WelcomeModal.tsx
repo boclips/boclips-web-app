@@ -95,7 +95,7 @@ const WelcomeModal = ({ showPopup, isAdmin, isClassroomUser }: Props) => {
       discoveryMethods: marketingInfo.discoveryMethods,
     };
 
-    if (isAdmin) {
+    if (user.hasAcceptedTermsAndConditions) {
       updateAccount(userRequest);
     } else {
       updateUser({
@@ -137,7 +137,7 @@ const WelcomeModal = ({ showPopup, isAdmin, isClassroomUser }: Props) => {
     return (
       validRegularFields &&
       (!isAdmin || validAdminFields) &&
-      (isAdmin || !termsAndConditionsNotAccepted)
+      (user.hasAcceptedTermsAndConditions || termsAndConditionsChecked)
     );
   };
 
