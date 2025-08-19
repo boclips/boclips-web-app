@@ -79,11 +79,11 @@ export const AccountButton = () => {
     }
 
     if (firstNameExists && !lastNameExists) {
-      return `${user?.firstName[0].toUpperCase()}}`;
+      return `${user?.firstName[0].toUpperCase()}`;
     }
 
     if (!firstNameExists && lastNameExists) {
-      return `${user?.lastName[0].toUpperCase()}}`;
+      return `${user?.lastName[0].toUpperCase()}`;
     }
 
     return 'User';
