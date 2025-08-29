@@ -93,11 +93,11 @@ describe('Team view', () => {
       email: 'joebiden@gmail.com',
       accountId: 'account-1',
       type: UserType.webAppUser,
+      userRoles: {
+        [Product.LIBRARY]: UserRole.ORDER_MANAGER,
+      },
     });
-    fakeClient.users.setPermissionsOfUser(joe.id, {
-      canOrder: true,
-      canManageUsers: false,
-    });
+
     fakeClient.users.insertCurrentUser(joe);
 
     const wrapper = render(
@@ -114,10 +114,8 @@ describe('Team view', () => {
     expect(await wrapper.findByText('Joe Biden')).toBeVisible();
     expect(await wrapper.findByText('Email address')).toBeVisible();
     expect(await wrapper.findByText('joebiden@gmail.com')).toBeVisible();
-    expect(await wrapper.findByText('Can order videos')).toBeVisible();
-    expect(await wrapper.findByText('Yes')).toBeVisible();
-    expect(await wrapper.findByText('Can manage team')).toBeVisible();
-    expect(await wrapper.findByText('No')).toBeVisible();
+    expect(await wrapper.findByText('Role')).toBeVisible();
+    expect(await wrapper.findByText('Order Manager')).toBeVisible();
   });
 
   it('doesnt display the edit button only if `getAccount` link is absent', async () => {
@@ -303,16 +301,7 @@ describe('Team view', () => {
       </MemoryRouter>,
     );
 
-    const originalOrderingPermission = await wrapper.findByTestId(
-      'user-info-field-Can order videos',
-    );
-    const originalManagingPermission = await wrapper.findByTestId(
-      'user-info-field-Can manage team',
-    );
-    expect(within(originalOrderingPermission).getByText('No')).toBeVisible();
-    expect(within(originalManagingPermission).getByText('Yes')).toBeVisible();
-
-    const editButton = wrapper.getByRole('button', { name: 'Edit' });
+    const editButton = await wrapper.findByRole('button', { name: 'Edit' });
     expect(editButton).toBeVisible();
     fireEvent.click(editButton);
 
@@ -330,6 +319,9 @@ describe('Team view', () => {
 
     const newRoles = fakeClient.users.getUserRolesOfUser(joe.id);
     expect(newRoles[Product.LIBRARY]).toEqual(UserRole.ADMIN);
+
+    const roleField = await wrapper.findByTestId('user-info-field-Role');
+    expect(within(roleField).getByText('Admin')).toBeVisible();
   });
 
   it('opens the remove user modal when user has permissions', async () => {

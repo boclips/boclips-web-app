@@ -9,6 +9,7 @@ import * as RadioGroup from '@radix-ui/react-radio-group';
 import s from 'src/components/common/yesNo/style.module.less';
 import { UserRole } from 'boclips-api-client/dist/sub-clients/users/model/UserRole';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { toTitleCase } from 'src/views/support/toTitleCase';
 
 type Props = {
   userToUpdate: AccountUser;
@@ -101,14 +102,6 @@ const EditTeamMemberModal = ({ userToUpdate, product, closeModal }: Props) => {
       return [UserRole.ADMIN, UserRole.ORDER_MANAGER, UserRole.VIEWER];
     }
     return [UserRole.ADMIN, UserRole.TEACHER];
-  };
-
-  const toTitleCase = (str: string) => {
-    return str
-      .toLowerCase()
-      .split('_')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
   };
 
   return (

@@ -6,6 +6,8 @@ import Button from '@boclips-ui/button';
 import PencilSVG from 'src/resources/icons/pencil.svg';
 import BinSVG from 'src/resources/icons/bin.svg';
 import { FeatureGate } from 'src/components/common/FeatureGate';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { toTitleCase } from 'src/views/support/toTitleCase';
 import s from './style.module.less';
 
 interface UserInformationFieldProps {
@@ -15,7 +17,7 @@ interface UserInformationFieldProps {
 
 export interface Props {
   user: AccountUser;
-  displayOrderPermissions: boolean;
+  product: Product;
   isLoading?: boolean;
   onEdit: (user: AccountUser) => void;
   canEdit: boolean;
@@ -25,15 +27,13 @@ export interface Props {
 
 export const UsersListItem = ({
   user,
+  product,
   isLoading,
   onEdit,
   canEdit,
-  displayOrderPermissions,
   onRemove,
   canRemove,
 }: Props) => {
-  const renderPermission = (permission: boolean) => (permission ? 'Yes' : 'No');
-
   return (
     <li
       data-qa={isLoading ? 'skeleton' : ''}
@@ -44,16 +44,11 @@ export const UsersListItem = ({
         value={`${user.firstName} ${user.lastName}`}
       />
       <UserInformationField name="Email address" value={user.email} />
-      {displayOrderPermissions && (
-        <UserInformationField
-          name="Can order videos"
-          value={renderPermission(user.permissions?.canOrder)}
-        />
-      )}
       <UserInformationField
-        name="Can manage team"
-        value={renderPermission(user.permissions?.canManageUsers)}
+        name="Role"
+        value={toTitleCase(user.userRoles?.[product])}
       />
+
       <ActionButtons
         user={user}
         onRemove={onRemove}

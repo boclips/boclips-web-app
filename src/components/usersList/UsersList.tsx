@@ -11,12 +11,9 @@ import Pagination from '@boclips-ui/pagination';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import c from 'classnames';
 import s from 'src/components/common/pagination/pagination.module.less';
-import {
-  AccountStatus,
-  AccountType,
-  Product,
-} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { AccountStatus } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { FeatureGate } from 'src/components/common/FeatureGate';
+import useCurrentProduct from 'src/hooks/useCurrentProduct';
 
 const SKELETON_LIST_ITEMS = new Array(3).fill('');
 const PAGE_SIZE = 25;
@@ -35,6 +32,7 @@ export const UsersList = ({ onEditUser, onRemoveUser }: Props) => {
   const { data: account, isLoading: isLoadingAccount } = useGetAccount(
     user?.account?.id,
   );
+  const product = useCurrentProduct();
 
   const canEditUser =
     !isLoadingAccount &&
@@ -50,10 +48,6 @@ export const UsersList = ({ onEditUser, onRemoveUser }: Props) => {
 
   const currentBreakpoint = useMediaBreakPoint();
   const mobileView = currentBreakpoint.type === 'mobile';
-
-  const displayOrderPermissions =
-    account?.products?.some((product) => product === Product.LIBRARY) &&
-    account?.type !== AccountType.TRIAL;
 
   const itemRender = React.useCallback(
     (page, type) => {
@@ -80,12 +74,12 @@ export const UsersList = ({ onEditUser, onRemoveUser }: Props) => {
         renderItem={(accountUser: AccountUser) => (
           <UsersListItem
             user={accountUser}
+            product={product}
             isLoading={isSkeletonLoading}
             onEdit={() => onEditUser(accountUser)}
             canEdit={canEditUser}
             onRemove={() => onRemoveUser(accountUser)}
             canRemove={canRemoveUser}
-            displayOrderPermissions={displayOrderPermissions}
           />
         )}
         pagination={{

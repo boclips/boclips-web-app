@@ -5,14 +5,19 @@ import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { UserRole } from 'boclips-api-client/dist/sub-clients/users/model/UserRole';
 
 describe('UsersListRow', () => {
-  it('says the user can place orders if the permissions allow that', () => {
+  it('shows user role', () => {
     const user: AccountUser = {
       id: 'id-1',
       email: 'joebiden@gmail.com',
       firstName: 'Joe',
       lastName: 'Biden',
+      userRoles: {
+        [Product.LIBRARY]: UserRole.ADMIN,
+      },
       permissions: {
         canOrder: true,
         canManageUsers: false,
@@ -22,30 +27,7 @@ describe('UsersListRow', () => {
     const wrapper = renderWrapper(user, jest.fn, false);
 
     expect(
-      within(wrapper.getByTestId('user-info-field-Can order videos')).getByText(
-        'Yes',
-      ),
-    ).toBeVisible();
-  });
-
-  it('says the user cannot place orders if the permissions do not allow that', () => {
-    const user: AccountUser = {
-      id: 'id-1',
-      email: 'joebiden@gmail.com',
-      firstName: 'Joe',
-      lastName: 'Biden',
-      permissions: {
-        canOrder: false,
-        canManageUsers: false,
-      },
-    };
-
-    const wrapper = renderWrapper(user, jest.fn, false);
-
-    expect(
-      within(wrapper.getByTestId('user-info-field-Can order videos')).getByText(
-        'No',
-      ),
+      within(wrapper.getByTestId('user-info-field-Role')).getByText('Admin'),
     ).toBeVisible();
   });
 
@@ -118,7 +100,7 @@ describe('UsersListRow', () => {
       },
     };
 
-    const wrapper = renderWrapper(user, jest.fn(), true, false);
+    const wrapper = renderWrapper(user, jest.fn(), true);
 
     expect(wrapper.queryByText('Can order videos')).not.toBeInTheDocument();
   });
@@ -139,7 +121,7 @@ describe('UsersListRow', () => {
     delete client.links.deleteUser;
     delete client.links.updateUser;
 
-    const wrapper = renderWrapper(user, jest.fn(), true, false, client);
+    const wrapper = renderWrapper(user, jest.fn(), true, client);
 
     expect(wrapper.queryByText('Remove')).toBeNull();
     expect(wrapper.queryByText('Edit')).toBeNull();
@@ -149,7 +131,6 @@ describe('UsersListRow', () => {
     user: AccountUser,
     onEdit: (user: AccountUser) => void,
     canEdit: boolean,
-    displayOrderPermissions = true,
     client = new FakeBoclipsClient(),
   ) => {
     return render(
@@ -157,12 +138,12 @@ describe('UsersListRow', () => {
         <QueryClientProvider client={new QueryClient()}>
           <UsersListItem
             user={user}
+            product={Product.LIBRARY}
             isLoading
             onEdit={onEdit}
             canEdit={canEdit}
             onRemove={() => {}}
             canRemove
-            displayOrderPermissions={displayOrderPermissions}
           />
         </QueryClientProvider>
       </BoclipsClientProvider>,
