@@ -8,11 +8,14 @@ import {
 } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
 import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
-import YesNo from 'src/components/common/yesNo/YesNo';
 import { Typography } from '@boclips-ui/typography';
-import { FeatureGate } from 'src/components/common/FeatureGate';
+import { UserRole } from 'boclips-api-client/dist/sub-clients/users/model/UserRole';
+import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import * as RadioGroup from '@radix-ui/react-radio-group';
+import s from 'src/components/common/yesNo/style.module.less';
 
 type Props = {
+  product: Product;
   closeModal: () => void;
 };
 
@@ -20,8 +23,7 @@ type NewUserForm = {
   firstName?: string;
   lastName?: string;
   email?: string;
-  canOrder?: boolean;
-  canManageUsers?: boolean;
+  role?: UserRole;
 };
 
 const successNotification = (userRequest: User) =>
@@ -44,7 +46,7 @@ const errorNotification = (
   );
 };
 
-const AddNewTeamMemberModal = ({ closeModal }: Props) => {
+const AddNewTeamMemberModal = ({ product, closeModal }: Props) => {
   const { data: user, isLoading: isLoadingUser } = useGetUserQuery();
   const [form, setForm] = useState<NewUserForm | null>(null);
   const {
@@ -81,9 +83,8 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
       email: form?.email,
       accountId: user?.account?.id,
       type: UserType.webAppUser,
-      permissions: {
-        canOrder: form?.canOrder,
-        canManageUsers: form?.canManageUsers,
+      userRoles: {
+        [product]: form?.role,
       },
     };
 
@@ -102,6 +103,22 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
     form[fieldName]?.length < 2
       ? setIsError({ ...isError, [fieldName]: true })
       : setIsError({ ...isError, [fieldName]: false });
+
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const getRolesForProduct = (product: Product) => {
+    if (product === Product.LIBRARY) {
+      return [UserRole.ADMIN, UserRole.ORDER_MANAGER, UserRole.VIEWER];
+    }
+    return [UserRole.ADMIN, UserRole.TEACHER];
+  };
+
+  const toTitleCase = (str: string) => {
+    return str
+      .toLowerCase()
+      .split('_')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
 
   return (
     <Bodal
@@ -150,27 +167,38 @@ const AddNewTeamMemberModal = ({ closeModal }: Props) => {
         onBlur={() => validateTextField('email')}
         errorMessage="Please enter a valid email address"
       />
-      <div className="mb-4">
-        <Typography.Body className="text-gray-800">
-          Team member actions
-        </Typography.Body>
+      <div className="my-4">
+        <Typography.Body className="text-gray-800">User role</Typography.Body>
       </div>
-      <YesNo
-        id="user-management-permission"
-        label="Can manage team?"
-        onValueChange={(value) => {
-          setForm({ ...form, canManageUsers: value });
-        }}
-      />
-      <FeatureGate linkName="order">
-        <YesNo
-          id="ordering-permission"
-          label="Can order videos?"
-          onValueChange={(value) => {
-            setForm({ ...form, canOrder: value });
-          }}
-        />
-      </FeatureGate>
+      <RadioGroup.Root
+        className={s.radioGroupRoot}
+        orientation="horizontal"
+        onValueChange={(value: UserRole) => setForm({ ...form, role: value })}
+        defaultValue={
+          product === Product.CLASSROOM ? UserRole.TEACHER : UserRole.VIEWER
+        }
+      >
+        {getRolesForProduct(product).map((role) => {
+          return (
+            <div className={s.radioGroupItemWrapper}>
+              <RadioGroup.Item
+                className={s.radioGroupItem}
+                value={role}
+                id={role.toLowerCase()}
+                aria-label={`${role} role`}
+              >
+                <RadioGroup.Indicator className={s.radioGroupIndicator} />
+              </RadioGroup.Item>
+              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+              <label htmlFor={role.toLowerCase()}>
+                <Typography.Body as="span" className={s.radioItemLabel}>
+                  {toTitleCase(role)}
+                </Typography.Body>
+              </label>
+            </div>
+          );
+        })}
+      </RadioGroup.Root>
     </Bodal>
   );
 };

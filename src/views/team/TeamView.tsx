@@ -11,12 +11,14 @@ import EditTeamMemberModal from 'src/components/teamModal/EditTeamMemberModal';
 import { Helmet } from 'react-helmet';
 import { RemoveTeamMemberModal } from 'src/components/teamModal/RemoveTeamMemberModal';
 import { FeatureGate } from 'src/components/common/FeatureGate';
+import useCurrentProduct from 'src/hooks/useCurrentProduct';
 
 const TeamView = () => {
   const [isNewUserModalOpen, setIsNewUserModalOpen] = React.useState(false);
   const [accountUserToEdit, setAccountUserToEdit] = React.useState(undefined);
   const [accountUserToRemove, setAccountUserToRemove] =
     React.useState(undefined);
+  const product = useCurrentProduct();
 
   return (
     <>
@@ -47,12 +49,14 @@ const TeamView = () => {
         </main>
         {isNewUserModalOpen && (
           <AddNewTeamMemberModal
+            product={product}
             closeModal={() => setIsNewUserModalOpen(false)}
           />
         )}
         {accountUserToEdit && (
           <EditTeamMemberModal
             userToUpdate={accountUserToEdit}
+            product={product}
             closeModal={() => setAccountUserToEdit(undefined)}
           />
         )}

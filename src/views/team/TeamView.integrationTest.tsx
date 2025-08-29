@@ -21,6 +21,7 @@ import {
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { Helmet } from 'react-helmet';
+import { UserRole } from 'boclips-api-client/dist/sub-clients/users/model/UserRole';
 
 describe('Team view', () => {
   it('renders Team page', async () => {
@@ -209,7 +210,7 @@ describe('Team view', () => {
     expect(wrapper.queryByText('Joe24 Biden')).toBeNull();
   });
 
-  it('user opens the edit modal when has permissions', async () => {
+  it('user opens the edit modal when has roles', async () => {
     const fakeClient = new FakeBoclipsClient();
 
     fakeClient.accounts.insertAccount(
@@ -262,8 +263,8 @@ describe('Team view', () => {
     expect(within(modal).getByText('Email address')).toBeVisible();
     expect(within(modal).getByText('joey@boclips.com')).toBeVisible();
 
-    expect(within(modal).getByLabelText('Can manage team? No')).toBeVisible();
-    expect(within(modal).getByLabelText('Can order videos? Yes')).toBeVisible();
+    expect(within(modal).getByText('User role')).toBeVisible();
+    expect(within(modal).getByLabelText('Admin')).toBeVisible();
     expect(within(modal).getByRole('button', { name: 'Save' })).toBeVisible();
     expect(within(modal).getByRole('button', { name: 'Cancel' })).toBeVisible();
   });
@@ -319,8 +320,7 @@ describe('Team view', () => {
       wrapper.getByRole('heading', { level: 1, name: 'Edit user' }),
     );
 
-    await userEvent.click(wrapper.getByLabelText('Can order videos? Yes'));
-    await userEvent.click(wrapper.getByLabelText('Can manage team? No'));
+    await userEvent.click(wrapper.getByLabelText('Admin'));
 
     fireEvent.click(wrapper.getByRole('button', { name: 'Save' }));
 
@@ -328,18 +328,8 @@ describe('Team view', () => {
       wrapper.getByRole('heading', { level: 1, name: 'Edit user' }),
     );
 
-    const newPermissions = fakeClient.users.getPermissionsOfUser(joe.id);
-    expect(newPermissions.canOrder).toEqual(true);
-    expect(newPermissions.canManageUsers).toEqual(false);
-
-    const newOrderPermission = await wrapper.findByTestId(
-      'user-info-field-Can order videos',
-    );
-    const newManagingPermission = await wrapper.findByTestId(
-      'user-info-field-Can manage team',
-    );
-    expect(within(newOrderPermission).getByText('Yes')).toBeVisible();
-    expect(within(newManagingPermission).getByText('No')).toBeVisible();
+    const newRoles = fakeClient.users.getUserRolesOfUser(joe.id);
+    expect(newRoles[Product.LIBRARY]).toEqual(UserRole.ADMIN);
   });
 
   it('opens the remove user modal when user has permissions', async () => {

@@ -11,7 +11,11 @@ import { ROLES } from 'src/types/Roles';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import EditTeamMemberModal from 'src/components/teamModal/EditTeamMemberModal';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
-import { AccountType } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import {
+  AccountType,
+  Product,
+} from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { UserRole } from 'boclips-api-client/dist/sub-clients/users/model/UserRole';
 
 describe('Edit Team member modal', () => {
   const user: AccountUser = {
@@ -19,6 +23,9 @@ describe('Edit Team member modal', () => {
     firstName: 'John',
     lastName: 'Doe',
     email: 'johny@boclips.com',
+    userRoles: {
+      [Product.LIBRARY]: UserRole.ADMIN,
+    },
     permissions: {
       canOrder: true,
       canManageUsers: false,
@@ -32,6 +39,7 @@ describe('Edit Team member modal', () => {
           <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
             <EditTeamMemberModal
               userToUpdate={user}
+              product={Product.LIBRARY}
               closeModal={() => jest.fn()}
             />
           </BoclipsSecurityProvider>
@@ -46,40 +54,12 @@ describe('Edit Team member modal', () => {
     expect(wrapper.getByText('Doe')).toBeVisible();
     expect(wrapper.getByText('Email address')).toBeVisible();
     expect(wrapper.getByText('johny@boclips.com')).toBeVisible();
+    expect(wrapper.getByText('User role')).toBeVisible();
 
-    const orderYes = await wrapper.findByLabelText('Can order videos? Yes');
-    expect(orderYes).toBeChecked();
-    const orderNo = wrapper.getByLabelText('Can order videos? No');
-    expect(orderNo).not.toBeChecked();
-
-    const manageUsersYes = wrapper.getByLabelText('Can manage team? Yes');
-    expect(manageUsersYes).not.toBeChecked();
-    const manageUsersNo = wrapper.getByLabelText('Can manage team? No');
-    expect(manageUsersNo).toBeChecked();
-  });
-
-  it('cannot update ordering permission if admin cannot order themselves', async () => {
-    const security: BoclipsSecurity = {
-      ...stubBoclipsSecurity,
-      hasRole: (role) => role !== ROLES.BOCLIPS_WEB_APP_ORDER,
-    };
-
-    const wrapper = render(
-      <BoclipsClientProvider client={new FakeBoclipsClient()}>
-        <QueryClientProvider client={new QueryClient()}>
-          <BoclipsSecurityProvider boclipsSecurity={security}>
-            <EditTeamMemberModal
-              userToUpdate={user}
-              closeModal={() => jest.fn()}
-            />
-          </BoclipsSecurityProvider>
-        </QueryClientProvider>
-      </BoclipsClientProvider>,
-    );
-
-    expect(await wrapper.findByText('Team member actions')).toBeVisible();
-    expect(wrapper.queryByText('Can order videos?')).toBeNull();
-    expect(wrapper.getByText('Can manage team?')).toBeVisible();
+    const viewer = wrapper.getByLabelText('Viewer');
+    expect(viewer).not.toBeChecked();
+    const admin = await wrapper.findByLabelText('Admin');
+    expect(admin).toBeChecked();
   });
 
   it('updates a user', async () => {
@@ -107,6 +87,7 @@ describe('Edit Team member modal', () => {
           <BoclipsSecurityProvider boclipsSecurity={security}>
             <EditTeamMemberModal
               userToUpdate={user}
+              product={Product.LIBRARY}
               closeModal={() => jest.fn()}
             />
           </BoclipsSecurityProvider>
@@ -114,16 +95,15 @@ describe('Edit Team member modal', () => {
       </BoclipsClientProvider>,
     );
 
-    await userEvent.click(wrapper.getByLabelText('Can manage team? Yes'));
-    await userEvent.click(wrapper.getByLabelText('Can order videos? No'));
+    expect(wrapper.getByLabelText('Admin')).toBeVisible();
+    await userEvent.click(wrapper.getByLabelText('Admin'));
 
     await userEvent.click(wrapper.getByRole('button', { name: 'Save' }));
 
     await waitFor(() =>
       expect(client.users.updateUser).toHaveBeenCalledWith('user-id-123', {
-        permissions: {
-          canOrder: false,
-          canManageUsers: true,
+        userRoles: {
+          [Product.LIBRARY]: UserRole.ADMIN,
         },
       }),
     );
