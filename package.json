@@ -40,7 +40,7 @@
     "@percy/cypress": "^3.1.2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.6.0",
     "@svgr/webpack": "^8.1.0",
-    "@testing-library/cypress": "^10.0.2",
+    "@testing-library/cypress": "^10.1.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.6.1",
