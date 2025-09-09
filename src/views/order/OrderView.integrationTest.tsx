@@ -102,10 +102,11 @@ describe('order table', () => {
 
     expect(await wrapper.findByText('video-1-title')).toBeVisible();
 
-    expect(
-      (await wrapper.findByTestId('order-item-thumbnail')).style
-        .backgroundImage,
-    ).toEqual('url(https://url.com)');
+    await waitFor(() => {
+      expect(
+        wrapper.getByTestId('order-item-thumbnail').style.backgroundImage,
+      ).toEqual('url(https://url.com)');
+    });
 
     expect(await wrapper.findByText('$600')).toBeVisible();
     expect(

@@ -13,12 +13,12 @@ import { NoSearchResults } from 'src/components/noResults/NoSearchResults';
 import { Loading } from 'src/components/common/Loading';
 import { useDebounce } from 'src/hooks/useDebounce';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { ErrorBoundary } from 'src/components/common/errors/ErrorBoundary';
 import RefreshPageError from 'src/components/common/errors/refreshPageError/RefreshPageError';
 import { Layout } from 'src/components/layout/Layout';
 import { ContentPackagePreviewBanner } from 'src/components/contentPackagePreviewBanner/ContentPackagePreviewBanner';
 import { useGetDisciplinesQuery } from 'src/hooks/api/disciplinesQuery';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
+import { JSErrorBoundary } from 'src/components/common/errors/JSErrorBoundary';
 
 export const PAGE_SIZE = 30;
 
@@ -125,7 +125,7 @@ const SearchResultsView = () => {
   return (
     <Layout rowsSetup="grid-rows-search-view">
       <Navbar />
-      <ErrorBoundary fallback={<RefreshPageError row="2" />}>
+      <JSErrorBoundary fallback={<RefreshPageError row="2" />}>
         <FilterPanel
           facets={data?.facets}
           disciplines={disciplines}
@@ -155,7 +155,7 @@ const SearchResultsView = () => {
         {contentPackage && (
           <ContentPackagePreviewBanner packageId={contentPackage} />
         )}
-      </ErrorBoundary>
+      </JSErrorBoundary>
       <Footer />
     </Layout>
   );

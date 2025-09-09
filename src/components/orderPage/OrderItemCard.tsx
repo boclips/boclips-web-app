@@ -12,11 +12,7 @@ interface Props {
 }
 
 export const OrderItemCard = ({ item }: Props) => {
-  const { data: video, isLoading } = useFindOrGetVideo(item.video.id);
-
-  const thumbnailUrl = isLoading
-    ? ''
-    : video.playback?.links?.thumbnail?.getOriginalLink();
+  const { data: video } = useFindOrGetVideo(item.video.id);
 
   return (
     <div
@@ -24,16 +20,13 @@ export const OrderItemCard = ({ item }: Props) => {
       className={s.orderItemWrapper}
       style={{ minHeight: '156px' }}
     >
-      <div className={s.thumbnail}>
-        {!isLoading && (
-          <div
-            data-qa="order-item-thumbnail"
-            style={{
-              backgroundImage: `url(${thumbnailUrl})`,
-            }}
-          />
-        )}
-      </div>
+      <div
+        className={s.thumbnail}
+        data-qa="order-item-thumbnail"
+        style={{
+          backgroundImage: `url(${video?.playback?.links?.thumbnail?.getOriginalLink()})`,
+        }}
+      />
 
       <div className="flex flex-col w-full relative pl-8">
         <Typography.Title1 className="absolute right-0 text-gray-800">
@@ -48,13 +41,17 @@ export const OrderItemCard = ({ item }: Props) => {
         </Typography.Title1>
 
         <div className="flex flex-col mb-4">
-          <Link
-            to={`/videos/${item.video.id}`}
-            state={{ userNavigated: true }}
-            className="text-gray-900 hover:text-gray-900"
-          >
+          {video ? (
+            <Link
+              to={`/videos/${item.video.id}`}
+              state={{ userNavigated: true }}
+              className="text-gray-900 hover:text-gray-900"
+            >
+              <Typography.Title1>{item.video.title}</Typography.Title1>
+            </Link>
+          ) : (
             <Typography.Title1>{item.video.title}</Typography.Title1>
-          </Link>
+          )}
           <Typography.Body size="small" className="text-gray-700">
             ID: {item.video.id}
           </Typography.Body>

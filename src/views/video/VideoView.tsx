@@ -6,10 +6,10 @@ import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import { Loading } from 'src/components/common/Loading';
 import { Helmet } from 'react-helmet';
 import { Layout } from 'src/components/layout/Layout';
-import { ErrorBoundary } from 'src/components/common/errors/ErrorBoundary';
 import { BoclipsApiError } from 'boclips-api-client/dist/types';
 import { Fallback } from 'src/views/video/Fallback';
 import { VideoPage } from 'src/components/videoPage/VideoPage';
+import { JSErrorBoundary } from 'src/components/common/errors/JSErrorBoundary';
 
 const VideoView = () => {
   const videoId = useGetIdFromLocation('videos');
@@ -27,9 +27,11 @@ const VideoView = () => {
     >
       {video?.title && <Helmet title={video.title} />}
       <Navbar />
-      <ErrorBoundary fallback={<Fallback isVideoNotFound={isVideoNotFound} />}>
+      <JSErrorBoundary
+        fallback={<Fallback isVideoNotFound={isVideoNotFound} />}
+      >
         <VideoPage video={video} />
-      </ErrorBoundary>
+      </JSErrorBoundary>
       <Footer className="row-start-last row-end-last" />
     </Layout>
   );
