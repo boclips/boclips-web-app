@@ -23,6 +23,7 @@ import { AccessGate } from 'src/components/common/errors/AccessGate';
 import { BoclipsClientProvider } from './components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from './components/common/providers/BoclipsSecurityProvider';
 import { JSErrorBoundary } from './components/common/errors/JSErrorBoundary';
+import { UserRole } from 'boclips-api-client/dist/sub-clients/users/model/UserRole';
 import Pendo = pendo.Pendo;
 
 declare global {
@@ -294,7 +295,18 @@ const App = ({
                         </FeatureGate>
                       }
                     />
-                    <Route path="/assistant" element={<AssistantView />} />
+                    <Route
+                      path="/assistant"
+                      element={
+                        <FeatureGate
+                          excludedUserRoles={[UserRole.STUDENT]}
+                          fallback={<NotFound />}
+                          isView
+                        >
+                          <AssistantView />
+                        </FeatureGate>
+                      }
+                    />
                     <Route
                       path="/assistant/generate"
                       element={<TrapDoorView feature="boclips-generate" />}
