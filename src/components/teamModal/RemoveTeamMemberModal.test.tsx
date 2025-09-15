@@ -18,10 +18,6 @@ describe('Remove Team member modal', () => {
     firstName: 'John',
     lastName: 'Doe',
     email: 'johny@boclips.com',
-    permissions: {
-      canOrder: false,
-      canManageUsers: false,
-    },
   };
 
   it('renders Remove User modal', () => {

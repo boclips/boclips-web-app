@@ -127,7 +127,7 @@ export const useUpdateSelfUser = () => {
 
   return useMutation(
     ({ user, request }: EditUserRequest) =>
-      doUpdateSelfUser(user, request, client),
+      doUpdateSelfUser(user as Partial<User>, request, client),
     {
       onSuccess: (_isSuccess, _request) => {
         // do not wait until query cache is invalidated!

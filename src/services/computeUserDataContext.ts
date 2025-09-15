@@ -10,6 +10,7 @@ interface ComputeUserDataContextProps {
   isClassroomUser: boolean;
   isMarketingInfoMissingForUser: boolean;
 }
+
 const computeUserDataContext = (user: User): ComputeUserDataContextProps => {
   const isUserInTrial = user?.account?.type === AccountType.TRIAL;
   const isMarketingInfoSetForAccount =

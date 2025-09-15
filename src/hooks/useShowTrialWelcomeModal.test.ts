@@ -5,12 +5,14 @@ describe('should show trial welcome modal', () => {
     const isClassroomUser = true;
     const isUserInTrial = false;
     const isMarketingInfoMissingForUser = true;
+    const isStudent = false;
 
     expect(
       shouldShowWelcomeModal(
         isClassroomUser,
         isUserInTrial,
         isMarketingInfoMissingForUser,
+        isStudent,
       ),
     ).toBeTruthy();
   });
@@ -19,12 +21,14 @@ describe('should show trial welcome modal', () => {
     const isClassroomUser = true;
     const isUserInTrial = false;
     const isMarketingInfoMissingForUser = false;
+    const isStudent = false;
 
     expect(
       shouldShowWelcomeModal(
         isClassroomUser,
         isUserInTrial,
         isMarketingInfoMissingForUser,
+        isStudent,
       ),
     ).toBeFalsy();
   });
@@ -33,12 +37,14 @@ describe('should show trial welcome modal', () => {
     const isClassroomUser = false;
     const isUserInTrial = true;
     const isMarketingInfoMissingForUser = true;
+    const isStudent = false;
 
     expect(
       shouldShowWelcomeModal(
         isClassroomUser,
         isUserInTrial,
         isMarketingInfoMissingForUser,
+        isStudent,
       ),
     ).toBeTruthy();
   });
@@ -47,12 +53,14 @@ describe('should show trial welcome modal', () => {
     const isClassroomUser = false;
     const isUserInTrial = true;
     const isMarketingInfoMissingForUser = false;
+    const isStudent = false;
 
     expect(
       shouldShowWelcomeModal(
         isClassroomUser,
         isUserInTrial,
         isMarketingInfoMissingForUser,
+        isStudent,
       ),
     ).toBeFalsy();
   });
@@ -62,12 +70,30 @@ describe('should show trial welcome modal', () => {
     const isClassroomUser = false;
     const isUserInTrial = false;
     const isMarketingInfoMissingForUser = false;
+    const isStudent = false;
 
     expect(
       shouldShowWelcomeModal(
         isClassroomUser,
         isUserInTrial,
         isMarketingInfoMissingForUser,
+        isStudent,
+      ),
+    ).toBeFalsy();
+  });
+
+  it('does not show modal when CLASSROOM user has marketing info missing but is student', () => {
+    const isClassroomUser = true;
+    const isUserInTrial = false;
+    const isMarketingInfoMissingForUser = true;
+    const isStudent = true;
+
+    expect(
+      shouldShowWelcomeModal(
+        isClassroomUser,
+        isUserInTrial,
+        isMarketingInfoMissingForUser,
+        isStudent,
       ),
     ).toBeFalsy();
   });

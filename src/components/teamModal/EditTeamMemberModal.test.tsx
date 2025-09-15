@@ -26,10 +26,6 @@ describe('Edit Team member modal', () => {
     userRoles: {
       [Product.LIBRARY]: UserRole.ADMIN,
     },
-    permissions: {
-      canOrder: true,
-      canManageUsers: false,
-    },
   };
 
   it('renders teams modal', async () => {

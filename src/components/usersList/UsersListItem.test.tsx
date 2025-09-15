@@ -18,10 +18,6 @@ describe('UsersListRow', () => {
       userRoles: {
         [Product.LIBRARY]: UserRole.ADMIN,
       },
-      permissions: {
-        canOrder: true,
-        canManageUsers: false,
-      },
     };
 
     const wrapper = renderWrapper(user, jest.fn, false);
@@ -37,9 +33,8 @@ describe('UsersListRow', () => {
       email: 'joebiden@gmail.com',
       firstName: 'Joe',
       lastName: 'Biden',
-      permissions: {
-        canOrder: false,
-        canManageUsers: false,
+      userRoles: {
+        [Product.LIBRARY]: UserRole.VIEWER,
       },
     };
 
@@ -54,9 +49,8 @@ describe('UsersListRow', () => {
       email: 'joebiden@gmail.com',
       firstName: 'Joe',
       lastName: 'Biden',
-      permissions: {
-        canOrder: false,
-        canManageUsers: true,
+      userRoles: {
+        [Product.LIBRARY]: UserRole.ADMIN,
       },
     };
 
@@ -74,9 +68,8 @@ describe('UsersListRow', () => {
       email: 'joebiden@gmail.com',
       firstName: 'Joe',
       lastName: 'Biden',
-      permissions: {
-        canOrder: false,
-        canManageUsers: true,
+      userRoles: {
+        [Product.LIBRARY]: UserRole.ADMIN,
       },
     };
 
@@ -94,9 +87,8 @@ describe('UsersListRow', () => {
       email: 'joebiden@gmail.com',
       firstName: 'Joe',
       lastName: 'Biden',
-      permissions: {
-        canOrder: false,
-        canManageUsers: true,
+      userRoles: {
+        [Product.LIBRARY]: UserRole.VIEWER,
       },
     };
 
@@ -111,9 +103,8 @@ describe('UsersListRow', () => {
       email: 'joebiden@gmail.com',
       firstName: 'Joe',
       lastName: 'Biden',
-      permissions: {
-        canOrder: false,
-        canManageUsers: true,
+      userRoles: {
+        [Product.LIBRARY]: UserRole.VIEWER,
       },
     };
 

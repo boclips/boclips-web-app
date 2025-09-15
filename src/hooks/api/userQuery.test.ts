@@ -16,6 +16,7 @@ import {
   CreateTrialUserRequest,
   UserType,
 } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
+import { UserRole } from 'boclips-api-client/dist/sub-clients/users/model/UserRole';
 
 describe('userQuery', () => {
   it('finds the account users', async () => {
@@ -115,9 +116,9 @@ describe('userQuery', () => {
     const usersSpy = jest.spyOn(fakeClient.users, 'updateUser');
 
     const request: UpdateUserRequest = {
-      permissions: {
-        canOrder: true,
-        canManageUsers: true,
+      userRoles: {
+        LIBRARY: UserRole.ADMIN,
+        CLASSROOM: UserRole.ADMIN,
       },
     };
     const { result } = renderHook(() => useUpdateUser(), {
@@ -129,9 +130,9 @@ describe('userQuery', () => {
       firstName: 'John',
       lastName: 'Doe',
       email: 'bla@boclips.com',
-      permissions: {
-        canOrder: false,
-        canManageUsers: false,
+      userRoles: {
+        LIBRARY: UserRole.ADMIN,
+        CLASSROOM: UserRole.ADMIN,
       },
     };
 
@@ -162,10 +163,6 @@ describe('userQuery', () => {
       firstName: 'John',
       lastName: 'Doe',
       email: 'bla@boclips.com',
-      permissions: {
-        canOrder: false,
-        canManageUsers: false,
-      },
     };
 
     act(() =>

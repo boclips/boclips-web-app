@@ -133,10 +133,7 @@ describe('Team view', () => {
       type: UserType.webAppUser,
     });
 
-    fakeClient.users.setPermissionsOfUser(joe.id, {
-      canOrder: true,
-      canManageUsers: true,
-    });
+    fakeClient.users.setUserRoles(joe.id, { LIBRARY: UserRole.ADMIN });
 
     delete fakeClient.links.getAccount;
 
@@ -221,9 +218,8 @@ describe('Team view', () => {
       email: 'joey@boclips.com',
       accountId: 'account-1',
       type: UserType.webAppUser,
-      permissions: {
-        canOrder: false,
-        canManageUsers: true,
+      userRoles: {
+        LIBRARY: UserRole.ADMIN,
       },
     });
 
@@ -286,9 +282,8 @@ describe('Team view', () => {
 
     await fakeClient.users.insertCurrentUser(joe);
 
-    fakeClient.users.setPermissionsOfUser(joe.id, {
-      canOrder: false,
-      canManageUsers: true,
+    fakeClient.users.setUserRoles(joe.id, {
+      LIBRARY: UserRole.ADMIN,
     });
 
     const wrapper = render(
@@ -337,9 +332,8 @@ describe('Team view', () => {
       email: 'joey@boclips.com',
       accountId: 'account-1',
       type: UserType.webAppUser,
-      permissions: {
-        canOrder: false,
-        canManageUsers: true,
+      userRoles: {
+        [Product.LIBRARY]: UserRole.ADMIN,
       },
     });
 
