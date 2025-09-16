@@ -294,10 +294,29 @@ const App = ({
                         </FeatureGate>
                       }
                     />
-                    <Route path="/assistant" element={<AssistantView />} />
+                    <Route
+                      path="/assistant"
+                      element={
+                        <FeatureGate
+                          linkName="assistant"
+                          fallback={<NotFound />}
+                          isView
+                        >
+                          <AssistantView />
+                        </FeatureGate>
+                      }
+                    />
                     <Route
                       path="/assistant/generate"
-                      element={<TrapDoorView feature="boclips-generate" />}
+                      element={
+                        <FeatureGate
+                          linkName="assistant"
+                          fallback={<NotFound />}
+                          isView
+                        >
+                          <TrapDoorView feature="boclips-generate" />
+                        </FeatureGate>
+                      }
                     />
                     <Route
                       path="*"

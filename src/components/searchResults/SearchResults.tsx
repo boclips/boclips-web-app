@@ -13,6 +13,7 @@ import { FilterKey } from 'src/types/search/FilterKey';
 import c from 'classnames';
 import { NavigateToAssistantPrompt } from 'src/components/common/assistant/NavigateToAssistantPrompt';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { FeatureGate } from 'src/components/common/FeatureGate';
 import s from './styles.module.less';
 
 interface Props {
@@ -91,15 +92,17 @@ export const SearchResults = ({
           'row-start-2': !hasSearchTopics,
         })}
       >
-        <div className={s.assistantPromptContainer}>
-          <NavigateToAssistantPrompt
-            onNavigate={() =>
-              AnalyticsFactory.pendo().trackAssistantEntryPointUsed(
-                'searchResults',
-              )
-            }
-          />
-        </div>
+        <FeatureGate linkName="assistant">
+          <div className={s.assistantPromptContainer}>
+            <NavigateToAssistantPrompt
+              onNavigate={() =>
+                AnalyticsFactory.pendo().trackAssistantEntryPointUsed(
+                  'searchResults',
+                )
+              }
+            />
+          </div>
+        </FeatureGate>
         <div className="flex flex-row justify-between mb-2.5">
           <SearchResultsSummary
             count={results?.pageSpec?.totalElements}

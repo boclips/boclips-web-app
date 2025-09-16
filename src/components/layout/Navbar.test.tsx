@@ -16,6 +16,8 @@ import {
   AccountType,
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
+import { AdminLinksFactory } from 'boclips-api-client/dist/test-support/AdminLinksFactory';
+import { sleep } from 'src/testSupport/sleep';
 import { BoclipsClientProvider } from '../common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from '../common/providers/BoclipsSecurityProvider';
 
@@ -200,10 +202,6 @@ describe(`Navbar`, () => {
     let wrapper;
 
     beforeEach(() => {
-      client.users.setCurrentUserFeatures({
-        BO_WEB_APP_DEV: true,
-      });
-
       wrapper = render(
         <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
           <BoclipsClientProvider client={client}>
@@ -236,10 +234,13 @@ describe(`Navbar`, () => {
     );
   });
 
-  it(`will hide the Assistant menu option on desktop when toggled off`, async () => {
+  it(`will hide the Assistant menu option on desktop when link is absent`, async () => {
+    const client = new FakeBoclipsClient();
+    client.links = AdminLinksFactory.sample({ assistant: null });
+
     const wrapper = render(
       <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
+        <BoclipsClientProvider client={client}>
           <NavbarResponsive />
         </BoclipsClientProvider>
       </BoclipsSecurityProvider>,
@@ -247,9 +248,11 @@ describe(`Navbar`, () => {
 
     resizeToDesktop();
 
+    await sleep(50);
+
     expect(
-      await wrapper.queryByRole('button', { name: 'Assistant' }),
-    ).toBeNull();
+      wrapper.queryByRole('button', { name: 'Assistant' }),
+    ).not.toBeInTheDocument();
   });
 
   describe('Mobile', () => {

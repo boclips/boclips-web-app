@@ -80,7 +80,9 @@ const NavbarResponsive = ({
           <div className="col-start-15 col-end-26 row-start-1 row-end-1 flex h-full justify-end">
             <div className={c('flex mr-6', s.buttonsDesktop)}>
               <LibraryButton />
-              <AssistantButton />
+              <FeatureGate linkName="assistant">
+                <AssistantButton />
+              </FeatureGate>
               <AlignmentsButton />
               <PlaylistsButton />
               <FeatureGate linkName="cart">

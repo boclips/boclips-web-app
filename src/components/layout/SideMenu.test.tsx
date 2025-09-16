@@ -56,6 +56,26 @@ describe('Side Menu', () => {
     expect(await wrapper.findByRole('link', { name: 'Team' })).toBeVisible();
   });
 
+  it(`displays Assistant when user has link`, async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.links = AdminLinksFactory.sample({
+      assistant: { href: '/assistant' },
+    });
+    const wrapper = renderSideMenu(fakeClient);
+
+    expect(
+      await wrapper.findByRole('link', { name: 'Assistant' }),
+    ).toBeVisible();
+  });
+
+  it(`does not display Assistant when user does not have link`, async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.links = AdminLinksFactory.sample({});
+    const wrapper = renderSideMenu(fakeClient);
+
+    expect(await wrapper.queryByRole('link', { name: 'Assistant' })).toBeNull();
+  });
+
   it(`displays platform guide when user has product LIBRARY`, async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.users.insertCurrentUser(
