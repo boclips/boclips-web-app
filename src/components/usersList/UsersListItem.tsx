@@ -23,6 +23,7 @@ export interface Props {
   canEdit: boolean;
   onRemove: (user: AccountUser) => void;
   canRemove: boolean;
+  displayAccount: boolean;
 }
 
 export const UsersListItem = ({
@@ -33,6 +34,7 @@ export const UsersListItem = ({
   canEdit,
   onRemove,
   canRemove,
+  displayAccount,
 }: Props) => {
   return (
     <li
@@ -44,6 +46,12 @@ export const UsersListItem = ({
         value={`${user.firstName} ${user.lastName}`}
       />
       <UserInformationField name="Email address" value={user.email} />
+      {displayAccount && (
+        <UserInformationField
+          name={product === Product.CLASSROOM ? 'District/School' : 'Account'}
+          value={user.account?.name}
+        />
+      )}
       <UserInformationField
         name="Role"
         value={toTitleCase(user.userRoles?.[product])}
