@@ -110,7 +110,7 @@ const AddNewTeamMemberModal = ({ product, closeModal }: Props) => {
     if (product === Product.LIBRARY) {
       return [UserRole.ADMIN, UserRole.ORDER_MANAGER, UserRole.VIEWER];
     }
-    return [UserRole.ADMIN, UserRole.TEACHER];
+    return [UserRole.ADMIN, UserRole.TEACHER, UserRole.STUDENT];
   };
 
   return (

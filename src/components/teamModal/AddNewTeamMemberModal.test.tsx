@@ -178,6 +178,7 @@ describe('Team modal', () => {
 
       expect(await wrapper.getByLabelText('Admin')).toBeVisible();
       expect(await wrapper.getByLabelText('Teacher')).toBeVisible();
+      expect(await wrapper.getByLabelText('Student')).toBeVisible();
       expect(await wrapper.queryByText('Viewer')).toBeNull();
     });
 
