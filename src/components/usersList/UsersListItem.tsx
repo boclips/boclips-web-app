@@ -24,6 +24,7 @@ export interface Props {
   onRemove: (user: AccountUser) => void;
   canRemove: boolean;
   displayAccount: boolean;
+  iconOnlyButtons: boolean;
 }
 
 export const UsersListItem = ({
@@ -35,6 +36,7 @@ export const UsersListItem = ({
   onRemove,
   canRemove,
   displayAccount,
+  iconOnlyButtons,
 }: Props) => {
   return (
     <li
@@ -63,6 +65,7 @@ export const UsersListItem = ({
         canRemove={canRemove}
         canEdit={canEdit}
         onEdit={onEdit}
+        iconOnlyButtons={iconOnlyButtons}
       />
     </li>
   );
@@ -90,6 +93,7 @@ const ActionButtons = ({
   user,
   canRemove,
   onRemove,
+  iconOnlyButtons,
 }: Partial<Props>) => {
   return (
     <div className={c(s.listItem, s.buttons)}>
@@ -99,7 +103,9 @@ const ActionButtons = ({
             onClick={() => onEdit(user)}
             className={s.editButton}
             text="Edit"
+            aria-label="Edit"
             icon={<PencilSVG aria-hidden />}
+            iconOnly={iconOnlyButtons}
             type="outline"
             height="42px"
           />
@@ -112,7 +118,9 @@ const ActionButtons = ({
             onClick={() => onRemove(user)}
             className={s.editButton}
             text="Remove"
+            aria-label="Remove"
             icon={<BinSVG aria-hidden />}
+            iconOnly={iconOnlyButtons}
             height="42px"
             type="label"
           />

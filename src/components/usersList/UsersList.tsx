@@ -26,6 +26,10 @@ interface Props {
 export const UsersList = ({ onEditUser, onRemoveUser }: Props) => {
   const [currentPageNumber, setCurrentPageNumber] = React.useState(0);
 
+  const breakpoints = useMediaBreakPoint();
+  const isMobileView =
+    breakpoints.type === 'mobile' || breakpoints.type === 'tablet';
+
   const { data: user, isLoading: isLoadingUser } = useGetUserQuery();
   const { data: accountUsersPage, isLoading: isLoadingAccountUsers } =
     useFindAccountUsers(user?.account?.id, currentPageNumber, PAGE_SIZE);
@@ -83,6 +87,7 @@ export const UsersList = ({ onEditUser, onRemoveUser }: Props) => {
             displayAccount={
               !isLoadingAccount && account.subAccounts?.length > 0
             }
+            iconOnlyButtons={isMobileView}
           />
         )}
         pagination={{

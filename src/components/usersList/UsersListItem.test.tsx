@@ -224,6 +224,36 @@ describe('UsersListRow', () => {
     expect(wrapper.queryByText('Edit')).toBeNull();
   });
 
+  it('displays icon only buttons when flag is set', async () => {
+    const user: AccountUser = {
+      id: 'id-1',
+      email: 'joebiden@gmail.com',
+      firstName: 'Joe',
+      lastName: 'Biden',
+      userRoles: {
+        [Product.LIBRARY]: UserRole.ADMIN,
+      },
+    };
+
+    const client = new FakeBoclipsClient();
+    expect(client.links.updateUser).not.toBeNull();
+
+    const wrapper = renderWrapper({
+      user,
+      onEdit: jest.fn(),
+      canEdit: true,
+      iconOnlyButtons: true,
+    });
+
+    expect(await wrapper.findByRole('button', { name: 'Edit' })).toBeVisible();
+    expect(
+      await wrapper.findByRole('button', { name: 'Remove' }),
+    ).toBeVisible();
+
+    expect(wrapper.queryByText('Edit')).toBeNull();
+    expect(wrapper.queryByText('Remove')).toBeNull();
+  });
+
   interface RenderOptions {
     user: AccountUser;
     onEdit: (user: AccountUser) => void;
@@ -231,6 +261,7 @@ describe('UsersListRow', () => {
     displayAccount?: boolean;
     product?: Product;
     client?: BoclipsClient;
+    iconOnlyButtons?: boolean;
   }
 
   const renderWrapper = ({
@@ -240,6 +271,7 @@ describe('UsersListRow', () => {
     client = new FakeBoclipsClient(),
     product = Product.LIBRARY,
     displayAccount = false,
+    iconOnlyButtons = false,
   }: RenderOptions) => {
     return render(
       <BoclipsClientProvider client={client}>
@@ -253,6 +285,7 @@ describe('UsersListRow', () => {
             onRemove={() => {}}
             canRemove
             displayAccount={displayAccount}
+            iconOnlyButtons={iconOnlyButtons}
           />
         </QueryClientProvider>
       </BoclipsClientProvider>,
