@@ -152,6 +152,53 @@ describe('Team view', () => {
     ).not.toBeInTheDocument();
   });
 
+  it('filters users', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    fakeClient.accounts.insertAccount(
+      AccountsFactory.sample({ id: 'account-1' }),
+    );
+
+    await fakeClient.users.createUser({
+      firstName: `Carlos`,
+      lastName: 'Bakhash',
+      email: `carlos@boclips.com`,
+      accountId: 'account-1',
+      type: UserType.webAppUser,
+    });
+
+    for (let i = 0; i < 2; i++) {
+      // eslint-disable-next-line no-await-in-loop
+      await fakeClient.users.createUser({
+        firstName: `Joe${i}`,
+        lastName: 'Biden',
+        email: `joebiden${i}@boclips.com`,
+        accountId: 'account-1',
+        type: UserType.webAppUser,
+      });
+    }
+
+    const wrapper = render(
+      <MemoryRouter initialEntries={['/team']}>
+        <App
+          reactQueryClient={createReactQueryClient()}
+          apiClient={fakeClient}
+          boclipsSecurity={stubBoclipsSecurity}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(await wrapper.findByText('Joe0 Biden')).toBeVisible();
+
+    const searchInput = wrapper.getByPlaceholderText(
+      'Search for users by email',
+    ) as HTMLInputElement;
+    await userEvent.type(searchInput, 'carlos');
+    const searchButton = wrapper.getByText('Search Users');
+    await userEvent.click(searchButton);
+
+    expect(await wrapper.findByText('Carlos Bakhash')).toBeVisible();
+  });
+
   it('only lists the first 25 users and shows pagination at the bottom', async () => {
     const fakeClient = new FakeBoclipsClient();
     fakeClient.accounts.insertAccount(

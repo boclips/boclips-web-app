@@ -38,6 +38,26 @@ describe('userQuery', () => {
     });
   });
 
+  it('finds the account users matching email query', async () => {
+    const fakeClient = new FakeBoclipsClient();
+    const accountsSpy = jest.spyOn(fakeClient.accounts, 'getAccountUsers');
+
+    const { result } = renderHook(
+      () => useFindAccountUsers('account-1', 2, 10, 'blah@boclips.com'),
+      {
+        wrapper: wrapperWithClients(fakeClient, new QueryClient()),
+      },
+    );
+
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
+    expect(accountsSpy).toBeCalledWith({
+      id: 'account-1',
+      emailQuery: 'blah@boclips.com',
+      page: 2,
+      size: 10,
+    });
+  });
+
   it('bulk gets account users', async () => {
     const fakeClient = new FakeBoclipsClient();
     const accountsSpy = jest.spyOn(fakeClient.accounts, 'getAccountBulkUsers');

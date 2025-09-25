@@ -8,7 +8,6 @@ import {
   CreateTrialUserRequest,
   CreateUserRequest,
 } from 'boclips-api-client/dist/sub-clients/users/model/CreateUserRequest';
-import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
 import { UpdateUserRequest } from 'boclips-api-client/dist/sub-clients/users/model/UpdateUserRequest';
 import { Account } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
@@ -139,15 +138,6 @@ export const useUpdateSelfUser = () => {
   );
 };
 
-const doFindAccountUsers = (
-  client: BoclipsClient,
-  accountId: string,
-  page: number,
-  size: number,
-): Promise<Pageable<AccountUser>> => {
-  return client.accounts.getAccountUsers({ id: accountId, page, size });
-};
-
 const doAccountBulkGetUsers = (
   client: BoclipsClient,
   accountId: string,
@@ -167,12 +157,19 @@ export const useFindAccountUsers = (
   accountId: string,
   page: number,
   size: number,
+  emailQuery?: string,
 ) => {
   const client = useBoclipsClient();
 
   return useQuery(
-    ['accountUsers', accountId, page],
-    () => doFindAccountUsers(client, accountId, page, size),
+    ['accountUsers', accountId, page, emailQuery],
+    () =>
+      client.accounts.getAccountUsers({
+        id: accountId,
+        emailQuery,
+        page,
+        size,
+      }),
     {
       enabled: !!accountId,
     },
