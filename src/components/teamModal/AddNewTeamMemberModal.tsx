@@ -197,6 +197,7 @@ const AddNewTeamMemberModal = ({ product, closeModal }: Props) => {
           onUpdate={(value: string) => {
             setForm({ ...form, accountId: value });
           }}
+          defaultValue={form?.accountId || user.account.id}
           options={accounts}
           dataQa="input-dropdown-accounts"
           placeholder="Select school/district"

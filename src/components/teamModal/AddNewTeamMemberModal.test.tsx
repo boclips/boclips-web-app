@@ -248,13 +248,12 @@ describe('Team modal', () => {
       );
 
       expect(await wrapper.findByText('School/District')).toBeVisible();
-      const dropdown = await wrapper.findByText('Select school/district');
+      const dropdown = await wrapper.findByText('Best district');
 
       fireEvent.click(dropdown);
 
       expect(wrapper.getByText('Best School Ever')).toBeVisible();
       expect(wrapper.getByText('Second Best School Ever')).toBeVisible();
-      expect(wrapper.getByText('Best district')).toBeVisible();
     });
   });
 });
