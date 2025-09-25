@@ -49,10 +49,10 @@ export const useAddNewUser = () => {
   return useMutation(
     (userRequest: CreateUserRequest) => doCreateNewUser(userRequest, client),
     {
-      onSuccess: (user: User) => {
+      onSuccess: () => {
         // do not wait until query cache is invalidated!
         // noinspection JSIgnoredPromiseFromCall
-        queryClient.invalidateQueries(['accountUsers', user.account.id]);
+        queryClient.invalidateQueries(['accountUsers']);
       },
     },
   );

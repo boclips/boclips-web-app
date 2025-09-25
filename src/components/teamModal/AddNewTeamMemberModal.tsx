@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Bodal } from 'src/components/common/bodal/Bodal';
 import { InputText } from '@boclips-ui/input';
 import { useAddNewUser, useGetUserQuery } from 'src/hooks/api/userQuery';
@@ -14,6 +14,7 @@ import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Acco
 import * as RadioGroup from '@radix-ui/react-radio-group';
 import s from 'src/components/common/yesNo/style.module.less';
 import { toTitleCase } from 'src/views/support/toTitleCase';
+import Dropdown, { OptionsProps } from '@boclips-ui/dropdown';
 
 type Props = {
   product: Product;
@@ -25,6 +26,7 @@ type NewUserForm = {
   lastName?: string;
   email?: string;
   role?: UserRole;
+  accountId?: string;
 };
 
 const successNotification = (userRequest: User) =>
@@ -82,7 +84,7 @@ const AddNewTeamMemberModal = ({ product, closeModal }: Props) => {
       firstName: form?.firstName,
       lastName: form?.lastName,
       email: form?.email,
-      accountId: user?.account?.id,
+      accountId: form?.accountId || user?.account.id,
       type: UserType.webAppUser,
       userRoles: {
         [product]: form?.role,
@@ -99,6 +101,31 @@ const AddNewTeamMemberModal = ({ product, closeModal }: Props) => {
       },
     });
   };
+
+  const accounts: OptionsProps[] = useMemo(() => {
+    if (!user || !user.account?.subAccounts) {
+      return [];
+    }
+    let items = [
+      {
+        id: user.account.id,
+        name: user.account.name,
+        value: user.account.id,
+        label: user.account.name,
+      },
+    ];
+    user.account.subAccounts?.map((subAccount) =>
+      items.push({
+        id: subAccount.id,
+        name: subAccount.name,
+        value: subAccount.id,
+        label: subAccount.name,
+      }),
+    );
+
+    items = items.sort((a, b) => a.label.localeCompare(b.label));
+    return items;
+  }, [user]);
 
   const validateTextField = (fieldName: string) =>
     form[fieldName]?.length < 2
@@ -160,6 +187,21 @@ const AddNewTeamMemberModal = ({ product, closeModal }: Props) => {
         onBlur={() => validateTextField('email')}
         errorMessage="Please enter a valid email address"
       />
+      {!isLoadingUser && user.account?.subAccounts?.length > 0 && (
+        <Dropdown
+          mode="single"
+          labelText="School/District"
+          onUpdate={(value: string) => {
+            setForm({ ...form, accountId: value });
+          }}
+          options={accounts}
+          dataQa="input-dropdown-accounts"
+          placeholder="Select school/district"
+          showLabel
+          fitWidth
+        />
+      )}
+
       <div className="my-4">
         <Typography.Body className="text-gray-800">User role</Typography.Body>
       </div>

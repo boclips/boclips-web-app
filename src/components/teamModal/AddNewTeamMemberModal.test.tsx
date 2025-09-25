@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import userEvent from '@testing-library/user-event';
@@ -16,6 +16,7 @@ import {
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 import { UserRole } from 'boclips-api-client/dist/sub-clients/users/model/UserRole';
+import { AccountsFactory } from 'boclips-api-client/dist/test-support/AccountsFactory';
 
 describe('Team modal', () => {
   it('renders teams modal', () => {
@@ -202,6 +203,58 @@ describe('Team modal', () => {
       expect(await wrapper.getByLabelText('Viewer')).toBeVisible();
       expect(await wrapper.getByLabelText('Order Manager')).toBeVisible();
       expect(await wrapper.queryByText('Teacher')).toBeNull();
+    });
+  });
+
+  describe('Team member account', () => {
+    it(`shows account dropdown when sub-accounts are present`, async () => {
+      const client = new FakeBoclipsClient();
+      const user = UserFactory.sample();
+      const account = AccountsFactory.sample({
+        id: user.account.id,
+        name: 'Best district',
+        subAccounts: [
+          { id: 'sub-1', name: 'Best School Ever' },
+          { id: 'sub-2', name: 'Second Best School Ever' },
+        ],
+      });
+      client.users.insertCurrentUser({
+        ...user,
+        account: {
+          id: account.id,
+          name: account.name,
+          type: account.type,
+          createdAt: account.createdAt,
+          subAccounts: account.subAccounts,
+        },
+      });
+
+      const wrapper = render(
+        <BoclipsClientProvider client={client}>
+          <QueryClientProvider client={new QueryClient()}>
+            <BoclipsSecurityProvider
+              boclipsSecurity={{
+                ...stubBoclipsSecurity,
+                hasRole: () => false,
+              }}
+            >
+              <AddNewTeamMemberModal
+                product={Product.CLASSROOM}
+                closeModal={() => jest.fn()}
+              />
+            </BoclipsSecurityProvider>
+          </QueryClientProvider>
+        </BoclipsClientProvider>,
+      );
+
+      expect(await wrapper.findByText('School/District')).toBeVisible();
+      const dropdown = await wrapper.findByText('Select school/district');
+
+      fireEvent.click(dropdown);
+
+      expect(wrapper.getByText('Best School Ever')).toBeVisible();
+      expect(wrapper.getByText('Second Best School Ever')).toBeVisible();
+      expect(wrapper.getByText('Best district')).toBeVisible();
     });
   });
 });
