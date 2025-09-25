@@ -69,6 +69,9 @@ const AddNewTeamMemberModal = ({ product, closeModal }: Props) => {
   const isFormIncomplete = () =>
     !form?.firstName?.length || !form?.lastName?.length || !form?.email?.length;
 
+  const defaultRole =
+    product === Product.CLASSROOM ? UserRole.TEACHER : UserRole.VIEWER;
+
   useEffect(() => {
     if (isCreateUserSuccess) {
       closeModal();
@@ -87,7 +90,7 @@ const AddNewTeamMemberModal = ({ product, closeModal }: Props) => {
       accountId: form?.accountId || user?.account.id,
       type: UserType.webAppUser,
       userRoles: {
-        [product]: form?.role,
+        [product]: form?.role ? form.role : defaultRole,
       },
     };
 
