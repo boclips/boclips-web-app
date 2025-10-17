@@ -24,13 +24,13 @@
 
   &:hover {
     &::after {
-      #barOnBottom;
+      #barOnBottom();
     }
   }
 
   &.active {
     &::after {
-      #barOnBottom;
+      #barOnBottom();
     }
   }
 
@@ -40,7 +40,7 @@
     height: 100%;
     align-items: center;
     justify-content: center;
-    #focus;
+    #focus();
 
     span {
     @apply text-xxs mt-1 font-medium;
