@@ -87,7 +87,7 @@
     "postcss-loader": "^8.1.1",
     "postcss-preset-env": "^10.2.4",
     "prettier": "^3.6.2",
-    "react-refresh": "^0.14.0",
+    "react-refresh": "^0.18.0",
     "react-refresh-typescript": "^2.0.8",
     "start-server-and-test": "^2.0.8",
     "style-loader": "^3.3.1",
