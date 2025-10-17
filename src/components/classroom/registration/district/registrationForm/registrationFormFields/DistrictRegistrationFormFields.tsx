@@ -217,8 +217,6 @@ const DistrictRegistrationFormFields = ({
           <InputText
             id="input-password"
             onChange={(value) => {
-              console.log('regData', registrationData);
-              console.log(validationErrors);
               handleChange('password', value);
             }}
             inputType="password"
