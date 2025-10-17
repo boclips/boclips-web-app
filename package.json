@@ -85,7 +85,7 @@
     "npm-audit-resolver": "^3.0.0-0",
     "postcss": "^8.5.2",
     "postcss-loader": "^8.1.1",
-    "postcss-preset-env": "^10.2.4",
+    "postcss-preset-env": "^10.4.0",
     "prettier": "^3.6.2",
     "react-refresh": "^0.14.0",
     "react-refresh-typescript": "^2.0.8",
