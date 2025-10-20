@@ -1,7 +1,7 @@
 import { ListViewAsset } from 'boclips-api-client/dist/sub-clients/videos/model/ListViewVideo';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import React from 'react';
-import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
+import { useGetVideos } from 'src/hooks/api/videoQuery';
 import s from './style.module.less';
 
 interface Props {
@@ -9,25 +9,17 @@ interface Props {
 }
 
 const Thumbnails = ({ assets }: Props) => {
-  const { data: firstVideo, isLoading: firstLoading } = useFindOrGetVideo(
-    assets[0]?.id.videoId,
-  );
-  const { data: secondVideo, isLoading: secondLoading } = useFindOrGetVideo(
-    assets[1]?.id.videoId,
-  );
-  const { data: thirdVideo, isLoading: thirdLoading } = useFindOrGetVideo(
-    assets[2]?.id.videoId,
-  );
-
-  const loading = [firstLoading, secondLoading, thirdLoading];
+  const videoIds = assets.slice(0, 3).map((asset) => asset.id.videoId);
+  const { data: videos, isLoading } = useGetVideos(videoIds);
 
   const getThumbnailUrl = (video: Video) =>
     video.playback?.links?.thumbnail?.getOriginalLink();
 
   return (
     <div className={s.thumbnailsContainer}>
-      {[firstVideo, secondVideo, thirdVideo].map((video, i) => {
-        if (video && loading[i] === false) {
+      {[0, 1, 2].map((i) => {
+        const video = videos?.[i];
+        if (video && !isLoading) {
           return (
             <div
               className={s.thumbnails}
