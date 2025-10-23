@@ -24,10 +24,12 @@ const AdditionalServices = ({ videoItem, cartItem }: Props) => {
         <TrimService videoItem={videoItem} cartItem={cartItem} />
       </FeatureGate>
 
-      <AdditionalServiceCheckbox
-        cartItem={cartItem}
-        label="Request human-generated caption and transcript files (in English)"
-      />
+      {videoItem.language.displayName.toLowerCase().startsWith('english') && (
+        <AdditionalServiceCheckbox
+          cartItem={cartItem}
+          label="Request human-generated caption and transcript files (in English)"
+        />
+      )}
 
       <FeatureGate feature="BO_WEB_APP_REQUEST_ADDITIONAL_EDITING">
         <EditRequest

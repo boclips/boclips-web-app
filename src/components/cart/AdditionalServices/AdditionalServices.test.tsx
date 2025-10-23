@@ -81,6 +81,7 @@ describe('AdditionalServices component', () => {
     const video = VideoFactory.sample({
       id: '123',
       title: 'this is cart item test',
+      language: { code: 'en-US', displayName: 'English (US)' },
     });
 
     const client = new QueryClient();
@@ -113,5 +114,46 @@ describe('AdditionalServices component', () => {
     expect(
       await wrapper.findByText('Request other type of editing'),
     ).toBeVisible();
+  });
+
+  it(`should not display transcript option for non-english video for users with flags`, async () => {
+    const cartItem = CartItemFactory.sample({
+      id: 'cart-item-id-1',
+      videoId: '123',
+    });
+
+    const video = VideoFactory.sample({
+      id: '123',
+      title: 'this is cart item test',
+      language: { code: 'jpn', displayName: 'Japanese' },
+    });
+
+    const client = new QueryClient();
+
+    const apiClient = new FakeBoclipsClient();
+    apiClient.users.insertCurrentUser(
+      UserFactory.sample({
+        features: {
+          BO_WEB_APP_REQUEST_TRIMMING: true,
+          BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
+        },
+      }),
+    );
+    const wrapper = render(
+      <BoclipsClientProvider client={apiClient}>
+        <QueryClientProvider client={client}>
+          <CartValidationProvider>
+            <AdditionalServices videoItem={video} cartItem={cartItem} />
+          </CartValidationProvider>
+        </QueryClientProvider>
+      </BoclipsClientProvider>,
+    );
+
+    expect(await wrapper.findByText('Trim video')).toBeVisible();
+    expect(
+      wrapper.queryByText(
+        'Request human-generated caption and transcript files (in English)',
+      ),
+    ).toBeNull();
   });
 });
