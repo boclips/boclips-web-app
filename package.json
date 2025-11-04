@@ -138,7 +138,7 @@
     "@tsparticles/react": "^3.0.0",
     "antd": "4.20.0",
     "axios": "^1.12.2",
-    "boclips-api-client": "^113.4.0",
+    "boclips-api-client": "^113.5.0",
     "boclips-js-security": "^17.0.1",
     "boclips-player": "^10.0.1",
     "boclips-player-react": "^7.0.0",

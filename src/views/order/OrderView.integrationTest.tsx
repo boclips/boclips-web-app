@@ -72,6 +72,7 @@ describe('order table', () => {
         maxResolutionAvailable: true,
         videoReference: 'video-ref',
         type: 'STOCK',
+        allowHumanCaptionRequest: false,
         _links: {
           fullProjection: new Link({ href: 'fullprojection', templated: true }),
           videoUpload: new Link({ href: 'videoUpload', templated: true }),
@@ -187,6 +188,7 @@ describe('order table', () => {
         maxResolutionAvailable: true,
         videoReference: 'video-ref',
         type: 'NEWS',
+        allowHumanCaptionRequest: false,
         _links: {
           fullProjection: new Link({ href: 'fullprojection', templated: true }),
           videoUpload: new Link({ href: 'videoUpload', templated: true }),

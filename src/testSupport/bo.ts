@@ -286,6 +286,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
               currency: 'EUR',
               amount: 123,
             },
+            allowHumanCaptionRequest: true,
           }),
         );
 
@@ -299,6 +300,7 @@ export function bo(apiClient: FakeBoclipsClient): Bo {
               currency: 'EUR',
               amount: 123,
             },
+            allowHumanCaptionRequest: true,
           }),
         );
 

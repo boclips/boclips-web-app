@@ -33,6 +33,7 @@ describe('CartView', () => {
     },
     type: 'NEWS',
     maxLicenseDurationYears: 5,
+    allowHumanCaptionRequest: true,
   });
   const instructionalVideo = VideoFactory.sample({
     id: 'instructional-video-id',
@@ -284,6 +285,7 @@ describe('CartView', () => {
         VideoFactory.sample({
           price: { amount: 300, currency: 'USD' },
           id: 'video-additional-service',
+          allowHumanCaptionRequest: true,
         }),
       );
 

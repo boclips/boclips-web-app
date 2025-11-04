@@ -45,6 +45,7 @@ describe('AdditionalServices component', () => {
     const video = VideoFactory.sample({
       id: '123',
       title: 'this is cart item test',
+      allowHumanCaptionRequest: true,
     });
 
     const client = new QueryClient();
@@ -81,7 +82,7 @@ describe('AdditionalServices component', () => {
     const video = VideoFactory.sample({
       id: '123',
       title: 'this is cart item test',
-      language: { code: 'en-US', displayName: 'English (US)' },
+      allowHumanCaptionRequest: true,
     });
 
     const client = new QueryClient();
@@ -116,7 +117,7 @@ describe('AdditionalServices component', () => {
     ).toBeVisible();
   });
 
-  it(`should not display transcript option for non-english video for users with flags`, async () => {
+  it(`should not display transcript option when not allowed for users with flags`, async () => {
     const cartItem = CartItemFactory.sample({
       id: 'cart-item-id-1',
       videoId: '123',
@@ -125,7 +126,7 @@ describe('AdditionalServices component', () => {
     const video = VideoFactory.sample({
       id: '123',
       title: 'this is cart item test',
-      language: { code: 'jpn', displayName: 'Japanese' },
+      allowHumanCaptionRequest: false,
     });
 
     const client = new QueryClient();
