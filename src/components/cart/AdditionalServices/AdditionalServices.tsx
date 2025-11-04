@@ -24,7 +24,7 @@ const AdditionalServices = ({ videoItem, cartItem }: Props) => {
         <TrimService videoItem={videoItem} cartItem={cartItem} />
       </FeatureGate>
 
-      {videoItem.language.displayName.toLowerCase().startsWith('english') && (
+      {videoItem.allowHumanCaptionRequest && (
         <AdditionalServiceCheckbox
           cartItem={cartItem}
           label="Request human-generated caption and transcript files (in English)"

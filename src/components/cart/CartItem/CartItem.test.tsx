@@ -68,6 +68,7 @@ describe('CartItem', () => {
       VideoFactory.sample({
         id: '123',
         title: 'this is cart item test',
+        allowHumanCaptionRequest: true,
       }),
     );
 
@@ -240,7 +241,9 @@ describe('CartItem', () => {
           transcriptRequested: false,
         },
       }),
-      VideoFactory.sample({}),
+      VideoFactory.sample({
+        allowHumanCaptionRequest: true,
+      }),
     );
 
     fakeClient.carts.insertCartItem(cartItem);
