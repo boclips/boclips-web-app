@@ -5,6 +5,7 @@ import { AnalyticsOptions } from 'boclips-player/dist/Events/AnalyticsOptions';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
 import getPlayerOptions from 'src/components/videoCard/playerOptionsFactory/playerOptionsFactory';
 import { PlaybackSegment } from 'boclips-player/dist/MediaPlayer/MediaPlayer';
+import { KalturaVideoPlayer } from 'src/components/kalturaVideoPlayer/KalturaVideoPlayer';
 import s from './VideoPlayer.module.less';
 
 interface Props {
@@ -38,6 +39,12 @@ export const VideoPlayer = ({
         borderRadius="4px"
         options={options}
         segment={segment}
+      />
+      <KalturaVideoPlayer
+        targetId={`video-player-${video?.id}`}
+        partnerId="2394162"
+        uiConfId="57478973"
+        entryId={video?.playback.id}
       />
     </div>
   );
