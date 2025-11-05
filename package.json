@@ -91,7 +91,7 @@
     "react-refresh-typescript": "^2.0.8",
     "start-server-and-test": "^2.0.8",
     "style-loader": "^3.3.1",
-    "tailwindcss": "^3.4.15",
+    "tailwindcss": "^4.1.16",
     "tailwindcss-debug-screens": "^2.2.1",
     "ts-import-plugin": "^3.0.0",
     "ts-jest": "^29.4.0",
