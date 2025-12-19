@@ -11,6 +11,7 @@ import { FilterKey } from 'src/types/search/FilterKey';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import { Segment } from 'boclips-api-client/dist/sub-clients/collections/model/Segment';
 import { HighlightBadge } from 'src/components/common/highlight/HighlightBadge';
+import { CefrLevelBadge } from 'src/components/common/cefrLevel/CefrLevelBadge';
 import s from './VideoCardWrapper.module.less';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 
@@ -81,6 +82,9 @@ export const VideoCardWrapper = ({
       </div>
     );
 
+  const cefrLevelBadge = () =>
+    video.cefrLevel && <CefrLevelBadge cefrLevel={video.cefrLevel} />;
+
   const highlightBadge = () => (
     <div className="absolute top-3 right-4">
       <HighlightBadge />{' '}
@@ -96,6 +100,7 @@ export const VideoCardWrapper = ({
           <VideoPlayer video={video} showDurationBadge segment={segment} />
         }
         createdBy={createdByLink()}
+        additionalBadges={[cefrLevelBadge()]}
         topBadge={showHighlightBadge ? highlightBadge() : priceBadge()}
         title={
           <VideoCardTitle video={video} disableTitleLink={disableTitleLink} />

@@ -51,6 +51,7 @@ describe('Video View', () => {
       { code: 'EL1', label: 'EL1 label' },
       { code: 'EL2', label: 'EL2 label' },
     ],
+    cefrLevel: 'A1',
     links: {
       ...VideoFactory.sample({}).links,
       createEmbedCode: new Link({ href: 'todo' }),
@@ -116,6 +117,18 @@ describe('Video View', () => {
 
       expect(wrapper.getByText('EL1 label')).toBeVisible();
       expect(wrapper.getByText('EL2 label')).toBeVisible();
+    });
+  });
+
+  it('on video page cefr level badge is rendered', async () => {
+    fakeClient.videos.insertVideo(exampleVideo);
+
+    const wrapper = renderView(['/videos/video-id']);
+
+    await waitFor(async () => {
+      expect(wrapper.getByTestId('A1-cefr-level-badge')).toBeInTheDocument();
+
+      expect(wrapper.getByText('A1 Beginner')).toBeVisible();
     });
   });
 

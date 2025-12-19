@@ -49,6 +49,7 @@ describe('SearchResults', () => {
             name: 'geography',
           },
         ],
+        cefrLevel: 'B2',
         playback: PlaybackFactory.sample({
           type: 'STREAM',
         }),
@@ -69,6 +70,7 @@ describe('SearchResults', () => {
       expect(wrapper.getByText('20 Mar 2019')).toBeVisible();
       expect(wrapper.getByText('BFI')).toBeVisible();
       expect(wrapper.getByText('geography')).toBeVisible();
+      expect(wrapper.getByText('B2 Upper Intermediate')).toBeVisible();
       expect(wrapper.queryByText('Ages 7-9')).not.toBeInTheDocument();
       expect(wrapper.queryByText('Selected filters')).not.toBeInTheDocument();
     });
