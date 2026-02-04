@@ -4,7 +4,9 @@ import { EditingRestrictionsLabel } from 'src/components/videoPage/videoLicensin
 
 describe('Editing restrictions label', () => {
   it('displays ALLOWED editing restriction', async () => {
-    const wrapper = render(<EditingRestrictionsLabel permission="ALLOWED" />);
+    const wrapper = render(
+      <EditingRestrictionsLabel permission="ALLOWED" editingFormLink={null} />,
+    );
 
     expect(wrapper.getByText(/Follow/)).toBeVisible();
     expect(
@@ -14,7 +16,10 @@ describe('Editing restrictions label', () => {
 
   it('displays ALLOWED_WITH_RESTRICTIONS editing restriction', async () => {
     const wrapper = render(
-      <EditingRestrictionsLabel permission="ALLOWED_WITH_RESTRICTIONS" />,
+      <EditingRestrictionsLabel
+        permission="ALLOWED_WITH_RESTRICTIONS"
+        editingFormLink={null}
+      />,
     );
     expect(
       wrapper.getByText(/Additional restrictions apply as well as/),
@@ -26,7 +31,10 @@ describe('Editing restrictions label', () => {
 
   it('displays NOT_ALLOWED editing restriction', async () => {
     const wrapper = render(
-      <EditingRestrictionsLabel permission="NOT_ALLOWED" />,
+      <EditingRestrictionsLabel
+        permission="NOT_ALLOWED"
+        editingFormLink={null}
+      />,
     );
 
     expect(
@@ -36,7 +44,10 @@ describe('Editing restrictions label', () => {
 
   it('displays editing request form link when editing is allowed with restriction', async () => {
     const wrapper = render(
-      <EditingRestrictionsLabel permission="ALLOWED_WITH_RESTRICTIONS" />,
+      <EditingRestrictionsLabel
+        permission="ALLOWED_WITH_RESTRICTIONS"
+        editingFormLink={<a href="example.com">here</a>}
+      />,
     );
     expect(wrapper.getByText(/Submit an editing request/)).toBeVisible();
     expect(wrapper.getByRole('link', { name: 'here' })).toBeVisible();

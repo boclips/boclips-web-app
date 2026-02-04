@@ -3,10 +3,10 @@ import React from 'react';
 import c from 'classnames';
 import { Typography } from '@boclips-ui/typography';
 import { VideoLicensingDetail } from 'src/components/videoPage/videoLicensingDetails/VideoLicensingDetail';
-import { getVideoPageLicenseDurationLabel } from 'src/services/getVideoLicenseDurationLabel';
 import { EditingRestrictionsLabel } from 'src/components/videoPage/videoLicensingDetails/EditingRestrictionsLabel';
 import { TerritoryRestrictionsLabel } from 'src/components/videoPage/videoLicensingDetails/TerritoryRestrictionsLabel';
 import { VideoRestrictionsLabel } from 'src/components/videoPage/videoLicensingDetails/VideoRestrictionsLabel';
+import { getVideoPageLicenseDurationLabel } from 'src/services/getVideoLicenseDurationLabel';
 import s from './videoLicensingDetails.module.less';
 
 interface Props {
@@ -19,6 +19,14 @@ export const VideoLicensingDetails = ({ video }: Props) => {
     video.restrictions?.territory?.type === 'RESTRICTED' &&
     video.restrictions?.territory?.territories &&
     video.restrictions?.territory?.territories.length > 0;
+
+  const requestFormLink = (
+    <a rel="noopener noreferrer" href="https://wkf.ms/3PUYqhP" target="_blank">
+      <Typography.Body size="small">
+        <Typography.Link type="inline-blue">here</Typography.Link>
+      </Typography.Body>
+    </a>
+  );
 
   return (
     <section className={c(s.scrollableLicensingDetails)}>
@@ -46,9 +54,16 @@ export const VideoLicensingDetails = ({ video }: Props) => {
       <div className="flex flex-col mt-2">
         <VideoLicensingDetail
           title="Maximum Licensing Term"
-          value={getVideoPageLicenseDurationLabel(
-            video.maxLicenseDurationYears,
-          )}
+          value={
+            <>
+              <p>
+                {getVideoPageLicenseDurationLabel(
+                  video.maxLicenseDurationYears,
+                )}
+              </p>
+              <p>Submit an extended license request {requestFormLink}.</p>
+            </>
+          }
         />
 
         {showTerritoryRestrictions && (
@@ -68,6 +83,7 @@ export const VideoLicensingDetails = ({ video }: Props) => {
             value={
               <EditingRestrictionsLabel
                 permission={video.restrictions.editing.permission}
+                editingFormLink={requestFormLink}
               />
             }
           />

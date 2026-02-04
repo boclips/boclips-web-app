@@ -25,12 +25,15 @@ describe('Video licensing details in video page', () => {
   });
 
   describe('max license duration', () => {
-    it('displays max license duration', () => {
+    it('displays max license duration and request link', () => {
       const video = VideoFactory.sample({ maxLicenseDurationYears: 3 });
       const wrapper = render(<VideoLicensingDetails video={video} />);
 
       expect(wrapper.getByText('Maximum Licensing Term')).toBeVisible();
       expect(wrapper.getByText('3 years')).toBeVisible();
+      expect(
+        wrapper.getByText(/Submit an extended license request/),
+      ).toBeVisible();
     });
   });
 

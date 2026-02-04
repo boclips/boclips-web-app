@@ -3,9 +3,11 @@ import { Typography } from '@boclips-ui/typography';
 
 interface Props {
   permission: string;
+  editingFormLink: ReactElement;
 }
 export const EditingRestrictionsLabel = ({
   permission,
+  editingFormLink,
 }: Props): string | ReactElement => {
   const editingPolicyLink = (
     <a
@@ -17,14 +19,6 @@ export const EditingRestrictionsLabel = ({
         <Typography.Link type="inline-blue">
           standard editing policy
         </Typography.Link>
-      </Typography.Body>
-    </a>
-  );
-
-  const editingFormLink = (
-    <a rel="noopener noreferrer" href="https://wkf.ms/3PUYqhP" target="_blank">
-      <Typography.Body size="small">
-        <Typography.Link type="inline-blue">here</Typography.Link>
       </Typography.Body>
     </a>
   );
