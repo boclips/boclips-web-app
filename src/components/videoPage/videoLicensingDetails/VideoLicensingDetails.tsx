@@ -20,8 +20,8 @@ export const VideoLicensingDetails = ({ video }: Props) => {
     video.restrictions?.territory?.territories &&
     video.restrictions?.territory?.territories.length > 0;
 
-  const requestFormLink = (
-    <a rel="noopener noreferrer" href="https://wkf.ms/3PUYqhP" target="_blank">
+  const licenseRequestFormLink = (
+    <a rel="noopener noreferrer" href="https://wkf.ms/48RAPre" target="_blank">
       <Typography.Body size="small">
         <Typography.Link type="inline-blue">here</Typography.Link>
       </Typography.Body>
@@ -61,7 +61,9 @@ export const VideoLicensingDetails = ({ video }: Props) => {
                   video.maxLicenseDurationYears,
                 )}
               </p>
-              <p>Submit an extended license request {requestFormLink}.</p>
+              <p>
+                Submit an extended license request {licenseRequestFormLink}.
+              </p>
             </>
           }
         />
@@ -83,7 +85,6 @@ export const VideoLicensingDetails = ({ video }: Props) => {
             value={
               <EditingRestrictionsLabel
                 permission={video.restrictions.editing.permission}
-                editingFormLink={requestFormLink}
               />
             }
           />
