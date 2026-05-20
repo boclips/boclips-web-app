@@ -32,11 +32,7 @@ export const LazyVideoPlayer = ({
 
   if (showPlayer) {
     return (
-      <VideoPlayer
-        video={video}
-        segment={segment}
-        setRef={setPlayerRef}
-      />
+      <VideoPlayer video={video} segment={segment} setRef={setPlayerRef} />
     );
   }
 
