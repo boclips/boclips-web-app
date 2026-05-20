@@ -5,6 +5,7 @@ import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { Video as PlayerVideo } from 'boclips-player/dist/types/Video';
 import { BoclipsPlayer } from 'boclips-player/dist/BoclipsPlayer/BoclipsPlayer';
 import { handleEnterKeyEvent } from 'src/services/handleKeyEvent';
+import PlayButton from 'src/components/common/playButton/PlayButton';
 
 export type OnSegmentPlayedEvent = (start: number, end: number) => void;
 
@@ -59,7 +60,7 @@ const CoverWithVideo = ({ video, onSegmentPlayed }: Props) => {
             onClick={() => setShowPlayer(true)}
             onKeyDown={(e) => handleEnterKeyEvent(e, () => setShowPlayer(true))}
           >
-            <div className={s.play} />
+            <PlayButton />
           </button>
           <span id={`${video.id}-label`}>play {video.title}</span>
           <span id={`${video.id}-description`}>{video.description}</span>

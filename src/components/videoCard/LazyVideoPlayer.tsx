@@ -3,6 +3,7 @@ import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { Segment } from 'boclips-api-client/dist/sub-clients/collections/model/Segment';
 import { BoclipsPlayer } from 'boclips-player/dist/BoclipsPlayer/BoclipsPlayer';
 import getFormattedDuration from 'src/services/getFormattedDuration';
+import PlayButton from 'src/components/common/playButton/PlayButton';
 import { VideoPlayer } from './VideoPlayer';
 import s from './LazyVideoPlayer.module.less';
 
@@ -55,7 +56,7 @@ export const LazyVideoPlayer = ({
         aria-label={`Play ${video?.title}`}
         onClick={() => setShowPlayer(true)}
       >
-        <div className={s.play} />
+        <PlayButton />
       </button>
       {showDurationBadge && duration && (
         <div className={s.durationBadge} aria-hidden>
