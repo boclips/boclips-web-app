@@ -2,7 +2,7 @@ import React from 'react';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { VideoCard } from '@boclips-ui/video-card';
 import { PriceBadge } from 'src/components/common/price/PriceBadge';
-import { VideoPlayer } from 'src/components/videoCard/VideoPlayer';
+import { LazyVideoPlayer } from 'src/components/videoCard/LazyVideoPlayer';
 import { Link } from 'react-router-dom';
 import { trackNavigateToVideoDetails } from 'src/components/common/analytics/Analytics';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
@@ -97,7 +97,7 @@ export const VideoCardWrapper = ({
         key={video.id}
         video={videoWithoutAgeRange}
         videoPlayer={
-          <VideoPlayer video={video} showDurationBadge segment={segment} />
+          <LazyVideoPlayer video={video} showDurationBadge segment={segment} />
         }
         createdBy={createdByLink()}
         additionalBadges={[cefrLevelBadge()]}
