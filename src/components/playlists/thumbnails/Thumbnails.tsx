@@ -1,16 +1,15 @@
 import { ListViewAsset } from 'boclips-api-client/dist/sub-clients/videos/model/ListViewVideo';
 import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import React from 'react';
-import { useGetVideos } from 'src/hooks/api/videoQuery';
 import s from './style.module.less';
 
 interface Props {
   assets: ListViewAsset[];
+  videos?: Video[];
 }
 
-const Thumbnails = ({ assets }: Props) => {
-  const videoIds = assets.slice(0, 3).map((asset) => asset.id.videoId);
-  const { data: videos, isLoading } = useGetVideos(videoIds);
+const Thumbnails = ({ assets, videos }: Props) => {
+  const thumbnailVideoIds = assets.slice(0, 3).map((asset) => asset.id.videoId);
 
   const getThumbnailUrl = (video: Video) =>
     video.playback?.links?.thumbnail?.getOriginalLink();
@@ -18,8 +17,8 @@ const Thumbnails = ({ assets }: Props) => {
   return (
     <div className={s.thumbnailsContainer}>
       {[0, 1, 2].map((i) => {
-        const video = videos?.[i];
-        if (video && !isLoading) {
+        const video = videos?.find((v) => v.id === thumbnailVideoIds[i]);
+        if (video) {
           return (
             <div
               className={s.thumbnails}
