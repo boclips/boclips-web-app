@@ -6,6 +6,7 @@ import c from 'classnames';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
 import Pagination from '@boclips-ui/pagination';
+import { useGetVideos } from 'src/hooks/api/videoQuery';
 import s from '../common/pagination/pagination.module.less';
 
 interface Props {
@@ -21,6 +22,11 @@ export const OrdersTable = ({ orders, paginationPage }: Props) => {
 
   const currentBreakpoint = useMediaBreakPoint();
   const mobileView = currentBreakpoint.type === 'mobile';
+
+  const thumbnailVideoIds = orders.page
+    .map((order) => order.items[0]?.video?.id)
+    .filter((id): id is string => !!id);
+  const { data: thumbnailVideos } = useGetVideos(thumbnailVideoIds);
 
   const itemRender = React.useCallback(
     (page, type) => (
@@ -59,7 +65,14 @@ export const OrdersTable = ({ orders, paginationPage }: Props) => {
           itemRender,
         }}
         dataSource={orders.page}
-        renderItem={(order: Order) => <OrdersCard order={order} />}
+        renderItem={(order: Order) => (
+          <OrdersCard
+            order={order}
+            thumbnailVideo={thumbnailVideos?.find(
+              (video) => video.id === order.items[0]?.video?.id,
+            )}
+          />
+        )}
       />
     </main>
   );

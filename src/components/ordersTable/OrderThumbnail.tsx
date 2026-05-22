@@ -1,16 +1,16 @@
 import React from 'react';
-import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import { OrderItem } from 'boclips-api-client/dist/sub-clients/orders/model/OrderItem';
 import { Typography } from '@boclips-ui/typography';
+import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import s from './style.module.less';
 
 interface Props {
   items: OrderItem[];
+  thumbnailVideo?: Video;
 }
 
-export const OrderThumbnail = ({ items }: Props) => {
+export const OrderThumbnail = ({ items, thumbnailVideo }: Props) => {
   const count = items.length;
-  const { data: firstVideo } = useFindOrGetVideo(items[0]?.video?.id);
 
   return (
     <div className="flex flex-grow relative">
@@ -18,7 +18,7 @@ export const OrderThumbnail = ({ items }: Props) => {
         data-qa="order-item-thumbnail"
         className={s.thumbnail}
         style={{
-          backgroundImage: `url(${firstVideo?.playback?.links?.thumbnail?.getOriginalLink()})`,
+          backgroundImage: `url(${thumbnailVideo?.playback?.links?.thumbnail?.getOriginalLink()})`,
         }}
       >
         <div className="text-white z-10 relative flex flex-col h-full items-center justify-center">
