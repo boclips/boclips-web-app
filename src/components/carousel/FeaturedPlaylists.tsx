@@ -4,6 +4,7 @@ import 'pure-react-carousel/dist/react-carousel.es.css';
 import { Carousel } from 'src/components/common/carousel/Carousel';
 import { PromotedForProduct } from 'boclips-api-client/dist/sub-clients/collections/model/PromotedForProduct';
 import { PlaylistSlide } from 'src/components/carousel/PlaylistSlide';
+import { useGetVideos } from 'src/hooks/api/videoQuery';
 import s from './styles.module.less';
 
 interface Props {
@@ -30,12 +31,22 @@ const FeaturedPlaylists = ({ product }: Props) => {
     [retrievedPlaylists],
   );
 
+  const firstVideoIds =
+    nonEmptyPlaylists?.map((playlist) => playlist.assets[0].id.videoId) ?? [];
+  const { data: firstVideos } = useGetVideos(firstVideoIds);
+
   const playlistSlides = useMemo(
     () =>
       nonEmptyPlaylists?.map((playlist) => (
-        <PlaylistSlide key={playlist.id} playlist={playlist} />
+        <PlaylistSlide
+          key={playlist.id}
+          playlist={playlist}
+          video={firstVideos?.find(
+            (video) => video.id === playlist.assets[0].id.videoId,
+          )}
+        />
       )),
-    [nonEmptyPlaylists],
+    [nonEmptyPlaylists, firstVideos],
   );
 
   if (isInitialLoading) {
