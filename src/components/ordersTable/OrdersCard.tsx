@@ -6,14 +6,16 @@ import { OrderThumbnail } from 'src/components/ordersTable/OrderThumbnail';
 import { OrderStatusField } from 'src/components/ordersTable/OrderStatusField';
 import { OrderDateField } from 'src/components/ordersTable/OrderDateField';
 import { OrderNumberField } from 'src/components/ordersTable/OrderNumberField';
+import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { OrderTotalValueField } from './OrderTotalValueField';
 import s from './style.module.less';
 
 interface Props {
   order: Order;
+  thumbnailVideo?: Video;
 }
 
-export const OrdersCard = ({ order }: Props) => {
+export const OrdersCard = ({ order, thumbnailVideo }: Props) => {
   const navigate = useNavigate();
 
   const goToOrder = () => {
@@ -24,7 +26,7 @@ export const OrdersCard = ({ order }: Props) => {
 
   return (
     <li className={s.orderCard}>
-      <OrderThumbnail items={order.items} />
+      <OrderThumbnail items={order.items} thumbnailVideo={thumbnailVideo} />
       <OrderDateField fieldName="Order date" date={order.createdAt} />
       <OrderNumberField id={order.id} isLink />
       <OrderTotalValueField totalPrice={order.totalPrice} />
