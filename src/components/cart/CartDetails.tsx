@@ -4,6 +4,7 @@ import { TextAreaWithDebounce } from 'src/components/cart/TextAreaWithDebounce';
 import { useBoclipsClient } from 'src/components/common/providers/BoclipsClientProvider';
 import { useMutation } from '@tanstack/react-query';
 import { Cart as ApiCart } from 'boclips-api-client/dist/sub-clients/carts/model/Cart';
+import { useGetVideos } from 'src/hooks/api/videoQuery';
 import CartItem from './CartItem/CartItem';
 
 interface Props {
@@ -15,6 +16,7 @@ export const CartDetails = ({ cart }: Props) => {
   const { mutate: onUpdateNote } = useMutation((note: string) =>
     doUpdateCartNote(note, apiClient),
   );
+  const { data: videos } = useGetVideos(cart.items.map((item) => item.videoId));
 
   return (
     <main tabIndex={-1} className="col-start-2 col-end-19 flex flex-col">
@@ -25,7 +27,11 @@ export const CartDetails = ({ cart }: Props) => {
       />
       <div className="pt-4 col-start-1 col-span-20">
         {cart.items.map((item) => (
-          <CartItem key={item.videoId} cartItem={item} />
+          <CartItem
+            key={item.videoId}
+            cartItem={item}
+            video={videos?.find((video) => video.id === item.videoId)}
+          />
         ))}
       </div>
     </main>

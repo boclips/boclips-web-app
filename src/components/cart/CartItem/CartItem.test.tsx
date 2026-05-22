@@ -40,7 +40,6 @@ describe('CartItem', () => {
   }
 
   const setupCartItemWithVideo = (
-    fakeApiClient: FakeBoclipsClient,
     cartItem: Partial<CartItemType>,
     video: Partial<Video>,
   ) => {
@@ -50,8 +49,7 @@ describe('CartItem', () => {
       videoId: fullVideo.id,
     });
 
-    fakeApiClient.videos.insertVideo(fullVideo);
-    return fullCartItem;
+    return { cartItem: fullCartItem, video: fullVideo };
   };
 
   it('displays cart item with title and additional services', async () => {
@@ -60,8 +58,7 @@ describe('CartItem', () => {
       BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
       BO_WEB_APP_REQUEST_TRIMMING: true,
     });
-    const cartItem = setupCartItemWithVideo(
-      fakeApiClient,
+    const { cartItem, video } = setupCartItemWithVideo(
       CartItemFactory.sample({
         id: 'cart-item-id-1',
       }),
@@ -73,7 +70,7 @@ describe('CartItem', () => {
     );
 
     const wrapper = renderCartItem(
-      <CartItem cartItem={cartItem} />,
+      <CartItem cartItem={cartItem} video={video} />,
       fakeApiClient,
     );
 
@@ -101,14 +98,13 @@ describe('CartItem', () => {
     fakeApiClient.users.setCurrentUserFeatures({
       BO_WEB_APP_REQUEST_TRIMMING: true,
     });
-    const cartItem = setupCartItemWithVideo(
-      fakeApiClient,
+    const { cartItem, video } = setupCartItemWithVideo(
       CartItemFactory.sample({}),
       VideoFactory.sample({}),
     );
 
     const wrapper = renderCartItem(
-      <CartItem cartItem={cartItem} />,
+      <CartItem cartItem={cartItem} video={video} />,
       fakeApiClient,
     );
 
@@ -137,7 +133,7 @@ describe('CartItem', () => {
     );
 
     const wrapper = renderCartItem(
-      <CartItem cartItem={cartItemFromCart} />,
+      <CartItem cartItem={cartItemFromCart} video={video} />,
       fakeClient,
     );
 
@@ -166,8 +162,7 @@ describe('CartItem', () => {
     fakeApiClient.users.setCurrentUserFeatures({
       BO_WEB_APP_REQUEST_TRIMMING: true,
     });
-    const cartItem = setupCartItemWithVideo(
-      fakeApiClient,
+    const { cartItem, video } = setupCartItemWithVideo(
       CartItemFactory.sample({
         additionalServices: {
           trim: {
@@ -180,7 +175,7 @@ describe('CartItem', () => {
     );
 
     const wrapper = renderCartItem(
-      <CartItem cartItem={cartItem} />,
+      <CartItem cartItem={cartItem} video={video} />,
       fakeApiClient,
     );
 
@@ -199,8 +194,7 @@ describe('CartItem', () => {
       BO_WEB_APP_REQUEST_TRIMMING: true,
     });
 
-    const cartItem = setupCartItemWithVideo(
-      fakeApiClient,
+    const { cartItem, video } = setupCartItemWithVideo(
       CartItemFactory.sample({
         additionalServices: {
           trim: {
@@ -215,7 +209,7 @@ describe('CartItem', () => {
     fakeApiClient.carts.insertCartItem(cartItem);
 
     const wrapper = renderCartItem(
-      <CartItem cartItem={cartItem} />,
+      <CartItem cartItem={cartItem} video={video} />,
       fakeApiClient,
     );
 
@@ -234,8 +228,7 @@ describe('CartItem', () => {
   it('sets caption and transcript request to true when checkbox is checked and to false when is unchecked', async () => {
     const fakeClient = new FakeBoclipsClient();
 
-    const cartItem = setupCartItemWithVideo(
-      fakeClient,
+    const { cartItem, video } = setupCartItemWithVideo(
       CartItemFactory.sample({
         additionalServices: {
           transcriptRequested: false,
@@ -248,7 +241,7 @@ describe('CartItem', () => {
 
     fakeClient.carts.insertCartItem(cartItem);
     const wrapper = renderCartItem(
-      <CartItem cartItem={cartItem} />,
+      <CartItem cartItem={cartItem} video={video} />,
       fakeClient,
     );
 
@@ -289,14 +282,13 @@ describe('CartItem', () => {
       BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
     });
 
-    const cartItem = setupCartItemWithVideo(
-      fakeClient,
+    const { cartItem, video } = setupCartItemWithVideo(
       CartItemFactory.sample({}),
       VideoFactory.sample({}),
     );
 
     const wrapper = renderCartItem(
-      <CartItem cartItem={cartItem} />,
+      <CartItem cartItem={cartItem} video={video} />,
       fakeClient,
     );
 
@@ -317,14 +309,13 @@ describe('CartItem', () => {
       BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
     });
 
-    const cartItem = setupCartItemWithVideo(
-      fakeClient,
+    const { cartItem, video } = setupCartItemWithVideo(
       CartItemFactory.sample({}),
       VideoFactory.sample({}),
     );
 
     const wrapper = renderCartItem(
-      <CartItem cartItem={cartItem} />,
+      <CartItem cartItem={cartItem} video={video} />,
       fakeClient,
     );
 
@@ -360,8 +351,7 @@ describe('CartItem', () => {
       BO_WEB_APP_REQUEST_ADDITIONAL_EDITING: true,
     });
 
-    const cartItem = setupCartItemWithVideo(
-      fakeClient,
+    const { cartItem, video } = setupCartItemWithVideo(
       CartItemFactory.sample({
         additionalServices: {
           editRequest: 'this was a mistake',
@@ -371,7 +361,7 @@ describe('CartItem', () => {
     );
 
     const wrapper = renderCartItem(
-      <CartItem cartItem={cartItem} />,
+      <CartItem cartItem={cartItem} video={video} />,
       fakeClient,
     );
 
@@ -402,21 +392,18 @@ describe('CartItem', () => {
       AnalyticsFactory.hotjar(),
       'event',
     );
-    const video = VideoFactory.sample({
-      id: '123',
-      title: 'this is cart item test',
-    });
-    const cartItem = setupCartItemWithVideo(
-      fakeApiClient,
+    const { cartItem, video } = setupCartItemWithVideo(
       CartItemFactory.sample({
         id: 'cart-item-id-1',
-        videoId: video.id,
       }),
-      video,
+      VideoFactory.sample({
+        id: '123',
+        title: 'this is cart item test',
+      }),
     );
 
     const wrapper = renderCartItem(
-      <CartItem cartItem={cartItem} />,
+      <CartItem cartItem={cartItem} video={video} />,
       fakeApiClient,
     );
 

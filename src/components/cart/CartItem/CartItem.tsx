@@ -7,28 +7,27 @@ import { useCartMutation } from 'src/hooks/api/cartQuery';
 import c from 'classnames';
 import { TextButton } from 'src/components/common/textButton/TextButton';
 import { PriceBadge } from 'src/components/common/price/PriceBadge';
-import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import VideoCardPlaceholder from '@boclips-ui/video-card-placeholder';
 import { Typography } from '@boclips-ui/typography';
 import { VideoInfo } from 'src/components/common/videoInfo/VideoInfo';
 import { Link } from 'src/components/common/Link';
 import { HotjarEvents } from 'src/services/analytics/hotjar/Events';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import s from './style.module.less';
 
 interface Props {
   cartItem: ApiCartItem;
+  video?: Video;
 }
 
-const CartItem = ({ cartItem }: Props) => {
+const CartItem = ({ cartItem, video }: Props) => {
   const videoRemovedHotjarEvent = () => {
     AnalyticsFactory.hotjar().event(HotjarEvents.VideoRemovedFromCart);
   };
 
   const [startAnimation, setStartAnimation] = useState<boolean>(false);
   const [shrinkAnimation, setShrinkAnimation] = useState<boolean>(false);
-
-  const { data: videoItem } = useFindOrGetVideo(cartItem.videoId);
 
   const { mutate: mutateDeleteFromCart, error } = useCartMutation({
     onSuccess: videoRemovedHotjarEvent,
@@ -53,7 +52,7 @@ const CartItem = ({ cartItem }: Props) => {
     }
   }, [error]);
 
-  if (videoItem) {
+  if (video) {
     return (
       <div
         data-qa="cart-item-wrapper"
@@ -63,20 +62,17 @@ const CartItem = ({ cartItem }: Props) => {
         })}
       >
         <div className={s.videoWrapper}>
-          <VideoPlayer video={videoItem} controls="cart" showDurationBadge />
+          <VideoPlayer video={video} controls="cart" showDurationBadge />
         </div>
         <div className="flex flex-col w-full ml-3">
           <div className="flex flex-row justify-between">
-            <Link
-              to={`/videos/${videoItem.id}`}
-              state={{ userNavigated: true }}
-            >
-              <Typography.Title1> {videoItem.title}</Typography.Title1>
+            <Link to={`/videos/${video.id}`} state={{ userNavigated: true }}>
+              <Typography.Title1> {video.title}</Typography.Title1>
             </Link>
-            <PriceBadge price={videoItem.price} />
+            <PriceBadge price={video.price} />
           </div>
-          <VideoInfo video={videoItem} />
-          <AdditionalServices videoItem={videoItem} cartItem={cartItem} />
+          <VideoInfo video={video} />
+          <AdditionalServices videoItem={video} cartItem={cartItem} />
           <TextButton
             onClick={cartItemAnimate}
             text="Remove"
