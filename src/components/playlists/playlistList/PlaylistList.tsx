@@ -7,6 +7,7 @@ import React from 'react';
 import c from 'classnames';
 import PlaylistCard from 'src/components/playlists/PlaylistCard';
 import { PlaylistEmptyState } from 'src/components/playlists/emptyState/EmptyState';
+import { useGetVideos } from 'src/hooks/api/videoQuery';
 import s from '../style.module.less';
 import paginationStyles from '../../common/pagination/pagination.module.less';
 
@@ -27,6 +28,11 @@ const PlaylistList: React.FC<PlaylistListProps> = ({
 }) => {
   const currentBreakpoint = getMediaBreakpoint();
   const mobileView = currentBreakpoint.type === 'mobile';
+
+  const allThumbnailVideoIds = playlists.page.flatMap((playlist) =>
+    playlist.assets.slice(0, 3).map((asset) => asset.id.videoId),
+  );
+  const { data: allThumbnailVideos } = useGetVideos(allThumbnailVideoIds);
 
   const itemRender = React.useCallback(
     (pageNumber: number, type: string) => (
@@ -62,9 +68,17 @@ const PlaylistList: React.FC<PlaylistListProps> = ({
         itemRender,
       }}
       dataSource={playlists.page}
-      renderItem={(playlist: ListViewCollection) => (
-        <PlaylistCard playlist={playlist} />
-      )}
+      renderItem={(playlist: ListViewCollection) => {
+        const playlistVideoIds = playlist.assets
+          .slice(0, 3)
+          .map((asset) => asset.id.videoId);
+        const thumbnailVideos = allThumbnailVideos?.filter((video) =>
+          playlistVideoIds.includes(video.id),
+        );
+        return (
+          <PlaylistCard playlist={playlist} thumbnailVideos={thumbnailVideos} />
+        );
+      }}
     />
   ) : (
     <PlaylistEmptyState playlistType={playlistType} />

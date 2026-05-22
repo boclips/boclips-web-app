@@ -11,13 +11,18 @@ import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Acco
 import { CopyButton } from 'src/components/common/copyLinkButton/CopyButton';
 import { Constants } from 'src/AppConstants';
 import { PlaylistShareLinkButton } from 'src/components/shareLinkButton/PlaylistShareLinkButton';
+import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import s from './style.module.less';
 
 interface PlaylistCardProps {
   playlist: ListViewCollection;
+  thumbnailVideos?: Video[];
 }
 
-const PlaylistCard: React.FC<PlaylistCardProps> = ({ playlist }) => {
+const PlaylistCard: React.FC<PlaylistCardProps> = ({
+  playlist,
+  thumbnailVideos,
+}) => {
   const linkCopiedHotjarEvent = () =>
     AnalyticsFactory.hotjar().event(HotjarEvents.PlaylistLinkCopied);
 
@@ -29,7 +34,7 @@ const PlaylistCard: React.FC<PlaylistCardProps> = ({ playlist }) => {
         name={playlist.title}
         header={
           <Link tabIndex={-1} to={`/playlists/${playlist.id}`} aria-hidden>
-            <Thumbnails assets={playlist.assets} />
+            <Thumbnails assets={playlist.assets} videos={thumbnailVideos} />
           </Link>
         }
         subheader={
