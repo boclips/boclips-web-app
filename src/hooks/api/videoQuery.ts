@@ -44,9 +44,11 @@ export const useGetVideoWithReferer = (videoId: string, referer: string) => {
 
 export const useGetVideos = (videoIds: string[]) => {
   const apiClient = useBoclipsClient();
-  return useQuery(['multipleVideos'], () => doGetVideos(videoIds, apiClient), {
-    enabled: !!videoIds,
-  });
+  return useQuery(
+    ['multipleVideos', ...videoIds],
+    () => doGetVideos(videoIds, apiClient),
+    { enabled: videoIds.length > 0 },
+  );
 };
 
 export const useGetVideoRecommendations = (video: Video) => {

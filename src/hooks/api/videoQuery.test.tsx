@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
+import { useFindOrGetVideo, useGetVideos } from 'src/hooks/api/videoQuery';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { QueryClient } from '@tanstack/react-query';
 import { SEARCH_BASE_KEY } from 'src/hooks/api/useSearchQuery';
@@ -42,6 +42,31 @@ describe('VideoQuery', () => {
     const { result: result2 } = renderHookForFindOrGetVideo();
     await waitFor(() => expect(result2.current.isSuccess).toBeTruthy());
     expect(result2.current.data.title).toEqual('Updated video');
+  });
+
+  it('useGetVideos uses different cache keys for different ID sets', async () => {
+    const queryClient = new QueryClient();
+    const boclipsClient = new FakeBoclipsClient();
+
+    boclipsClient.videos.insertVideo(
+      VideoFactory.sample({ id: 'a', title: 'Video A' }),
+    );
+    boclipsClient.videos.insertVideo(
+      VideoFactory.sample({ id: 'b', title: 'Video B' }),
+    );
+
+    const { result: resultA } = renderHook(() => useGetVideos(['a']), {
+      wrapper: wrapperWithClients(boclipsClient, queryClient),
+    });
+    const { result: resultB } = renderHook(() => useGetVideos(['b']), {
+      wrapper: wrapperWithClients(boclipsClient, queryClient),
+    });
+
+    await waitFor(() => expect(resultA.current.isSuccess).toBeTruthy());
+    await waitFor(() => expect(resultB.current.isSuccess).toBeTruthy());
+
+    expect(resultA.current.data.map((v) => v.id)).toEqual(['a']);
+    expect(resultB.current.data.map((v) => v.id)).toEqual(['b']);
   });
 
   const cacheVideoSearchResults = (
