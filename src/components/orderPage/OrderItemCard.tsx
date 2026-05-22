@@ -1,19 +1,18 @@
 import { OrderItem } from 'boclips-api-client/dist/sub-clients/orders/model/OrderItem';
 import React from 'react';
-import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import { AdditionalServicesSummaryPreview } from 'src/components/cart/AdditionalServices/AdditionalServicesSummaryPreview';
 import { Typography } from '@boclips-ui/typography';
 import { PriceBadge } from 'src/components/common/price/PriceBadge';
+import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import s from './style.module.less';
 import { Link } from '../common/Link';
 
 interface Props {
   item: OrderItem;
+  video?: Video;
 }
 
-export const OrderItemCard = ({ item }: Props) => {
-  const { data: video } = useFindOrGetVideo(item.video.id);
-
+export const OrderItemCard = ({ item, video }: Props) => {
   return (
     <div
       data-qa="order-item-card"
