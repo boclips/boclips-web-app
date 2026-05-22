@@ -2,17 +2,15 @@ import { Typography } from '@boclips-ui/typography';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Thumbnail from 'src/components/playlists/thumbnails/Thumbnail';
-import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import { Collection } from 'boclips-api-client/dist/sub-clients/collections/model/Collection';
+import { Video } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 
 interface Props {
   playlist: Collection;
+  video?: Video;
 }
 
-export const PlaylistSlide = ({ playlist }: Props) => {
-  const videoId = playlist.assets[0].id.videoId;
-  const { data: video } = useFindOrGetVideo(videoId);
-
+export const PlaylistSlide = ({ playlist, video }: Props) => {
   return (
     <Link
       to={{
