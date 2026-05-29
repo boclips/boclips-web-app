@@ -45,7 +45,7 @@ const YesNo = ({ id, label, defaultValue, onValueChange }: Props) => {
           >
             <RadioGroup.Indicator className={s.radioGroupIndicator} />
           </RadioGroup.Item>
-          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+          {}
           <label htmlFor={yesId}>
             <Typography.Body as="span" className={s.radioItemLabel}>
               Yes
@@ -61,7 +61,7 @@ const YesNo = ({ id, label, defaultValue, onValueChange }: Props) => {
           >
             <RadioGroup.Indicator className={s.radioGroupIndicator} />
           </RadioGroup.Item>
-          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+          {}
           <label htmlFor={noId}>
             <Typography.Body as="span" className={s.radioItemLabel}>
               No

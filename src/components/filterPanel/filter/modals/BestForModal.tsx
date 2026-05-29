@@ -22,7 +22,7 @@ const BestForModal = ({ setOpen }) => {
       </Typography.Body>
       {bestForInfo.map((it) => {
         return (
-          <section className={s.body}>
+          <section key={it.title} className={s.body}>
             <div className={s.title}>
               <Typography.Body weight="medium">{it.title}</Typography.Body>
               <div className={s.icon}>{it.icon}</div>

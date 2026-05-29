@@ -28,9 +28,7 @@ const PlaylistAssetsListDraggable = ({
       data-qa={`data-${id}`}
       ref={setNodeRef}
       style={style}
-      /* eslint-disable-next-line react/jsx-props-no-spreading */
       {...attributes}
-      /* eslint-disable-next-line react/jsx-props-no-spreading */
       {...listeners}
       className={s.draggableItem}
     >

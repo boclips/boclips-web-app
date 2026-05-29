@@ -104,7 +104,7 @@ const FeedbackButton = ({
           <ul>
             {handleFeedbackApiResponse.map((it) => {
               return (
-                <li>
+                <li key={it.id}>
                   {' '}
                   <Button
                     onClick={() => handleOnClick(it.id, it.text)}

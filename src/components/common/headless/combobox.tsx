@@ -69,7 +69,6 @@ export const Combobox = ({
     value: '',
   });
 
-  // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (mode === ComboboxMode.FETCH) {
       setTimeout(async () => {
