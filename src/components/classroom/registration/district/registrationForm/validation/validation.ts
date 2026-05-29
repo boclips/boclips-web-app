@@ -71,7 +71,6 @@ const FormValidator: FormValidatorClass = class
   checkPasswordIsStrong(): boolean {
     const schema = new PasswordValidator();
 
-    /* eslint-disable */
     schema
       .is()
       .min(8)
@@ -84,7 +83,6 @@ const FormValidator: FormValidatorClass = class
       .has()
       .not()
       .spaces();
-    /* eslint-enable  */
 
     if (!schema.validate(this.registrationData.password)) {
       this.setError('password', true, '');

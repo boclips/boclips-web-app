@@ -39,7 +39,7 @@ const DateSelect = ({
   return (
     <label htmlFor={id} className="pb-4">
       {label}
-      {/* eslint-disable-next-line react/jsx-props-no-spreading  */ /* prettier-ignore */ /* @ts-ignore */}
+      {  /* prettier-ignore */ /* @ts-ignore */}
       <duet-date-picker {...props} value={value} ref={ref} identifier={id} />
     </label>
   );

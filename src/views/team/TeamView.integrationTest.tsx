@@ -167,7 +167,6 @@ describe('Team view', () => {
     });
 
     for (let i = 0; i < 2; i++) {
-      // eslint-disable-next-line no-await-in-loop
       await fakeClient.users.createUser({
         firstName: `Joe${i}`,
         lastName: 'Biden',
@@ -206,7 +205,6 @@ describe('Team view', () => {
     );
 
     for (let i = 0; i < 26; i++) {
-      // eslint-disable-next-line no-await-in-loop
       await fakeClient.users.createUser({
         firstName: `Joe${i}`,
         lastName: 'Biden',

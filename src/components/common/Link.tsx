@@ -35,7 +35,6 @@ export const Link = ({
           e.preventDefault();
         }
       }}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...rest}
     >
       <Typography.Link className={className} type={type}>

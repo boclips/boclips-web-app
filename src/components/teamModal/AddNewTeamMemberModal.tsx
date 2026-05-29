@@ -219,7 +219,7 @@ const AddNewTeamMemberModal = ({ product, closeModal }: Props) => {
       >
         {getRolesForProduct(product).map((role) => {
           return (
-            <div className={s.radioGroupItemWrapper}>
+            <div key={role} className={s.radioGroupItemWrapper}>
               <RadioGroup.Item
                 className={s.radioGroupItem}
                 value={role}
@@ -228,7 +228,7 @@ const AddNewTeamMemberModal = ({ product, closeModal }: Props) => {
               >
                 <RadioGroup.Indicator className={s.radioGroupIndicator} />
               </RadioGroup.Item>
-              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+              {}
               <label htmlFor={role.toLowerCase()}>
                 <Typography.Body as="span" className={s.radioItemLabel}>
                   {toTitleCase(role)}

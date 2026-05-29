@@ -27,7 +27,7 @@ import '@percy/cypress';
 import '@testing-library/cypress/add-commands';
 
 Cypress.Commands.add('bo', (callback) => {
-  // @ts-ignore
+  // @ts-expect-error window.bo is injected by FakeBoclipsClient in fake mode
   cy.window().then(({ bo }) => {
     callback(bo);
   });
@@ -38,7 +38,7 @@ Cypress.Commands.overwrite('intercept', (originalFn, ...args) => {
   const [options] = args;
 
   if (typeof options === 'string') {
-    // @ts-ignore
+    // @ts-expect-error originalFn overload types don't match this call signature
     return originalFn(args[0], { forceNetworkError: true });
   }
   const modifiedOptions = {
@@ -46,6 +46,6 @@ Cypress.Commands.overwrite('intercept', (originalFn, ...args) => {
     forceNetworkError: true,
   };
 
-  // @ts-ignore
+  // @ts-expect-error originalFn overload types don't match this call signature
   return originalFn(...args, modifiedOptions);
 });

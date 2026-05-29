@@ -84,7 +84,7 @@ const onLogin = async () => {
         />
       </Router>,
     );
-  } catch (e) {
+  } catch {
     root.render(<FallbackApp />);
   }
 };

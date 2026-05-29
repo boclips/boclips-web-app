@@ -100,7 +100,7 @@ export const Bodal: React.FC<Props> = ({
   return (
     <FocusTrap>
       {/* Below should be fine according to https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/479 */}
-      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+      {}
       <div
         role="dialog"
         aria-labelledby="bodal-title"
