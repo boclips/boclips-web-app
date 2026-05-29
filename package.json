@@ -92,7 +92,7 @@
     "tailwindcss-debug-screens": "^2.2.1",
     "ts-import-plugin": "^3.0.0",
     "ts-jest": "^29.4.0",
-    "ts-loader": "^9.5.0",
+    "ts-loader": "^9.6.0",
     "typescript": "^5.8.2",
     "webpack": "^5.107.2",
     "webpack-bundle-analyzer": "^4.10.2",
