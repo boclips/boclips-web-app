@@ -1,4 +1,3 @@
-import queryString from 'querystring';
 import { Constants } from 'src/AppConstants';
 
 export const getShareableVideoLink = (
@@ -19,7 +18,7 @@ export const getShareableVideoLink = (
     params.segmentEnd = end;
   }
 
-  const queryParams = queryString.stringify(params);
+  const queryParams = new URLSearchParams(params).toString();
 
   return `${Constants.HOST}/videos/shared/${videoId}?${queryParams}`;
 };
@@ -32,7 +31,7 @@ export const getShareablePlaylistLink = (
     referer: userId,
   };
 
-  const queryParams = queryString.stringify(params);
+  const queryParams = new URLSearchParams(params).toString();
 
   return `${Constants.HOST}/playlists/shared/${playlistId}?${queryParams}`;
 };

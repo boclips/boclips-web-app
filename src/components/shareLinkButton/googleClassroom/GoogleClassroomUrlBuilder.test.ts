@@ -8,6 +8,6 @@ it('can build a valid url', () => {
     .build();
 
   expect(url).toEqual(
-    'https://classroom.google.com/u/0/share?url=%2Fvideos%2F123456789THEBESTVIDEO&title=Matt%20and%20Alex&body=Use%20code%20ZXY%20to%20access.',
+    'https://classroom.google.com/u/0/share?url=%2Fvideos%2F123456789THEBESTVIDEO&title=Matt+and+Alex&body=Use+code+ZXY+to+access.',
   );
 });

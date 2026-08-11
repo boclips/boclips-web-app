@@ -1,5 +1,3 @@
-import * as queryString from 'querystring';
-
 export class GoogleClassroomUrlBuilder {
   private readonly baseUrl: string = 'https://classroom.google.com/u/0/share';
 
@@ -31,7 +29,7 @@ export class GoogleClassroomUrlBuilder {
       body: this.body,
     };
 
-    const query = queryString.stringify(paramsToEncode);
+    const query = new URLSearchParams(paramsToEncode).toString();
 
     return `${this.baseUrl}?${query}`;
   }
