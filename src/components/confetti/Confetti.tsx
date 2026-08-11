@@ -1,23 +1,29 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import Particles, { initParticlesEngine } from '@tsparticles/react';
+import React, { useMemo } from 'react';
+import Particles, {
+  ParticlesProvider,
+  useParticlesProvider,
+} from '@tsparticles/react';
 import type { Engine, ISourceOptions } from '@tsparticles/engine';
 import { loadConfettiPreset } from '@tsparticles/preset-confetti';
 import confettiSettings from './confetti-settings.json';
 
-const Confetti = () => {
-  const [init, setInit] = useState(false);
-
-  useEffect(() => {
-    initParticlesEngine(async (engine: Engine) => {
-      await loadConfettiPreset(engine);
-    }).then(() => {
-      setInit(true);
-    });
-  }, []);
+const ConfettiParticles = () => {
+  const { loaded } = useParticlesProvider();
 
   // @ts-ignore
   const options: ISourceOptions = useMemo(() => confettiSettings, []);
 
-  return init && <Particles id="tsparticles" options={options} />;
+  return loaded && <Particles id="tsparticles" options={options} />;
 };
+
+const Confetti = () => (
+  <ParticlesProvider
+    init={async (engine: Engine) => {
+      await loadConfettiPreset(engine);
+    }}
+  >
+    <ConfettiParticles />
+  </ParticlesProvider>
+);
+
 export default Confetti;
