@@ -3,10 +3,9 @@ import * as Accordion from '@radix-ui/react-accordion';
 import { Typography } from '@boclips-ui/typography';
 import ChevronDownIcon from 'src/resources/icons/chevron-down.svg';
 import { getVideoCountLabel } from 'src/services/getVideoCountLabel';
-import { HashLink } from 'react-router-hash-link';
 import c from 'classnames';
 import { useThemeMobileMenuContext } from 'src/components/common/providers/ThemeMobileMenuProvider';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   firstTargetInfo,
   getSelectedTopic,
@@ -51,13 +50,11 @@ const NavigationPanelBody = ({ theme }: Props) => {
   }, [location.hash]);
 
   const renderTargetLevelLabel = (label: string, targetLink: string) => (
-    <HashLink
+    <Link
       key={targetLink}
       className={s.targetAnchor}
       onClick={() => {
         setIsOpen(false);
-      }}
-      scroll={() => {
         window.scrollTo({ top: 0 });
       }}
       to={{
@@ -72,7 +69,7 @@ const NavigationPanelBody = ({ theme }: Props) => {
       >
         {label}
       </Typography.H3>
-    </HashLink>
+    </Link>
   );
 
   const updateTableOfContent = (newSelection: string) => {

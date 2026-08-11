@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashLink } from 'react-router-hash-link';
+import { Link } from 'react-router-dom';
 import { useAlignmentProvider } from 'src/components/common/providers/AlignmentContextProvider';
 import s from './style.module.less';
 
@@ -12,8 +12,7 @@ export const PaginationLink = ({ themeId, hash, children }: PageLinkProps) => {
   const provider = useAlignmentProvider();
 
   return (
-    <HashLink
-      scroll={() => {}}
+    <Link
       to={{
         pathname: `/alignments/${provider.navigationPath}/${themeId}`,
         hash,
@@ -21,6 +20,6 @@ export const PaginationLink = ({ themeId, hash, children }: PageLinkProps) => {
       className={s.targetLink}
     >
       {children}
-    </HashLink>
+    </Link>
   );
 };
