@@ -1,82 +1,69 @@
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+React 18 SPA for the Boclips video library platform. Node 22.x required (`>=22.13.1 <23`).
 
 ## Commands
 
 ```bash
 npm run dev          # Dev server on :9000 against staging backend
-npm run local        # Dev server on :9000 against localhost:30000 (local backend)
-npm run fake         # Dev server with in-memory FakeBoclipsClient (no auth required)
+npm run local        # Dev server on :9000 against localhost:30000
+npm run fake         # Dev server with in-memory FakeBoclipsClient — no auth needed
 
-npm test                        # Run all Jest tests
-npx jest path/to/File.test.tsx  # Run a single test file
+npm test                        # All Jest tests
+npx jest path/to/File.test.tsx  # A single test file
 
+npm run all-checks   # lint:errors + compile + test + build — the full CI gate
 npm run lint:fix     # ESLint with auto-fix
-npm run compile      # TypeScript type-check without emit
-npm run all-checks   # lint:errors + compile + test + build (full CI gate)
+npm run compile      # TypeScript type-check, no emit
 
-npm run test-visual:open        # Start fake server + open Cypress UI
-npm run test-visual             # Run Cypress headlessly with Percy snapshots (needs fake server running)
+npm run test-visual:open   # Start fake server + open Cypress UI
+npm run test-visual        # Cypress headless with Percy snapshots (needs the fake server running)
 ```
 
-**Node version:** 22.x required (`>=22.13.1 <23`)
+## Layer conventions
 
-## Architecture
+- **`src/views/`** — route-level pages. Views own the React Query hooks, state, and business logic.
+- **`src/components/`** — reusable UI, presentation only. **No barrel `index.ts` files** — import by
+  direct file path.
+- **`src/hooks/api/`** — all API calls, as React Query hooks.
+- **`src/services/`** — pure functions and class utilities, no React dependencies.
+- **Import with the `src/` prefix** (`import { Foo } from 'src/components/common/Foo'`). It is the one
+  alias configured everywhere — `tsconfig.json` paths and `webpack.common.js` resolve.alias — alongside
+  `resources/`. A `~/` alias exists **only** in `jest.config.js` moduleNameMapper, not in tsconfig or
+  webpack, so a `~/` import type-checks and bundles as unresolved while passing tests. Nothing in `src/`
+  uses it; don't introduce it.
 
-React 18 SPA for a video library platform. Two entry points: `src/index.tsx` (authenticated app) and `src/AppUnauthenticated.tsx` (registration and shared-content views). All views are lazy-loaded via `lazyWithRetry`, which auto-reloads once on chunk load failure to handle stale browser caches after deploys.
+## Conventions and gotchas
 
-### Layer conventions
-
-- **`src/views/`** — Route-level pages. Views own their React Query hooks, state, and business logic; rendering is delegated to components.
-- **`src/components/`** — Reusable UI, presentation only. No barrel `index.ts` files — import by direct file path.
-- **`src/hooks/api/`** — All API calls go here as React Query hooks.
-- **`src/services/`** — Pure functions and class-based utilities with no React dependencies.
-
-### Provider stack (App.tsx, outermost → innermost)
-
-```
-QueryClientProvider → ScrollToTop → ToastContainer → BoclipsSecurityProvider
-  → BoclipsClientProvider → Suspense → JSErrorBoundary → AccessGate
-    → SubdomainRedirector → Routes
-```
-
-### Multi-product: Library vs Classroom
-
-The app serves two products (`Product.LIBRARY`, `Product.CLASSROOM`) at separate subdomains. After auth, `SubdomainRedirector` (wrapping all routes) fetches the current user, checks `user.account.products` against the current hostname, and calls `window.location.replace()` if the user belongs on a different subdomain — blocking route rendering until the decision is made. `useCurrentProduct()` resolves the active product from the hostname; `useUserProducts()` returns the user's entitlements.
-
-### Access control — FeatureGate
-
-`<FeatureGate>` accepts one of four mutually exclusive guard props:
-
-| Prop | Logic |
-|---|---|
-| `linkName: AdminLinksKey` | Renders if `client.links[linkName]` exists (HATEOAS) |
-| `anyLinkName: AdminLinksKey[]` | Renders if any of the links exist |
-| `feature: FeatureKey` | Renders if the feature flag is enabled |
-| `product: Product` | Renders if the user has that product entitlement |
-
-`<AccessGate>` wraps all routes and handles two top-level cases: trial expired (`reportAccessExpired` link present) and no app access at all (neither `boclipsWebAppAccess` nor `classroomWebAppAccess` link). Several routes are wrapped in `<FeatureGate>` with a `linkName` prop directly in `App.tsx` (e.g. `cart`, `userOrders`, `assistant`).
-
-### Data fetching
-
-Each file in `src/hooks/api/` exports a plain `doXxx(params, client)` async function alongside a `useXxxQuery()` or `useXxxMutation()` hook. The hook calls `useBoclipsClient()` and wraps the `do` function with `useQuery`/`useMutation`. The `doXxx` split makes logic testable without React.
-
-**Search filters live in the URL**, not React state. `useSearchQueryLocationParams()` reads and writes all filter state (query, page, `video_type`, `subject`, `duration`, etc.) via `URLSearchParams` + React Router's `navigate()`. There is no separate filter store.
-
-### Styling
-
-**CSS Modules with LESS** is the primary approach — each component has a co-located `style.module.less`. **Tailwind** is also extensively used alongside CSS Modules, not just occasionally: the app has a custom 24-column grid layout with named row templates (`home`, `search-view`, `playlist-view`, etc.), custom color utilities bridging to LESS CSS variables, and extended spacing/sizing tokens, all configured in `tailwind.config.js`. Use `classnames` for conditional class merging.
-
-### Runtime configuration
-
-`src/AppConstants.ts` reads all config from `window.Environment`, injected by the HTML template at build time. It is the single source of truth for endpoints, host URLs, and feature toggle flags.
+- **Search filter state lives in the URL, not React state.** `useSearchQueryLocationParams()` reads and
+  writes every filter (query, page, `video_type`, `subject`, `duration`, …) through `URLSearchParams`
+  plus React Router's `navigate()`. There is no filter store — adding a filter means adding it there.
+- Each file in `src/hooks/api/` exports a plain `doXxx(params, client)` alongside its
+  `useXxxQuery()`/`useXxxMutation()` hook. Keep that split: the `do` function is what makes the logic
+  testable without React.
+- **Two products, two subdomains.** `SubdomainRedirector` wraps all routes, fetches the current user,
+  compares `user.account.products` against the hostname, and `window.location.replace()`s if they
+  belong elsewhere — blocking route rendering until it decides. Use `useCurrentProduct()` for the
+  active product and `useUserProducts()` for entitlements; don't read the hostname directly.
+- **Access control is HATEOAS-driven, not role-driven.** `<FeatureGate>` takes exactly one of
+  `linkName` / `anyLinkName` (renders if `client.links[...]` exists), `feature` (flag), or `product`
+  (entitlement). `<AccessGate>` handles the two top-level cases: trial expired
+  (`reportAccessExpired` link present) and no app access at all. So removing a link server-side is how
+  access is revoked — which is what `bo.remove.cartLink()` simulates in tests.
+- **Both CSS Modules (LESS) and Tailwind are load-bearing**, not one primary and one occasional. Each
+  component has a co-located `style.module.less`; `tailwind.config.js` carries a custom 24-column grid
+  with named row templates (`home`, `search-view`, `playlist-view`, …) and color utilities bridging to
+  the LESS variables. Use `classnames` for conditional merging.
+- All views are lazy-loaded via `lazyWithRetry`, which auto-reloads once on chunk load failure to
+  survive stale browser caches after a deploy.
+- `src/AppConstants.ts` reads all runtime config from `window.Environment`, injected by the HTML
+  template at build time. It is the single source of truth for endpoints and feature toggles.
+- Two entry points: `src/index.tsx` (authenticated) and `src/AppUnauthenticated.tsx` (registration and
+  shared-content views).
 
 ## Testing
 
-Test files use suffixes `.integrationTest.tsx`, `.a11yTest.tsx`, or `.test.ts(x)`. Integration and a11y tests render the full `<App>` inside a `MemoryRouter` with `FakeBoclipsClient` and `stubBoclipsSecurity` — they test end-to-end behaviour through the real component tree, not isolated units.
-
-### Standard integration test setup
+Suffixes distinguish the kinds: `.test.ts(x)`, `.integrationTest.tsx`, `.a11yTest.tsx`. Integration
+and a11y tests render the **full `<App>`** in a `MemoryRouter` with `FakeBoclipsClient` and
+`stubBoclipsSecurity` — end-to-end through the real component tree, not isolated units:
 
 ```ts
 const fakeClient = new FakeBoclipsClient();
@@ -89,40 +76,14 @@ render(
 );
 ```
 
-### Key test utilities (`src/testSupport/`)
-
-| Utility | Purpose |
-|---|---|
-| `bo(client)` | Builder facade for seeding complex `FakeBoclipsClient` state |
-| `lastEvent(client, type)` | Retrieve the latest analytics event from `client.events.getEvents()` |
-| `wrapperWithClients()` | Provider wrapper for `renderHook()` |
-| `resizeToDesktop/Tablet/Mobile()` | Simulate responsive breakpoints |
-
-**`bo()` API** — three namespaces:
-- `bo.create.*` — insert videos, users (standard/trial), cart, playlists, and fixture sets; `bo.create.fixtureSet.eelsBiologyGeography()` seeds subjects, disciplines, videos, and facets in one call
-- `bo.set.facets(partial)` / `bo.set.features({ [FeatureKey]: boolean })` — configure search facets and feature flags
-- `bo.remove.cartLink()` — remove a HATEOAS link to simulate restricted access
-- `bo.inspect()` / `bo.interact(callback)` — direct access to the underlying `FakeBoclipsClient`
-
-Factories for test data come from `boclips-api-client/dist/test-support` (e.g. `VideoFactory`, `UserFactory`) and `src/testSupport/` for local ones.
-
-Testing Library is configured with `testIdAttribute: 'data-qa'` — use `data-qa` attributes as selectors.
-
-### Cypress e2e tests
-
-Cypress tests (`cypress/e2e/*.cy.ts`) run against the fake server (`npm run fake`). The fake app exposes `window.bo` (the `bo()` helper wrapping `FakeBoclipsClient`) so tests can seed state via:
-
-```ts
-cy.bo((bo) => {
-  bo.create.user();
-  bo.set.features({ someFeatureKey: true });
-});
-```
-
-## Path aliases
-
-`~` and `src` both resolve to `src/` in TypeScript and Jest:
-
-```ts
-import { Foo } from '~/components/common/Foo';
-```
+- **Testing Library is configured with `testIdAttribute: 'data-qa'`** — `getByTestId` reads `data-qa`,
+  not `data-testid`.
+- Seed state through `bo(client)` in `src/testSupport/` rather than poking the fake directly; it has
+  `bo.create.*`, `bo.set.facets/features`, `bo.remove.*`, and `bo.inspect()`/`bo.interact()` escape
+  hatches. `bo.create.fixtureSet.*` seeds whole scenarios in one call.
+- Other helpers there: `lastEvent(client, type)` for analytics assertions, `wrapperWithClients()` for
+  `renderHook()`, and `resizeToDesktop/Tablet/Mobile()` for breakpoints.
+- Factories come from `boclips-api-client/dist/test-support` (`VideoFactory`, `UserFactory`, …), with
+  local ones in `src/testSupport/`.
+- Cypress specs (`cypress/e2e/*.cy.ts`) run against `npm run fake`, which exposes `window.bo` so specs
+  seed through the same helper via `cy.bo((bo) => { … })`.
