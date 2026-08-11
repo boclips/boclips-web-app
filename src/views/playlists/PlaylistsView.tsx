@@ -3,7 +3,7 @@ import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import { Layout } from 'src/components/layout/Layout';
 import Playlists from 'src/components/playlists/Playlists';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import PageHeader from 'src/components/pageTitle/PageHeader';
 import CreateNewPlaylistButton from 'src/components/playlists/buttons/createPlaylist/CreateNewPlaylistButton';
 

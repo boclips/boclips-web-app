@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 import { Hero } from 'src/components/hero/Hero';
 import TrialEndedSVG from 'src/resources/icons/trial-ended.svg';
 import Button from '@boclips-ui/button';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { usePlatformInteractedWithEvent } from 'src/hooks/usePlatformInteractedWithEvent';
 
 const TrialEnded = () => {

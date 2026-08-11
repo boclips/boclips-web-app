@@ -10,7 +10,7 @@ import { Constants } from 'src/AppConstants';
 import FallbackView from 'src/views/fallback/FallbackView';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Loading } from 'src/components/common/Loading';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import NotFound from 'src/views/notFound/NotFound';
 
 interface Props {
@@ -80,48 +80,50 @@ const AppUnauthenticated = ({
   }
 
   return (
-    <QueryClientProvider client={reactQueryClient}>
-      <BoclipsClientProvider client={apiClient}>
-        <Suspense fallback={<Loading />}>
-          <Routes>
-            <Route
-              path="/register"
-              element={<SubdomainAppropriateRegistrationView />}
-            />
-            <Route
-              path="/district/register"
-              element={<ClassroomDistrictRegistrationView />}
-            />
-            <Route
-              path="/classroom/register"
-              element={<ClassroomRegistrationView />}
-            />
-            <Route
-              path="/classroom/district/register"
-              element={<ClassroomDistrictRegistrationView />}
-            />
-            <Route
-              path="/videos/shared/:id"
-              element={<UnauthorizedVideoView />}
-            />
-            <Route
-              path="/playlists/shared/:id"
-              element={<UnauthorizedPlaylistView />}
-            />
-            <Route
-              path="*"
-              element={
-                <>
-                  <Helmet title="Page not found" />
-                  <NotFound unauthenticated />
-                </>
-              }
-            />
-          </Routes>
-          <ReactQueryDevtools initialIsOpen={false} />
-        </Suspense>
-      </BoclipsClientProvider>
-    </QueryClientProvider>
+    <HelmetProvider>
+      <QueryClientProvider client={reactQueryClient}>
+        <BoclipsClientProvider client={apiClient}>
+          <Suspense fallback={<Loading />}>
+            <Routes>
+              <Route
+                path="/register"
+                element={<SubdomainAppropriateRegistrationView />}
+              />
+              <Route
+                path="/district/register"
+                element={<ClassroomDistrictRegistrationView />}
+              />
+              <Route
+                path="/classroom/register"
+                element={<ClassroomRegistrationView />}
+              />
+              <Route
+                path="/classroom/district/register"
+                element={<ClassroomDistrictRegistrationView />}
+              />
+              <Route
+                path="/videos/shared/:id"
+                element={<UnauthorizedVideoView />}
+              />
+              <Route
+                path="/playlists/shared/:id"
+                element={<UnauthorizedPlaylistView />}
+              />
+              <Route
+                path="*"
+                element={
+                  <>
+                    <Helmet title="Page not found" />
+                    <NotFound unauthenticated />
+                  </>
+                }
+              />
+            </Routes>
+            <ReactQueryDevtools initialIsOpen={false} />
+          </Suspense>
+        </BoclipsClientProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
   );
 };
 

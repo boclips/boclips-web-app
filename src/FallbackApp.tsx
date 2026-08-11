@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Loading } from './components/common/Loading';
 
 const FallbackView = React.lazy(() => import('./views/fallback/FallbackView'));

@@ -11,7 +11,7 @@ import { Content } from 'src/components/alignments/themePage/theme/Content';
 import { NavigationPanel } from 'src/components/alignments/themePage/navigationPanel/NavigationPanel';
 import { ThemeMobileMenuProvider } from 'src/components/common/providers/ThemeMobileMenuProvider';
 import ThemeSkeletonPage from 'src/components/skeleton/theme/ThemeSkeletonPage';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import PaginationPanel from 'src/components/alignments/themePage/theme/pagination/PaginationPanel';
 import NotFound from 'src/views/notFound/NotFound';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';

@@ -3,7 +3,7 @@ import Navbar from 'src/components/layout/Navbar';
 import { Layout } from 'src/components/layout/Layout';
 import Footer from 'src/components/layout/Footer';
 import { AlignmentWidget } from 'src/components/alignments/widget/AlignmentWidget';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 const AlignmentsView = () => {
   return (

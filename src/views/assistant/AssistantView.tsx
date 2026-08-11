@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from 'src/components/layout/Navbar';
 import Footer from 'src/components/layout/Footer';
 import { Layout } from 'src/components/layout/Layout';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import AssistantSidebar from 'src/components/assistant/AssistantSidebar';
 import AssistantChatBox from 'src/components/assistant/AssistantChatBox';
 import AssistantConversations from 'src/components/assistant/conversations/AssistantConversations';

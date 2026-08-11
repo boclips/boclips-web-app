@@ -7,7 +7,7 @@ import Button from '@boclips-ui/button';
 import { Hero } from 'src/components/hero/Hero';
 import OrderConfirmedSVG from 'src/resources/icons/order-confirmed.svg';
 import { Typography } from '@boclips-ui/typography';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import useFeatureFlags from 'src/hooks/useFeatureFlags';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 

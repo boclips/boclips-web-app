@@ -12,7 +12,7 @@ import ProviderPageHeader from 'src/components/alignments/explore/explorePageHea
 import { useParams } from 'react-router';
 import NotFound from 'src/views/notFound/NotFound';
 import { AlignmentContextProvider } from 'src/components/common/providers/AlignmentContextProvider';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { ExploreViewSkeleton } from 'src/views/alignments/explore/ExploreViewSkeleton';
 
 const ExploreView = () => {

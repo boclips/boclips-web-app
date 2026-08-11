@@ -13,7 +13,6 @@ import { Link } from 'boclips-api-client/dist/types';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { OrderStatus } from 'boclips-api-client/dist/sub-clients/orders/model/Order';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
-import { Helmet } from 'react-helmet';
 
 describe('order table', () => {
   it('renders the order header with an id that matches query', async () => {
@@ -235,10 +234,8 @@ describe('order table', () => {
         </MemoryRouter>,
       );
 
-      const helmet = Helmet.peek();
-
       await waitFor(() => {
-        expect(helmet.title).toEqual('Order order-123');
+        expect(document.title).toEqual('Order order-123');
       });
     });
   });

@@ -2,7 +2,6 @@ import { render, waitFor } from '@testing-library/react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import { MemoryRouter, Router } from 'react-router-dom';
 import App from 'src/App';
 import { createBrowserHistory } from 'history';
@@ -92,10 +91,8 @@ describe('OrderConfirmationView', () => {
         </Router>,
       );
 
-      const helmet = Helmet.peek();
-
       expect(await wrapper.findByText('Your order is confirmed')).toBeVisible();
-      expect(helmet.title).toEqual('Order confirmed!');
+      await waitFor(() => expect(document.title).toEqual('Order confirmed!'));
     });
   });
 });

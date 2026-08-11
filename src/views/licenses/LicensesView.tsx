@@ -4,7 +4,7 @@ import Navbar from 'src/components/layout/Navbar';
 import PageHeader from 'src/components/pageTitle/PageHeader';
 import InfoIcon from 'src/resources/icons/info.svg';
 import Footer from 'src/components/layout/Footer';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import {
   useUserAccountLicensedContentQuery,
   useUserLicensedContentQuery,

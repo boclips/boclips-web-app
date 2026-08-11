@@ -9,7 +9,7 @@ import PlaylistBody from 'src/components/playlists/playlistBody/PlaylistBody';
 import SkeletonPage from 'src/components/skeleton/SkeletonPage';
 import { FollowPlaylist } from 'src/services/followPlaylist';
 import { displayNotification } from 'src/components/common/notification/displayNotification';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import { Product } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
 

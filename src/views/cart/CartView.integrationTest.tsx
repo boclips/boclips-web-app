@@ -17,7 +17,6 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { queryClientConfig } from 'src/hooks/api/queryClientConfig';
 import { QueryClient } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet';
 import userEvent from '@testing-library/user-event';
 import { lastEvent } from 'src/testSupport/lastEvent';
 
@@ -658,10 +657,8 @@ describe('CartView', () => {
       );
       expect(await view.findByText('Shopping cart')).toBeVisible();
 
-      const helmet = Helmet.peek();
-
       await waitFor(() => {
-        expect(helmet.title).toEqual('Cart');
+        expect(document.title).toEqual('Cart');
       });
     });
   });

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout } from 'src/components/layout/Layout';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { useMediaBreakPoint } from '@boclips-ui/use-media-breakpoints';
 import InvisibleNavbar from 'src/components/common/invisibleNavbar/InvisibleNavbar';
 import { DistrictRegistration } from 'src/components/classroom/registration/district/DistrictRegistration';

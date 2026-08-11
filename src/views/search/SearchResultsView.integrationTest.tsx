@@ -20,7 +20,6 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
-import { Helmet } from 'react-helmet';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { Link } from 'boclips-api-client/dist/types';
 
@@ -392,19 +391,19 @@ describe('SearchResults', () => {
 
   describe('window titles', () => {
     it('displays search query in window title', async () => {
+      const client = new FakeBoclipsClient();
+      client.videos.insertVideo(
+        VideoFactory.sample({ id: '1', title: 'hello' }),
+      );
+
       render(
         <MemoryRouter initialEntries={['/videos?q=hello']}>
-          <App
-            apiClient={new FakeBoclipsClient()}
-            boclipsSecurity={stubBoclipsSecurity}
-          />
+          <App apiClient={client} boclipsSecurity={stubBoclipsSecurity} />
         </MemoryRouter>,
       );
 
-      const helmet = Helmet.peek();
-
       await waitFor(() => {
-        expect(helmet.title).toEqual('Search results for hello');
+        expect(document.title).toEqual('Search results for hello');
       });
     });
 
@@ -418,10 +417,8 @@ describe('SearchResults', () => {
         </MemoryRouter>,
       );
 
-      const helmet = Helmet.peek();
-
       await waitFor(() => {
-        expect(helmet.title).toEqual('All Videos');
+        expect(document.title).toEqual('All Videos');
       });
     });
   });

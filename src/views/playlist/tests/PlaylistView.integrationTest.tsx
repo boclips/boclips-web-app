@@ -1,3 +1,4 @@
+import { HelmetProvider } from 'react-helmet-async';
 import {
   fireEvent,
   render,
@@ -263,20 +264,24 @@ describe('Playlist view', () => {
       history.push('/playlists/123');
 
       render(
-        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-          <BoclipsClientProvider client={client}>
-            <QueryClientProvider client={new QueryClient()}>
-              <Router location={history.location} navigator={history}>
-                <Routes>
-                  <Route
-                    path="/playlists/:id"
-                    element={<PlaylistView followPlaylist={bookmarkService} />}
-                  />
-                </Routes>
-              </Router>
-            </QueryClientProvider>
-          </BoclipsClientProvider>
-        </BoclipsSecurityProvider>,
+        <HelmetProvider>
+          <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+            <BoclipsClientProvider client={client}>
+              <QueryClientProvider client={new QueryClient()}>
+                <Router location={history.location} navigator={history}>
+                  <Routes>
+                    <Route
+                      path="/playlists/:id"
+                      element={
+                        <PlaylistView followPlaylist={bookmarkService} />
+                      }
+                    />
+                  </Routes>
+                </Router>
+              </QueryClientProvider>
+            </BoclipsClientProvider>
+          </BoclipsSecurityProvider>
+        </HelmetProvider>,
       );
 
       await waitFor(() => {

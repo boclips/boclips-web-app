@@ -7,7 +7,7 @@ import {
 } from 'src/hooks/useLocationParams';
 import { useGetVideoWithReferer } from 'src/hooks/api/videoQuery';
 import { Loading } from 'src/components/common/Loading';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Layout } from 'src/components/layout/Layout';
 import { VideoPage } from 'src/components/videoPage/VideoPage';
 import ErrorView from 'src/views/error/ErrorView';

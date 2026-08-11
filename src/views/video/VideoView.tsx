@@ -4,7 +4,7 @@ import Footer from 'src/components/layout/Footer';
 import { useGetIdFromLocation } from 'src/hooks/useLocationParams';
 import { useFindOrGetVideo } from 'src/hooks/api/videoQuery';
 import { Loading } from 'src/components/common/Loading';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Layout } from 'src/components/layout/Layout';
 import { BoclipsApiError } from 'boclips-api-client/dist/types';
 import { Fallback } from 'src/views/video/Fallback';

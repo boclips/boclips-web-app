@@ -12,7 +12,6 @@ import App from 'src/App';
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
-import { Helmet } from 'react-helmet';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
 import { User } from 'boclips-api-client/dist/sub-clients/users/model/User';
 import {
@@ -81,8 +80,7 @@ describe('Profile view', () => {
     wrapper();
 
     await waitFor(() => {
-      const helmet = Helmet.peek();
-      expect(helmet.title).toEqual('Profile');
+      expect(document.title).toEqual('Profile');
     });
   });
 
