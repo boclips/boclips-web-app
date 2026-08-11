@@ -1,5 +1,5 @@
-import * as EmailValidator from 'email-validator';
 import PasswordValidator from 'password-validator';
+import { isValidEmail } from 'src/services/validation/emailValidation';
 import { ClassroomRegistrationData } from 'src/components/classroom/registration/user/registrationForm/ClassroomRegistrationForm';
 
 type SetError = (fieldName: string, errorMessage: string | boolean) => void;
@@ -44,7 +44,7 @@ const FormValidator: FormValidatorClass = class
   }
 
   checkHasEmailFormat(fieldName: string, errorMessage: string): boolean {
-    if (!EmailValidator.validate(this.registrationData[fieldName])) {
+    if (!isValidEmail(this.registrationData[fieldName])) {
       this.setError(fieldName, errorMessage);
       return false;
     }
