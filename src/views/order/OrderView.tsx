@@ -7,7 +7,7 @@ import { Loading } from 'src/components/common/Loading';
 import { OrderPage } from 'src/components/orderPage/OrderPage';
 import RefreshPageError from 'src/components/common/errors/refreshPageError/RefreshPageError';
 import { OrderHeader } from 'src/components/orderPage/OrderHeader';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Layout } from 'src/components/layout/Layout';
 import { JSErrorBoundary } from 'src/components/common/errors/JSErrorBoundary';
 

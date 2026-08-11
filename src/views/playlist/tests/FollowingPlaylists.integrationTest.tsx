@@ -1,4 +1,5 @@
 import { FollowPlaylist } from 'src/services/followPlaylist';
+import { HelmetProvider } from 'react-helmet-async';
 import { createBrowserHistory, createMemoryHistory } from 'history';
 import { render, waitFor } from '@testing-library/react';
 import { BoclipsSecurityProvider } from 'src/components/common/providers/BoclipsSecurityProvider';
@@ -65,20 +66,22 @@ describe('following a playlist', () => {
     history.push('/playlists/123');
 
     render(
-      <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-        <BoclipsClientProvider client={client}>
-          <QueryClientProvider client={new QueryClient()}>
-            <Router location={history.location} navigator={history}>
-              <Routes>
-                <Route
-                  path="/playlists/:id"
-                  element={<PlaylistView followPlaylist={bookmarkService} />}
-                />
-              </Routes>
-            </Router>
-          </QueryClientProvider>
-        </BoclipsClientProvider>
-      </BoclipsSecurityProvider>,
+      <HelmetProvider>
+        <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+          <BoclipsClientProvider client={client}>
+            <QueryClientProvider client={new QueryClient()}>
+              <Router location={history.location} navigator={history}>
+                <Routes>
+                  <Route
+                    path="/playlists/:id"
+                    element={<PlaylistView followPlaylist={bookmarkService} />}
+                  />
+                </Routes>
+              </Router>
+            </QueryClientProvider>
+          </BoclipsClientProvider>
+        </BoclipsSecurityProvider>
+      </HelmetProvider>,
     );
 
     await waitFor(() => {

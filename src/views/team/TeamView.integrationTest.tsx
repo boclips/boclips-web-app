@@ -20,7 +20,6 @@ import {
   AccountType,
   Product,
 } from 'boclips-api-client/dist/sub-clients/accounts/model/Account';
-import { Helmet } from 'react-helmet';
 import { UserRole } from 'boclips-api-client/dist/sub-clients/users/model/UserRole';
 
 describe('Team view', () => {
@@ -541,8 +540,7 @@ describe('Team view', () => {
     );
 
     await waitFor(() => {
-      const helmet = Helmet.peek();
-      expect(helmet.title).toEqual('Team');
+      expect(document.title).toEqual('Team');
     });
   });
 });

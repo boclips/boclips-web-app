@@ -1,5 +1,5 @@
 import { render, waitFor } from '@testing-library/react';
-import { Helmet } from 'react-helmet';
+import { HelmetProvider } from 'react-helmet-async';
 import React from 'react';
 import { BoclipsClientProvider } from 'src/components/common/providers/BoclipsClientProvider';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
@@ -12,21 +12,21 @@ import LibraryRegistrationView from 'src/views/register/library/LibraryRegistrat
 describe('RegisterView', () => {
   it('displays Register as window title for /register', async () => {
     render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={new FakeBoclipsClient()}>
-          <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
-            <MemoryRouter>
-              <LibraryRegistrationView />
-            </MemoryRouter>
-          </BoclipsSecurityProvider>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
+      <HelmetProvider>
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={new FakeBoclipsClient()}>
+            <BoclipsSecurityProvider boclipsSecurity={stubBoclipsSecurity}>
+              <MemoryRouter>
+                <LibraryRegistrationView />
+              </MemoryRouter>
+            </BoclipsSecurityProvider>
+          </BoclipsClientProvider>
+        </QueryClientProvider>
+      </HelmetProvider>,
     );
 
-    const helmet = Helmet.peek();
-
     await waitFor(() => {
-      expect(helmet.title).toEqual('Register');
+      expect(document.title).toEqual('Register');
     });
   });
 });

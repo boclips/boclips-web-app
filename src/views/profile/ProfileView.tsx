@@ -3,7 +3,7 @@ import Navbar from 'src/components/layout/Navbar';
 import React, { useState } from 'react';
 import PageHeader from 'src/components/pageTitle/PageHeader';
 import Footer from 'src/components/layout/Footer';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Typography } from '@boclips-ui/typography';
 import { useGetUserQuery } from 'src/hooks/api/userQuery';
 import UserIcon from 'src/resources/icons/user-icon.svg';

@@ -8,7 +8,7 @@ import Footer from 'src/components/layout/Footer';
 import PlusSign from 'resources/icons/plus-sign.svg';
 import { UsersList } from 'src/components/usersList/UsersList';
 import EditTeamMemberModal from 'src/components/teamModal/EditTeamMemberModal';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { RemoveTeamMemberModal } from 'src/components/teamModal/RemoveTeamMemberModal';
 import { FeatureGate } from 'src/components/common/FeatureGate';
 import useCurrentProduct from 'src/hooks/useCurrentProduct';

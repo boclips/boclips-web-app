@@ -7,7 +7,6 @@ import {
   FakeBoclipsClient,
 } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
-import { Helmet } from 'react-helmet';
 import { createBrowserHistory } from 'history';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { resizeToDesktop } from 'src/testSupport/resizeTo';
@@ -90,9 +89,8 @@ describe('HomeView', () => {
 
   it('displays Home as window title', async () => {
     renderWrapper();
-    const helmet = Helmet.peek();
 
-    expect(helmet.title).toEqual('Home');
+    expect(document.title).toEqual('Home');
   });
 
   it('redirects to empty search (video) page with no filters or query', async () => {

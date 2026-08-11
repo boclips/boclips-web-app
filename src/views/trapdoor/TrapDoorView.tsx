@@ -2,7 +2,7 @@ import { Layout } from 'src/components/layout/Layout';
 import Navbar from 'src/components/layout/Navbar';
 import React from 'react';
 import Footer from 'src/components/layout/Footer';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { TrapDoorInterestSignUp } from 'src/components/trapdoor/TrapDoorInterestSignUp';
 
 interface Props {

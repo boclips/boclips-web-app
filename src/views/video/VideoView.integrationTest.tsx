@@ -9,7 +9,6 @@ import {
   SubjectFactory,
 } from 'boclips-api-client/dist/test-support';
 import { stubBoclipsSecurity } from 'src/testSupport/StubBoclipsSecurity';
-import { Helmet } from 'react-helmet';
 import { CartItemFactory } from 'boclips-api-client/dist/test-support/CartsFactory';
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
 import { UserFactory } from 'boclips-api-client/dist/test-support/UserFactory';
@@ -388,8 +387,9 @@ describe('Video View', () => {
         await wrapper.findByText('the coolest video you ever did see'),
       ).toBeVisible();
 
-      const helmet = Helmet.peek();
-      expect(helmet.title).toEqual('the coolest video you ever did see');
+      await waitFor(() =>
+        expect(document.title).toEqual('the coolest video you ever did see'),
+      );
     });
 
     it('displays default window title when no video available', async () => {
@@ -406,8 +406,7 @@ describe('Video View', () => {
         expect(it).toBeInTheDocument();
       });
 
-      const helmet = Helmet.peek();
-      expect(helmet.title).toEqual('Library');
+      await waitFor(() => expect(document.title).toEqual('Library'));
     });
   });
 

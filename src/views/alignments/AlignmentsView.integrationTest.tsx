@@ -6,7 +6,6 @@ import App from 'src/App';
 import { QueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { createBrowserHistory } from 'history';
-import { Helmet } from 'react-helmet';
 import { ProviderFactory } from 'src/views/alignments/provider/ProviderFactory';
 
 describe('Alignments landing page', () => {
@@ -74,8 +73,6 @@ describe('Alignments landing page', () => {
 
     expect(await wrapper.findByText('aligned')).toBeVisible();
 
-    const helmet = Helmet.peek();
-
-    expect(helmet.title).toEqual('Alignments');
+    await waitFor(() => expect(document.title).toEqual('Alignments'));
   });
 });

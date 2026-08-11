@@ -1,4 +1,5 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
+import { HelmetProvider } from 'react-helmet-async';
 import UnauthorizedVideoView from 'src/views/unauthorizedVideoView/UnauthorizedVideoView';
 import { render } from '@testing-library/react';
 import React from 'react';
@@ -15,15 +16,17 @@ describe('Video View', () => {
     apiClient.videos.addValidReferer('referer-id');
 
     const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={apiClient}>
-          <MemoryRouter
-            initialEntries={['/videos/shared/video-id?referer=referer-id']}
-          >
-            <UnauthorizedVideoView />
-          </MemoryRouter>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
+      <HelmetProvider>
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={apiClient}>
+            <MemoryRouter
+              initialEntries={['/videos/shared/video-id?referer=referer-id']}
+            >
+              <UnauthorizedVideoView />
+            </MemoryRouter>
+          </BoclipsClientProvider>
+        </QueryClientProvider>
+      </HelmetProvider>,
     );
 
     expect(await wrapper.findByText('NATO')).toBeVisible();
@@ -36,17 +39,19 @@ describe('Video View', () => {
     apiClient.videos.addValidReferer('referer-id');
 
     const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={apiClient}>
-          <MemoryRouter
-            initialEntries={[
-              '/videos/shared/video-id?referer=another-referer-id',
-            ]}
-          >
-            <UnauthorizedVideoView />
-          </MemoryRouter>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
+      <HelmetProvider>
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={apiClient}>
+            <MemoryRouter
+              initialEntries={[
+                '/videos/shared/video-id?referer=another-referer-id',
+              ]}
+            >
+              <UnauthorizedVideoView />
+            </MemoryRouter>
+          </BoclipsClientProvider>
+        </QueryClientProvider>
+      </HelmetProvider>,
     );
 
     expect(await wrapper.findByText('Page not found!')).toBeVisible();
@@ -59,13 +64,15 @@ describe('Video View', () => {
     apiClient.videos.addValidReferer('referer-id');
 
     const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={apiClient}>
-          <MemoryRouter initialEntries={['/videos/shared/video-id']}>
-            <UnauthorizedVideoView />
-          </MemoryRouter>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
+      <HelmetProvider>
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={apiClient}>
+            <MemoryRouter initialEntries={['/videos/shared/video-id']}>
+              <UnauthorizedVideoView />
+            </MemoryRouter>
+          </BoclipsClientProvider>
+        </QueryClientProvider>
+      </HelmetProvider>,
     );
 
     expect(await wrapper.findByText('Page not found!')).toBeVisible();

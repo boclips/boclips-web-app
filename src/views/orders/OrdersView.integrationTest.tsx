@@ -12,7 +12,6 @@ import { OrderStatus } from 'boclips-api-client/dist/sub-clients/orders/model/Or
 import { Link } from 'boclips-api-client/dist/types';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
-import { Helmet } from 'react-helmet';
 import { createReactQueryClient } from 'src/testSupport/createReactQueryClient';
 
 describe('OrderView', () => {
@@ -245,10 +244,8 @@ describe('OrderView', () => {
         </MemoryRouter>,
       );
 
-      const helmet = Helmet.peek();
-
       await waitFor(() => {
-        expect(helmet.title).toEqual('Order History');
+        expect(document.title).toEqual('Order History');
       });
     });
   });

@@ -1,4 +1,5 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
+import { HelmetProvider } from 'react-helmet-async';
 import { render } from '@testing-library/react';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -34,15 +35,17 @@ describe('Unauthorized Playlist View', () => {
     apiClient.collections.addValidReferer('pl123');
 
     const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={apiClient}>
-          <MemoryRouter
-            initialEntries={['/playlists/shared/playlist-id?referer=pl123']}
-          >
-            <UnauthorizedPlaylistView />
-          </MemoryRouter>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
+      <HelmetProvider>
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={apiClient}>
+            <MemoryRouter
+              initialEntries={['/playlists/shared/playlist-id?referer=pl123']}
+            >
+              <UnauthorizedPlaylistView />
+            </MemoryRouter>
+          </BoclipsClientProvider>
+        </QueryClientProvider>
+      </HelmetProvider>,
     );
 
     expect(
@@ -80,15 +83,17 @@ describe('Unauthorized Playlist View', () => {
     apiClient.collections.addValidReferer('another-referer');
 
     const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={apiClient}>
-          <MemoryRouter
-            initialEntries={['/playlists/shared/playlist-id?referer=pl123']}
-          >
-            <UnauthorizedPlaylistView />
-          </MemoryRouter>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
+      <HelmetProvider>
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={apiClient}>
+            <MemoryRouter
+              initialEntries={['/playlists/shared/playlist-id?referer=pl123']}
+            >
+              <UnauthorizedPlaylistView />
+            </MemoryRouter>
+          </BoclipsClientProvider>
+        </QueryClientProvider>
+      </HelmetProvider>,
     );
 
     expect(await wrapper.findByText('Page not found!')).toBeVisible();
@@ -117,13 +122,15 @@ describe('Unauthorized Playlist View', () => {
     apiClient.collections.addValidReferer('another-referer');
 
     const wrapper = render(
-      <QueryClientProvider client={new QueryClient()}>
-        <BoclipsClientProvider client={apiClient}>
-          <MemoryRouter initialEntries={['/playlists/shared/playlist-id']}>
-            <UnauthorizedPlaylistView />
-          </MemoryRouter>
-        </BoclipsClientProvider>
-      </QueryClientProvider>,
+      <HelmetProvider>
+        <QueryClientProvider client={new QueryClient()}>
+          <BoclipsClientProvider client={apiClient}>
+            <MemoryRouter initialEntries={['/playlists/shared/playlist-id']}>
+              <UnauthorizedPlaylistView />
+            </MemoryRouter>
+          </BoclipsClientProvider>
+        </QueryClientProvider>
+      </HelmetProvider>,
     );
 
     expect(await wrapper.findByText('Page not found!')).toBeVisible();

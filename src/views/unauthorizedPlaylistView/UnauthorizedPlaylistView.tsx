@@ -4,7 +4,7 @@ import { useGetPlaylistWithReferer } from 'src/hooks/api/playlistsQuery';
 import { useLocation } from 'react-router-dom';
 import Footer from 'src/components/layout/Footer';
 import SkeletonPage from 'src/components/skeleton/SkeletonPage';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import UnauthorizedNavbar from 'src/components/layout/UnauthorizedNavbar';
 import {
   useGetAnyParamFromLocation,
