@@ -90,7 +90,7 @@ describe('HomeView', () => {
   it('displays Home as window title', async () => {
     renderWrapper();
 
-    expect(document.title).toEqual('Home');
+    await waitFor(() => expect(document.title).toEqual('Home'));
   });
 
   it('redirects to empty search (video) page with no filters or query', async () => {
