@@ -29,7 +29,6 @@ export class GoogleClassroomUrlBuilder {
       body: this.body,
     };
 
-    // URLSearchParams would serialise unset fields as the string "undefined"
     const query = new URLSearchParams(
       Object.entries(paramsToEncode).filter(([, value]) => value != null),
     ).toString();

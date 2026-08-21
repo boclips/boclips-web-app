@@ -83,8 +83,7 @@ module.exports = {
                 localIdentContext: __dirname,
                 localIdentName: '[local]--[hash:base64:5]',
                 mode: 'local',
-                // css-loader 7 defaults namedExport to true, which silently breaks
-                // `import s from './style.module.less'` (classes become undefined)
+                // the v7 default (true) silently breaks default-imported CSS modules
                 namedExport: false,
               },
             },
