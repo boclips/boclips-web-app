@@ -123,11 +123,13 @@ describe('Profile view', () => {
       await userEvent.type(firstNameInput, 'Andy');
 
       await userEvent.click(screen.getByRole('button', { name: 'Save' }));
-      await waitForElementToBeRemoved(() =>
-        screen.getByRole('heading', {
-          level: 1,
-          name: 'Edit Personal Profile',
-        }),
+      await waitFor(() =>
+        expect(
+          screen.queryByRole('heading', {
+            level: 1,
+            name: 'Edit Personal Profile',
+          }),
+        ).not.toBeInTheDocument(),
       );
 
       await waitFor(() =>
