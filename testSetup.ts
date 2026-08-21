@@ -1,6 +1,9 @@
 import { configure } from '@testing-library/react';
 import resizeTo from 'src/testSupport/resizeTo';
 import '@testing-library/jest-dom';
+import { TextDecoder, TextEncoder } from 'util';
+
+Object.assign(globalThis, { TextEncoder, TextDecoder });
 
 const jestTimeout = 30000;
 
