@@ -4,7 +4,6 @@ import {
   render,
   screen,
   waitFor,
-  waitForElementToBeRemoved,
   within,
 } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
