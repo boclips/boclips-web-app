@@ -24,9 +24,7 @@ const SubdomainAppropriateRegistrationView = lazyWithRetry(
 
 const ClassroomDistrictRegistrationView = lazyWithRetry(
   () =>
-    import(
-      'src/views/register/classroom/district/ClassroomDistrictRegistrationView'
-    ),
+    import('src/views/register/classroom/district/ClassroomDistrictRegistrationView'),
 );
 
 const ClassroomRegistrationView = lazyWithRetry(
