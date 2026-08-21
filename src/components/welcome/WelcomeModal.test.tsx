@@ -143,11 +143,13 @@ describe('Trial Welcome Modal', () => {
         await wrapper.findByText('User kobe@la.com successfully updated'),
       ).toBeVisible();
 
-      expect(
-        wrapper.queryByText(
-          'Your colleague has invited you to Boclips Library!',
-        ),
-      ).toBeNull();
+      await waitFor(() =>
+        expect(
+          wrapper.queryByText(
+            'Your colleague has invited you to Boclips Library!',
+          ),
+        ).toBeNull(),
+      );
     });
 
     it('displays error notification when user update fails', async () => {

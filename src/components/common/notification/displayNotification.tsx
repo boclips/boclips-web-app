@@ -1,6 +1,5 @@
 import React from 'react';
 import { toast, ToastOptions } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import c from 'classnames';
 import s from './displayNotification.module.less';
 
