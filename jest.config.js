@@ -2,6 +2,7 @@ module.exports = {
   clearMocks: true,
   moduleFileExtensions: ['js', 'ts', 'tsx'],
   moduleNameMapper: {
+    '^@ant-design/([^/]+)/es/(.*)$': '@ant-design/$1/lib/$2',
     'boclips-js-security': '<rootDir>/__mocks__/boclips-js-security.ts',
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/__mocks__/fileMock.js',

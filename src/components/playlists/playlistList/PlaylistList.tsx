@@ -1,6 +1,6 @@
 import { getMediaBreakpoint } from '@boclips-ui/use-media-breakpoints';
 import Pagination from '@boclips-ui/pagination';
-import List from 'antd/lib/list';
+import { List } from 'antd';
 import Pageable from 'boclips-api-client/dist/sub-clients/common/model/Pageable';
 import { ListViewCollection } from 'boclips-api-client/dist/sub-clients/collections/model/ListViewCollection';
 import React from 'react';

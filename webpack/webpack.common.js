@@ -1,6 +1,5 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const tsImportPluginFactory = require('ts-import-plugin');
 const path = require('path');
 const ReactRefreshTypeScript = require('react-refresh-typescript');
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
@@ -38,14 +37,9 @@ module.exports = {
             options: {
               transpileOnly: true,
               getCustomTransformers: () => ({
-                before: [
-                  tsImportPluginFactory({
-                    libraryName: 'antd',
-                    libraryDirectory: 'lib',
-                    style: true,
-                  }),
-                  isDevelopment && ReactRefreshTypeScript(),
-                ].filter(Boolean),
+                before: [isDevelopment && ReactRefreshTypeScript()].filter(
+                  Boolean,
+                ),
               }),
             },
           },

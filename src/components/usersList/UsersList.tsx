@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AccountUser } from 'boclips-api-client/dist/sub-clients/accounts/model/AccountUser';
-import List from 'antd/lib/list';
+import { List } from 'antd';
 import { UsersListItem } from 'src/components/usersList/UsersListItem';
 import {
   useFindAccountUsers,

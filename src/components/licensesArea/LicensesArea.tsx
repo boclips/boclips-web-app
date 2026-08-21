@@ -1,5 +1,5 @@
 import React from 'react';
-import List from 'antd/lib/list';
+import { List } from 'antd';
 import LicensedContentCard from 'src/components/LicensedContentCard/LicensedContentCard';
 import { LicensedContent } from 'boclips-api-client/dist/sub-clients/licenses/model/LicensedContent';
 import Pagination from '@boclips-ui/pagination';
