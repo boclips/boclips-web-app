@@ -87,7 +87,7 @@
     "start-server-and-test": "^3.0.5",
     "style-loader": "^3.3.1",
     "tailwindcss": "^3.4.15",
-    "tailwindcss-debug-screens": "^2.2.1",
+    "tailwindcss-debug-screens": "^3.0.1",
     "ts-import-plugin": "^3.0.0",
     "ts-jest": "^29.4.0",
     "ts-loader": "^9.6.0",
