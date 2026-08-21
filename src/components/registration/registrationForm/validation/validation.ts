@@ -21,9 +21,7 @@ interface FormValidatorInstance {
   checkEducationalUseAgreementValid: ValidationMethod;
 }
 
-const FormValidator: FormValidatorClass = class
-  implements FormValidatorInstance
-{
+const FormValidator: FormValidatorClass = class implements FormValidatorInstance {
   private registrationData: RegistrationData;
 
   private setError: SetError;
@@ -57,13 +55,19 @@ const FormValidator: FormValidatorClass = class
     const schema = new PasswordValidator();
 
     /* eslint-disable */
-        schema
-            .is().min(8)
-            .has().digits()
-            .has().letters()
-            .has().symbols()
-            .has().not().spaces();
-        /* eslint-enable  */
+    schema
+      .is()
+      .min(8)
+      .has()
+      .digits()
+      .has()
+      .letters()
+      .has()
+      .symbols()
+      .has()
+      .not()
+      .spaces();
+    /* eslint-enable  */
 
     if (!schema.validate(this.registrationData.password)) {
       this.setError('password', ' ');

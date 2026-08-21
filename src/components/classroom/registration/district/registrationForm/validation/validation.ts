@@ -23,9 +23,7 @@ interface FormValidatorInstance {
   checkEducationalUseAgreementValid: ValidationMethod;
 }
 
-const FormValidator: FormValidatorClass = class
-  implements FormValidatorInstance
-{
+const FormValidator: FormValidatorClass = class implements FormValidatorInstance {
   private registrationData: DistrictRegistrationData;
 
   private setError: SetError;
