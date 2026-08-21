@@ -74,7 +74,7 @@
     "jest-axe": "^10.0.0",
     "jest-environment-jsdom": "^29.7.0",
     "jsdom": "^29.1.1",
-    "less": "^4.6.4",
+    "less": "^4.9.0",
     "less-loader": "^13.0.0",
     "mini-css-extract-plugin": "^2.9.2",
     "npm-audit-resolver": "^3.0.0-0",
