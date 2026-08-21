@@ -1,3 +1,2 @@
-import { getUserLocales } from 'get-user-locale';
-
-export const getBrowserLocale = () => getUserLocales()[0];
+export const getBrowserLocale = () =>
+  navigator.languages?.[0] ?? navigator.language;
