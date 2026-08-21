@@ -150,7 +150,7 @@
     "react-helmet-async": "^3.0.0",
     "react-markdown": "^10.1.0",
     "react-password-validattor": "^1.2.0",
-    "react-router-dom": "^6.22.3",
+    "react-router-dom": "^6.30.5",
     "react-toastify": "^11.1.0",
     "tsparticles": "^4.1.2"
   }
