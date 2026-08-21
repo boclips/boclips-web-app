@@ -83,8 +83,10 @@ module.exports = {
                 localIdentContext: __dirname,
                 localIdentName: '[local]--[hash:base64:5]',
                 mode: 'local',
-                // the v7 default (true) silently breaks default-imported CSS modules
+                // v7 defaults break the v6 behaviour these modules rely on:
+                // named-only exports, and camel-casing that renames videoAIContent
                 namedExport: false,
+                exportLocalsConvention: 'as-is',
               },
             },
           },
