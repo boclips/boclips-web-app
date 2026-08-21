@@ -1,6 +1,5 @@
 import { SortBy } from 'src/types/SortBy';
 import { Facet } from 'boclips-api-client/dist/sub-clients/videos/model/VideoFacets';
-import isNumeric from 'antd/lib/_util/isNumeric';
 
 export const getFacetSorter = (by: SortBy) => {
   if (by === 'SORT_BY_NAME') {
@@ -22,13 +21,7 @@ const sortByName = (a: Facet, b: Facet) => a.name.localeCompare(b.name);
 
 const sortByDuration = (a: Facet, b: Facet) => {
   const getNumberValues = (string: string) =>
-    parseInt(
-      string
-        .split('')
-        .filter((item) => isNumeric(item))
-        .join(''),
-      10,
-    );
+    parseInt(string.replace(/\D/g, ''), 10);
 
   return getNumberValues(a.id) - getNumberValues(b.id);
 };
