@@ -92,7 +92,7 @@ export const ChatInput = () => {
     setInputValue('');
     doChat({
       chatRequest: {
-        model: 'langchain5-gpt4-markdown',
+        model: 'langchain5-gpt6-markdown',
         conversationId: getConversationId(),
         chatHistory: convertToChatHistory(history),
       },
